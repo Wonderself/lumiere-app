@@ -7,10 +7,9 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
 import {
-  Coins, TrendingUp, Film, Users, Clock, Shield,
-  ArrowRight, Landmark, ChartBar, Wallet, Vote,
-  Briefcase, Star, Zap, Lock, CheckCircle2,
-  BarChart3, CircleDollarSign, Sparkles
+  Coins, TrendingUp, Film, Clock, Shield,
+  ArrowRight, Vote,
+  Briefcase, Sparkles, CheckCircle2,
 } from 'lucide-react'
 import type { Metadata } from 'next'
 import {
@@ -91,61 +90,38 @@ export default async function TokenizationMarketplacePage() {
   }
 
   return (
-    <div className="space-y-6 sm:space-y-8">
+    <div className="space-y-8">
       {/* Sub-Nav */}
       <TokenizationNav active="marketplace" />
 
-      {/* Hero */}
-      <div className="relative overflow-hidden rounded-2xl border border-[#D4AF37]/20 bg-gradient-to-br from-[#D4AF37]/10 via-black to-[#D4AF37]/5 p-6 sm:p-8 lg:p-10">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_rgba(212,175,55,0.15),transparent_60%)]" />
-        <div className="relative z-10 flex flex-col lg:flex-row lg:items-center gap-6">
+      {/* Hero — Clean Fintech Style */}
+      <div className="relative overflow-hidden rounded-2xl border border-[#D4AF37]/10 bg-gradient-to-br from-[#D4AF37]/[0.06] to-transparent p-6 sm:p-8 lg:p-10">
+        <div className="flex flex-col lg:flex-row lg:items-center gap-8">
           <div className="flex-1 space-y-4">
-            <div className="flex items-center gap-2">
-              <Badge className="border-[#D4AF37]/30 bg-[#D4AF37]/10 text-[#D4AF37]">
-                <Landmark className="h-3 w-3 mr-1" />
-                ISA Israel
-              </Badge>
-              <Badge variant="secondary">
-                <Shield className="h-3 w-3 mr-1" />
-                Régulé
-              </Badge>
-            </div>
+            <Badge className="border-[#D4AF37]/20 bg-[#D4AF37]/[0.08] text-[#D4AF37] text-xs">
+              <Shield className="h-3 w-3 mr-1" />
+              Régulé ISA Israel
+            </Badge>
             <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white font-[family-name:var(--font-playfair)]">
               Investissez dans le Cinéma IA
             </h1>
-            <p className="text-white/50 max-w-xl text-sm sm:text-base leading-relaxed">
-              Co-produisez des films générés par intelligence artificielle. Achetez des tokens,
-              participez aux décisions créatives, et percevez des revenus sur chaque exploitation.
-              Cadre juridique israélien — offres exemptées ISA.
+            <p className="text-white/35 max-w-lg text-sm leading-relaxed">
+              Co-produisez des films IA. Achetez des tokens, votez sur les décisions créatives,
+              percevez des revenus sur chaque exploitation.
             </p>
-            <div className="flex flex-wrap gap-3 pt-2">
-              <Link href="/tokenization/portfolio">
-                <Button variant="outline" className="min-h-[44px]">
-                  <Wallet className="h-4 w-4 mr-2" />
-                  Mon Portfolio
-                </Button>
-              </Link>
-              <Link href="/tokenization/governance">
-                <Button variant="ghost" className="min-h-[44px]">
-                  <Vote className="h-4 w-4 mr-2" />
-                  Gouvernance
-                </Button>
-              </Link>
-            </div>
           </div>
 
-          {/* Platform Stats */}
-          <div className="grid grid-cols-2 gap-3 lg:gap-4 lg:w-80">
+          {/* Platform Stats — Clean Numbers */}
+          <div className="grid grid-cols-2 gap-4 lg:w-72">
             {[
-              { label: 'Total levé', value: formatEur(platformStats.totalRaised), icon: CircleDollarSign, color: 'text-[#D4AF37]' },
-              { label: 'Offres actives', value: platformStats.activeOfferings.toString(), icon: Film, color: 'text-blue-400' },
-              { label: 'Investisseurs', value: platformStats.totalInvestors.toString(), icon: Users, color: 'text-green-400' },
-              { label: 'ROI moyen', value: `${platformStats.avgROI}%`, icon: TrendingUp, color: 'text-purple-400' },
+              { label: 'Total levé', value: formatEur(platformStats.totalRaised), color: 'text-[#D4AF37]' },
+              { label: 'Offres actives', value: platformStats.activeOfferings.toString(), color: 'text-blue-400' },
+              { label: 'Investisseurs', value: platformStats.totalInvestors.toString(), color: 'text-green-400' },
+              { label: 'ROI moyen', value: `${platformStats.avgROI}%`, color: 'text-purple-400' },
             ].map((stat) => (
-              <div key={stat.label} className="rounded-xl bg-white/[0.05] border border-white/10 p-3 sm:p-4">
-                <stat.icon className={`h-5 w-5 ${stat.color} mb-2`} />
-                <p className="text-white text-lg sm:text-xl font-bold">{stat.value}</p>
-                <p className="text-white/30 text-xs">{stat.label}</p>
+              <div key={stat.label}>
+                <p className={`text-2xl font-bold ${stat.color}`}>{stat.value}</p>
+                <p className="text-white/25 text-xs mt-0.5">{stat.label}</p>
               </div>
             ))}
           </div>
@@ -154,34 +130,30 @@ export default async function TokenizationMarketplacePage() {
 
       {/* Active Offerings */}
       <section>
-        <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center justify-between mb-5">
           <h2 className="text-lg sm:text-xl font-bold text-white font-[family-name:var(--font-playfair)]">
             Offres en Cours
           </h2>
-          <Badge variant="secondary">{offerings.filter(o => o.status === 'OPEN').length} ouvertes</Badge>
+          <span className="text-white/25 text-sm">{offerings.filter(o => o.status === 'OPEN').length} ouvertes</span>
         </div>
 
         {offerings.length === 0 ? (
-          <Card className="bg-white/[0.03] border-white/10">
-            <CardContent className="p-8 text-center">
-              <Sparkles className="h-12 w-12 text-[#D4AF37]/30 mx-auto mb-4" />
-              <p className="text-white/50 text-sm">Aucune offre active pour le moment.</p>
-              <p className="text-white/30 text-xs mt-1">De nouvelles opportunités arrivent bientôt.</p>
-            </CardContent>
-          </Card>
+          <div className="py-16 text-center">
+            <Sparkles className="h-10 w-10 text-[#D4AF37]/20 mx-auto mb-4" />
+            <p className="text-white/40 text-sm">Aucune offre active pour le moment.</p>
+            <p className="text-white/20 text-xs mt-1">De nouvelles opportunités arrivent bientôt.</p>
+          </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {offerings.map((offering) => {
               const progress = getOfferingProgress(offering)
-              const remaining = offering.totalTokens - offering.tokensSold
-              const risk = RISK_LABELS[offering.riskLevel] || RISK_LABELS.MEDIUM
               const timeLeft = getTimeRemaining(offering.closesAt)
 
               return (
                 <Link key={offering.id} href={`/tokenization/${offering.filmId}`}>
-                  <Card className="bg-white/[0.03] border-white/10 hover:border-[#D4AF37]/30 transition-all h-full group overflow-hidden">
+                  <Card className="bg-white/[0.02] border-white/[0.06] hover:border-[#D4AF37]/20 transition-all h-full group overflow-hidden">
                     {/* Film Cover */}
-                    <div className="relative h-40 bg-gradient-to-br from-[#D4AF37]/10 to-purple-500/10 overflow-hidden">
+                    <div className="relative h-36 bg-gradient-to-br from-[#D4AF37]/[0.06] to-purple-500/[0.04] overflow-hidden">
                       {offering.film.coverImageUrl ? (
                         <img
                           src={offering.film.coverImageUrl}
@@ -190,77 +162,45 @@ export default async function TokenizationMarketplacePage() {
                         />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center">
-                          <Film className="h-12 w-12 text-white/10" />
+                          <Film className="h-10 w-10 text-white/[0.06]" />
                         </div>
                       )}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-                      <div className="absolute top-3 right-3 flex gap-1.5">
-                        <Badge className={`${risk.bgColor} text-xs`}>
-                          {risk.label}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
+                      {offering.status === 'FUNDED' && (
+                        <Badge variant="success" className="absolute top-3 right-3 text-xs">
+                          Financé
                         </Badge>
-                        {offering.status === 'FUNDED' && (
-                          <Badge variant="success" className="text-xs">
-                            <CheckCircle2 className="h-3 w-3 mr-1" />
-                            Financé
-                          </Badge>
-                        )}
-                      </div>
-                      <div className="absolute bottom-3 left-3">
+                      )}
+                      <div className="absolute bottom-3 left-3 right-3">
                         <h3 className="text-white font-semibold text-sm line-clamp-1">{offering.film.title}</h3>
-                        {offering.film.genre && (
-                          <p className="text-white/50 text-xs">{offering.film.genre}</p>
-                        )}
                       </div>
                     </div>
 
                     <CardContent className="p-4 space-y-3">
-                      {/* Progress */}
+                      {/* Progress Bar */}
                       <div>
-                        <div className="flex items-center justify-between mb-1.5">
-                          <span className="text-white/50 text-xs">Levée</span>
-                          <span className="text-white text-xs font-semibold">{progress}%</span>
-                        </div>
-                        <Progress value={progress} className="h-2" />
-                        <div className="flex items-center justify-between mt-1.5">
-                          <span className="text-[#D4AF37] text-xs font-medium">{formatEur(offering.raised)}</span>
-                          <span className="text-white/30 text-xs">/ {formatEur(offering.hardCap)}</span>
+                        <Progress value={progress} className="h-1.5" />
+                        <div className="flex items-center justify-between mt-2">
+                          <span className="text-[#D4AF37] text-sm font-semibold">{formatEur(offering.raised)}</span>
+                          <span className="text-white/25 text-xs">/ {formatEur(offering.hardCap)}</span>
                         </div>
                       </div>
 
-                      {/* Key Stats */}
-                      <div className="grid grid-cols-2 gap-2">
-                        <div className="rounded-lg bg-white/[0.03] p-2">
-                          <p className="text-white/30 text-[10px]">Prix/Token</p>
-                          <p className="text-white text-sm font-semibold">{formatEur(offering.tokenPrice)}</p>
-                        </div>
-                        <div className="rounded-lg bg-white/[0.03] p-2">
-                          <p className="text-white/30 text-[10px]">Disponibles</p>
-                          <p className="text-white text-sm font-semibold">{remaining.toLocaleString('fr-FR')}</p>
-                        </div>
-                      </div>
-
-                      {/* Footer */}
-                      <div className="flex items-center justify-between pt-2 border-t border-white/5">
-                        <div className="flex items-center gap-1.5">
-                          {offering.projectedROI && (
-                            <Badge variant="outline" className="text-[10px] border-green-500/20 text-green-400">
-                              <TrendingUp className="h-2.5 w-2.5 mr-0.5" />
-                              ROI ~{offering.projectedROI}%
-                            </Badge>
-                          )}
-                        </div>
-                        <div className="flex items-center gap-1 text-white/30 text-[10px]">
+                      {/* ROI + Time */}
+                      <div className="flex items-center justify-between text-xs">
+                        {offering.projectedROI && (
+                          <span className="text-green-400 font-medium">ROI ~{offering.projectedROI}%</span>
+                        )}
+                        <span className="text-white/25 flex items-center gap-1">
                           <Clock className="h-3 w-3" />
                           {timeLeft}
-                        </div>
+                        </span>
                       </div>
 
                       {/* CTA */}
                       {offering.status === 'OPEN' && (
-                        <Button className="w-full min-h-[44px] group-hover:shadow-[0_0_30px_rgba(212,175,55,0.4)]">
-                          <Coins className="h-4 w-4 mr-2" />
+                        <Button className="w-full min-h-[44px]">
                           Investir
-                          <ArrowRight className="h-4 w-4 ml-auto opacity-0 group-hover:opacity-100 transition-opacity" />
                         </Button>
                       )}
                     </CardContent>
@@ -299,83 +239,45 @@ export default async function TokenizationMarketplacePage() {
         </section>
       )}
 
-      {/* How It Works */}
+      {/* How It Works — 4 Clean Steps */}
       <section>
-        <h2 className="text-lg sm:text-xl font-bold text-white font-[family-name:var(--font-playfair)] mb-4">
+        <h2 className="text-lg font-bold text-white font-[family-name:var(--font-playfair)] mb-5">
           Comment ça Marche
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           {[
-            {
-              step: '01',
-              title: 'Choisissez',
-              description: 'Parcourez les films en cours de financement et analysez les projections de revenus.',
-              icon: Film,
-              color: 'text-blue-400',
-              bgColor: 'bg-blue-500/10',
-            },
-            {
-              step: '02',
-              title: 'Investissez',
-              description: 'Achetez des tokens à partir de 10€. Chaque token représente une part du film.',
-              icon: Coins,
-              color: 'text-[#D4AF37]',
-              bgColor: 'bg-[#D4AF37]/10',
-            },
-            {
-              step: '03',
-              title: 'Votez',
-              description: 'Participez aux décisions créatives : casting, distribution, marketing.',
-              icon: Vote,
-              color: 'text-purple-400',
-              bgColor: 'bg-purple-500/10',
-            },
-            {
-              step: '04',
-              title: 'Gagnez',
-              description: 'Recevez des dividendes sur chaque exploitation du film : streaming, licences, merchandising.',
-              icon: TrendingUp,
-              color: 'text-green-400',
-              bgColor: 'bg-green-500/10',
-            },
+            { title: 'Choisissez', desc: 'Parcourez les films en financement', icon: Film, color: 'text-blue-400' },
+            { title: 'Investissez', desc: 'Tokens dès 10€ par film', icon: Coins, color: 'text-[#D4AF37]' },
+            { title: 'Votez', desc: 'Décisions créatives partagées', icon: Vote, color: 'text-purple-400' },
+            { title: 'Gagnez', desc: 'Dividendes sur les exploitations', icon: TrendingUp, color: 'text-green-400' },
           ].map((item) => (
-            <Card key={item.step} className="bg-white/[0.03] border-white/10 hover:border-white/20 transition-all">
-              <CardContent className="p-5 space-y-3">
-                <div className="flex items-center gap-3">
-                  <div className={`h-10 w-10 rounded-lg ${item.bgColor} flex items-center justify-center`}>
-                    <item.icon className={`h-5 w-5 ${item.color}`} />
-                  </div>
-                  <span className="text-white/10 text-2xl font-bold font-[family-name:var(--font-playfair)]">{item.step}</span>
-                </div>
-                <h3 className="text-white font-semibold">{item.title}</h3>
-                <p className="text-white/40 text-xs leading-relaxed">{item.description}</p>
-              </CardContent>
-            </Card>
+            <div key={item.title} className="text-center p-5 rounded-xl border border-white/[0.06] bg-white/[0.02]">
+              <item.icon className={`h-6 w-6 ${item.color} mx-auto mb-3`} />
+              <h3 className="text-white font-semibold text-sm mb-1">{item.title}</h3>
+              <p className="text-white/30 text-xs">{item.desc}</p>
+            </div>
           ))}
         </div>
       </section>
 
-      {/* Legal Disclaimer */}
-      <Card className="bg-white/[0.02] border-white/5">
-        <CardContent className="p-4 sm:p-6">
-          <div className="flex items-start gap-3">
-            <Shield className="h-5 w-5 text-white/20 shrink-0 mt-0.5" />
-            <div className="space-y-2">
-              <p className="text-white/30 text-xs leading-relaxed">
-                <strong className="text-white/50">Avertissement légal :</strong> Les tokens proposés sur cette plateforme sont émis
-                dans le cadre du régime d&apos;offres exemptées de l&apos;Israel Securities Authority (ISA), sous le seuil de 5 millions ILS.
-                L&apos;investissement dans des projets cinématographiques comporte des risques significatifs, incluant la perte
-                totale du capital investi. Les projections de ROI sont indicatives et ne constituent pas une garantie de rendement.
-              </p>
-              <p className="text-white/30 text-xs leading-relaxed">
-                Lumière Brothers Ltd. est enregistrée en Israël. Les tokens ne constituent pas des valeurs mobilières au sens du
-                droit européen ou américain. Consultez un conseiller financier agréé avant tout investissement. Investissez
-                uniquement des sommes que vous pouvez vous permettre de perdre.
-              </p>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+      {/* Legal Disclaimer — Collapsible */}
+      <details className="group">
+        <summary className="flex items-center gap-2 cursor-pointer text-xs text-white/25 hover:text-white/40 transition-colors list-none py-2">
+          <Shield className="h-3.5 w-3.5" />
+          <span>Avertissement légal</span>
+          <span className="text-[10px] ml-1 group-open:hidden">Cliquez pour lire</span>
+        </summary>
+        <div className="mt-2 p-4 rounded-xl bg-white/[0.02] border border-white/[0.04] space-y-2">
+          <p className="text-white/25 text-xs leading-relaxed">
+            Les tokens proposés sur cette plateforme sont émis dans le cadre du régime d&apos;offres exemptées de l&apos;Israel Securities Authority (ISA), sous le seuil de 5 millions ILS.
+            L&apos;investissement dans des projets cinématographiques comporte des risques significatifs, incluant la perte totale du capital investi.
+          </p>
+          <p className="text-white/25 text-xs leading-relaxed">
+            Lumière Brothers Ltd. est enregistrée en Israël. Consultez un conseiller financier agréé avant tout investissement.
+            Investissez uniquement des sommes que vous pouvez vous permettre de perdre.
+          </p>
+        </div>
+      </details>
     </div>
   )
 }

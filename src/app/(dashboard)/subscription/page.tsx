@@ -4,9 +4,9 @@ import { redirect } from 'next/navigation'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import {
-  Crown, Star, Zap, Check, ChevronDown,
+  Crown, Star, Check, ChevronDown,
   User, Rocket, Shield, HelpCircle, Coins,
-  Package, Building2, Sparkles
+  Building2, Sparkles
 } from 'lucide-react'
 import { PlanButton } from './plan-button'
 import { SUBSCRIPTION_PLANS, TOKEN_PACKS, TOKEN_COSTS } from '@/lib/tokens'
@@ -54,132 +54,136 @@ export default async function SubscriptionPage() {
   const currentPlan = user.subscription?.plan ?? 'FREE'
 
   return (
-    <div className="p-4 sm:p-6 lg:p-8 space-y-8 sm:space-y-10 max-w-6xl mx-auto">
+    <div className="p-4 sm:p-6 lg:p-8 space-y-10 max-w-5xl mx-auto">
       {/* Header */}
-      <div>
+      <div className="text-center">
         <h1 className="text-2xl sm:text-3xl font-bold font-[family-name:var(--font-playfair)]">
           Abonnement & Tokens
         </h1>
-        <p className="text-white/50 mt-1 text-sm sm:text-base">
-          Choisissez votre plan et achetez des tokens pour alimenter vos creations IA.
+        <p className="text-white/30 mt-2 text-sm">
+          Choisissez votre plan. Alimentez vos créations IA.
         </p>
+        {/* Current status inline */}
+        <div className="flex items-center justify-center gap-6 mt-4">
+          <div className="flex items-center gap-2">
+            <Star className="h-4 w-4 text-[#D4AF37]" />
+            <span className="text-white/50 text-sm">Plan :</span>
+            <span className="text-white font-medium text-sm">
+              {currentPlan === 'FREE' ? 'Gratuit' : currentPlan === 'STARTER' ? 'Starter' : currentPlan === 'PRO' ? 'Pro' : 'Business'}
+            </span>
+          </div>
+          <div className="w-px h-4 bg-white/10" />
+          <div className="flex items-center gap-2">
+            <Coins className="h-4 w-4 text-[#D4AF37]" />
+            <span className="text-white font-medium text-sm">{user.lumenBalance}</span>
+            <span className="text-white/30 text-sm">Lumens</span>
+          </div>
+        </div>
       </div>
 
-      {/* Current Plan + Balance */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-        <Card className="bg-white/[0.03] border-white/10">
-          <CardContent className="p-4 sm:p-6 flex items-center justify-between gap-3">
-            <div className="flex items-center gap-3 sm:gap-4">
-              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-[#D4AF37]/10 border border-[#D4AF37]/20 flex items-center justify-center shrink-0">
-                <Star className="h-5 w-5 sm:h-6 sm:w-6 text-[#D4AF37]" />
-              </div>
-              <div>
-                <p className="text-sm text-white/40">Plan actuel</p>
-                <p className="text-lg font-semibold text-white">
-                  {currentPlan === 'FREE' ? 'Gratuit' : currentPlan === 'STARTER' ? 'Starter' : currentPlan === 'PRO' ? 'Pro' : currentPlan === 'BUSINESS' ? 'Business' : currentPlan}
-                </p>
-              </div>
-            </div>
-            <Badge className={currentPlan === 'FREE' ? 'border-white/20 bg-white/5 text-white/60' : 'border-[#D4AF37]/30 bg-[#D4AF37]/10 text-[#D4AF37]'}>
-              Actif
-            </Badge>
-          </CardContent>
-        </Card>
+      {/* Plan Cards — Apple Style */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {SUBSCRIPTION_PLANS.map((plan) => {
+          const meta = PLAN_META[plan.id]
+          const isCurrent = plan.id.toUpperCase() === currentPlan || (plan.id === 'free' && currentPlan === 'FREE')
+          const isRec = !!meta.recommended
+          const PlanIcon = meta.icon
 
-        <Card className="bg-white/[0.03] border-white/10">
-          <CardContent className="p-4 sm:p-6 flex items-center justify-between gap-3">
-            <div className="flex items-center gap-3 sm:gap-4">
-              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center shrink-0">
-                <Coins className="h-5 w-5 sm:h-6 sm:w-6 text-purple-400" />
-              </div>
-              <div>
-                <p className="text-sm text-white/40">Solde tokens</p>
-                <p className="text-lg font-semibold text-white">{user.lumenBalance} tokens</p>
-              </div>
+          return (
+            <div key={plan.id} className="relative">
+              {isRec && (
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-10">
+                  <Badge className="border-[#D4AF37]/50 bg-[#D4AF37]/20 text-[#D4AF37] text-xs shadow-[0_0_20px_rgba(212,175,55,0.15)]">
+                    Recommandé
+                  </Badge>
+                </div>
+              )}
+
+              <Card className={`h-full flex flex-col transition-all ${
+                isRec
+                  ? 'bg-[#D4AF37]/[0.04] border-[#D4AF37]/20 scale-[1.02]'
+                  : 'bg-white/[0.02] border-white/[0.06]'
+              } ${isCurrent ? 'ring-1 ring-[#D4AF37]/30' : ''}`}>
+                <CardHeader className="pb-2 text-center">
+                  <PlanIcon className={`h-6 w-6 mx-auto mb-3 ${isRec ? 'text-[#D4AF37]' : 'text-white/40'}`} />
+                  <CardTitle className="text-lg font-[family-name:var(--font-playfair)]">{plan.name}</CardTitle>
+                  <div className="flex items-baseline justify-center gap-1 mt-2">
+                    <span className={`text-3xl font-bold ${isRec ? 'text-[#D4AF37]' : 'text-white'}`}>
+                      {plan.price === 0 ? '0' : plan.price.toFixed(0)}
+                    </span>
+                    <span className="text-sm text-white/30">&#8364;/mois</span>
+                  </div>
+                  {plan.tokensPerMonth > 0 && (
+                    <p className="text-xs text-white/30 mt-1">{plan.tokensPerMonth} Lumens/mois</p>
+                  )}
+                  {plan.tokensOneTime > 0 && (
+                    <p className="text-xs text-white/30 mt-1">{plan.tokensOneTime} Lumens offerts</p>
+                  )}
+                </CardHeader>
+
+                <CardContent className="flex-1 flex flex-col pt-4">
+                  <ul className="space-y-2.5 mb-6 flex-1">
+                    {plan.features.slice(0, 5).map((feature) => (
+                      <li key={feature} className="flex items-center gap-2.5">
+                        <Check className={`h-3.5 w-3.5 shrink-0 ${isRec ? 'text-[#D4AF37]' : 'text-green-400/60'}`} />
+                        <span className="text-xs text-white/50">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <PlanButton
+                    planId={plan.id.toUpperCase()}
+                    planName={plan.name}
+                    isCurrent={isCurrent}
+                    isRecommended={isRec}
+                    isFree={plan.price === 0}
+                  />
+                </CardContent>
+              </Card>
             </div>
-            <Badge className="border-purple-500/20 bg-purple-500/10 text-purple-400">
-              Lumens
-            </Badge>
-          </CardContent>
-        </Card>
+          )
+        })}
       </div>
 
-      {/* Plan Cards */}
+      {/* Token Packs — Top 3 Only */}
       <div>
-        <h2 className="text-xl font-bold text-white mb-4 font-[family-name:var(--font-playfair)]">Plans d&apos;abonnement</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-          {SUBSCRIPTION_PLANS.map((plan) => {
-            const meta = PLAN_META[plan.id]
-            const isCurrent = plan.id.toUpperCase() === currentPlan || (plan.id === 'free' && currentPlan === 'FREE')
-            const PlanIcon = meta.icon
-
+        <h2 className="text-lg font-bold text-white mb-5 font-[family-name:var(--font-playfair)] text-center">
+          Recharger des Lumens
+        </h2>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto">
+          {TOKEN_PACKS.slice(0, 3).map((pack, i) => {
+            const isBestValue = i === 2
             return (
-              <div key={plan.id} className="relative">
-                {meta.recommended && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-10">
-                    <Badge className="border-[#D4AF37]/50 bg-[#D4AF37]/20 text-[#D4AF37] shadow-[0_0_20px_rgba(212,175,55,0.2)]">
-                      <Zap className="h-3 w-3 mr-1" />
-                      Recommande
+              <div key={pack.id} className="relative">
+                {isBestValue && (
+                  <div className="absolute -top-2.5 left-1/2 -translate-x-1/2 z-10">
+                    <Badge className="border-green-500/30 bg-green-500/15 text-green-400 text-[10px]">
+                      Meilleur rapport
                     </Badge>
                   </div>
                 )}
-
-                <Card className={`h-full flex flex-col ${meta.bgColor} ${meta.borderColor} ${isCurrent ? 'ring-1 ring-[#D4AF37]/30' : ''}`}>
-                  <CardHeader className="pb-2">
-                    <div className="flex items-center gap-3 mb-4">
-                      <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
-                        meta.recommended || plan.id === 'business'
-                          ? 'bg-[#D4AF37]/10 border border-[#D4AF37]/20'
-                          : 'bg-white/5 border border-white/10'
-                      }`}>
-                        <PlanIcon className={`h-5 w-5 ${
-                          meta.recommended || plan.id === 'business' ? 'text-[#D4AF37]' : 'text-white/60'
-                        }`} />
-                      </div>
-                      <div>
-                        <CardTitle className="text-lg font-[family-name:var(--font-playfair)]">{plan.name}</CardTitle>
-                        {plan.tokensPerMonth > 0 && (
-                          <p className="text-xs text-[#D4AF37]/60">{plan.tokensPerMonth} tokens/mois</p>
-                        )}
-                        {plan.tokensOneTime > 0 && (
-                          <p className="text-xs text-white/40">{plan.tokensOneTime} tokens offerts</p>
-                        )}
-                      </div>
+                <Card className={`h-full transition-all hover:border-[#D4AF37]/20 ${
+                  isBestValue ? 'bg-[#D4AF37]/[0.03] border-[#D4AF37]/15' : 'bg-white/[0.02] border-white/[0.06]'
+                }`}>
+                  <CardContent className="p-6 text-center space-y-3">
+                    <h3 className="text-white font-semibold">{pack.name}</h3>
+                    <p className="text-3xl font-bold text-white">{pack.tokens}</p>
+                    <p className="text-white/25 text-xs">
+                      Lumens
+                      {pack.bonus > 0 && <span className="text-green-400 ml-1">+{pack.bonus} bonus</span>}
+                    </p>
+                    <div className="pt-3">
+                      <p className="text-[#D4AF37] text-xl font-bold">{pack.price.toFixed(2).replace('.', ',')}&#8364;</p>
                     </div>
-
-                    <div className="flex items-baseline gap-1 mb-1">
-                      <span className={`text-3xl font-bold ${
-                        meta.recommended || plan.id === 'business' ? 'text-[#D4AF37]' : 'text-white'
-                      }`}>
-                        {plan.price === 0 ? '0' : plan.price.toFixed(2).replace('.', ',')}
-                      </span>
-                      <span className="text-sm text-white/40">&#8364;/mois</span>
-                    </div>
-                  </CardHeader>
-
-                  <CardContent className="flex-1 flex flex-col">
-                    <ul className="space-y-2 mb-6 flex-1">
-                      {plan.features.map((feature) => (
-                        <li key={feature} className="flex items-center gap-2">
-                          <div className={`w-4 h-4 rounded-full flex items-center justify-center shrink-0 ${
-                            meta.recommended || plan.id === 'business'
-                              ? 'bg-[#D4AF37]/15 text-[#D4AF37]'
-                              : 'bg-green-500/15 text-green-400'
-                          }`}>
-                            <Check className="h-2.5 w-2.5" />
-                          </div>
-                          <span className="text-xs text-white/60">{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
-
-                    <PlanButton
-                      planId={plan.id.toUpperCase()}
-                      planName={plan.name}
-                      isCurrent={isCurrent}
-                      isRecommended={!!meta.recommended}
-                      isFree={plan.price === 0}
-                    />
+                    <button
+                      className={`w-full py-2.5 rounded-xl text-sm font-semibold transition-colors ${
+                        isBestValue
+                          ? 'bg-[#D4AF37] text-black hover:bg-[#F0D060]'
+                          : 'bg-white/[0.06] text-white/70 hover:bg-white/10'
+                      }`}
+                    >
+                      Acheter
+                    </button>
                   </CardContent>
                 </Card>
               </div>
@@ -188,123 +192,53 @@ export default async function SubscriptionPage() {
         </div>
       </div>
 
-      {/* Token Packs */}
-      <div>
-        <h2 className="text-xl font-bold text-white mb-4 font-[family-name:var(--font-playfair)] flex items-center gap-2">
-          <Package className="h-5 w-5 text-[#D4AF37]" />
-          Packs de Tokens
-        </h2>
-        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-          {TOKEN_PACKS.map((pack) => (
-            <Card key={pack.id} className="bg-white/[0.03] border-white/10 hover:border-[#D4AF37]/30 transition-all">
-              <CardContent className="p-5 text-center space-y-3">
-                <div className="h-12 w-12 rounded-full bg-[#D4AF37]/10 mx-auto flex items-center justify-center">
-                  <Coins className="h-6 w-6 text-[#D4AF37]" />
-                </div>
-                <h3 className="text-white font-semibold">{pack.name}</h3>
-                <div className="space-y-1">
-                  <p className="text-2xl font-bold text-white">{pack.tokens}</p>
-                  <p className="text-white/30 text-xs">tokens</p>
-                  {pack.bonus > 0 && (
-                    <Badge className="bg-green-500/10 border-green-500/20 text-green-400 text-[10px]">
-                      +{pack.bonus} bonus
-                    </Badge>
-                  )}
-                </div>
-                <div className="pt-3 border-t border-white/5">
-                  <p className="text-[#D4AF37] text-lg font-bold">{pack.price.toFixed(2).replace('.', ',')}&#8364;</p>
-                  <p className="text-white/20 text-[10px]">
-                    {(pack.price / (pack.tokens + pack.bonus) * 100).toFixed(1).replace('.', ',')} ct/token
-                  </p>
-                </div>
-                <button
-                  className="w-full py-2 rounded-lg bg-[#D4AF37]/10 text-[#D4AF37] text-sm font-medium hover:bg-[#D4AF37]/20 transition-colors"
-                  onClick={undefined}
-                >
-                  Acheter
-                </button>
-              </CardContent>
-            </Card>
+      {/* Token Costs — Compact */}
+      <details className="group">
+        <summary className="flex items-center gap-2 cursor-pointer text-sm text-white/30 hover:text-white/50 transition-colors list-none justify-center">
+          <Sparkles className="h-4 w-4 text-[#D4AF37]/50" />
+          <span>Grille tarifaire des Lumens</span>
+          <ChevronDown className="h-3.5 w-3.5 transition-transform group-open:rotate-180" />
+        </summary>
+        <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
+          {[
+            { label: 'Vidéo HD', cost: TOKEN_COSTS.VIDEO_GEN_STANDARD, unit: '' },
+            { label: 'Vidéo 4K', cost: TOKEN_COSTS.VIDEO_GEN_4K, unit: '' },
+            { label: 'Clone Voix', cost: TOKEN_COSTS.CLONE_VOICE, unit: '' },
+            { label: 'Publication', cost: TOKEN_COSTS.PUBLISH_MULTI, unit: '/plateforme' },
+            { label: 'A/B Test', cost: TOKEN_COSTS.AB_TEST, unit: '/variant' },
+          ].map((item) => (
+            <div key={item.label} className="flex items-center justify-between p-3 rounded-xl bg-white/[0.02] border border-white/[0.04]">
+              <span className="text-white/40 text-xs">{item.label}</span>
+              <span className="text-[#D4AF37]/70 text-xs font-medium">{item.cost}{item.unit}</span>
+            </div>
           ))}
         </div>
-      </div>
-
-      {/* Token Costs Grid */}
-      <div>
-        <h2 className="text-xl font-bold text-white mb-4 font-[family-name:var(--font-playfair)] flex items-center gap-2">
-          <Sparkles className="h-5 w-5 text-[#D4AF37]" />
-          Grille tarifaire
-        </h2>
-        <Card className="bg-white/[0.03] border-white/10">
-          <CardContent className="p-6">
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-3">
-              {[
-                { label: 'Vidéo Standard', cost: TOKEN_COSTS.VIDEO_GEN_STANDARD, unit: '' },
-                { label: 'Vidéo 4K', cost: TOKEN_COSTS.VIDEO_GEN_4K, unit: '' },
-                { label: 'Clone Voix', cost: TOKEN_COSTS.CLONE_VOICE, unit: '' },
-                { label: 'Publication', cost: TOKEN_COSTS.PUBLISH_MULTI, unit: '/plateforme' },
-                { label: 'Outreach', cost: TOKEN_COSTS.OUTREACH, unit: '/contact' },
-                { label: 'Analytics Pro', cost: TOKEN_COSTS.ANALYTICS_PRO, unit: '/mois' },
-                { label: 'A/B Test', cost: TOKEN_COSTS.AB_TEST, unit: '/variant' },
-                { label: '+30 sec', cost: TOKEN_COSTS.VIDEO_EXTRA_30S, unit: '' },
-                { label: 'Modification', cost: TOKEN_COSTS.REGEN_MODIFY, unit: '' },
-                { label: 'Sans watermark', cost: TOKEN_COSTS.WATERMARK_REMOVE, unit: '/mois' },
-              ].map((item) => (
-                <div key={item.label} className="flex items-center justify-between p-3 rounded-lg bg-white/[0.02] border border-white/5">
-                  <span className="text-white/60 text-xs">{item.label}</span>
-                  <Badge variant="outline" className="border-[#D4AF37]/20 text-[#D4AF37] text-[10px]">
-                    {item.cost}{item.unit}
-                  </Badge>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+      </details>
 
       {/* Coming Soon */}
-      <Card className="bg-white/[0.03] border-white/10">
-        <CardContent className="p-4 sm:p-6 flex items-start sm:items-center gap-3 sm:gap-4">
-          <div className="w-10 h-10 rounded-lg bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center shrink-0">
-            <Shield className="h-5 w-5 text-yellow-400" />
-          </div>
-          <div>
-            <p className="text-sm font-medium text-white/80">
-              Paiements Stripe en cours d&apos;integration
-            </p>
-            <p className="text-xs text-white/40 mt-0.5">
-              Les abonnements et achats de tokens seront connectes via Stripe Connect.
-              En attendant, les tokens de demo sont disponibles via le seed.
-            </p>
-          </div>
-        </CardContent>
-      </Card>
+      <div className="flex items-center gap-3 p-4 rounded-xl bg-white/[0.02] border border-white/[0.04]">
+        <Shield className="h-4 w-4 text-yellow-400/60 shrink-0" />
+        <p className="text-xs text-white/30">
+          Paiements Stripe en cours d&apos;intégration. Tokens de démo disponibles via le seed.
+        </p>
+      </div>
 
-      {/* FAQ */}
-      <div className="space-y-6">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center">
-            <HelpCircle className="h-5 w-5 text-white/60" />
-          </div>
-          <h2 className="text-xl sm:text-2xl font-bold font-[family-name:var(--font-playfair)]">
-            Questions frequentes
-          </h2>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
+      {/* FAQ — Collapsible */}
+      <details className="group">
+        <summary className="flex items-center gap-2 cursor-pointer text-sm text-white/30 hover:text-white/50 transition-colors list-none justify-center">
+          <HelpCircle className="h-4 w-4" />
+          <span>Questions fréquentes</span>
+          <ChevronDown className="h-3.5 w-3.5 transition-transform group-open:rotate-180" />
+        </summary>
+        <div className="mt-4 space-y-3 max-w-3xl mx-auto">
           {FAQ.map((item) => (
-            <Card key={item.question} className="bg-white/[0.03] border-white/10">
-              <CardContent className="p-4 sm:p-6">
-                <div className="flex items-start gap-3 mb-3">
-                  <ChevronDown className="h-4 w-4 text-[#D4AF37] mt-0.5 shrink-0" />
-                  <h3 className="text-sm font-semibold text-white/90">{item.question}</h3>
-                </div>
-                <p className="text-sm text-white/50 leading-relaxed pl-7">{item.answer}</p>
-              </CardContent>
-            </Card>
+            <div key={item.question} className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.04]">
+              <h3 className="text-sm font-medium text-white/70 mb-2">{item.question}</h3>
+              <p className="text-xs text-white/35 leading-relaxed">{item.answer}</p>
+            </div>
           ))}
         </div>
-      </div>
+      </details>
     </div>
   )
 }

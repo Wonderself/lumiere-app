@@ -137,6 +137,116 @@ export async function deleteVideoAction(formData: FormData) {
   revalidatePath('/creator/videos')
 }
 
+export async function generateTrendingVideoAction(
+  prevState: { error?: string; success?: boolean } | null,
+  formData: FormData
+) {
+  const session = await auth()
+  if (!session?.user?.id) return { error: 'Non authentifié' }
+
+  const profile = await prisma.creatorProfile.findUnique({
+    where: { userId: session.user.id },
+  })
+  if (!profile) return { error: 'Profil créateur requis. Complétez le wizard.' }
+
+  const trendId = formData.get('trendId') as string
+  const identityType = formData.get('identityType') as string
+  const tone = formData.get('tone') as string
+  const platforms = formData.getAll('platforms') as string[]
+  const scheduleType = formData.get('scheduleType') as string
+
+  if (!trendId) return { error: 'Sélectionnez une tendance' }
+  if (!identityType) return { error: 'Sélectionnez votre identité' }
+  if (platforms.length === 0) return { error: 'Sélectionnez au moins une plateforme' }
+
+  // Map trend IDs to titles
+  const trendTitles: Record<string, string> = {
+    'face-movie': 'Mon visage dans un film IA',
+    'pov-director': 'POV: Je suis réalisateur IA',
+    'before-after': 'Before/After VFX IA',
+    'storytime': 'Storytime: Comment j\'ai produit un film',
+    'reaction': 'Réaction à mon film IA',
+    '3-scenes': '3 scènes, 1 acteur (moi)',
+    'film-60s': 'Film en 60 secondes',
+    'casting-family': 'Casting ma famille dans un film',
+    'future-cinema': 'Le futur du cinéma',
+    'making-of': 'Making-of: De l\'idée au film',
+  }
+
+  const title = trendTitles[trendId] || 'Vidéo Tendance IA'
+
+  // Token cost based on trend complexity
+  const trendCosts: Record<string, number> = {
+    'face-movie': 20,
+    'pov-director': 15,
+    'before-after': 15,
+    'storytime': 10,
+    'reaction': 10,
+    '3-scenes': 25,
+    'film-60s': 20,
+    'casting-family': 25,
+    'future-cinema': 10,
+    'making-of': 15,
+  }
+
+  const cost = trendCosts[trendId] || 15
+
+  // Check token balance
+  const user = await prisma.user.findUnique({
+    where: { id: session.user.id },
+    select: { lumenBalance: true },
+  })
+
+  if ((user?.lumenBalance || 0) < cost) {
+    return { error: `Solde insuffisant. Coût : ${cost} tokens. Votre solde : ${user?.lumenBalance || 0} tokens.` }
+  }
+
+  // Create video record
+  const video = await prisma.generatedVideo.create({
+    data: {
+      profileId: profile.id,
+      title: `[Trend] ${title}`,
+      script: `Trend: ${trendId} | Tone: ${tone || 'inspirant'} | Identity: ${identityType}`,
+      platforms,
+      status: 'GENERATING',
+      tokensSpent: cost,
+    },
+  })
+
+  // If scheduled, create publish schedule entries
+  if (scheduleType === 'now') {
+    for (const platform of platforms) {
+      await prisma.publishSchedule.create({
+        data: {
+          videoId: video.id,
+          platform: platform as any,
+          scheduledAt: new Date(),
+          status: 'SCHEDULED',
+        },
+      })
+    }
+  }
+
+  // Deduct tokens
+  await prisma.user.update({
+    where: { id: session.user.id },
+    data: { lumenBalance: { decrement: cost } },
+  })
+
+  await prisma.lumenTransaction.create({
+    data: {
+      userId: session.user.id,
+      amount: -cost,
+      type: 'VIDEO_GEN',
+      description: `Vidéo tendance : ${title}`,
+    },
+  })
+
+  revalidatePath('/creator/trending')
+  revalidatePath('/creator/videos')
+  return { success: true }
+}
+
 export async function connectSocialAccountAction(
   prevState: { error?: string; success?: boolean } | null,
   formData: FormData

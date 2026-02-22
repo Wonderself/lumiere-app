@@ -48,6 +48,8 @@ import {
   Vote,
   Scale,
   Bot,
+  Flame,
+  Activity,
 } from 'lucide-react'
 import { cn, getInitials } from '@/lib/utils'
 import { useState, useEffect } from 'react'
@@ -112,10 +114,12 @@ const mainNavSections: NavSection[] = [
     links: [
       { href: '/creator', label: 'Mon Studio', icon: Clapperboard, exact: true },
       { href: '/creator/generate', label: 'Générer Vidéo', icon: Wand2 },
+      { href: '/creator/trending', label: 'Vidéos Tendance', icon: Flame },
       { href: '/creator/videos', label: 'Mes Vidéos', icon: Video },
       { href: '/creator/schedule', label: 'Planning', icon: Calendar },
       { href: '/creator/noface', label: 'NoFace', icon: EyeOff },
       { href: '/creator/accounts', label: 'Réseaux', icon: LinkIcon },
+      { href: '/creator/social-hub', label: 'Centre Social', icon: Activity },
     ],
   },
   {
