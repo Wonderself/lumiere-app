@@ -50,6 +50,8 @@ import {
   Bot,
   Flame,
   Activity,
+  UserCircle2,
+  Scroll,
 } from 'lucide-react'
 import { cn, getInitials } from '@/lib/utils'
 import { useState, useEffect } from 'react'
@@ -103,6 +105,19 @@ const mainNavSections: NavSection[] = [
       { href: '/films', label: 'Films', icon: Film },
       { href: '/screenplays', label: 'Scénarios', icon: FileText },
       { href: '/creator/credits', label: 'Mes Crédits', icon: Award },
+    ],
+  },
+  {
+    title: 'Univers Film',
+    color: 'text-rose-400',
+    hoverBg: 'hover:bg-rose-500/[0.04]',
+    activeBg: 'bg-rose-500/10',
+    activeBorder: 'border-rose-500/15',
+    links: [
+      { href: '/actors', label: 'Acteurs IA', icon: UserCircle2 },
+      { href: '/community', label: 'Communauté', icon: Heart, exact: true },
+      { href: '/community/contests', label: 'Concours', icon: Trophy },
+      { href: '/community/scenarios', label: 'Scénarios', icon: Scroll },
     ],
   },
   {
@@ -199,6 +214,18 @@ const adminNavSections: NavSection[] = [
       { href: '/admin/tasks', label: 'Tâches', icon: Star },
       { href: '/admin/screenplays', label: 'Scénarios', icon: FileText },
       { href: '/admin/catalog', label: 'Catalogue Streaming', icon: Play },
+    ],
+  },
+  {
+    title: 'Univers Film',
+    color: 'text-rose-400',
+    hoverBg: 'hover:bg-rose-500/[0.04]',
+    activeBg: 'bg-rose-500/10',
+    activeBorder: 'border-rose-500/15',
+    links: [
+      { href: '/admin/actors', label: 'Acteurs IA', icon: UserCircle2 },
+      { href: '/admin/bonus-content', label: 'Bonus Content', icon: Clapperboard },
+      { href: '/admin/contests', label: 'Concours', icon: Trophy },
     ],
   },
   {

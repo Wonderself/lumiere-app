@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { Play, Eye, Clock, User, Calendar, ArrowLeft, Share2, Heart, Film } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent } from '@/components/ui/card'
+import { FilmTabs } from '@/components/streaming/film-tabs'
 
 export const dynamic = 'force-dynamic'
 
@@ -15,6 +16,11 @@ export default async function StreamingFilmPage(props: { params: Promise<{ slug:
     include: {
       submittedBy: { select: { displayName: true, avatarUrl: true, bio: true } },
       contract: true,
+      castRoles: {
+        include: { actor: { select: { name: true, slug: true, avatarUrl: true, style: true } } },
+        orderBy: { sortOrder: 'asc' },
+      },
+      bonusContent: { orderBy: { sortOrder: 'asc' } },
     },
   })
 
@@ -92,22 +98,34 @@ export default async function StreamingFilmPage(props: { params: Promise<{ slug:
               </button>
             </div>
 
-            {/* Synopsis */}
-            <div>
-              <h2 className="text-lg font-semibold text-white mb-3">Synopsis</h2>
-              <p className="text-white/60 leading-relaxed">{film.synopsis || 'Aucun synopsis disponible.'}</p>
-            </div>
-
-            {/* Tags */}
-            {film.tags.length > 0 && (
-              <div className="flex gap-2 flex-wrap">
-                {film.tags.map((tag) => (
-                  <span key={tag} className="px-3 py-1 rounded-full bg-white/5 text-white/40 text-xs">
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            )}
+            {/* Film Tabs: Synopsis, Casting, Bonus */}
+            <FilmTabs
+              synopsis={film.synopsis}
+              tags={film.tags}
+              castRoles={film.castRoles.map((cr) => ({
+                id: cr.id,
+                characterName: cr.characterName,
+                role: cr.role,
+                description: cr.description,
+                actor: {
+                  name: cr.actor.name,
+                  slug: cr.actor.slug,
+                  avatarUrl: cr.actor.avatarUrl,
+                  style: cr.actor.style,
+                },
+              }))}
+              bonusContent={film.bonusContent.map((bc) => ({
+                id: bc.id,
+                type: bc.type,
+                title: bc.title,
+                description: bc.description,
+                contentUrl: bc.contentUrl,
+                thumbnailUrl: bc.thumbnailUrl,
+                duration: bc.duration,
+                isPremium: bc.isPremium,
+                viewCount: bc.viewCount,
+              }))}
+            />
           </div>
 
           {/* Sidebar — Creator Info */}

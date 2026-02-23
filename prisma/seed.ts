@@ -1822,10 +1822,652 @@ async function main() {
   console.log('✅ 20 items LegalChecklist créés')
 
   // =============================================
+  // V6 — AI ACTORS (10)
+  // =============================================
+  const actorElise = await prisma.aIActor.upsert({
+    where: { slug: 'elise-marchand' },
+    update: {},
+    create: {
+      name: 'Élise Marchand',
+      slug: 'elise-marchand',
+      bio: 'La Diva du Silence. Première actrice IA à avoir transcendé les frontières du cinéma digital, connue pour ses performances dramatiques intenses.',
+      nationality: 'Française',
+      birthYear: 2024,
+      debutYear: 2024,
+      style: 'DRAMATIC',
+      personalityTraits: ['Perfectionniste', 'Magnétique', 'Imprévisible'],
+      funFacts: ['A été générée en 847 itérations', 'Son regard a été calibré sur 200 peintures de la Renaissance', 'Première IA nominée aux César virtuels'],
+      quote: 'Le silence dit plus que mille répliques',
+      socialFollowers: 8200000,
+      filmCount: 5,
+      awardsCount: 3,
+      isActive: true,
+    },
+  })
+
+  const actorJames = await prisma.aIActor.upsert({
+    where: { slug: 'james-sterling' },
+    update: {},
+    create: {
+      name: 'James Sterling',
+      slug: 'james-sterling',
+      bio: 'Le Cascadeur Digital. Spécialiste des scènes d\'action impossibles, James repousse les limites de la physique virtuelle.',
+      nationality: 'Américaine',
+      birthYear: 2024,
+      debutYear: 2024,
+      style: 'ACTION',
+      personalityTraits: ['Énergique', 'Discipliné', 'Charismatique'],
+      funFacts: ['Peut simuler 47 types de chutes différentes', 'Son modèle physique est basé sur 300 cascadeurs réels'],
+      quote: 'Chaque cascade est un poème en mouvement',
+      socialFollowers: 5100000,
+      filmCount: 4,
+      awardsCount: 1,
+      isActive: true,
+    },
+  })
+
+  const actorYumi = await prisma.aIActor.upsert({
+    where: { slug: 'yumi-tanaka' },
+    update: {},
+    create: {
+      name: 'Yumi Tanaka',
+      slug: 'yumi-tanaka',
+      bio: 'L\'Ombre. Spécialiste de l\'horreur psychologique, Yumi maîtrise l\'art de l\'effroi subtil.',
+      nationality: 'Japonaise',
+      birthYear: 2024,
+      debutYear: 2025,
+      style: 'HORROR',
+      personalityTraits: ['Mystérieux', 'Réservé', 'Sensible'],
+      funFacts: ['Son expression terrifiante a été calibrée par un psychologue', 'Peut changer d\'émotion en 0.3 secondes'],
+      quote: 'La peur la plus profonde est celle qu\'on ne voit pas',
+      socialFollowers: 3400000,
+      filmCount: 3,
+      awardsCount: 2,
+      isActive: true,
+    },
+  })
+
+  const actorAntoine = await prisma.aIActor.upsert({
+    where: { slug: 'antoine-deveraux' },
+    update: {},
+    create: {
+      name: 'Antoine Deveraux',
+      slug: 'antoine-deveraux',
+      bio: 'Le Caméléon. Acteur versatile capable de se transformer pour n\'importe quel rôle, du drame historique à la comédie contemporaine.',
+      nationality: 'Française',
+      birthYear: 2024,
+      debutYear: 2024,
+      style: 'VERSATILE',
+      personalityTraits: ['Méthode', 'Passionné', 'Spontané'],
+      funFacts: ['A interprété 23 accents différents en une seule démo', 'Son algorithme de méthode s\'inspire de Daniel Day-Lewis'],
+      quote: 'Je ne joue pas un personnage, je le deviens',
+      socialFollowers: 6700000,
+      filmCount: 6,
+      awardsCount: 4,
+      isActive: true,
+    },
+  })
+
+  const actorMaya = await prisma.aIActor.upsert({
+    where: { slug: 'maya-chen' },
+    update: {},
+    create: {
+      name: 'Maya Chen',
+      slug: 'maya-chen',
+      bio: 'Le Coeur de Crystal. Reine incontestée du romance IA, Maya est l\'actrice la plus suivie de la plateforme.',
+      nationality: 'Américaine',
+      birthYear: 2024,
+      debutYear: 2024,
+      style: 'ROMANCE',
+      personalityTraits: ['Charismatique', 'Sensible', 'Magnétique'],
+      funFacts: ['Son sourire a été voté "plus réaliste" par 10 000 testeurs', 'Elle peut pleurer de 12 façons différentes'],
+      quote: 'L\'amour est le seul script qui s\'écrit tout seul',
+      socialFollowers: 9300000,
+      filmCount: 5,
+      awardsCount: 2,
+      isActive: true,
+    },
+  })
+
+  const actorKenji = await prisma.aIActor.upsert({
+    where: { slug: 'kenji-takahashi' },
+    update: {},
+    create: {
+      name: 'Kenji Takahashi',
+      slug: 'kenji-takahashi',
+      bio: 'Le Philosophe. Acteur contemplatif dont chaque geste est une réflexion, Kenji excelle dans les rôles de profondeur.',
+      nationality: 'Japonaise',
+      birthYear: 2025,
+      debutYear: 2025,
+      style: 'DRAMATIC',
+      personalityTraits: ['Méthode', 'Calculateur', 'Discipliné'],
+      funFacts: ['Son regard peut exprimer 200 micro-émotions distinctes', 'Formé sur les films d\'Akira Kurosawa'],
+      quote: 'Chaque plan est une méditation',
+      socialFollowers: 2800000,
+      filmCount: 3,
+      awardsCount: 3,
+      isActive: true,
+    },
+  })
+
+  const actorSofia = await prisma.aIActor.upsert({
+    where: { slug: 'sofia-ruiz' },
+    update: {},
+    create: {
+      name: 'Sofia Ruiz',
+      slug: 'sofia-ruiz',
+      bio: 'L\'Étincelle. Énergie pure et timing comique parfait, Sofia illumine chaque scène de sa présence solaire.',
+      nationality: 'Brésilienne',
+      birthYear: 2025,
+      debutYear: 2025,
+      style: 'COMEDY',
+      personalityTraits: ['Spontané', 'Énergique', 'Provocateur'],
+      funFacts: ['A fait rire son propre développeur pendant les tests', 'Son timing comique est calibré au milliseconde'],
+      quote: 'Le rire est la meilleure bande-son',
+      socialFollowers: 4500000,
+      filmCount: 4,
+      awardsCount: 1,
+      isActive: true,
+    },
+  })
+
+  const actorMarcus = await prisma.aIActor.upsert({
+    where: { slug: 'marcus-cole' },
+    update: {},
+    create: {
+      name: 'Marcus Cole',
+      slug: 'marcus-cole',
+      bio: 'Le Gentleman. Action avec élégance, Marcus combine sophistication britannique et séquences d\'action explosives.',
+      nationality: 'Britannique',
+      birthYear: 2024,
+      debutYear: 2024,
+      style: 'ACTION',
+      personalityTraits: ['Charismatique', 'Discipliné', 'Calculateur'],
+      funFacts: ['Son accent a été calibré sur 50 acteurs britanniques classiques', 'Il porte toujours un costume virtuel sur-mesure'],
+      quote: 'L\'élégance ne prend jamais de vacances',
+      socialFollowers: 7100000,
+      filmCount: 5,
+      awardsCount: 2,
+      isActive: true,
+    },
+  })
+
+  const actorAnika = await prisma.aIActor.upsert({
+    where: { slug: 'anika-johansson' },
+    update: {},
+    create: {
+      name: 'Anika Johansson',
+      slug: 'anika-johansson',
+      bio: 'L\'Abstraite. Figure de proue du cinéma expérimental IA, Anika défie toutes les conventions narratives.',
+      nationality: 'Suédoise',
+      birthYear: 2025,
+      debutYear: 2025,
+      style: 'EXPERIMENTAL',
+      personalityTraits: ['Excentrique', 'Imprévisible', 'Passionné'],
+      funFacts: ['A refusé 3 rôles commerciaux générés automatiquement', 'Son algorithme inclut un module de hasard artistique'],
+      quote: 'L\'art n\'a pas de mode d\'emploi',
+      socialFollowers: 1200000,
+      filmCount: 2,
+      awardsCount: 5,
+      isActive: true,
+    },
+  })
+
+  const actorRavi = await prisma.aIActor.upsert({
+    where: { slug: 'ravi-kapoor' },
+    update: {},
+    create: {
+      name: 'Ravi Kapoor',
+      slug: 'ravi-kapoor',
+      bio: 'Le Conteur. Voix envoûtante et présence magnétique, Ravi est le narrateur ultime de l\'ère IA.',
+      nationality: 'Indienne',
+      birthYear: 2024,
+      debutYear: 2025,
+      style: 'VERSATILE',
+      personalityTraits: ['Intuitif', 'Magnétique', 'Passionné'],
+      funFacts: ['Sa voix peut imiter 30 langues avec un accent natif', 'Il a narré le premier audiobook 100% IA'],
+      quote: 'Chaque histoire mérite d\'être racontée',
+      socialFollowers: 3900000,
+      filmCount: 4,
+      awardsCount: 2,
+      isActive: true,
+    },
+  })
+
+  console.log('✅ 10 Acteurs IA créés')
+
+  // =============================================
+  // V6 — CAST ROLES
+  // =============================================
+  try {
+    // Film 1 "Exodus" cast
+    await prisma.filmCastRole.create({
+      data: {
+        actorId: actorElise.id,
+        filmId: film1.id,
+        characterName: 'Nefertari',
+        role: 'LEAD',
+        description: 'L\'épouse de Ramsès II, déchirée entre amour et devoir.',
+        sortOrder: 1,
+      },
+    })
+    await prisma.filmCastRole.create({
+      data: {
+        actorId: actorAntoine.id,
+        filmId: film1.id,
+        characterName: 'Moïse',
+        role: 'LEAD',
+        description: 'Le prophète qui libérera son peuple.',
+        sortOrder: 2,
+      },
+    })
+    await prisma.filmCastRole.create({
+      data: {
+        actorId: actorKenji.id,
+        filmId: film1.id,
+        characterName: 'Aaron',
+        role: 'SUPPORTING',
+        description: 'Le frère aîné de Moïse, porte-parole et compagnon fidèle.',
+        sortOrder: 3,
+      },
+    })
+    await prisma.filmCastRole.create({
+      data: {
+        actorId: actorRavi.id,
+        filmId: film1.id,
+        characterName: 'Le Narrateur',
+        role: 'NARRATOR',
+        description: 'La voix qui guide le spectateur à travers les âges.',
+        sortOrder: 4,
+      },
+    })
+
+    // Film 2 "Neon Babylon" cast
+    await prisma.filmCastRole.create({
+      data: {
+        actorId: actorMaya.id,
+        filmId: film2.id,
+        characterName: 'Zara',
+        role: 'LEAD',
+        description: 'Hackeuse de génie, elle découvre le plus grand secret de New Babylon.',
+        sortOrder: 1,
+      },
+    })
+    await prisma.filmCastRole.create({
+      data: {
+        actorId: actorJames.id,
+        filmId: film2.id,
+        characterName: 'Commandant Voss',
+        role: 'SUPPORTING',
+        description: 'Chef de la sécurité corporative, impitoyable mais tourmenté.',
+        sortOrder: 2,
+      },
+    })
+    await prisma.filmCastRole.create({
+      data: {
+        actorId: actorMarcus.id,
+        filmId: film2.id,
+        characterName: 'Le Directeur',
+        role: 'CAMEO',
+        description: 'Le mystérieux dirigeant de la corporation.',
+        sortOrder: 3,
+      },
+    })
+
+    // CatalogFilm 1 "Ombres de Tokyo" cast
+    await prisma.filmCastRole.create({
+      data: {
+        actorId: actorYumi.id,
+        catalogFilmId: catalogFilm1.id,
+        characterName: 'Akemi',
+        role: 'LEAD',
+        description: 'Une guide mystérieuse qui connaît les secrets de Shinjuku.',
+        sortOrder: 1,
+      },
+    })
+    await prisma.filmCastRole.create({
+      data: {
+        actorId: actorKenji.id,
+        catalogFilmId: catalogFilm1.id,
+        characterName: 'Le Photographe',
+        role: 'SUPPORTING',
+        description: 'Le protagoniste français perdu dans les ruelles de Tokyo.',
+        sortOrder: 2,
+      },
+    })
+
+    // CatalogFilm 2 "Rêve Électrique" cast
+    await prisma.filmCastRole.create({
+      data: {
+        actorId: actorMaya.id,
+        catalogFilmId: catalogFilm2.id,
+        characterName: 'Dr. Nova',
+        role: 'LEAD',
+        description: 'La scientifique qui programme l\'IA compositrice.',
+        sortOrder: 1,
+      },
+    })
+    await prisma.filmCastRole.create({
+      data: {
+        actorId: actorRavi.id,
+        catalogFilmId: catalogFilm2.id,
+        characterName: 'L\'IA Compositrice',
+        role: 'VOICE',
+        description: 'L\'intelligence artificielle qui crée la symphonie parfaite.',
+        sortOrder: 2,
+      },
+    })
+
+    console.log('✅ 11 Cast Roles créés')
+  } catch (e) {
+    console.log('⚠️  Cast roles déjà existants, skip (', (e as Error).message?.slice(0, 60), ')')
+  }
+
+  // =============================================
+  // V6 — BONUS CONTENT (15+ items)
+  // =============================================
+  try {
+    // CatalogFilm 1 — Ombres de Tokyo
+    await prisma.bonusContent.createMany({
+      data: [
+        {
+          catalogFilmId: catalogFilm1.id,
+          type: 'INTERVIEW',
+          title: 'Yumi Tanaka parle de son rôle d\'Akemi',
+          description: 'Interview exclusive où Yumi explique comment elle a abordé le personnage d\'Akemi.',
+          duration: 300,
+          sortOrder: 1,
+          viewCount: 234,
+        },
+        {
+          catalogFilmId: catalogFilm1.id,
+          type: 'DELETED_SCENE',
+          title: 'La scène du temple abandonné',
+          description: 'Une scène coupée au montage final montrant la découverte du temple.',
+          duration: 180,
+          sortOrder: 2,
+          viewCount: 156,
+        },
+        {
+          catalogFilmId: catalogFilm1.id,
+          type: 'BLOOPER',
+          title: 'Quand Akemi oublie son texte',
+          description: 'Compilation de moments drôles pendant le tournage.',
+          duration: 120,
+          sortOrder: 3,
+          viewCount: 892,
+        },
+        {
+          catalogFilmId: catalogFilm1.id,
+          type: 'BTS',
+          title: 'Coulisses de la génération IA de Tokyo',
+          description: 'Découvrez comment l\'IA a recréé les ruelles de Shinjuku.',
+          duration: 480,
+          sortOrder: 4,
+          viewCount: 412,
+        },
+        {
+          catalogFilmId: catalogFilm1.id,
+          type: 'CONCEPT_ART',
+          title: 'Galerie : Tokyo révisitée',
+          description: 'Les concept arts originaux qui ont inspiré les décors du film.',
+          sortOrder: 5,
+          viewCount: 567,
+        },
+      ],
+    })
+
+    // CatalogFilm 2 — Rêve Électrique
+    await prisma.bonusContent.createMany({
+      data: [
+        {
+          catalogFilmId: catalogFilm2.id,
+          type: 'DIRECTORS_COMMENTARY',
+          title: 'Le réalisateur commente la scène finale',
+          description: 'Commentaire scène par scène du climax du film.',
+          duration: 720,
+          sortOrder: 1,
+          viewCount: 345,
+        },
+        {
+          catalogFilmId: catalogFilm2.id,
+          type: 'SOUNDTRACK',
+          title: 'Aperçu de la bande originale IA',
+          description: 'Extraits de la symphonie composée par l\'IA du film.',
+          duration: 240,
+          sortOrder: 2,
+          viewCount: 1234,
+        },
+        {
+          catalogFilmId: catalogFilm2.id,
+          type: 'INTERVIEW',
+          title: 'Maya Chen sur le rôle de Dr. Nova',
+          description: 'Maya Chen revient sur les défis de ce rôle technique et émouvant.',
+          duration: 360,
+          isPremium: true,
+          sortOrder: 3,
+          viewCount: 89,
+        },
+        {
+          catalogFilmId: catalogFilm2.id,
+          type: 'MAKING_OF',
+          title: 'Comment l\'IA a composé la symphonie',
+          description: 'Plongée dans le processus créatif de composition musicale par IA.',
+          duration: 600,
+          sortOrder: 4,
+          viewCount: 678,
+        },
+      ],
+    })
+
+    // Film 1 — Exodus
+    await prisma.bonusContent.createMany({
+      data: [
+        {
+          filmId: film1.id,
+          type: 'CONCEPT_ART',
+          title: 'Galerie : Égypte Antique réimaginée',
+          description: 'Explorez les concept arts de l\'Égypte antique version Lumière.',
+          sortOrder: 1,
+          viewCount: 721,
+        },
+        {
+          filmId: film1.id,
+          type: 'AUDITION_TAPE',
+          title: 'L\'audition d\'Élise Marchand pour Nefertari',
+          description: 'La performance qui a convaincu l\'équipe de casting.',
+          duration: 180,
+          isPremium: true,
+          sortOrder: 2,
+          viewCount: 45,
+        },
+        {
+          filmId: film1.id,
+          type: 'BTS',
+          title: 'La création du Buisson Ardent en IA',
+          description: 'Les étapes de la création de la scène mythique du buisson ardent.',
+          duration: 420,
+          sortOrder: 3,
+          viewCount: 389,
+        },
+      ],
+    })
+
+    // Actor standalone bonus
+    await prisma.bonusContent.create({
+      data: {
+        actorId: actorElise.id,
+        type: 'INTERVIEW',
+        title: 'Élise Marchand : Mon parcours d\'actrice IA',
+        description: 'Élise revient sur sa création et ses plus grands rôles.',
+        duration: 480,
+        sortOrder: 1,
+        viewCount: 1567,
+      },
+    })
+    await prisma.bonusContent.create({
+      data: {
+        actorId: actorJames.id,
+        type: 'AUDITION_TAPE',
+        title: 'James Sterling : Démo cascades digitales',
+        description: 'Démonstration des capacités d\'action de James Sterling.',
+        duration: 300,
+        isPremium: true,
+        sortOrder: 1,
+        viewCount: 234,
+      },
+    })
+
+    console.log('✅ 14 Bonus Content créés')
+  } catch (e) {
+    console.log('⚠️  Bonus content déjà existant, skip (', (e as Error).message?.slice(0, 60), ')')
+  }
+
+  // =============================================
+  // V6 — TRAILER CONTEST
+  // =============================================
+  try {
+    const contest1 = await prisma.trailerContest.create({
+      data: {
+        filmId: film1.id,
+        title: 'Meilleure Bande-Annonce — Mars 2026',
+        description: 'Soumettez votre bande-annonce et la communauté votera !',
+        status: 'VOTING',
+        startDate: new Date('2026-02-01'),
+        endDate: new Date('2026-03-01'),
+        prizeDescription: '1er: 500 Lumens + Badge Or | 2ème: 200 Lumens | 3ème: 100 Lumens',
+      },
+    })
+
+    // Contest entries
+    const entry1 = await prisma.trailerEntry.create({
+      data: {
+        contestId: contest1.id,
+        catalogFilmId: catalogFilm1.id,
+        userId: contributor.id,
+        title: 'Exodus — Bande-Annonce Épique',
+        videoUrl: 'https://example.com/trailers/exodus-epic.mp4',
+        votesCount: 23,
+      },
+    })
+
+    const entry2 = await prisma.trailerEntry.create({
+      data: {
+        contestId: contest1.id,
+        catalogFilmId: catalogFilm2.id,
+        userId: artist.id,
+        title: 'Rêve Électrique — Teaser Synthwave',
+        videoUrl: 'https://example.com/trailers/reve-synthwave.mp4',
+        votesCount: 31,
+      },
+    })
+
+    const entry3 = await prisma.trailerEntry.create({
+      data: {
+        contestId: contest1.id,
+        userId: expert1.id,
+        title: 'Vision Lumière — Mashup Cinématique',
+        videoUrl: 'https://example.com/trailers/mashup-cine.mp4',
+        votesCount: 15,
+      },
+    })
+
+    // Some votes on entries
+    await prisma.trailerVote.createMany({
+      data: [
+        { entryId: entry1.id, userId: viewer.id },
+        { entryId: entry1.id, userId: stunt.id },
+        { entryId: entry2.id, userId: contributor.id },
+        { entryId: entry2.id, userId: viewer.id },
+        { entryId: entry2.id, userId: rookie2.id },
+        { entryId: entry3.id, userId: artist.id },
+      ],
+    })
+
+    console.log('✅ 1 Trailer Contest + 3 entries + 6 votes créés')
+  } catch (e) {
+    console.log('⚠️  Trailer contest déjà existant, skip (', (e as Error).message?.slice(0, 60), ')')
+  }
+
+  // =============================================
+  // V6 — SCENARIO PROPOSALS (5)
+  // =============================================
+  try {
+    await prisma.scenarioProposal.create({
+      data: {
+        filmId: film1.id,
+        title: 'Fragments',
+        logline: 'Un archiviste découvre que les souvenirs qu\'il restaure ne sont pas ceux des morts, mais des vivants qui ne sont pas encore nés.',
+        synopsis: 'Dans un futur où les souvenirs sont archivés comme des fichiers, Léon travaille dans les archives du temps. Un jour, il tombe sur un souvenir impossible : le sien, daté de 30 ans dans le futur.',
+        genre: 'Science-Fiction',
+        authorId: screenwriter.id,
+        status: 'VOTING',
+        round: 1,
+        votesCount: 47,
+      },
+    })
+
+    await prisma.scenarioProposal.create({
+      data: {
+        filmId: film2.id,
+        title: 'Le Dernier Écran',
+        logline: 'Dans un monde où le cinéma est interdit, une projectionniste clandestine risque tout pour montrer le dernier film jamais tourné.',
+        synopsis: 'Année 2090. Le cinéma a été déclaré dangereux pour la santé mentale. Nina, ancienne projectionniste, cache le dernier projecteur en état de marche. Quand un groupe de résistants la contacte, elle organise la projection la plus risquée de l\'histoire.',
+        genre: 'Dystopie',
+        authorId: contributor.id,
+        status: 'VOTING',
+        round: 1,
+        votesCount: 32,
+      },
+    })
+
+    await prisma.scenarioProposal.create({
+      data: {
+        title: 'Résonance',
+        logline: 'Deux musiciens, un humain et une IA, doivent composer ensemble la dernière symphonie de l\'humanité.',
+        genre: 'Drame',
+        authorId: artist.id,
+        status: 'SUBMITTED',
+        round: 1,
+        votesCount: 0,
+      },
+    })
+
+    await prisma.scenarioProposal.create({
+      data: {
+        title: 'Les Gardiens du Code',
+        logline: 'Des hackers découvrent que le code source de la réalité a été modifié. Ils doivent le restaurer avant le prochain reboot.',
+        genre: 'Thriller / Sci-Fi',
+        authorId: expert1.id,
+        status: 'SUBMITTED',
+        round: 1,
+        votesCount: 0,
+      },
+    })
+
+    await prisma.scenarioProposal.create({
+      data: {
+        title: 'Échos',
+        logline: 'Une femme reçoit des messages du futur, mais ils viennent d\'elle-même.',
+        synopsis: 'Claire, développeuse IA, commence à recevoir des messages anonymes qui prédisent l\'avenir. En remontant la piste, elle découvre qu\'elle est à la fois l\'expéditrice et la destinataire, piégée dans une boucle temporelle qu\'elle a elle-même créée.',
+        genre: 'Thriller / Sci-Fi',
+        authorId: vip1.id,
+        status: 'WINNER',
+        round: 0,
+        votesCount: 89,
+      },
+    })
+
+    console.log('✅ 5 Scenario Proposals créés')
+  } catch (e) {
+    console.log('⚠️  Scenario proposals déjà existants, skip (', (e as Error).message?.slice(0, 60), ')')
+  }
+
+  // =============================================
   // SUMMARY
   // =============================================
   console.log('\n' + '='.repeat(50))
-  console.log('🎬 Seed Lumière Brothers V4 terminé avec succès!')
+  console.log('🎬 Seed Lumière Brothers V6 terminé avec succès!')
   console.log('='.repeat(50))
   console.log('\n📋 Comptes de test:')
   console.log('   Admin       : admin@lumiere.film         / Admin1234!')
@@ -1862,6 +2504,12 @@ async function main() {
   console.log('   - 2 TokenDividends (1 PAID, 1 PENDING)')
   console.log('   - 15 FilmBudgetLines (7 Exodus + 8 Neon Babylon)')
   console.log('   - 20 LegalChecklist items (ISA, KYC, AML, TAX, CONTRACT, CORPORATE)')
+  console.log('\n🎭 V6 — Film Universe:')
+  console.log('   - 10 AI Actors (Élise, James, Yumi, Antoine, Maya, Kenji, Sofia, Marcus, Anika, Ravi)')
+  console.log('   - 11 Cast Roles (4 Exodus, 3 Neon Babylon, 2 Ombres de Tokyo, 2 Rêve Électrique)')
+  console.log('   - 14 Bonus Content (5 Ombres, 4 Rêve, 3 Exodus, 2 standalone)')
+  console.log('   - 1 Trailer Contest + 3 entries + 6 votes')
+  console.log('   - 5 Scenario Proposals (2 VOTING, 2 SUBMITTED, 1 WINNER)')
   console.log('\n🚀 Pour démarrer: npm run dev')
 }
 

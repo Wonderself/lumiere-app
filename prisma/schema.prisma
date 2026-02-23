@@ -73,6 +73,12 @@ model User {
   governanceProposals GovernanceProposal[] @relation("ProposalAuthor")
   governanceVotes   GovernanceVote[]
   tokenDividends    TokenDividend[]
+
+  // V6 — Film Universe
+  scenarioProposals ScenarioProposal[]
+  scenarioVotes     ScenarioVote[]
+  trailerEntries    TrailerEntry[]
+  trailerVotes      TrailerVote[]
 }
 
 // ============================================
@@ -106,6 +112,12 @@ model Film {
   // V4 — Tokenization
   tokenOffering FilmTokenOffering?
   budgetLines   FilmBudgetLine[]
+
+  // V6 — Film Universe
+  castRoles    FilmCastRole[]
+  bonusContent BonusContent[]
+  scenarios    ScenarioProposal[]
+  contests     TrailerContest[]
 }
 
 model FilmPhase {
@@ -639,6 +651,12 @@ model CatalogFilm {
   contract    CatalogContract?
   views       FilmView[]
   payouts     CreatorPayout[]
+
+  // V6 — Film Universe
+  castRoles      FilmCastRole[]
+  bonusContent   BonusContent[]
+  scenarios      ScenarioProposal[]
+  trailerEntries TrailerEntry[]
 }
 
 model CatalogContract {
@@ -1184,4 +1202,203 @@ enum DividendStatus {
   CALCULATED
   PAID
   FAILED
+}
+
+// ============================================
+// V6 — FILM UNIVERSE (AI ACTORS, BONUS, COMMUNITY)
+// ============================================
+
+model AIActor {
+  id                String      @id @default(cuid())
+  name              String
+  slug              String      @unique
+  avatarUrl         String?
+  coverUrl          String?
+  bio               String?
+  nationality       String?
+  birthYear         Int?
+  debutYear         Int?
+  style             ActorStyle  @default(VERSATILE)
+  personalityTraits String[]    @default([])
+  funFacts          String[]    @default([])
+  quote             String?
+  socialFollowers   Int         @default(0)
+  filmCount         Int         @default(0)
+  awardsCount       Int         @default(0)
+  isActive          Boolean     @default(true)
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
+
+  castRoles    FilmCastRole[]
+  bonusContent BonusContent[]
+}
+
+model FilmCastRole {
+  id            String       @id @default(cuid())
+  actorId       String
+  filmId        String?
+  catalogFilmId String?
+  characterName String
+  role          CastRoleType @default(SUPPORTING)
+  description   String?
+  screenTime    String?
+  sortOrder     Int          @default(0)
+  createdAt     DateTime     @default(now())
+
+  actor       AIActor      @relation(fields: [actorId], references: [id], onDelete: Cascade)
+  film        Film?        @relation(fields: [filmId], references: [id], onDelete: Cascade)
+  catalogFilm CatalogFilm? @relation(fields: [catalogFilmId], references: [id], onDelete: Cascade)
+
+  @@unique([actorId, filmId, characterName])
+  @@unique([actorId, catalogFilmId, characterName])
+}
+
+model BonusContent {
+  id            String    @id @default(cuid())
+  filmId        String?
+  catalogFilmId String?
+  actorId       String?
+  type          BonusType
+  title         String
+  description   String?
+  contentUrl    String?
+  thumbnailUrl  String?
+  duration      Int?
+  isPremium     Boolean   @default(false)
+  sortOrder     Int       @default(0)
+  viewCount     Int       @default(0)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  film        Film?        @relation(fields: [filmId], references: [id], onDelete: Cascade)
+  catalogFilm CatalogFilm? @relation(fields: [catalogFilmId], references: [id], onDelete: Cascade)
+  actor       AIActor?     @relation(fields: [actorId], references: [id], onDelete: Cascade)
+}
+
+model ScenarioProposal {
+  id            String                 @id @default(cuid())
+  filmId        String?
+  catalogFilmId String?
+  title         String
+  logline       String
+  synopsis      String?
+  genre         String?
+  authorId      String
+  status        ScenarioProposalStatus @default(SUBMITTED)
+  round         Int                    @default(1)
+  votesCount    Int                    @default(0)
+  createdAt     DateTime               @default(now())
+  updatedAt     DateTime               @updatedAt
+
+  author  User             @relation(fields: [authorId], references: [id])
+  film    Film?            @relation(fields: [filmId], references: [id], onDelete: Cascade)
+  catalog CatalogFilm?     @relation(fields: [catalogFilmId], references: [id], onDelete: Cascade)
+  votes   ScenarioVote[]
+}
+
+model ScenarioVote {
+  id         String   @id @default(cuid())
+  proposalId String
+  userId     String
+  createdAt  DateTime @default(now())
+
+  proposal ScenarioProposal @relation(fields: [proposalId], references: [id], onDelete: Cascade)
+  user     User             @relation(fields: [userId], references: [id])
+
+  @@unique([proposalId, userId])
+}
+
+model TrailerContest {
+  id               String                @id @default(cuid())
+  filmId           String?
+  title            String
+  description      String?
+  status           CreativeContestStatus @default(UPCOMING)
+  startDate        DateTime?
+  endDate          DateTime?
+  prizeDescription String?
+  winnerId         String?
+  createdAt        DateTime              @default(now())
+  updatedAt        DateTime              @updatedAt
+
+  film    Film?          @relation(fields: [filmId], references: [id])
+  entries TrailerEntry[]
+}
+
+model TrailerEntry {
+  id            String   @id @default(cuid())
+  contestId     String
+  catalogFilmId String?
+  userId        String
+  title         String
+  videoUrl      String?
+  thumbnailUrl  String?
+  votesCount    Int      @default(0)
+  createdAt     DateTime @default(now())
+
+  contest     TrailerContest @relation(fields: [contestId], references: [id], onDelete: Cascade)
+  catalogFilm CatalogFilm?  @relation(fields: [catalogFilmId], references: [id])
+  user        User           @relation(fields: [userId], references: [id])
+  votes       TrailerVote[]
+}
+
+model TrailerVote {
+  id        String   @id @default(cuid())
+  entryId   String
+  userId    String
+  createdAt DateTime @default(now())
+
+  entry TrailerEntry @relation(fields: [entryId], references: [id], onDelete: Cascade)
+  user  User         @relation(fields: [userId], references: [id])
+
+  @@unique([entryId, userId])
+}
+
+// ============================================
+// V6 — NEW ENUMS
+// ============================================
+
+enum ActorStyle {
+  DRAMATIC
+  COMEDY
+  ACTION
+  VERSATILE
+  HORROR
+  ROMANCE
+  EXPERIMENTAL
+}
+
+enum CastRoleType {
+  LEAD
+  SUPPORTING
+  CAMEO
+  VOICE
+  NARRATOR
+}
+
+enum BonusType {
+  INTERVIEW
+  DELETED_SCENE
+  BLOOPER
+  BTS
+  DIRECTORS_COMMENTARY
+  CONCEPT_ART
+  SOUNDTRACK
+  MAKING_OF
+  AUDITION_TAPE
+}
+
+enum ScenarioProposalStatus {
+  SUBMITTED
+  SHORTLISTED
+  VOTING
+  WINNER
+  ARCHIVED
+}
+
+enum CreativeContestStatus {
+  UPCOMING
+  OPEN
+  VOTING
+  CLOSED
 }

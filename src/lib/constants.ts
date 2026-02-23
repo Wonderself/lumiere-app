@@ -144,3 +144,48 @@ export const GENRES = [
   'Historique',
   'Biblique',
 ] as const
+
+export const ACTOR_STYLE_LABELS = {
+  DRAMATIC: 'Dramatique',
+  COMEDY: 'Comédie',
+  ACTION: 'Action',
+  VERSATILE: 'Polyvalent',
+  HORROR: 'Horreur',
+  ROMANCE: 'Romance',
+  EXPERIMENTAL: 'Expérimental',
+} as const
+
+export const CAST_ROLE_LABELS = {
+  LEAD: 'Rôle principal',
+  SUPPORTING: 'Second rôle',
+  CAMEO: 'Caméo',
+  VOICE: 'Voix',
+  NARRATOR: 'Narrateur',
+} as const
+
+export const BONUS_TYPE_LABELS = {
+  INTERVIEW: 'Interview',
+  DELETED_SCENE: 'Scène coupée',
+  BLOOPER: 'Bêtisier',
+  BTS: 'Making-of',
+  DIRECTORS_COMMENTARY: 'Commentaire du réalisateur',
+  CONCEPT_ART: 'Concept Art',
+  SOUNDTRACK: 'Bande originale',
+  MAKING_OF: 'Coulisses',
+  AUDITION_TAPE: 'Audition',
+} as const
+
+export const SCENARIO_STATUS_LABELS = {
+  SUBMITTED: 'Soumis',
+  SHORTLISTED: 'Présélectionné',
+  VOTING: 'En vote',
+  WINNER: 'Gagnant',
+  ARCHIVED: 'Archivé',
+} as const
+
+export const CONTEST_STATUS_LABELS = {
+  UPCOMING: 'À venir',
+  OPEN: 'Ouvert',
+  VOTING: 'En vote',
+  CLOSED: 'Terminé',
+} as const
