@@ -16,27 +16,24 @@ const playfair = Playfair_Display({
 })
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://lumiere.film'),
+  metadataBase: new URL('https://cinema.lumiere.film'),
   title: {
-    template: '%s | Lumière',
-    default: 'Lumière — Créez le Cinéma de Demain',
+    template: '%s | Lumière Cinema',
+    default: 'Lumière Cinema — Le Studio IA du Futur',
   },
   description:
-    "Lumière est la plateforme de micro-tâches créatives pour la production collaborative de films d'intelligence artificielle. Contribuez, créez, et soyez payé.",
+    "Lumière Cinema : production collaborative de films IA, micro-tâches créatives, streaming, bandes-annonces, votre visage dans le film. Paris · Tel Aviv · Hollywood.",
   keywords: [
     'cinéma IA',
     'film intelligence artificielle',
     'production collaborative',
-    'micro-tâches créatives',
-    'co-production film',
+    'micro-tâches cinéma',
     'streaming IA',
-    'acteurs IA',
-    'Lumière',
-    'cinéma du futur',
-    'freelance créatif',
+    'bandes-annonces IA',
+    'Lumière Brothers Pictures',
+    'studio cinéma IA',
   ],
   authors: [{ name: 'Lumière Brothers Pictures' }],
-  manifest: '/manifest.json',
   icons: {
     icon: '/favicon.svg',
     apple: '/icon.svg',
@@ -44,15 +41,15 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'fr_FR',
-    siteName: 'Lumière',
-    title: 'Lumière — Créez le Cinéma de Demain',
-    description: "La plateforme de micro-tâches pour la création collaborative de films IA",
-    url: 'https://lumiere.film',
+    siteName: 'Lumière Cinema',
+    title: 'Lumière Cinema — Le Studio IA du Futur',
+    description: "Production collaborative de films IA, micro-tâches créatives, streaming mondial.",
+    url: 'https://cinema.lumiere.film',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Lumière — Créez le Cinéma de Demain',
-    description: "La plateforme de micro-tâches pour la création collaborative de films IA",
+    title: 'Lumière Cinema — Le Studio IA du Futur',
+    description: "Production collaborative de films IA, micro-tâches créatives, streaming mondial.",
   },
 }
 
@@ -62,18 +59,18 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="fr">
-      <body className={`${inter.variable} ${playfair.variable} antialiased bg-white text-[#1A1A2E]`}>
+    <html lang="fr" className="dark">
+      <body className={`${inter.variable} ${playfair.variable} antialiased bg-[#0A0A0A] text-white`}>
         <AuthSessionProvider>
         {children}
         <CookieBanner />
         <Toaster
-          theme="light"
+          theme="dark"
           toastOptions={{
             style: {
-              background: '#FFFFFF',
-              border: '1px solid #E8E8ED',
-              color: '#1A1A2E',
+              background: '#111111',
+              border: '1px solid #222222',
+              color: '#FAFAFA',
             },
           }}
         />
