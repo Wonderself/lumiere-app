@@ -129,7 +129,7 @@ export default async function DashboardPage() {
       </div>
 
       {/* KPI Row */}
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-3 sm:gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
         {[
           { label: 'Tâches complétées', value: user.tasksCompleted, icon: CheckCircle2, color: 'text-green-400' },
           { label: 'Vidéos créées', value: videosCount, icon: Video, color: 'text-blue-400' },
@@ -138,13 +138,13 @@ export default async function DashboardPage() {
           { label: 'Tokens Film', value: totalTokensHeld, icon: Coins, color: 'text-amber-400' },
         ].map((kpi) => (
           <Card key={kpi.label} className="bg-white/[0.02] border-white/[0.06]">
-            <CardContent className="p-4 flex items-center gap-3 min-h-[76px]">
-              <div className="h-10 w-10 rounded-lg bg-white/[0.04] flex items-center justify-center shrink-0">
-                <kpi.icon className={`h-5 w-5 ${kpi.color}`} />
+            <CardContent className="p-3 sm:p-4 flex items-center gap-2.5 sm:gap-3 min-h-[76px]">
+              <div className="h-9 w-9 sm:h-10 sm:w-10 rounded-lg bg-white/[0.04] flex items-center justify-center shrink-0">
+                <kpi.icon className={`h-4 w-4 sm:h-5 sm:w-5 ${kpi.color}`} />
               </div>
-              <div>
-                <p className="text-white text-xl font-bold leading-tight">{kpi.value}</p>
-                <p className="text-white/30 text-xs mt-0.5">{kpi.label}</p>
+              <div className="min-w-0">
+                <p className="text-white text-lg sm:text-xl font-bold leading-tight truncate">{kpi.value}</p>
+                <p className="text-white/30 text-[11px] sm:text-xs mt-0.5 truncate">{kpi.label}</p>
               </div>
             </CardContent>
           </Card>
@@ -155,7 +155,7 @@ export default async function DashboardPage() {
       {(pendingCollabs > 0 || activeOrders > 0 || pendingDividends > 0 || unvotedProposals > 0) && (
         <div className="flex flex-col sm:flex-row flex-wrap gap-3">
           {pendingCollabs > 0 && (
-            <Link href="/collabs" className="flex-1 min-w-[240px]">
+            <Link href="/collabs" className="flex-1 min-w-0 sm:min-w-[240px]">
               <Card className="bg-yellow-500/5 border-yellow-500/20 hover:border-yellow-500/40 transition-all">
                 <CardContent className="p-4 flex items-center gap-3">
                   <Handshake className="h-5 w-5 text-yellow-400" />
@@ -166,7 +166,7 @@ export default async function DashboardPage() {
             </Link>
           )}
           {activeOrders > 0 && (
-            <Link href="/collabs/orders" className="flex-1 min-w-[240px]">
+            <Link href="/collabs/orders" className="flex-1 min-w-0 sm:min-w-[240px]">
               <Card className="bg-blue-500/5 border-blue-500/20 hover:border-blue-500/40 transition-all">
                 <CardContent className="p-4 flex items-center gap-3">
                   <Clock className="h-5 w-5 text-blue-400" />
@@ -177,7 +177,7 @@ export default async function DashboardPage() {
             </Link>
           )}
           {pendingDividends > 0 && (
-            <Link href="/tokenization/portfolio" className="flex-1 min-w-[240px]">
+            <Link href="/tokenization/portfolio" className="flex-1 min-w-0 sm:min-w-[240px]">
               <Card className="bg-amber-500/5 border-amber-500/20 hover:border-amber-500/40 transition-all">
                 <CardContent className="p-4 flex items-center gap-3">
                   <CircleDollarSign className="h-5 w-5 text-amber-400" />
@@ -188,7 +188,7 @@ export default async function DashboardPage() {
             </Link>
           )}
           {unvotedProposals > 0 && (
-            <Link href="/tokenization/governance" className="flex-1 min-w-[240px]">
+            <Link href="/tokenization/governance" className="flex-1 min-w-0 sm:min-w-[240px]">
               <Card className="bg-purple-500/5 border-purple-500/20 hover:border-purple-500/40 transition-all">
                 <CardContent className="p-4 flex items-center gap-3">
                   <Vote className="h-5 w-5 text-purple-400" />
@@ -206,7 +206,7 @@ export default async function DashboardPage() {
         {/* Module 1 — Studio Films */}
         <Link href="/tasks">
           <Card className="bg-gradient-to-br from-[#D4AF37]/[0.06] to-transparent border-white/[0.06] hover:border-[#D4AF37]/30 transition-all h-full group">
-            <CardContent className="p-6 space-y-3">
+            <CardContent className="p-4 sm:p-6 space-y-3">
               <div className="flex items-center justify-between">
                 <div className="h-11 w-11 rounded-xl bg-[#D4AF37]/10 flex items-center justify-center">
                   <Film className="h-5 w-5 text-[#D4AF37]" />
@@ -227,7 +227,7 @@ export default async function DashboardPage() {
         {/* Module 2 — Créateur IA */}
         <Link href={hasCreatorProfile ? '/creator' : '/creator/wizard'}>
           <Card className="bg-gradient-to-br from-purple-500/[0.06] to-transparent border-white/[0.06] hover:border-purple-500/30 transition-all h-full group">
-            <CardContent className="p-6 space-y-3">
+            <CardContent className="p-4 sm:p-6 space-y-3">
               <div className="flex items-center justify-between">
                 <div className="h-11 w-11 rounded-xl bg-purple-500/10 flex items-center justify-center">
                   <Wand2 className="h-5 w-5 text-purple-400" />
@@ -258,7 +258,7 @@ export default async function DashboardPage() {
         {/* Module 3 — Collabs & Growth */}
         <Link href="/collabs">
           <Card className="bg-gradient-to-br from-green-500/[0.06] to-transparent border-white/[0.06] hover:border-green-500/30 transition-all h-full group">
-            <CardContent className="p-6 space-y-3">
+            <CardContent className="p-4 sm:p-6 space-y-3">
               <div className="flex items-center justify-between">
                 <div className="h-11 w-11 rounded-xl bg-green-500/10 flex items-center justify-center">
                   <Handshake className="h-5 w-5 text-green-400" />
@@ -279,7 +279,7 @@ export default async function DashboardPage() {
         {/* Module 4 — Analytics */}
         <Link href="/analytics">
           <Card className="bg-gradient-to-br from-blue-500/[0.06] to-transparent border-white/[0.06] hover:border-blue-500/30 transition-all h-full group">
-            <CardContent className="p-6 space-y-3">
+            <CardContent className="p-4 sm:p-6 space-y-3">
               <div className="flex items-center justify-between">
                 <div className="h-11 w-11 rounded-xl bg-blue-500/10 flex items-center justify-center">
                   <ChartLine className="h-5 w-5 text-blue-400" />
@@ -298,7 +298,7 @@ export default async function DashboardPage() {
         {/* Streaming */}
         <Link href="/streaming">
           <Card className="bg-gradient-to-br from-red-500/[0.06] to-transparent border-white/[0.06] hover:border-red-500/30 transition-all h-full group">
-            <CardContent className="p-6 space-y-3">
+            <CardContent className="p-4 sm:p-6 space-y-3">
               <div className="flex items-center justify-between">
                 <div className="h-11 w-11 rounded-xl bg-red-500/10 flex items-center justify-center">
                   <Tv className="h-5 w-5 text-red-400" />
@@ -317,7 +317,7 @@ export default async function DashboardPage() {
         {/* Module 6 — Investissement */}
         <Link href="/tokenization">
           <Card className="bg-gradient-to-br from-amber-500/[0.06] to-transparent border-white/[0.06] hover:border-amber-500/30 transition-all h-full group">
-            <CardContent className="p-6 space-y-3">
+            <CardContent className="p-4 sm:p-6 space-y-3">
               <div className="flex items-center justify-between">
                 <div className="h-11 w-11 rounded-xl bg-amber-500/10 flex items-center justify-center">
                   <Coins className="h-5 w-5 text-amber-400" />
@@ -343,7 +343,7 @@ export default async function DashboardPage() {
         {isAdmin && (
           <Link href="/admin">
             <Card className="bg-gradient-to-br from-orange-500/[0.06] to-transparent border-white/[0.06] hover:border-orange-500/30 transition-all h-full group">
-              <CardContent className="p-6 space-y-3">
+              <CardContent className="p-4 sm:p-6 space-y-3">
                 <div className="flex items-center justify-between">
                   <div className="h-11 w-11 rounded-xl bg-orange-500/10 flex items-center justify-center">
                     <Settings className="h-5 w-5 text-orange-400" />
@@ -359,7 +359,7 @@ export default async function DashboardPage() {
       </div>
 
       {/* Quick Actions */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+      <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-4 gap-3">
         {[
           { label: 'Générer une vidéo', href: '/creator/generate', icon: Wand2, color: 'text-purple-400', bg: 'bg-purple-500/[0.06]' },
           { label: 'Voir le planning', href: '/creator/schedule', icon: Calendar, color: 'text-blue-400', bg: 'bg-blue-500/[0.06]' },
@@ -450,16 +450,16 @@ export default async function DashboardPage() {
               ] as const).map((item) => (
                 <div
                   key={item.title}
-                  className="flex items-center gap-3 p-3 rounded-lg hover:bg-white/[0.02] transition-colors group"
+                  className="flex flex-wrap sm:flex-nowrap items-center gap-2 sm:gap-3 p-3 rounded-lg hover:bg-white/[0.02] transition-colors duration-200 group"
                 >
                   <Square className={`h-4 w-4 shrink-0 ${item.needsAttention ? 'text-[#D4AF37]/40' : 'text-white/15'}`} />
                   <item.icon className={`h-4 w-4 shrink-0 ${item.needsAttention ? 'text-[#D4AF37]/60' : 'text-white/20'}`} />
-                  <span className={`text-sm flex-1 ${item.needsAttention ? 'text-white/70' : 'text-white/30'}`}>
+                  <span className={`text-sm flex-1 min-w-0 ${item.needsAttention ? 'text-white/70' : 'text-white/30'}`}>
                     {item.title}
                   </span>
                   <Badge
                     variant="outline"
-                    className={`text-[9px] px-1.5 py-0 h-4 ${
+                    className={`text-[9px] px-1.5 py-0 h-4 shrink-0 ${
                       item.helper === 'CLAUDE'
                         ? 'border-purple-500/20 text-purple-400/70'
                         : item.helper === 'HUMAN'
@@ -474,7 +474,7 @@ export default async function DashboardPage() {
                       href={item.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-[#D4AF37]/40 hover:text-[#D4AF37] transition-colors opacity-0 group-hover:opacity-100"
+                      className="text-[#D4AF37]/40 hover:text-[#D4AF37] transition-colors sm:opacity-0 sm:group-hover:opacity-100 shrink-0"
                     >
                       <ExternalLink className="h-3.5 w-3.5" />
                     </a>

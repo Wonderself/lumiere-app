@@ -1,10 +1,21 @@
 import { prisma } from '@/lib/prisma'
 import Link from 'next/link'
-import { Play, Search, Star, Eye, Clock, Film } from 'lucide-react'
+import { Play, Search, Star, Eye, Clock, Film, Coins, Crown, ArrowRight } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
+import type { Metadata } from 'next'
 
 export const dynamic = 'force-dynamic'
+
+export const metadata: Metadata = {
+  title: 'Streaming — Films IA en continu',
+  description:
+    "Découvrez et regardez des films créés par l'intelligence artificielle. Catalogue de courts et longs métrages IA, bandes-annonces exclusives.",
+  openGraph: {
+    title: 'Streaming — Films IA en continu | Lumière',
+    description: "Découvrez et regardez des films créés par l'intelligence artificielle.",
+  },
+}
 
 const GENRES = ['Tous', 'Sci-Fi', 'Drame', 'Action', 'Comédie', 'Thriller', 'Animation', 'Documentaire', 'Horreur', 'Romance']
 
@@ -32,32 +43,46 @@ export default async function StreamingPage(props: { searchParams: Promise<{ gen
   return (
     <div className="min-h-screen bg-[#0A0A0A]">
       {/* Hero Banner */}
-      {featured && (
-        <div className="relative h-[60vh] min-h-[400px] overflow-hidden">
+      {featured ? (
+        <div className="relative h-[65vh] min-h-[450px] overflow-hidden">
           <div
-            className="absolute inset-0 bg-cover bg-center"
+            className="absolute inset-0 bg-cover bg-center scale-105"
             style={{ backgroundImage: featured.posterUrl ? `url(${featured.posterUrl})` : 'linear-gradient(135deg, #1a1a2e, #0A0A0A)' }}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/60 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/50 to-[#0A0A0A]/20" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0A0A0A]/80 to-transparent" />
           <div className="absolute bottom-0 left-0 right-0 p-8 md:p-16">
-            <Badge className="mb-4 bg-[#D4AF37]/20 text-[#D4AF37] border-[#D4AF37]/30">
-              <Star className="h-3 w-3 mr-1" /> En vedette
+            <Badge className="mb-4 bg-[#D4AF37]/20 text-[#D4AF37] border-[#D4AF37]/30 backdrop-blur-sm">
+              <Star className="h-3 w-3 mr-1 fill-[#D4AF37]" /> En vedette
             </Badge>
-            <h1 className="text-4xl md:text-6xl font-bold text-white mb-3 font-[family-name:var(--font-playfair)]">
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-4 font-[family-name:var(--font-playfair)] max-w-3xl">
               {featured.title}
             </h1>
-            <p className="text-white/70 text-lg max-w-2xl mb-6 line-clamp-2">{featured.synopsis}</p>
-            <div className="flex items-center gap-4">
+            <p className="text-white/70 text-lg max-w-2xl mb-8 line-clamp-2 leading-relaxed">{featured.synopsis}</p>
+            <div className="flex flex-wrap items-center gap-4">
               <Link
                 href={`/streaming/${featured.slug}`}
-                className="inline-flex items-center gap-2 px-8 py-3 bg-[#D4AF37] text-black font-semibold rounded-lg hover:bg-[#F0D060] transition-colors"
+                className="inline-flex items-center gap-2 px-8 py-3.5 bg-[#D4AF37] text-black font-semibold rounded-xl hover:bg-[#F0D060] transition-colors text-lg"
               >
                 <Play className="h-5 w-5" /> Regarder
               </Link>
-              <span className="text-white/50 flex items-center gap-1.5">
-                <Eye className="h-4 w-4" /> {featured.viewCount.toLocaleString()} vues
+              <span className="text-white/50 flex items-center gap-1.5 text-sm">
+                <Eye className="h-4 w-4" /> {featured.viewCount.toLocaleString('fr-FR')} vues
               </span>
             </div>
+          </div>
+        </div>
+      ) : (
+        <div className="relative h-[40vh] min-h-[300px] overflow-hidden flex items-center justify-center">
+          <div className="absolute inset-0 bg-gradient-to-b from-[#D4AF37]/[0.05] via-transparent to-transparent" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] rounded-full bg-[#D4AF37]/[0.04] blur-[120px]" />
+          <div className="relative text-center px-4">
+            <h1 className="text-4xl md:text-6xl font-bold text-white mb-4 font-[family-name:var(--font-playfair)]">
+              Streaming
+            </h1>
+            <p className="text-white/50 text-lg max-w-xl mx-auto">
+              Decouvrez les films crees par la communaute et l&apos;intelligence artificielle.
+            </p>
           </div>
         </div>
       )}
@@ -65,8 +90,9 @@ export default async function StreamingPage(props: { searchParams: Promise<{ gen
       <div className="max-w-7xl mx-auto px-6 py-12">
         {/* Search & Filters */}
         <div className="flex flex-col md:flex-row gap-4 mb-10">
-          <form className="relative flex-1">
+          <form action="/streaming" method="GET" className="relative flex-1">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/30" />
+            {genre && genre !== 'Tous' && <input type="hidden" name="genre" value={genre} />}
             <input
               name="q"
               defaultValue={query}
@@ -156,6 +182,35 @@ export default async function StreamingPage(props: { searchParams: Promise<{ gen
             ))}
           </div>
         )}
+
+        {/* Devenez Producteur Banner */}
+        <div className="mt-16 relative overflow-hidden rounded-2xl border border-[#D4AF37]/20 bg-gradient-to-br from-[#D4AF37]/[0.08] via-[#D4AF37]/[0.03] to-transparent p-8 md:p-12">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-[#D4AF37]/[0.06] rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
+          <div className="relative flex flex-col md:flex-row items-center gap-8">
+            <div className="flex-1">
+              <div className="flex items-center gap-2 mb-3">
+                <div className="h-10 w-10 rounded-xl bg-[#D4AF37]/15 border border-[#D4AF37]/25 flex items-center justify-center">
+                  <Crown className="h-5 w-5 text-[#D4AF37]" />
+                </div>
+                <h2 className="text-2xl md:text-3xl font-bold text-white font-[family-name:var(--font-playfair)]">
+                  Devenez Producteur
+                </h2>
+              </div>
+              <p className="text-white/50 leading-relaxed max-w-lg">
+                Ne vous contentez pas de regarder. Co-produisez les films de demain des 10&#8364;,
+                recevez des revenus et voyez votre nom au generique.
+              </p>
+            </div>
+            <Link
+              href="/tokenization"
+              className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-[#D4AF37] hover:bg-[#C5A028] text-black font-semibold transition-colors text-lg shrink-0"
+            >
+              <Coins className="h-5 w-5" />
+              Investir
+              <ArrowRight className="h-5 w-5" />
+            </Link>
+          </div>
+        </div>
       </div>
     </div>
   )

@@ -16,20 +16,52 @@ const playfair = Playfair_Display({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://lumiere.film'),
   title: {
     template: '%s | Lumière',
     default: 'Lumière — Créez le Cinéma de Demain',
   },
   description:
     "Lumière est la plateforme de micro-tâches créatives pour la production collaborative de films d'intelligence artificielle. Contribuez, créez, et soyez payé.",
-  keywords: ['cinéma', 'IA', 'film', 'micro-tâches', 'créativité', 'production', 'freelance'],
+  keywords: [
+    'cinéma IA',
+    'film intelligence artificielle',
+    'production collaborative',
+    'micro-tâches créatives',
+    'co-production film',
+    'streaming IA',
+    'acteurs IA',
+    'Lumière',
+    'cinéma du futur',
+    'freelance créatif',
+  ],
   authors: [{ name: 'Lumière Brothers Pictures' }],
+  manifest: '/manifest.json',
+  icons: {
+    icon: '/icon-192.png',
+    apple: '/icon-192.png',
+  },
   openGraph: {
     type: 'website',
     locale: 'fr_FR',
     siteName: 'Lumière',
     title: 'Lumière — Créez le Cinéma de Demain',
     description: "La plateforme de micro-tâches pour la création collaborative de films IA",
+    url: 'https://lumiere.film',
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'Lumière — Le Studio de Cinéma du Futur',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Lumière — Créez le Cinéma de Demain',
+    description: "La plateforme de micro-tâches pour la création collaborative de films IA",
+    images: ['/og-image.png'],
   },
 }
 

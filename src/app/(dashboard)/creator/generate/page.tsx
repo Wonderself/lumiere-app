@@ -102,7 +102,7 @@ export default async function GeneratePage() {
         await generateVideoAction(null, formData)
       }}>
         {/* Mode Selection */}
-        <div className="grid grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           {MODES.map((mode, index) => (
             <label key={mode.id} className="cursor-pointer group">
               <input
@@ -112,12 +112,14 @@ export default async function GeneratePage() {
                 defaultChecked={index === 0}
                 className="peer sr-only"
               />
-              <div className="flex flex-col items-center gap-2.5 p-5 rounded-xl border border-white/[0.06] bg-white/[0.02] transition-all duration-200 peer-checked:border-[color:var(--mode-color)] peer-checked:bg-[color:var(--mode-color)]/[0.08] hover:bg-white/[0.04]" style={{ '--mode-color': mode.color } as React.CSSProperties}>
-                <div className="h-12 w-12 rounded-xl bg-white/[0.04] flex items-center justify-center peer-checked:bg-white/10">
-                  <mode.icon className="h-6 w-6" style={{ color: mode.color }} />
+              <div className="flex sm:flex-col items-center sm:items-center gap-3 sm:gap-2.5 p-4 sm:p-5 rounded-xl border border-white/[0.06] bg-white/[0.02] transition-all duration-200 peer-checked:border-[color:var(--mode-color)] peer-checked:bg-[color:var(--mode-color)]/[0.08] hover:bg-white/[0.04]" style={{ '--mode-color': mode.color } as React.CSSProperties}>
+                <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-xl bg-white/[0.04] flex items-center justify-center peer-checked:bg-white/10 shrink-0">
+                  <mode.icon className="h-5 w-5 sm:h-6 sm:w-6" style={{ color: mode.color }} />
                 </div>
-                <p className="text-white font-semibold text-sm">{mode.label}</p>
-                <p className="text-white/30 text-xs text-center">{mode.desc}</p>
+                <div className="sm:text-center">
+                  <p className="text-white font-semibold text-sm">{mode.label}</p>
+                  <p className="text-white/30 text-xs">{mode.desc}</p>
+                </div>
               </div>
             </label>
           ))}
@@ -177,7 +179,7 @@ export default async function GeneratePage() {
           {/* Duration */}
           <div className="space-y-3">
             <Label className="text-white/60 text-sm">Durée</Label>
-            <div className="grid grid-cols-4 gap-3">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
               {DURATIONS.map((dur, i) => (
                 <label key={dur.value} className="cursor-pointer">
                   <input
@@ -230,7 +232,7 @@ export default async function GeneratePage() {
               </p>
               <Link
                 href="/lumens"
-                className="inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-[#D4AF37] text-black font-semibold rounded-xl hover:bg-[#F0D060] transition-colors"
+                className="inline-flex items-center justify-center gap-2 w-full sm:w-auto px-8 py-3.5 bg-[#D4AF37] text-black font-semibold rounded-xl hover:bg-[#F0D060] transition-colors min-h-[48px]"
               >
                 <Coins className="h-4 w-4" />
                 Recharger mes Lumens
@@ -239,7 +241,7 @@ export default async function GeneratePage() {
           ) : (
             <button
               type="submit"
-              className="relative inline-flex items-center justify-center gap-3 px-12 py-4 bg-[#D4AF37] text-black font-bold rounded-xl hover:bg-[#F0D060] transition-all text-lg shadow-[0_0_40px_rgba(212,175,55,0.35)] hover:shadow-[0_0_60px_rgba(212,175,55,0.5)] hover:scale-[1.02] active:scale-[0.98]"
+              className="relative inline-flex items-center justify-center gap-3 w-full sm:w-auto px-12 py-4 bg-[#D4AF37] text-black font-bold rounded-xl hover:bg-[#F0D060] transition-all text-lg shadow-[0_0_40px_rgba(212,175,55,0.35)] hover:shadow-[0_0_60px_rgba(212,175,55,0.5)] hover:scale-[1.02] active:scale-[0.98] min-h-[52px]"
             >
               <Wand2 className="h-5 w-5" />
               Générer ma Vidéo

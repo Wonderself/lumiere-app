@@ -38,9 +38,9 @@ import { NotificationBell } from '@/components/layout/notification-bell'
 
 const navLinks = [
   { href: '/films', label: 'Films', icon: Film },
+  { href: '/actors', label: 'Acteurs', icon: User },
+  { href: '/community', label: 'Communauté', icon: Trophy },
   { href: '/tasks', label: 'Tâches', icon: Star, protected: true },
-  { href: '/leaderboard', label: 'Classement', icon: Trophy },
-  { href: '/roadmap', label: 'Roadmap', icon: BookOpen },
 ]
 
 export function Header() {
@@ -61,7 +61,7 @@ export function Header() {
             <div className="absolute inset-0 blur-lg bg-[#D4AF37]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
           </div>
           <span
-            className="text-xl font-bold tracking-wider text-gold-gradient hidden sm:block"
+            className="text-xl font-bold tracking-wider text-gold-gradient hidden xs:block"
             style={{ fontFamily: 'var(--font-playfair)' }}
           >
             LUMIÈRE
@@ -203,12 +203,14 @@ export function Header() {
               </DropdownMenu>
             </div>
           ) : (
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-3">
               <Link href="/login">
-                <Button variant="ghost" size="sm">Se connecter</Button>
+                <Button variant="ghost" size="sm" className="text-white/50 hover:text-white">Se connecter</Button>
               </Link>
               <Link href="/register">
-                <Button size="sm">Rejoindre</Button>
+                <Button size="sm" className="bg-[#D4AF37] text-black hover:bg-[#F0D060] font-semibold shadow-[0_0_20px_rgba(212,175,55,0.2)] transition-all duration-200">
+                  S&apos;inscrire
+                </Button>
               </Link>
             </div>
           )}
@@ -242,7 +244,7 @@ export function Header() {
                     href={link.href}
                     onClick={() => setMobileOpen(false)}
                     className={cn(
-                      'flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all',
+                      'flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 min-h-[44px]',
                       pathname.startsWith(link.href)
                         ? 'text-[#D4AF37] bg-[#D4AF37]/10'
                         : 'text-white/50 hover:text-white hover:bg-white/5'
@@ -256,35 +258,35 @@ export function Header() {
               {session?.user ? (
                 <>
                   <div className="h-px bg-white/5 my-2" />
-                  <Link href="/dashboard" onClick={() => setMobileOpen(false)} className="flex items-center gap-3 px-3 py-2.5 text-sm text-white/50 hover:text-white hover:bg-white/5 rounded-lg transition-all">
+                  <Link href="/dashboard" onClick={() => setMobileOpen(false)} className="flex items-center gap-3 px-4 py-3 text-sm text-white/50 hover:text-white hover:bg-white/5 rounded-lg transition-all duration-200 min-h-[44px]">
                     <LayoutDashboard className="h-4 w-4" /> Dashboard
                   </Link>
-                  <Link href="/profile" onClick={() => setMobileOpen(false)} className="flex items-center gap-3 px-3 py-2.5 text-sm text-white/50 hover:text-white hover:bg-white/5 rounded-lg transition-all">
+                  <Link href="/profile" onClick={() => setMobileOpen(false)} className="flex items-center gap-3 px-4 py-3 text-sm text-white/50 hover:text-white hover:bg-white/5 rounded-lg transition-all duration-200 min-h-[44px]">
                     <User className="h-4 w-4" /> Profil
                   </Link>
-                  <Link href="/lumens" onClick={() => setMobileOpen(false)} className="flex items-center gap-3 px-3 py-2.5 text-sm text-white/50 hover:text-white hover:bg-white/5 rounded-lg transition-all">
+                  <Link href="/lumens" onClick={() => setMobileOpen(false)} className="flex items-center gap-3 px-4 py-3 text-sm text-white/50 hover:text-white hover:bg-white/5 rounded-lg transition-all duration-200 min-h-[44px]">
                     <Sun className="h-4 w-4 text-[#D4AF37]" /> Mes Lumens
                   </Link>
                   {isAdmin && (
-                    <Link href="/admin" onClick={() => setMobileOpen(false)} className="flex items-center gap-3 px-3 py-2.5 text-sm text-white/50 hover:text-white hover:bg-white/5 rounded-lg transition-all">
+                    <Link href="/admin" onClick={() => setMobileOpen(false)} className="flex items-center gap-3 px-4 py-3 text-sm text-white/50 hover:text-white hover:bg-white/5 rounded-lg transition-all duration-200 min-h-[44px]">
                       <Settings className="h-4 w-4" /> Admin
                     </Link>
                   )}
                   <div className="h-px bg-white/5 my-2" />
                   <button
                     onClick={() => { signOut({ callbackUrl: '/' }); setMobileOpen(false) }}
-                    className="flex items-center gap-3 px-3 py-2.5 text-sm text-red-400/70 hover:text-red-400 hover:bg-red-500/5 rounded-lg w-full transition-all"
+                    className="flex items-center gap-3 px-4 py-3 text-sm text-red-400/70 hover:text-red-400 hover:bg-red-500/5 rounded-lg w-full transition-all duration-200 min-h-[44px]"
                   >
                     <LogOut className="h-4 w-4" /> Se déconnecter
                   </button>
                 </>
               ) : (
-                <div className="flex gap-2 pt-3">
+                <div className="flex gap-3 pt-3">
                   <Link href="/login" onClick={() => setMobileOpen(false)} className="flex-1">
-                    <Button variant="outline" size="sm" className="w-full">Se connecter</Button>
+                    <Button variant="outline" size="sm" className="w-full min-h-[44px]">Se connecter</Button>
                   </Link>
                   <Link href="/register" onClick={() => setMobileOpen(false)} className="flex-1">
-                    <Button size="sm" className="w-full">Rejoindre</Button>
+                    <Button size="sm" className="w-full min-h-[44px] bg-[#D4AF37] text-black hover:bg-[#F0D060] font-semibold">S&apos;inscrire</Button>
                   </Link>
                 </div>
               )}

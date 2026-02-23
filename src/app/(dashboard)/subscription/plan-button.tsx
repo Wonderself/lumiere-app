@@ -17,7 +17,7 @@ export function PlanButton({
 }) {
   if (isCurrent) {
     return (
-      <Button disabled variant="secondary" className="w-full">
+      <Button disabled variant="secondary" className="w-full min-h-[44px]">
         Plan actuel
       </Button>
     )
@@ -26,7 +26,7 @@ export function PlanButton({
   return (
     <Button
       variant={isRecommended ? 'default' : 'outline'}
-      className="w-full"
+      className={`w-full min-h-[44px] ${isRecommended ? 'bg-[#D4AF37] text-black hover:bg-[#F0D060] font-semibold' : ''}`}
       onClick={() => {
         alert(`L'abonnement ${planName} sera bientot disponible. Restez connecte !`)
       }}

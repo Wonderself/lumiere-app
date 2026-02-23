@@ -98,7 +98,7 @@ export default async function CollabsMarketplacePage(
       </div>
 
       {/* Nav pills */}
-      <nav className="flex items-center gap-1.5 p-1 rounded-xl bg-white/[0.03] border border-white/[0.06] w-fit overflow-x-auto">
+      <nav className="flex items-center gap-1.5 p-1 rounded-xl bg-white/[0.03] border border-white/[0.06] max-w-full overflow-x-auto scrollbar-thin">
         {navLinks.map((link) => (
           <Link
             key={link.href}

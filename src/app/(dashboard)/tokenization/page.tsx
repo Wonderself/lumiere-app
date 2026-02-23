@@ -9,7 +9,7 @@ import { Progress } from '@/components/ui/progress'
 import {
   Coins, TrendingUp, Film, Clock, Shield,
   ArrowRight, Vote,
-  Briefcase, Sparkles, CheckCircle2,
+  Briefcase, Sparkles, CheckCircle2, Crown,
 } from 'lucide-react'
 import type { Metadata } from 'next'
 import {
@@ -20,8 +20,8 @@ import {
 export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
-  title: 'Tokenization — Investissez dans le Cinéma IA',
-  description: 'Co-produisez des films IA en acquérant des tokens. Revenus partagés, gouvernance communautaire.',
+  title: 'Co-Production — Devenez Producteur de Cinema IA',
+  description: 'Co-produisez des films IA des 10\u20AC. Tokens de co-production, revenus partages, votre nom au generique, gouvernance participative.',
 }
 
 // Sub-navigation tabs
@@ -96,27 +96,44 @@ export default async function TokenizationMarketplacePage() {
 
       {/* Hero — Clean Fintech Style */}
       <div className="relative overflow-hidden rounded-2xl border border-[#D4AF37]/10 bg-gradient-to-br from-[#D4AF37]/[0.06] to-transparent p-6 sm:p-8 lg:p-10">
-        <div className="flex flex-col lg:flex-row lg:items-center gap-8">
+        {/* Background glow */}
+        <div className="absolute top-0 right-0 w-64 h-64 bg-[#D4AF37]/[0.04] rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
+
+        <div className="relative flex flex-col lg:flex-row lg:items-center gap-8">
           <div className="flex-1 space-y-4">
             <Badge className="border-[#D4AF37]/20 bg-[#D4AF37]/[0.08] text-[#D4AF37] text-xs">
-              <Shield className="h-3 w-3 mr-1" />
-              Régulé ISA Israel
+              <Crown className="h-3 w-3 mr-1" />
+              Co-Production Cinematographique
             </Badge>
             <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white font-[family-name:var(--font-playfair)]">
-              Investissez dans le Cinéma IA
+              Co-Produisez le Cinema de Demain
             </h1>
             <p className="text-white/35 max-w-lg text-sm leading-relaxed">
-              Co-produisez des films IA. Achetez des tokens, votez sur les décisions créatives,
-              percevez des revenus sur chaque exploitation.
+              Chaque token est une part de co-production. Investissez des 10&#8364;,
+              votez sur les decisions creatives, percevez des revenus, et voyez votre nom au generique.
             </p>
+            {/* Key benefits row */}
+            <div className="flex flex-wrap gap-3 pt-1">
+              {[
+                { icon: Coins, label: 'Des 10\u20AC' },
+                { icon: TrendingUp, label: 'Revenus partages' },
+                { icon: Vote, label: 'Droit de vote' },
+                { icon: Crown, label: 'Nom au generique' },
+              ].map((b) => (
+                <span key={b.label} className="inline-flex items-center gap-1.5 text-xs text-white/30 bg-white/[0.03] border border-white/[0.06] rounded-full px-3 py-1">
+                  <b.icon className="h-3 w-3 text-[#D4AF37]/60" />
+                  {b.label}
+                </span>
+              ))}
+            </div>
           </div>
 
           {/* Platform Stats — Clean Numbers */}
           <div className="grid grid-cols-2 gap-4 lg:w-72">
             {[
-              { label: 'Total levé', value: formatEur(platformStats.totalRaised), color: 'text-[#D4AF37]' },
-              { label: 'Offres actives', value: platformStats.activeOfferings.toString(), color: 'text-blue-400' },
-              { label: 'Investisseurs', value: platformStats.totalInvestors.toString(), color: 'text-green-400' },
+              { label: 'Co-produit', value: formatEur(platformStats.totalRaised), color: 'text-[#D4AF37]' },
+              { label: 'Films ouverts', value: platformStats.activeOfferings.toString(), color: 'text-blue-400' },
+              { label: 'Co-producteurs', value: platformStats.totalInvestors.toString(), color: 'text-green-400' },
               { label: 'ROI moyen', value: `${platformStats.avgROI}%`, color: 'text-purple-400' },
             ].map((stat) => (
               <div key={stat.label}>
@@ -132,7 +149,7 @@ export default async function TokenizationMarketplacePage() {
       <section>
         <div className="flex items-center justify-between mb-5">
           <h2 className="text-lg sm:text-xl font-bold text-white font-[family-name:var(--font-playfair)]">
-            Offres en Cours
+            Films Ouverts a la Co-Production
           </h2>
           <span className="text-white/25 text-sm">{offerings.filter(o => o.status === 'OPEN').length} ouvertes</span>
         </div>
@@ -200,7 +217,8 @@ export default async function TokenizationMarketplacePage() {
                       {/* CTA */}
                       {offering.status === 'OPEN' && (
                         <Button className="w-full min-h-[44px]">
-                          Investir
+                          <Coins className="h-4 w-4 mr-1" />
+                          Co-Produire
                         </Button>
                       )}
                     </CardContent>
@@ -216,7 +234,7 @@ export default async function TokenizationMarketplacePage() {
       {recentlyFunded.length > 0 && (
         <section>
           <h2 className="text-lg sm:text-xl font-bold text-white font-[family-name:var(--font-playfair)] mb-4">
-            Récemment Financés
+            Co-Productions Financees
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
             {recentlyFunded.map((offering) => (
@@ -242,16 +260,16 @@ export default async function TokenizationMarketplacePage() {
       {/* How It Works — 4 Clean Steps */}
       <section>
         <h2 className="text-lg font-bold text-white font-[family-name:var(--font-playfair)] mb-5">
-          Comment ça Marche
+          Comment Devenir Co-Producteur
         </h2>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           {[
-            { title: 'Choisissez', desc: 'Parcourez les films en financement', icon: Film, color: 'text-blue-400' },
-            { title: 'Investissez', desc: 'Tokens dès 10€ par film', icon: Coins, color: 'text-[#D4AF37]' },
-            { title: 'Votez', desc: 'Décisions créatives partagées', icon: Vote, color: 'text-purple-400' },
-            { title: 'Gagnez', desc: 'Dividendes sur les exploitations', icon: TrendingUp, color: 'text-green-400' },
+            { title: 'Choisissez', desc: 'Parcourez les films ouverts a la co-production', icon: Film, color: 'text-blue-400' },
+            { title: 'Co-Produisez', desc: 'Tokens de co-production des 10\u20AC', icon: Coins, color: 'text-[#D4AF37]' },
+            { title: 'Decidez', desc: 'Votez sur les choix creatifs du film', icon: Vote, color: 'text-purple-400' },
+            { title: 'Gagnez', desc: 'Revenus partages + nom au generique', icon: TrendingUp, color: 'text-green-400' },
           ].map((item) => (
-            <div key={item.title} className="text-center p-5 rounded-xl border border-white/[0.06] bg-white/[0.02]">
+            <div key={item.title} className="text-center p-5 rounded-xl border border-white/[0.06] bg-white/[0.02] hover:border-[#D4AF37]/15 transition-all duration-300">
               <item.icon className={`h-6 w-6 ${item.color} mx-auto mb-3`} />
               <h3 className="text-white font-semibold text-sm mb-1">{item.title}</h3>
               <p className="text-white/30 text-xs">{item.desc}</p>
@@ -264,17 +282,19 @@ export default async function TokenizationMarketplacePage() {
       <details className="group">
         <summary className="flex items-center gap-2 cursor-pointer text-xs text-white/25 hover:text-white/40 transition-colors list-none py-2">
           <Shield className="h-3.5 w-3.5" />
-          <span>Avertissement légal</span>
+          <span>Avertissement legal &amp; conformite reglementaire</span>
           <span className="text-[10px] ml-1 group-open:hidden">Cliquez pour lire</span>
         </summary>
         <div className="mt-2 p-4 rounded-xl bg-white/[0.02] border border-white/[0.04] space-y-2">
           <p className="text-white/25 text-xs leading-relaxed">
-            Les tokens proposés sur cette plateforme sont émis dans le cadre du régime d&apos;offres exemptées de l&apos;Israel Securities Authority (ISA), sous le seuil de 5 millions ILS.
-            L&apos;investissement dans des projets cinématographiques comporte des risques significatifs, incluant la perte totale du capital investi.
+            Les tokens de co-production proposes sur cette plateforme representent des parts de revenus futurs des films.
+            L&apos;investissement dans des projets cinematographiques comporte des risques significatifs, incluant la perte totale du capital investi.
+            Les offres sont emises dans le respect des cadres reglementaires applicables, incluant la conformite ISA pour les offres exemptees.
           </p>
           <p className="text-white/25 text-xs leading-relaxed">
-            Lumière Brothers Ltd. est enregistrée en Israël. Consultez un conseiller financier agréé avant tout investissement.
+            Consultez un conseiller financier agree avant tout investissement.
             Investissez uniquement des sommes que vous pouvez vous permettre de perdre.
+            Les performances passees ne garantissent pas les resultats futurs.
           </p>
         </div>
       </details>

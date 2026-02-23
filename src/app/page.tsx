@@ -1,5 +1,6 @@
 export const dynamic = 'force-dynamic'
 
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Header } from '@/components/layout/header'
@@ -34,7 +35,20 @@ import {
   Clock,
   TrendingUp,
   Mail,
+  Vote,
 } from 'lucide-react'
+
+export const metadata: Metadata = {
+  title: 'Lumiere Brothers — Le Studio de Cinema du Futur',
+  description:
+    "Devenez co-producteur de films IA. Investissez des 10\u20AC, recevez des revenus, votre nom au generique. La premiere plateforme de cinema collaboratif propulsee par l'intelligence artificielle.",
+  openGraph: {
+    title: 'Lumiere Brothers — Le Studio de Cinema du Futur',
+    description:
+      'Devenez co-producteur de films IA des 10\u20AC. Revenus partages, votre nom au generique.',
+    type: 'website',
+  },
+}
 
 // ---------------------------------------------------------------------------
 // DATA FETCHING
@@ -77,32 +91,42 @@ const howItWorksSteps = [
     icon: Film,
     title: 'Choisissez un Film',
     description:
-      'Parcourez notre catalogue de productions IA. Chaque film a besoin de dizaines de contributeurs pour prendre vie.',
+      'Parcourez notre catalogue de productions IA. Trouvez le projet qui vous passionne parmi des dizaines de films en cours.',
   },
   {
     number: '02',
-    icon: Zap,
-    title: 'Accomplissez des Micro-Taches',
+    icon: Coins,
+    title: 'Contribuez ou Investissez',
     description:
-      'Prompts, images, VFX, sound design, cascades... Choisissez les taches qui correspondent a vos talents.',
+      'Accomplissez des micro-taches creatives ou investissez des 10\u20AC pour devenir co-producteur du film.',
   },
   {
     number: '03',
     icon: Sparkles,
-    title: "L'IA Assemble Votre Contribution",
+    title: "L'IA Assemble le Film",
     description:
-      'Notre IA evalue, integre et assemble chaque contribution dans le film. Feedback instantane, qualite cinema.',
+      'Notre IA evalue, integre et assemble chaque contribution. Les co-producteurs votent sur les decisions creatives.',
   },
   {
     number: '04',
     icon: Crown,
-    title: 'Soyez Credite au Generique',
+    title: 'Gagnez des Revenus',
     description:
-      'Chaque contributeur est credite au generique du film. Vous etes co-createur. Votre nom, sur grand ecran.',
+      'Le film est distribue en streaming mondial. Contributeurs et co-producteurs partagent les revenus. Votre nom au generique.',
   },
 ]
 
 const modules = [
+  {
+    icon: Coins,
+    title: 'Devenez Co-Producteur',
+    description: 'Investissez des 10\u20AC dans un film. Recevez des revenus, votez sur les decisions, votre nom au generique.',
+    color: '#D4AF37',
+    colorName: 'gold',
+    href: '/tokenization',
+    badge: 'Co-Production',
+    featured: true,
+  },
   {
     icon: Clapperboard,
     title: 'Studio Films',
@@ -111,6 +135,7 @@ const modules = [
     colorName: 'gold',
     href: '/films',
     badge: 'Production',
+    featured: false,
   },
   {
     icon: Sparkles,
@@ -120,6 +145,7 @@ const modules = [
     colorName: 'purple',
     href: '/creator',
     badge: 'Creation',
+    featured: false,
   },
   {
     icon: Play,
@@ -129,6 +155,7 @@ const modules = [
     colorName: 'red',
     href: '/streaming',
     badge: 'Diffusion',
+    featured: false,
   },
   {
     icon: Handshake,
@@ -138,6 +165,7 @@ const modules = [
     colorName: 'green',
     href: '/collabs',
     badge: 'Reseau',
+    featured: false,
   },
   {
     icon: BarChart3,
@@ -147,6 +175,7 @@ const modules = [
     colorName: 'blue',
     href: '/analytics',
     badge: 'Donnees',
+    featured: false,
   },
 ]
 
@@ -255,8 +284,22 @@ const plans = [
 export default async function HomePage() {
   const [stats, films] = await Promise.all([getStats(), getFilmsInProduction()])
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'Lumière',
+    url: 'https://lumiere.film',
+    description: "Plateforme de cinéma collaboratif propulsée par l'IA",
+    foundingDate: '2025',
+    sameAs: ['https://github.com/Wonderself/lumiere-app'],
+  }
+
   return (
     <div className="relative overflow-hidden bg-[#0A0A0A] text-white">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Header />
 
       {/* ================================================================ */}
@@ -301,19 +344,23 @@ export default async function HomePage() {
         </div>
 
         {/* Badge */}
-        <div className="relative inline-flex items-center gap-2 rounded-full border border-[#D4AF37]/30 bg-[#D4AF37]/10 px-5 py-2 text-sm text-[#D4AF37] mb-10 backdrop-blur-sm">
+        <div className="relative inline-flex items-center gap-2 rounded-full border border-[#D4AF37]/30 bg-[#D4AF37]/10 px-5 py-2 text-sm text-[#D4AF37] mb-4 backdrop-blur-sm">
           <Clapperboard className="h-4 w-4" />
-          <span className="font-medium">Plateforme de Cinema IA Collaboratif</span>
+          <span className="font-medium">Le Studio de Cinema du Futur</span>
         </div>
+
+        {/* Tagline */}
+        <p className="relative text-sm sm:text-base text-white/30 uppercase tracking-[0.2em] mb-10 font-medium">
+          Produisez &middot; Creez &middot; Investissez
+        </p>
 
         {/* Headline */}
         <h1
           className="relative text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold leading-[1.1] mb-8 max-w-6xl"
           style={{ fontFamily: 'var(--font-playfair)' }}
         >
-          <span className="block">Vous Aussi,</span>
+          <span className="block">Devenez</span>
           <span className="block mt-2">
-            Soyez{' '}
             <span
               className="relative inline-block"
               style={{
@@ -323,7 +370,7 @@ export default async function HomePage() {
                 backgroundClip: 'text',
               }}
             >
-              Createurs
+              Producteur
             </span>
           </span>
           <span className="block mt-2">
@@ -343,34 +390,35 @@ export default async function HomePage() {
 
         {/* Subline */}
         <p className="relative text-lg sm:text-xl md:text-2xl text-white/50 max-w-3xl mb-12 leading-relaxed px-4">
-          La premiere plateforme ou chaque utilisateur est co-createur et credite au generique.
-          Contribuez des micro-taches, l'IA assemble vos contributions en films cinematographiques.
+          Co-produisez des films IA des 10&#8364;. Recevez des revenus, votez sur les decisions creatives,
+          et voyez votre nom au generique.
         </p>
 
         {/* CTA Buttons */}
-        <div className="relative flex flex-col sm:flex-row gap-4 mb-20">
-          <Link href="/register">
-            <Button size="xl" className="group text-base sm:text-lg px-8 sm:px-12">
-              Commencer Gratuitement
+        <div className="relative flex flex-col sm:flex-row gap-4 mb-20 w-full sm:w-auto px-4 sm:px-0">
+          <Link href="/tokenization" className="w-full sm:w-auto">
+            <Button size="xl" className="group text-base sm:text-lg px-8 sm:px-12 w-full sm:w-auto">
+              <Coins className="h-5 w-5" />
+              Devenez Producteur
               <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
             </Button>
           </Link>
-          <Link href="/streaming">
-            <Button size="xl" variant="outline" className="text-base sm:text-lg px-8 sm:px-12">
+          <Link href="/streaming" className="w-full sm:w-auto">
+            <Button size="xl" variant="outline" className="text-base sm:text-lg px-8 sm:px-12 w-full sm:w-auto">
               <Play className="h-5 w-5" />
-              Voir le Catalogue
+              Explorer les Films
             </Button>
           </Link>
         </div>
 
         {/* Stats bar */}
-        <div className="relative w-full max-w-4xl mx-auto">
+        <div className="relative w-full max-w-4xl mx-auto px-4 sm:px-0">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm p-6 sm:p-8">
             {[
-              { label: 'Contributeurs', value: stats.usersCount > 0 ? `${stats.usersCount}+` : '500+', icon: Users },
-              { label: 'Films en Production', value: stats.filmsCount > 0 ? `${stats.filmsCount}` : '12', icon: Film },
-              { label: 'Taches Validees', value: stats.tasksValidated > 0 ? `${stats.tasksValidated.toLocaleString('fr-FR')}` : '2 400+', icon: CheckCircle },
-              { label: 'Tokens Distribues', value: stats.lumensTx > 0 ? `${stats.lumensTx.toLocaleString('fr-FR')}` : '18 000+', icon: Coins },
+              { label: 'Co-Producteurs', value: stats.usersCount > 0 ? `${stats.usersCount.toLocaleString('fr-FR')}+` : '500+', icon: Users },
+              { label: 'Films en Production', value: stats.filmsCount > 0 ? `${stats.filmsCount}+` : '12+', icon: Film },
+              { label: 'Taches Validees', value: stats.tasksValidated > 0 ? `${stats.tasksValidated.toLocaleString('fr-FR')}+` : '2,400+', icon: CheckCircle },
+              { label: 'Investis en Tokens', value: stats.lumensTx > 0 ? `${stats.lumensTx.toLocaleString('fr-FR')}+` : '18,000+', icon: Coins },
             ].map((stat) => (
               <div key={stat.label} className="text-center space-y-2">
                 <div className="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-[#D4AF37]/10 border border-[#D4AF37]/20 mx-auto mb-1">
@@ -425,7 +473,7 @@ export default async function HomePage() {
               </span>
             </h2>
             <p className="text-white/40 text-lg max-w-2xl mx-auto">
-              De l'inscription au credit au generique, en 4 etapes simples.
+              Du choix d&apos;un film aux premiers revenus, en 4 etapes simples.
             </p>
           </div>
 
@@ -505,11 +553,11 @@ export default async function HomePage() {
           {/* Module cards */}
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {modules.map((mod) => (
-              <Link key={mod.title} href={mod.href} className="group">
+              <Link key={mod.title} href={mod.href} className={`group ${mod.featured ? 'sm:col-span-2 lg:col-span-1' : ''}`}>
                 <div
-                  className="relative rounded-2xl border bg-white/[0.03] p-6 sm:p-8 h-full transition-all duration-500 hover:scale-[1.02]"
+                  className={`relative rounded-2xl border bg-white/[0.03] p-6 sm:p-8 h-full transition-all duration-500 hover:scale-[1.02] ${mod.featured ? 'ring-1 ring-[#D4AF37]/20 shadow-[0_0_30px_rgba(212,175,55,0.08)]' : ''}`}
                   style={{
-                    borderColor: `${mod.color}15`,
+                    borderColor: mod.featured ? `${mod.color}40` : `${mod.color}15`,
                   }}
                 >
                   {/* Glow on hover */}
@@ -560,23 +608,23 @@ export default async function HomePage() {
               </Link>
             ))}
 
-            {/* 6th card — Join CTA */}
+            {/* 7th card — Producer CTA */}
             <div className="relative rounded-2xl border border-[#D4AF37]/20 bg-gradient-to-br from-[#D4AF37]/[0.08] to-[#D4AF37]/[0.02] p-6 sm:p-8 flex flex-col items-center justify-center text-center">
               <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#D4AF37]/20 border border-[#D4AF37]/30 mb-5">
-                <Rocket className="h-7 w-7 text-[#D4AF37]" />
+                <Crown className="h-7 w-7 text-[#D4AF37]" />
               </div>
               <h3
                 className="text-xl font-bold mb-3 text-[#D4AF37]"
                 style={{ fontFamily: 'var(--font-playfair)' }}
               >
-                Et bien plus...
+                Votre Nom au Generique
               </h3>
               <p className="text-white/40 text-sm mb-6 leading-relaxed">
-                De nouvelles fonctionnalites chaque mois. Face in Film, IA vocale, NFT credits...
+                Contribuez ou investissez. Chaque participant est credite comme co-producteur du film.
               </p>
-              <Link href="/roadmap">
+              <Link href="/tokenization">
                 <Button variant="outline" size="sm" className="group">
-                  Voir la Roadmap
+                  Devenez Producteur
                   <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </Link>
@@ -1148,22 +1196,28 @@ export default async function HomePage() {
           </h2>
 
           <p className="text-xl text-white/45 mb-12 max-w-2xl mx-auto leading-relaxed">
-            Des milliers de createurs construisent le cinema de demain.
-            Votre talent merite d'etre au generique. Commencez aujourd'hui, c'est gratuit.
+            Des milliers de co-producteurs construisent le cinema de demain.
+            Investissez, creez, et voyez votre nom au generique. Commencez aujourd&apos;hui.
           </p>
 
           {/* CTA buttons */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
-            <Link href="/register">
-              <Button size="xl" className="group text-base sm:text-lg px-10 sm:px-14">
-                Creer mon Compte Gratuit
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8 px-4 sm:px-0">
+            <Link href="/tokenization" className="w-full sm:w-auto">
+              <Button size="xl" className="group text-base sm:text-lg px-10 sm:px-14 w-full sm:w-auto">
+                <Coins className="h-5 w-5" />
+                Devenez Producteur
                 <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
+              </Button>
+            </Link>
+            <Link href="/register" className="w-full sm:w-auto">
+              <Button size="xl" variant="outline" className="text-base sm:text-lg px-10 sm:px-14 w-full sm:w-auto">
+                Creer un Compte Gratuit
               </Button>
             </Link>
           </div>
 
           <p className="text-xs text-white/25">
-            Inscription gratuite — Pas de carte bancaire requise — Acces immediat
+            Co-production des 10&#8364; — Revenus partages — Votre nom au generique
           </p>
         </div>
       </section>

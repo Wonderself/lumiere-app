@@ -94,9 +94,9 @@ export default async function CreatorDashboardPage() {
 
       {/* Recent Videos */}
       <Card className="bg-white/[0.03] border-white/10">
-        <CardHeader className="flex flex-row items-center justify-between">
+        <CardHeader className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
           <CardTitle className="text-white">Vidéos récentes</CardTitle>
-          <Link href="/creator/videos" className="text-[#D4AF37] text-sm hover:underline">Voir tout →</Link>
+          <Link href="/creator/videos" className="text-[#D4AF37] text-sm hover:underline shrink-0">Voir tout →</Link>
         </CardHeader>
         <CardContent>
           {profile.videos.length === 0 ? (

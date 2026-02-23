@@ -5,8 +5,29 @@ import { Play, Eye, Clock, User, Calendar, ArrowLeft, Share2, Heart, Film } from
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent } from '@/components/ui/card'
 import { FilmTabs } from '@/components/streaming/film-tabs'
+import type { Metadata } from 'next'
 
 export const dynamic = 'force-dynamic'
+
+export async function generateMetadata(
+  props: { params: Promise<{ slug: string }> }
+): Promise<Metadata> {
+  const { slug } = await props.params
+  const film = await prisma.catalogFilm.findUnique({
+    where: { slug },
+    select: { title: true, synopsis: true, thumbnailUrl: true },
+  })
+  if (!film) return { title: 'Film introuvable' }
+  return {
+    title: `${film.title} — Lumière Streaming`,
+    description: film.synopsis || `Regardez ${film.title} sur Lumière`,
+    openGraph: {
+      title: film.title,
+      description: film.synopsis || undefined,
+      images: film.thumbnailUrl ? [film.thumbnailUrl] : undefined,
+    },
+  }
+}
 
 export default async function StreamingFilmPage(props: { params: Promise<{ slug: string }> }) {
   const { slug } = await props.params

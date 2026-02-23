@@ -110,7 +110,7 @@ export default async function AnalyticsPage(
         </div>
 
         {/* Period Selector — Radio Pills */}
-        <nav className="flex items-center gap-1 rounded-xl bg-white/[0.03] border border-white/[0.06] p-1 self-start">
+        <nav className="flex items-center gap-1 rounded-xl bg-white/[0.03] border border-white/[0.06] p-1 self-start overflow-x-auto max-w-full scrollbar-thin">
           {periods.map((p) => (
             <Link
               key={p.key}

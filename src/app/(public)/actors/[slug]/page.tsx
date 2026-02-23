@@ -28,8 +28,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const actor = await prisma.aIActor.findUnique({ where: { slug } })
   if (!actor) return { title: 'Acteur introuvable' }
   return {
-    title: `${actor.name} — Acteur IA Lumiere`,
-    description: actor.bio || `Decouvrez ${actor.name}, acteur IA sur la plateforme Lumiere.`,
+    title: `${actor.name} — Acteur IA Lumière`,
+    description: actor.bio || `Découvrez ${actor.name}, acteur IA sur la plateforme Lumière.`,
+    openGraph: {
+      title: `${actor.name} — Acteur IA Lumière`,
+      description: actor.bio || `Découvrez ${actor.name}, acteur IA sur la plateforme Lumière.`,
+      images: actor.avatarUrl ? [actor.avatarUrl] : undefined,
+    },
   }
 }
 
@@ -133,11 +138,11 @@ export default async function ActorProfilePage({ params }: Props) {
       </div>
 
       {/* Profile Header */}
-      <div className="container mx-auto max-w-5xl px-4 -mt-24 relative z-10">
-        <div className="flex flex-col md:flex-row items-start gap-6 mb-10">
+      <div className="container mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 -mt-20 sm:-mt-24 relative z-10">
+        <div className="flex flex-col md:flex-row items-start gap-5 sm:gap-6 mb-8 sm:mb-10">
           {/* Avatar */}
           <div className="relative shrink-0">
-            <div className="w-36 h-36 md:w-44 md:h-44 rounded-full border-4 border-[#D4AF37]/40 bg-gradient-to-br from-[#D4AF37]/10 to-purple-900/20 overflow-hidden shadow-[0_0_60px_rgba(212,175,55,0.2)]">
+            <div className="w-28 h-28 sm:w-36 sm:h-36 md:w-44 md:h-44 rounded-full border-4 border-[#D4AF37]/40 bg-gradient-to-br from-[#D4AF37]/10 to-purple-900/20 overflow-hidden shadow-[0_0_60px_rgba(212,175,55,0.2)]">
               {actor.avatarUrl ? (
                 <img
                   src={actor.avatarUrl}
@@ -156,7 +161,7 @@ export default async function ActorProfilePage({ params }: Props) {
           <div className="flex-1 pt-4 md:pt-10">
             <div className="flex flex-wrap items-center gap-3 mb-2">
               <h1
-                className="text-4xl md:text-5xl font-bold text-white"
+                className="text-2xl sm:text-4xl md:text-5xl font-bold text-white"
                 style={{ fontFamily: 'var(--font-playfair)' }}
               >
                 {actor.name}
@@ -182,14 +187,14 @@ export default async function ActorProfilePage({ params }: Props) {
             {actor.quote && (
               <div className="flex items-start gap-3 mb-6">
                 <Quote className="h-5 w-5 text-[#D4AF37]/40 shrink-0 mt-0.5" />
-                <p className="text-[#D4AF37]/70 italic text-lg leading-relaxed" style={{ fontFamily: 'var(--font-playfair)' }}>
+                <p className="text-[#D4AF37]/70 italic text-base sm:text-lg leading-relaxed" style={{ fontFamily: 'var(--font-playfair)' }}>
                   {actor.quote}
                 </p>
               </div>
             )}
 
             {/* Stats Row */}
-            <div className="flex flex-wrap gap-6">
+            <div className="flex flex-wrap gap-4 sm:gap-6">
               {[
                 { icon: Film, value: actor.filmCount, label: 'films' },
                 { icon: Award, value: actor.awardsCount, label: 'prix' },
@@ -206,7 +211,7 @@ export default async function ActorProfilePage({ params }: Props) {
         </div>
 
         {/* Content Grid */}
-        <div className="grid lg:grid-cols-3 gap-8 pb-24">
+        <div className="grid lg:grid-cols-3 gap-6 sm:gap-8 pb-16 sm:pb-24">
           {/* Main Column */}
           <div className="lg:col-span-2 space-y-8">
             {/* Bio */}

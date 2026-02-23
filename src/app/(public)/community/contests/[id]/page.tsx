@@ -30,9 +30,14 @@ export async function generateMetadata(
     where: { id },
     select: { title: true, description: true },
   })
+  if (!contest) return { title: 'Concours introuvable' }
   return {
-    title: contest ? `${contest.title} — Concours Lumiere` : 'Concours — Lumiere',
-    description: contest?.description || 'Concours de trailers Lumiere',
+    title: `${contest.title} — Concours Lumière`,
+    description: contest.description || 'Concours de trailers Lumière — Participez et votez.',
+    openGraph: {
+      title: `${contest.title} — Concours Lumière`,
+      description: contest.description || 'Concours de trailers Lumière — Participez et votez.',
+    },
   }
 }
 
@@ -81,13 +86,13 @@ export default async function ContestDetailPage({
   const isClosed = contest.status === 'CLOSED'
 
   return (
-    <div className="min-h-screen py-16 px-4">
+    <div className="min-h-screen py-8 sm:py-12 lg:py-16 px-4 sm:px-6 lg:px-8">
       <div className="container mx-auto max-w-5xl">
 
         {/* Breadcrumb */}
         <Link
           href="/community/contests"
-          className="inline-flex items-center gap-1.5 text-sm text-white/40 hover:text-[#D4AF37] transition-colors mb-8"
+          className="inline-flex items-center gap-1.5 text-sm text-white/40 hover:text-[#D4AF37] transition-colors duration-200 mb-6 sm:mb-8 min-h-[44px]"
         >
           <ArrowLeft className="h-4 w-4" />
           Retour aux concours
@@ -107,7 +112,7 @@ export default async function ContestDetailPage({
             )}
           </div>
 
-          <h1 className="text-4xl md:text-5xl font-bold mb-4" style={{ fontFamily: 'var(--font-playfair)' }}>
+          <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4" style={{ fontFamily: 'var(--font-playfair)' }}>
             {contest.title}
           </h1>
 
@@ -118,7 +123,7 @@ export default async function ContestDetailPage({
           )}
 
           {/* Contest meta */}
-          <div className="flex flex-wrap gap-6 text-sm text-white/40">
+          <div className="flex flex-wrap gap-3 sm:gap-6 text-xs sm:text-sm text-white/40">
             {contest.film && (
               <div className="flex items-center gap-2">
                 <Clapperboard className="h-4 w-4" />
@@ -192,7 +197,7 @@ export default async function ContestDetailPage({
             </CardContent>
           </Card>
         ) : (
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {contest.entries.map((entry, idx) => {
               const isWinner = isClosed && contest.winnerId === entry.id
               const hasVoted = userVotes.has(entry.id)
@@ -298,16 +303,16 @@ export default async function ContestDetailPage({
             <p className="text-white/40 text-sm mb-4">
               Rejoignez la communaute Lumiere pour participer et voter.
             </p>
-            <div className="flex justify-center gap-3">
+            <div className="flex flex-col sm:flex-row justify-center gap-3">
               <Link
                 href="/login"
-                className="px-5 py-2.5 rounded-full bg-[#D4AF37] text-black font-semibold hover:bg-[#F0D060] transition-colors text-sm"
+                className="px-5 py-2.5 rounded-full bg-[#D4AF37] text-black font-semibold hover:bg-[#F0D060] transition-all duration-200 text-sm text-center min-h-[44px] inline-flex items-center justify-center"
               >
                 Se connecter
               </Link>
               <Link
                 href="/register"
-                className="px-5 py-2.5 rounded-full border border-[#D4AF37]/30 text-[#D4AF37] font-semibold hover:bg-[#D4AF37]/10 transition-colors text-sm"
+                className="px-5 py-2.5 rounded-full border border-[#D4AF37]/30 text-[#D4AF37] font-semibold hover:bg-[#D4AF37]/10 transition-all duration-200 text-sm text-center min-h-[44px] inline-flex items-center justify-center"
               >
                 Creer un compte
               </Link>

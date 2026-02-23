@@ -64,7 +64,7 @@ export default async function SubscriptionPage() {
           Choisissez votre plan. Alimentez vos créations IA.
         </p>
         {/* Current status inline */}
-        <div className="flex items-center justify-center gap-6 mt-4">
+        <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 mt-4">
           <div className="flex items-center gap-2">
             <Star className="h-4 w-4 text-[#D4AF37]" />
             <span className="text-white/50 text-sm">Plan :</span>
@@ -176,7 +176,7 @@ export default async function SubscriptionPage() {
                       <p className="text-[#D4AF37] text-xl font-bold">{pack.price.toFixed(2).replace('.', ',')}&#8364;</p>
                     </div>
                     <button
-                      className={`w-full py-2.5 rounded-xl text-sm font-semibold transition-colors ${
+                      className={`w-full py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 min-h-[44px] ${
                         isBestValue
                           ? 'bg-[#D4AF37] text-black hover:bg-[#F0D060]'
                           : 'bg-white/[0.06] text-white/70 hover:bg-white/10'

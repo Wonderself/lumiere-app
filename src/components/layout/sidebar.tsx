@@ -390,11 +390,11 @@ export function Sidebar() {
 
   return (
     <>
-      {/* Mobile hamburger */}
+      {/* Mobile hamburger — positioned below the header */}
       <button
         onClick={() => setMobileOpen(true)}
-        className="lg:hidden fixed top-4 left-4 z-50 h-10 w-10 rounded-lg bg-[#0A0A0A]/90 border border-white/10 flex items-center justify-center text-white/60 hover:text-white/90 transition-colors"
-        aria-label="Ouvrir le menu"
+        className="lg:hidden fixed top-[72px] left-3 z-40 h-10 w-10 rounded-lg bg-[#0A0A0A]/90 border border-white/10 flex items-center justify-center text-white/60 hover:text-white/90 transition-colors backdrop-blur-sm"
+        aria-label="Ouvrir le menu lateral"
       >
         <Menu className="h-5 w-5" />
       </button>

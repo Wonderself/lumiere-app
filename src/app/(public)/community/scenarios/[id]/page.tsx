@@ -30,9 +30,14 @@ export async function generateMetadata(
     where: { id },
     select: { title: true, logline: true },
   })
+  if (!scenario) return { title: 'Scénario introuvable' }
   return {
-    title: scenario ? `${scenario.title} — Scenarios Lumiere` : 'Scenario — Lumiere',
-    description: scenario?.logline || 'Proposition de scenario Lumiere',
+    title: `${scenario.title} — Scénarios Lumière`,
+    description: scenario.logline || 'Proposition de scénario sur la plateforme Lumière.',
+    openGraph: {
+      title: `${scenario.title} — Scénarios Lumière`,
+      description: scenario.logline || 'Proposition de scénario sur la plateforme Lumière.',
+    },
   }
 }
 

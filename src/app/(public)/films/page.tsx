@@ -7,8 +7,13 @@ import type { Metadata } from 'next'
 export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
-  title: 'Catalogue Films',
-  description: "Découvrez tous les films en production sur la plateforme Lumière.",
+  title: 'Films en Production — Catalogue Cinéma IA',
+  description:
+    'Découvrez tous les films en production sur la plateforme Lumière. Rejoignez l\'équipe, contribuez aux micro-tâches et soyez crédité au générique.',
+  openGraph: {
+    title: 'Films en Production — Catalogue Cinéma IA | Lumière',
+    description: 'Découvrez tous les films en production sur la plateforme Lumière.',
+  },
 }
 
 async function getFilms(searchParams: { [key: string]: string | undefined }) {
