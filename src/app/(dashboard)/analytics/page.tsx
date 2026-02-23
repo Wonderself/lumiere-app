@@ -200,20 +200,20 @@ export default async function AnalyticsPage(
         </div>
       </div>
 
-      {/* Secondary Analytics — Collapsible Feel */}
-      <details className="group">
-        <summary className="flex items-center gap-2 cursor-pointer text-sm text-white/40 hover:text-white/60 transition-colors list-none">
-          <ChevronRight className="h-4 w-4 transition-transform group-open:rotate-90" />
-          <span>Voir plus d&apos;analytics</span>
-        </summary>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+      {/* Secondary Analytics */}
+      <div>
+        <h2 className="text-sm font-semibold text-white/50 mb-4 flex items-center gap-2">
+          <BarChart3 className="h-4 w-4 text-[#D4AF37]/50" />
+          Analyses detaillees
+        </h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {/* Revenue Sources Donut */}
           <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-5">
             <h2 className="text-sm font-semibold text-white/60 mb-4">Revenus par Source</h2>
             {revenueStats?.revenueBySource && revenueStats.revenueBySource.some(s => s.value > 0) ? (
               <DonutChart data={revenueStats.revenueBySource.filter(s => s.value > 0)} size={160} />
             ) : (
-              <div className="text-white/20 text-sm text-center py-12">Pas de données</div>
+              <div className="text-white/20 text-sm text-center py-12">Pas de donnees</div>
             )}
           </div>
 
@@ -223,7 +223,7 @@ export default async function AnalyticsPage(
             {creatorStats?.engagementTrend && creatorStats.engagementTrend.length > 0 ? (
               <LineChart data={creatorStats.engagementTrend} color="#a855f7" height={180} />
             ) : (
-              <div className="text-white/20 text-sm text-center py-12">Pas de données</div>
+              <div className="text-white/20 text-sm text-center py-12">Pas de donnees</div>
             )}
           </div>
 
@@ -237,9 +237,9 @@ export default async function AnalyticsPage(
             </div>
             <div className="space-y-3">
               {[
-                { label: 'Terminées', value: collabStats?.completed ?? 0, color: 'text-green-400' },
+                { label: 'Terminees', value: collabStats?.completed ?? 0, color: 'text-green-400' },
                 { label: 'En cours', value: collabStats?.pending ?? 0, color: 'text-yellow-400' },
-                { label: 'Taux succès', value: `${collabStats?.successRate ?? 0}%`, color: 'text-[#D4AF37]' },
+                { label: 'Taux succes', value: `${collabStats?.successRate ?? 0}%`, color: 'text-[#D4AF37]' },
               ].map((row) => (
                 <div key={row.label} className="flex items-center justify-between">
                   <span className="text-sm text-white/35">{row.label}</span>
@@ -249,7 +249,7 @@ export default async function AnalyticsPage(
             </div>
           </div>
         </div>
-      </details>
+      </div>
 
       {/* Quick Navigation */}
       <div className="grid grid-cols-3 gap-3">

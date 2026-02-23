@@ -38,8 +38,8 @@ export const metadata: Metadata = {
   authors: [{ name: 'Lumière Brothers Pictures' }],
   manifest: '/manifest.json',
   icons: {
-    icon: '/icon-192.png',
-    apple: '/icon-192.png',
+    icon: '/favicon.svg',
+    apple: '/icon.svg',
   },
   openGraph: {
     type: 'website',
@@ -48,20 +48,11 @@ export const metadata: Metadata = {
     title: 'Lumière — Créez le Cinéma de Demain',
     description: "La plateforme de micro-tâches pour la création collaborative de films IA",
     url: 'https://lumiere.film',
-    images: [
-      {
-        url: '/og-image.png',
-        width: 1200,
-        height: 630,
-        alt: 'Lumière — Le Studio de Cinéma du Futur',
-      },
-    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Lumière — Créez le Cinéma de Demain',
     description: "La plateforme de micro-tâches pour la création collaborative de films IA",
-    images: ['/og-image.png'],
   },
 }
 

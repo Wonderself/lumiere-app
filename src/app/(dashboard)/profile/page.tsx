@@ -14,6 +14,7 @@ import {
   Wallet,
   Calendar,
   ShieldCheck,
+  Clapperboard,
 } from 'lucide-react'
 import { ProfileEditDialog } from './profile-edit-dialog'
 import type { Metadata } from 'next'
@@ -186,6 +187,38 @@ export default async function ProfilePage() {
           </Card>
         ))}
       </div>
+
+      {/* ── Profile Completion CTA ── */}
+      {!user.bio && user.skills.length === 0 && user.languages.length === 0 && (
+        <Card className="relative overflow-hidden border-[#D4AF37]/20 bg-[#D4AF37]/[0.03]">
+          <div className="absolute inset-0 bg-gradient-to-br from-[#D4AF37]/5 via-transparent to-transparent pointer-events-none" />
+          <CardContent className="relative p-8 text-center">
+            <div className="inline-flex items-center justify-center h-14 w-14 rounded-2xl bg-[#D4AF37]/10 border border-[#D4AF37]/20 mb-5">
+              <Clapperboard className="h-7 w-7 text-[#D4AF37]" />
+            </div>
+            <h2
+              className="text-xl font-bold text-white mb-3"
+              style={{ fontFamily: 'var(--font-playfair)' }}
+            >
+              Completez votre profil
+            </h2>
+            <p className="text-white/40 text-sm leading-relaxed max-w-md mx-auto mb-6">
+              Un profil complet augmente votre visibilite dans la communaute et vous donne acces a plus de missions.
+            </p>
+            <ProfileEditDialog
+              user={{
+                displayName: user.displayName,
+                bio: user.bio,
+                avatarUrl: user.avatarUrl,
+                portfolioUrl: user.portfolioUrl,
+                skills: user.skills,
+                languages: user.languages,
+                walletAddress: user.walletAddress,
+              }}
+            />
+          </CardContent>
+        </Card>
+      )}
 
       {/* ── Bio Section ── */}
       {user.bio && (

@@ -21,7 +21,7 @@ import {
   Bell,
   FileText,
   Landmark,
-  ListTodo,
+
   Wallet,
   TrendingUp,
   Heart,
@@ -263,7 +263,6 @@ const adminNavSections: NavSection[] = [
     activeBorder: 'border-white/10',
     links: [
       { href: '/admin/funding', label: 'Aides Publiques', icon: Landmark },
-      { href: '/admin/todo-fondateur', label: 'TODO Fondateur', icon: ListTodo },
       { href: '/admin/settings', label: 'Paramètres', icon: Settings },
     ],
   },

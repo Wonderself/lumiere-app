@@ -8,7 +8,7 @@ import {
   User, Rocket, Shield, HelpCircle, Coins,
   Building2, Sparkles
 } from 'lucide-react'
-import { PlanButton } from './plan-button'
+import { PlanButton, TokenPackButton } from './plan-button'
 import { SUBSCRIPTION_PLANS, TOKEN_PACKS, TOKEN_COSTS } from '@/lib/tokens'
 import type { Metadata } from 'next'
 
@@ -175,15 +175,7 @@ export default async function SubscriptionPage() {
                     <div className="pt-3">
                       <p className="text-[#D4AF37] text-xl font-bold">{pack.price.toFixed(2).replace('.', ',')}&#8364;</p>
                     </div>
-                    <button
-                      className={`w-full py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 min-h-[44px] ${
-                        isBestValue
-                          ? 'bg-[#D4AF37] text-black hover:bg-[#F0D060]'
-                          : 'bg-white/[0.06] text-white/70 hover:bg-white/10'
-                      }`}
-                    >
-                      Acheter
-                    </button>
+                    <TokenPackButton isBestValue={isBestValue} />
                   </CardContent>
                 </Card>
               </div>
@@ -215,11 +207,11 @@ export default async function SubscriptionPage() {
         </div>
       </details>
 
-      {/* Coming Soon */}
+      {/* Launch Note */}
       <div className="flex items-center gap-3 p-4 rounded-xl bg-white/[0.02] border border-white/[0.04]">
-        <Shield className="h-4 w-4 text-yellow-400/60 shrink-0" />
-        <p className="text-xs text-white/30">
-          Paiements Stripe en cours d&apos;intégration. Tokens de démo disponibles via le seed.
+        <Shield className="h-4 w-4 text-[#D4AF37]/50 shrink-0" />
+        <p className="text-xs text-white/40">
+          Les paiements seront disponibles lors du lancement officiel.
         </p>
       </div>
 

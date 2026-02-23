@@ -1,6 +1,6 @@
 import { prisma } from '@/lib/prisma'
 import Link from 'next/link'
-import { Film, ChevronRight, Star } from 'lucide-react'
+import { Film, ChevronRight, Star, Users, CheckCircle, Clapperboard } from 'lucide-react'
 import { FILM_STATUS_LABELS, CATALOG_LABELS } from '@/lib/constants'
 import type { Metadata } from 'next'
 
@@ -36,6 +36,19 @@ async function getFilms(searchParams: { [key: string]: string | undefined }) {
   }
 }
 
+async function getHeroStats() {
+  try {
+    const [filmsCount, tasksCount, contributorsCount] = await Promise.all([
+      prisma.film.count({ where: { isPublic: true } }),
+      prisma.task.count(),
+      prisma.user.count({ where: { isVerified: true } }),
+    ])
+    return { filmsCount, tasksCount, contributorsCount }
+  } catch {
+    return { filmsCount: 0, tasksCount: 0, contributorsCount: 0 }
+  }
+}
+
 const STATUS_ORDER = ['IN_PRODUCTION', 'PRE_PRODUCTION', 'POST_PRODUCTION', 'RELEASED', 'DRAFT']
 
 const STATUS_COLORS: Record<string, string> = {
@@ -52,126 +65,199 @@ export default async function FilmsPage({
   searchParams: Promise<{ [key: string]: string | undefined }>
 }) {
   const params = await searchParams
-  const films = await getFilms(params)
+  const [films, heroStats] = await Promise.all([getFilms(params), getHeroStats()])
 
   return (
-    <div className="min-h-screen py-16 px-4">
-      <div className="container mx-auto max-w-7xl">
-        {/* Header */}
-        <div className="mb-12">
-          <h1 className="text-5xl font-bold mb-4" style={{ fontFamily: 'var(--font-playfair)' }}>
-            Catalogue Films
-          </h1>
-          <p className="text-white/50 text-lg">
-            {films.length} film{films.length > 1 ? 's' : ''} en production. Rejoignez l'équipe et contribuez.
-          </p>
+    <div className="min-h-screen">
+      {/* ================================================================ */}
+      {/* HERO SECTION                                                     */}
+      {/* ================================================================ */}
+      <section className="relative pt-24 pb-16 px-4 overflow-hidden">
+        {/* Ambient blur circles */}
+        <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+          <div className="absolute top-20 left-1/4 w-96 h-96 bg-[#D4AF37]/[0.03] rounded-full blur-[120px]" />
+          <div className="absolute top-10 right-1/4 w-80 h-80 bg-[#D4AF37]/[0.04] rounded-full blur-[100px]" />
+          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-[#D4AF37]/[0.02] rounded-full blur-[150px]" />
+          {/* Gold particles */}
+          <div className="absolute top-[15%] left-[20%] w-1 h-1 rounded-full bg-[#D4AF37]/40 animate-pulse" />
+          <div className="absolute top-[25%] right-[25%] w-1.5 h-1.5 rounded-full bg-[#D4AF37]/30 animate-pulse [animation-delay:0.5s]" />
+          <div className="absolute top-[60%] left-[15%] w-1 h-1 rounded-full bg-[#D4AF37]/25 animate-pulse [animation-delay:1s]" />
+          <div className="absolute top-[40%] right-[20%] w-1 h-1 rounded-full bg-[#D4AF37]/30 animate-pulse [animation-delay:1.5s]" />
         </div>
 
-        {/* Filters */}
-        <div className="flex flex-wrap gap-3 mb-10">
-          {['Tous', 'IN_PRODUCTION', 'PRE_PRODUCTION', 'POST_PRODUCTION', 'RELEASED'].map((s) => {
-            const isActive = (!params.status && s === 'Tous') || params.status === s
-            return (
-              <Link
-                key={s}
-                href={s === 'Tous' ? '/films' : `/films?status=${s}`}
-                className={`px-4 py-2 rounded-full text-sm border transition-all ${
-                  isActive
-                    ? 'bg-[#D4AF37]/20 border-[#D4AF37]/40 text-[#D4AF37]'
-                    : 'bg-white/5 border-white/10 text-white/50 hover:border-white/20'
-                }`}
-              >
-                {s === 'Tous' ? 'Tous les films' : FILM_STATUS_LABELS[s as keyof typeof FILM_STATUS_LABELS]}
-              </Link>
-            )
-          })}
-        </div>
-
-        {/* Films Grid */}
-        {films.length === 0 ? (
-          <div className="text-center py-24 text-white/30">
-            <Film className="h-16 w-16 mx-auto mb-4 opacity-30" />
-            <p className="text-xl">Aucun film trouvé</p>
-            <p className="text-sm mt-2">Les films seront bientôt disponibles.</p>
+        <div className="relative container mx-auto max-w-7xl text-center">
+          {/* Badge */}
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#D4AF37]/10 border border-[#D4AF37]/20 text-[#D4AF37] text-sm mb-6">
+            <Clapperboard className="h-4 w-4" />
+            <span className="font-medium">Nos Productions</span>
           </div>
-        ) : (
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {films.map((film) => (
-              <Link key={film.id} href={`/films/${film.slug}`}>
-                <div className="group rounded-2xl border border-white/5 bg-white/[0.02] overflow-hidden hover:border-[#D4AF37]/20 transition-all duration-300 h-full flex flex-col">
-                  {/* Cover */}
-                  <div className="relative h-52 bg-gradient-to-br from-[#D4AF37]/10 to-purple-900/20 shrink-0">
-                    {film.coverImageUrl ? (
-                      <img
-                        src={film.coverImageUrl}
-                        alt={film.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center">
-                        <Film className="h-16 w-16 text-[#D4AF37]/20" />
-                      </div>
-                    )}
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-transparent to-transparent" />
-                    <div className="absolute top-3 right-3">
-                      <span className={`text-xs font-medium ${STATUS_COLORS[film.status]}`}>
-                        ● {FILM_STATUS_LABELS[film.status]}
-                      </span>
-                    </div>
-                    {film.catalog && film.catalog !== 'LUMIERE' && (
-                      <div className="absolute top-3 left-3">
-                        <span className="text-xs bg-black/50 text-white/60 rounded px-2 py-0.5">
-                          {CATALOG_LABELS[film.catalog]}
-                        </span>
-                      </div>
-                    )}
-                  </div>
 
-                  {/* Content */}
-                  <div className="p-5 flex flex-col flex-1">
-                    <h3 className="font-semibold text-base mb-2 group-hover:text-[#D4AF37] transition-colors line-clamp-2">
-                      {film.title}
-                    </h3>
+          {/* Title */}
+          <h1
+            className="text-4xl sm:text-5xl md:text-6xl font-bold mb-5"
+            style={{ fontFamily: 'var(--font-playfair)' }}
+          >
+            Films &{' '}
+            <span
+              style={{
+                background: 'linear-gradient(135deg, #D4AF37 0%, #F0D060 40%, #D4AF37 70%, #B8960C 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text',
+              }}
+            >
+              Productions
+            </span>
+          </h1>
 
-                    {film.genre && (
-                      <span className="text-xs text-white/30 mb-3">{film.genre}</span>
-                    )}
+          {/* Subtitle */}
+          <p className="text-white/40 text-lg max-w-2xl mx-auto mb-12 leading-relaxed">
+            Decouvrez nos productions cinematographiques creees collaborativement par notre communaute de co-producteurs
+          </p>
 
-                    {film.description && (
-                      <p className="text-xs text-white/40 mb-4 line-clamp-3 flex-1">{film.description}</p>
-                    )}
-
-                    {/* Progress */}
-                    <div className="space-y-1.5 mt-auto">
-                      <div className="flex justify-between text-xs">
-                        <span className="text-white/30">Progression</span>
-                        <span className="text-[#D4AF37] font-medium">{Math.round(film.progressPct)}%</span>
-                      </div>
-                      <div className="h-1 bg-white/10 rounded-full overflow-hidden">
-                        <div
-                          className="h-full bg-gradient-to-r from-[#D4AF37] to-[#F0D060] rounded-full"
-                          style={{ width: `${film.progressPct}%` }}
-                        />
-                      </div>
-                    </div>
-
-                    <div className="flex items-center justify-between mt-4 pt-3 border-t border-white/5">
-                      <div className="flex items-center gap-3 text-xs text-white/30">
-                        <span>{film._count.tasks} tâches</span>
-                        {film._count.votes > 0 && (
-                          <span className="flex items-center gap-1">
-                            <Star className="h-3 w-3" /> {film._count.votes}
-                          </span>
-                        )}
-                      </div>
-                      <ChevronRight className="h-4 w-4 text-[#D4AF37]/50 group-hover:text-[#D4AF37] transition-colors" />
-                    </div>
-                  </div>
+          {/* Stats row */}
+          <div className="grid grid-cols-3 gap-4 sm:gap-6 max-w-2xl mx-auto">
+            {[
+              { label: 'Films', value: heroStats.filmsCount, icon: Film },
+              { label: 'Taches', value: heroStats.tasksCount, icon: CheckCircle },
+              { label: 'Contributeurs', value: heroStats.contributorsCount, icon: Users },
+            ].map((stat) => (
+              <div
+                key={stat.label}
+                className="rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm p-4 sm:p-5 text-center"
+              >
+                <div className="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-[#D4AF37]/10 border border-[#D4AF37]/20 mx-auto mb-2">
+                  <stat.icon className="h-4 w-4 text-[#D4AF37]" />
                 </div>
-              </Link>
+                <div
+                  className="text-2xl sm:text-3xl font-bold text-[#D4AF37]"
+                  style={{ fontFamily: 'var(--font-playfair)' }}
+                >
+                  {stat.value > 0 ? stat.value.toLocaleString('fr-FR') : '--'}
+                </div>
+                <div className="text-[10px] sm:text-xs text-white/40 uppercase tracking-wider font-medium mt-1">
+                  {stat.label}
+                </div>
+              </div>
             ))}
           </div>
-        )}
+        </div>
+
+        {/* Bottom fade separator */}
+        <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#D4AF37]/10 to-transparent" />
+      </section>
+
+      {/* ================================================================ */}
+      {/* FILTERS & GRID                                                   */}
+      {/* ================================================================ */}
+      <div className="px-4 pb-16">
+        <div className="container mx-auto max-w-7xl">
+          {/* Filters */}
+          <div className="flex flex-wrap gap-3 mb-10">
+            {['Tous', 'IN_PRODUCTION', 'PRE_PRODUCTION', 'POST_PRODUCTION', 'RELEASED'].map((s) => {
+              const isActive = (!params.status && s === 'Tous') || params.status === s
+              return (
+                <Link
+                  key={s}
+                  href={s === 'Tous' ? '/films' : `/films?status=${s}`}
+                  className={`px-4 py-2 rounded-full text-sm border transition-all ${
+                    isActive
+                      ? 'bg-[#D4AF37]/20 border-[#D4AF37]/40 text-[#D4AF37]'
+                      : 'bg-white/5 border-white/10 text-white/50 hover:border-white/20'
+                  }`}
+                >
+                  {s === 'Tous' ? 'Tous les films' : FILM_STATUS_LABELS[s as keyof typeof FILM_STATUS_LABELS]}
+                </Link>
+              )
+            })}
+          </div>
+
+          {/* Films Grid */}
+          {films.length === 0 ? (
+            <div className="text-center py-24 text-white/30">
+              <Film className="h-16 w-16 mx-auto mb-4 opacity-30" />
+              <p className="text-xl">Aucun film trouve</p>
+              <p className="text-sm mt-2">Les films seront bientot disponibles.</p>
+            </div>
+          ) : (
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              {films.map((film) => (
+                <Link key={film.id} href={`/films/${film.slug}`}>
+                  <div className="group rounded-2xl border border-white/[0.06] bg-white/[0.02] overflow-hidden hover:border-[#D4AF37]/20 transition-all duration-300 h-full flex flex-col">
+                    {/* Cover */}
+                    <div className="relative h-52 bg-gradient-to-br from-[#D4AF37]/10 to-purple-900/20 shrink-0">
+                      {film.coverImageUrl ? (
+                        <img
+                          src={film.coverImageUrl}
+                          alt={film.title}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center">
+                          <Film className="h-16 w-16 text-[#D4AF37]/20" />
+                        </div>
+                      )}
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-transparent to-transparent" />
+                      <div className="absolute top-3 right-3">
+                        <span className={`text-xs font-medium ${STATUS_COLORS[film.status]}`}>
+                          ● {FILM_STATUS_LABELS[film.status]}
+                        </span>
+                      </div>
+                      {film.catalog && film.catalog !== 'LUMIERE' && (
+                        <div className="absolute top-3 left-3">
+                          <span className="text-xs bg-black/50 text-white/60 rounded px-2 py-0.5">
+                            {CATALOG_LABELS[film.catalog]}
+                          </span>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Content */}
+                    <div className="p-5 flex flex-col flex-1">
+                      <h3 className="font-semibold text-base mb-2 group-hover:text-[#D4AF37] transition-colors line-clamp-2">
+                        {film.title}
+                      </h3>
+
+                      {film.genre && (
+                        <span className="text-xs text-white/30 mb-3">{film.genre}</span>
+                      )}
+
+                      {film.description && (
+                        <p className="text-xs text-white/40 mb-4 line-clamp-3 flex-1">{film.description}</p>
+                      )}
+
+                      {/* Progress */}
+                      <div className="space-y-1.5 mt-auto">
+                        <div className="flex justify-between text-xs">
+                          <span className="text-white/30">Progression</span>
+                          <span className="text-[#D4AF37] font-medium">{Math.round(film.progressPct)}%</span>
+                        </div>
+                        <div className="h-1 bg-white/10 rounded-full overflow-hidden">
+                          <div
+                            className="h-full bg-gradient-to-r from-[#D4AF37] to-[#F0D060] rounded-full"
+                            style={{ width: `${film.progressPct}%` }}
+                          />
+                        </div>
+                      </div>
+
+                      <div className="flex items-center justify-between mt-4 pt-3 border-t border-white/5">
+                        <div className="flex items-center gap-3 text-xs text-white/30">
+                          <span>{film._count.tasks} taches</span>
+                          {film._count.votes > 0 && (
+                            <span className="flex items-center gap-1">
+                              <Star className="h-3 w-3" /> {film._count.votes}
+                            </span>
+                          )}
+                        </div>
+                        <ChevronRight className="h-4 w-4 text-[#D4AF37]/50 group-hover:text-[#D4AF37] transition-colors" />
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   )

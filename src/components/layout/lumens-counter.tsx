@@ -1,0 +1,32 @@
+'use client'
+
+import { useEffect, useState } from 'react'
+import Link from 'next/link'
+import { Sun } from 'lucide-react'
+
+export function LumensCounter() {
+  const [lumens, setLumens] = useState<number | null>(null)
+
+  useEffect(() => {
+    fetch('/api/user/lumens')
+      .then((res) => res.json())
+      .then((data) => setLumens(data.lumens ?? 0))
+      .catch(() => setLumens(0))
+  }, [])
+
+  return (
+    <Link
+      href="/lumens"
+      className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm text-white/50 hover:text-[#D4AF37] hover:bg-[#D4AF37]/5 transition-all"
+    >
+      <Sun className="h-4 w-4 text-[#D4AF37]" />
+      <span className="font-medium">
+        {lumens === null ? (
+          <span className="inline-block w-6 h-4 rounded bg-white/10 animate-pulse" />
+        ) : (
+          lumens.toLocaleString('fr-FR')
+        )}
+      </span>
+    </Link>
+  )
+}

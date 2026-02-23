@@ -968,15 +968,14 @@ export default async function HomePage() {
             ))}
           </div>
 
-          {/* Backed by / Press logos placeholder */}
+          {/* Technology partners */}
           <div className="text-center">
-            <p className="text-xs text-white/25 uppercase tracking-widest mb-8">Ils parlent de nous</p>
+            <p className="text-xs text-white/25 uppercase tracking-widest mb-8">Nos Partenaires Technologiques</p>
             <div className="flex flex-wrap items-center justify-center gap-8 sm:gap-12">
-              {['TechCrunch', 'Les Echos', 'Wired', 'Le Monde', 'Variety'].map((name) => (
+              {['Powered by Claude AI', 'Built with Next.js', 'Secured by Stripe', 'Hosted on Vercel', 'Database by PostgreSQL'].map((name) => (
                 <div
                   key={name}
-                  className="text-white/[0.12] text-lg sm:text-xl font-bold tracking-wider hover:text-white/20 transition-colors duration-300"
-                  style={{ fontFamily: 'var(--font-playfair)' }}
+                  className="text-white/[0.12] text-sm sm:text-base font-semibold tracking-wider hover:text-white/20 transition-colors duration-300"
                 >
                   {name}
                 </div>

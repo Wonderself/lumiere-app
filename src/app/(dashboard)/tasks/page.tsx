@@ -11,7 +11,7 @@ import {
   PHASE_LABELS,
 } from '@/lib/constants'
 import { formatPrice, getStatusColor, getDifficultyColor } from '@/lib/utils'
-import { Star, Lock, ChevronRight } from 'lucide-react'
+import { Star, Lock, ChevronRight, ChevronDown } from 'lucide-react'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = { title: 'Tâches Disponibles' }
@@ -72,66 +72,78 @@ export default async function TasksPage({
     <div className="p-8 space-y-8">
       <div>
         <h1 className="text-3xl font-bold mb-2" style={{ fontFamily: 'var(--font-playfair)' }}>
-          Marketplace de Tâches
+          Marketplace de Taches
         </h1>
-        <p className="text-white/50">{tasks.length} tâche{tasks.length > 1 ? 's' : ''} trouvée{tasks.length > 1 ? 's' : ''}</p>
+        <p className="text-white/50">{tasks.length} tache{tasks.length > 1 ? 's' : ''} trouvee{tasks.length > 1 ? 's' : ''}</p>
       </div>
 
       {/* Filters */}
-      <div className="flex flex-wrap gap-3 p-4 rounded-xl border border-white/5 bg-white/[0.01]">
+      <div className="flex flex-wrap gap-3 p-4 rounded-xl border border-white/[0.06] bg-white/[0.02]">
         {/* Film filter */}
         <form method="GET" className="flex flex-wrap gap-3 w-full">
-          <select
-            name="film"
-            defaultValue={params.film || ''}
-            className="h-9 rounded-lg border border-white/10 bg-white/5 px-3 text-sm text-white focus:outline-none focus:ring-1 focus:ring-[#D4AF37]/50"
-          >
-            <option value="">Tous les films</option>
-            {films.map((f) => (
-              <option key={f.id} value={f.id}>{f.title}</option>
-            ))}
-          </select>
+          <div className="relative">
+            <select
+              name="film"
+              defaultValue={params.film || ''}
+              className="h-9 appearance-none rounded-lg border border-white/[0.06] bg-white/[0.03] pl-3 pr-9 text-sm text-white focus:outline-none focus:ring-1 focus:ring-[#D4AF37]/30 focus:border-[#D4AF37]/30 transition-all cursor-pointer"
+            >
+              <option value="">Tous les films</option>
+              {films.map((f) => (
+                <option key={f.id} value={f.id}>{f.title}</option>
+              ))}
+            </select>
+            <ChevronDown className="absolute right-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-white/30 pointer-events-none" />
+          </div>
 
-          <select
-            name="difficulty"
-            defaultValue={params.difficulty || ''}
-            className="h-9 rounded-lg border border-white/10 bg-white/5 px-3 text-sm text-white focus:outline-none"
-          >
-            <option value="">Toutes difficultés</option>
-            <option value="EASY">Facile</option>
-            <option value="MEDIUM">Moyen</option>
-            <option value="HARD">Difficile</option>
-            <option value="EXPERT">Expert</option>
-          </select>
+          <div className="relative">
+            <select
+              name="difficulty"
+              defaultValue={params.difficulty || ''}
+              className="h-9 appearance-none rounded-lg border border-white/[0.06] bg-white/[0.03] pl-3 pr-9 text-sm text-white focus:outline-none focus:ring-1 focus:ring-[#D4AF37]/30 focus:border-[#D4AF37]/30 transition-all cursor-pointer"
+            >
+              <option value="">Toutes difficultes</option>
+              <option value="EASY">Facile</option>
+              <option value="MEDIUM">Moyen</option>
+              <option value="HARD">Difficile</option>
+              <option value="EXPERT">Expert</option>
+            </select>
+            <ChevronDown className="absolute right-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-white/30 pointer-events-none" />
+          </div>
 
-          <select
-            name="status"
-            defaultValue={params.status || ''}
-            className="h-9 rounded-lg border border-white/10 bg-white/5 px-3 text-sm text-white focus:outline-none"
-          >
-            <option value="">Disponibles & En cours</option>
-            <option value="AVAILABLE">Disponibles</option>
-            <option value="CLAIMED">En cours</option>
-            <option value="VALIDATED">Validées</option>
-          </select>
+          <div className="relative">
+            <select
+              name="status"
+              defaultValue={params.status || ''}
+              className="h-9 appearance-none rounded-lg border border-white/[0.06] bg-white/[0.03] pl-3 pr-9 text-sm text-white focus:outline-none focus:ring-1 focus:ring-[#D4AF37]/30 focus:border-[#D4AF37]/30 transition-all cursor-pointer"
+            >
+              <option value="">Disponibles & En cours</option>
+              <option value="AVAILABLE">Disponibles</option>
+              <option value="CLAIMED">En cours</option>
+              <option value="VALIDATED">Validees</option>
+            </select>
+            <ChevronDown className="absolute right-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-white/30 pointer-events-none" />
+          </div>
 
-          <select
-            name="minPrice"
-            defaultValue={params.minPrice || ''}
-            className="h-9 rounded-lg border border-white/10 bg-white/5 px-3 text-sm text-white focus:outline-none"
-          >
-            <option value="">Prix min</option>
-            <option value="50">50€+</option>
-            <option value="100">100€+</option>
-            <option value="500">500€</option>
-          </select>
+          <div className="relative">
+            <select
+              name="minPrice"
+              defaultValue={params.minPrice || ''}
+              className="h-9 appearance-none rounded-lg border border-white/[0.06] bg-white/[0.03] pl-3 pr-9 text-sm text-white focus:outline-none focus:ring-1 focus:ring-[#D4AF37]/30 focus:border-[#D4AF37]/30 transition-all cursor-pointer"
+            >
+              <option value="">Prix min</option>
+              <option value="50">50€+</option>
+              <option value="100">100€+</option>
+              <option value="500">500€</option>
+            </select>
+            <ChevronDown className="absolute right-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-white/30 pointer-events-none" />
+          </div>
 
           <Button type="submit" variant="outline" size="sm">
             Filtrer
           </Button>
 
           <Link href="/tasks">
-            <Button variant="ghost" size="sm">Réinitialiser</Button>
+            <Button variant="ghost" size="sm">Reinitialiser</Button>
           </Link>
         </form>
       </div>
@@ -140,14 +152,14 @@ export default async function TasksPage({
       {tasks.length === 0 ? (
         <div className="text-center py-24 text-white/30">
           <Star className="h-16 w-16 mx-auto mb-4 opacity-30" />
-          <p className="text-xl">Aucune tâche trouvée</p>
+          <p className="text-xl">Aucune tache trouvee</p>
           <p className="text-sm mt-2">Modifiez vos filtres ou revenez plus tard.</p>
         </div>
       ) : (
         <div className="space-y-3">
           {tasks.map((task) => (
             <Link key={task.id} href={`/tasks/${task.id}`}>
-              <div className="group flex items-center gap-4 p-4 rounded-xl border border-white/5 bg-white/[0.02] hover:border-[#D4AF37]/20 hover:bg-white/[0.04] transition-all duration-200">
+              <div className="group flex items-center gap-4 p-4 rounded-xl border border-white/[0.06] bg-white/[0.02] hover:border-[#D4AF37]/20 hover:bg-white/[0.04] transition-all duration-200">
                 {/* Status indicator */}
                 <div className={`w-2 h-12 rounded-full ${
                   task.status === 'AVAILABLE' ? 'bg-green-500' :

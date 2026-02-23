@@ -141,7 +141,8 @@ export default async function NotificationsPage() {
               <h2 className="text-sm font-medium text-white/30 uppercase tracking-wider mb-3 px-1">
                 {group.label}
               </h2>
-              <div className="space-y-2">
+              {/* Date group container with subtle background */}
+              <div className="bg-white/[0.02] rounded-2xl border border-white/[0.04] p-3 space-y-2">
                 {group.items.map((notification) => {
                   const Icon = NOTIF_ICONS[notification.type] || Bell
                   const iconColor = NOTIF_COLORS[notification.type] || 'text-white/50'
@@ -159,11 +160,16 @@ export default async function NotificationsPage() {
                     >
                       <CardContent className="p-4">
                         <div className="flex items-start gap-4">
-                          {/* Icon */}
-                          <div
-                            className={`mt-0.5 p-2 rounded-lg bg-white/[0.05] ${iconColor}`}
-                          >
-                            <Icon className="h-4 w-4" />
+                          {/* Icon with gold dot for unread */}
+                          <div className="relative mt-0.5">
+                            <div
+                              className={`p-2 rounded-lg bg-white/[0.05] ${iconColor}`}
+                            >
+                              <Icon className="h-4 w-4" />
+                            </div>
+                            {isUnread && (
+                              <div className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-[#D4AF37] border-2 border-[#0A0A0A]" />
+                            )}
                           </div>
 
                           {/* Content */}

@@ -66,17 +66,49 @@ export default async function StreamingFilmPage(props: { params: Promise<{ slug:
             className="w-full h-full object-contain"
           />
         ) : film.trailerUrl ? (
-          <video
-            src={film.trailerUrl}
-            poster={film.thumbnailUrl || undefined}
-            controls
-            className="w-full h-full object-contain"
-          />
+          <>
+            <video
+              src={film.trailerUrl}
+              poster={film.thumbnailUrl || undefined}
+              controls
+              className="w-full h-full object-contain"
+            />
+            {/* Trailer badge overlay */}
+            <div className="absolute top-4 left-4 px-3 py-1.5 rounded-lg bg-[#D4AF37]/90 text-black text-xs font-semibold backdrop-blur-sm pointer-events-none">
+              Bande-annonce
+            </div>
+          </>
         ) : (
-          <div className="flex items-center justify-center h-full">
-            <div className="text-center">
-              <Play className="h-20 w-20 text-white/20 mx-auto mb-4" />
-              <p className="text-white/30">Vidéo bientôt disponible</p>
+          <div className="relative flex items-center justify-center h-full overflow-hidden">
+            {/* Background poster/thumbnail with blur */}
+            {(film.posterUrl || film.thumbnailUrl) && (
+              <>
+                <img
+                  src={film.posterUrl || film.thumbnailUrl || ''}
+                  alt=""
+                  className="absolute inset-0 w-full h-full object-cover scale-110 blur-md opacity-30"
+                />
+                <div className="absolute inset-0 bg-black/60" />
+              </>
+            )}
+            {/* Glass card overlay */}
+            <div className="relative z-10 text-center px-6 py-10 rounded-2xl bg-white/[0.04] backdrop-blur-xl border border-white/[0.08] max-w-sm mx-4">
+              <div className="relative mx-auto mb-5 h-16 w-16">
+                <Film className="h-16 w-16 text-[#D4AF37]/40" />
+                {/* Subtle pulse animation */}
+                <div className="absolute inset-0 rounded-full bg-[#D4AF37]/10 animate-ping" style={{ animationDuration: '3s' }} />
+              </div>
+              <p className="text-white/70 text-lg font-semibold mb-2" style={{ fontFamily: 'var(--font-playfair)' }}>
+                En cours de production
+              </p>
+              <p className="text-white/30 text-sm mb-1">
+                Ce film est actuellement en production.
+              </p>
+              {film.contract && (
+                <p className="text-[#D4AF37]/60 text-xs mt-3">
+                  Statut du contrat : {film.contract.status === 'SIGNED' ? 'Signe' : film.contract.status === 'PENDING' ? 'En attente' : film.contract.status.toLowerCase()}
+                </p>
+              )}
             </div>
           </div>
         )}

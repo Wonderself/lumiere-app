@@ -35,6 +35,7 @@ import {
 import { cn, getInitials } from '@/lib/utils'
 import { AnimatePresence, MotionDiv } from '@/components/ui/motion'
 import { NotificationBell } from '@/components/layout/notification-bell'
+import { LumensCounter } from '@/components/layout/lumens-counter'
 
 const navLinks = [
   { href: '/films', label: 'Films', icon: Film },
@@ -119,13 +120,7 @@ export function Header() {
               <NotificationBell />
 
               {/* Lumens */}
-              <Link
-                href="/lumens"
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm text-white/50 hover:text-[#D4AF37] hover:bg-[#D4AF37]/5 transition-all"
-              >
-                <Sun className="h-4 w-4 text-[#D4AF37]" />
-                <span className="font-medium">0</span>
-              </Link>
+              <LumensCounter />
 
               {/* User Menu */}
               <DropdownMenu>
