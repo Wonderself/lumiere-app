@@ -108,6 +108,35 @@ body {
   background-clip: text;
 }
 
+.text-instagram-gradient {
+  background: linear-gradient(135deg, #833AB4 0%, #E1306C 33%, #F77737 66%, #FCAF45 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.bg-instagram-gradient {
+  background: linear-gradient(135deg, #833AB4 0%, #E1306C 33%, #F77737 66%, #FCAF45 100%);
+}
+
+.border-instagram-gradient {
+  position: relative;
+}
+
+.border-instagram-gradient::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, #833AB4, #E1306C, #F77737, #FCAF45);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
 .text-shimmer {
   background: linear-gradient(
     120deg,
