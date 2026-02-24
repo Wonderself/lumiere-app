@@ -62,7 +62,7 @@ const roadmap: Phase[] = [
       { id: 'v2-4', title: 'Dépendances de tâches (DAG)', description: 'Déverrouillage automatique selon l\'ordre de production', status: 'todo', difficulty: 'medium' },
       { id: 'v2-5', title: 'Timer 48h + auto-release', description: 'Si non soumis dans les délais, la tâche redevient disponible', status: 'todo', difficulty: 'easy', note: 'BullMQ + cron' },
       { id: 'v2-6', title: 'Emails transactionnels', description: 'Bienvenue, validation, paiement, rappels — beaux et clairs', status: 'todo', difficulty: 'easy', note: 'Resend + react-email' },
-      { id: 'v2-7', title: 'Recherche full-text', description: 'Chercher films et tâches instantanément', status: 'todo', difficulty: 'easy', note: 'MeiliSearch, setup en 5 min' },
+      { id: 'v2-7', title: 'Recherche full-text', description: 'Recherche instantanee films, taches et createurs (Ctrl+K)', status: 'done', difficulty: 'easy', note: 'SearchOverlay + server action' },
     ],
   },
   {
@@ -100,12 +100,12 @@ const roadmap: Phase[] = [
     name: 'Gamification',
     version: 'V5',
     description: 'Points, badges, classements, concours. La communauté s\'anime.',
-    status: 'todo',
+    status: 'in_progress',
     emoji: '🏆',
     items: [
       { id: 'v5-1', title: 'Points & niveaux automatiques', description: 'ROOKIE → PRO → EXPERT → VIP, progression naturelle', status: 'todo', difficulty: 'easy' },
       { id: 'v5-2', title: 'Badges & achievements', description: '13 badges : Première Lumière, Marathonien, Perfectionniste...', status: 'todo', difficulty: 'easy' },
-      { id: 'v5-3', title: 'Profils publics', description: 'Portfolio, filmographie, badges, partage social', status: 'todo', difficulty: 'easy' },
+      { id: 'v5-3', title: 'Profils publics', description: 'Page publique createur avec stats, competences, contributions', status: 'done', difficulty: 'easy', note: '/users/[id] avec scenarios + taches' },
       { id: 'v5-4', title: 'Concours mensuels', description: 'Thèmes, votes communautaires, récompenses automatiques', status: 'todo', difficulty: 'medium' },
       { id: 'v5-5', title: 'Parrainage', description: 'Liens uniques, bonus parrain et filleul', status: 'todo', difficulty: 'easy' },
     ],

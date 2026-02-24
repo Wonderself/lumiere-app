@@ -183,6 +183,31 @@
   - V7-3 (Security): DONE — middleware + Zod + password policy
   - V7-6 (Legal RGPD): DONE — 3 full legal pages
 
+### 2026-02-24 — Search + Public Profiles + Screenwriter Dashboard + Timeline
+- **Search overlay** (`src/components/search-overlay.tsx`):
+  - Expandable search in header (Ctrl+K shortcut)
+  - Real-time search across films, tasks and users via `searchAction`
+  - 300ms debounce, categorized results with navigation
+  - Replaces static search icon in NetflixHeader
+- **Public user profiles** (`src/app/(public)/users/[id]/page.tsx`):
+  - Full creator profile: avatar, bio, level, role, reputation badges
+  - Stats grid: points, validated tasks, reputation, completed tasks
+  - Skills & languages display with themed pills
+  - Recent contributions (validated tasks with film links)
+  - Scenario proposals list with vote counts and AI scores
+- **Screenwriter dashboard** (`src/app/(dashboard)/dashboard/screenwriter/page.tsx`):
+  - Stats: total scenarios, votes, avg AI score, winners
+  - Active voting alert banner
+  - Full scenario list with status indicators and AI scores
+  - Tips section for writing good scenarios
+  - Banner link from main dashboard for SCREENWRITER and ADMIN roles
+- **Film production timeline** (`src/components/film-timeline.tsx`):
+  - Interactive horizontal timeline bar (desktop) with phase dots
+  - Expandable vertical list with task details
+  - Click to expand phases and see tasks with prices and status
+  - Replaces static phase display on film detail pages
+- **Roadmap updated**: V2-7, V5-3 marked done; V5 now in_progress
+
 ---
 
 ## ROADMAP — Etapes Detaillees

@@ -290,7 +290,7 @@ Each phase has: status (LOCKED/ACTIVE/COMPLETED), order, dependencies
 ## 12. Public Pages
 - **Cinema** (`/cinema`) — Main landing with stats, films, services
 - **Films** (`/films`) — Browse all public films
-- **Film Detail** (`/films/[slug]`) — Full film info, phases, tasks, tokenization
+- **Film Detail** (`/films/[slug]`) — Full film info, interactive timeline, tasks, tokenization, JSON-LD SEO
 - **Streaming** (`/streaming`) — Browse streaming catalog
 - **Actors** (`/actors`) — Browse AI actors
 - **Actor Profile** (`/actors/[slug]`) — Actor details, filmography
@@ -299,6 +299,7 @@ Each phase has: status (LOCKED/ACTIVE/COMPLETED), order, dependencies
 - **Invest** (`/invest`) — Investor landing page, metrics, advantages, comparison table, timeline
 - **Roadmap** (`/roadmap`) — Product roadmap
 - **Leaderboard** (`/leaderboard`) — User rankings
+- **Public Profiles** (`/users/[id]`) — Creator profile, stats, skills, contributions, scenarios
 - **Legal** — Terms, privacy, cookies
 
 ---
@@ -418,3 +419,36 @@ Each phase has: status (LOCKED/ACTIVE/COMPLETED), order, dependencies
 - **force-dynamic**: All 52 Prisma-using pages marked for runtime rendering
 - **Standalone output**: Next.js standalone mode for Docker deployment
 - **Healthcheck**: curl-based Docker healthcheck on port 3000
+
+---
+
+## 19. Search System
+- **Search Overlay** (`src/components/search-overlay.tsx`): Ctrl+K keyboard shortcut
+- **Expandable search bar** in Netflix header (replaces static icon)
+- **Real-time results** with 300ms debounce across 3 categories:
+  - Films (title, genre, description) — public only
+  - Tasks (title, description) — available only
+  - Users (displayName, email) — all users
+- **Server action** (`src/app/actions/search.ts`): Prisma parallel queries
+- **Navigation**: Click any result to navigate to detail page
+
+---
+
+## 20. Screenwriter Dashboard
+- **Dedicated page** (`/dashboard/screenwriter`): Full scenario management
+- **Stats grid**: Total scenarios, total votes, average AI score, winners count
+- **Voting alert**: Gold banner when scenarios are in active voting phase
+- **Scenario list**: Status badges, AI scores, vote counts, creation dates, loglines
+- **Status tracking**: SUBMITTED → SHORTLISTED → VOTING → WINNER → ARCHIVED
+- **Tips section**: Best practices for writing good scenarios
+- **Dashboard link**: Banner on main dashboard for SCREENWRITER and ADMIN roles
+
+---
+
+## 21. Film Production Timeline
+- **Interactive component** (`src/components/film-timeline.tsx`)
+- **Desktop horizontal bar**: Phase dots on progress track with status colors
+- **Expandable vertical list**: Click phases to see tasks with prices and status
+- **Task status dots**: Green (validated), gold (available), blue (claimed)
+- **Phase indicators**: Completed (green checkmark), Active (gold pulse), Locked (gray lock)
+- **Replaces** static phase display on film detail pages

@@ -221,6 +221,24 @@ export default async function DashboardPage() {
         )}
       </div>
 
+      {/* Screenwriter Banner */}
+      {(user.role === 'SCREENWRITER' || user.role === 'ADMIN') && (
+        <Link href="/dashboard/screenwriter" className="block p-5 rounded-2xl bg-gradient-to-r from-amber-50 to-yellow-50 border border-amber-200/50 hover:shadow-md transition-all group">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="h-10 w-10 rounded-xl bg-[#D4AF37]/15 flex items-center justify-center">
+                <Scale className="h-5 w-5 text-[#D4AF37]" />
+              </div>
+              <div>
+                <h3 className="font-semibold text-gray-800 text-sm">Espace Scenariste</h3>
+                <p className="text-xs text-gray-500">Gerez vos scenarios, suivez les votes et scores IA</p>
+              </div>
+            </div>
+            <ChevronRight className="h-5 w-5 text-gray-300 group-hover:text-[#D4AF37] transition-colors" />
+          </div>
+        </Link>
+      )}
+
       {/* Quick Actions */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         {[

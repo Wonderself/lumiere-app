@@ -3,13 +3,12 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import { Progress } from '@/components/ui/progress'
 
 export const dynamic = 'force-dynamic'
 import Image from 'next/image'
-import { Film, ChevronRight, Lock, CheckCircle, Loader2, Star, ArrowRight, Coins, Crown, Vote, TrendingUp, Bell } from 'lucide-react'
-import { FILM_STATUS_LABELS, PHASE_LABELS, TASK_TYPE_LABELS, DIFFICULTY_LABELS } from '@/lib/constants'
-import { formatPrice } from '@/lib/utils'
+import { Film, ArrowRight, Coins, Crown, Vote, TrendingUp, Bell } from 'lucide-react'
+import { FILM_STATUS_LABELS } from '@/lib/constants'
+import { FilmTimeline } from '@/components/film-timeline'
 import type { Metadata } from 'next'
 
 type Props = { params: Promise<{ slug: string }> }
@@ -72,18 +71,6 @@ export default async function FilmDetailPage({ params }: Props) {
       url: 'https://cinema.lumiere.film',
     },
     dateCreated: film.createdAt.toISOString(),
-  }
-
-  const phaseStatusIcon = (status: string) => {
-    if (status === 'COMPLETED') return <CheckCircle className="h-5 w-5 text-green-400" />
-    if (status === 'ACTIVE') return <Loader2 className="h-5 w-5 text-[#D4AF37] animate-spin" />
-    return <Lock className="h-5 w-5 text-white/20" />
-  }
-
-  const phaseStatusColor = (status: string) => {
-    if (status === 'COMPLETED') return 'border-green-500/20 bg-green-500/5'
-    if (status === 'ACTIVE') return 'border-[#D4AF37]/30 bg-[#D4AF37]/5'
-    return 'border-white/5 bg-white/[0.01] opacity-60'
   }
 
   return (
@@ -185,54 +172,8 @@ export default async function FilmDetailPage({ params }: Props) {
           </div>
         </div>
 
-        {/* Phases */}
-        <div>
-          <h2 className="text-2xl font-bold mb-6" style={{ fontFamily: 'var(--font-playfair)' }}>
-            Phases de Production
-          </h2>
-          <div className="space-y-4">
-            {film.phases.map((phase) => (
-              <div key={phase.id} className={`rounded-xl border p-6 transition-all ${phaseStatusColor(phase.status)}`}>
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center gap-3">
-                    {phaseStatusIcon(phase.status)}
-                    <div>
-                      <h3 className="font-semibold text-lg">
-                        {phase.phaseOrder}. {PHASE_LABELS[phase.phaseName]}
-                      </h3>
-                      <p className="text-xs text-white/30 capitalize">{phase.status.toLowerCase()}</p>
-                    </div>
-                  </div>
-                  <div className="text-sm text-white/40">
-                    {phase._count.tasks} tâche{phase._count.tasks > 1 ? 's' : ''}
-                  </div>
-                </div>
-
-                {/* Sample tasks */}
-                {phase.tasks.length > 0 && phase.status !== 'LOCKED' && (
-                  <div className="space-y-2 mt-4 pt-4 border-t border-white/5">
-                    {phase.tasks.map((task) => (
-                      <Link key={task.id} href={`/tasks/${task.id}`}>
-                        <div className="flex items-center justify-between p-3 rounded-lg hover:bg-white/5 transition-colors">
-                          <div className="flex items-center gap-3">
-                            <span className="text-sm font-medium line-clamp-1">{task.title}</span>
-                            <Badge variant="secondary" className="text-xs hidden sm:block">
-                              {TASK_TYPE_LABELS[task.type]}
-                            </Badge>
-                          </div>
-                          <div className="flex items-center gap-3 shrink-0">
-                            <span className="text-sm font-medium text-[#D4AF37]">{formatPrice(task.priceEuros)}</span>
-                            <ChevronRight className="h-4 w-4 text-white/20" />
-                          </div>
-                        </div>
-                      </Link>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
+        {/* Production Timeline */}
+        <FilmTimeline phases={film.phases as never} />
 
         {/* Co-Producer Section */}
         <div className="rounded-2xl border border-[#D4AF37]/20 bg-gradient-to-br from-[#D4AF37]/[0.06] to-transparent p-8 md:p-10 relative overflow-hidden">

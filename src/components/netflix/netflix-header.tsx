@@ -34,6 +34,7 @@ import {
 import { cn, getInitials } from '@/lib/utils'
 import { AnimatePresence, MotionDiv } from '@/components/ui/motion'
 import { NotificationBell } from '@/components/layout/notification-bell'
+import { SearchOverlay } from '@/components/search-overlay'
 
 export function NetflixHeader() {
   const pathname = usePathname()
@@ -124,10 +125,8 @@ export function NetflixHeader() {
 
         {/* Right: Search + Profile */}
         <div className="flex items-center gap-3">
-          {/* Search icon */}
-          <button className="hidden md:flex h-8 w-8 items-center justify-center rounded-full hover:bg-white/10 transition-colors">
-            <Search className="h-4 w-4 text-white/60" />
-          </button>
+          {/* Search */}
+          <SearchOverlay />
 
           {session?.user ? (
             <div className="hidden lg:flex items-center gap-2">
