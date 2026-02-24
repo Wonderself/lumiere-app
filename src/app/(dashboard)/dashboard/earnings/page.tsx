@@ -11,6 +11,7 @@ import {
   ArrowUpRight,
   Banknote,
   CalendarDays,
+  FileText,
 } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import Link from 'next/link'
@@ -190,6 +191,16 @@ export default async function EarningsPage() {
                   <Badge variant="outline" className={`text-[10px] shrink-0 ${statusColors[p.status] || ''}`}>
                     {statusLabels[p.status] || p.status}
                   </Badge>
+                  {p.status === 'COMPLETED' && (
+                    <Link
+                      href={`/api/invoices?paymentId=${p.id}`}
+                      target="_blank"
+                      className="p-1.5 rounded-lg hover:bg-gray-100 transition-colors shrink-0"
+                      title="Telecharger la facture"
+                    >
+                      <FileText className="h-3.5 w-3.5 text-gray-400" />
+                    </Link>
+                  )}
                 </div>
               ))}
             </div>

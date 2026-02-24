@@ -492,6 +492,52 @@ Templates HTML branding Lumiere gold/dark.
 - V7-4: Redis cache → done
 - V3 phase status: todo → in_progress
 
+### 2026-02-24 — Emails + Deals + Sentry + VideoPlayer + Invoices + Build Fix
+
+**Emails Transactionnels (v2-6)**
+- Created `src/lib/email.ts` — 6 email templates (welcome, password reset, task validated, payment, screenplay accepted, weekly digest)
+- Resend SDK with graceful degradation (logs in dev if no API key)
+- HTML email layout: dark theme with gold (#D4AF37) accents, matching brand
+- Integrated into auth.ts (welcome + reset), admin.ts (task validated + payment), screenplays.ts (deal accepted)
+
+**Deal Automatisé Scénarios (v6-3)**
+- Created `generateScreenplayDeal()` in `src/lib/contracts.ts`
+- Complete deal contract with: IP rights, revenue share, credit type, modification tolerance, festival bonuses, 24-month production deadline
+- `generateScreenplayDealAction` in screenplays.ts — admin generates deal for accepted screenplay
+- Email + notification + blockchain event on deal creation
+
+**Sentry Monitoring (v7-5)**
+- Created `src/instrumentation.ts` — Next.js instrumentation hook for Sentry
+- Created `src/app/global-error.tsx` — Global error boundary with Sentry reporting
+- Dynamic imports: only loads when NEXT_PUBLIC_SENTRY_DSN is set, zero overhead otherwise
+- `onRequestError` handler captures server-side errors
+
+**Video Player Component (v4-1)**
+- Created `src/components/video-player.tsx` — Full-featured video player
+- Controls: play/pause, mute, volume slider, fullscreen, seek, skip ±10s
+- Keyboard shortcuts: Space/K (play), F (fullscreen), M (mute), arrows (seek)
+- Subtitle track support (.vtt/.srt), progress callback, auto-hide controls
+- Gold-themed UI matching the design system
+
+**Invoice System (auto-payment)**
+- Created `src/lib/invoices.ts` — Invoice generation (Markdown format)
+- Legal-compliant French invoice template with: SIRET, TVA, prestation details, auto-liquidation clause
+- Sequential invoice numbers: LB-YYYY-MMDD-XXXXXX
+- Created `src/app/api/invoices/route.ts` — Download invoice by paymentId (owner or admin only)
+- Invoice download button added to earnings page for each COMPLETED payment
+- Blockchain event on payment completion
+
+**Build Fix (Docker/Coolify)**
+- Fixed `prisma/seed.ts` TypeScript errors: added `as never` casts for enum types (TaskType, Difficulty, Status)
+- Fixed `scripts/test-auth.ts`: added `as never` cast for PhaseName enum
+- These were blocking the Docker build on Coolify (TypeScript strict mode fails on enum string literals)
+
+**Existing Features Recognized in Roadmap**
+- v3-2 (Co-production) → Marked done (tokenization ecosystem: marketplace, portfolio, governance, dividends)
+- v4-3 (Catalogue streaming) → Marked done (/streaming with search, genres, featured hero)
+- v4-6 (Soumission de films) → Marked done (/streaming/submit with auto-contract + AI evaluation)
+- V5 Gamification → Marked DONE (8/8 items complete)
+
 ---
 
 ## Important Files

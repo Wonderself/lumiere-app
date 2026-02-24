@@ -6,6 +6,9 @@ import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { createNotification } from '@/lib/notifications'
 import { registerContentHash } from '@/lib/content-hash'
+import { recordEvent } from '@/lib/blockchain'
+import { generateScreenplayDeal } from '@/lib/contracts'
+import { sendScreenplayAcceptedEmail } from '@/lib/email'
 import { z } from 'zod'
 
 const screenplaySchema = z.object({
@@ -105,6 +108,86 @@ export async function submitScreenplayAction(
     href: '/screenplays',
   })
 
+  // Send email if accepted
+  if (status === 'ACCEPTED') {
+    const user = await prisma.user.findUnique({
+      where: { id: session.user.id },
+      select: { email: true, displayName: true },
+    })
+    if (user?.email) {
+      const sharePct = revenueShareBps / 100
+      sendScreenplayAcceptedEmail(user.email, user.displayName || 'Auteur', title, sharePct).catch(() => {})
+    }
+  }
+
+  revalidatePath('/screenplays')
+  return { success: true }
+}
+
+// ─── Admin: Generate Deal for Accepted Screenplay ────────────
+
+export async function generateScreenplayDealAction(formData: FormData) {
+  const session = await auth()
+  if (!session?.user || session.user.role !== 'ADMIN') return { error: 'Non autorisé' }
+
+  const screenplayId = formData.get('screenplayId') as string
+  if (!screenplayId) return { error: 'ID manquant' }
+
+  const screenplay = await prisma.screenplay.findUnique({
+    where: { id: screenplayId },
+    include: { user: { select: { displayName: true, email: true } } },
+  })
+
+  if (!screenplay) return { error: 'Scénario introuvable' }
+  if (screenplay.status !== 'ACCEPTED') return { error: 'Le scénario doit être accepté pour générer un deal' }
+
+  const revenueSharePct = screenplay.revenueShareBps > 0
+    ? screenplay.revenueShareBps / 100
+    : 5 // Default 5% if not specified
+
+  const dealMarkdown = generateScreenplayDeal({
+    writerName: screenplay.user.displayName || 'Auteur',
+    screenplayTitle: screenplay.title,
+    genre: screenplay.genre || 'Non spécifié',
+    revenueSharePct,
+    modificationTolerancePct: screenplay.modificationTolerance,
+    signDate: new Date().toISOString().split('T')[0],
+  })
+
+  // Store deal in screenplay record (using aiFeedback field for deal terms — pragmatic)
+  await prisma.screenplay.update({
+    where: { id: screenplayId },
+    data: {
+      status: 'ACCEPTED' as never,
+      aiFeedback: `${screenplay.aiFeedback || ''}\n\n---\n\n${dealMarkdown}`,
+    },
+  })
+
+  // Notify writer
+  await createNotification(screenplay.userId, 'SYSTEM' as never, 'Deal proposé pour votre scénario', {
+    body: `Un contrat de ${revenueSharePct}% des revenus vous est proposé pour "${screenplay.title}". Consultez les détails sur votre page scénarios.`,
+    href: '/screenplays',
+  })
+
+  // Record on blockchain
+  await recordEvent({
+    type: 'SCREENPLAY_DEAL_CREATED',
+    entityType: 'Screenplay',
+    entityId: screenplayId,
+    data: { userId: screenplay.userId, revenueSharePct, title: screenplay.title },
+  }).catch(() => {})
+
+  // Send email
+  if (screenplay.user.email) {
+    sendScreenplayAcceptedEmail(
+      screenplay.user.email,
+      screenplay.user.displayName || 'Auteur',
+      screenplay.title,
+      revenueSharePct
+    ).catch(() => {})
+  }
+
+  revalidatePath('/admin/screenplays')
   revalidatePath('/screenplays')
   return { success: true }
 }

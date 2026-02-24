@@ -259,7 +259,7 @@ async function main() {
   await prisma.filmPhase.createMany({
     data: phaseNames.map((name, i) => ({
       filmId: testFilm.id,
-      phaseName: name,
+      phaseName: name as never,
       phaseOrder: i + 1,
       status: (i === 0 ? 'ACTIVE' : 'LOCKED') as never,
     })),

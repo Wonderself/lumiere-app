@@ -612,3 +612,61 @@ Each phase has: status (LOCKED/ACTIVE/COMPLETED), order, dependencies
 - **Graceful degradation**: if Redis unavailable, falls back to direct Prisma query
 - **No user impact**: cache-miss still returns fresh data, just slightly slower
 - **Significant load reduction** on PostgreSQL for frequently-accessed public pages
+
+---
+
+## 36. Emails Transactionnels (Resend)
+- **Service**: `src/lib/email.ts` — wrapper Resend avec graceful degradation
+- **6 templates HTML** avec layout dark/gold brand-matching:
+  - `sendWelcomeEmail()` — bienvenue après inscription
+  - `sendPasswordResetEmail()` — lien de reset (1h expiry)
+  - `sendTaskValidatedEmail()` — tâche validée + montant crédité
+  - `sendPaymentEmail()` — paiement envoyé + montant
+  - `sendScreenplayAcceptedEmail()` — scénario accepté + deal proposé
+  - `sendWeeklyDigest()` — résumé hebdomadaire (tâches, Lumens, films)
+- **Intégré** dans auth.ts (register, reset), admin.ts (task validation, payment), screenplays.ts (deal)
+- **Fallback dev**: si pas de RESEND_API_KEY, log en console (pas d'erreur)
+
+---
+
+## 37. Deal Automatisé Scénarios
+- **Contrat complet**: `generateScreenplayDeal()` dans `src/lib/contracts.ts`
+- **8 articles**: droits cédés, rémunération (%), crédit au générique, modifications, garanties, résiliation
+- **Bonus festival**: +500€ si sélectionné (Cannes, Berlin, Venice, Toronto, Sundance)
+- **Bonus 100K vues**: +200€ si le film dépasse 100 000 vues
+- **Credit types**: sole writer, co-written, story-by
+- **Production deadline**: 24 mois pour entrer en production, sinon droits reviennent à l'auteur
+- **Action admin**: `generateScreenplayDealAction` — génère deal pour scénario accepté
+- **Notifications**: email + in-app + blockchain event
+
+---
+
+## 38. Monitoring Sentry
+- **Instrumentation**: `src/instrumentation.ts` — hook Next.js auto-chargé
+- **Error boundary**: `src/app/global-error.tsx` — capture erreurs globales
+- **Dynamic import**: Sentry ne charge que si `NEXT_PUBLIC_SENTRY_DSN` est défini
+- **Server errors**: `onRequestError` capture les erreurs côté serveur
+- **Zero overhead**: aucun impact perf si pas configuré
+- **Config**: tracesSampleRate 0.1 en prod, 1.0 en dev
+
+---
+
+## 39. Video Player Component
+- **Fichier**: `src/components/video-player.tsx`
+- **Features**: play/pause, volume, mute, fullscreen, seek, skip ±10s
+- **Sous-titres**: support tracks .vtt/.srt multi-langues
+- **Raccourcis clavier**: Space/K (play), F (fullscreen), M (mute), flèches (seek)
+- **Auto-hide**: contrôles disparaissent après 3s d'inactivité
+- **Callbacks**: onProgress(%), onComplete pour analytics
+- **Design**: gold-themed controls matching le design system
+
+---
+
+## 40. Système de Facturation
+- **Génération**: `src/lib/invoices.ts` — factures Markdown légales
+- **Format français**: SIRET, TVA intracommunautaire, auto-liquidation Art. 283-2 CGI
+- **Numérotation séquentielle**: LB-YYYY-MMDD-XXXXXX
+- **API download**: `GET /api/invoices?paymentId=xxx` — Markdown à télécharger
+- **Sécurité**: propriétaire du paiement ou admin uniquement
+- **Dashboard**: bouton "Facture" visible sur chaque paiement COMPLETED dans /dashboard/earnings
+- **Blockchain**: event PAYMENT_COMPLETED enregistré à chaque paiement

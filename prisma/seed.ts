@@ -351,7 +351,7 @@ async function main() {
   ]
 
   for (const task of tasks1Data) {
-    await prisma.task.create({ data: task })
+    await prisma.task.create({ data: task as never })
   }
 
   // =============================================
@@ -434,7 +434,7 @@ async function main() {
   ]
 
   for (const task of tasks2Data) {
-    await prisma.task.create({ data: task })
+    await prisma.task.create({ data: task as never })
   }
 
   // =============================================
@@ -502,7 +502,7 @@ async function main() {
   ]
 
   for (const task of tasks3Data) {
-    await prisma.task.create({ data: task })
+    await prisma.task.create({ data: task as never })
   }
 
   // =============================================

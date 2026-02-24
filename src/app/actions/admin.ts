@@ -11,6 +11,7 @@ import { createNotification } from '@/lib/notifications'
 import { runAiReview } from '@/lib/ai-review'
 import { recordEvent } from '@/lib/blockchain'
 import { calculateReputationScore, getBadgeForScore } from '@/lib/reputation'
+import { sendTaskValidatedEmail, sendPaymentEmail } from '@/lib/email'
 
 async function requireAdmin() {
   const session = await auth()
@@ -478,6 +479,22 @@ export async function approveSubmissionAction(formData: FormData) {
     href: `/tasks/${submission.taskId}`,
   })
 
+  // Send task validated email (non-blocking)
+  const submitter = await prisma.user.findUnique({
+    where: { id: submission.userId },
+    select: { email: true, displayName: true },
+  })
+  if (submitter?.email) {
+    const filmTitle = await prisma.film.findUnique({ where: { id: submission.task.filmId }, select: { title: true } })
+    sendTaskValidatedEmail(
+      submitter.email,
+      submitter.displayName || 'Contributeur',
+      submission.task.title,
+      filmTitle?.title || 'Film',
+      submission.task.priceEuros
+    ).catch(() => {})
+  }
+
   // Record task validation on blockchain
   await recordEvent({
     type: 'TASK_VALIDATED',
@@ -587,9 +604,26 @@ export async function markPaymentPaidAction(formData: FormData) {
   })
 
   await createNotification(payment.userId, 'PAYMENT_RECEIVED', 'Paiement effectué', {
-    body: `Votre paiement de ${payment.amountEur.toFixed(2)}€ a été traité.`,
-    href: '/profile/payments',
+    body: `Votre paiement de ${payment.amountEur.toFixed(2)}€ a été traité. Facture disponible.`,
+    href: `/dashboard/earnings`,
   })
+
+  // Send payment email (non-blocking)
+  const payee = await prisma.user.findUnique({
+    where: { id: payment.userId },
+    select: { email: true, displayName: true },
+  })
+  if (payee?.email) {
+    sendPaymentEmail(payee.email, payee.displayName || 'Contributeur', payment.amountEur, 'Virement').catch(() => {})
+  }
+
+  // Record payment on blockchain
+  await recordEvent({
+    type: 'PAYMENT_COMPLETED',
+    entityType: 'Payment',
+    entityId: paymentId,
+    data: { userId: payment.userId, amountEur: payment.amountEur },
+  }).catch(() => {})
 
   revalidatePath('/admin/payments')
 }

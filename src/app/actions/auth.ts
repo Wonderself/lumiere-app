@@ -7,6 +7,7 @@ import { z } from 'zod'
 import { redirect } from 'next/navigation'
 import { revalidatePath } from 'next/cache'
 import { randomBytes } from 'crypto'
+import { sendWelcomeEmail, sendPasswordResetEmail } from '@/lib/email'
 
 const registerSchema = z.object({
   email: z.string().email('Email invalide'),
@@ -65,6 +66,9 @@ export async function registerAction(
         isVerified: false,
       },
     })
+
+    // Send welcome email (non-blocking)
+    sendWelcomeEmail(email.toLowerCase(), displayName).catch(() => {})
 
     return { success: true }
   } catch (error) {
@@ -134,10 +138,8 @@ export async function forgotPasswordAction(
     },
   })
 
-  // In production, send email via Resend/SendGrid
-  // For now, log the reset link
-  console.log(`[RESET PASSWORD] Token for ${email}: ${token}`)
-  console.log(`[RESET PASSWORD] Link: /reset-password?token=${token}`)
+  // Send reset email (logs in dev if no RESEND_API_KEY)
+  await sendPasswordResetEmail(email, token)
 
   return { success: true }
 }
