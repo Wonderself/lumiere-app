@@ -538,6 +538,53 @@ Templates HTML branding Lumiere gold/dark.
 - v4-6 (Soumission de films) → Marked done (/streaming/submit with auto-contract + AI evaluation)
 - V5 Gamification → Marked DONE (8/8 items complete)
 
+### 2026-02-24 — Uploads + Subtitles + Book-to-Screen + Subscriptions
+
+**File Upload Service (v2-3)**
+- Created `src/lib/upload.ts` — S3-compatible presigned URL generation
+- Supports 5 categories: video, image, document, subtitle, audio
+- 500MB max file size, MIME type validation per category
+- `getPresignedUploadUrl()` — generates presigned PUT URL for direct client-to-bucket upload
+- Dev fallback: mock URL for local upload via API route
+- Created `src/app/api/upload/route.ts` — local dev upload endpoint (saves to public/uploads/)
+- Created `src/components/file-upload.tsx` — drag & drop component with circular progress bar, category icons
+- XHR upload with progress tracking for S3 presigned URLs
+- S3 SDK dynamically imported (only loaded in production when installed)
+
+**Subtitle Management (v4-5)**
+- Created `src/app/actions/subtitles.ts` — full subtitle pipeline
+- 12 supported languages: fr, en, es, de, it, pt, ar, zh, ja, ko, ru, he
+- `validateSubtitleContent()` — detects VTT/SRT format, counts cues
+- `srtToVtt()` — automatic SRT→VTT conversion (browser-compatible timecodes)
+- `addSubtitleAction()` — stores subtitle tracks in film tags (no schema change needed)
+- `extractSubtitleTracks()` — extracts subtitle data for VideoPlayer component
+
+**Book-to-Screen Pipeline (v6-4)**
+- Created `src/app/actions/book-to-screen.ts` — Éditions Ruppin adaptation pipeline
+- `analyzeBookForAdaptation()` — scores: visual potential, dialogue density, narrative structure, market appeal
+- Budget estimation (LOW/MEDIUM/HIGH) and format recommendation (SHORT/FEATURE/SERIES)
+- Adaptation outline generation with 3-act structure
+- `submitBookForAdaptationAction()` — creates screenplay entry from book metadata with AI analysis
+
+**Subscription System (v4-4)**
+- Created `src/app/(public)/pricing/page.tsx` — subscription pricing page
+- 3 plans: Free (0€), Basic (4.99€/mo), Premium (9.99€/mo)
+- Features: quality tiers (720p/1080p/4K), offline downloads, ad-free, badges
+- Created `src/app/actions/subscriptions.ts` — plan management
+- `subscribeToPlanAction()` — activates subscription (Stripe-ready, works without Stripe)
+- `getUserSubscription()` — returns current plan with expiry check
+
+**Roadmap Phase Updates**
+- V2 → DONE (8/8 items complete)
+- V4-4 (Abonnements) → done
+- V4-5 (Sous-titres) → done
+- V6 → DONE (4/4 items complete)
+- V6-4 (Book-to-screen) → done
+
+**Middleware Fix (Next.js 16)**
+- Deleted `src/middleware.ts` — conflicted with proxy.ts in Next.js 16
+- Updated `src/proxy.ts` protectedPaths to include all routes from deleted middleware
+
 ---
 
 ## Important Files

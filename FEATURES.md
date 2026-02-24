@@ -17,8 +17,8 @@
 - Password reset via token (1h expiry, email link)
 - Profile updates (name, bio, skills, languages, wallet address)
 
-### Route Protection (Middleware)
-- Centralized middleware (`src/middleware.ts`) for auth route protection
+### Route Protection (Proxy)
+- Centralized proxy (`src/proxy.ts`) for auth route protection (Next.js 16)
 - Protected: /dashboard/*, /admin/*, /profile/*, /tasks/*, /lumens/*, /notifications/*, /screenplays/*, /tokenization/*
 - Admin role check on /admin/* (redirects non-admins to /dashboard)
 - Unauthenticated users redirected to /login with callbackUrl
@@ -670,3 +670,63 @@ Each phase has: status (LOCKED/ACTIVE/COMPLETED), order, dependencies
 - **Sécurité**: propriétaire du paiement ou admin uniquement
 - **Dashboard**: bouton "Facture" visible sur chaque paiement COMPLETED dans /dashboard/earnings
 - **Blockchain**: event PAYMENT_COMPLETED enregistré à chaque paiement
+
+---
+
+## 41. File Upload Service (S3-Compatible)
+- **Service**: `src/lib/upload.ts` — presigned URL generation pour uploads directs client-to-bucket
+- **5 catégories**: video, image, document, subtitle, audio
+- **Validation**: MIME types par catégorie, taille max 500MB
+- **S3-compatible**: AWS S3, Cloudflare R2, Supabase Storage, MinIO
+- **Presigned PUT URL**: le client upload directement sur le bucket (bypass serveur)
+- **Dev fallback**: URL locale via API route (`/api/upload`)
+- **API route**: `src/app/api/upload/route.ts` — stockage local dans `public/uploads/` en dev
+- **Composant client**: `src/components/file-upload.tsx`
+  - Drag & drop zone avec icônes par catégorie
+  - Barre de progression circulaire (SVG)
+  - Validation des types de fichiers côté client
+  - XHR upload avec suivi de progression pour presigned URLs
+  - Callbacks: onUploadComplete(fileKey, publicUrl), onError
+
+---
+
+## 42. Subtitle Management
+- **Server actions**: `src/app/actions/subtitles.ts`
+- **12 langues supportées**: fr, en, es, de, it, pt, ar, zh, ja, ko, ru, he
+- **Validation**: `validateSubtitleContent()` détecte format VTT/SRT, compte les cues
+- **Conversion automatique**: `srtToVtt()` convertit SRT→WebVTT (virgule→point dans timecodes)
+- **Stockage**: `addSubtitleAction()` stocke les sous-titres dans les tags du film (pas de changement de schéma)
+- **Extraction**: `extractSubtitleTracks()` extrait les données pour le composant VideoPlayer
+- **Intégré** avec le VideoPlayer pour l'affichage multi-langues
+
+---
+
+## 43. Book-to-Screen Pipeline (Éditions Ruppin)
+- **Server actions**: `src/app/actions/book-to-screen.ts`
+- **Analyse d'adaptation**: `analyzeBookForAdaptation()` score sur 4 axes:
+  - Potentiel visuel (0-100)
+  - Densité de dialogues (0-100)
+  - Structure narrative (0-100)
+  - Appel marché (0-100)
+- **Estimation budget**: LOW (<25K€), MEDIUM (25K-100K€), HIGH (>100K€)
+- **Format recommandé**: SHORT (<30min), FEATURE (30min-2h+), SERIES (multi-épisode)
+- **Outline automatique**: structure en 3 actes (Set-up, Confrontation, Resolution)
+- **Soumission**: `submitBookForAdaptationAction()` crée un scénario à partir des métadonnées du livre
+- **Tags**: genre, format recommandé, langue automatiquement ajoutés
+
+---
+
+## 44. Système d'Abonnements
+- **Page pricing**: `src/app/(public)/pricing/page.tsx` — 3 plans avec comparaison
+- **Plans**:
+  | Plan | Prix | Qualité | Écrans | Offline | Pubs |
+  |------|------|---------|--------|---------|------|
+  | Free | 0€ | 720p | 1 | Non | Oui |
+  | Basic | 4.99€/mois | 1080p | 2 | 5 films | Non |
+  | Premium | 9.99€/mois | 4K HDR | 4 | Illimité | Non |
+- **Server actions**: `src/app/actions/subscriptions.ts`
+  - `subscribeToPlanAction(planId)` — active l'abonnement
+  - `getUserSubscription()` — retourne plan actuel + vérification expiration
+  - `cancelSubscriptionAction()` — annule l'abonnement
+- **Stripe-ready**: préparé pour intégration Stripe Checkout, fonctionne sans Stripe en attendant
+- **Design**: cards avec badges "Populaire" / "Pro", gradient gold pour le plan Premium
