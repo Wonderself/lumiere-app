@@ -99,9 +99,9 @@ export function LoginForm() {
           {/* Demo accounts hint */}
           <div className="mt-5 rounded-xl bg-white/[0.02] border border-white/[0.05] p-4">
             <p className="text-[11px] text-white/30 text-center leading-relaxed">
-              Comptes démo : <span className="text-[#D4AF37]/60">admin@lumiere.film</span> / Admin123!
+              Comptes demo : <span className="text-[#D4AF37]/60">admin@lumiere.film</span> / Admin1234!
               <br />
-              <span className="text-[#D4AF37]/60">user@lumiere.film</span> / User1234!
+              <span className="text-[#D4AF37]/60">contributeur@lumiere.film</span> / Test1234!
             </p>
           </div>
         </div>

@@ -16,7 +16,13 @@
     "scenarios": "Mes Scenarios",
     "admin": "Administration",
     "logout": "Se deconnecter",
-    "search": "Rechercher"
+    "search": "Rechercher",
+    "about": "A propos",
+    "roadmap": "Roadmap",
+    "pricing": "Tarifs",
+    "developers": "API",
+    "invest": "Investir",
+    "more": "Plus"
   },
   "home": {
     "hero_badge": "Studio de Cinema IA",

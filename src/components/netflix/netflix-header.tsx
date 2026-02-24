@@ -27,9 +27,14 @@ import {
   FileText,
   ChevronDown,
   Play,
-  Search,
-  Bell,
   Sparkles,
+  Info,
+  MapPin,
+  Tag,
+  Code2,
+  TrendingUp,
+  Users,
+  BookOpen,
 } from 'lucide-react'
 import { cn, getInitials } from '@/lib/utils'
 import { AnimatePresence, MotionDiv } from '@/components/ui/motion'
@@ -55,14 +60,28 @@ export function NetflixHeader() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  const navLinks = [
+  // Primary nav links (always visible)
+  const primaryLinks = [
     { href: '/', label: t('home') },
     { href: '/films', label: t('films') },
     { href: '/streaming', label: t('streaming') },
     { href: '/community', label: t('vote') },
-    { href: '/actors', label: t('actors') },
-    { href: '/leaderboard', label: t('leaderboard') },
   ]
+
+  // Secondary nav links (in "Plus" dropdown on desktop, flat on mobile)
+  const secondaryLinks = [
+    { href: '/actors', label: t('actors'), icon: Users },
+    { href: '/leaderboard', label: t('leaderboard'), icon: TrendingUp },
+    { href: '/about', label: t('about'), icon: Info },
+    { href: '/pricing', label: t('pricing'), icon: Tag },
+    { href: '/roadmap', label: t('roadmap'), icon: MapPin },
+    { href: '/invest', label: t('invest'), icon: TrendingUp },
+    { href: '/developers', label: t('developers'), icon: Code2 },
+  ]
+
+  const isSecondaryActive = secondaryLinks.some(
+    (link) => pathname === link.href || pathname.startsWith(link.href + '/')
+  )
 
   return (
     <header
@@ -76,7 +95,7 @@ export function NetflixHeader() {
       <div className="flex h-16 md:h-[68px] items-center justify-between px-4 md:px-12">
         {/* Left: Logo + Nav */}
         <div className="flex items-center gap-6 md:gap-10">
-          {/* Logo - bigger */}
+          {/* Logo */}
           <Link href="/" className="flex items-center shrink-0">
             <Image
               src="/images/lumiere-brothers-logo-cinema-dark.webp"
@@ -89,8 +108,8 @@ export function NetflixHeader() {
           </Link>
 
           {/* Desktop Nav */}
-          <nav className="hidden lg:flex items-center gap-1">
-            {navLinks.map((link) => {
+          <nav className="hidden lg:flex items-center gap-0.5">
+            {primaryLinks.map((link) => {
               const isActive = link.href === '/'
                 ? pathname === '/'
                 : pathname === link.href || pathname.startsWith(link.href + '/')
@@ -109,6 +128,8 @@ export function NetflixHeader() {
                 </Link>
               )
             })}
+
+            {/* Tasks (logged in only) */}
             {session?.user && (
               <Link
                 href="/tasks"
@@ -123,6 +144,41 @@ export function NetflixHeader() {
                 {t('tasks')}
               </Link>
             )}
+
+            {/* "Plus" dropdown for secondary links */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button
+                  className={cn(
+                    'px-3 py-1.5 rounded text-[13px] font-medium transition-all duration-200 flex items-center gap-1 outline-none',
+                    isSecondaryActive
+                      ? 'text-white font-bold'
+                      : 'text-white/60 hover:text-white/90'
+                  )}
+                >
+                  {t('more')}
+                  <ChevronDown className="h-3 w-3" />
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start" className="w-52 bg-[#111]/95 backdrop-blur-xl border-white/10">
+                {secondaryLinks.map((link) => (
+                  <DropdownMenuItem key={link.href} asChild>
+                    <Link
+                      href={link.href}
+                      className={cn(
+                        'flex items-center gap-2.5 cursor-pointer',
+                        (pathname === link.href || pathname.startsWith(link.href + '/'))
+                          ? 'text-[#D4AF37]'
+                          : 'text-white/70 hover:text-white'
+                      )}
+                    >
+                      <link.icon className="h-4 w-4" />
+                      {link.label}
+                    </Link>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
           </nav>
         </div>
 
@@ -242,8 +298,9 @@ export function NetflixHeader() {
             transition={{ duration: 0.2 }}
             className="lg:hidden bg-[#0A0A0A]/98 backdrop-blur-xl overflow-hidden border-t border-white/5"
           >
-            <div className="px-4 py-4 space-y-1">
-              {navLinks.map((link) => (
+            <div className="px-4 py-4 space-y-1 max-h-[80vh] overflow-y-auto">
+              {/* Primary nav */}
+              {primaryLinks.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
@@ -262,11 +319,37 @@ export function NetflixHeader() {
                 <Link
                   href="/tasks"
                   onClick={() => setMobileOpen(false)}
-                  className="flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-medium text-white/60 hover:text-white hover:bg-white/5 transition-all"
+                  className={cn(
+                    'flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-medium transition-all',
+                    pathname.startsWith('/tasks')
+                      ? 'text-[#D4AF37] bg-[#D4AF37]/10'
+                      : 'text-white/60 hover:text-white hover:bg-white/5'
+                  )}
                 >
                   <Sparkles className="h-4 w-4" /> {t('tasks')}
                 </Link>
               )}
+
+              {/* Separator + Secondary links */}
+              <div className="h-px bg-white/5 my-2" />
+              <p className="px-3 text-[10px] uppercase tracking-widest text-white/20 font-medium">{t('more')}</p>
+              {secondaryLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setMobileOpen(false)}
+                  className={cn(
+                    'flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all',
+                    (pathname === link.href || pathname.startsWith(link.href + '/'))
+                      ? 'text-[#D4AF37] bg-[#D4AF37]/10'
+                      : 'text-white/50 hover:text-white hover:bg-white/5'
+                  )}
+                >
+                  <link.icon className="h-4 w-4" /> {link.label}
+                </Link>
+              ))}
+
+              {/* Separator + User section */}
               <div className="h-px bg-white/5 my-2" />
               {session?.user ? (
                 <>

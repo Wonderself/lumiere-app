@@ -717,3 +717,43 @@ Templates HTML branding Lumiere gold/dark.
 - V8-2 (i18n): marked done
 - V8 status: in_progress (3/6 done)
 - V10-1 (API): updated note with docs page
+
+---
+
+### Session 2026-02-24 (suite) — Auth Fixes, Navigation, UX
+
+**Authentication Fixes**:
+- Fixed WRONG demo credentials in login form (`Admin123!` → `Admin1234!`, `user@lumiere.film` → `contributeur@lumiere.film / Test1234!`)
+- Added `AUTH_URL="http://localhost:3000"` to `.env` (required by NextAuth v5)
+- Created `src/middleware.ts` — NextAuth v5 route protection middleware:
+  - Protects: /dashboard, /admin, /profile, /tasks, /lumens, /notifications, /screenplays, /tokenization
+  - Redirects unauthenticated users to /login with callbackUrl
+  - Blocks non-admin users from /admin routes (redirects to /dashboard)
+
+**Navigation Improvements**:
+- Rewrote Netflix header with split navigation:
+  - Primary links always visible: Accueil, Films, Streaming, Voter
+  - "Plus" dropdown for secondary links: Acteurs, Classement, A propos, Tarifs, Roadmap, Investir, API
+  - Icons for each secondary link
+  - Mobile menu shows all links flat with section separator
+- Added new i18n keys (about, roadmap, pricing, developers, invest, more) to fr.json and en.json
+- Updated footer with new links: Roadmap, Tarifs, API Developpeurs
+
+**Roadmap Display Improvements**:
+- Added prominent status badges: "✓ Fait" (green), "⏳ En cours" (gold), "○ A faire" (gray)
+- Done items use green text instead of strikethrough
+- Difficulty badge and note displayed on separate row below description
+
+**404 Page** (`src/app/not-found.tsx`):
+- Cinema-themed 404 with gold Film icon
+- "Cette scene n'existe pas encore" messaging
+- Links to accueil and films
+
+**Loading States**:
+- `src/app/loading.tsx` — Root loading with gold spinner
+- `src/app/(public)/loading.tsx` — Public pages loading
+- `src/app/(dashboard)/loading.tsx` — Dashboard loading
+
+**Roadmap Updates**:
+- V8-7 (Loading states & 404): marked done
+- V8 status: in_progress (5/7 done)

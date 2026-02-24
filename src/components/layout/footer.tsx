@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { Film, Tv, Users, Award, Pen, BarChart3 } from 'lucide-react'
+import { Film, Tv, Users, Award, Pen, BarChart3, MapPin, Code2, Tag } from 'lucide-react'
 
 export function Footer() {
   return (
@@ -39,6 +39,9 @@ export function Footer() {
               <li><Link href="/streaming" className="group flex items-center gap-2 text-[13px] text-white/25 hover:text-[#D4AF37] transition-colors"><Tv className="h-3.5 w-3.5 opacity-40 group-hover:opacity-100 transition-opacity" />Streaming</Link></li>
               <li><Link href="/community" className="group flex items-center gap-2 text-[13px] text-white/25 hover:text-[#D4AF37] transition-colors"><Users className="h-3.5 w-3.5 opacity-40 group-hover:opacity-100 transition-opacity" />Communaute</Link></li>
               <li><Link href="/leaderboard" className="group flex items-center gap-2 text-[13px] text-white/25 hover:text-[#D4AF37] transition-colors"><BarChart3 className="h-3.5 w-3.5 opacity-40 group-hover:opacity-100 transition-opacity" />Classement</Link></li>
+              <li><Link href="/roadmap" className="group flex items-center gap-2 text-[13px] text-white/25 hover:text-[#D4AF37] transition-colors"><MapPin className="h-3.5 w-3.5 opacity-40 group-hover:opacity-100 transition-opacity" />Roadmap</Link></li>
+              <li><Link href="/pricing" className="group flex items-center gap-2 text-[13px] text-white/25 hover:text-[#D4AF37] transition-colors"><Tag className="h-3.5 w-3.5 opacity-40 group-hover:opacity-100 transition-opacity" />Tarifs</Link></li>
+              <li><Link href="/developers" className="group flex items-center gap-2 text-[13px] text-white/25 hover:text-[#D4AF37] transition-colors"><Code2 className="h-3.5 w-3.5 opacity-40 group-hover:opacity-100 transition-opacity" />API Developpeurs</Link></li>
             </ul>
           </div>
 

@@ -881,3 +881,32 @@ Each phase has: status (LOCKED/ACTIVE/COMPLETED), order, dependencies
 - `NextIntlClientProvider` dans root layout avec détection dynamique
 - Header Netflix traduit: navigation, dropdown, menu mobile
 - `next.config.ts` mis à jour avec `createNextIntlPlugin`
+
+## 57. Middleware d'Authentification
+- `src/middleware.ts` — Protection routes NextAuth v5
+- Routes protégées: /dashboard, /admin, /profile, /tasks, /lumens, /notifications, /screenplays, /tokenization
+- Redirection vers /login avec callbackUrl pour utilisateurs non connectés
+- Blocage non-admin sur /admin (redirection vers /dashboard)
+- Pattern: `export default auth((req) => { ... })` avec matcher
+
+## 58. Navigation Améliorée
+- Header Netflix redesigné avec split navigation:
+  - Liens principaux toujours visibles: Accueil, Films, Streaming, Voter
+  - Menu "Plus" dropdown: Acteurs, Classement, A propos, Tarifs, Roadmap, Investir, API
+  - Icônes Lucide pour chaque lien secondaire
+  - Menu mobile: tous les liens avec séparation visuelle
+- Footer enrichi: liens Roadmap, Tarifs, API Développeurs ajoutés
+- Nouvelles clés i18n: about, roadmap, pricing, developers, invest, more
+
+## 59. UX: Loading States & 404
+- `src/app/loading.tsx` — Spinner gold plein écran (route racine)
+- `src/app/(public)/loading.tsx` — Spinner pages publiques
+- `src/app/(dashboard)/loading.tsx` — Spinner dashboard
+- `src/app/not-found.tsx` — Page 404 cinéma (Film icon, "Cette scène n'existe pas encore")
+- Boutons retour accueil et voir nos films
+
+## 60. Roadmap: Indicateurs de Complétion
+- Badges statut proéminents: "✓ Fait" (vert), "⏳ En cours" (gold), "○ A faire" (gris)
+- Items terminés en texte vert (au lieu de barré)
+- Badges difficulté et notes en ligne séparée sous description
+- V8-7 (Loading & 404) ajouté au roadmap

@@ -16,7 +16,13 @@
     "scenarios": "My Scenarios",
     "admin": "Administration",
     "logout": "Sign Out",
-    "search": "Search"
+    "search": "Search",
+    "about": "About",
+    "roadmap": "Roadmap",
+    "pricing": "Pricing",
+    "developers": "API",
+    "invest": "Invest",
+    "more": "More"
   },
   "home": {
     "hero_badge": "AI Cinema Studio",

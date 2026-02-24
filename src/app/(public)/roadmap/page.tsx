@@ -163,6 +163,7 @@ const roadmap: Phase[] = [
       { id: 'v8-4', title: 'Analytics avancées', description: 'Dashboard analytics admin avec graphiques, cohortes, prédictions', status: 'done', difficulty: 'medium', note: 'KPI cards + charts + top contributors + pipeline' },
       { id: 'v8-5', title: 'Whisper sous-titres auto', description: 'Transcription automatique audio → sous-titres multi-langues', status: 'todo', difficulty: 'guided' },
       { id: 'v8-6', title: 'CDN vidéo mondial', description: 'Distribution vidéo multi-région via Cloudflare Stream ou Mux', status: 'todo', difficulty: 'medium' },
+      { id: 'v8-7', title: 'Loading states & 404', description: 'Squelettes de chargement (spinner gold), page 404 cinéma', status: 'done', difficulty: 'trivial', note: 'loading.tsx (root + public + dashboard) + not-found.tsx' },
     ],
   },
   {
@@ -197,9 +198,9 @@ const roadmap: Phase[] = [
 ]
 
 const STATUS_CONFIG = {
-  done: { icon: CheckCircle, color: 'text-green-400', bg: 'bg-green-500/10 border-green-500/20', label: 'Terminé' },
-  in_progress: { icon: Clock, color: 'text-[#D4AF37]', bg: 'bg-[#D4AF37]/10 border-[#D4AF37]/20', label: 'En cours' },
-  todo: { icon: Circle, color: 'text-white/30', bg: 'bg-white/5 border-white/10', label: 'À faire' },
+  done: { icon: CheckCircle, color: 'text-green-400', bg: 'bg-green-500/10 border-green-500/20', label: 'Termine', badge: 'bg-green-500/15 text-green-400 border-green-500/20' },
+  in_progress: { icon: Clock, color: 'text-[#D4AF37]', bg: 'bg-[#D4AF37]/10 border-[#D4AF37]/20', label: 'En cours', badge: 'bg-[#D4AF37]/15 text-[#D4AF37] border-[#D4AF37]/20' },
+  todo: { icon: Circle, color: 'text-white/30', bg: 'bg-white/5 border-white/10', label: 'A faire', badge: 'bg-white/5 text-white/30 border-white/10' },
 }
 
 const DIFFICULTY_CONFIG: Record<string, { label: string; color: string; text: string }> = {
@@ -314,24 +315,30 @@ export default function RoadmapPage() {
                     return (
                       <div
                         key={item.id}
-                        className={`group flex items-start gap-3.5 p-4 sm:p-5 rounded-xl sm:rounded-2xl border transition-all duration-500 hover-lift ${itemConfig.bg}`}
+                        className={`group relative flex items-start gap-3.5 p-4 sm:p-5 rounded-xl sm:rounded-2xl border transition-all duration-500 hover-lift ${itemConfig.bg}`}
                       >
                         <itemConfig.icon className={`h-5 w-5 mt-0.5 shrink-0 transition-transform duration-500 group-hover:scale-110 ${itemConfig.color}`} />
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2 mb-1.5 flex-wrap">
-                            <p className={`text-sm font-medium ${item.status === 'done' ? 'text-white/50 line-through decoration-white/20' : 'text-white/90'}`}>
+                            <p className={`text-sm font-medium ${item.status === 'done' ? 'text-green-400/70' : item.status === 'in_progress' ? 'text-white/90' : 'text-white/60'}`}>
                               {item.title}
                             </p>
-                            <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full border text-[10px] font-medium ${diffConfig.color}`}>
-                              {diffConfig.text} {diffConfig.label}
+                            {/* Status badge - always shown */}
+                            <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full border text-[10px] font-semibold ${itemConfig.badge}`}>
+                              {item.status === 'done' ? '✓ Fait' : item.status === 'in_progress' ? '⏳ En cours' : '○ A faire'}
                             </span>
                           </div>
                           <p className="text-xs text-white/30 leading-relaxed">{item.description}</p>
-                          {item.note && (
-                            <p className="text-xs text-[#D4AF37]/50 mt-1.5 flex items-center gap-1.5">
-                              <Sparkles className="h-3 w-3" /> {item.note}
-                            </p>
-                          )}
+                          <div className="flex items-center gap-3 mt-1.5 flex-wrap">
+                            <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full border text-[10px] font-medium ${diffConfig.color}`}>
+                              {diffConfig.text} {diffConfig.label}
+                            </span>
+                            {item.note && (
+                              <p className="text-[11px] text-[#D4AF37]/50 flex items-center gap-1">
+                                <Sparkles className="h-3 w-3 shrink-0" /> {item.note}
+                              </p>
+                            )}
+                          </div>
                         </div>
                       </div>
                     )
