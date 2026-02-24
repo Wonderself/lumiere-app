@@ -76,6 +76,21 @@
 - Task lifecycle events: TASK_CLAIMED, TASK_SUBMITTED on blockchain
 - `force-dynamic` kept on all DB pages (Prisma requires runtime DB connection)
 
+### 2026-02-24 — Netflix-Style Redesign + Slate Deck 2026
+- **Complete Netflix-style homepage**: Hero banner with auto-rotating featured films, horizontal scrolling film rows by category
+- **New components**: `src/components/netflix/` — NetflixHeader, HeroBanner, FilmRow, CreatorBar, NetflixHome
+- **Netflix header**: Transparent on scroll, bigger logo, cleaner navigation, scroll-aware background
+- **Creator participation bar**: 4 cards (Scenarios, Voting, Contests, Production) with gradient backgrounds
+- **20 films from Slate Deck 2026** added to seed:
+  - 8 main projects: MERCI, KETER, Code d'Esther, Zion of Africa, Dernier Convoi, Carnaval, Na Nah Nahma, Ortistes
+  - 7 extras: Super-Heros, Amelie Poul2, Royal Rumble, Trip Carnaval, Tokenisation, Nuit des Cesars, Metacinema
+  - 5 bonus: Enfants de la Lumiere, Prophetie des Sables, Tel Aviv Nights, Gardiens du Shabat, Frequency 432
+- **SLATE_DECK.md** created with all project details (genres, formats, loglines, poster concepts)
+- **Graceful fallback**: Homepage works without DB using hardcoded film data
+- **Gold theme (#D4AF37)** consistent across all Netflix components (replaces Netflix red)
+- **Public layout** now uses Netflix header
+- **Image optimization**: `<img>` replaced by Next.js `<Image>` in films page
+
 ---
 
 ## Key Decisions
@@ -89,6 +104,8 @@
 8. **force-dynamic on DB pages** — Prisma can't connect during build, static generation fails
 9. **Auto-film from scenario** — Winning scenario auto-generates Film + phases + tasks via decomposer
 10. **Blockchain for everything** — Every important action (film, task, phase, token, governance) recorded on-chain
+11. **Netflix-style UI** — Horizontal scroll rows, hero banner, dark+gold theme, creator bar integrated
+12. **Fallback data** — Homepage works without DB connection using hardcoded film cards
 
 ---
 
@@ -104,3 +121,5 @@
 - `src/app/actions/tasks.ts` — Task claim, submit, abandon + blockchain events
 - `src/app/actions/tokenization.ts` — Token purchase, sale, governance, dividends + blockchain events
 - `next.config.ts` — Build & optimization configuration
+- `src/components/netflix/` — Netflix-style UI components (header, hero, film rows, creator bar)
+- `SLATE_DECK.md` — Full project pipeline with 15 projects details

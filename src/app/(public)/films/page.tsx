@@ -1,5 +1,6 @@
 import { prisma } from '@/lib/prisma'
 import Link from 'next/link'
+import Image from 'next/image'
 import { Film, ChevronRight, Star, Users, CheckCircle, Clapperboard } from 'lucide-react'
 import { FILM_STATUS_LABELS, CATALOG_LABELS } from '@/lib/constants'
 import type { Metadata } from 'next'
@@ -187,10 +188,12 @@ export default async function FilmsPage({
                     {/* Cover */}
                     <div className="relative h-52 bg-gradient-to-br from-[#D4AF37]/[0.06] to-white/[0.03] shrink-0">
                       {film.coverImageUrl ? (
-                        <img
+                        <Image
                           src={film.coverImageUrl}
                           alt={film.title}
-                          className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-700"
+                          fill
+                          className="object-cover group-hover:scale-[1.03] transition-transform duration-700"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                         />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center">
