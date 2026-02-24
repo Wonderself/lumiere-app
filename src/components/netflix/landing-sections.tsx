@@ -23,7 +23,7 @@ const manifestoLines = [
 
 export function ManifestoSection() {
   return (
-    <section id="manifesto" className="relative py-28 md:py-40 overflow-hidden">
+    <section id="manifesto" className="relative py-32 md:py-44 overflow-hidden">
       {/* Subtle center glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full opacity-[0.04]"
         style={{ background: 'radial-gradient(circle, #D4AF37 0%, transparent 70%)' }}
@@ -32,7 +32,7 @@ export function ManifestoSection() {
       <div className="relative z-10 max-w-3xl mx-auto px-4 sm:px-8 text-center">
         {manifestoLines.map((line, idx) => {
           if (!line.normal && !line.gold) {
-            return <div key={idx} className="h-8 md:h-12" />
+            return <div key={idx} className="h-10 md:h-14" />
           }
           return (
             <motion.p
@@ -55,7 +55,7 @@ export function ManifestoSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.8 }}
-          className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-white mt-12 md:mt-16"
+          className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-white mt-14 md:mt-20"
           style={{ fontFamily: 'var(--font-playfair)' }}
         >
           Bienvenue dans le <span className="text-[#D4AF37]">futur du cinema.</span>
@@ -107,15 +107,15 @@ const pillars = [
 
 export function HowItWorks() {
   return (
-    <section className="py-20 md:py-28 px-4 sm:px-8 md:px-16 lg:px-20">
+    <section className="py-24 md:py-32 px-4 sm:px-8 md:px-16 lg:px-20">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className="text-center mb-14 md:mb-18"
+        className="text-center mb-16 md:mb-20"
       >
         <h2
-          className="text-3xl md:text-4xl lg:text-5xl font-black text-white mb-4"
+          className="text-3xl md:text-4xl lg:text-5xl font-black text-white mb-5"
           style={{ fontFamily: 'var(--font-playfair)' }}
         >
           Comment ca marche
@@ -125,7 +125,7 @@ export function HowItWorks() {
         </p>
       </motion.div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5 max-w-7xl mx-auto">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 max-w-7xl mx-auto">
         {pillars.map((pillar, idx) => (
           <motion.div
             key={pillar.title}
@@ -133,17 +133,17 @@ export function HowItWorks() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-30px' }}
             transition={{ duration: 0.5, delay: idx * 0.1 }}
-            className="group relative rounded-2xl overflow-hidden p-6 md:p-7 border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.04] hover:border-white/[0.12] transition-all duration-500"
+            className="group relative rounded-2xl overflow-hidden p-7 md:p-8 border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.04] hover:border-white/[0.12] transition-all duration-500"
           >
             {/* Top accent */}
             <div className="absolute top-0 left-0 right-0 h-[2px] opacity-0 group-hover:opacity-100 transition-opacity"
               style={{ background: `linear-gradient(90deg, transparent, ${pillar.color}, transparent)` }}
             />
 
-            <pillar.icon className="h-7 w-7 mb-5 transition-colors" style={{ color: pillar.color }} />
+            <pillar.icon className="h-7 w-7 mb-6 transition-colors" style={{ color: pillar.color }} />
 
-            <h3 className="text-sm font-black text-white tracking-wide mb-3">{pillar.title}</h3>
-            <p className="text-[12px] text-white/35 leading-[1.7] mb-4">{pillar.description}</p>
+            <h3 className="text-sm font-black text-white tracking-wide mb-3.5">{pillar.title}</h3>
+            <p className="text-[12px] text-white/35 leading-[1.7] mb-5">{pillar.description}</p>
             <p className="text-[11px] font-bold transition-colors" style={{ color: pillar.color }}>
               &rarr; {pillar.accent}
             </p>
@@ -169,15 +169,15 @@ const pipelineSteps = [
 
 export function PipelineVisual() {
   return (
-    <section className="py-20 md:py-28 px-4 sm:px-8 md:px-16 lg:px-20 overflow-hidden">
+    <section className="py-24 md:py-32 px-4 sm:px-8 md:px-16 lg:px-20 overflow-hidden">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className="text-center mb-14"
+        className="text-center mb-16"
       >
         <h2
-          className="text-3xl md:text-4xl lg:text-5xl font-black text-white mb-4"
+          className="text-3xl md:text-4xl lg:text-5xl font-black text-white mb-5"
           style={{ fontFamily: 'var(--font-playfair)' }}
         >
           De l&apos;idee au <span className="text-[#D4AF37]">grand ecran</span>
@@ -204,10 +204,10 @@ export function PipelineVisual() {
               className="flex-1 text-center relative"
             >
               {/* Dot */}
-              <div className="relative z-10 mx-auto w-12 h-12 rounded-full border-2 border-[#D4AF37]/30 bg-[#0A0A0A] flex items-center justify-center mb-4">
+              <div className="relative z-10 mx-auto w-12 h-12 rounded-full border-2 border-[#D4AF37]/30 bg-[#0A0A0A] flex items-center justify-center mb-5">
                 <span className="text-[11px] font-black text-[#D4AF37]">{step.num}</span>
               </div>
-              <p className="text-[12px] font-bold text-white/70 mb-1">{step.label}</p>
+              <p className="text-[12px] font-bold text-white/70 mb-1.5">{step.label}</p>
               <p className="text-[10px] text-white/25 leading-relaxed px-2">{step.detail}</p>
             </motion.div>
           ))}
@@ -222,7 +222,7 @@ export function PipelineVisual() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ delay: idx * 0.06 }}
-              className="flex items-start gap-4 relative"
+              className="flex items-start gap-5 relative"
             >
               {/* Vertical line */}
               {idx < pipelineSteps.length - 1 && (
@@ -232,8 +232,8 @@ export function PipelineVisual() {
               <div className="relative z-10 shrink-0 w-12 h-12 rounded-full border-2 border-[#D4AF37]/30 bg-[#0A0A0A] flex items-center justify-center">
                 <span className="text-[11px] font-black text-[#D4AF37]">{step.num}</span>
               </div>
-              <div className="pb-8">
-                <p className="text-[13px] font-bold text-white/70 mb-0.5">{step.label}</p>
+              <div className="pb-9">
+                <p className="text-[13px] font-bold text-white/70 mb-1">{step.label}</p>
                 <p className="text-[11px] text-white/25">{step.detail}</p>
               </div>
             </motion.div>
@@ -270,15 +270,15 @@ function CellIcon({ value }: { value: string | null }) {
 
 export function ComparisonTable() {
   return (
-    <section className="py-20 md:py-28 px-4 sm:px-8 md:px-16 lg:px-20">
+    <section className="py-24 md:py-32 px-4 sm:px-8 md:px-16 lg:px-20">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className="text-center mb-14"
+        className="text-center mb-16"
       >
         <h2
-          className="text-3xl md:text-4xl lg:text-5xl font-black text-white mb-4"
+          className="text-3xl md:text-4xl lg:text-5xl font-black text-white mb-5"
           style={{ fontFamily: 'var(--font-playfair)' }}
         >
           Pourquoi <span className="text-[#D4AF37]">Lumiere</span>
@@ -296,14 +296,14 @@ export function ComparisonTable() {
       >
         {/* Header */}
         <div className="grid grid-cols-4 bg-white/[0.02]">
-          <div className="p-4 md:p-5" />
-          <div className="p-4 md:p-5 text-center border-l border-white/[0.04]">
+          <div className="p-5 md:p-6" />
+          <div className="p-5 md:p-6 text-center border-l border-white/[0.04]">
             <p className="text-[11px] font-bold text-white/25 uppercase tracking-wider">Hollywood</p>
           </div>
-          <div className="p-4 md:p-5 text-center border-l border-white/[0.04]">
+          <div className="p-5 md:p-6 text-center border-l border-white/[0.04]">
             <p className="text-[11px] font-bold text-white/25 uppercase tracking-wider">Netflix</p>
           </div>
-          <div className="p-4 md:p-5 text-center border-l border-[#D4AF37]/10 bg-[#D4AF37]/[0.03]">
+          <div className="p-5 md:p-6 text-center border-l border-[#D4AF37]/10 bg-[#D4AF37]/[0.03]">
             <p className="text-[11px] font-black text-[#D4AF37] uppercase tracking-wider">Lumiere</p>
           </div>
         </div>
@@ -311,24 +311,24 @@ export function ComparisonTable() {
         {/* Rows */}
         {compRows.map((row, idx) => (
           <div key={row.label} className={`grid grid-cols-4 ${idx % 2 === 0 ? '' : 'bg-white/[0.01]'} border-t border-white/[0.04]`}>
-            <div className="p-4 md:p-5 flex items-center">
+            <div className="p-5 md:p-6 flex items-center">
               <p className="text-[12px] md:text-[13px] font-semibold text-white/50">{row.label}</p>
             </div>
-            <div className="p-4 md:p-5 flex items-center justify-center border-l border-white/[0.04]">
+            <div className="p-5 md:p-6 flex items-center justify-center border-l border-white/[0.04]">
               {row.hollywood ? (
                 <p className="text-[11px] md:text-[12px] text-white/25 text-center">{row.hollywood}</p>
               ) : (
                 <CellIcon value={row.hollywood} />
               )}
             </div>
-            <div className="p-4 md:p-5 flex items-center justify-center border-l border-white/[0.04]">
+            <div className="p-5 md:p-6 flex items-center justify-center border-l border-white/[0.04]">
               {row.netflix ? (
                 <p className="text-[11px] md:text-[12px] text-white/25 text-center">{row.netflix}</p>
               ) : (
                 <CellIcon value={row.netflix} />
               )}
             </div>
-            <div className="p-4 md:p-5 flex items-center justify-center border-l border-[#D4AF37]/10 bg-[#D4AF37]/[0.03]">
+            <div className="p-5 md:p-6 flex items-center justify-center border-l border-[#D4AF37]/10 bg-[#D4AF37]/[0.03]">
               {row.lumiere ? (
                 <p className={`text-[11px] md:text-[12px] text-center font-bold ${row.lumiereHighlight ? 'text-[#D4AF37]' : 'text-white/60'}`}>
                   {row.lumiere}
@@ -355,23 +355,23 @@ const credentials = [
 
 export function SocialProof() {
   return (
-    <section className="py-20 md:py-28 px-4 sm:px-8 md:px-16 lg:px-20">
+    <section className="py-24 md:py-32 px-4 sm:px-8 md:px-16 lg:px-20">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className="text-center mb-12"
+        className="text-center mb-14"
       >
-        <p className="text-[11px] font-bold text-white/25 uppercase tracking-[0.2em] mb-8">
+        <p className="text-[11px] font-bold text-white/25 uppercase tracking-[0.2em] mb-10">
           Soutenu par l&apos;ecosysteme innovation
         </p>
 
         {/* Credential badges */}
-        <div className="flex flex-wrap items-center justify-center gap-4 md:gap-6 mb-16">
+        <div className="flex flex-wrap items-center justify-center gap-5 md:gap-7 mb-20">
           {credentials.map((cred) => (
             <div
               key={cred}
-              className="px-5 py-2.5 rounded-lg border border-white/[0.06] bg-white/[0.02] text-[11px] md:text-[12px] text-white/25 font-medium tracking-wide"
+              className="px-6 py-3 rounded-lg border border-white/[0.06] bg-white/[0.02] text-[11px] md:text-[12px] text-white/25 font-medium tracking-wide"
             >
               {cred}
             </div>
@@ -380,7 +380,7 @@ export function SocialProof() {
 
         {/* Quote */}
         <div className="max-w-2xl mx-auto">
-          <div className="h-[1px] w-16 bg-[#D4AF37]/30 mx-auto mb-8" />
+          <div className="h-[1px] w-16 bg-[#D4AF37]/30 mx-auto mb-10" />
           <motion.blockquote
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
@@ -392,7 +392,7 @@ export function SocialProof() {
             &laquo;&nbsp;Nous ne remplacons pas les artistes. Nous donnons a chaque artiste
             un studio de cinema dans sa poche.&nbsp;&raquo;
           </motion.blockquote>
-          <p className="text-[12px] text-white/20 mt-6 font-medium">
+          <p className="text-[12px] text-white/20 mt-7 font-medium">
             &mdash; Emmanuel &amp; Eric, Fondateurs
           </p>
         </div>
@@ -405,7 +405,7 @@ export function SocialProof() {
 
 export function FinalCTA() {
   return (
-    <section className="relative py-24 md:py-32 overflow-hidden">
+    <section className="relative py-28 md:py-36 overflow-hidden">
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-[#0A0A0A] via-[#0F0D08] to-[#0A0A0A]" />
       <div className="absolute inset-0 opacity-[0.03]"
@@ -421,7 +421,7 @@ export function FinalCTA() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-3xl md:text-4xl lg:text-5xl font-black text-white mb-6 leading-tight"
+          className="text-3xl md:text-4xl lg:text-5xl font-black text-white mb-8 leading-tight"
           style={{ fontFamily: 'var(--font-playfair)' }}
         >
           Le cinema de demain se construit{' '}
@@ -433,7 +433,7 @@ export function FinalCTA() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.15 }}
-          className="text-sm md:text-[15px] text-white/35 leading-[1.8] max-w-xl mx-auto mb-10"
+          className="text-sm md:text-[15px] text-white/35 leading-[1.8] max-w-xl mx-auto mb-12"
         >
           Que vous soyez scenariste, realisateur, monteur, musicien,
           developpeur, designer ou simplement passionne de cinema &mdash;
@@ -445,11 +445,11 @@ export function FinalCTA() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.3 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8"
+          className="flex flex-col sm:flex-row items-center justify-center gap-5 mb-10"
         >
           <Link
             href="/register"
-            className="group inline-flex items-center gap-2.5 px-10 py-4 rounded-xl text-[15px] font-bold text-black transition-all duration-300 hover:shadow-[0_0_60px_rgba(212,175,55,0.4)] hover:scale-[1.03] active:scale-[0.97]"
+            className="group inline-flex items-center gap-3 px-10 py-4 rounded-xl text-[15px] font-bold text-black transition-all duration-300 hover:shadow-[0_0_60px_rgba(212,175,55,0.4)] hover:scale-[1.03] active:scale-[0.97]"
             style={{ background: 'linear-gradient(135deg, #D4AF37 0%, #F0D060 50%, #D4AF37 100%)' }}
           >
             Creer mon compte gratuitement
@@ -469,7 +469,7 @@ export function FinalCTA() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ delay: 0.5 }}
-          className="text-[11px] text-white/15 mt-10 uppercase tracking-[0.2em] font-medium"
+          className="text-[11px] text-white/15 mt-12 uppercase tracking-[0.2em] font-medium"
         >
           Premiere production : Q2 2026
         </motion.p>

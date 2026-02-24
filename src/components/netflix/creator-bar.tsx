@@ -65,10 +65,10 @@ const cardVariants = {
 
 export function CreatorBar() {
   return (
-    <section className="px-4 sm:px-8 md:px-16 lg:px-20 mb-14 mt-2">
+    <section className="px-4 sm:px-8 md:px-16 lg:px-20 mb-16 mt-4">
       {/* Section header */}
-      <div className="flex items-center gap-3 mb-7">
-        <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-[#D4AF37] to-[#8B6914] flex items-center justify-center shadow-[0_0_20px_rgba(212,175,55,0.2)]">
+      <div className="flex items-center gap-4 mb-8">
+        <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-[#D4AF37] to-[#8B6914] flex items-center justify-center shadow-[0_0_20px_rgba(212,175,55,0.2)]">
           <Sparkles className="h-4.5 w-4.5 text-black" />
         </div>
         <div>
@@ -78,13 +78,13 @@ export function CreatorBar() {
           >
             Participez a la Creation
           </h2>
-          <p className="text-[11px] text-white/35 mt-0.5 tracking-wide">Devenez acteur du cinema de demain</p>
+          <p className="text-[11px] text-white/35 mt-1 tracking-wide">Devenez acteur du cinema de demain</p>
         </div>
       </div>
 
       {/* Cards grid */}
       <motion.div
-        className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5"
+        className="grid grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6"
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
@@ -94,7 +94,7 @@ export function CreatorBar() {
           <motion.div key={action.title} variants={cardVariants}>
             <Link
               href={action.href}
-              className="group relative block rounded-2xl overflow-hidden h-[190px] sm:h-[210px] md:h-[230px]"
+              className="group relative block rounded-2xl overflow-hidden h-[200px] sm:h-[220px] md:h-[240px]"
             >
               {/* Background image */}
               <div
@@ -121,7 +121,7 @@ export function CreatorBar() {
               />
 
               {/* Content — perfect padding */}
-              <div className="relative z-10 h-full flex flex-col justify-between p-4 sm:p-5 md:p-6">
+              <div className="relative z-10 h-full flex flex-col justify-between p-5 sm:p-6 md:p-7">
                 {/* Icon */}
                 <div
                   className={`h-12 w-12 rounded-xl bg-gradient-to-br ${action.iconBg} flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:shadow-[0_4px_20px_rgba(0,0,0,0.3)] transition-all duration-300`}
@@ -132,7 +132,7 @@ export function CreatorBar() {
                 {/* Text */}
                 <div>
                   <h3
-                    className="text-base md:text-lg font-bold text-white mb-1.5 group-hover:text-white transition-colors leading-tight"
+                    className="text-base md:text-lg font-bold text-white mb-2 group-hover:text-white transition-colors leading-tight"
                     style={{ fontFamily: 'var(--font-playfair)' }}
                   >
                     {action.title}
@@ -142,7 +142,7 @@ export function CreatorBar() {
                   </p>
 
                   {/* CTA arrow */}
-                  <div className="flex items-center gap-1.5 mt-3 text-xs font-semibold transition-all duration-300 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0"
+                  <div className="flex items-center gap-2 mt-3.5 text-xs font-semibold transition-all duration-300 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0"
                     style={{ color: action.accent }}
                   >
                     <span>Explorer</span>

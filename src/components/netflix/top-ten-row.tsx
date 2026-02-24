@@ -49,9 +49,9 @@ export function TopTenRow({ films }: { films: FilmCard[] }) {
   const topFilms = films.slice(0, 10)
 
   return (
-    <section className="relative group/row mb-12 md:mb-16">
+    <section className="relative group/row mb-16 md:mb-20">
       {/* Section title */}
-      <div className="px-4 sm:px-8 md:px-16 lg:px-20 mb-5">
+      <div className="px-4 sm:px-8 md:px-16 lg:px-20 mb-6">
         <div className="flex items-center gap-3">
           <div className="h-7 w-1.5 rounded-full bg-gradient-to-b from-[#D4AF37] to-[#8B6914]" />
           <h2

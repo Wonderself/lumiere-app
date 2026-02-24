@@ -77,9 +77,9 @@ export function FilmRow({ title, films, href }: FilmRowProps) {
   if (films.length === 0) return null
 
   return (
-    <section className="relative group/row mb-12 md:mb-16">
+    <section className="relative group/row mb-16 md:mb-20">
       {/* Row title */}
-      <div className="flex items-center justify-between px-4 sm:px-8 md:px-16 lg:px-20 mb-5">
+      <div className="flex items-center justify-between px-4 sm:px-8 md:px-16 lg:px-20 mb-6">
         <h2
           className="text-lg md:text-xl lg:text-2xl font-bold text-white/90 tracking-tight"
           style={{ fontFamily: 'var(--font-playfair)' }}
@@ -127,7 +127,7 @@ export function FilmRow({ title, films, href }: FilmRowProps) {
         <div
           ref={scrollRef}
           onScroll={updateArrows}
-          className="flex gap-3 md:gap-4 overflow-x-auto scrollbar-hide px-4 sm:px-8 md:px-16 lg:px-20 scroll-smooth"
+          className="flex gap-4 md:gap-5 overflow-x-auto scrollbar-hide px-4 sm:px-8 md:px-16 lg:px-20 scroll-smooth"
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
           {films.map((film, idx) => (
@@ -181,7 +181,7 @@ export function FilmRow({ title, films, href }: FilmRowProps) {
                 </div>
 
                 {/* Status badge (always visible) */}
-                <div className="absolute top-3 left-3">
+                <div className="absolute top-3.5 left-3.5">
                   <span
                     className="text-[9px] font-bold px-2.5 py-1 rounded-lg uppercase tracking-wider backdrop-blur-xl"
                     style={{
@@ -196,7 +196,7 @@ export function FilmRow({ title, films, href }: FilmRowProps) {
               </div>
 
               {/* Title below poster */}
-              <div className="pt-3 pb-2 px-1">
+              <div className="pt-3.5 pb-2.5 px-1.5">
                 <p className="text-[12px] sm:text-[13px] font-semibold text-white/80 truncate group-hover/card:text-white transition-colors">{film.title}</p>
                 {film.genre && (
                   <p className="text-[10px] sm:text-[11px] text-white/30 mt-0.5">{film.genre}</p>

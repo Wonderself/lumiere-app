@@ -208,6 +208,28 @@
   - Replaces static phase display on film detail pages
 - **Roadmap updated**: V2-7, V5-3 marked done; V5 now in_progress
 
+### 2026-02-25 — Global Spacing Polish + Login UX Improvement
+- **Clickable demo credentials on login page**: Admin and Contributeur buttons auto-fill email/password fields
+  - Gold-highlighted Admin button, subtle Contributeur button
+  - Replaced passive text with interactive buttons for instant testing
+- **Global spacing increase across all public pages** (without changing element sizes):
+  - **HeroBanner**: More bottom padding (pb-28→32), larger gaps between genre/title/synopsis/buttons
+  - **FilmRow**: Increased row margins (mb-12→16), card gaps (gap-3→4), title spacing
+  - **TopTenRow**: Matching increased margins and title spacing
+  - **CreatorBar**: Larger section margins, grid gaps (gap-4→5), card heights (+10px), internal padding
+  - **HeroManifesto**: More breathing room between logo/headline/subheadline/CTAs, stats bar padding
+  - **ManifestoSection**: Increased vertical padding (py-28→32), manifesto line spacing
+  - **HowItWorks**: Larger section padding, card padding (p-6→7), icon/text margins
+  - **PipelineVisual**: More section padding, dot/label spacing
+  - **ComparisonTable**: Increased cell padding (p-4→5), section header spacing
+  - **SocialProof**: More breathing room for badges, quote spacing
+  - **FinalCTA**: Larger vertical padding, CTA gaps
+  - **Footer**: Increased top/bottom padding, column gaps, link spacing, bottom bar margin
+  - **Auth layout**: More content padding, bottom section spacing
+  - **Dashboard layout**: Increased main content padding
+  - **Admin page**: More gap between KPIs, action items, quick actions; removed redundant p-8
+- **All changes maintain responsive breakpoints** — only spacing values increased, no layout changes
+
 ---
 
 ## ROADMAP — Etapes Detaillees
