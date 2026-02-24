@@ -60,29 +60,47 @@
 - Enabled `noImplicitAny: true` in tsconfig.json
 - Fixed all implicit `any` types across 4 files
 - Replaced `<img>` with Next.js `<Image>` for optimization
-- Replaced `force-dynamic` with `revalidate` on key pages
 - Added Redis caching for stats queries
 - Optimized next.config.ts (image formats, package imports, compression)
 - Added `display: 'swap'` to font loading
 - Created documentation: PROJECT_HISTORY.md, FEATURES.md, FILM_PIPELINE.md
 
+### 2026-02-24 — Complete Film Pipeline + Blockchain Integration
+- Extended BlockchainEventType enum with 13 new event types (pipeline + tokenization)
+- Added generic `recordEvent()` in blockchain.ts for full lifecycle tracking
+- **Auto-film creation from scenario winner**: pickScenarioWinnerAction now auto-creates a Film with 10 phases + auto-generated tasks via film-decomposer
+- Blockchain events now cover: film creation, task claim/submit/validate, phase unlock/complete, film completion
+- Blockchain events for tokenization: token purchase, listing, secondary transfer, governance proposals/votes, dividend claims
+- Integrated reputation scoring (`calculateReputationScore` + `getBadgeForScore`) in task approval flow
+- New admin actions: `reassignTaskAction()` (release claimed tasks), `cleanupExpiredTasksAction()` (auto-release expired tasks)
+- Task lifecycle events: TASK_CLAIMED, TASK_SUBMITTED on blockchain
+- `force-dynamic` kept on all DB pages (Prisma requires runtime DB connection)
+
 ---
 
 ## Key Decisions
-1. **Standalone output** — Required for deployment (Docker/Railway)
+1. **Standalone output** — Required for deployment (Docker/Railway/Coolify)
 2. **JWT strategy** — Stateless auth, no server-side sessions needed
 3. **Hash-based blockchain** — Proof system works offline, ready for real contracts
 4. **Redis graceful degradation** — App works without Redis, just slower
 5. **Israeli legal framework** — Tokenization follows IL securities law
 6. **Prisma adapter-pg** — Direct PostgreSQL adapter for better performance
 7. **noImplicitAny: true** — Strict TypeScript for code quality
+8. **force-dynamic on DB pages** — Prisma can't connect during build, static generation fails
+9. **Auto-film from scenario** — Winning scenario auto-generates Film + phases + tasks via decomposer
+10. **Blockchain for everything** — Every important action (film, task, phase, token, governance) recorded on-chain
 
 ---
 
 ## Important Files
-- `prisma/schema.prisma` — Full database schema (70+ models)
+- `prisma/schema.prisma` — Full database schema (70+ models, 23 BlockchainEventType values)
 - `src/lib/auth.ts` — Authentication configuration
-- `src/lib/blockchain.ts` — Blockchain proof system
+- `src/lib/blockchain.ts` — Blockchain proof system + generic `recordEvent()`
 - `src/lib/redis.ts` — Redis caching layer
-- `src/app/actions/` — 19 server action files
+- `src/lib/film-decomposer.ts` — Auto-generates tasks/budget/timeline from genre
+- `src/lib/reputation.ts` — Weighted reputation scoring system
+- `src/app/actions/admin.ts` — Film, task, phase, review management + reassignment + cleanup
+- `src/app/actions/community.ts` — Scenarios, contests + auto-film from winner
+- `src/app/actions/tasks.ts` — Task claim, submit, abandon + blockchain events
+- `src/app/actions/tokenization.ts` — Token purchase, sale, governance, dividends + blockchain events
 - `next.config.ts` — Build & optimization configuration
