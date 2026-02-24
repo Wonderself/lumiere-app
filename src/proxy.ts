@@ -14,7 +14,7 @@ export async function proxy(req: NextRequest) {
   const isLoggedIn = !!token
   const isAdmin = token?.role === 'ADMIN'
 
-  const protectedPaths = ['/dashboard', '/tasks', '/profile']
+  const protectedPaths = ['/dashboard', '/tasks', '/profile', '/lumens', '/notifications', '/screenplays', '/tokenization']
   const adminPaths = ['/admin']
   const authPaths = ['/login', '/register']
 
