@@ -11,6 +11,7 @@ import type { Metadata } from 'next'
 
 type Props = { params: Promise<{ id: string }> }
 
+export const dynamic = 'force-dynamic'
 export const metadata: Metadata = { title: 'Admin — Éditer Film' }
 
 const FILM_STATUSES = [

@@ -10,6 +10,7 @@ import { ArrowLeft, Trash2, Save } from 'lucide-react'
 import Link from 'next/link'
 import type { Metadata } from 'next'
 
+export const dynamic = 'force-dynamic'
 export const metadata: Metadata = { title: 'Admin — Modifier Tâche' }
 
 const TASK_TYPES = [

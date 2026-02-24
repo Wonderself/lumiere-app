@@ -23,8 +23,11 @@ COPY . .
 RUN npx prisma generate
 
 # Build Next.js (standalone output)
+# Dummy DATABASE_URL so Prisma module can be imported during build analysis
+# (actual DB connection only happens at runtime thanks to lazy proxy in prisma.ts)
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV NODE_ENV=production
+ENV DATABASE_URL="postgresql://dummy:dummy@localhost:5432/dummy"
 RUN npm run build
 
 # ---------- Stage 3: Production Runtime ----------

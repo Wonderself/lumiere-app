@@ -9,6 +9,7 @@ import { createTaskAction } from '@/app/actions/admin'
 import { TASK_TYPE_LABELS, DIFFICULTY_LABELS, PHASE_LABELS } from '@/lib/constants'
 import type { Metadata } from 'next'
 
+export const dynamic = 'force-dynamic'
 export const metadata: Metadata = { title: 'Admin — Nouvelle Tâche' }
 
 export default async function NewTaskPage() {
