@@ -138,7 +138,7 @@ const roadmap: Phase[] = [
     items: [
       { id: 'v7-1', title: 'Déploiement Production', description: 'Docker + Coolify sur Hetzner, HTTPS via Traefik, CI/CD', status: 'in_progress', difficulty: 'trivial', note: 'Coolify + Hetzner configuré' },
       { id: 'v7-2', title: 'SEO complet', description: 'Metadata dynamique, sitemap XML, robots.txt, JSON-LD Movie schema', status: 'done', difficulty: 'easy', note: 'OpenGraph + Twitter Cards + JSON-LD' },
-      { id: 'v7-3', title: 'Sécurité', description: 'Middleware auth, validation Zod, protection routes admin', status: 'done', difficulty: 'medium', note: 'Middleware + password min 8' },
+      { id: 'v7-3', title: 'Sécurité', description: 'Middleware auth, validation Zod, protection routes admin, rate limiting, security headers', status: 'done', difficulty: 'medium', note: 'Rate limiting (login/register/reset) + CSP + HSTS + X-Frame-Options + X-Content-Type-Options' },
       { id: 'v7-4', title: 'Cache & performance', description: 'Redis ISR, images optimisées, Lighthouse 90+', status: 'done', difficulty: 'easy', note: 'Redis getCached sur films, leaderboard, community (2-5 min TTL)' },
       { id: 'v7-5', title: 'Monitoring Sentry', description: 'Error tracking, alertes, dashboard performance', status: 'done', difficulty: 'trivial', note: 'instrumentation.ts + global-error.tsx + dynamic import conditionnel' },
       { id: 'v7-6', title: 'Pages légales RGPD', description: 'CGU, confidentialité, cookies — conformes RGPD/CNIL', status: 'done', difficulty: 'trivial', note: '3 pages légales complètes' },
@@ -147,6 +147,10 @@ const roadmap: Phase[] = [
       { id: 'v7-9', title: 'Smart contracts (interfaces)', description: 'Types TypeScript pour Polygon/Base ERC-20/ERC-721/Governance', status: 'done', difficulty: 'medium', note: 'smart-contracts.ts: 4 contrats, 4 ABIs, config multi-chain' },
       { id: 'v7-10', title: 'Documentation technique', description: 'SECURITY.md, DEPLOYMENT.md, CONTRIBUTING.md', status: 'done', difficulty: 'trivial', note: '3 guides complets pour sécurité, déploiement et contribution' },
       { id: 'v7-11', title: 'Audit visuel complet', description: 'Responsive mobile, padding, bordures, typography, boutons cohérents', status: 'done', difficulty: 'medium', note: '60+ corrections sur 12 fichiers' },
+      { id: 'v7-12', title: 'Tests unitaires (Vitest)', description: '85 tests couvrant utils, reputation, invoices, film-decomposer, rate-limiter', status: 'done', difficulty: 'medium', note: 'Vitest + 5 suites de tests, 85/85 passing' },
+      { id: 'v7-13', title: 'CI/CD GitHub Actions', description: 'Pipeline automatique: TypeScript check, tests, build sur chaque push/PR', status: 'done', difficulty: 'easy', note: '.github/workflows/ci.yml — 3 jobs: lint, test, build' },
+      { id: 'v7-14', title: 'Rate Limiting', description: 'Protection brute-force sur login (5/15min), register (3/h), password reset (3/15min)', status: 'done', difficulty: 'easy', note: 'In-memory sliding window, IP-based, auto-cleanup' },
+      { id: 'v7-15', title: 'Security Headers', description: 'CSP, HSTS, X-Frame-Options, X-Content-Type-Options, Permissions-Policy', status: 'done', difficulty: 'easy', note: 'Applied via proxy.ts on every response' },
     ],
   },
   {
@@ -162,8 +166,10 @@ const roadmap: Phase[] = [
       { id: 'v8-3', title: 'IA Generative (images/video)', description: 'Génération d\'affiches, storyboards, previsualisations par IA', status: 'todo', difficulty: 'guided' },
       { id: 'v8-4', title: 'Analytics avancées', description: 'Dashboard analytics admin avec graphiques, cohortes, prédictions', status: 'done', difficulty: 'medium', note: 'KPI cards + charts + top contributors + pipeline' },
       { id: 'v8-5', title: 'Whisper sous-titres auto', description: 'Transcription automatique audio → sous-titres multi-langues', status: 'todo', difficulty: 'guided' },
-      { id: 'v8-6', title: 'CDN vidéo mondial', description: 'Distribution vidéo multi-région via Cloudflare Stream ou Mux', status: 'todo', difficulty: 'medium' },
+      { id: 'v8-6', title: 'CDN vidéo + HLS streaming', description: 'Distribution vidéo multi-région via Cloudflare Stream ou Mux, HLS adaptive bitrate', status: 'todo', difficulty: 'medium', note: 'transcoding.ts prêt (4 profils HLS), manque exécution FFmpeg + CDN' },
       { id: 'v8-7', title: 'Loading states & 404', description: 'Squelettes de chargement (spinner gold), page 404 cinéma', status: 'done', difficulty: 'trivial', note: 'loading.tsx (root + public + dashboard) + not-found.tsx' },
+      { id: 'v8-8', title: 'Email verification', description: 'Vérification email à l\'inscription, token + action resendVerification', status: 'done', difficulty: 'easy', note: 'isVerified check + resendVerificationAction dans auth.ts' },
+      { id: 'v8-9', title: 'Annulation abonnement', description: 'Bouton annulation dans le profil, cancelSubscriptionAction complète', status: 'todo', difficulty: 'easy', note: 'Action documentée, UI à créer dans /profile ou /dashboard' },
     ],
   },
   {

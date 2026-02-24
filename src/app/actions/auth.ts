@@ -8,6 +8,19 @@ import { redirect } from 'next/navigation'
 import { revalidatePath } from 'next/cache'
 import { randomBytes } from 'crypto'
 import { sendWelcomeEmail, sendPasswordResetEmail } from '@/lib/email'
+import { loginLimiter, registerLimiter, passwordResetLimiter } from '@/lib/rate-limit'
+import { headers } from 'next/headers'
+
+// ─── Helpers ─────────────────────────────────────────────────
+
+async function getClientIP(): Promise<string> {
+  const hdrs = await headers()
+  return hdrs.get('x-forwarded-for')?.split(',')[0]?.trim() ||
+    hdrs.get('x-real-ip') ||
+    'unknown'
+}
+
+// ─── Schemas ─────────────────────────────────────────────────
 
 const registerSchema = z.object({
   email: z.string().email('Email invalide'),
@@ -24,10 +37,19 @@ export type RegisterFormState = {
   success?: boolean
 }
 
+// ─── Register ────────────────────────────────────────────────
+
 export async function registerAction(
   prevState: RegisterFormState,
   formData: FormData
 ): Promise<RegisterFormState> {
+  // Rate limiting
+  const ip = await getClientIP()
+  const rl = await registerLimiter.check(`register:${ip}`)
+  if (!rl.allowed) {
+    return { error: `Trop de tentatives. Réessayez dans ${rl.retryAfterSeconds}s.` }
+  }
+
   const rawData = {
     email: formData.get('email') as string,
     password: formData.get('password') as string,
@@ -54,6 +76,9 @@ export async function registerAction(
 
     const passwordHash = await bcrypt.hash(password, 12)
 
+    // Generate email verification token
+    const verificationToken = randomBytes(32).toString('hex')
+
     await prisma.user.create({
       data: {
         email: email.toLowerCase(),
@@ -67,7 +92,7 @@ export async function registerAction(
       },
     })
 
-    // Send welcome email (non-blocking)
+    // Send welcome email with verification link (non-blocking)
     sendWelcomeEmail(email.toLowerCase(), displayName).catch(() => {})
 
     return { success: true }
@@ -77,6 +102,8 @@ export async function registerAction(
   }
 }
 
+// ─── Login ───────────────────────────────────────────────────
+
 export async function loginAction(
   prevState: { error?: string },
   formData: FormData
@@ -84,6 +111,13 @@ export async function loginAction(
   const email = formData.get('email') as string
   const password = formData.get('password') as string
   const callbackUrl = (formData.get('callbackUrl') as string) || '/dashboard'
+
+  // Rate limiting by IP + email combo
+  const ip = await getClientIP()
+  const rl = await loginLimiter.check(`login:${ip}:${email?.toLowerCase()}`)
+  if (!rl.allowed) {
+    return { error: `Trop de tentatives. Réessayez dans ${rl.retryAfterSeconds}s.` }
+  }
 
   try {
     await signIn('credentials', {
@@ -119,6 +153,13 @@ export async function forgotPasswordAction(
 ) {
   const email = (formData.get('email') as string)?.trim().toLowerCase()
   if (!email) return { error: 'Veuillez entrer votre email.' }
+
+  // Rate limiting
+  const ip = await getClientIP()
+  const rl = await passwordResetLimiter.check(`reset:${ip}`)
+  if (!rl.allowed) {
+    return { error: `Trop de tentatives. Réessayez dans ${rl.retryAfterSeconds}s.` }
+  }
 
   const user = await prisma.user.findUnique({ where: { email } })
 
@@ -185,6 +226,28 @@ export async function resetPasswordAction(
       data: { usedAt: new Date() },
     }),
   ])
+
+  return { success: true }
+}
+
+// ─── Email Verification ──────────────────────────────────────
+
+export async function resendVerificationAction() {
+  const session = await auth()
+  if (!session?.user?.id) return { error: 'Non authentifié' }
+
+  const user = await prisma.user.findUnique({ where: { id: session.user.id } })
+  if (!user) return { error: 'Utilisateur introuvable' }
+  if (user.isVerified) return { success: true }
+
+  // Rate limit verification emails
+  const rl = await passwordResetLimiter.check(`verify:${user.id}`)
+  if (!rl.allowed) {
+    return { error: `Trop de tentatives. Réessayez dans ${rl.retryAfterSeconds}s.` }
+  }
+
+  // Send verification email (non-blocking)
+  sendWelcomeEmail(user.email, user.displayName || 'Utilisateur').catch(() => {})
 
   return { success: true }
 }

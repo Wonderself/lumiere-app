@@ -911,3 +911,62 @@ Each phase has: status (LOCKED/ACTIVE/COMPLETED), order, dependencies
 - Items terminés en texte vert (au lieu de barré)
 - Badges difficulté et notes en ligne séparée sous description
 - V8-7 (Loading & 404) ajouté au roadmap
+
+## 61. Tests Unitaires (Vitest)
+- **Configuration**: `vitest.config.ts` avec aliases `@/` → `src/`
+- **5 suites de tests** (85 tests total, 100% passing):
+  - `src/__tests__/lib/utils.test.ts` — 34 tests: slugify, formatPrice, getProgressColor, truncate, getInitials, color helpers
+  - `src/__tests__/lib/reputation.test.ts` — 16 tests: calculateReputationScore, getBadgeForScore, REPUTATION_WEIGHTS sum, badges ordering
+  - `src/__tests__/lib/invoices.test.ts` — Tests: generateInvoiceNumber format, generateInvoice content (header, amounts, TVA), buildInvoiceData, PLATFORM_INFO
+  - `src/__tests__/lib/film-decomposer.test.ts` — 14 tests: token decomposition, budget sum tolerance, genre-specific tasks, timeline sequential, risk assessment
+  - `src/__tests__/lib/rate-limit.test.ts` — 6 tests: allows first request, maxAttempts, blocks after exceeded, per-identifier tracking, reset, retryAfterSeconds
+- **Scripts npm**: `test`, `test:watch`, `test:coverage` (v8 provider)
+- **Stratégie**: tests de fonctions pures uniquement, pas de mocking DB/Redis
+
+## 62. CI/CD GitHub Actions
+- **Fichier**: `.github/workflows/ci.yml`
+- **Trigger**: push ou PR sur main
+- **3 jobs**:
+  1. `lint-and-typecheck` — `npx tsc --noEmit`
+  2. `test` — `npx vitest run --reporter=verbose`
+  3. `build` — `npm run build` (dépend des 2 précédents)
+- **Node 20** avec cache npm pour rapidité
+- **Prisma generate** avant chaque job
+- **Build env**: dummy `DATABASE_URL` + `AUTH_SECRET` + `SKIP_ENV_VALIDATION`
+
+## 63. Rate Limiting
+- **Fichier**: `src/lib/rate-limit.ts`
+- **Implémentation**: Sliding window in-memory (Map-based)
+- **3 limiteurs pré-configurés**:
+  | Limiter | Max tentatives | Fenêtre | Utilisation |
+  |---------|---------------|---------|-------------|
+  | loginLimiter | 5 | 15 min | loginAction |
+  | registerLimiter | 3 | 1 heure | registerAction |
+  | passwordResetLimiter | 3 | 15 min | forgotPasswordAction |
+- **Identification**: IP via `x-forwarded-for` / `x-real-ip` + email
+- **Auto-cleanup**: Nettoyage des entrées expirées toutes les 5 minutes
+- **API**: `check(identifier)` → `{ allowed, remaining, retryAfterSeconds }`
+- **Reset**: `reset(identifier)` pour libérer après succès
+
+## 64. Security Headers
+- **Fichier**: `src/lib/security-headers.ts`
+- **Headers appliqués** sur chaque réponse via proxy.ts:
+  | Header | Valeur |
+  |--------|--------|
+  | Content-Security-Policy | default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; img-src 'self' data: https://images.unsplash.com; connect-src 'self' https://api.resend.com |
+  | Strict-Transport-Security | max-age=63072000; includeSubDomains; preload |
+  | X-Frame-Options | DENY |
+  | X-Content-Type-Options | nosniff |
+  | Permissions-Policy | camera=(), microphone=(), geolocation=() |
+  | Referrer-Policy | strict-origin-when-cross-origin |
+  | X-XSS-Protection | 1; mode=block |
+  | X-DNS-Prefetch-Control | on |
+- **Application**: `addSecurityHeaders()` dans proxy.ts, couvre redirections et réponses normales
+
+## 65. Email Verification
+- **Action**: `resendVerificationAction()` dans `src/app/actions/auth.ts`
+- **Flow**: inscription → email de bienvenue avec prompt de vérification
+- **Rate limited**: 3 renvois max par 15 min (via passwordResetLimiter)
+- **Auth-gated**: seuls les utilisateurs connectés peuvent re-demander
+- **Login check**: avertissement si `isVerified === false` (soft, pas bloquant)
+- **Champ DB**: `isVerified` dans modèle User (existait déjà)

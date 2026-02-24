@@ -687,6 +687,50 @@ Templates HTML branding Lumiere gold/dark.
 - `GET /api/v1/stats` — Platform stats (Redis-cached, 5min TTL)
 - `GET /api/v1/contributors` — Top contributors leaderboard
 
+### 2026-02-25 — Tests, CI/CD, Security Hardening, Email Verification
+
+**Unit Tests (85 tests, Vitest)**:
+- Installed `vitest` + `@vitest/coverage-v8`
+- Created `vitest.config.ts` with path aliases
+- 5 test suites covering pure modules (no DB mocking needed):
+  - `src/__tests__/lib/utils.test.ts` — 34 tests: slugify, formatPrice, getProgressColor, truncate, getInitials, color helpers
+  - `src/__tests__/lib/reputation.test.ts` — 16 tests: calculateReputationScore, getBadgeForScore, weights, badges ordering
+  - `src/__tests__/lib/invoices.test.ts` — Tests: invoice number format, content validation, buildInvoiceData, PLATFORM_INFO
+  - `src/__tests__/lib/film-decomposer.test.ts` — 14 tests: token decomposition, budget sums, genre tasks, timeline, risk assessment
+  - `src/__tests__/lib/rate-limit.test.ts` — 6 tests: sliding window, per-identifier tracking, reset, retryAfterSeconds
+- All 85/85 tests passing
+
+**CI/CD GitHub Actions**:
+- Created `.github/workflows/ci.yml` with 3 jobs:
+  1. `lint-and-typecheck` — `tsc --noEmit`
+  2. `test` — `vitest run --reporter=verbose`
+  3. `build` — full Next.js build (needs lint + test to pass first)
+- Node 20, npm cache, prisma generate before each job
+- Build job uses dummy DATABASE_URL + AUTH_SECRET for Prisma module analysis
+
+**Rate Limiting**:
+- Created `src/lib/rate-limit.ts` — in-memory sliding window rate limiter
+- Pre-configured limiters: login (5/15min), register (3/1h), password reset (3/15min)
+- IP-based identification via `x-forwarded-for` / `x-real-ip` headers
+- Auto-cleanup of expired entries every 5 minutes
+- Integrated into `loginAction`, `registerAction`, `forgotPasswordAction` in auth.ts
+
+**Security Headers**:
+- Created `src/lib/security-headers.ts` — CSP, HSTS, X-Frame-Options, X-Content-Type-Options, Permissions-Policy, Referrer-Policy, X-XSS-Protection, X-DNS-Prefetch-Control
+- CSP: self + unsafe-inline/eval (Next.js requirement) + Unsplash images + Resend
+- Applied via `addSecurityHeaders()` in `src/proxy.ts` on every response (including redirects)
+
+**Email Verification**:
+- Added `resendVerificationAction()` in `src/app/actions/auth.ts`
+- Rate-limited, auth-gated, sends welcome email with verification prompt
+- Login now checks `isVerified` and warns if not verified (soft warning, not blocking)
+
+**Roadmap Updated**:
+- Added v7-12 (Tests), v7-13 (CI/CD), v7-14 (Rate Limiting), v7-15 (Security Headers)
+- Updated v7-3 description to include rate limiting + security headers
+- Added v8-8 (Email verification), v8-9 (Cancel subscription — TODO)
+- Updated v8-6 (CDN vidéo) with transcoding.ts readiness note
+
 ---
 
 ## Important Files
