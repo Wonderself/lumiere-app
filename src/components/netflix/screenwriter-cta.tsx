@@ -29,7 +29,7 @@ const benefits = [
 
 export function ScreenwriterCTA() {
   return (
-    <section className="relative mx-4 sm:mx-8 md:mx-16 lg:mx-20 mb-16 overflow-hidden rounded-2xl">
+    <section className="relative mx-4 sm:mx-8 md:mx-16 lg:mx-20 mb-20 overflow-hidden rounded-2xl">
       {/* Background — cinematic dark with gold accents */}
       <div className="absolute inset-0 bg-gradient-to-br from-[#0F0F0F] via-[#1A1508] to-[#0F0F0F]" />
       <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1455390582262-044cdead277a?w=1200&q=30')] bg-cover bg-center opacity-[0.06]" />
@@ -43,8 +43,8 @@ export function ScreenwriterCTA() {
       <div className="absolute bottom-0 right-0 w-20 h-20 bg-gradient-to-tl from-[#D4AF37]/10 to-transparent" />
 
       {/* Content */}
-      <div className="relative z-10 px-5 sm:px-8 md:px-12 lg:px-16 py-10 sm:py-12 md:py-16">
-        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-10">
+      <div className="relative z-10 px-6 sm:px-10 md:px-14 lg:px-18 py-12 sm:py-14 md:py-20">
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-12">
           {/* Left: Main CTA */}
           <div className="max-w-xl">
             {/* Badge */}
@@ -52,7 +52,7 @@ export function ScreenwriterCTA() {
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#D4AF37]/20 bg-[#D4AF37]/5 mb-6"
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#D4AF37]/20 bg-[#D4AF37]/5 mb-8"
             >
               <Star className="h-3.5 w-3.5 text-[#D4AF37]" />
               <span className="text-[11px] font-bold tracking-[0.15em] uppercase text-[#D4AF37]">
@@ -65,7 +65,7 @@ export function ScreenwriterCTA() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
-              className="text-3xl md:text-4xl lg:text-[2.75rem] font-black text-white leading-[1.1] tracking-tight mb-5"
+              className="text-3xl md:text-4xl lg:text-[2.75rem] font-black text-white leading-[1.1] tracking-tight mb-7"
               style={{ fontFamily: 'var(--font-playfair)' }}
             >
               100 Scenaristes.<br />
@@ -77,7 +77,7 @@ export function ScreenwriterCTA() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
-              className="text-sm md:text-[15px] text-white/45 leading-[1.7] mb-8 max-w-md"
+              className="text-sm md:text-[15px] text-white/45 leading-[1.7] mb-10 max-w-md"
             >
               Nous invitons 100 scenaristes a soumettre leurs projets au vote de la communaute.
               Le scenario gagnant sera produit en film. Les auteurs sont automatiquement credites
@@ -89,7 +89,7 @@ export function ScreenwriterCTA() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.3 }}
-              className="flex flex-col sm:flex-row items-start sm:items-center gap-4"
+              className="flex flex-col sm:flex-row items-start sm:items-center gap-5"
             >
               <Link
                 href="/register?role=SCREENWRITER"
@@ -115,14 +115,14 @@ export function ScreenwriterCTA() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2, duration: 0.6 }}
-            className="grid grid-cols-2 gap-4 lg:gap-5 max-w-sm"
+            className="grid grid-cols-2 gap-5 lg:gap-6 max-w-sm"
           >
             {benefits.map((benefit, idx) => (
               <div
                 key={benefit.label}
-                className="group p-4 md:p-5 rounded-xl bg-white/[0.03] border border-white/[0.06] hover:border-[#D4AF37]/20 hover:bg-white/[0.05] transition-all duration-300"
+                className="group p-5 md:p-6 rounded-xl bg-white/[0.03] border border-white/[0.06] hover:border-[#D4AF37]/20 hover:bg-white/[0.05] transition-all duration-300"
               >
-                <benefit.icon className="h-5 w-5 text-[#D4AF37]/70 mb-3 group-hover:text-[#D4AF37] transition-colors" />
+                <benefit.icon className="h-5 w-5 text-[#D4AF37]/70 mb-3.5 group-hover:text-[#D4AF37] transition-colors" />
                 <p className="text-[13px] font-bold text-white/80 mb-1">{benefit.label}</p>
                 <p className="text-[10px] text-white/30 leading-relaxed">{benefit.description}</p>
               </div>
@@ -136,7 +136,7 @@ export function ScreenwriterCTA() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.4 }}
-          className="flex flex-wrap items-center gap-5 sm:gap-8 mt-10 pt-8 border-t border-white/[0.05]"
+          className="flex flex-wrap items-center gap-6 sm:gap-10 mt-12 pt-10 border-t border-white/[0.05]"
         >
           <div>
             <p className="text-2xl md:text-3xl font-black text-[#D4AF37]" style={{ fontFamily: 'var(--font-playfair)' }}>100</p>

@@ -77,9 +77,9 @@ export function FilmRow({ title, films, href }: FilmRowProps) {
   if (films.length === 0) return null
 
   return (
-    <section className="relative group/row mb-16 md:mb-20">
+    <section className="relative group/row mb-20 md:mb-24">
       {/* Row title */}
-      <div className="flex items-center justify-between px-4 sm:px-8 md:px-16 lg:px-20 mb-6">
+      <div className="flex items-center justify-between px-6 sm:px-10 md:px-16 lg:px-20 mb-8">
         <h2
           className="text-lg md:text-xl lg:text-2xl font-bold text-white/90 tracking-tight"
           style={{ fontFamily: 'var(--font-playfair)' }}
@@ -127,7 +127,7 @@ export function FilmRow({ title, films, href }: FilmRowProps) {
         <div
           ref={scrollRef}
           onScroll={updateArrows}
-          className="flex gap-4 md:gap-5 overflow-x-auto scrollbar-hide px-4 sm:px-8 md:px-16 lg:px-20 scroll-smooth"
+          className="flex gap-5 md:gap-6 overflow-x-auto scrollbar-hide px-6 sm:px-10 md:px-16 lg:px-20 scroll-smooth"
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
           {films.map((film, idx) => (
@@ -196,7 +196,7 @@ export function FilmRow({ title, films, href }: FilmRowProps) {
               </div>
 
               {/* Title below poster */}
-              <div className="pt-3.5 pb-2.5 px-1.5">
+              <div className="pt-4 pb-3 px-2">
                 <p className="text-[12px] sm:text-[13px] font-semibold text-white/80 truncate group-hover/card:text-white transition-colors">{film.title}</p>
                 {film.genre && (
                   <p className="text-[10px] sm:text-[11px] text-white/30 mt-0.5">{film.genre}</p>

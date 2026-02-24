@@ -49,9 +49,9 @@ export function TopTenRow({ films }: { films: FilmCard[] }) {
   const topFilms = films.slice(0, 10)
 
   return (
-    <section className="relative group/row mb-16 md:mb-20">
+    <section className="relative group/row mb-20 md:mb-24">
       {/* Section title */}
-      <div className="px-4 sm:px-8 md:px-16 lg:px-20 mb-6">
+      <div className="px-6 sm:px-10 md:px-16 lg:px-20 mb-8">
         <div className="flex items-center gap-3">
           <div className="h-7 w-1.5 rounded-full bg-gradient-to-b from-[#D4AF37] to-[#8B6914]" />
           <h2
@@ -90,7 +90,7 @@ export function TopTenRow({ films }: { films: FilmCard[] }) {
         <div
           ref={scrollRef}
           onScroll={updateArrows}
-          className="flex gap-0 md:gap-0 overflow-x-auto scrollbar-hide px-4 sm:px-8 md:px-16 lg:px-20 scroll-smooth"
+          className="flex gap-1 md:gap-1 overflow-x-auto scrollbar-hide px-6 sm:px-10 md:px-16 lg:px-20 scroll-smooth"
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
           {topFilms.map((film, idx) => (

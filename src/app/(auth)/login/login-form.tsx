@@ -1,6 +1,6 @@
 'use client'
 
-import { useActionState, useRef } from 'react'
+import { useActionState, useRef, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
@@ -13,18 +13,15 @@ export function LoginForm() {
   const searchParams = useSearchParams()
   const callbackUrl = searchParams.get('callbackUrl') || '/dashboard'
   const [state, action, isPending] = useActionState(loginAction, {})
-  const emailRef = useRef<HTMLInputElement>(null)
-  const passwordRef = useRef<HTMLInputElement>(null)
+  const formRef = useRef<HTMLFormElement>(null)
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
 
-  const fillDemo = (email: string, password: string) => {
-    if (emailRef.current) {
-      emailRef.current.value = email
-      emailRef.current.dispatchEvent(new Event('input', { bubbles: true }))
-    }
-    if (passwordRef.current) {
-      passwordRef.current.value = password
-      passwordRef.current.dispatchEvent(new Event('input', { bubbles: true }))
-    }
+  const loginAsDemo = (demoEmail: string, demoPassword: string) => {
+    setEmail(demoEmail)
+    setPassword(demoPassword)
+    // Submit on next tick after state update renders
+    setTimeout(() => formRef.current?.requestSubmit(), 0)
   }
 
   return (
@@ -46,7 +43,7 @@ export function LoginForm() {
         <div className="absolute -inset-1 bg-gradient-to-b from-[#D4AF37]/10 via-transparent to-[#D4AF37]/5 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
 
         <div className="relative sm:rounded-3xl rounded-2xl border border-white/[0.08] bg-white/[0.03] backdrop-blur-sm p-7 sm:p-9 shadow-2xl shadow-black/20">
-          <form action={action} className="space-y-6">
+          <form ref={formRef} action={action} className="space-y-6">
             <input type="hidden" name="callbackUrl" value={callbackUrl} />
 
             {state.error && (
@@ -60,10 +57,11 @@ export function LoginForm() {
               <div className="relative">
                 <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-white/25" />
                 <Input
-                  ref={emailRef}
                   id="email"
                   name="email"
                   type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   placeholder="vous@exemple.com"
                   required
                   autoComplete="email"
@@ -82,10 +80,11 @@ export function LoginForm() {
               <div className="relative">
                 <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-white/25" />
                 <Input
-                  ref={passwordRef}
                   id="password"
                   name="password"
                   type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
                   required
                   autoComplete="current-password"
@@ -113,32 +112,38 @@ export function LoginForm() {
             <div className="flex-1 h-px bg-gradient-to-l from-transparent to-white/[0.06]" />
           </div>
 
-          {/* Demo accounts — clickable to auto-fill */}
+          {/* Demo accounts — click to auto-fill AND submit */}
           <div className="mt-5 space-y-2.5">
             <button
               type="button"
-              onClick={() => fillDemo('admin@lumiere.film', 'Admin1234!')}
-              className="w-full rounded-xl bg-[#D4AF37]/[0.06] border border-[#D4AF37]/15 hover:border-[#D4AF37]/30 hover:bg-[#D4AF37]/10 p-3.5 text-left transition-all duration-300 group cursor-pointer"
+              disabled={isPending}
+              onClick={() => loginAsDemo('admin@lumiere.film', 'Admin1234!')}
+              className="w-full rounded-xl bg-[#D4AF37]/[0.06] border border-[#D4AF37]/15 hover:border-[#D4AF37]/30 hover:bg-[#D4AF37]/10 p-3.5 text-left transition-all duration-300 group cursor-pointer disabled:opacity-50"
             >
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-xs font-semibold text-[#D4AF37]/80 group-hover:text-[#D4AF37]">Admin</p>
                   <p className="text-[11px] text-white/35 mt-0.5">admin@lumiere.film / Admin1234!</p>
                 </div>
-                <span className="text-[10px] text-[#D4AF37]/40 group-hover:text-[#D4AF37]/70 uppercase tracking-wider font-medium">Cliquer</span>
+                <span className="text-[10px] text-[#D4AF37]/40 group-hover:text-[#D4AF37]/70 uppercase tracking-wider font-medium">
+                  {isPending ? 'Connexion...' : 'Connexion rapide'}
+                </span>
               </div>
             </button>
             <button
               type="button"
-              onClick={() => fillDemo('contributeur@lumiere.film', 'Test1234!')}
-              className="w-full rounded-xl bg-white/[0.02] border border-white/[0.06] hover:border-white/[0.12] hover:bg-white/[0.04] p-3.5 text-left transition-all duration-300 group cursor-pointer"
+              disabled={isPending}
+              onClick={() => loginAsDemo('contributeur@lumiere.film', 'Test1234!')}
+              className="w-full rounded-xl bg-white/[0.02] border border-white/[0.06] hover:border-white/[0.12] hover:bg-white/[0.04] p-3.5 text-left transition-all duration-300 group cursor-pointer disabled:opacity-50"
             >
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-xs font-semibold text-white/50 group-hover:text-white/70">Contributeur</p>
                   <p className="text-[11px] text-white/25 mt-0.5">contributeur@lumiere.film / Test1234!</p>
                 </div>
-                <span className="text-[10px] text-white/20 group-hover:text-white/40 uppercase tracking-wider font-medium">Cliquer</span>
+                <span className="text-[10px] text-white/20 group-hover:text-white/40 uppercase tracking-wider font-medium">
+                  {isPending ? 'Connexion...' : 'Connexion rapide'}
+                </span>
               </div>
             </button>
           </div>

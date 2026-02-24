@@ -65,10 +65,10 @@ const cardVariants = {
 
 export function CreatorBar() {
   return (
-    <section className="px-4 sm:px-8 md:px-16 lg:px-20 mb-16 mt-4">
+    <section className="px-6 sm:px-10 md:px-16 lg:px-20 mb-20 mt-6">
       {/* Section header */}
-      <div className="flex items-center gap-4 mb-8">
-        <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-[#D4AF37] to-[#8B6914] flex items-center justify-center shadow-[0_0_20px_rgba(212,175,55,0.2)]">
+      <div className="flex items-center gap-5 mb-10">
+        <div className="h-11 w-11 rounded-xl bg-gradient-to-br from-[#D4AF37] to-[#8B6914] flex items-center justify-center shadow-[0_0_20px_rgba(212,175,55,0.2)]">
           <Sparkles className="h-4.5 w-4.5 text-black" />
         </div>
         <div>
@@ -78,13 +78,13 @@ export function CreatorBar() {
           >
             Participez a la Creation
           </h2>
-          <p className="text-[11px] text-white/35 mt-1 tracking-wide">Devenez acteur du cinema de demain</p>
+          <p className="text-[11px] text-white/35 mt-1.5 tracking-wide">Devenez acteur du cinema de demain</p>
         </div>
       </div>
 
       {/* Cards grid */}
       <motion.div
-        className="grid grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6"
+        className="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-7"
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
@@ -94,7 +94,7 @@ export function CreatorBar() {
           <motion.div key={action.title} variants={cardVariants}>
             <Link
               href={action.href}
-              className="group relative block rounded-2xl overflow-hidden h-[200px] sm:h-[220px] md:h-[240px]"
+              className="group relative block rounded-2xl overflow-hidden h-[215px] sm:h-[235px] md:h-[255px]"
             >
               {/* Background image */}
               <div
@@ -121,7 +121,7 @@ export function CreatorBar() {
               />
 
               {/* Content — perfect padding */}
-              <div className="relative z-10 h-full flex flex-col justify-between p-5 sm:p-6 md:p-7">
+              <div className="relative z-10 h-full flex flex-col justify-between p-6 sm:p-7 md:p-8">
                 {/* Icon */}
                 <div
                   className={`h-12 w-12 rounded-xl bg-gradient-to-br ${action.iconBg} flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:shadow-[0_4px_20px_rgba(0,0,0,0.3)] transition-all duration-300`}

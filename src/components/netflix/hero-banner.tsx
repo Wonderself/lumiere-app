@@ -105,7 +105,7 @@ export function HeroBanner({ films }: { films: HeroFilm[] }) {
       <div className="absolute top-0 left-0 right-0 h-[2px] bg-black/40" />
 
       {/* Content */}
-      <div className="relative h-full flex flex-col justify-end pb-28 sm:pb-32 md:pb-40 px-4 sm:px-8 md:px-16 lg:px-20">
+      <div className="relative h-full flex flex-col justify-end pb-32 sm:pb-36 md:pb-44 px-6 sm:px-10 md:px-16 lg:px-20">
         <AnimatePresence mode="wait">
           <motion.div
             key={film.id}
@@ -116,7 +116,7 @@ export function HeroBanner({ films }: { films: HeroFilm[] }) {
             className="max-w-2xl"
           >
             {/* Genre badge with line */}
-            <div className="flex items-center gap-3 mb-6">
+            <div className="flex items-center gap-3 mb-7">
               <div className="h-[2px] w-10 bg-gradient-to-r from-[#D4AF37] to-[#D4AF37]/0" />
               <span className="text-[11px] font-bold tracking-[0.25em] uppercase text-[#D4AF37]">
                 {film.genre || 'Film'}
@@ -129,21 +129,21 @@ export function HeroBanner({ films }: { films: HeroFilm[] }) {
 
             {/* Title — strong cinema typography */}
             <h1
-              className="text-[2.5rem] sm:text-5xl md:text-6xl lg:text-[5rem] font-black mb-6 md:mb-8 text-white leading-[0.92] tracking-[-0.02em]"
+              className="text-[2.5rem] sm:text-5xl md:text-6xl lg:text-[5rem] font-black mb-8 md:mb-10 text-white leading-[0.92] tracking-[-0.02em]"
               style={{ fontFamily: 'var(--font-playfair)' }}
             >
               {film.title}
             </h1>
 
             {/* Synopsis with frosted glass background */}
-            <div className="mb-8 md:mb-10">
+            <div className="mb-10 md:mb-12">
               <p className="text-sm md:text-[15px] lg:text-base text-white/55 line-clamp-3 leading-[1.7] max-w-lg">
                 {film.synopsis || 'Decouvrez ce projet sur Lumiere Cinema.'}
               </p>
             </div>
 
             {/* Action buttons */}
-            <div className="flex items-center gap-4 sm:gap-5">
+            <div className="flex items-center gap-5 sm:gap-6">
               <Link
                 href={href}
                 className="group inline-flex items-center gap-2.5 px-6 sm:px-8 md:px-10 py-3.5 md:py-4 rounded-xl text-sm md:text-[15px] font-bold text-black transition-all duration-300 hover:shadow-[0_0_50px_rgba(212,175,55,0.45)] hover:scale-[1.03] active:scale-[0.97]"
@@ -184,7 +184,7 @@ export function HeroBanner({ films }: { films: HeroFilm[] }) {
 
       {/* Bottom progress bar + navigation dots */}
       {films.length > 1 && (
-        <div className="absolute bottom-12 left-4 sm:left-8 md:left-16 lg:left-20 flex items-center gap-3">
+        <div className="absolute bottom-14 left-6 sm:left-10 md:left-16 lg:left-20 flex items-center gap-3.5">
           {films.map((f, idx) => (
             <button
               key={f.id}

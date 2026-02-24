@@ -14,7 +14,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
       </div>
 
       {/* Auth Header */}
-      <div className="p-6 sm:p-8 relative z-10">
+      <div className="p-8 sm:p-10 relative z-10">
         <Link href="/" className="group flex items-center gap-2.5 w-fit transition-opacity duration-500 hover:opacity-80">
           <div className="relative">
             <Clapperboard className="h-7 w-7 text-[#D4AF37] transition-transform duration-500 group-hover:scale-110" />
@@ -27,16 +27,16 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
       </div>
 
       {/* Auth Content */}
-      <div className="flex-1 flex items-center justify-center px-5 sm:px-8 py-10 sm:py-14 relative z-10">
+      <div className="flex-1 flex items-center justify-center px-6 sm:px-10 py-12 sm:py-16 relative z-10">
         <div className="w-full max-w-md">
           {children}
         </div>
       </div>
 
       {/* Bottom decorative line */}
-      <div className="relative z-10 px-4 sm:px-8 pb-8">
+      <div className="relative z-10 px-4 sm:px-8 pb-10">
         <div className="h-px bg-gradient-to-r from-transparent via-[#D4AF37]/20 to-transparent" />
-        <p className="text-center text-xs text-white/20 mt-5">
+        <p className="text-center text-xs text-white/20 mt-6">
           &copy; {new Date().getFullYear()} Lumière Brothers Pictures
         </p>
       </div>

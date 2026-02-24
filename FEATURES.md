@@ -12,8 +12,9 @@
 - Email/password registration with role selection
 - URL param auto-select role (e.g. `?role=SCREENWRITER`)
 - Custom welcome for screenwriters: "Devenez Scenariste"
-- Credential-based login via NextAuth 5
+- Credential-based login via NextAuth 5 (no PrismaAdapter — pure JWT + Credentials)
 - JWT stateless sessions
+- Clickable demo login buttons (Admin + Contributeur) with controlled form inputs
 - Password reset via token (1h expiry, email link)
 - Profile updates (name, bio, skills, languages, wallet address)
 

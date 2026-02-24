@@ -136,7 +136,7 @@ export function HeroManifesto({ filmCount }: { filmCount: number }) {
             alt="Lumiere Brothers Pictures"
             width={280}
             height={70}
-            className="h-12 sm:h-14 md:h-16 w-auto object-contain mx-auto mb-12 opacity-90"
+            className="h-12 sm:h-14 md:h-16 w-auto object-contain mx-auto mb-14 opacity-90"
             priority
           />
         </motion.div>
@@ -146,7 +146,7 @@ export function HeroManifesto({ filmCount }: { filmCount: number }) {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black text-white leading-[1.05] tracking-tight max-w-5xl mb-8"
+          className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black text-white leading-[1.05] tracking-tight max-w-5xl mb-10"
           style={{ fontFamily: 'var(--font-playfair)' }}
         >
           Le premier studio de cinema{' '}
@@ -160,7 +160,7 @@ export function HeroManifesto({ filmCount }: { filmCount: number }) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.7 }}
-          className="text-lg sm:text-xl md:text-2xl text-white/40 font-light max-w-2xl mb-12 leading-relaxed"
+          className="text-lg sm:text-xl md:text-2xl text-white/40 font-light max-w-2xl mb-14 leading-relaxed"
         >
           {filmCount > 0 ? filmCount : 20} films. 1 an. 25 000&euro; par film.
           <br />
@@ -172,7 +172,7 @@ export function HeroManifesto({ filmCount }: { filmCount: number }) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 1.0 }}
-          className="flex flex-col sm:flex-row items-center gap-5"
+          className="flex flex-col sm:flex-row items-center gap-6"
         >
           <Link
             href="/register"
@@ -200,24 +200,24 @@ export function HeroManifesto({ filmCount }: { filmCount: number }) {
         transition={{ duration: 0.8, delay: 1.3 }}
         className="relative z-10 border-t border-white/[0.05] bg-black/30 backdrop-blur-sm"
       >
-        <div className="max-w-5xl mx-auto py-8 sm:py-10 px-4 sm:px-6 grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-10">
+        <div className="max-w-5xl mx-auto py-10 sm:py-12 px-6 sm:px-8 grid grid-cols-2 md:grid-cols-4 gap-8 sm:gap-12">
           <div className="text-center">
             <AnimatedCounter end={filmCount > 0 ? filmCount : 20} />
-            <p className="text-[11px] text-white/25 uppercase tracking-[0.2em] mt-2.5 font-medium">films en pipeline</p>
+            <p className="text-[11px] text-white/25 uppercase tracking-[0.2em] mt-3 font-medium">films en pipeline</p>
           </div>
           <div className="text-center">
             <AnimatedCounter end={500} suffix="+" />
-            <p className="text-[11px] text-white/25 uppercase tracking-[0.2em] mt-2.5 font-medium">micro-taches</p>
+            <p className="text-[11px] text-white/25 uppercase tracking-[0.2em] mt-3 font-medium">micro-taches</p>
           </div>
           <div className="text-center">
             <AnimatedCounter end={25} prefix="" suffix="K€" />
-            <p className="text-[11px] text-white/25 uppercase tracking-[0.2em] mt-2.5 font-medium">par film</p>
+            <p className="text-[11px] text-white/25 uppercase tracking-[0.2em] mt-3 font-medium">par film</p>
           </div>
           <div className="text-center">
             <p className="text-2xl sm:text-3xl md:text-4xl font-black text-white/60" style={{ fontFamily: 'var(--font-playfair)' }}>
               Paris &middot; Jerusalem
             </p>
-            <p className="text-[11px] text-white/25 uppercase tracking-[0.2em] mt-2.5 font-medium">double ecosysteme</p>
+            <p className="text-[11px] text-white/25 uppercase tracking-[0.2em] mt-3 font-medium">double ecosysteme</p>
           </div>
         </div>
       </motion.div>

@@ -73,7 +73,7 @@ export default async function AdminPage() {
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-10">
       {/* Header */}
       <div className="flex items-start justify-between">
         <div>
@@ -100,7 +100,7 @@ export default async function AdminPage() {
       )}
 
       {/* KPIs with sparklines */}
-      <div className="grid grid-cols-2 lg:grid-cols-3 gap-5">
+      <div className="grid grid-cols-2 lg:grid-cols-3 gap-6">
         {kpis.map((kpi) => (
           <Link key={kpi.label} href={kpi.href}>
             <Card className="hover:border-white/10 transition-all cursor-pointer h-full">
@@ -123,7 +123,7 @@ export default async function AdminPage() {
         ))}
       </div>
 
-      <div className="grid lg:grid-cols-2 gap-8">
+      <div className="grid lg:grid-cols-2 gap-10">
         {/* TODO List */}
         <Card>
           <CardHeader className="pb-3">
@@ -185,7 +185,7 @@ export default async function AdminPage() {
       </div>
 
       {/* Quick Actions */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
         {[
           { icon: Film, label: 'Nouveau Film', href: '/admin/films/new' },
           { icon: Star, label: 'Nouvelle Tâche', href: '/admin/tasks/new' },
@@ -193,8 +193,8 @@ export default async function AdminPage() {
           { icon: Eye, label: 'Reviews', href: '/admin/reviews' },
         ].map((action) => (
           <Link key={action.label} href={action.href}>
-            <div className="group p-5 rounded-xl border border-white/5 bg-white/[0.02] hover:border-[#D4AF37]/20 transition-all text-center">
-              <action.icon className="h-5 w-5 text-[#D4AF37] mx-auto mb-3" />
+            <div className="group p-6 rounded-xl border border-white/5 bg-white/[0.02] hover:border-[#D4AF37]/20 transition-all text-center">
+              <action.icon className="h-5 w-5 text-[#D4AF37] mx-auto mb-4" />
               <p className="text-sm font-medium">{action.label}</p>
             </div>
           </Link>

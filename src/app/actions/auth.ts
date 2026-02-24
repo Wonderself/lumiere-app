@@ -92,13 +92,19 @@ export async function loginAction(
       redirectTo: callbackUrl,
     })
   } catch (error: unknown) {
-    const err = error as Record<string, string | undefined>
-    if (err?.message?.includes('CredentialsSignin') || err?.type === 'CredentialsSignin') {
+    // NextAuth redirects throw — re-throw them so Next.js can handle the redirect
+    if (error instanceof Error && 'digest' in error) {
+      const digest = (error as { digest?: string }).digest
+      if (typeof digest === 'string' && digest.startsWith('NEXT_REDIRECT')) {
+        throw error
+      }
+    }
+    // NextAuth credential failures
+    const errStr = String(error)
+    if (errStr.includes('CredentialsSignin') || errStr.includes('CallbackRouteError')) {
       return { error: 'Email ou mot de passe incorrect.' }
     }
-    if (err?.digest?.startsWith('NEXT_REDIRECT')) {
-      throw error
-    }
+    console.error('[loginAction] Unexpected error:', error)
     return { error: 'Une erreur est survenue.' }
   }
 

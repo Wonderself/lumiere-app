@@ -208,27 +208,34 @@
   - Replaces static phase display on film detail pages
 - **Roadmap updated**: V2-7, V5-3 marked done; V5 now in_progress
 
-### 2026-02-25 — Global Spacing Polish + Login UX Improvement
-- **Clickable demo credentials on login page**: Admin and Contributeur buttons auto-fill email/password fields
-  - Gold-highlighted Admin button, subtle Contributeur button
-  - Replaced passive text with interactive buttons for instant testing
-- **Global spacing increase across all public pages** (without changing element sizes):
-  - **HeroBanner**: More bottom padding (pb-28→32), larger gaps between genre/title/synopsis/buttons
-  - **FilmRow**: Increased row margins (mb-12→16), card gaps (gap-3→4), title spacing
-  - **TopTenRow**: Matching increased margins and title spacing
-  - **CreatorBar**: Larger section margins, grid gaps (gap-4→5), card heights (+10px), internal padding
-  - **HeroManifesto**: More breathing room between logo/headline/subheadline/CTAs, stats bar padding
-  - **ManifestoSection**: Increased vertical padding (py-28→32), manifesto line spacing
-  - **HowItWorks**: Larger section padding, card padding (p-6→7), icon/text margins
-  - **PipelineVisual**: More section padding, dot/label spacing
-  - **ComparisonTable**: Increased cell padding (p-4→5), section header spacing
-  - **SocialProof**: More breathing room for badges, quote spacing
-  - **FinalCTA**: Larger vertical padding, CTA gaps
-  - **Footer**: Increased top/bottom padding, column gaps, link spacing, bottom bar margin
-  - **Auth layout**: More content padding, bottom section spacing
-  - **Dashboard layout**: Increased main content padding
-  - **Admin page**: More gap between KPIs, action items, quick actions; removed redundant p-8
-- **All changes maintain responsive breakpoints** — only spacing values increased, no layout changes
+### 2026-02-25 — Login Root Cause Fix + Global Spacing Polish (Round 2)
+
+**Login Authentication Fix (permanent)**:
+- **ROOT CAUSE**: `PrismaAdapter` in `src/lib/auth.ts` required Account/Session/VerificationToken models that DON'T exist in the Prisma schema — adapter silently failed during sign-in
+- **Fix**: Removed PrismaAdapter entirely — only JWT + Credentials provider are used, no adapter needed
+- **Login form rewrite** (`login-form.tsx`): Controlled inputs with useState, demo buttons use `requestSubmit()` on next tick
+- **Error handling fix** (`auth.ts` action): Proper NEXT_REDIRECT detection, CredentialsSignin/CallbackRouteError matching
+- **Verified working**: Session returns `{user: {name, email, id, role, level, isVerified}}` for both admin and contributor demo accounts
+
+**Global spacing increase — Round 2 (even more airy)**:
+- **HeroBanner**: pb-28→32, mb-6→7/8, gap-4→5, bottom-12→14
+- **FilmRow**: mb-16→20, mb-6→8, gap-4→5, pt-3.5→4, px-4→6
+- **TopTenRow**: mb-16→20, mb-6→8, gap-0→1, px-4→6
+- **CreatorBar**: mb-16→20, mt-4→6, gap-4→5, mb-8→10, gap-5→6, h-200→215, p-5→6
+- **HeroManifesto**: mb-12→14, mb-8→10, mb-12→14, gap-5→6, py-8→10, gap-6→8, mt-2.5→3
+- **ManifestoSection**: py-32→36, h-10→12, mt-14→16
+- **HowItWorks**: py-24→28, mb-16→18, gap-6→7, p-7→8, mb-6→7, mb-3.5→4, mb-5→6
+- **PipelineVisual**: py-24→28, mb-16→20, mb-5→6, mb-1.5→2
+- **ComparisonTable**: py-24→28, mb-16→20, p-5→6
+- **SocialProof**: py-24→28, mb-14→16, mb-10→12, gap-5→6, mb-20→24, px-6→7, py-3→3.5, mt-7→8
+- **FinalCTA**: py-28→32, mb-8→10, mb-12→14, gap-5→6, mb-10→12, mt-12→14
+- **Footer**: pt-20→24, pb-12→14, mt-24→28, gap-14→16, space-y-6→7, space-y-5→6, space-y-3→3.5, mt-16→20, pt-10→12
+- **Auth layout**: p-6→8, px-5→6, py-10→12, pb-8→10, mt-5→6
+- **Dashboard layout**: p-5→6, sm:p-7→8, lg:p-9→10
+- **ScreenwriterCTA**: mb-16→20, py-10→12, gap-10→12, mb-6→8, mb-5→7, mb-8→10, gap-4→5, p-4→5, gap-5→6, mt-10→12, pt-8→10
+- **Admin page**: space-y-8→10, gap-5→6 (KPIs), gap-8→10 (grid), gap-4→5, p-5→6, mb-3→4
+- **Card component**: CardHeader/Content/Footer p-6→p-7
+- All responsive breakpoints preserved — only spacing values changed
 
 ---
 
