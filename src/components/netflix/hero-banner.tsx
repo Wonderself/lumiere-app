@@ -105,7 +105,7 @@ export function HeroBanner({ films }: { films: HeroFilm[] }) {
       <div className="absolute top-0 left-0 right-0 h-[2px] bg-black/40" />
 
       {/* Content */}
-      <div className="relative h-full flex flex-col justify-end pb-24 sm:pb-28 md:pb-36 px-8 md:px-16 lg:px-20">
+      <div className="relative h-full flex flex-col justify-end pb-24 sm:pb-28 md:pb-36 px-4 sm:px-8 md:px-16 lg:px-20">
         <AnimatePresence mode="wait">
           <motion.div
             key={film.id}
@@ -146,7 +146,7 @@ export function HeroBanner({ films }: { films: HeroFilm[] }) {
             <div className="flex items-center gap-3 sm:gap-4">
               <Link
                 href={href}
-                className="group inline-flex items-center gap-2.5 px-8 md:px-10 py-3.5 md:py-4 rounded-xl text-sm md:text-[15px] font-bold text-black transition-all duration-300 hover:shadow-[0_0_50px_rgba(212,175,55,0.45)] hover:scale-[1.03] active:scale-[0.97]"
+                className="group inline-flex items-center gap-2.5 px-6 sm:px-8 md:px-10 py-3.5 md:py-4 rounded-xl text-sm md:text-[15px] font-bold text-black transition-all duration-300 hover:shadow-[0_0_50px_rgba(212,175,55,0.45)] hover:scale-[1.03] active:scale-[0.97]"
                 style={{ background: 'linear-gradient(135deg, #D4AF37 0%, #F0D060 50%, #D4AF37 100%)' }}
               >
                 <Play className="h-5 w-5 fill-black" />
@@ -154,7 +154,7 @@ export function HeroBanner({ films }: { films: HeroFilm[] }) {
               </Link>
               <Link
                 href={href}
-                className="inline-flex items-center gap-2.5 px-6 md:px-8 py-3.5 md:py-4 rounded-xl text-sm md:text-[15px] font-semibold text-white/90 bg-white/8 hover:bg-white/15 backdrop-blur-xl border border-white/10 hover:border-white/25 transition-all duration-300"
+                className="inline-flex items-center gap-2.5 px-6 sm:px-8 py-3.5 md:py-4 rounded-xl text-sm md:text-[15px] font-semibold text-white/90 bg-white/8 hover:bg-white/15 backdrop-blur-xl border border-white/10 hover:border-white/25 transition-all duration-300"
               >
                 <Info className="h-5 w-5" />
                 Plus d&apos;infos
@@ -169,13 +169,13 @@ export function HeroBanner({ films }: { films: HeroFilm[] }) {
         <>
           <button
             onClick={prev}
-            className="absolute left-3 md:left-6 top-1/2 -translate-y-1/2 h-12 w-12 md:h-14 md:w-14 rounded-full bg-black/20 backdrop-blur-md border border-white/8 flex items-center justify-center opacity-0 hover:opacity-100 focus:opacity-100 transition-all duration-300 hover:bg-black/50 hover:border-[#D4AF37]/30 hover:scale-110 group"
+            className="absolute left-2 sm:left-3 md:left-6 top-1/2 -translate-y-1/2 h-10 w-10 sm:h-12 sm:w-12 md:h-14 md:w-14 rounded-full bg-black/30 backdrop-blur-md border border-white/8 flex items-center justify-center opacity-40 sm:opacity-0 hover:opacity-100 focus:opacity-100 transition-all duration-300 hover:bg-black/50 hover:border-[#D4AF37]/30 hover:scale-110 group"
           >
             <ChevronLeft className="h-5 w-5 text-white/70 group-hover:text-white" />
           </button>
           <button
             onClick={next}
-            className="absolute right-3 md:right-6 top-1/2 -translate-y-1/2 h-12 w-12 md:h-14 md:w-14 rounded-full bg-black/20 backdrop-blur-md border border-white/8 flex items-center justify-center opacity-0 hover:opacity-100 focus:opacity-100 transition-all duration-300 hover:bg-black/50 hover:border-[#D4AF37]/30 hover:scale-110 group"
+            className="absolute right-2 sm:right-3 md:right-6 top-1/2 -translate-y-1/2 h-10 w-10 sm:h-12 sm:w-12 md:h-14 md:w-14 rounded-full bg-black/30 backdrop-blur-md border border-white/8 flex items-center justify-center opacity-40 sm:opacity-0 hover:opacity-100 focus:opacity-100 transition-all duration-300 hover:bg-black/50 hover:border-[#D4AF37]/30 hover:scale-110 group"
           >
             <ChevronRight className="h-5 w-5 text-white/70 group-hover:text-white" />
           </button>
@@ -184,7 +184,7 @@ export function HeroBanner({ films }: { films: HeroFilm[] }) {
 
       {/* Bottom progress bar + navigation dots */}
       {films.length > 1 && (
-        <div className="absolute bottom-10 left-8 md:left-16 lg:left-20 flex items-center gap-2.5">
+        <div className="absolute bottom-10 left-4 sm:left-8 md:left-16 lg:left-20 flex items-center gap-2.5">
           {films.map((f, idx) => (
             <button
               key={f.id}

@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { resetPasswordAction } from '@/app/actions/auth'
-import { Lock, CheckCircle, AlertTriangle, ArrowLeft } from 'lucide-react'
+import { Lock, CheckCircle, AlertTriangle, ArrowLeft, ShieldCheck } from 'lucide-react'
 
 export default function ResetPasswordForm({ token }: { token?: string }) {
   const [state, action, isPending] = useActionState(resetPasswordAction, null)
@@ -14,125 +14,149 @@ export default function ResetPasswordForm({ token }: { token?: string }) {
   if (!token) {
     return (
       <div className="space-y-8">
-        <div className="text-center">
-          <h1 className="text-3xl font-bold mb-2" style={{ fontFamily: 'var(--font-playfair)' }}>
+        <div className="text-center space-y-3">
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-red-500/10 border border-red-500/20 mb-2">
+            <AlertTriangle className="h-8 w-8 text-red-400" />
+          </div>
+          <h1 className="text-3xl sm:text-4xl font-bold text-white" style={{ fontFamily: 'var(--font-playfair)' }}>
             Lien invalide
           </h1>
-        </div>
-
-        <div className="rounded-2xl border border-red-500/20 bg-red-500/5 backdrop-blur-xl p-8 text-center space-y-4">
-          <AlertTriangle className="h-14 w-14 text-red-400 mx-auto" />
-          <p className="text-white/70 text-sm">
-            Ce lien de réinitialisation est invalide ou a expiré.
-          </p>
-          <p className="text-white/40 text-xs">
-            Veuillez demander un nouveau lien de réinitialisation.
+          <p className="text-white/50 text-sm sm:text-base">
+            Ce lien de reinitialisation est invalide ou a expire.
           </p>
         </div>
 
-        <div className="flex flex-col items-center gap-3">
-          <Link
-            href="/forgot-password"
-            className="text-[#D4AF37] hover:text-[#F0D060] transition-colors font-medium text-sm"
-          >
-            Demander un nouveau lien
-          </Link>
+        <div className="relative group">
+          <div className="absolute -inset-1 bg-gradient-to-b from-red-500/10 via-transparent to-red-500/5 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+          <div className="relative sm:rounded-3xl rounded-2xl border border-white/[0.08] bg-white/[0.03] backdrop-blur-sm p-6 sm:p-8 shadow-2xl shadow-black/20 text-center space-y-5">
+            <p className="text-white/50 text-sm leading-relaxed">
+              Veuillez demander un nouveau lien de reinitialisation.
+            </p>
+            <Link
+              href="/forgot-password"
+              className="inline-block w-full h-12 leading-[3rem] rounded-xl bg-[#D4AF37] hover:bg-[#F0D060] text-black font-semibold shadow-lg shadow-[#D4AF37]/20 hover:shadow-[#D4AF37]/30 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 text-center"
+            >
+              Demander un nouveau lien
+            </Link>
+          </div>
+        </div>
+
+        <p className="text-center text-sm text-white/40">
           <Link
             href="/login"
-            className="inline-flex items-center gap-1.5 text-white/40 hover:text-white/60 transition-colors text-sm"
+            className="inline-flex items-center gap-1.5 text-[#D4AF37] hover:text-[#F0D060] transition-colors duration-300 font-medium"
           >
             <ArrowLeft className="h-3.5 w-3.5" />
-            Retour à la connexion
+            Retour a la connexion
           </Link>
-        </div>
+        </p>
       </div>
     )
   }
 
   return (
     <div className="space-y-8">
-      <div className="text-center">
-        <h1 className="text-3xl font-bold mb-2" style={{ fontFamily: 'var(--font-playfair)' }}>
-          Nouveau mot de passe
+      {/* Header */}
+      <div className="text-center space-y-3">
+        <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-[#D4AF37]/10 border border-[#D4AF37]/20 mb-2">
+          <ShieldCheck className="h-8 w-8 text-[#D4AF37]" />
+        </div>
+        <h1 className="text-3xl sm:text-4xl font-bold text-white" style={{ fontFamily: 'var(--font-playfair)' }}>
+          <span className="text-shimmer">Nouveau mot de passe</span>
         </h1>
-        <p className="text-white/50">
+        <p className="text-white/50 text-sm sm:text-base">
           Choisissez un nouveau mot de passe pour votre compte.
         </p>
       </div>
 
-      <div className="rounded-2xl border border-white/5 bg-white/[0.02] backdrop-blur-xl p-8">
-        {state?.success ? (
-          <div className="text-center space-y-4">
-            <CheckCircle className="h-14 w-14 text-[#D4AF37] mx-auto" />
-            <p className="text-white/80 text-sm leading-relaxed">
-              Mot de passe réinitialisé ! Vous pouvez vous connecter.
-            </p>
-            <Link
-              href="/login"
-              className="inline-block mt-2 px-6 py-2.5 rounded-lg bg-[#D4AF37] text-black font-semibold text-sm hover:bg-[#F0D060] transition-colors"
-            >
-              Se connecter
-            </Link>
-          </div>
-        ) : (
-          <form action={action} className="space-y-5">
-            <input type="hidden" name="token" value={token} />
+      {/* Form Card */}
+      <div className="relative group">
+        <div className="absolute -inset-1 bg-gradient-to-b from-[#D4AF37]/10 via-transparent to-[#D4AF37]/5 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
 
-            {state?.error && (
-              <div className="rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-400">
-                {state.error}
+        <div className="relative sm:rounded-3xl rounded-2xl border border-white/[0.08] bg-white/[0.03] backdrop-blur-sm p-6 sm:p-8 shadow-2xl shadow-black/20">
+          {state?.success ? (
+            <div className="text-center space-y-5 py-4">
+              <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-green-500/10 border border-green-500/20">
+                <CheckCircle className="h-10 w-10 text-green-400" />
               </div>
-            )}
-
-            <div className="space-y-2">
-              <Label htmlFor="password">Nouveau mot de passe</Label>
-              <div className="relative">
-                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/30" />
-                <Input
-                  id="password"
-                  name="password"
-                  type="password"
-                  placeholder="Minimum 8 caractères"
-                  required
-                  minLength={8}
-                  autoComplete="new-password"
-                  className="pl-10"
-                />
-              </div>
+              <h2 className="text-xl font-bold text-white" style={{ fontFamily: 'var(--font-playfair)' }}>
+                Mot de passe reinitialise !
+              </h2>
+              <p className="text-white/50 text-sm leading-relaxed">
+                Vous pouvez maintenant vous connecter avec votre nouveau mot de passe.
+              </p>
+              <Link
+                href="/login"
+                className="inline-block w-full h-12 leading-[3rem] rounded-xl bg-[#D4AF37] hover:bg-[#F0D060] text-black font-semibold shadow-lg shadow-[#D4AF37]/20 hover:shadow-[#D4AF37]/30 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 text-center"
+              >
+                Se connecter
+              </Link>
             </div>
+          ) : (
+            <form action={action} className="space-y-5">
+              <input type="hidden" name="token" value={token} />
 
-            <div className="space-y-2">
-              <Label htmlFor="confirmPassword">Confirmer le mot de passe</Label>
-              <div className="relative">
-                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/30" />
-                <Input
-                  id="confirmPassword"
-                  name="confirmPassword"
-                  type="password"
-                  placeholder="Retapez le mot de passe"
-                  required
-                  minLength={8}
-                  autoComplete="new-password"
-                  className="pl-10"
-                />
+              {state?.error && (
+                <div className="rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-400 backdrop-blur-sm">
+                  {state.error}
+                </div>
+              )}
+
+              <div className="space-y-2">
+                <Label htmlFor="password" className="text-white/70 text-sm font-medium">Nouveau mot de passe</Label>
+                <div className="relative">
+                  <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-white/25" />
+                  <Input
+                    id="password"
+                    name="password"
+                    type="password"
+                    placeholder="Minimum 8 caracteres"
+                    required
+                    minLength={8}
+                    autoComplete="new-password"
+                    className="pl-11 h-12 rounded-xl bg-white/[0.04] border-white/[0.08] text-white placeholder:text-white/25 focus:border-[#D4AF37]/40 focus:ring-[#D4AF37]/20 transition-all duration-300"
+                  />
+                </div>
               </div>
-            </div>
 
-            <Button type="submit" className="w-full" size="lg" loading={isPending}>
-              {isPending ? 'Réinitialisation...' : 'Réinitialiser le mot de passe'}
-            </Button>
-          </form>
-        )}
+              <div className="space-y-2">
+                <Label htmlFor="confirmPassword" className="text-white/70 text-sm font-medium">Confirmer le mot de passe</Label>
+                <div className="relative">
+                  <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-white/25" />
+                  <Input
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    type="password"
+                    placeholder="Retapez le mot de passe"
+                    required
+                    minLength={8}
+                    autoComplete="new-password"
+                    className="pl-11 h-12 rounded-xl bg-white/[0.04] border-white/[0.08] text-white placeholder:text-white/25 focus:border-[#D4AF37]/40 focus:ring-[#D4AF37]/20 transition-all duration-300"
+                  />
+                </div>
+              </div>
+
+              <Button
+                type="submit"
+                className="w-full h-12 rounded-xl bg-[#D4AF37] hover:bg-[#F0D060] text-black font-semibold shadow-lg shadow-[#D4AF37]/20 hover:shadow-[#D4AF37]/30 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300"
+                size="lg"
+                loading={isPending}
+              >
+                {isPending ? 'Reinitialisation...' : 'Reinitialiser le mot de passe'}
+              </Button>
+            </form>
+          )}
+        </div>
       </div>
 
       {!state?.success && (
         <p className="text-center text-sm text-white/40">
           <Link
             href="/login"
-            className="inline-flex items-center gap-1.5 text-[#D4AF37] hover:text-[#F0D060] transition-colors font-medium"
+            className="inline-flex items-center gap-1.5 text-[#D4AF37] hover:text-[#F0D060] transition-colors duration-300 font-medium"
           >
             <ArrowLeft className="h-3.5 w-3.5" />
-            Retour à la connexion
+            Retour a la connexion
           </Link>
         </p>
       )}

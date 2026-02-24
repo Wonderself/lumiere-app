@@ -184,12 +184,12 @@ export default async function FilmsPage({
               <p className="text-sm mt-2 text-white/40">Les films seront bientot disponibles.</p>
             </div>
           ) : (
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
               {films.map((film) => (
                 <Link key={film.id} href={`/films/${film.slug}`}>
                   <div className="group rounded-2xl sm:rounded-3xl border border-white/[0.06] bg-white/[0.03] overflow-hidden hover:border-[#D4AF37]/30 transition-all duration-500 h-full flex flex-col hover-lift">
                     {/* Cover */}
-                    <div className="relative h-52 bg-gradient-to-br from-[#D4AF37]/[0.06] to-white/[0.03] shrink-0">
+                    <div className="relative h-44 sm:h-52 bg-gradient-to-br from-[#D4AF37]/[0.06] to-white/[0.03] shrink-0">
                       {film.coverImageUrl ? (
                         <Image
                           src={film.coverImageUrl}

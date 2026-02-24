@@ -176,7 +176,7 @@ export function HeroManifesto({ filmCount }: { filmCount: number }) {
         >
           <Link
             href="/register"
-            className="group inline-flex items-center gap-2.5 px-10 py-4 rounded-xl text-[15px] font-bold text-black transition-all duration-300 hover:shadow-[0_0_60px_rgba(212,175,55,0.4)] hover:scale-[1.03] active:scale-[0.97]"
+            className="group inline-flex items-center gap-2.5 px-7 sm:px-10 py-3.5 sm:py-4 rounded-xl text-sm sm:text-[15px] font-bold text-black transition-all duration-300 hover:shadow-[0_0_60px_rgba(212,175,55,0.4)] hover:scale-[1.03] active:scale-[0.97]"
             style={{ background: 'linear-gradient(135deg, #D4AF37 0%, #F0D060 50%, #D4AF37 100%)' }}
           >
             Rejoindre la revolution
@@ -186,7 +186,7 @@ export function HeroManifesto({ filmCount }: { filmCount: number }) {
             onClick={() => {
               document.getElementById('manifesto')?.scrollIntoView({ behavior: 'smooth' })
             }}
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-xl text-[15px] font-medium text-white/60 border border-white/10 hover:border-white/25 hover:text-white/80 backdrop-blur-sm transition-all duration-300"
+            className="inline-flex items-center gap-2 px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl text-sm sm:text-[15px] font-medium text-white/60 border border-white/10 hover:border-white/25 hover:text-white/80 backdrop-blur-sm transition-all duration-300"
           >
             Decouvrir comment
           </button>
@@ -200,7 +200,7 @@ export function HeroManifesto({ filmCount }: { filmCount: number }) {
         transition={{ duration: 0.8, delay: 1.3 }}
         className="relative z-10 border-t border-white/[0.05] bg-black/30 backdrop-blur-sm"
       >
-        <div className="max-w-5xl mx-auto py-8 px-6 grid grid-cols-2 md:grid-cols-4 gap-8">
+        <div className="max-w-5xl mx-auto py-6 sm:py-8 px-4 sm:px-6 grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8">
           <div className="text-center">
             <AnimatedCounter end={filmCount > 0 ? filmCount : 20} />
             <p className="text-[11px] text-white/25 uppercase tracking-[0.2em] mt-1.5 font-medium">films en pipeline</p>

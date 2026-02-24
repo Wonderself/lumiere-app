@@ -29,7 +29,7 @@ const benefits = [
 
 export function ScreenwriterCTA() {
   return (
-    <section className="relative mx-8 md:mx-16 lg:mx-20 mb-16 overflow-hidden rounded-2xl">
+    <section className="relative mx-4 sm:mx-8 md:mx-16 lg:mx-20 mb-16 overflow-hidden rounded-2xl">
       {/* Background — cinematic dark with gold accents */}
       <div className="absolute inset-0 bg-gradient-to-br from-[#0F0F0F] via-[#1A1508] to-[#0F0F0F]" />
       <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1455390582262-044cdead277a?w=1200&q=30')] bg-cover bg-center opacity-[0.06]" />
@@ -43,7 +43,7 @@ export function ScreenwriterCTA() {
       <div className="absolute bottom-0 right-0 w-20 h-20 bg-gradient-to-tl from-[#D4AF37]/10 to-transparent" />
 
       {/* Content */}
-      <div className="relative z-10 px-8 md:px-12 lg:px-16 py-12 md:py-16">
+      <div className="relative z-10 px-5 sm:px-8 md:px-12 lg:px-16 py-10 sm:py-12 md:py-16">
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-10">
           {/* Left: Main CTA */}
           <div className="max-w-xl">
@@ -136,7 +136,7 @@ export function ScreenwriterCTA() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.4 }}
-          className="flex items-center gap-8 mt-10 pt-8 border-t border-white/[0.05]"
+          className="flex flex-wrap items-center gap-5 sm:gap-8 mt-10 pt-8 border-t border-white/[0.05]"
         >
           <div>
             <p className="text-2xl md:text-3xl font-black text-[#D4AF37]" style={{ fontFamily: 'var(--font-playfair)' }}>100</p>

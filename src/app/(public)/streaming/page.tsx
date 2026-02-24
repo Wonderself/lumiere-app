@@ -52,18 +52,18 @@ export default async function StreamingPage(props: { searchParams: Promise<{ gen
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/50 to-[#0A0A0A]/20" />
           <div className="absolute inset-0 bg-gradient-to-r from-[#0A0A0A]/80 to-transparent" />
-          <div className="absolute bottom-0 left-0 right-0 p-8 md:p-16">
+          <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-8 md:p-12 lg:p-16">
             <Badge className="mb-4 bg-[#D4AF37]/20 text-[#D4AF37] border-[#D4AF37]/30 backdrop-blur-sm">
               <Star className="h-3 w-3 mr-1 fill-[#D4AF37]" /> En vedette
             </Badge>
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-4 font-[family-name:var(--font-playfair)] max-w-3xl">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold text-white mb-4 font-[family-name:var(--font-playfair)] max-w-3xl">
               {featured.title}
             </h1>
             <p className="text-white/70 text-lg max-w-2xl mb-8 line-clamp-2 leading-relaxed">{featured.synopsis}</p>
             <div className="flex flex-wrap items-center gap-4">
               <Link
                 href={`/streaming/${featured.slug}`}
-                className="inline-flex items-center gap-2 px-8 py-3.5 bg-[#D4AF37] text-black font-semibold rounded-xl hover:bg-[#F0D060] transition-colors text-lg"
+                className="inline-flex items-center gap-2 px-6 sm:px-8 py-3 sm:py-3.5 bg-[#D4AF37] text-black font-semibold rounded-xl hover:bg-[#F0D060] transition-colors text-base sm:text-lg"
               >
                 <Play className="h-5 w-5" /> Regarder
               </Link>
@@ -141,7 +141,7 @@ export default async function StreamingPage(props: { searchParams: Promise<{ gen
             <p className="text-white/30 text-lg">Aucun film trouvé</p>
           </div>
         ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4">
             {films.map((film) => (
               <Link key={film.id} href={`/streaming/${film.slug}`} className="group">
                 <Card className="bg-white/[0.02] border-white/5 overflow-hidden hover:border-[#D4AF37]/30 transition-all duration-300">
@@ -162,7 +162,7 @@ export default async function StreamingPage(props: { searchParams: Promise<{ gen
                       </Badge>
                     )}
                   </div>
-                  <CardContent className="p-3">
+                  <CardContent className="p-2.5 sm:p-3">
                     <h3 className="text-sm font-semibold text-white truncate group-hover:text-[#D4AF37] transition-colors">
                       {film.title}
                     </h3>

@@ -34,7 +34,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
       </div>
 
       {/* Bottom decorative line */}
-      <div className="relative z-10 px-8 pb-6">
+      <div className="relative z-10 px-4 sm:px-8 pb-6">
         <div className="h-px bg-gradient-to-r from-transparent via-[#D4AF37]/20 to-transparent" />
         <p className="text-center text-xs text-white/20 mt-4">
           &copy; {new Date().getFullYear()} Lumière Brothers Pictures

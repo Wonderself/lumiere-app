@@ -65,7 +65,7 @@ const cardVariants = {
 
 export function CreatorBar() {
   return (
-    <section className="px-8 md:px-16 lg:px-20 mb-14 mt-2">
+    <section className="px-4 sm:px-8 md:px-16 lg:px-20 mb-14 mt-2">
       {/* Section header */}
       <div className="flex items-center gap-3 mb-7">
         <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-[#D4AF37] to-[#8B6914] flex items-center justify-center shadow-[0_0_20px_rgba(212,175,55,0.2)]">
@@ -94,7 +94,7 @@ export function CreatorBar() {
           <motion.div key={action.title} variants={cardVariants}>
             <Link
               href={action.href}
-              className="group relative block rounded-2xl overflow-hidden h-[210px] md:h-[230px]"
+              className="group relative block rounded-2xl overflow-hidden h-[190px] sm:h-[210px] md:h-[230px]"
             >
               {/* Background image */}
               <div
@@ -121,7 +121,7 @@ export function CreatorBar() {
               />
 
               {/* Content — perfect padding */}
-              <div className="relative z-10 h-full flex flex-col justify-between p-5 md:p-6">
+              <div className="relative z-10 h-full flex flex-col justify-between p-4 sm:p-5 md:p-6">
                 {/* Icon */}
                 <div
                   className={`h-12 w-12 rounded-xl bg-gradient-to-br ${action.iconBg} flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:shadow-[0_4px_20px_rgba(0,0,0,0.3)] transition-all duration-300`}

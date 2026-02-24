@@ -29,7 +29,7 @@ export function ManifestoSection() {
         style={{ background: 'radial-gradient(circle, #D4AF37 0%, transparent 70%)' }}
       />
 
-      <div className="relative z-10 max-w-3xl mx-auto px-8 text-center">
+      <div className="relative z-10 max-w-3xl mx-auto px-4 sm:px-8 text-center">
         {manifestoLines.map((line, idx) => {
           if (!line.normal && !line.gold) {
             return <div key={idx} className="h-8 md:h-12" />
@@ -107,7 +107,7 @@ const pillars = [
 
 export function HowItWorks() {
   return (
-    <section className="py-20 md:py-28 px-8 md:px-16 lg:px-20">
+    <section className="py-20 md:py-28 px-4 sm:px-8 md:px-16 lg:px-20">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -169,7 +169,7 @@ const pipelineSteps = [
 
 export function PipelineVisual() {
   return (
-    <section className="py-20 md:py-28 px-8 md:px-16 lg:px-20 overflow-hidden">
+    <section className="py-20 md:py-28 px-4 sm:px-8 md:px-16 lg:px-20 overflow-hidden">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -270,7 +270,7 @@ function CellIcon({ value }: { value: string | null }) {
 
 export function ComparisonTable() {
   return (
-    <section className="py-20 md:py-28 px-8 md:px-16 lg:px-20">
+    <section className="py-20 md:py-28 px-4 sm:px-8 md:px-16 lg:px-20">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -355,7 +355,7 @@ const credentials = [
 
 export function SocialProof() {
   return (
-    <section className="py-20 md:py-28 px-8 md:px-16 lg:px-20">
+    <section className="py-20 md:py-28 px-4 sm:px-8 md:px-16 lg:px-20">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -416,7 +416,7 @@ export function FinalCTA() {
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[1px] bg-gradient-to-r from-transparent via-[#D4AF37]/20 to-transparent" />
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[500px] h-[1px] bg-gradient-to-r from-transparent via-[#D4AF37]/10 to-transparent" />
 
-      <div className="relative z-10 max-w-3xl mx-auto px-8 text-center">
+      <div className="relative z-10 max-w-3xl mx-auto px-4 sm:px-8 text-center">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}

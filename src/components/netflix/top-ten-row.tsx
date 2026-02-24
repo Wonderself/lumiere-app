@@ -51,7 +51,7 @@ export function TopTenRow({ films }: { films: FilmCard[] }) {
   return (
     <section className="relative group/row mb-12 md:mb-16">
       {/* Section title */}
-      <div className="px-8 md:px-16 lg:px-20 mb-5">
+      <div className="px-4 sm:px-8 md:px-16 lg:px-20 mb-5">
         <div className="flex items-center gap-3">
           <div className="h-7 w-1.5 rounded-full bg-gradient-to-b from-[#D4AF37] to-[#8B6914]" />
           <h2
@@ -90,7 +90,7 @@ export function TopTenRow({ films }: { films: FilmCard[] }) {
         <div
           ref={scrollRef}
           onScroll={updateArrows}
-          className="flex gap-0 md:gap-0 overflow-x-auto scrollbar-hide px-8 md:px-16 lg:px-20 scroll-smooth"
+          className="flex gap-0 md:gap-0 overflow-x-auto scrollbar-hide px-4 sm:px-8 md:px-16 lg:px-20 scroll-smooth"
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
           {topFilms.map((film, idx) => (
@@ -101,13 +101,13 @@ export function TopTenRow({ films }: { films: FilmCard[] }) {
             >
               {/* Big number — positioned behind poster */}
               <div
-                className="text-[90px] sm:text-[110px] md:text-[130px] lg:text-[150px] font-black leading-none select-none z-10 transition-all duration-500 group-hover/card:scale-105"
+                className="text-[70px] sm:text-[90px] md:text-[130px] lg:text-[150px] font-black leading-none select-none z-10 transition-all duration-500 group-hover/card:scale-105"
                 style={{
-                  WebkitTextStroke: '2.5px rgba(212, 175, 55, 0.25)',
+                  WebkitTextStroke: '2px rgba(212, 175, 55, 0.25)',
                   color: 'transparent',
                   fontFamily: 'var(--font-playfair)',
                   filter: 'drop-shadow(0 0 30px rgba(212, 175, 55, 0.06))',
-                  marginRight: '-18px',
+                  marginRight: '-12px',
                 }}
               >
                 {idx + 1}
@@ -130,10 +130,10 @@ export function TopTenRow({ films }: { films: FilmCard[] }) {
                       <Play className="h-4 w-4 text-black fill-black ml-0.5" />
                     </div>
                   </div>
-                  <div className="absolute bottom-3 left-3 right-3">
-                    <p className="text-[11px] font-bold text-white truncate">{film.title}</p>
+                  <div className="absolute bottom-2.5 left-2.5 right-2.5 sm:bottom-3 sm:left-3 sm:right-3">
+                    <p className="text-[10px] sm:text-[11px] font-bold text-white truncate">{film.title}</p>
                     {film.genre && (
-                      <p className="text-[9px] text-white/50 mt-0.5">{film.genre}</p>
+                      <p className="text-[8px] sm:text-[9px] text-white/50 mt-0.5">{film.genre}</p>
                     )}
                   </div>
                 </div>
