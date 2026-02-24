@@ -1,6 +1,7 @@
 'use client'
 
-import { HeroBanner } from './hero-banner'
+import { HeroManifesto } from './hero-manifesto'
+import { ManifestoSection, HowItWorks, PipelineVisual, ComparisonTable, SocialProof, FinalCTA } from './landing-sections'
 import { FilmRow } from './film-row'
 import { TopTenRow } from './top-ten-row'
 import { CreatorBar } from './creator-bar'
@@ -40,40 +41,7 @@ interface HomeData {
   released: FilmCard[]
 }
 
-// Fallback data when DB is not available
-const FALLBACK_HERO: HeroFilm[] = [
-  {
-    id: 'fallback-1',
-    title: 'KETER — The Singularity Point',
-    slug: 'keter-the-singularity-point',
-    synopsis: "Christopher Nolan meets the Zohar. Un physicien decouvre que le point de singularite quantique correspond a la Keter de la Kabbale. Course contre la montre avant qu'une IA ne l'utilise pour recrire la realite.",
-    genre: 'Science-Fiction',
-    coverImageUrl: 'https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=1920&h=1080&fit=crop',
-    status: 'PRE_PRODUCTION',
-    type: 'film',
-  },
-  {
-    id: 'fallback-2',
-    title: 'MERCI... (The Miracle Protocol)',
-    slug: 'merci-the-miracle-protocol',
-    synopsis: "Docu-serie sur les miracles du 7 octobre. Temoignages de survivants, reconstitutions cinematiques, dimension spirituelle.",
-    genre: 'Documentaire',
-    coverImageUrl: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=1920&h=1080&fit=crop',
-    status: 'IN_PRODUCTION',
-    type: 'film',
-  },
-  {
-    id: 'fallback-3',
-    title: 'Exodus — La Traversee',
-    slug: 'exodus-la-traversee',
-    synopsis: "L'histoire epique de la liberation du peuple hebreu d'Egypte, reimaginee avec l'intelligence artificielle. Un film spectaculaire sur la liberte, la foi et le sacrifice.",
-    genre: 'Historique',
-    coverImageUrl: 'https://images.unsplash.com/photo-1539650116574-8efeb43e2750?w=1920&h=1080&fit=crop',
-    status: 'IN_PRODUCTION',
-    type: 'film',
-  },
-]
-
+// Better cinematic fallback images
 const FALLBACK_FILMS: FilmCard[] = [
   { id: 'f1', title: 'KETER', slug: 'keter-the-singularity-point', genre: 'Science-Fiction', coverImageUrl: 'https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=800&h=1200&fit=crop', status: 'PRE_PRODUCTION', progressPct: 10, type: 'film' },
   { id: 'f2', title: 'MERCI...', slug: 'merci-the-miracle-protocol', genre: 'Documentaire', coverImageUrl: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800&h=1200&fit=crop', status: 'IN_PRODUCTION', progressPct: 35, type: 'film' },
@@ -88,13 +56,13 @@ const FALLBACK_FILMS: FilmCard[] = [
 ]
 
 export function NetflixHome({ data }: { data: HomeData }) {
-  const heroFilms = data.heroFilms.length > 0 ? data.heroFilms : FALLBACK_HERO
   const hasDbData = data.allFilms.length > 0
 
-  // Build rows
+  // Build film rows
   const topFilms = hasDbData ? data.allFilms.slice(0, 10) : FALLBACK_FILMS
   const inProd = hasDbData ? data.inProduction : FALLBACK_FILMS.filter(f => f.status === 'IN_PRODUCTION')
   const inDev = hasDbData ? data.inDevelopment : FALLBACK_FILMS.filter(f => f.status === 'DRAFT' || f.status === 'PRE_PRODUCTION')
+  const filmCount = hasDbData ? data.allFilms.length : 20
 
   // Genre rows
   const genreRows = Object.entries(data.genres)
@@ -105,48 +73,70 @@ export function NetflixHome({ data }: { data: HomeData }) {
     <div className="min-h-screen bg-[#0A0A0A] text-white">
       <NetflixHeader />
 
-      {/* Hero Banner */}
-      <HeroBanner films={heroFilms} />
+      {/* ── SECTION 1: Hero Manifesto ── */}
+      <HeroManifesto filmCount={filmCount} />
 
-      {/* Film Rows — overlapping hero bottom for seamless transition */}
-      <div className="-mt-24 relative z-10 pb-20">
-        {/* Top 10 */}
+      {/* ── SECTION 2: Films — Top 10 + Creator Bar ── */}
+      <div className="relative z-10 pt-10">
         <TopTenRow films={topFilms} />
-
-        {/* Creator bar */}
         <CreatorBar />
+      </div>
 
-        {/* Full selection */}
-        <FilmRow title="Notre Selection" films={topFilms} href="/films" />
+      {/* ── SECTION 3: Manifesto Text ── */}
+      <ManifestoSection />
 
-        {/* Screenwriter recruitment CTA */}
-        <ScreenwriterCTA />
-
-        {/* In production */}
+      {/* ── SECTION 4: Our Productions ── */}
+      <div className="relative z-10">
+        <div className="px-8 md:px-16 lg:px-20 mb-4">
+          <p className="text-[11px] font-bold tracking-[0.2em] uppercase text-[#D4AF37]/50">Nos productions</p>
+        </div>
+        <FilmRow
+          title="Nos Prochaines Productions"
+          films={topFilms}
+          href="/films"
+        />
         {inProd.length > 0 && (
           <FilmRow title="En Production" films={inProd} href="/films" />
         )}
+      </div>
 
-        {/* Streaming catalog */}
+      {/* ── SECTION 5: How it Works — 5 Pillars ── */}
+      <HowItWorks />
+
+      {/* ── SECTION 6: Pipeline Visual ── */}
+      <PipelineVisual />
+
+      {/* ── More films ── */}
+      <div className="relative z-10">
         {data.catalogFilms.length > 0 && (
           <FilmRow title="Disponible en Streaming" films={data.catalogFilms} href="/streaming" />
         )}
-
-        {/* Genre rows */}
         {genreRows.map(([genre, films]) => (
           <FilmRow key={genre} title={genre} films={films} />
         ))}
+      </div>
 
-        {/* In development */}
+      {/* ── SECTION 7: Comparison Table ── */}
+      <ComparisonTable />
+
+      {/* ── SECTION 8: Screenwriter CTA ── */}
+      <ScreenwriterCTA />
+
+      {/* ── More films (dev + released) ── */}
+      <div className="relative z-10">
         {inDev.length > 0 && (
           <FilmRow title="En Developpement" films={inDev} href="/films" />
         )}
-
-        {/* Released */}
         {data.released.length > 0 && (
           <FilmRow title="Films Termines" films={data.released} href="/streaming" />
         )}
       </div>
+
+      {/* ── SECTION 9: Social Proof ── */}
+      <SocialProof />
+
+      {/* ── SECTION 10: Final CTA ── */}
+      <FinalCTA />
 
       <Footer />
     </div>

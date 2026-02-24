@@ -4,7 +4,7 @@ import { auth } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
 import { redirect } from 'next/navigation'
 import { revalidatePath } from 'next/cache'
-import { runMockAiReview } from '@/lib/ai-review'
+import { runAiReview } from '@/lib/ai-review'
 import { registerContentHash } from '@/lib/content-hash'
 import { createNotification } from '@/lib/notifications'
 import { recordEvent } from '@/lib/blockchain'
@@ -96,8 +96,12 @@ export async function submitTaskAction(formData: FormData) {
   const contentToHash = `${notes || ''}|${fileUrl || ''}|${taskId}|${session.user.id}`
   await registerContentHash('submission', submission.id, contentToHash, session.user.id)
 
-  // Run mock AI review immediately (no more PENDING_AI forever)
-  const aiResult = await runMockAiReview(submission.id, notes, fileUrl)
+  // Run AI review (real Claude or mock fallback)
+  const aiResult = await runAiReview(submission.id, notes, fileUrl, {
+    title: task.title,
+    type: task.type,
+    instructions: task.instructionsMd,
+  })
 
   // Update submission with AI results
   await prisma.taskSubmission.update({

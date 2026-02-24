@@ -7,7 +7,7 @@ import { revalidatePath } from 'next/cache'
 import { slugify } from '@/lib/utils'
 import { checkAndUpgradeLevel } from '@/lib/level'
 import { createNotification } from '@/lib/notifications'
-import { runMockAiReview } from '@/lib/ai-review'
+import { runAiReview } from '@/lib/ai-review'
 import { recordEvent } from '@/lib/blockchain'
 import { calculateReputationScore, getBadgeForScore } from '@/lib/reputation'
 
@@ -241,7 +241,17 @@ export async function runAiReviewAction(formData: FormData) {
   })
   if (!submission) return
 
-  const aiResult = await runMockAiReview(submission.id, submission.notes, submission.fileUrl)
+  // Get task context for smarter AI review
+  const taskInfo = await prisma.task.findUnique({
+    where: { id: submission.taskId },
+    select: { title: true, type: true, instructionsMd: true },
+  })
+
+  const aiResult = await runAiReview(submission.id, submission.notes, submission.fileUrl, taskInfo ? {
+    title: taskInfo.title,
+    type: taskInfo.type,
+    instructions: taskInfo.instructionsMd,
+  } : undefined)
 
   await prisma.$transaction([
     prisma.taskSubmission.update({

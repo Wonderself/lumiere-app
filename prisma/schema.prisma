@@ -1294,6 +1294,9 @@ model ScenarioProposal {
   prizePoolEur  Float                  @default(0)
   prizeClaimedAt DateTime?
   onChainHash   String?
+  aiScore       Int?
+  aiAnalysis    String?
+  aiSuggestions String[]
   createdAt     DateTime               @default(now())
   updatedAt     DateTime               @updatedAt
 

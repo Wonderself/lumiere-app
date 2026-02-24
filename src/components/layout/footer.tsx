@@ -27,9 +27,7 @@ export function Footer() {
             <div className="flex items-center gap-4 pt-1">
               <span className="text-[10px] text-white/15 uppercase tracking-[0.2em] font-medium">Paris</span>
               <div className="h-1 w-1 rounded-full bg-[#D4AF37]/30" />
-              <span className="text-[10px] text-white/15 uppercase tracking-[0.2em] font-medium">Tel Aviv</span>
-              <div className="h-1 w-1 rounded-full bg-[#D4AF37]/30" />
-              <span className="text-[10px] text-white/15 uppercase tracking-[0.2em] font-medium">Hollywood</span>
+              <span className="text-[10px] text-white/15 uppercase tracking-[0.2em] font-medium">Jerusalem</span>
             </div>
           </div>
 
@@ -62,6 +60,7 @@ export function Footer() {
               <li><Link href="/legal/privacy" className="text-[13px] text-white/25 hover:text-white/50 transition-colors">Politique de Confidentialite</Link></li>
               <li><Link href="/legal/cookies" className="text-[13px] text-white/25 hover:text-white/50 transition-colors">Cookies</Link></li>
               <li><Link href="/about" className="text-[13px] text-white/25 hover:text-white/50 transition-colors">A Propos</Link></li>
+              <li><Link href="/invest" className="text-[13px] text-white/25 hover:text-[#D4AF37] transition-colors font-medium">Investisseurs</Link></li>
             </ul>
           </div>
         </div>

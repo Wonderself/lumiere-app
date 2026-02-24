@@ -55,7 +55,7 @@ export function NetflixHeader() {
     { href: '/', label: 'Accueil' },
     { href: '/films', label: 'Films' },
     { href: '/streaming', label: 'Streaming' },
-    { href: '/community', label: 'Communaute' },
+    { href: '/community', label: 'Voter' },
     { href: '/actors', label: 'Acteurs' },
     { href: '/leaderboard', label: 'Classement' },
   ]
@@ -210,10 +210,10 @@ export function NetflixHeader() {
               </Link>
               <Link
                 href="/register"
-                className="text-sm font-semibold px-5 py-2 rounded text-black hover:opacity-90 transition-all"
+                className="text-sm font-bold px-5 py-2 rounded-lg text-black hover:shadow-[0_0_30px_rgba(212,175,55,0.3)] hover:scale-[1.02] transition-all"
                 style={{ background: 'linear-gradient(135deg, #D4AF37, #F0D060)' }}
               >
-                S&apos;inscrire
+                Rejoindre
               </Link>
             </div>
           )}

@@ -13,6 +13,7 @@ import {
 } from '@/lib/blockchain'
 import { slugify } from '@/lib/utils'
 import { decomposeFilmToTasks } from '@/lib/film-decomposer'
+import { analyzeScenario } from '@/lib/ai-review'
 
 // ============================================
 // SCENARIO PROPOSALS
@@ -38,7 +39,7 @@ export async function submitScenarioAction(prevState: { error?: string; success?
   }
 
   try {
-    await prisma.scenarioProposal.create({
+    const proposal = await prisma.scenarioProposal.create({
       data: {
         authorId: session.user.id,
         title,
@@ -50,6 +51,22 @@ export async function submitScenarioAction(prevState: { error?: string; success?
         status: 'SUBMITTED',
       },
     })
+
+    // Async AI analysis (non-blocking)
+    analyzeScenario(title, logline, synopsis, genre)
+      .then(async (result) => {
+        if (result) {
+          await prisma.scenarioProposal.update({
+            where: { id: proposal.id },
+            data: {
+              aiScore: result.score,
+              aiAnalysis: result.analysis,
+              aiSuggestions: result.suggestions,
+            },
+          })
+        }
+      })
+      .catch((err) => console.error('[AI] Scenario analysis failed:', err))
 
     revalidatePath('/community/scenarios')
     return { success: true }
