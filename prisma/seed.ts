@@ -504,9 +504,613 @@ async function main() {
   }
 
   // =============================================
+  // SLATE DECK 2026 — 20 films from Pipeline
+  // =============================================
+
+  // ── P1: MERCI... (THE MIRACLE PROTOCOL) ──
+  const filmP1 = await prisma.film.upsert({
+    where: { slug: 'merci-the-miracle-protocol' },
+    update: {},
+    create: {
+      title: 'MERCI... (The Miracle Protocol)',
+      slug: 'merci-the-miracle-protocol',
+      description: "Docu-serie sur les miracles du 7 octobre. Temoignages de survivants, reconstitutions cinematiques.",
+      synopsis: "Quatre episodes de 52 minutes explorant les recits de miracles et de survie du 7 octobre. A travers des temoignages bouleversants et des reconstitutions cinematographiques, cette serie documentaire revele la dimension spirituelle et humaine de l'evenement.",
+      genre: 'Documentaire',
+      catalog: 'LUMIERE',
+      status: 'IN_PRODUCTION',
+      isPublic: true,
+      coverImageUrl: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=1200&h=600&fit=crop',
+      estimatedBudget: 120000,
+    },
+  })
+  await prisma.filmPhase.createMany({ data: [
+    { filmId: filmP1.id, phaseName: 'SCRIPT', phaseOrder: 1, status: 'COMPLETED' },
+    { filmId: filmP1.id, phaseName: 'STORYBOARD', phaseOrder: 2, status: 'ACTIVE' },
+    { filmId: filmP1.id, phaseName: 'PREVIZ', phaseOrder: 3, status: 'LOCKED' },
+    { filmId: filmP1.id, phaseName: 'DESIGN', phaseOrder: 4, status: 'LOCKED' },
+    { filmId: filmP1.id, phaseName: 'ANIMATION', phaseOrder: 5, status: 'LOCKED' },
+    { filmId: filmP1.id, phaseName: 'VFX', phaseOrder: 6, status: 'LOCKED' },
+    { filmId: filmP1.id, phaseName: 'AUDIO', phaseOrder: 7, status: 'LOCKED' },
+    { filmId: filmP1.id, phaseName: 'EDITING', phaseOrder: 8, status: 'LOCKED' },
+    { filmId: filmP1.id, phaseName: 'COLOR', phaseOrder: 9, status: 'LOCKED' },
+    { filmId: filmP1.id, phaseName: 'FINAL', phaseOrder: 10, status: 'LOCKED' },
+  ] })
+
+  // ── P2: KETER (THE SINGULARITY POINT) ──
+  const filmP2 = await prisma.film.upsert({
+    where: { slug: 'keter-the-singularity-point' },
+    update: {},
+    create: {
+      title: 'KETER (The Singularity Point)',
+      slug: 'keter-the-singularity-point',
+      description: "Christopher Nolan meets the Zohar. Thriller sci-fi ou physique quantique et Kabbale se rencontrent.",
+      synopsis: "Un physicien de renom decouvre que le point de singularite quantique correspond exactement a la Keter (couronne) de l'Arbre de Vie kabbalistique. Alors qu'une intelligence artificielle tente d'utiliser cette decouverte pour recrire la realite, il doit affronter les limites de la science et de la foi dans une course contre la montre vertigineuse.",
+      genre: 'Science-Fiction',
+      catalog: 'LUMIERE',
+      status: 'PRE_PRODUCTION',
+      isPublic: true,
+      coverImageUrl: 'https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=1200&h=600&fit=crop',
+      estimatedBudget: 200000,
+    },
+  })
+  await prisma.filmPhase.createMany({ data: [
+    { filmId: filmP2.id, phaseName: 'SCRIPT', phaseOrder: 1, status: 'ACTIVE' },
+    { filmId: filmP2.id, phaseName: 'STORYBOARD', phaseOrder: 2, status: 'LOCKED' },
+    { filmId: filmP2.id, phaseName: 'PREVIZ', phaseOrder: 3, status: 'LOCKED' },
+    { filmId: filmP2.id, phaseName: 'DESIGN', phaseOrder: 4, status: 'LOCKED' },
+    { filmId: filmP2.id, phaseName: 'ANIMATION', phaseOrder: 5, status: 'LOCKED' },
+    { filmId: filmP2.id, phaseName: 'VFX', phaseOrder: 6, status: 'LOCKED' },
+    { filmId: filmP2.id, phaseName: 'AUDIO', phaseOrder: 7, status: 'LOCKED' },
+    { filmId: filmP2.id, phaseName: 'EDITING', phaseOrder: 8, status: 'LOCKED' },
+    { filmId: filmP2.id, phaseName: 'COLOR', phaseOrder: 9, status: 'LOCKED' },
+    { filmId: filmP2.id, phaseName: 'FINAL', phaseOrder: 10, status: 'LOCKED' },
+  ] })
+
+  // ── P3: LE CODE D'ESTHER ──
+  const filmP3 = await prisma.film.upsert({
+    where: { slug: 'le-code-desther' },
+    update: {},
+    create: {
+      title: "Le Code d'Esther",
+      slug: 'le-code-desther',
+      description: "Investigation sur les codes caches du Livre d'Esther. Docu-fiction historique.",
+      synopsis: "Un cryptographe et une historienne decouvrent des patterns mathematiques caches dans le Livre d'Esther. Leurs recherches revelent des paralleles troublants entre le recit biblique et des evenements historiques majeurs. Entre reconstitutions epiques de la Perse antique et analyses cryptographiques modernes.",
+      genre: 'Documentaire',
+      catalog: 'BIBLE',
+      status: 'PRE_PRODUCTION',
+      isPublic: true,
+      coverImageUrl: 'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=1200&h=600&fit=crop',
+      estimatedBudget: 90000,
+    },
+  })
+  await prisma.filmPhase.createMany({ data: [
+    { filmId: filmP3.id, phaseName: 'SCRIPT', phaseOrder: 1, status: 'ACTIVE' },
+    { filmId: filmP3.id, phaseName: 'STORYBOARD', phaseOrder: 2, status: 'LOCKED' },
+    { filmId: filmP3.id, phaseName: 'PREVIZ', phaseOrder: 3, status: 'LOCKED' },
+    { filmId: filmP3.id, phaseName: 'DESIGN', phaseOrder: 4, status: 'LOCKED' },
+    { filmId: filmP3.id, phaseName: 'ANIMATION', phaseOrder: 5, status: 'LOCKED' },
+    { filmId: filmP3.id, phaseName: 'VFX', phaseOrder: 6, status: 'LOCKED' },
+    { filmId: filmP3.id, phaseName: 'AUDIO', phaseOrder: 7, status: 'LOCKED' },
+    { filmId: filmP3.id, phaseName: 'EDITING', phaseOrder: 8, status: 'LOCKED' },
+    { filmId: filmP3.id, phaseName: 'COLOR', phaseOrder: 9, status: 'LOCKED' },
+    { filmId: filmP3.id, phaseName: 'FINAL', phaseOrder: 10, status: 'LOCKED' },
+  ] })
+
+  // ── P4: ZION OF AFRICA ──
+  const filmP4 = await prisma.film.upsert({
+    where: { slug: 'zion-of-africa' },
+    update: {},
+    create: {
+      title: 'Zion of Africa',
+      slug: 'zion-of-africa',
+      description: "L'histoire meconnue des communautes juives d'Afrique. Des Beta Israel aux Lemba.",
+      synopsis: "Des Beta Israel d'Ethiopie aux Lemba du Zimbabwe, en passant par les communautes du Nigeria et d'Afrique du Sud, ce documentaire revelateur retrace l'heritage juif africain meconnu. Voyage a travers les siecles, les rituels, les genes et les traditions qui unissent ces peuples a une histoire commune.",
+      genre: 'Documentaire',
+      catalog: 'LUMIERE',
+      status: 'DRAFT',
+      isPublic: true,
+      coverImageUrl: 'https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?w=1200&h=600&fit=crop',
+      estimatedBudget: 80000,
+    },
+  })
+  await prisma.filmPhase.createMany({ data: [
+    { filmId: filmP4.id, phaseName: 'SCRIPT', phaseOrder: 1, status: 'ACTIVE' },
+    { filmId: filmP4.id, phaseName: 'STORYBOARD', phaseOrder: 2, status: 'LOCKED' },
+    { filmId: filmP4.id, phaseName: 'PREVIZ', phaseOrder: 3, status: 'LOCKED' },
+    { filmId: filmP4.id, phaseName: 'DESIGN', phaseOrder: 4, status: 'LOCKED' },
+    { filmId: filmP4.id, phaseName: 'ANIMATION', phaseOrder: 5, status: 'LOCKED' },
+    { filmId: filmP4.id, phaseName: 'VFX', phaseOrder: 6, status: 'LOCKED' },
+    { filmId: filmP4.id, phaseName: 'AUDIO', phaseOrder: 7, status: 'LOCKED' },
+    { filmId: filmP4.id, phaseName: 'EDITING', phaseOrder: 8, status: 'LOCKED' },
+    { filmId: filmP4.id, phaseName: 'COLOR', phaseOrder: 9, status: 'LOCKED' },
+    { filmId: filmP4.id, phaseName: 'FINAL', phaseOrder: 10, status: 'LOCKED' },
+  ] })
+
+  // ── P5: LE DERNIER CONVOI (THE LAST TRAIN) ──
+  const filmP5 = await prisma.film.upsert({
+    where: { slug: 'le-dernier-convoi' },
+    update: {},
+    create: {
+      title: 'Le Dernier Convoi (The Last Train)',
+      slug: 'le-dernier-convoi',
+      description: "Le dernier convoi de deportation parti de France en 1944. Docu-drama poignant.",
+      synopsis: "Aout 1944 : alors que Paris est sur le point d'etre libere, un dernier train quitte Bobigny vers les camps. A travers les destins croises de deportes, de resistants et de cheminots, ce film reconstitue les dernieres heures d'une tragedie historique basee sur des temoignages reels.",
+      genre: 'Drame',
+      catalog: 'LUMIERE',
+      status: 'DRAFT',
+      isPublic: true,
+      coverImageUrl: 'https://images.unsplash.com/photo-1527684651103-9a66277a1e40?w=1200&h=600&fit=crop',
+      estimatedBudget: 150000,
+    },
+  })
+  await prisma.filmPhase.createMany({ data: [
+    { filmId: filmP5.id, phaseName: 'SCRIPT', phaseOrder: 1, status: 'ACTIVE' },
+    { filmId: filmP5.id, phaseName: 'STORYBOARD', phaseOrder: 2, status: 'LOCKED' },
+    { filmId: filmP5.id, phaseName: 'PREVIZ', phaseOrder: 3, status: 'LOCKED' },
+    { filmId: filmP5.id, phaseName: 'DESIGN', phaseOrder: 4, status: 'LOCKED' },
+    { filmId: filmP5.id, phaseName: 'ANIMATION', phaseOrder: 5, status: 'LOCKED' },
+    { filmId: filmP5.id, phaseName: 'VFX', phaseOrder: 6, status: 'LOCKED' },
+    { filmId: filmP5.id, phaseName: 'AUDIO', phaseOrder: 7, status: 'LOCKED' },
+    { filmId: filmP5.id, phaseName: 'EDITING', phaseOrder: 8, status: 'LOCKED' },
+    { filmId: filmP5.id, phaseName: 'COLOR', phaseOrder: 9, status: 'LOCKED' },
+    { filmId: filmP5.id, phaseName: 'FINAL', phaseOrder: 10, status: 'LOCKED' },
+  ] })
+
+  // ── P6: CARNAVAL (BAD TRIP) ──
+  const filmP6 = await prisma.film.upsert({
+    where: { slug: 'carnaval-bad-trip' },
+    update: {},
+    create: {
+      title: 'Carnaval (Bad Trip)',
+      slug: 'carnaval-bad-trip',
+      description: "Court-metrage experimental. Un carnaval qui tourne au cauchemar. Demo technique IA.",
+      synopsis: "Un jeune homme se retrouve piege dans un carnaval qui se transforme progressivement en cauchemar. Les masques deviennent reels, les couleurs virent au cauchemardesque, la realite se distord. Court-metrage experimental entierement genere par IA, servant de demonstration technique pour le studio.",
+      genre: 'Horreur',
+      catalog: 'LUMIERE',
+      status: 'PRE_PRODUCTION',
+      isPublic: true,
+      coverImageUrl: 'https://images.unsplash.com/photo-1533709752211-118fcaf03312?w=1200&h=600&fit=crop',
+      estimatedBudget: 25000,
+    },
+  })
+  await prisma.filmPhase.createMany({ data: [
+    { filmId: filmP6.id, phaseName: 'SCRIPT', phaseOrder: 1, status: 'COMPLETED' },
+    { filmId: filmP6.id, phaseName: 'STORYBOARD', phaseOrder: 2, status: 'ACTIVE' },
+    { filmId: filmP6.id, phaseName: 'PREVIZ', phaseOrder: 3, status: 'LOCKED' },
+    { filmId: filmP6.id, phaseName: 'DESIGN', phaseOrder: 4, status: 'LOCKED' },
+    { filmId: filmP6.id, phaseName: 'ANIMATION', phaseOrder: 5, status: 'LOCKED' },
+    { filmId: filmP6.id, phaseName: 'VFX', phaseOrder: 6, status: 'LOCKED' },
+    { filmId: filmP6.id, phaseName: 'AUDIO', phaseOrder: 7, status: 'LOCKED' },
+    { filmId: filmP6.id, phaseName: 'EDITING', phaseOrder: 8, status: 'LOCKED' },
+    { filmId: filmP6.id, phaseName: 'COLOR', phaseOrder: 9, status: 'LOCKED' },
+    { filmId: filmP6.id, phaseName: 'FINAL', phaseOrder: 10, status: 'LOCKED' },
+  ] })
+
+  // ── P7: NA NAH NAHMA (THE BRESLOV LIGHT) ──
+  const filmP7 = await prisma.film.upsert({
+    where: { slug: 'na-nah-nahma-the-breslov-light' },
+    update: {},
+    create: {
+      title: 'Na Nah Nahma (The Breslov Light)',
+      slug: 'na-nah-nahma-the-breslov-light',
+      description: "Plongee dans l'univers Breslov. Musique, danse, priere et joie comme philosophie de vie.",
+      synopsis: "Du Rabbi Nachman de Bratslav au phenomene mondial Na Nach, cette serie documentaire explore le mouvement hassidique le plus joyeux du monde. A travers la musique, la danse et la priere, decouvrez comment une philosophie du 18e siecle est devenue un phenomene de pop culture.",
+      genre: 'Documentaire',
+      catalog: 'LUMIERE',
+      status: 'DRAFT',
+      isPublic: true,
+      coverImageUrl: 'https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=1200&h=600&fit=crop',
+      estimatedBudget: 75000,
+    },
+  })
+  await prisma.filmPhase.createMany({ data: [
+    { filmId: filmP7.id, phaseName: 'SCRIPT', phaseOrder: 1, status: 'ACTIVE' },
+    { filmId: filmP7.id, phaseName: 'STORYBOARD', phaseOrder: 2, status: 'LOCKED' },
+    { filmId: filmP7.id, phaseName: 'PREVIZ', phaseOrder: 3, status: 'LOCKED' },
+    { filmId: filmP7.id, phaseName: 'DESIGN', phaseOrder: 4, status: 'LOCKED' },
+    { filmId: filmP7.id, phaseName: 'ANIMATION', phaseOrder: 5, status: 'LOCKED' },
+    { filmId: filmP7.id, phaseName: 'VFX', phaseOrder: 6, status: 'LOCKED' },
+    { filmId: filmP7.id, phaseName: 'AUDIO', phaseOrder: 7, status: 'LOCKED' },
+    { filmId: filmP7.id, phaseName: 'EDITING', phaseOrder: 8, status: 'LOCKED' },
+    { filmId: filmP7.id, phaseName: 'COLOR', phaseOrder: 9, status: 'LOCKED' },
+    { filmId: filmP7.id, phaseName: 'FINAL', phaseOrder: 10, status: 'LOCKED' },
+  ] })
+
+  // ── P8: ORTISTES (THE GIFT) ──
+  const filmP8 = await prisma.film.upsert({
+    where: { slug: 'ortistes-the-gift' },
+    update: {},
+    create: {
+      title: 'Ortistes (The Gift)',
+      slug: 'ortistes-the-gift',
+      description: "Mini-serie animee sur des artistes autistes aux talents extraordinaires. 10x12 min.",
+      synopsis: "Chaque episode de 12 minutes raconte l'histoire d'un artiste autiste au talent extraordinaire. Musique, peinture, calcul mental, memoire photographique : ces dons uniques sont reveles a travers une animation poetique entierement generee par IA, celebrant la neurodiversite.",
+      genre: 'Animation',
+      catalog: 'LUMIERE',
+      status: 'DRAFT',
+      isPublic: true,
+      coverImageUrl: 'https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=1200&h=600&fit=crop',
+      estimatedBudget: 60000,
+    },
+  })
+  await prisma.filmPhase.createMany({ data: [
+    { filmId: filmP8.id, phaseName: 'SCRIPT', phaseOrder: 1, status: 'ACTIVE' },
+    { filmId: filmP8.id, phaseName: 'STORYBOARD', phaseOrder: 2, status: 'LOCKED' },
+    { filmId: filmP8.id, phaseName: 'PREVIZ', phaseOrder: 3, status: 'LOCKED' },
+    { filmId: filmP8.id, phaseName: 'DESIGN', phaseOrder: 4, status: 'LOCKED' },
+    { filmId: filmP8.id, phaseName: 'ANIMATION', phaseOrder: 5, status: 'LOCKED' },
+    { filmId: filmP8.id, phaseName: 'VFX', phaseOrder: 6, status: 'LOCKED' },
+    { filmId: filmP8.id, phaseName: 'AUDIO', phaseOrder: 7, status: 'LOCKED' },
+    { filmId: filmP8.id, phaseName: 'EDITING', phaseOrder: 8, status: 'LOCKED' },
+    { filmId: filmP8.id, phaseName: 'COLOR', phaseOrder: 9, status: 'LOCKED' },
+    { filmId: filmP8.id, phaseName: 'FINAL', phaseOrder: 10, status: 'LOCKED' },
+  ] })
+
+  // ── E1: SUPER-HEROS ──
+  const filmE1 = await prisma.film.upsert({
+    where: { slug: 'super-heros' },
+    update: {},
+    create: {
+      title: 'Super-Heros',
+      slug: 'super-heros',
+      description: "Projet super-heros a la franchise israelienne. Action fantastique.",
+      synopsis: "Le premier super-heros israelien. Ne dans les ruelles de Jaffa, dote de pouvoirs lies a la Kabbale, il doit proteger Tel Aviv d'une menace ancestrale tout en cachant sa double identite. Un film d'action spectaculaire melant mythologie juive et culture pop.",
+      genre: 'Action',
+      catalog: 'LUMIERE',
+      status: 'DRAFT',
+      isPublic: true,
+      coverImageUrl: 'https://images.unsplash.com/photo-1612036782180-6f0b6cd846fe?w=1200&h=600&fit=crop',
+      estimatedBudget: 180000,
+    },
+  })
+  await prisma.filmPhase.createMany({ data: [
+    { filmId: filmE1.id, phaseName: 'SCRIPT', phaseOrder: 1, status: 'ACTIVE' },
+    { filmId: filmE1.id, phaseName: 'STORYBOARD', phaseOrder: 2, status: 'LOCKED' },
+    { filmId: filmE1.id, phaseName: 'PREVIZ', phaseOrder: 3, status: 'LOCKED' },
+    { filmId: filmE1.id, phaseName: 'DESIGN', phaseOrder: 4, status: 'LOCKED' },
+    { filmId: filmE1.id, phaseName: 'ANIMATION', phaseOrder: 5, status: 'LOCKED' },
+    { filmId: filmE1.id, phaseName: 'VFX', phaseOrder: 6, status: 'LOCKED' },
+    { filmId: filmE1.id, phaseName: 'AUDIO', phaseOrder: 7, status: 'LOCKED' },
+    { filmId: filmE1.id, phaseName: 'EDITING', phaseOrder: 8, status: 'LOCKED' },
+    { filmId: filmE1.id, phaseName: 'COLOR', phaseOrder: 9, status: 'LOCKED' },
+    { filmId: filmE1.id, phaseName: 'FINAL', phaseOrder: 10, status: 'LOCKED' },
+  ] })
+
+  // ── E2: AMELIE POUL2 ──
+  const filmE2 = await prisma.film.upsert({
+    where: { slug: 'amelie-poul2' },
+    update: {},
+    create: {
+      title: 'Amelie Poul2',
+      slug: 'amelie-poul2',
+      description: "Suite/hommage du Fabuleux Destin d'Amelie Poulain. Vision IA contemporaine.",
+      synopsis: "20 ans apres, Amelie Poulain vit toujours a Montmartre mais le quartier a change. Quand une IA commence a predire les petits bonheurs des passants, Amelie se lance dans une quete pour prouver que la vraie magie ne se calcule pas. Un hommage poetique et decale au film culte.",
+      genre: 'Comedie',
+      catalog: 'LUMIERE',
+      status: 'DRAFT',
+      isPublic: true,
+      coverImageUrl: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=1200&h=600&fit=crop',
+      estimatedBudget: 100000,
+    },
+  })
+  await prisma.filmPhase.createMany({ data: [
+    { filmId: filmE2.id, phaseName: 'SCRIPT', phaseOrder: 1, status: 'ACTIVE' },
+    { filmId: filmE2.id, phaseName: 'STORYBOARD', phaseOrder: 2, status: 'LOCKED' },
+    { filmId: filmE2.id, phaseName: 'PREVIZ', phaseOrder: 3, status: 'LOCKED' },
+    { filmId: filmE2.id, phaseName: 'DESIGN', phaseOrder: 4, status: 'LOCKED' },
+    { filmId: filmE2.id, phaseName: 'ANIMATION', phaseOrder: 5, status: 'LOCKED' },
+    { filmId: filmE2.id, phaseName: 'VFX', phaseOrder: 6, status: 'LOCKED' },
+    { filmId: filmE2.id, phaseName: 'AUDIO', phaseOrder: 7, status: 'LOCKED' },
+    { filmId: filmE2.id, phaseName: 'EDITING', phaseOrder: 8, status: 'LOCKED' },
+    { filmId: filmE2.id, phaseName: 'COLOR', phaseOrder: 9, status: 'LOCKED' },
+    { filmId: filmE2.id, phaseName: 'FINAL', phaseOrder: 10, status: 'LOCKED' },
+  ] })
+
+  // ── E3: ROYAL RUMBLE ──
+  const filmE3 = await prisma.film.upsert({
+    where: { slug: 'royal-rumble' },
+    update: {},
+    create: {
+      title: 'Royal Rumble',
+      slug: 'royal-rumble',
+      description: "Battle royale cinematique. Melange d'action et d'humour.",
+      synopsis: "16 acteurs IA s'affrontent dans une arene virtuelle pour le role principal du prochain blockbuster Lumiere. Elimination par elimination, chaque round revele leurs talents uniques. Action, comedie, et meta-cinema dans un format innovant.",
+      genre: 'Action',
+      catalog: 'LUMIERE',
+      status: 'DRAFT',
+      isPublic: true,
+      coverImageUrl: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=1200&h=600&fit=crop',
+      estimatedBudget: 40000,
+    },
+  })
+  await prisma.filmPhase.createMany({ data: [
+    { filmId: filmE3.id, phaseName: 'SCRIPT', phaseOrder: 1, status: 'ACTIVE' },
+    { filmId: filmE3.id, phaseName: 'STORYBOARD', phaseOrder: 2, status: 'LOCKED' },
+    { filmId: filmE3.id, phaseName: 'PREVIZ', phaseOrder: 3, status: 'LOCKED' },
+    { filmId: filmE3.id, phaseName: 'DESIGN', phaseOrder: 4, status: 'LOCKED' },
+    { filmId: filmE3.id, phaseName: 'ANIMATION', phaseOrder: 5, status: 'LOCKED' },
+    { filmId: filmE3.id, phaseName: 'VFX', phaseOrder: 6, status: 'LOCKED' },
+    { filmId: filmE3.id, phaseName: 'AUDIO', phaseOrder: 7, status: 'LOCKED' },
+    { filmId: filmE3.id, phaseName: 'EDITING', phaseOrder: 8, status: 'LOCKED' },
+    { filmId: filmE3.id, phaseName: 'COLOR', phaseOrder: 9, status: 'LOCKED' },
+    { filmId: filmE3.id, phaseName: 'FINAL', phaseOrder: 10, status: 'LOCKED' },
+  ] })
+
+  // ── E4: TRIP CARNAVAL ──
+  const filmE4 = await prisma.film.upsert({
+    where: { slug: 'trip-carnaval' },
+    update: {},
+    create: {
+      title: 'Trip Carnaval',
+      slug: 'trip-carnaval',
+      description: "Version musicale et extended du concept Carnaval. Trip visuel et sonore experimental.",
+      synopsis: "Experience audiovisuelle immersive ou la musique electronique rencontre les visuels de carnaval generes par IA. 45 minutes de trip sensoriel a travers des paysages oniriques, des masques en mutation constante et des rythmes enivrants.",
+      genre: 'Experimental',
+      catalog: 'LUMIERE',
+      status: 'DRAFT',
+      isPublic: true,
+      coverImageUrl: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=1200&h=600&fit=crop',
+      estimatedBudget: 30000,
+    },
+  })
+  await prisma.filmPhase.createMany({ data: [
+    { filmId: filmE4.id, phaseName: 'SCRIPT', phaseOrder: 1, status: 'ACTIVE' },
+    { filmId: filmE4.id, phaseName: 'STORYBOARD', phaseOrder: 2, status: 'LOCKED' },
+    { filmId: filmE4.id, phaseName: 'PREVIZ', phaseOrder: 3, status: 'LOCKED' },
+    { filmId: filmE4.id, phaseName: 'DESIGN', phaseOrder: 4, status: 'LOCKED' },
+    { filmId: filmE4.id, phaseName: 'ANIMATION', phaseOrder: 5, status: 'LOCKED' },
+    { filmId: filmE4.id, phaseName: 'VFX', phaseOrder: 6, status: 'LOCKED' },
+    { filmId: filmE4.id, phaseName: 'AUDIO', phaseOrder: 7, status: 'LOCKED' },
+    { filmId: filmE4.id, phaseName: 'EDITING', phaseOrder: 8, status: 'LOCKED' },
+    { filmId: filmE4.id, phaseName: 'COLOR', phaseOrder: 9, status: 'LOCKED' },
+    { filmId: filmE4.id, phaseName: 'FINAL', phaseOrder: 10, status: 'LOCKED' },
+  ] })
+
+  // ── E5: TOKENISATION (Le Film) ──
+  const filmE5 = await prisma.film.upsert({
+    where: { slug: 'tokenisation-le-film' },
+    update: {},
+    create: {
+      title: 'Tokenisation (Le Film)',
+      slug: 'tokenisation-le-film',
+      description: "Meta-documentaire sur la tokenisation du cinema. Financement decentralise de l'art.",
+      synopsis: "Un film sur la tokenisation du cinema... finance par tokenisation. Ce meta-documentaire explore comment la blockchain revolutionne le financement de l'art, en suivant son propre parcours de financement decentralise. Interviews d'artistes, de technologues et d'investisseurs.",
+      genre: 'Documentaire',
+      catalog: 'LUMIERE',
+      status: 'DRAFT',
+      isPublic: true,
+      coverImageUrl: 'https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=1200&h=600&fit=crop',
+      estimatedBudget: 50000,
+    },
+  })
+  await prisma.filmPhase.createMany({ data: [
+    { filmId: filmE5.id, phaseName: 'SCRIPT', phaseOrder: 1, status: 'ACTIVE' },
+    { filmId: filmE5.id, phaseName: 'STORYBOARD', phaseOrder: 2, status: 'LOCKED' },
+    { filmId: filmE5.id, phaseName: 'PREVIZ', phaseOrder: 3, status: 'LOCKED' },
+    { filmId: filmE5.id, phaseName: 'DESIGN', phaseOrder: 4, status: 'LOCKED' },
+    { filmId: filmE5.id, phaseName: 'ANIMATION', phaseOrder: 5, status: 'LOCKED' },
+    { filmId: filmE5.id, phaseName: 'VFX', phaseOrder: 6, status: 'LOCKED' },
+    { filmId: filmE5.id, phaseName: 'AUDIO', phaseOrder: 7, status: 'LOCKED' },
+    { filmId: filmE5.id, phaseName: 'EDITING', phaseOrder: 8, status: 'LOCKED' },
+    { filmId: filmE5.id, phaseName: 'COLOR', phaseOrder: 9, status: 'LOCKED' },
+    { filmId: filmE5.id, phaseName: 'FINAL', phaseOrder: 10, status: 'LOCKED' },
+  ] })
+
+  // ── E6: NUIT DES CESARS ──
+  const filmE6 = await prisma.film.upsert({
+    where: { slug: 'nuit-des-cesars' },
+    update: {},
+    create: {
+      title: 'Nuit des Cesars',
+      slug: 'nuit-des-cesars',
+      description: "Satire de la ceremonie des Cesars. Comedie noire sur l'industrie du cinema francais.",
+      synopsis: "La nuit des Cesars tourne au chaos quand un hacker diffuse en direct les conversations privees de tous les nomines. Secrets, trahisons et ridicule s'entrechoquent dans cette satire mordante de l'industrie du cinema francais, generee integralement par IA.",
+      genre: 'Comedie',
+      catalog: 'LUMIERE',
+      status: 'DRAFT',
+      isPublic: true,
+      coverImageUrl: 'https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=1200&h=600&fit=crop',
+      estimatedBudget: 35000,
+    },
+  })
+  await prisma.filmPhase.createMany({ data: [
+    { filmId: filmE6.id, phaseName: 'SCRIPT', phaseOrder: 1, status: 'ACTIVE' },
+    { filmId: filmE6.id, phaseName: 'STORYBOARD', phaseOrder: 2, status: 'LOCKED' },
+    { filmId: filmE6.id, phaseName: 'PREVIZ', phaseOrder: 3, status: 'LOCKED' },
+    { filmId: filmE6.id, phaseName: 'DESIGN', phaseOrder: 4, status: 'LOCKED' },
+    { filmId: filmE6.id, phaseName: 'ANIMATION', phaseOrder: 5, status: 'LOCKED' },
+    { filmId: filmE6.id, phaseName: 'VFX', phaseOrder: 6, status: 'LOCKED' },
+    { filmId: filmE6.id, phaseName: 'AUDIO', phaseOrder: 7, status: 'LOCKED' },
+    { filmId: filmE6.id, phaseName: 'EDITING', phaseOrder: 8, status: 'LOCKED' },
+    { filmId: filmE6.id, phaseName: 'COLOR', phaseOrder: 9, status: 'LOCKED' },
+    { filmId: filmE6.id, phaseName: 'FINAL', phaseOrder: 10, status: 'LOCKED' },
+  ] })
+
+  // ── E7: METACINEMA ──
+  const filmE7 = await prisma.film.upsert({
+    where: { slug: 'metacinema' },
+    update: {},
+    create: {
+      title: 'Metacinema',
+      slug: 'metacinema',
+      description: "Cinema qui parle de lui-meme. Experience immersive meta-cinematographique generee par IA.",
+      synopsis: "Un film qui se sait etre un film. Les personnages decouvrent qu'ils sont generes par IA et commencent a questionner leur existence, leur createur et le public qui les regarde. Experience experimentale et philosophique qui repousse les limites du cinema genere par intelligence artificielle.",
+      genre: 'Experimental',
+      catalog: 'LUMIERE',
+      status: 'DRAFT',
+      isPublic: true,
+      coverImageUrl: 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=1200&h=600&fit=crop',
+      estimatedBudget: 45000,
+    },
+  })
+  await prisma.filmPhase.createMany({ data: [
+    { filmId: filmE7.id, phaseName: 'SCRIPT', phaseOrder: 1, status: 'ACTIVE' },
+    { filmId: filmE7.id, phaseName: 'STORYBOARD', phaseOrder: 2, status: 'LOCKED' },
+    { filmId: filmE7.id, phaseName: 'PREVIZ', phaseOrder: 3, status: 'LOCKED' },
+    { filmId: filmE7.id, phaseName: 'DESIGN', phaseOrder: 4, status: 'LOCKED' },
+    { filmId: filmE7.id, phaseName: 'ANIMATION', phaseOrder: 5, status: 'LOCKED' },
+    { filmId: filmE7.id, phaseName: 'VFX', phaseOrder: 6, status: 'LOCKED' },
+    { filmId: filmE7.id, phaseName: 'AUDIO', phaseOrder: 7, status: 'LOCKED' },
+    { filmId: filmE7.id, phaseName: 'EDITING', phaseOrder: 8, status: 'LOCKED' },
+    { filmId: filmE7.id, phaseName: 'COLOR', phaseOrder: 9, status: 'LOCKED' },
+    { filmId: filmE7.id, phaseName: 'FINAL', phaseOrder: 10, status: 'LOCKED' },
+  ] })
+
+  // ── BONUS: 5 extra community films to reach 20+ total ──
+
+  const filmB1 = await prisma.film.upsert({
+    where: { slug: 'les-enfants-de-la-lumiere' },
+    update: {},
+    create: {
+      title: 'Les Enfants de la Lumiere',
+      slug: 'les-enfants-de-la-lumiere',
+      description: "Conte poetique sur des enfants qui decouvrent le cinema dans un village recule.",
+      synopsis: "Dans un village isole du sud marocain, trois enfants trouvent une vieille camera et commencent a filmer leur monde. Leur film amateur devient viral et attire l'attention d'un studio hollywoodien. Mais les enfants refusent de quitter leur village. Un conte sur la magie du cinema a l'ere de l'IA.",
+      genre: 'Drame',
+      catalog: 'COMMUNITY',
+      status: 'IN_PRODUCTION',
+      isPublic: true,
+      coverImageUrl: 'https://images.unsplash.com/photo-1485846234645-a62644f84728?w=1200&h=600&fit=crop',
+      estimatedBudget: 45000,
+    },
+  })
+  await prisma.filmPhase.createMany({ data: [
+    { filmId: filmB1.id, phaseName: 'SCRIPT', phaseOrder: 1, status: 'COMPLETED' },
+    { filmId: filmB1.id, phaseName: 'STORYBOARD', phaseOrder: 2, status: 'COMPLETED' },
+    { filmId: filmB1.id, phaseName: 'PREVIZ', phaseOrder: 3, status: 'ACTIVE' },
+    { filmId: filmB1.id, phaseName: 'DESIGN', phaseOrder: 4, status: 'LOCKED' },
+    { filmId: filmB1.id, phaseName: 'ANIMATION', phaseOrder: 5, status: 'LOCKED' },
+    { filmId: filmB1.id, phaseName: 'VFX', phaseOrder: 6, status: 'LOCKED' },
+    { filmId: filmB1.id, phaseName: 'AUDIO', phaseOrder: 7, status: 'LOCKED' },
+    { filmId: filmB1.id, phaseName: 'EDITING', phaseOrder: 8, status: 'LOCKED' },
+    { filmId: filmB1.id, phaseName: 'COLOR', phaseOrder: 9, status: 'LOCKED' },
+    { filmId: filmB1.id, phaseName: 'FINAL', phaseOrder: 10, status: 'LOCKED' },
+  ] })
+
+  const filmB2 = await prisma.film.upsert({
+    where: { slug: 'la-prophetie-des-sables' },
+    update: {},
+    create: {
+      title: 'La Prophetie des Sables',
+      slug: 'la-prophetie-des-sables',
+      description: "Aventure epique dans le desert du Negev. Prophetie ancienne et technologie futuriste.",
+      synopsis: "Un archeologue decouvre dans le desert du Negev des inscriptions prophetiques vieilles de 3000 ans qui semblent predire l'avenement de l'intelligence artificielle. Course contre la montre entre chercheurs et mercenaires dans les dunes brulantes.",
+      genre: 'Aventure',
+      catalog: 'LUMIERE',
+      status: 'PRE_PRODUCTION',
+      isPublic: true,
+      coverImageUrl: 'https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=1200&h=600&fit=crop',
+      estimatedBudget: 95000,
+    },
+  })
+  await prisma.filmPhase.createMany({ data: [
+    { filmId: filmB2.id, phaseName: 'SCRIPT', phaseOrder: 1, status: 'ACTIVE' },
+    { filmId: filmB2.id, phaseName: 'STORYBOARD', phaseOrder: 2, status: 'LOCKED' },
+    { filmId: filmB2.id, phaseName: 'PREVIZ', phaseOrder: 3, status: 'LOCKED' },
+    { filmId: filmB2.id, phaseName: 'DESIGN', phaseOrder: 4, status: 'LOCKED' },
+    { filmId: filmB2.id, phaseName: 'ANIMATION', phaseOrder: 5, status: 'LOCKED' },
+    { filmId: filmB2.id, phaseName: 'VFX', phaseOrder: 6, status: 'LOCKED' },
+    { filmId: filmB2.id, phaseName: 'AUDIO', phaseOrder: 7, status: 'LOCKED' },
+    { filmId: filmB2.id, phaseName: 'EDITING', phaseOrder: 8, status: 'LOCKED' },
+    { filmId: filmB2.id, phaseName: 'COLOR', phaseOrder: 9, status: 'LOCKED' },
+    { filmId: filmB2.id, phaseName: 'FINAL', phaseOrder: 10, status: 'LOCKED' },
+  ] })
+
+  const filmB3 = await prisma.film.upsert({
+    where: { slug: 'tel-aviv-nights' },
+    update: {},
+    create: {
+      title: 'Tel Aviv Nights',
+      slug: 'tel-aviv-nights',
+      description: "Romance et suspense dans les nuits de Tel Aviv. Thriller romantique urbain.",
+      synopsis: "Une danseuse francaise et un hacker israelien se rencontrent dans un club underground de Tel Aviv. Leur histoire d'amour se complique quand ils decouvrent qu'ils travaillent pour des camps opposes dans une guerre de l'information qui menace la ville entiere.",
+      genre: 'Thriller',
+      catalog: 'LUMIERE',
+      status: 'DRAFT',
+      isPublic: true,
+      coverImageUrl: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=1200&h=600&fit=crop',
+      estimatedBudget: 70000,
+    },
+  })
+  await prisma.filmPhase.createMany({ data: [
+    { filmId: filmB3.id, phaseName: 'SCRIPT', phaseOrder: 1, status: 'ACTIVE' },
+    { filmId: filmB3.id, phaseName: 'STORYBOARD', phaseOrder: 2, status: 'LOCKED' },
+    { filmId: filmB3.id, phaseName: 'PREVIZ', phaseOrder: 3, status: 'LOCKED' },
+    { filmId: filmB3.id, phaseName: 'DESIGN', phaseOrder: 4, status: 'LOCKED' },
+    { filmId: filmB3.id, phaseName: 'ANIMATION', phaseOrder: 5, status: 'LOCKED' },
+    { filmId: filmB3.id, phaseName: 'VFX', phaseOrder: 6, status: 'LOCKED' },
+    { filmId: filmB3.id, phaseName: 'AUDIO', phaseOrder: 7, status: 'LOCKED' },
+    { filmId: filmB3.id, phaseName: 'EDITING', phaseOrder: 8, status: 'LOCKED' },
+    { filmId: filmB3.id, phaseName: 'COLOR', phaseOrder: 9, status: 'LOCKED' },
+    { filmId: filmB3.id, phaseName: 'FINAL', phaseOrder: 10, status: 'LOCKED' },
+  ] })
+
+  const filmB4 = await prisma.film.upsert({
+    where: { slug: 'les-gardiens-du-shabat' },
+    update: {},
+    create: {
+      title: 'Les Gardiens du Shabat',
+      slug: 'les-gardiens-du-shabat',
+      description: "Fantasy juif : des gardiens mystiques protegent le monde chaque vendredi soir.",
+      synopsis: "Chaque vendredi soir, quand le Shabat commence, 36 justes caches dans le monde activent une barriere mystique qui protege l'humanite. Quand l'un d'eux disparait, une jeune femme decouvre qu'elle est la prochaine gardienne. Fantasy epique ancre dans la tradition juive.",
+      genre: 'Fantastique',
+      catalog: 'LUMIERE',
+      status: 'DRAFT',
+      isPublic: true,
+      coverImageUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1200&h=600&fit=crop',
+      estimatedBudget: 110000,
+    },
+  })
+  await prisma.filmPhase.createMany({ data: [
+    { filmId: filmB4.id, phaseName: 'SCRIPT', phaseOrder: 1, status: 'ACTIVE' },
+    { filmId: filmB4.id, phaseName: 'STORYBOARD', phaseOrder: 2, status: 'LOCKED' },
+    { filmId: filmB4.id, phaseName: 'PREVIZ', phaseOrder: 3, status: 'LOCKED' },
+    { filmId: filmB4.id, phaseName: 'DESIGN', phaseOrder: 4, status: 'LOCKED' },
+    { filmId: filmB4.id, phaseName: 'ANIMATION', phaseOrder: 5, status: 'LOCKED' },
+    { filmId: filmB4.id, phaseName: 'VFX', phaseOrder: 6, status: 'LOCKED' },
+    { filmId: filmB4.id, phaseName: 'AUDIO', phaseOrder: 7, status: 'LOCKED' },
+    { filmId: filmB4.id, phaseName: 'EDITING', phaseOrder: 8, status: 'LOCKED' },
+    { filmId: filmB4.id, phaseName: 'COLOR', phaseOrder: 9, status: 'LOCKED' },
+    { filmId: filmB4.id, phaseName: 'FINAL', phaseOrder: 10, status: 'LOCKED' },
+  ] })
+
+  const filmB5 = await prisma.film.upsert({
+    where: { slug: 'frequency-432' },
+    update: {},
+    create: {
+      title: 'Frequency 432',
+      slug: 'frequency-432',
+      description: "Thriller musical autour de la frequence 432Hz et ses effets sur la conscience humaine.",
+      synopsis: "Un ingenieur du son decouvre que la frequence 432Hz, longtemps consideree comme la 'frequence de l'univers', peut ouvrir des portails de conscience. Quand une corporation tente d'utiliser cette decouverte a des fins de controle mental, il doit choisir entre le silence et la revolution sonore.",
+      genre: 'Thriller',
+      catalog: 'LUMIERE',
+      status: 'DRAFT',
+      isPublic: true,
+      coverImageUrl: 'https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=1200&h=600&fit=crop',
+      estimatedBudget: 65000,
+    },
+  })
+  await prisma.filmPhase.createMany({ data: [
+    { filmId: filmB5.id, phaseName: 'SCRIPT', phaseOrder: 1, status: 'ACTIVE' },
+    { filmId: filmB5.id, phaseName: 'STORYBOARD', phaseOrder: 2, status: 'LOCKED' },
+    { filmId: filmB5.id, phaseName: 'PREVIZ', phaseOrder: 3, status: 'LOCKED' },
+    { filmId: filmB5.id, phaseName: 'DESIGN', phaseOrder: 4, status: 'LOCKED' },
+    { filmId: filmB5.id, phaseName: 'ANIMATION', phaseOrder: 5, status: 'LOCKED' },
+    { filmId: filmB5.id, phaseName: 'VFX', phaseOrder: 6, status: 'LOCKED' },
+    { filmId: filmB5.id, phaseName: 'AUDIO', phaseOrder: 7, status: 'LOCKED' },
+    { filmId: filmB5.id, phaseName: 'EDITING', phaseOrder: 8, status: 'LOCKED' },
+    { filmId: filmB5.id, phaseName: 'COLOR', phaseOrder: 9, status: 'LOCKED' },
+    { filmId: filmB5.id, phaseName: 'FINAL', phaseOrder: 10, status: 'LOCKED' },
+  ] })
+
+  const allSlateFilms = [filmP1, filmP2, filmP3, filmP4, filmP5, filmP6, filmP7, filmP8, filmE1, filmE2, filmE3, filmE4, filmE5, filmE6, filmE7, filmB1, filmB2, filmB3, filmB4, filmB5]
+  console.log(`✅ ${allSlateFilms.length} films Slate Deck 2026 créés avec phases`)
+
+  // =============================================
   // UPDATE FILM STATS
   // =============================================
-  for (const film of [film1, film2, film3]) {
+  for (const film of [film1, film2, film3, ...allSlateFilms]) {
     const total = await prisma.task.count({ where: { filmId: film.id } })
     const validated = await prisma.task.count({ where: { filmId: film.id, status: 'VALIDATED' } })
     await prisma.film.update({
@@ -2467,7 +3071,7 @@ async function main() {
   // SUMMARY
   // =============================================
   console.log('\n' + '='.repeat(50))
-  console.log('🎬 Seed Lumière Brothers V6 terminé avec succès!')
+  console.log('🎬 Seed Lumière Brothers V10 terminé avec succès!')
   console.log('='.repeat(50))
   console.log('\n📋 Comptes de test:')
   console.log('   Admin       : admin@lumiere.film         / Admin1234!')
@@ -2480,10 +3084,13 @@ async function main() {
   console.log('   Rookie 2    : thomas@lumiere.film        / Test1234!')
   console.log('   Expert      : expert@lumiere.film        / Test1234!  (créateur, Starter)')
   console.log('   VIP         : vip@lumiere.film           / Test1234!  (créateur, Business)')
-  console.log('\n🎞️  Films Studio:')
+  console.log('\n🎞️  Films Studio (3 originaux + 20 Slate Deck 2026):')
   console.log('   - Exodus — La Traversée (Historique, IN_PRODUCTION)')
   console.log('   - Neon Babylon (Sci-Fi, PRE_PRODUCTION)')
   console.log('   - Le Dernier Jardin (Animation, DRAFT)')
+  console.log('   + 8 projets principaux Slate Deck (MERCI, KETER, Code d\'Esther, Zion of Africa, Dernier Convoi, Carnaval, Na Nah Nahma, Ortistes)')
+  console.log('   + 7 extras (Super-Heros, Amelie Poul2, Royal Rumble, Trip Carnaval, Tokenisation, Nuit des Cesars, Metacinema)')
+  console.log('   + 5 bonus (Enfants de la Lumiere, Prophetie des Sables, Tel Aviv Nights, Gardiens du Shabat, Frequency 432)')
   console.log('\n📺 Streaming Catalogue:')
   console.log('   - Ombres de Tokyo (Thriller, LIVE, 3420 vues)')
   console.log('   - Rêve Électrique (Sci-Fi, LIVE, 5890 vues)')

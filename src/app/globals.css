@@ -532,3 +532,15 @@ body {
   outline: 2px solid rgba(212, 175, 55, 0.5);
   outline-offset: 2px;
 }
+
+/* ========================================
+   NETFLIX SCROLL HIDE
+   ======================================== */
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
