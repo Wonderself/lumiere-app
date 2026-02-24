@@ -2,6 +2,7 @@
 
 import { HeroBanner } from './hero-banner'
 import { FilmRow } from './film-row'
+import { TopTenRow } from './top-ten-row'
 import { CreatorBar } from './creator-bar'
 import { NetflixHeader } from './netflix-header'
 import { Footer } from '@/components/layout/footer'
@@ -108,11 +109,14 @@ export function NetflixHome({ data }: { data: HomeData }) {
 
       {/* Film Rows */}
       <div className="-mt-16 relative z-10 pb-16">
-        {/* Top picks */}
-        <FilmRow title="Notre Selection" films={topFilms} href="/films" />
+        {/* Top 10 */}
+        <TopTenRow films={topFilms} />
 
         {/* Creator bar */}
         <CreatorBar />
+
+        {/* Full selection */}
+        <FilmRow title="Notre Selection" films={topFilms} href="/films" />
 
         {/* In production */}
         {inProd.length > 0 && (
