@@ -35,17 +35,17 @@ if [ "$RETRY" -lt "$MAX_RETRIES" ]; then
   echo "Database is ready!"
 fi
 
-# Run Prisma schema push (idempotent — safe to run every time)
+# Run Prisma schema push (use node directly — npx not available in slim image)
 echo "Syncing database schema..."
-npx prisma db push --skip-generate 2>&1 || {
+node ./node_modules/prisma/build/index.js db push --skip-generate 2>&1 || {
   echo "Warning: db push failed. Trying with --accept-data-loss for first deploy..."
-  npx prisma db push --skip-generate --accept-data-loss 2>&1 || echo "Warning: db push retry also failed"
+  node ./node_modules/prisma/build/index.js db push --skip-generate --accept-data-loss 2>&1 || echo "Warning: db push retry also failed"
 }
 
 # Seed database if SEED_DB=true (only on first deploy)
 if [ "$SEED_DB" = "true" ]; then
   echo "Seeding database..."
-  npx ts-node --compiler-options '{"module":"CommonJS"}' prisma/seed.ts 2>&1 || echo "Warning: seed failed (data may already exist)"
+  node ./node_modules/ts-node/dist/bin.js --compiler-options '{"module":"CommonJS"}' prisma/seed.ts 2>&1 || echo "Warning: seed failed (data may already exist)"
 fi
 
 echo "Starting Next.js server..."

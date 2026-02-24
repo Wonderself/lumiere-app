@@ -642,7 +642,7 @@ async function main() {
       catalog: 'LUMIERE',
       status: 'DRAFT',
       isPublic: true,
-      coverImageUrl: 'https://images.unsplash.com/photo-1527684651103-9a66277a1e40?w=800&h=1200&fit=crop',
+      coverImageUrl: 'https://images.unsplash.com/photo-1502982720700-bfff97f2ecac?w=800&h=1200&fit=crop',
       estimatedBudget: 150000,
     },
   })
