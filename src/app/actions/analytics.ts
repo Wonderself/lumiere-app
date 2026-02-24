@@ -4,6 +4,164 @@ import { auth } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
 
 // ============================================
+// ADMIN ANALYTICS OVERVIEW — Platform-wide metrics
+// ============================================
+
+export async function getAnalyticsOverview() {
+  const session = await auth()
+  if (!session?.user?.id) return { error: 'Non authentifie' }
+
+  const user = await prisma.user.findUnique({ where: { id: session.user.id }, select: { role: true } })
+  if (user?.role !== 'ADMIN') return { error: 'Acces refuse' }
+
+  const now = new Date()
+  const thirtyDaysAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000)
+  const sevenDaysAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000)
+
+  const [
+    totalUsers,
+    newUsers30d,
+    newUsers7d,
+    verifiedUsers,
+    totalFilms,
+    filmsInProduction,
+    filmsReleased,
+    totalTasks,
+    completedTasks,
+    availableTasks,
+    inProgressTasks,
+    totalScenarios,
+    approvedScenarios,
+    totalPayments,
+    totalNotifications,
+    recentPayments,
+  ] = await Promise.all([
+    prisma.user.count(),
+    prisma.user.count({ where: { createdAt: { gte: thirtyDaysAgo } } }),
+    prisma.user.count({ where: { createdAt: { gte: sevenDaysAgo } } }),
+    prisma.user.count({ where: { isVerified: true } }),
+    prisma.film.count(),
+    prisma.film.count({ where: { status: { in: ['IN_PRODUCTION', 'PRE_PRODUCTION', 'POST_PRODUCTION'] } } }),
+    prisma.film.count({ where: { status: 'RELEASED' } }),
+    prisma.task.count(),
+    prisma.task.count({ where: { status: 'VALIDATED' } }),
+    prisma.task.count({ where: { status: 'AVAILABLE' } }),
+    prisma.task.count({ where: { status: 'CLAIMED' as never } }),
+    prisma.scenarioProposal.count(),
+    prisma.scenarioProposal.count({ where: { status: 'APPROVED' as never } }),
+    prisma.payment.aggregate({ _sum: { amountEur: true } }),
+    prisma.notification.count(),
+    prisma.payment.findMany({
+      where: { createdAt: { gte: thirtyDaysAgo } },
+      select: { amountEur: true, createdAt: true, status: true },
+      orderBy: { createdAt: 'desc' },
+      take: 50,
+    }),
+  ])
+
+  // Build daily user growth for last 30 days
+  const userGrowth = await prisma.user.groupBy({
+    by: ['createdAt'],
+    _count: true,
+    where: { createdAt: { gte: thirtyDaysAgo } },
+    orderBy: { createdAt: 'asc' },
+  })
+
+  const dailyGrowth: Record<string, number> = {}
+  for (let i = 0; i < 30; i++) {
+    const date = new Date(now.getTime() - (29 - i) * 24 * 60 * 60 * 1000)
+    dailyGrowth[date.toISOString().split('T')[0]] = 0
+  }
+  for (const row of userGrowth) {
+    const key = row.createdAt.toISOString().split('T')[0]
+    if (dailyGrowth[key] !== undefined) {
+      dailyGrowth[key] += row._count
+    }
+  }
+
+  const taskCompletionRate = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0
+
+  // Revenue by day
+  const dailyRevenue: Record<string, number> = {}
+  for (let i = 0; i < 30; i++) {
+    const date = new Date(now.getTime() - (29 - i) * 24 * 60 * 60 * 1000)
+    dailyRevenue[date.toISOString().split('T')[0]] = 0
+  }
+  for (const payment of recentPayments) {
+    const key = payment.createdAt.toISOString().split('T')[0]
+    if (dailyRevenue[key] !== undefined) {
+      dailyRevenue[key] += Number(payment.amountEur)
+    }
+  }
+
+  // Role distribution
+  const roleDistribution = await prisma.user.groupBy({
+    by: ['role'],
+    _count: true,
+    orderBy: { _count: { role: 'desc' } },
+  })
+
+  // Top contributors
+  const topContributors = await prisma.user.findMany({
+    where: { claimedTasks: { some: { status: 'VALIDATED' as never } } },
+    select: {
+      id: true,
+      displayName: true,
+      role: true,
+      lumenBalance: true,
+      _count: { select: { claimedTasks: { where: { status: 'VALIDATED' as never } } } },
+    },
+    orderBy: { lumenBalance: 'desc' },
+    take: 10,
+  })
+
+  return {
+    data: {
+      users: {
+        total: totalUsers,
+        new30d: newUsers30d,
+        new7d: newUsers7d,
+        verified: verifiedUsers,
+        verificationRate: totalUsers > 0 ? Math.round((verifiedUsers / totalUsers) * 100) : 0,
+        dailyGrowth: Object.entries(dailyGrowth).map(([date, count]) => ({ date, count })),
+        roleDistribution: roleDistribution.map((r) => ({ role: r.role, count: r._count })),
+      },
+      films: {
+        total: totalFilms,
+        inProduction: filmsInProduction,
+        released: filmsReleased,
+      },
+      tasks: {
+        total: totalTasks,
+        completed: completedTasks,
+        available: availableTasks,
+        inProgress: inProgressTasks,
+        completionRate: taskCompletionRate,
+      },
+      scenarios: {
+        total: totalScenarios,
+        approved: approvedScenarios,
+        approvalRate: totalScenarios > 0 ? Math.round((approvedScenarios / totalScenarios) * 100) : 0,
+      },
+      revenue: {
+        total: Number(totalPayments._sum.amountEur || 0),
+        dailyRevenue: Object.entries(dailyRevenue).map(([date, amount]) => ({ date, amount })),
+      },
+      engagement: {
+        totalNotifications,
+        topContributors: topContributors.map((u) => ({
+          id: u.id,
+          name: u.displayName,
+          role: u.role,
+          lumens: u.lumenBalance,
+          tasksCompleted: u._count.claimedTasks,
+        })),
+      },
+    },
+  }
+}
+
+// ============================================
 // CREATOR STATS — Aggregate video views, likes, shares
 // ============================================
 

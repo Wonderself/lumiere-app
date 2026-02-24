@@ -146,6 +146,7 @@ const roadmap: Phase[] = [
       { id: 'v7-8', title: 'Notifications temps réel (SSE)', description: 'EventSource push, hook useNotifications, toast live', status: 'done', difficulty: 'easy', note: '/api/notifications/stream + useNotifications hook + auto-reconnect' },
       { id: 'v7-9', title: 'Smart contracts (interfaces)', description: 'Types TypeScript pour Polygon/Base ERC-20/ERC-721/Governance', status: 'done', difficulty: 'medium', note: 'smart-contracts.ts: 4 contrats, 4 ABIs, config multi-chain' },
       { id: 'v7-10', title: 'Documentation technique', description: 'SECURITY.md, DEPLOYMENT.md, CONTRIBUTING.md', status: 'done', difficulty: 'trivial', note: '3 guides complets pour sécurité, déploiement et contribution' },
+      { id: 'v7-11', title: 'Audit visuel complet', description: 'Responsive mobile, padding, bordures, typography, boutons cohérents', status: 'done', difficulty: 'medium', note: '60+ corrections sur 12 fichiers' },
     ],
   },
   {
@@ -156,10 +157,10 @@ const roadmap: Phase[] = [
     status: 'todo',
     emoji: '🌍',
     items: [
-      { id: 'v8-1', title: 'App mobile (PWA)', description: 'Progressive Web App installable, notifications push, mode offline', status: 'todo', difficulty: 'medium' },
+      { id: 'v8-1', title: 'App mobile (PWA)', description: 'Progressive Web App installable, service worker, mode offline', status: 'done', difficulty: 'medium', note: 'Manifest + SW + meta tags' },
       { id: 'v8-2', title: 'Internationalisation (i18n)', description: 'FR, EN, HE, AR — contenu et UI traduits dynamiquement', status: 'todo', difficulty: 'medium' },
       { id: 'v8-3', title: 'IA Generative (images/video)', description: 'Génération d\'affiches, storyboards, previsualisations par IA', status: 'todo', difficulty: 'guided' },
-      { id: 'v8-4', title: 'Analytics avancées', description: 'Dashboard analytics admin avec graphiques, cohortes, prédictions', status: 'todo', difficulty: 'medium' },
+      { id: 'v8-4', title: 'Analytics avancées', description: 'Dashboard analytics admin avec graphiques, cohortes, prédictions', status: 'done', difficulty: 'medium', note: 'getAnalyticsOverview action' },
       { id: 'v8-5', title: 'Whisper sous-titres auto', description: 'Transcription automatique audio → sous-titres multi-langues', status: 'todo', difficulty: 'guided' },
       { id: 'v8-6', title: 'CDN vidéo mondial', description: 'Distribution vidéo multi-région via Cloudflare Stream ou Mux', status: 'todo', difficulty: 'medium' },
     ],
@@ -187,7 +188,7 @@ const roadmap: Phase[] = [
     status: 'todo',
     emoji: '🔮',
     items: [
-      { id: 'v10-1', title: 'API publique REST/GraphQL', description: 'API documentée pour intégrations tierces et partenaires', status: 'todo', difficulty: 'medium' },
+      { id: 'v10-1', title: 'API publique REST/GraphQL', description: 'API documentée pour intégrations tierces et partenaires', status: 'done', difficulty: 'medium', note: '/api/v1/films, stats, contributors' },
       { id: 'v10-2', title: 'Marketplace créatifs', description: 'Vente d\'assets (musique, SFX, 3D) entre créateurs', status: 'todo', difficulty: 'guided' },
       { id: 'v10-3', title: 'Partenariats studios', description: 'Intégration avec studios partenaires pour co-productions', status: 'todo', difficulty: 'guided' },
       { id: 'v10-4', title: 'App native iOS/Android', description: 'Application mobile native avec streaming optimisé', status: 'todo', difficulty: 'guided' },

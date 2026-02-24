@@ -4,6 +4,7 @@ import './globals.css'
 import { Toaster } from 'sonner'
 import { AuthSessionProvider } from '@/components/layout/session-provider'
 import { CookieBanner } from '@/components/layout/cookie-banner'
+import { ServiceWorkerRegister } from '@/components/layout/sw-register'
 
 const inter = Inter({
   variable: '--font-inter',
@@ -36,9 +37,15 @@ export const metadata: Metadata = {
     'studio cinéma IA',
   ],
   authors: [{ name: 'Lumière Brothers Pictures' }],
+  manifest: '/manifest.json',
   icons: {
     icon: '/favicon.svg',
     apple: '/icon.svg',
+  },
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'black-translucent',
+    title: 'Lumiere',
   },
   openGraph: {
     type: 'website',
@@ -62,10 +69,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr" className="dark">
+      <head>
+        <meta name="theme-color" content="#0A0A0A" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="mobile-web-app-capable" content="yes" />
+      </head>
       <body className={`${inter.variable} ${playfair.variable} antialiased bg-[#0A0A0A] text-white`}>
         <AuthSessionProvider>
         {children}
         <CookieBanner />
+        <ServiceWorkerRegister />
         <Toaster
           theme="dark"
           toastOptions={{

@@ -819,3 +819,37 @@ Each phase has: status (LOCKED/ACTIVE/COMPLETED), order, dependencies
   - Golden rules, code style, design system
   - Workflow (branches, commits, PRs)
   - Common tasks, known pitfalls
+
+## 50. Audit Visuel Complet
+- **60+ corrections** sur 12 fichiers (auth, Netflix components, pages publiques)
+- Responsive mobile: padding px-4 sm:px-8 sur toutes les sections
+- Reset password form redesigné (gold button, h-12 inputs, labels cohérents)
+- Hero banner: flèches de navigation visibles sur mobile
+- Top Ten Row: taille des chiffres adaptée au mobile
+- Film Row, Creator Bar, Streaming: responsive grid/gap/typography
+- Toutes les pages testées tsc --noEmit = 0 erreurs
+
+## 51. Progressive Web App (PWA)
+- `public/manifest.json` enrichi (shortcuts, categories, orientation)
+- `manifest` lié dans metadata de layout.tsx
+- Meta tags: theme-color, apple-mobile-web-app-capable, mobile-web-app-capable
+- `public/sw.js` — Service worker:
+  - Cache-first pour assets statiques (images, fonts, CSS, JS)
+  - Network-first pour pages (fallback offline vers cache)
+  - Nettoyage automatique des anciens caches
+- `src/hooks/use-service-worker.ts` — Hook d'enregistrement
+- `src/components/layout/sw-register.tsx` — Composant d'initialisation
+
+## 52. Analytics Avancées (Admin)
+- `getAnalyticsOverview()` dans `src/app/actions/analytics.ts`
+- Métriques: utilisateurs (total, 30j, 7j, vérifiés), films, tâches, scénarios
+- Croissance quotidienne (30 jours), distribution des rôles
+- Revenue par jour, top 10 contributeurs
+- Taux de complétion des tâches, taux d'approbation scénarios
+
+## 53. API REST Publique v1
+- `GET /api/v1/films` — Liste films publics (pagination, filtres genre/status, tri)
+- `GET /api/v1/films/:id` — Détail film par ID ou slug (phases, compteurs)
+- `GET /api/v1/stats` — Stats plateforme (cache Redis 5min)
+- `GET /api/v1/contributors` — Leaderboard contributeurs (pagination)
+- Toutes les routes avec `force-dynamic`

@@ -620,6 +620,44 @@ Templates HTML branding Lumiere gold/dark.
 - V9: Blockchain Live (deploy contracts, WalletConnect, NFT, governance, dividendes)
 - V10: Ecosystem (API publique, marketplace, partenariats, app native)
 
+### 2026-02-24 — Visual Audit + PWA + Analytics + Public API
+
+**Build Fix: Suspense Boundary**
+- Split `/register` and `/login` pages into server component + client form
+- `useSearchParams()` requires `<Suspense>` boundary in Next.js 16
+- Added `force-dynamic` + metadata exports to both pages
+
+**Comprehensive Visual Audit (60+ fixes across 12 files)**
+- Reset password form: completely redesigned (h-12 inputs, gold button, proper labels)
+- Auth layout: responsive footer padding
+- Hero banner: mobile-visible nav arrows, responsive button padding
+- Top Ten Row: scaled number sizes for mobile, responsive padding
+- Film Row: responsive padding, improved card text spacing
+- Creator Bar: mobile height/padding adjustments
+- Hero Manifesto: responsive CTA buttons, mobile stats gap
+- Landing Sections: all px-8 → px-4 sm:px-8 for mobile
+- Screenwriter CTA: mobile margins, flex-wrap stats
+- Films page: responsive grid gap, mobile cover height
+- Streaming page: responsive hero padding, typography, grid gap
+
+**PWA (Progressive Web App) — v8-1 DONE**
+- Enhanced `public/manifest.json` (shortcuts, categories, orientation)
+- Added `manifest` link in metadata
+- Apple web app meta tags (theme-color, standalone)
+- Created `public/sw.js` — service worker (cache-first static, network-first pages)
+- Created `src/hooks/use-service-worker.ts` + `src/components/layout/sw-register.tsx`
+
+**Advanced Analytics — v8-4 DONE**
+- Added `getAnalyticsOverview()` to `src/app/actions/analytics.ts`
+- Platform-wide metrics: users (30d/7d growth), films, tasks, scenarios, revenue
+- Daily growth charts, role distribution, top contributors, task completion rates
+
+**Public REST API — v10-1 DONE**
+- `GET /api/v1/films` — List public films (pagination, genre/status filters, sort)
+- `GET /api/v1/films/:id` — Film detail by ID or slug (phases, counts)
+- `GET /api/v1/stats` — Platform stats (Redis-cached, 5min TTL)
+- `GET /api/v1/contributors` — Top contributors leaderboard
+
 ---
 
 ## Important Files
