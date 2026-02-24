@@ -118,6 +118,18 @@
 - **Better fallback images**: Cinematic Unsplash images matched to each film theme
 - **Consistent padding**: All sections use `px-8 md:px-16 lg:px-20`
 
+### 2026-02-24 — Complete Homepage Redesign (Manifesto + Streaming Hybrid)
+- **New HeroManifesto**: full-viewport manifesto with canvas particle animation, animated counters, stats bar (films/taches/budget/location)
+- **ManifestoSection**: cinematic fade-in text "Le cinema coute des millions. Nous le faisons pour 25K€"
+- **HowItWorks**: 5 pillar cards (Micro-Taches, Vote, IA Ethique, Watch/Create/Earn, France-Israel)
+- **PipelineVisual**: 8-step visual pipeline from idea to revenues (horizontal desktop, vertical mobile)
+- **ComparisonTable**: Hollywood vs Netflix vs Lumiere (cost, time, participation, AI, blockchain)
+- **SocialProof**: credential badges (Innovation Authority, CNC, BPI, Fair AI Cinema) + founders quote
+- **FinalCTA**: full-width conversion section with "Le cinema de demain se construit maintenant"
+- **Header updated**: "Communaute" → "Voter", "S'inscrire" → "Rejoindre" (gold CTA)
+- **Footer updated**: "Hollywood" removed → "Paris · Jerusalem", added "Investisseurs" link
+- Homepage flow: Hero Manifesto → Top 10 + CreatorBar → Manifesto Text → Films → HowItWorks → Pipeline → More Films → Comparison → ScreenwriterCTA → Dev Films → Social Proof → Final CTA → Footer
+
 ---
 
 ## ROADMAP — Etapes Detaillees
