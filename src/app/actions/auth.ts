@@ -2,6 +2,7 @@
 
 import { prisma } from '@/lib/prisma'
 import { auth, signIn } from '@/lib/auth'
+import { AuthError } from 'next-auth'
 import bcrypt from 'bcryptjs'
 import { z } from 'zod'
 import { redirect } from 'next/navigation'
@@ -126,20 +127,20 @@ export async function loginAction(
       redirectTo: callbackUrl,
     })
   } catch (error: unknown) {
-    // NextAuth redirects throw — re-throw them so Next.js can handle the redirect
-    if (error instanceof Error && 'digest' in error) {
-      const digest = (error as { digest?: string }).digest
-      if (typeof digest === 'string' && digest.startsWith('NEXT_REDIRECT')) {
-        throw error
+    // NextAuth v5: only catch AuthError — re-throw everything else (redirects, etc.)
+    if (error instanceof AuthError) {
+      console.error('[loginAction] AuthError:', error.type, error.message)
+      switch (error.type) {
+        case 'CredentialsSignin':
+          return { error: 'Email ou mot de passe incorrect.' }
+        case 'CallbackRouteError':
+          return { error: 'Email ou mot de passe incorrect.' }
+        default:
+          return { error: 'Une erreur est survenue lors de la connexion.' }
       }
     }
-    // NextAuth credential failures
-    const errStr = String(error)
-    if (errStr.includes('CredentialsSignin') || errStr.includes('CallbackRouteError')) {
-      return { error: 'Email ou mot de passe incorrect.' }
-    }
-    console.error('[loginAction] Unexpected error:', error)
-    return { error: 'Une erreur est survenue.' }
+    // Re-throw all non-auth errors (NEXT_REDIRECT, etc.)
+    throw error
   }
 
   return {}

@@ -25,9 +25,9 @@ export function LoginForm() {
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-10">
       {/* Header */}
-      <div className="text-center space-y-4">
+      <div className="text-center space-y-5">
         <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-[#D4AF37]/10 border border-[#D4AF37]/20 mb-3">
           <Sparkles className="h-8 w-8 text-[#D4AF37]" />
         </div>
@@ -42,7 +42,7 @@ export function LoginForm() {
         {/* Gold glow behind card */}
         <div className="absolute -inset-1 bg-gradient-to-b from-[#D4AF37]/10 via-transparent to-[#D4AF37]/5 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
 
-        <div className="relative sm:rounded-3xl rounded-2xl border border-white/[0.08] bg-white/[0.03] backdrop-blur-sm p-7 sm:p-9 shadow-2xl shadow-black/20">
+        <div className="relative sm:rounded-3xl rounded-2xl border border-white/[0.08] bg-white/[0.03] backdrop-blur-sm p-8 sm:p-10 shadow-2xl shadow-black/20">
           <form ref={formRef} action={action} className="space-y-6">
             <input type="hidden" name="callbackUrl" value={callbackUrl} />
 

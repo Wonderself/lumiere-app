@@ -88,9 +88,9 @@ export default async function StreamingPage(props: { searchParams: Promise<{ gen
         </div>
       )}
 
-      <div className="max-w-7xl mx-auto px-6 py-12">
+      <div className="max-w-7xl mx-auto px-6 sm:px-10 md:px-16 lg:px-20 py-14 sm:py-16">
         {/* Search & Filters */}
-        <div className="flex flex-col md:flex-row gap-4 mb-10">
+        <div className="flex flex-col md:flex-row gap-5 mb-12">
           <form action="/streaming" method="GET" className="relative flex-1">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/30" />
             {genre && genre !== 'Tous' && <input type="hidden" name="genre" value={genre} />}
@@ -119,7 +119,7 @@ export default async function StreamingPage(props: { searchParams: Promise<{ gen
         </div>
 
         {/* Submit CTA */}
-        <div className="mb-10 p-6 rounded-2xl bg-gradient-to-r from-[#D4AF37]/10 to-transparent border border-[#D4AF37]/20">
+        <div className="mb-12 p-7 sm:p-8 rounded-2xl bg-gradient-to-r from-[#D4AF37]/10 to-transparent border border-[#D4AF37]/20">
           <div className="flex items-center justify-between flex-wrap gap-4">
             <div>
               <h2 className="text-xl font-bold text-white mb-1">Vous êtes réalisateur ?</h2>
@@ -141,7 +141,7 @@ export default async function StreamingPage(props: { searchParams: Promise<{ gen
             <p className="text-white/30 text-lg">Aucun film trouvé</p>
           </div>
         ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-5">
             {films.map((film) => (
               <Link key={film.id} href={`/streaming/${film.slug}`} className="group">
                 <Card className="bg-white/[0.02] border-white/5 overflow-hidden hover:border-[#D4AF37]/30 transition-all duration-300">
@@ -162,7 +162,7 @@ export default async function StreamingPage(props: { searchParams: Promise<{ gen
                       </Badge>
                     )}
                   </div>
-                  <CardContent className="p-2.5 sm:p-3">
+                  <CardContent className="p-3 sm:p-4">
                     <h3 className="text-sm font-semibold text-white truncate group-hover:text-[#D4AF37] transition-colors">
                       {film.title}
                     </h3>
@@ -185,7 +185,7 @@ export default async function StreamingPage(props: { searchParams: Promise<{ gen
         )}
 
         {/* Devenez Producteur Banner */}
-        <div className="mt-16 relative overflow-hidden rounded-2xl border border-[#D4AF37]/20 bg-gradient-to-br from-[#D4AF37]/[0.08] via-[#D4AF37]/[0.03] to-transparent p-8 md:p-12">
+        <div className="mt-20 relative overflow-hidden rounded-2xl border border-[#D4AF37]/20 bg-gradient-to-br from-[#D4AF37]/[0.08] via-[#D4AF37]/[0.03] to-transparent p-8 md:p-12 lg:p-14">
           <div className="absolute top-0 right-0 w-64 h-64 bg-[#D4AF37]/[0.06] rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
           <div className="relative flex flex-col md:flex-row items-center gap-8">
             <div className="flex-1">

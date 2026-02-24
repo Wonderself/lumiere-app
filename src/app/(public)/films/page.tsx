@@ -76,7 +76,7 @@ export default async function FilmsPage({
       {/* ================================================================ */}
       {/* HERO SECTION                                                     */}
       {/* ================================================================ */}
-      <section className="relative pt-24 pb-16 px-4 overflow-hidden bg-gradient-to-b from-white/[0.02] to-transparent">
+      <section className="relative pt-28 pb-20 px-6 sm:px-10 md:px-16 lg:px-20 overflow-hidden bg-gradient-to-b from-white/[0.02] to-transparent">
         {/* Ambient blur circles */}
         <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
           <div className="absolute top-20 left-1/4 w-96 h-96 bg-[#D4AF37]/[0.04] rounded-full blur-[120px]" />
@@ -90,7 +90,7 @@ export default async function FilmsPage({
 
         <div className="relative container mx-auto max-w-7xl text-center">
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#D4AF37]/10 border border-[#D4AF37]/20 text-[#D4AF37] text-sm mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#D4AF37]/10 border border-[#D4AF37]/20 text-[#D4AF37] text-sm mb-8">
             <Clapperboard className="h-4 w-4" />
             <span className="font-medium">Nos Productions</span>
           </div>
@@ -114,7 +114,7 @@ export default async function FilmsPage({
           </h1>
 
           {/* Subtitle */}
-          <p className="text-white/50 text-lg max-w-2xl mx-auto mb-12 leading-relaxed">
+          <p className="text-white/50 text-lg max-w-2xl mx-auto mb-14 leading-relaxed">
             Decouvrez nos productions cinematographiques creees collaborativement par notre communaute de co-producteurs
           </p>
 
@@ -153,11 +153,11 @@ export default async function FilmsPage({
       {/* ================================================================ */}
       {/* FILTERS & GRID                                                   */}
       {/* ================================================================ */}
-      <div className="relative px-4 pb-16">
+      <div className="relative px-6 sm:px-10 md:px-16 lg:px-20 pb-20">
         <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/15 to-transparent" />
         <div className="container mx-auto max-w-7xl">
           {/* Filters */}
-          <div className="flex flex-wrap gap-3 mb-10">
+          <div className="flex flex-wrap gap-3 mb-12">
             {['Tous', 'IN_PRODUCTION', 'PRE_PRODUCTION', 'POST_PRODUCTION', 'RELEASED'].map((s) => {
               const isActive = (!params.status && s === 'Tous') || params.status === s
               return (
@@ -184,7 +184,7 @@ export default async function FilmsPage({
               <p className="text-sm mt-2 text-white/40">Les films seront bientot disponibles.</p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 sm:gap-7">
               {films.map((film) => (
                 <Link key={film.id} href={`/films/${film.slug}`}>
                   <div className="group rounded-2xl sm:rounded-3xl border border-white/[0.06] bg-white/[0.03] overflow-hidden hover:border-[#D4AF37]/30 transition-all duration-500 h-full flex flex-col hover-lift">
@@ -219,7 +219,7 @@ export default async function FilmsPage({
                     </div>
 
                     {/* Content */}
-                    <div className="p-5 flex flex-col flex-1">
+                    <div className="p-5 sm:p-6 flex flex-col flex-1">
                       <h3 className="font-semibold text-base mb-2 text-white group-hover:text-[#D4AF37] transition-colors line-clamp-2">
                         {film.title}
                       </h3>

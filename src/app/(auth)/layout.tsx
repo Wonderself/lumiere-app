@@ -27,14 +27,14 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
       </div>
 
       {/* Auth Content */}
-      <div className="flex-1 flex items-center justify-center px-6 sm:px-10 py-12 sm:py-16 relative z-10">
+      <div className="flex-1 flex items-center justify-center px-6 sm:px-10 py-16 sm:py-20 relative z-10">
         <div className="w-full max-w-md">
           {children}
         </div>
       </div>
 
       {/* Bottom decorative line */}
-      <div className="relative z-10 px-4 sm:px-8 pb-10">
+      <div className="relative z-10 px-4 sm:px-8 pb-14">
         <div className="h-px bg-gradient-to-r from-transparent via-[#D4AF37]/20 to-transparent" />
         <p className="text-center text-xs text-white/20 mt-6">
           &copy; {new Date().getFullYear()} Lumière Brothers Pictures

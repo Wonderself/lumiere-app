@@ -131,13 +131,13 @@ export default async function CommunityPage() {
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4 text-gray-900" style={{ fontFamily: 'var(--font-playfair)' }}>
             Communaute <span className="text-[#D4AF37]">Creative</span>
           </h1>
-          <p className="text-base sm:text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-base sm:text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed mb-2">
             Le cinema se fait ensemble. Proposez des scenarios, votez pour vos favoris,
             participez aux concours de trailers. La communaute decide, le film se cree.
           </p>
 
           {/* Quick Navigation */}
-          <div className="flex flex-wrap justify-center gap-3 mt-6 sm:mt-8">
+          <div className="flex flex-wrap justify-center gap-3 mt-8 sm:mt-10">
             <Link
               href="/community/scenarios"
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gray-100 border border-gray-200 text-sm font-medium text-gray-700 hover:border-[#D4AF37]/30 hover:text-[#D4AF37] hover:bg-[#D4AF37]/[0.04] transition-all duration-300 min-h-[44px]"
@@ -163,20 +163,20 @@ export default async function CommunityPage() {
         </div>
       </div>
 
-      <div className="container mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 pb-16 sm:pb-20 space-y-10 sm:space-y-16">
+      <div className="container mx-auto max-w-5xl px-6 sm:px-10 md:px-16 lg:px-20 pb-20 sm:pb-24 space-y-12 sm:space-y-16">
 
         {/* Section separator */}
         <div className="h-px bg-gradient-to-r from-transparent via-[#D4AF37]/10 to-transparent" />
 
         {/* Stats Row */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-5">
           {[
             { label: 'Votes exprimes', value: stats.totalVotes, icon: Heart, color: 'text-red-500' },
             { label: 'Scenarios proposes', value: stats.totalScenarios, icon: PenTool, color: 'text-blue-500' },
             { label: 'Concours termines', value: stats.totalContests, icon: Trophy, color: 'text-[#D4AF37]' },
             { label: 'Participations', value: stats.totalEntries, icon: Film, color: 'text-purple-500' },
           ].map((stat) => (
-            <div key={stat.label} className="text-center p-5 sm:rounded-3xl rounded-2xl border border-gray-100 bg-white shadow-sm backdrop-blur-sm">
+            <div key={stat.label} className="text-center p-6 sm:p-7 sm:rounded-3xl rounded-2xl border border-gray-100 bg-white shadow-sm backdrop-blur-sm">
               <stat.icon className={`h-5 w-5 ${stat.color} mx-auto mb-2`} />
               <div className="text-2xl font-bold text-gray-900">{stat.value.toLocaleString()}</div>
               <div className="text-xs text-gray-400 mt-1">{stat.label}</div>

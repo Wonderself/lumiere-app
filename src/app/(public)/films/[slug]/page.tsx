@@ -108,9 +108,9 @@ export default async function FilmDetailPage({ params }: Props) {
         </div>
       </div>
 
-      <div className="container mx-auto max-w-5xl px-4 py-12 space-y-12">
+      <div className="container mx-auto max-w-5xl px-6 sm:px-10 md:px-16 py-16 md:py-20 space-y-14 md:space-y-16">
         {/* Synopsis + Stats */}
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-3 gap-10 md:gap-12">
           <div className="md:col-span-2 space-y-4">
             {film.synopsis && (
               <div>
@@ -125,7 +125,7 @@ export default async function FilmDetailPage({ params }: Props) {
 
           <div className="space-y-4">
             {/* Progress card */}
-            <div className="rounded-xl border border-white/5 bg-white/[0.02] p-6">
+            <div className="rounded-xl border border-white/5 bg-white/[0.02] p-7">
               <h3 className="text-sm font-medium text-white/50 mb-4 uppercase tracking-wider">Progression globale</h3>
               <div className="text-5xl font-bold text-[#D4AF37] mb-3" style={{ fontFamily: 'var(--font-playfair)' }}>
                 {Math.round(film.progressPct)}%

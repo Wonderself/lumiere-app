@@ -77,9 +77,9 @@ export function FilmRow({ title, films, href }: FilmRowProps) {
   if (films.length === 0) return null
 
   return (
-    <section className="relative group/row mb-20 md:mb-24">
+    <section className="relative group/row mb-24 md:mb-28">
       {/* Row title */}
-      <div className="flex items-center justify-between px-6 sm:px-10 md:px-16 lg:px-20 mb-8">
+      <div className="flex items-center justify-between px-6 sm:px-10 md:px-16 lg:px-20 mb-10">
         <h2
           className="text-lg md:text-xl lg:text-2xl font-bold text-white/90 tracking-tight"
           style={{ fontFamily: 'var(--font-playfair)' }}
