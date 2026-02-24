@@ -49,6 +49,9 @@
 - Set genre, catalog, status, budget, public visibility
 - Track progress (totalTasks, completedTasks, progressPct)
 - Cover image, synopsis, description
+- **AI Task Generator**: Admin can auto-generate genre-specific tasks via Film Decomposer
+  - 13 base tasks + genre-specific tasks (Sci-Fi, Action, Drama, Horror, etc.)
+  - Budget-aware pricing, assigned to correct production phases
 
 ### Production Phases (auto-generated per film)
 1. SCRIPT
@@ -395,3 +398,23 @@ Each phase has: status (LOCKED/ACTIVE/COMPLETED), order, dependencies
 - Gradient buttons: linear-gradient(135deg, #D4AF37, #F0D060, #D4AF37)
 - Frosted glass: backdrop-blur-xl + bg-white/8
 - Transitions: 300-500ms, ease [0.25, 0.1, 0.25, 1]
+
+---
+
+## 17. SEO & Structured Data
+- **Metadata**: Dynamic titles, descriptions, OpenGraph, Twitter Cards per page
+- **Sitemap**: Dynamic XML sitemap with static + film pages (`src/app/sitemap.ts`)
+- **Robots.txt**: Allows public pages, blocks /admin/, /dashboard/, /api/ (`src/app/robots.ts`)
+- **JSON-LD**: Organization schema on homepage, Movie schema on film detail pages
+- **OpenGraph images**: Film cover images in og:image for social sharing
+
+---
+
+## 18. Deployment & Infrastructure
+- **Docker multi-stage build**: deps → builder → runner (node:20-alpine)
+- **Build-safe Prisma**: Lazy Proxy singleton, never connects at build time
+- **Dockerfile**: Dummy DATABASE_URL during build, real env at runtime
+- **Coolify**: Self-hosted on Hetzner (188.245.182.200), Traefik reverse proxy
+- **force-dynamic**: All 52 Prisma-using pages marked for runtime rendering
+- **Standalone output**: Next.js standalone mode for Docker deployment
+- **Healthcheck**: curl-based Docker healthcheck on port 3000

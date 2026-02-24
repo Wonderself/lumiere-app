@@ -5,8 +5,9 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { updateFilmAction } from '@/app/actions/admin'
+import { updateFilmAction, generateTasksForFilmAction } from '@/app/actions/admin'
 import { GENRES, CATALOG_LABELS } from '@/lib/constants'
+import { Wand2 } from 'lucide-react'
 import type { Metadata } from 'next'
 
 type Props = { params: Promise<{ id: string }> }
@@ -190,6 +191,32 @@ export default async function EditFilmPage({ params }: Props) {
           </Link>
         </div>
       </form>
+
+      {/* Generate Tasks from Film Decomposer */}
+      <div className="p-6 rounded-xl border border-[#D4AF37]/20 bg-[#D4AF37]/[0.03]">
+        <div className="flex items-start gap-4">
+          <div className="h-10 w-10 rounded-xl bg-[#D4AF37]/15 border border-[#D4AF37]/25 flex items-center justify-center shrink-0">
+            <Wand2 className="h-5 w-5 text-[#D4AF37]" />
+          </div>
+          <div className="flex-1">
+            <h3 className="font-semibold mb-1">Generateur de Taches IA</h3>
+            <p className="text-sm text-white/40 mb-4">
+              Genere automatiquement les micro-taches pour ce film en fonction de son genre
+              ({film.genre || 'non defini'}). Base + taches specialisees par genre.
+              {film._count.tasks > 0 && (
+                <span className="text-[#D4AF37]"> Ce film a deja {film._count.tasks} tache{film._count.tasks > 1 ? 's' : ''}.</span>
+              )}
+            </p>
+            <form action={generateTasksForFilmAction}>
+              <input type="hidden" name="filmId" value={film.id} />
+              <Button type="submit" variant="outline" className="border-[#D4AF37]/30 text-[#D4AF37] hover:bg-[#D4AF37]/10">
+                <Wand2 className="h-4 w-4 mr-2" />
+                Generer les Taches
+              </Button>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }

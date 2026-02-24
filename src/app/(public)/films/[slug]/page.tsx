@@ -57,6 +57,23 @@ export default async function FilmDetailPage({ params }: Props) {
     where: { filmId: film.id, status: 'AVAILABLE' },
   })
 
+  // JSON-LD Movie structured data for SEO
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Movie',
+    name: film.title,
+    description: film.synopsis || film.description || undefined,
+    genre: film.genre || undefined,
+    image: film.coverImageUrl || undefined,
+    url: `https://cinema.lumiere.film/films/${film.slug}`,
+    productionCompany: {
+      '@type': 'Organization',
+      name: 'Lumiere Brothers Pictures',
+      url: 'https://cinema.lumiere.film',
+    },
+    dateCreated: film.createdAt.toISOString(),
+  }
+
   const phaseStatusIcon = (status: string) => {
     if (status === 'COMPLETED') return <CheckCircle className="h-5 w-5 text-green-400" />
     if (status === 'ACTIVE') return <Loader2 className="h-5 w-5 text-[#D4AF37] animate-spin" />
@@ -71,6 +88,10 @@ export default async function FilmDetailPage({ params }: Props) {
 
   return (
     <div className="min-h-screen">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       {/* Banner */}
       <div className="relative h-72 md:h-96">
         {film.coverImageUrl ? (

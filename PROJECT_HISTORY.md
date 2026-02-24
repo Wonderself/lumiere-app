@@ -157,6 +157,32 @@
   - CTA with email link (invest@lumiere.film)
   - Linked from footer "Investisseurs"
 
+### 2026-02-24 — Build-Safe Prisma + Deployment Fixes + Roadmap Advance
+- **Build-safe Prisma client** (`src/lib/prisma.ts`):
+  - Lazy Proxy singleton — client only created at first runtime access, never at build
+  - Prevents `DATABASE_URL!` crash during Docker build when env is not set
+  - Descriptive error message when DATABASE_URL is truly missing at runtime
+- **Dockerfile fix**: Added dummy `DATABASE_URL` during build stage for Prisma module analysis
+- **3 additional force-dynamic pages** fixed: admin/tasks/new, admin/films/[id]/edit, admin/tasks/[id]/edit
+- **Sitemap rewrite** (`src/app/sitemap.ts`):
+  - Lazy prisma import (`await import()`) to avoid build-time DB connection
+  - Added force-dynamic + try/catch fallback
+  - Added /community and /invest URLs
+- **JSON-LD Movie schema**: Film detail pages now include structured data (Movie type) for SEO
+  - Organization, production company, genre, image, dateCreated
+- **Admin Task Generator UI**: "Generateur de Taches IA" button on film edit page
+  - Uses film-decomposer to auto-generate genre-specific tasks for any film
+  - `generateTasksForFilmAction` creates tasks in bulk, updates totalTasks count
+- **Roadmap statuses updated** to reflect actual completion:
+  - V2-1 (AI validation): DONE — Claude Haiku 4.5 integrated
+  - V2-2 (Auto task generation): DONE — Film Decomposer + admin UI
+  - V6-1 (Scenario submission): DONE — with AI synopsis generator
+  - V6-2 (AI evaluation): DONE — auto-scoring on submission
+  - V7-1 (Deployment): IN PROGRESS — Coolify + Hetzner
+  - V7-2 (SEO): DONE — metadata + sitemap + robots.txt + JSON-LD
+  - V7-3 (Security): DONE — middleware + Zod + password policy
+  - V7-6 (Legal RGPD): DONE — 3 full legal pages
+
 ---
 
 ## ROADMAP — Etapes Detaillees

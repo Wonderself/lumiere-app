@@ -124,6 +124,61 @@ export async function deleteFilmAction(formData: FormData) {
   revalidatePath('/films')
 }
 
+// ─── Generate Tasks from Film Decomposer ──────────────────────
+
+export async function generateTasksForFilmAction(formData: FormData) {
+  await requireAdmin()
+
+  const filmId = formData.get('filmId') as string
+  if (!filmId) throw new Error('filmId is required')
+
+  const film = await prisma.film.findUnique({
+    where: { id: filmId },
+    include: { phases: { orderBy: { phaseOrder: 'asc' } } },
+  })
+  if (!film) throw new Error('Film not found')
+
+  const { decomposeFilmToTasks } = await import('@/lib/film-decomposer')
+  const tasks = decomposeFilmToTasks(film.genre, film.estimatedBudget ? film.estimatedBudget / 20 : 50)
+
+  // Map phase names to phase IDs
+  const phaseMap = new Map(film.phases.map(p => [p.phaseName, p.id]))
+
+  let created = 0
+  for (const task of tasks) {
+    const phaseId = phaseMap.get(task.phase)
+    if (!phaseId) continue
+
+    await prisma.task.create({
+      data: {
+        filmId,
+        phaseId,
+        title: task.title,
+        descriptionMd: task.description,
+        instructionsMd: '',
+        type: task.type as never,
+        difficulty: task.difficulty as never,
+        priceEuros: task.priceEuros,
+        status: 'AVAILABLE' as never,
+        requiredLevel: 'ROOKIE' as never,
+      },
+    })
+    created++
+  }
+
+  // Update film totalTasks count
+  await prisma.film.update({
+    where: { id: filmId },
+    data: { totalTasks: { increment: created } },
+  })
+
+  revalidatePath('/admin/films')
+  revalidatePath('/admin/tasks')
+  revalidatePath('/tasks')
+  revalidatePath(`/films/${film.slug}`)
+  redirect(`/admin/films/${filmId}/edit`)
+}
+
 // ─── Task Actions ──────────────────────────────────────────────
 
 export async function createTaskAction(formData: FormData) {
