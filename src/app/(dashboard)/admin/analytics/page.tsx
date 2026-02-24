@@ -6,71 +6,50 @@ import { LineChart } from '@/components/admin/charts/line-chart'
 import { BarChart } from '@/components/admin/charts/bar-chart'
 import { DonutChart } from '@/components/admin/charts/donut-chart'
 import { AreaChart } from '@/components/admin/charts/area-chart'
+import { Sparkline } from '@/components/admin/charts/sparkline'
+import { getAnalyticsOverview } from '@/app/actions/analytics'
+import {
+  Users, Film, ListChecks, FileText, CreditCard, TrendingUp, Trophy,
+  ArrowUpRight, ArrowDownRight, Activity, Eye,
+} from 'lucide-react'
 import type { Metadata } from 'next'
 
 export const dynamic = 'force-dynamic'
 
-export const metadata: Metadata = { title: 'Admin — Analytics' }
+export const metadata: Metadata = { title: 'Admin — Analytics Avancees' }
 
 export default async function AdminAnalyticsPage() {
   const session = await auth()
   if (!session?.user || session.user.role !== 'ADMIN') redirect('/dashboard')
 
-  const [tasksByType, tasksByDifficulty, usersByLevel, payments, submissions] = await Promise.all([
+  // Fetch comprehensive analytics + existing chart data in parallel
+  const [overview, tasksByType, tasksByDifficulty, usersByLevel, successByDifficulty, totalByDifficulty] = await Promise.all([
+    getAnalyticsOverview(),
     prisma.task.groupBy({ by: ['type'], _count: true }),
     prisma.task.groupBy({ by: ['difficulty'], _count: true }),
     prisma.user.groupBy({ by: ['level'], _count: true }),
-    prisma.payment.findMany({
-      where: { status: 'COMPLETED' },
-      select: { amountEur: true, createdAt: true },
-      orderBy: { createdAt: 'asc' },
-    }),
-    prisma.taskSubmission.findMany({
-      select: { createdAt: true, status: true, aiScore: true },
-      orderBy: { createdAt: 'asc' },
-    }),
+    prisma.task.groupBy({ by: ['difficulty'], where: { status: 'VALIDATED' }, _count: true }),
+    prisma.task.groupBy({ by: ['difficulty'], _count: true }),
   ])
 
-  // Revenue over time (group by month)
-  const revenueByMonth = new Map<string, number>()
-  payments.forEach(p => {
-    const key = `${p.createdAt.getFullYear()}-${String(p.createdAt.getMonth() + 1).padStart(2, '0')}`
-    revenueByMonth.set(key, (revenueByMonth.get(key) || 0) + p.amountEur)
-  })
-  const revenueData = [...revenueByMonth.entries()].map(([label, value]) => ({ label, value: Math.round(value) }))
+  const hasData = 'data' in overview
+  const data = hasData ? overview.data : null
 
-  // Submissions over time
-  const subsByMonth = new Map<string, number>()
-  submissions.forEach(s => {
-    const key = `${s.createdAt.getFullYear()}-${String(s.createdAt.getMonth() + 1).padStart(2, '0')}`
-    subsByMonth.set(key, (subsByMonth.get(key) || 0) + 1)
-  })
-  const subsData = [...subsByMonth.entries()].map(([label, value]) => ({ label, value }))
-
-  // Task type labels
+  // Type labels & colors
   const typeLabels: Record<string, string> = {
-    PROMPT: 'Prompt IA', IMAGE_GEN: 'Image', VIDEO_GEN: 'Vidéo', AUDIO_GEN: 'Audio',
+    PROMPT: 'Prompt IA', IMAGE_GEN: 'Image', VIDEO_GEN: 'Video', AUDIO_GEN: 'Audio',
     VOICE_CLONE: 'Voice', SUBTITLE: 'Sous-titres', REVIEW: 'Review', STORYBOARD: 'Storyboard',
-    SCRIPT_EDIT: 'Script', COLOR_GRADE: 'Étalonnage', MUSIC_COMPOSE: 'Musique', SOUND_DESIGN: 'Sound Design',
+    SCRIPT_EDIT: 'Script', COLOR_GRADE: 'Etalonnage', MUSIC_COMPOSE: 'Musique', SOUND_DESIGN: 'Sound Design',
   }
-
   const difficultyColors: Record<string, string> = {
     EASY: '#22c55e', MEDIUM: '#D4AF37', HARD: '#f97316', EXPERT: '#ef4444',
   }
   const levelColors: Record<string, string> = {
     ROOKIE: '#9ca3af', PRO: '#3b82f6', EXPERT: '#D4AF37', VIP: '#a855f7',
   }
-
-  // Success rate by difficulty
-  const successByDifficulty = await prisma.task.groupBy({
-    by: ['difficulty'],
-    where: { status: 'VALIDATED' },
-    _count: true,
-  })
-  const totalByDifficulty = await prisma.task.groupBy({
-    by: ['difficulty'],
-    _count: true,
-  })
+  const roleColors: Record<string, string> = {
+    ADMIN: '#ef4444', USER: '#9ca3af', CONTRIBUTOR: '#22c55e', CREATOR: '#D4AF37', INVESTOR: '#a855f7',
+  }
 
   const successRateData = totalByDifficulty.map(t => {
     const validated = successByDifficulty.find(s => s.difficulty === t.difficulty)?._count || 0
@@ -81,40 +60,215 @@ export default async function AdminAnalyticsPage() {
     }
   })
 
+  // KPI cards data
+  const kpis = data ? [
+    {
+      label: 'Utilisateurs',
+      value: data.users.total,
+      sub: `+${data.users.new7d} cette semaine`,
+      trend: data.users.new7d > 0 ? 'up' : 'neutral',
+      icon: Users,
+      color: '#3b82f6',
+      sparkData: data.users.dailyGrowth.map(d => d.count),
+    },
+    {
+      label: 'Films',
+      value: data.films.total,
+      sub: `${data.films.inProduction} en production`,
+      trend: data.films.inProduction > 0 ? 'up' : 'neutral',
+      icon: Film,
+      color: '#D4AF37',
+      sparkData: [],
+    },
+    {
+      label: 'Taches',
+      value: data.tasks.total,
+      sub: `${data.tasks.completionRate}% completees`,
+      trend: data.tasks.completionRate > 50 ? 'up' : 'down',
+      icon: ListChecks,
+      color: '#22c55e',
+      sparkData: [],
+    },
+    {
+      label: 'Scenarios',
+      value: data.scenarios.total,
+      sub: `${data.scenarios.approvalRate}% approuves`,
+      trend: data.scenarios.approvalRate > 30 ? 'up' : 'neutral',
+      icon: FileText,
+      color: '#f97316',
+      sparkData: [],
+    },
+    {
+      label: 'Revenus',
+      value: `${Math.round(data.revenue.total)}€`,
+      sub: 'Total distribue',
+      trend: data.revenue.total > 0 ? 'up' : 'neutral',
+      icon: CreditCard,
+      color: '#a855f7',
+      sparkData: data.revenue.dailyRevenue.map(d => d.amount),
+    },
+    {
+      label: 'Engagement',
+      value: data.engagement.totalNotifications,
+      sub: 'Notifications envoyees',
+      trend: 'neutral' as const,
+      icon: Activity,
+      color: '#06b6d4',
+      sparkData: [],
+    },
+  ] : []
+
   return (
     <div className="space-y-8">
+      {/* Header */}
       <div>
-        <h1 className="text-3xl sm:text-4xl font-bold mb-1" style={{ fontFamily: 'var(--font-playfair)' }}>Analytics</h1>
-        <p className="text-white/50">Données et tendances de la plateforme</p>
+        <h1 className="text-3xl sm:text-4xl font-bold mb-1" style={{ fontFamily: 'var(--font-playfair)' }}>
+          Analytics{' '}
+          <span className="text-shimmer">Avancees</span>
+        </h1>
+        <p className="text-white/50">Vue complete des donnees et tendances de la plateforme</p>
       </div>
 
-      <div className="h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
+      <div className="h-px bg-gradient-to-r from-transparent via-[#D4AF37]/20 to-transparent" />
 
+      {/* KPI Grid */}
+      {data && (
+        <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-3 sm:gap-4">
+          {kpis.map((kpi) => (
+            <Card key={kpi.label} className="sm:rounded-2xl border-white/5 bg-white/[0.02] hover:border-white/10 hover:shadow-md hover:-translate-y-[1px] transition-all duration-300">
+              <CardContent className="p-4 sm:p-5">
+                <div className="flex items-center justify-between mb-3">
+                  <div className="p-2 rounded-xl" style={{ background: `${kpi.color}15` }}>
+                    <kpi.icon className="h-4 w-4" style={{ color: kpi.color }} />
+                  </div>
+                  {kpi.trend === 'up' && <ArrowUpRight className="h-4 w-4 text-green-400" />}
+                  {kpi.trend === 'down' && <ArrowDownRight className="h-4 w-4 text-red-400" />}
+                </div>
+                <div className="text-2xl font-bold text-white mb-0.5" style={{ fontFamily: 'var(--font-playfair)' }}>
+                  {kpi.value}
+                </div>
+                <div className="text-[11px] text-white/30 mb-2">{kpi.label}</div>
+                <div className="flex items-center justify-between gap-2">
+                  <span className="text-[10px] text-white/40 truncate">{kpi.sub}</span>
+                  {kpi.sparkData.length > 2 && (
+                    <Sparkline data={kpi.sparkData} color={kpi.color} width={48} height={16} />
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      )}
+
+      {/* User Verification Banner */}
+      {data && data.users.verified < data.users.total && (
+        <div className="flex items-center gap-3 px-5 py-3 rounded-xl bg-amber-500/5 border border-amber-500/10">
+          <Eye className="h-4 w-4 text-amber-400 shrink-0" />
+          <span className="text-sm text-amber-300/80">
+            {data.users.total - data.users.verified} utilisateur{data.users.total - data.users.verified > 1 ? 's' : ''} non verifie{data.users.total - data.users.verified > 1 ? 's' : ''} ({data.users.verificationRate}% verification rate)
+          </span>
+        </div>
+      )}
+
+      {/* Charts Row 1: Growth + Revenue */}
+      {data && (
+        <div className="grid lg:grid-cols-2 gap-6">
+          <Card className="sm:rounded-2xl border-white/5 bg-white/[0.02] hover:shadow-md hover:-translate-y-[1px] transition-all">
+            <CardHeader>
+              <CardTitle className="text-sm flex items-center gap-2">
+                <TrendingUp className="h-4 w-4 text-blue-400" />
+                Croissance utilisateurs (30 jours)
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              {data.users.dailyGrowth.some(d => d.count > 0) ? (
+                <LineChart
+                  data={data.users.dailyGrowth.map(d => ({
+                    label: d.date.slice(5),
+                    value: d.count,
+                  }))}
+                  color="#3b82f6"
+                />
+              ) : (
+                <p className="text-sm text-white/30 text-center py-8">Pas encore de donnees</p>
+              )}
+            </CardContent>
+          </Card>
+
+          <Card className="sm:rounded-2xl border-white/5 bg-white/[0.02] hover:shadow-md hover:-translate-y-[1px] transition-all">
+            <CardHeader>
+              <CardTitle className="text-sm flex items-center gap-2">
+                <CreditCard className="h-4 w-4 text-purple-400" />
+                Revenus quotidiens (30 jours)
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              {data.revenue.dailyRevenue.some(d => d.amount > 0) ? (
+                <AreaChart
+                  data={data.revenue.dailyRevenue.map(d => ({
+                    label: d.date.slice(5),
+                    value: Math.round(d.amount * 100) / 100,
+                  }))}
+                  color="#a855f7"
+                />
+              ) : (
+                <p className="text-sm text-white/30 text-center py-8">Pas encore de revenus</p>
+              )}
+            </CardContent>
+          </Card>
+        </div>
+      )}
+
+      {/* Charts Row 2: Distribution */}
+      {data && (
+        <div className="grid lg:grid-cols-3 gap-6">
+          <Card className="sm:rounded-2xl border-white/5 bg-white/[0.02] hover:shadow-md hover:-translate-y-[1px] transition-all">
+            <CardHeader>
+              <CardTitle className="text-sm">Distribution des roles</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <DonutChart data={data.users.roleDistribution.map(r => ({
+                label: r.role,
+                value: r.count,
+                color: roleColors[r.role] || '#9ca3af',
+              }))} />
+            </CardContent>
+          </Card>
+
+          <Card className="sm:rounded-2xl border-white/5 bg-white/[0.02] hover:shadow-md hover:-translate-y-[1px] transition-all">
+            <CardHeader>
+              <CardTitle className="text-sm">Distribution des niveaux</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <DonutChart data={usersByLevel.map(u => ({
+                label: u.level,
+                value: u._count,
+                color: levelColors[u.level] || '#9ca3af',
+              }))} />
+            </CardContent>
+          </Card>
+
+          <Card className="sm:rounded-2xl border-white/5 bg-white/[0.02] hover:shadow-md hover:-translate-y-[1px] transition-all">
+            <CardHeader>
+              <CardTitle className="text-sm">Taches par difficulte</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <DonutChart data={tasksByDifficulty.map(t => ({
+                label: t.difficulty,
+                value: t._count,
+                color: difficultyColors[t.difficulty] || '#D4AF37',
+              }))} />
+            </CardContent>
+          </Card>
+        </div>
+      )}
+
+      {/* Charts Row 3: Tasks + Success Rate */}
       <div className="grid lg:grid-cols-2 gap-6">
-        <Card className="sm:rounded-2xl hover:shadow-md hover:-translate-y-[1px]">
-          <CardHeader><CardTitle className="text-sm">Revenus dans le temps</CardTitle></CardHeader>
-          <CardContent>
-            {revenueData.length > 0 ? (
-              <LineChart data={revenueData} color="#D4AF37" />
-            ) : (
-              <p className="text-sm text-white/30 text-center py-8">Pas encore de revenus</p>
-            )}
-          </CardContent>
-        </Card>
-
-        <Card className="sm:rounded-2xl hover:shadow-md hover:-translate-y-[1px]">
-          <CardHeader><CardTitle className="text-sm">Soumissions dans le temps</CardTitle></CardHeader>
-          <CardContent>
-            {subsData.length > 0 ? (
-              <AreaChart data={subsData} color="#22c55e" />
-            ) : (
-              <p className="text-sm text-white/30 text-center py-8">Pas encore de soumissions</p>
-            )}
-          </CardContent>
-        </Card>
-
-        <Card className="sm:rounded-2xl hover:shadow-md hover:-translate-y-[1px]">
-          <CardHeader><CardTitle className="text-sm">Tâches par type</CardTitle></CardHeader>
+        <Card className="sm:rounded-2xl border-white/5 bg-white/[0.02] hover:shadow-md hover:-translate-y-[1px] transition-all">
+          <CardHeader>
+            <CardTitle className="text-sm">Taches par type</CardTitle>
+          </CardHeader>
           <CardContent>
             <BarChart data={tasksByType.map(t => ({
               label: typeLabels[t.type] || t.type,
@@ -123,35 +277,96 @@ export default async function AdminAnalyticsPage() {
           </CardContent>
         </Card>
 
-        <Card className="sm:rounded-2xl hover:shadow-md hover:-translate-y-[1px]">
-          <CardHeader><CardTitle className="text-sm">Distribution des niveaux</CardTitle></CardHeader>
-          <CardContent>
-            <DonutChart data={usersByLevel.map(u => ({
-              label: u.level,
-              value: u._count,
-              color: levelColors[u.level] || '#9ca3af',
-            }))} />
-          </CardContent>
-        </Card>
-
-        <Card className="sm:rounded-2xl hover:shadow-md hover:-translate-y-[1px]">
-          <CardHeader><CardTitle className="text-sm">Taux de succès par difficulté</CardTitle></CardHeader>
+        <Card className="sm:rounded-2xl border-white/5 bg-white/[0.02] hover:shadow-md hover:-translate-y-[1px] transition-all">
+          <CardHeader>
+            <CardTitle className="text-sm">Taux de succes par difficulte</CardTitle>
+          </CardHeader>
           <CardContent>
             <BarChart data={successRateData} />
           </CardContent>
         </Card>
+      </div>
 
-        <Card className="sm:rounded-2xl hover:shadow-md hover:-translate-y-[1px]">
-          <CardHeader><CardTitle className="text-sm">Tâches par difficulté</CardTitle></CardHeader>
+      {/* Top Contributors */}
+      {data && data.engagement.topContributors.length > 0 && (
+        <Card className="sm:rounded-2xl border-white/5 bg-white/[0.02]">
+          <CardHeader>
+            <CardTitle className="text-sm flex items-center gap-2">
+              <Trophy className="h-4 w-4 text-[#D4AF37]" />
+              Top 10 Contributeurs
+            </CardTitle>
+          </CardHeader>
           <CardContent>
-            <DonutChart data={tasksByDifficulty.map(t => ({
-              label: t.difficulty,
-              value: t._count,
-              color: difficultyColors[t.difficulty] || '#D4AF37',
-            }))} />
+            <div className="space-y-2">
+              {data.engagement.topContributors.map((user, i) => (
+                <div
+                  key={user.id}
+                  className="flex items-center gap-4 p-3 rounded-xl bg-white/[0.02] border border-white/[0.04] hover:border-white/[0.08] transition-all"
+                >
+                  <div className={`w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold shrink-0 ${
+                    i === 0 ? 'bg-[#D4AF37]/20 text-[#D4AF37]' :
+                    i === 1 ? 'bg-gray-400/20 text-gray-300' :
+                    i === 2 ? 'bg-amber-700/20 text-amber-600' :
+                    'bg-white/5 text-white/30'
+                  }`}>
+                    {i + 1}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="text-sm font-medium text-white/80 truncate">{user.name}</div>
+                    <div className="text-[11px] text-white/30">{user.role}</div>
+                  </div>
+                  <div className="text-right shrink-0">
+                    <div className="text-sm font-semibold text-[#D4AF37]">{user.lumens} LUM</div>
+                    <div className="text-[11px] text-white/30">{user.tasksCompleted} taches</div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </CardContent>
         </Card>
-      </div>
+      )}
+
+      {/* Task Pipeline Summary */}
+      {data && (
+        <Card className="sm:rounded-2xl border-white/5 bg-white/[0.02]">
+          <CardHeader>
+            <CardTitle className="text-sm flex items-center gap-2">
+              <ListChecks className="h-4 w-4 text-green-400" />
+              Pipeline des taches
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+              {[
+                { label: 'Disponibles', value: data.tasks.available, color: '#3b82f6' },
+                { label: 'En cours', value: data.tasks.inProgress, color: '#D4AF37' },
+                { label: 'Completees', value: data.tasks.completed, color: '#22c55e' },
+                { label: 'Total', value: data.tasks.total, color: '#9ca3af' },
+              ].map((item) => (
+                <div key={item.label} className="text-center p-4 rounded-xl bg-white/[0.02] border border-white/[0.04]">
+                  <div className="text-2xl font-bold mb-1" style={{ color: item.color, fontFamily: 'var(--font-playfair)' }}>
+                    {item.value}
+                  </div>
+                  <div className="text-[11px] text-white/40">{item.label}</div>
+                </div>
+              ))}
+            </div>
+            {/* Completion progress bar */}
+            <div className="mt-4">
+              <div className="flex items-center justify-between text-xs text-white/40 mb-2">
+                <span>Taux de completion</span>
+                <span className="font-medium text-[#D4AF37]">{data.tasks.completionRate}%</span>
+              </div>
+              <div className="h-2 bg-white/[0.04] rounded-full overflow-hidden">
+                <div
+                  className="h-full bg-gradient-to-r from-[#D4AF37] to-[#F0D060] rounded-full transition-all"
+                  style={{ width: `${data.tasks.completionRate}%` }}
+                />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
     </div>
   )
 }

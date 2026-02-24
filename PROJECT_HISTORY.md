@@ -681,3 +681,39 @@ Templates HTML branding Lumiere gold/dark.
 - `next.config.ts` — Build & optimization configuration
 - `src/components/netflix/` — Netflix-style UI components (header, hero, film rows, creator bar, screenwriter CTA)
 - `SLATE_DECK.md` — Full project pipeline with 20 projects details
+
+---
+
+### 2026-02-24 — Analytics Dashboard UI + API Docs + i18n Infrastructure
+
+**Admin Analytics Dashboard** (enhanced `/admin/analytics`):
+- 6 KPI summary cards with sparklines: Users, Films, Tasks, Scenarios, Revenue, Engagement
+- User growth line chart (30-day daily)
+- Daily revenue area chart (30-day)
+- Role distribution donut chart
+- Top 10 contributors leaderboard with rank badges
+- Task pipeline summary with completion progress bar
+- Leverages `getAnalyticsOverview()` server action for comprehensive data
+
+**API Documentation Page** (`/developers`):
+- Beautiful interactive documentation for public REST API v1
+- Endpoint cards with method badges, parameter tables, JSON response examples
+- Quick Start section with JavaScript/TypeScript and cURL examples
+- Rate limiting and error format documentation
+- Linked from roadmap and footer
+
+**Internationalization (i18n)** — Foundation:
+- Installed `next-intl` 4.8.3 with "without i18n routing" approach
+- Translation files: `messages/fr.json` and `messages/en.json`
+- `src/i18n/config.ts` — Locale configuration (fr, en)
+- `src/i18n/request.ts` — Server request config (reads locale from cookie)
+- `src/app/actions/locale.ts` — Server action to switch locale
+- `src/components/layout/locale-switcher.tsx` — Language switcher dropdown (flags + names)
+- `NextIntlClientProvider` wrapping root layout with dynamic locale detection
+- Netflix header fully translated (nav, dropdown, mobile menu)
+- `next.config.ts` updated with `createNextIntlPlugin`
+
+**Roadmap Updates**:
+- V8-2 (i18n): marked done
+- V8 status: in_progress (3/6 done)
+- V10-1 (API): updated note with docs page

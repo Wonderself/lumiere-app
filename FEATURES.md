@@ -853,3 +853,31 @@ Each phase has: status (LOCKED/ACTIVE/COMPLETED), order, dependencies
 - `GET /api/v1/stats` — Stats plateforme (cache Redis 5min)
 - `GET /api/v1/contributors` — Leaderboard contributeurs (pagination)
 - Toutes les routes avec `force-dynamic`
+
+## 54. Admin Analytics Dashboard UI
+- Page `/admin/analytics` enrichie avec `getAnalyticsOverview()` action
+- 6 cartes KPI avec sparklines: Utilisateurs, Films, Tâches, Scénarios, Revenus, Engagement
+- Graphique croissance utilisateurs (30 jours, LineChart)
+- Graphique revenus quotidiens (30 jours, AreaChart)
+- Distribution des rôles (DonutChart), niveaux, difficulté
+- Top 10 contributeurs avec classement et badges
+- Pipeline tâches avec barre de progression de complétion
+- Tâches par type (BarChart), taux de succès par difficulté
+
+## 55. Page Documentation API Développeurs
+- Page `/developers` avec documentation interactive API REST v1
+- Cards endpoint avec badges méthode (GET), tables paramètres, exemples JSON
+- Section Quick Start: JavaScript/TypeScript et cURL
+- Documentation rate limiting et format erreurs
+- Design cohérent avec le thème dark/gold
+
+## 56. Internationalisation (i18n) — Infrastructure
+- `next-intl` 4.8.3 intégré en mode "sans routing i18n"
+- Fichiers traductions: `messages/fr.json` et `messages/en.json`
+- Configuration: `src/i18n/config.ts` (locales: fr, en)
+- Requête serveur: `src/i18n/request.ts` (lecture cookie locale)
+- Action serveur: `src/app/actions/locale.ts` (switch locale via cookie)
+- Composant sélecteur: `src/components/layout/locale-switcher.tsx` (drapeaux + noms)
+- `NextIntlClientProvider` dans root layout avec détection dynamique
+- Header Netflix traduit: navigation, dropdown, menu mobile
+- `next.config.ts` mis à jour avec `createNextIntlPlugin`

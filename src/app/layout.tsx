@@ -5,6 +5,8 @@ import { Toaster } from 'sonner'
 import { AuthSessionProvider } from '@/components/layout/session-provider'
 import { CookieBanner } from '@/components/layout/cookie-banner'
 import { ServiceWorkerRegister } from '@/components/layout/sw-register'
+import { NextIntlClientProvider } from 'next-intl'
+import { getLocale, getMessages } from 'next-intl/server'
 
 const inter = Inter({
   variable: '--font-inter',
@@ -62,19 +64,23 @@ export const metadata: Metadata = {
   },
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const locale = await getLocale()
+  const messages = await getMessages()
+
   return (
-    <html lang="fr" className="dark">
+    <html lang={locale} className="dark">
       <head>
         <meta name="theme-color" content="#0A0A0A" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="mobile-web-app-capable" content="yes" />
       </head>
       <body className={`${inter.variable} ${playfair.variable} antialiased bg-[#0A0A0A] text-white`}>
+        <NextIntlClientProvider messages={messages}>
         <AuthSessionProvider>
         {children}
         <CookieBanner />
@@ -90,6 +96,7 @@ export default function RootLayout({
           }}
         />
         </AuthSessionProvider>
+        </NextIntlClientProvider>
       </body>
     </html>
   )

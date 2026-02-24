@@ -35,12 +35,15 @@ import { cn, getInitials } from '@/lib/utils'
 import { AnimatePresence, MotionDiv } from '@/components/ui/motion'
 import { NotificationBell } from '@/components/layout/notification-bell'
 import { SearchOverlay } from '@/components/search-overlay'
+import { LocaleSwitcher } from '@/components/layout/locale-switcher'
+import { useTranslations } from 'next-intl'
 
 export function NetflixHeader() {
   const pathname = usePathname()
   const { data: session } = useSession()
   const [mobileOpen, setMobileOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const t = useTranslations('nav')
 
   const isAdmin = session?.user?.role === 'ADMIN'
   const userName = session?.user?.name || session?.user?.email || ''
@@ -53,12 +56,12 @@ export function NetflixHeader() {
   }, [])
 
   const navLinks = [
-    { href: '/', label: 'Accueil' },
-    { href: '/films', label: 'Films' },
-    { href: '/streaming', label: 'Streaming' },
-    { href: '/community', label: 'Voter' },
-    { href: '/actors', label: 'Acteurs' },
-    { href: '/leaderboard', label: 'Classement' },
+    { href: '/', label: t('home') },
+    { href: '/films', label: t('films') },
+    { href: '/streaming', label: t('streaming') },
+    { href: '/community', label: t('vote') },
+    { href: '/actors', label: t('actors') },
+    { href: '/leaderboard', label: t('leaderboard') },
   ]
 
   return (
@@ -117,16 +120,18 @@ export function NetflixHeader() {
                 )}
               >
                 <Sparkles className="h-3 w-3" />
-                Taches
+                {t('tasks')}
               </Link>
             )}
           </nav>
         </div>
 
-        {/* Right: Search + Profile */}
-        <div className="flex items-center gap-3">
+        {/* Right: Search + Lang + Profile */}
+        <div className="flex items-center gap-2 sm:gap-3">
           {/* Search */}
           <SearchOverlay />
+          {/* Language */}
+          <LocaleSwitcher />
 
           {session?.user ? (
             <div className="hidden lg:flex items-center gap-2">
@@ -154,28 +159,28 @@ export function NetflixHeader() {
                   <DropdownMenuSeparator className="bg-white/10" />
                   <DropdownMenuItem asChild>
                     <Link href="/dashboard" className="flex items-center gap-2 cursor-pointer text-white/70 hover:text-white">
-                      <LayoutDashboard className="h-4 w-4" /> Dashboard
+                      <LayoutDashboard className="h-4 w-4" /> {t('dashboard')}
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
                     <Link href="/profile" className="flex items-center gap-2 cursor-pointer text-white/70 hover:text-white">
-                      <User className="h-4 w-4" /> Mon Profil
+                      <User className="h-4 w-4" /> {t('profile')}
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
                     <Link href="/profile/payments" className="flex items-center gap-2 cursor-pointer text-white/70 hover:text-white">
-                      <CreditCard className="h-4 w-4" /> Paiements
+                      <CreditCard className="h-4 w-4" /> {t('payments')}
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
                     <Link href="/lumens" className="flex items-center gap-2 cursor-pointer text-white/70 hover:text-white">
-                      <Sun className="h-4 w-4" /> Mes Lumens
+                      <Sun className="h-4 w-4" /> {t('lumens')}
                     </Link>
                   </DropdownMenuItem>
                   {(session.user as { role?: string }).role === 'SCREENWRITER' && (
                     <DropdownMenuItem asChild>
                       <Link href="/screenplays" className="flex items-center gap-2 cursor-pointer text-white/70 hover:text-white">
-                        <FileText className="h-4 w-4" /> Mes Scenarios
+                        <FileText className="h-4 w-4" /> {t('scenarios')}
                       </Link>
                     </DropdownMenuItem>
                   )}
@@ -184,7 +189,7 @@ export function NetflixHeader() {
                       <DropdownMenuSeparator className="bg-white/10" />
                       <DropdownMenuItem asChild>
                         <Link href="/admin" className="flex items-center gap-2 cursor-pointer text-white/70 hover:text-white">
-                          <Settings className="h-4 w-4" /> Administration
+                          <Settings className="h-4 w-4" /> {t('admin')}
                         </Link>
                       </DropdownMenuItem>
                     </>
@@ -194,7 +199,7 @@ export function NetflixHeader() {
                     className="text-red-400 focus:text-red-300 focus:bg-red-500/10 cursor-pointer"
                     onClick={() => signOut({ callbackUrl: '/' })}
                   >
-                    <LogOut className="h-4 w-4 mr-2" /> Se deconnecter
+                    <LogOut className="h-4 w-4 mr-2" /> {t('logout')}
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
@@ -205,14 +210,14 @@ export function NetflixHeader() {
                 href="/login"
                 className="text-sm text-white/60 hover:text-white px-3 py-1.5 transition-colors"
               >
-                Connexion
+                {t('login')}
               </Link>
               <Link
                 href="/register"
                 className="text-sm font-bold px-5 py-2 rounded-lg text-black hover:shadow-[0_0_30px_rgba(212,175,55,0.3)] hover:scale-[1.02] transition-all"
                 style={{ background: 'linear-gradient(135deg, #D4AF37, #F0D060)' }}
               >
-                Rejoindre
+                {t('register')}
               </Link>
             </div>
           )}
@@ -259,37 +264,37 @@ export function NetflixHeader() {
                   onClick={() => setMobileOpen(false)}
                   className="flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-medium text-white/60 hover:text-white hover:bg-white/5 transition-all"
                 >
-                  <Sparkles className="h-4 w-4" /> Taches
+                  <Sparkles className="h-4 w-4" /> {t('tasks')}
                 </Link>
               )}
               <div className="h-px bg-white/5 my-2" />
               {session?.user ? (
                 <>
                   <Link href="/dashboard" onClick={() => setMobileOpen(false)} className="flex items-center gap-3 px-3 py-3 text-sm text-white/50 hover:text-white hover:bg-white/5 rounded-lg transition-all">
-                    <LayoutDashboard className="h-4 w-4" /> Dashboard
+                    <LayoutDashboard className="h-4 w-4" /> {t('dashboard')}
                   </Link>
                   <Link href="/profile" onClick={() => setMobileOpen(false)} className="flex items-center gap-3 px-3 py-3 text-sm text-white/50 hover:text-white hover:bg-white/5 rounded-lg transition-all">
-                    <User className="h-4 w-4" /> Profil
+                    <User className="h-4 w-4" /> {t('profile')}
                   </Link>
                   {isAdmin && (
                     <Link href="/admin" onClick={() => setMobileOpen(false)} className="flex items-center gap-3 px-3 py-3 text-sm text-white/50 hover:text-white hover:bg-white/5 rounded-lg transition-all">
-                      <Settings className="h-4 w-4" /> Admin
+                      <Settings className="h-4 w-4" /> {t('admin')}
                     </Link>
                   )}
                   <button
                     onClick={() => { signOut({ callbackUrl: '/' }); setMobileOpen(false) }}
                     className="flex items-center gap-3 px-3 py-3 text-sm text-red-400/70 hover:text-red-400 hover:bg-red-500/5 rounded-lg w-full transition-all"
                   >
-                    <LogOut className="h-4 w-4" /> Se deconnecter
+                    <LogOut className="h-4 w-4" /> {t('logout')}
                   </button>
                 </>
               ) : (
                 <div className="flex gap-2 pt-2">
                   <Link href="/login" onClick={() => setMobileOpen(false)} className="flex-1 text-center text-sm text-white/60 border border-white/10 rounded-lg py-2.5 hover:bg-white/5 transition-all">
-                    Connexion
+                    {t('login')}
                   </Link>
                   <Link href="/register" onClick={() => setMobileOpen(false)} className="flex-1 text-center text-sm font-semibold text-black rounded-lg py-2.5" style={{ background: 'linear-gradient(135deg, #D4AF37, #F0D060)' }}>
-                    S&apos;inscrire
+                    {t('register')}
                   </Link>
                 </div>
               )}
