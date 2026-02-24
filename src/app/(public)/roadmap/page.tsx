@@ -71,10 +71,10 @@ const roadmap: Phase[] = [
     name: 'Paiements',
     version: 'V3',
     description: 'Les contributeurs sont payés. Stripe, co-production, transparence totale.',
-    status: 'in_progress',
+    status: 'done',
     emoji: '💰',
     items: [
-      { id: 'v3-1', title: 'Stripe Connect', description: 'Paiement automatique aux contributeurs après validation', status: 'todo', difficulty: 'medium', note: 'Guide Stripe pas à pas disponible' },
+      { id: 'v3-1', title: 'Stripe Connect', description: 'Paiement automatique aux contributeurs après validation', status: 'done', difficulty: 'medium', note: 'Checkout + Connect onboarding + webhook + auto-payout sur validation' },
       { id: 'v3-2', title: 'Page de co-production', description: 'Investir dans un film, recevoir des perks et % revenus', status: 'done', difficulty: 'medium', note: 'Tokenization: marketplace, portfolio, governance, dividendes' },
       { id: 'v3-3', title: 'Admin paiements & export', description: 'Vue globale, historique, export CSV pour comptabilité', status: 'done', difficulty: 'easy', note: 'Export CSV /api/admin/export-payments' },
       { id: 'v3-4', title: 'Dashboard revenus contributeur', description: 'Historique des gains, prévisions, demande de retrait', status: 'done', difficulty: 'easy', note: '/dashboard/earnings avec graphique mensuel' },
@@ -85,11 +85,11 @@ const roadmap: Phase[] = [
     name: 'Streaming & Distribution',
     version: 'V4',
     description: 'Les films sont visibles. Player vidéo, catalogue, abonnements.',
-    status: 'in_progress',
+    status: 'done',
     emoji: '🎬',
     items: [
       { id: 'v4-1', title: 'Player vidéo HLS', description: 'Streaming adaptatif multi-qualité, sous-titres, PiP', status: 'done', difficulty: 'medium', note: 'VideoPlayer component avec controles, raccourcis clavier, sous-titres' },
-      { id: 'v4-2', title: 'Transcoding automatique', description: '360p/720p/1080p/4K — pipeline FFmpeg', status: 'todo', difficulty: 'guided', note: 'Guide étape par étape fourni' },
+      { id: 'v4-2', title: 'Transcoding automatique', description: '360p/720p/1080p/4K — pipeline FFmpeg', status: 'done', difficulty: 'guided', note: 'transcoding.ts: 4 profils HLS (360p→4K), FFmpeg cmd builder, master playlist' },
       { id: 'v4-3', title: 'Catalogue streaming', description: 'Films released, filtres, page film avec player intégré', status: 'done', difficulty: 'easy', note: 'Page /streaming avec recherche, genres, featured hero' },
       { id: 'v4-4', title: 'Abonnements', description: 'Gratuit / Basic 4.99€ / Premium 9.99€ via Stripe', status: 'done', difficulty: 'medium', note: 'Page pricing + subscriptions.ts (3 plans, Stripe-ready, qualité 720p/1080p/4K)' },
       { id: 'v4-5', title: 'Sous-titres multi-langues', description: 'Upload .srt/.vtt, conversion SRT→VTT, 12 langues', status: 'done', difficulty: 'easy', note: 'subtitles.ts: validation, conversion, 12 langues (fr/en/es/de/it/pt/ar/zh/ja/ko/ru/he)' },
@@ -143,6 +143,54 @@ const roadmap: Phase[] = [
       { id: 'v7-5', title: 'Monitoring Sentry', description: 'Error tracking, alertes, dashboard performance', status: 'done', difficulty: 'trivial', note: 'instrumentation.ts + global-error.tsx + dynamic import conditionnel' },
       { id: 'v7-6', title: 'Pages légales RGPD', description: 'CGU, confidentialité, cookies — conformes RGPD/CNIL', status: 'done', difficulty: 'trivial', note: '3 pages légales complètes' },
       { id: 'v7-7', title: 'DNS & domaine custom', description: 'lumiere.film configuré avec Vercel/Cloudflare', status: 'todo', difficulty: 'easy', note: 'Guide fourni' },
+      { id: 'v7-8', title: 'Notifications temps réel (SSE)', description: 'EventSource push, hook useNotifications, toast live', status: 'done', difficulty: 'easy', note: '/api/notifications/stream + useNotifications hook + auto-reconnect' },
+      { id: 'v7-9', title: 'Smart contracts (interfaces)', description: 'Types TypeScript pour Polygon/Base ERC-20/ERC-721/Governance', status: 'done', difficulty: 'medium', note: 'smart-contracts.ts: 4 contrats, 4 ABIs, config multi-chain' },
+      { id: 'v7-10', title: 'Documentation technique', description: 'SECURITY.md, DEPLOYMENT.md, CONTRIBUTING.md', status: 'done', difficulty: 'trivial', note: '3 guides complets pour sécurité, déploiement et contribution' },
+    ],
+  },
+  {
+    id: 'v8',
+    name: 'Scale & Intelligence',
+    version: 'V8',
+    description: 'IA avancée, mobile, internationalisation, analytics. La plateforme devient mondiale.',
+    status: 'todo',
+    emoji: '🌍',
+    items: [
+      { id: 'v8-1', title: 'App mobile (PWA)', description: 'Progressive Web App installable, notifications push, mode offline', status: 'todo', difficulty: 'medium' },
+      { id: 'v8-2', title: 'Internationalisation (i18n)', description: 'FR, EN, HE, AR — contenu et UI traduits dynamiquement', status: 'todo', difficulty: 'medium' },
+      { id: 'v8-3', title: 'IA Generative (images/video)', description: 'Génération d\'affiches, storyboards, previsualisations par IA', status: 'todo', difficulty: 'guided' },
+      { id: 'v8-4', title: 'Analytics avancées', description: 'Dashboard analytics admin avec graphiques, cohortes, prédictions', status: 'todo', difficulty: 'medium' },
+      { id: 'v8-5', title: 'Whisper sous-titres auto', description: 'Transcription automatique audio → sous-titres multi-langues', status: 'todo', difficulty: 'guided' },
+      { id: 'v8-6', title: 'CDN vidéo mondial', description: 'Distribution vidéo multi-région via Cloudflare Stream ou Mux', status: 'todo', difficulty: 'medium' },
+    ],
+  },
+  {
+    id: 'v9',
+    name: 'Blockchain Live',
+    version: 'V9',
+    description: 'Smart contracts déployés, tokens réels, gouvernance on-chain, NFT contributeurs.',
+    status: 'todo',
+    emoji: '⛓️',
+    items: [
+      { id: 'v9-1', title: 'Deploy smart contracts', description: 'ERC-20 FilmToken + ERC-721 ContributionNFT sur Polygon/Base', status: 'todo', difficulty: 'guided' },
+      { id: 'v9-2', title: 'Wallet Connect', description: 'Connexion MetaMask/WalletConnect pour acheter tokens et voter', status: 'todo', difficulty: 'medium' },
+      { id: 'v9-3', title: 'NFT contributeur', description: 'Mint automatique d\'un NFT preuve-de-contribution à chaque tâche validée', status: 'todo', difficulty: 'medium' },
+      { id: 'v9-4', title: 'Gouvernance on-chain', description: 'Votes token-weighted pour décisions de production (casting, script, budget)', status: 'todo', difficulty: 'guided' },
+      { id: 'v9-5', title: 'Dividendes automatiques', description: 'Distribution automatique des revenus aux détenteurs de tokens', status: 'todo', difficulty: 'guided' },
+    ],
+  },
+  {
+    id: 'v10',
+    name: 'Ecosystem',
+    version: 'V10',
+    description: 'API publique, marketplace tiers, partenariats studios, expansion internationale.',
+    status: 'todo',
+    emoji: '🔮',
+    items: [
+      { id: 'v10-1', title: 'API publique REST/GraphQL', description: 'API documentée pour intégrations tierces et partenaires', status: 'todo', difficulty: 'medium' },
+      { id: 'v10-2', title: 'Marketplace créatifs', description: 'Vente d\'assets (musique, SFX, 3D) entre créateurs', status: 'todo', difficulty: 'guided' },
+      { id: 'v10-3', title: 'Partenariats studios', description: 'Intégration avec studios partenaires pour co-productions', status: 'todo', difficulty: 'guided' },
+      { id: 'v10-4', title: 'App native iOS/Android', description: 'Application mobile native avec streaming optimisé', status: 'todo', difficulty: 'guided' },
     ],
   },
 ]
@@ -191,7 +239,7 @@ export default function RoadmapPage() {
             </span>
           </h1>
           <p className="text-white/40 text-base sm:text-lg mb-12 max-w-2xl mx-auto leading-relaxed">
-            7 phases pour construire le studio de cinema IA le plus ambitieux au monde.
+            10 phases pour construire le studio de cinema IA le plus ambitieux au monde.
             Chaque etape est concrete, realiste, et nous rapproche du lancement.
           </p>
 

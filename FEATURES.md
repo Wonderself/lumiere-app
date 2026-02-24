@@ -730,3 +730,92 @@ Each phase has: status (LOCKED/ACTIVE/COMPLETED), order, dependencies
   - `cancelSubscriptionAction()` — annule l'abonnement
 - **Stripe-ready**: préparé pour intégration Stripe Checkout, fonctionne sans Stripe en attendant
 - **Design**: cards avec badges "Populaire" / "Pro", gradient gold pour le plan Premium
+
+---
+
+## 45. Stripe Connect Integration
+- **Server actions**: `src/app/actions/stripe.ts`
+- **Checkout**: `createCheckoutSessionAction(planId)` — crée session Stripe Checkout
+- **Payout**: `createPayoutAction(paymentId)` — paiement admin vers contributeur via Connect
+- **Auto-payment**: `generateAutoPayment(taskId, userId, amount, filmId)` — paiement auto à validation
+- **Connect onboarding**: `createConnectOnboardingAction()` — KYC contributeur sur Stripe
+- **Status**: `getStripeStatusAction()` — mode (live/test/disabled), connexion utilisateur
+- **Webhook**: `src/app/api/stripe/webhook/route.ts`
+  - `checkout.session.completed` → active abonnement
+  - `invoice.payment_succeeded` → renouvellement
+  - `invoice.payment_failed` → suspension
+  - `account.updated` → mise à jour Connect
+- **Graceful degradation**: mode mock si pas de clés Stripe (log + activation directe)
+
+---
+
+## 46. FFmpeg Transcoding Pipeline
+- **Service**: `src/lib/transcoding.ts`
+- **4 profils de qualité**:
+  | Profil | Résolution | Bitrate vidéo | Bitrate audio | FPS |
+  |--------|-----------|---------------|---------------|-----|
+  | 360p (SD) | 640×360 | 800k | 96k | 30 |
+  | 720p (HD) | 1280×720 | 2500k | 128k | 30 |
+  | 1080p (Full HD) | 1920×1080 | 5000k | 192k | 60 |
+  | 4K (Ultra HD) | 3840×2160 | 15000k | 256k | 60 |
+- **HLS output**: segments de 6s, H.264 High profile, AAC audio
+- **Master playlist**: fichier `.m3u8` avec toutes les qualités pour adaptive streaming
+- **`buildFFmpegArgs()`**: génère la commande FFmpeg complète
+- **`startTranscodingAction()`**: admin lance le transcoding, retourne la commande
+- **`setFilmHlsUrl()`**: mise à jour du film avec URL HLS après transcoding
+
+---
+
+## 47. Notifications Temps Réel (SSE)
+- **SSE endpoint**: `src/app/api/notifications/stream/route.ts`
+- **Events**:
+  - `connected` — confirmation connexion (userId, timestamp)
+  - `notification` — nouvelle notification (id, type, title, body, href)
+  - `count` — nombre de non-lues mis à jour
+  - Heartbeat pour maintenir la connexion
+- **Polling**: vérifie les nouvelles notifications toutes les 5 secondes
+- **Hook React**: `src/hooks/use-notifications.ts`
+  - `useNotifications({ enabled, onNotification })` → `{ unreadCount, notifications, connected }`
+  - Auto-reconnexion avec backoff exponentiel (max 5 tentatives)
+  - Fallback: fetch initial du compteur via REST
+- **Sécurité**: authentification vérifiée côté serveur, nettoyage sur déconnexion
+
+---
+
+## 48. Smart Contract Interfaces (Polygon/Base)
+- **Fichier**: `src/lib/smart-contracts.ts`
+- **4 contrats définis** (types TypeScript + ABI):
+  1. **FilmToken (ERC-20)** — tokens de co-production par film
+     - mint, transfer, approve, distributeRevenue, claimDividend
+  2. **FilmNFT (ERC-721)** — NFT preuve de contribution
+     - mintContribution (filmId, taskId, taskType, metadata)
+  3. **Governance** — votes token-weighted
+     - createProposal, castVote, executeProposal
+  4. **Payments** — paiements automatiques + escrow
+     - createEscrow, releasePayment, batchRelease
+- **Multi-chain**: Polygon (137), Polygon Amoy (80002), Base (8453), Base Sepolia (84532)
+- **Helpers**: `getActiveChain()`, `getContractAddresses()`, `isContractsDeployed()`
+- **Explorer**: `getExplorerTxUrl()`, `getExplorerAddressUrl()`
+- **Migration**: hash-based proofs actuels → vrais smart contracts quand déployés
+
+---
+
+## 49. Documentation Technique
+- **SECURITY.md** — Politique de sécurité complète:
+  - Auth, RBAC, password policy, route protection
+  - RGPD compliance, encryption, data protection
+  - API security (Zod, rate limiting, CORS)
+  - Infrastructure (Docker, non-root, secrets)
+  - Incident response, monitoring, checklist
+- **DEPLOYMENT.md** — Guide de déploiement:
+  - Architecture (Cloudflare → Traefik → Next.js + Redis + PostgreSQL)
+  - Coolify step-by-step (6 étapes)
+  - Docker Compose alternative
+  - Dockerfile expliqué (3 stages)
+  - Cron jobs, monitoring, troubleshooting, backup
+- **CONTRIBUTING.md** — Guide du contributeur:
+  - Quick start (5 commandes)
+  - Project structure
+  - Golden rules, code style, design system
+  - Workflow (branches, commits, PRs)
+  - Common tasks, known pitfalls

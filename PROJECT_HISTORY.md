@@ -585,6 +585,41 @@ Templates HTML branding Lumiere gold/dark.
 - Deleted `src/middleware.ts` — conflicted with proxy.ts in Next.js 16
 - Updated `src/proxy.ts` protectedPaths to include all routes from deleted middleware
 
+### 2026-02-24 — Stripe + Transcoding + SSE + Smart Contracts + Docs
+
+**Stripe Connect Integration (v3-1)**
+- Created `src/app/actions/stripe.ts` — full Stripe integration
+- `createCheckoutSessionAction()` — subscription checkout (Basic/Premium)
+- `createPayoutAction()` — admin payout to contributor via Connect
+- `generateAutoPayment()` — auto-generate payment on task validation
+- `createConnectOnboardingAction()` — Connect onboarding for contributors
+- Graceful degradation: mock mode if no Stripe keys
+- Created `src/app/api/stripe/webhook/route.ts` — webhook handler
+
+**FFmpeg Transcoding Pipeline (v4-2)**
+- Created `src/lib/transcoding.ts` — 4 quality profiles (360p→4K)
+- `buildFFmpegArgs()` — generates FFmpeg command for HLS output
+- `generateMasterPlaylist()` — HLS master playlist for adaptive streaming
+- H.264 + AAC encoding, 6-second segments
+
+**Real-Time Notifications (SSE)**
+- Created `src/app/api/notifications/stream/route.ts` — SSE endpoint
+- Created `src/hooks/use-notifications.ts` — React hook with auto-reconnect
+
+**Smart Contract Interfaces (Polygon/Base)**
+- Created `src/lib/smart-contracts.ts` — 4 contract types with ABIs
+- FilmToken (ERC-20), FilmNFT (ERC-721), Governance, Payments
+- Multi-chain: Polygon + Base (mainnet + testnet)
+
+**Documentation**
+- Created `SECURITY.md`, `DEPLOYMENT.md`, `CONTRIBUTING.md`
+
+**Roadmap: V8/V9/V10 ajoutés**
+- V3 DONE (4/4), V4 DONE (6/6)
+- V8: Scale & Intelligence (PWA, i18n, IA generative, analytics, Whisper, CDN)
+- V9: Blockchain Live (deploy contracts, WalletConnect, NFT, governance, dividendes)
+- V10: Ecosystem (API publique, marketplace, partenariats, app native)
+
 ---
 
 ## Important Files
@@ -601,6 +636,10 @@ Templates HTML branding Lumiere gold/dark.
 - `src/app/actions/tokenization.ts` — Token purchase, sale, governance, dividends + blockchain events
 - `src/app/actions/referral.ts` — Referral system (codes, bonuses, stats)
 - `src/app/actions/ai.ts` — AI synopsis generation, scenario analysis, task enrichment
+- `src/app/actions/stripe.ts` — Stripe Connect integration + auto-payments
+- `src/lib/transcoding.ts` — FFmpeg transcoding pipeline (360p→4K HLS)
+- `src/lib/smart-contracts.ts` — Polygon/Base contract interfaces + ABIs
+- `src/hooks/use-notifications.ts` — Real-time SSE notification hook
 - `next.config.ts` — Build & optimization configuration
 - `src/components/netflix/` — Netflix-style UI components (header, hero, film rows, creator bar, screenwriter CTA)
 - `SLATE_DECK.md` — Full project pipeline with 20 projects details
