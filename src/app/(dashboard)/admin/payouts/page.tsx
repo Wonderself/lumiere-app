@@ -9,6 +9,8 @@ import {
 } from 'lucide-react'
 import type { Metadata } from 'next'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = { title: 'Admin — Payouts' }
 
 export default async function AdminPayoutsPage(

@@ -9,6 +9,8 @@ import { CreditCard, CheckCircle, Clock, AlertCircle } from 'lucide-react'
 import { markPaymentPaidAction } from '@/app/actions/admin'
 import type { Metadata } from 'next'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = { title: 'Admin — Paiements' }
 
 export default async function AdminPaymentsPage() {

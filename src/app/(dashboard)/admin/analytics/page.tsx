@@ -8,6 +8,8 @@ import { DonutChart } from '@/components/admin/charts/donut-chart'
 import { AreaChart } from '@/components/admin/charts/area-chart'
 import type { Metadata } from 'next'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = { title: 'Admin — Analytics' }
 
 export default async function AdminAnalyticsPage() {

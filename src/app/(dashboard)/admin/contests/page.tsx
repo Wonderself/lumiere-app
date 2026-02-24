@@ -18,6 +18,8 @@ import {
 import { formatDate, formatDateShort } from '@/lib/utils'
 import type { Metadata } from 'next'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = { title: 'Admin — Concours & Scenarios' }
 
 const CONTEST_STATUS: Record<string, { label: string; variant: 'default' | 'success' | 'warning' | 'secondary' }> = {

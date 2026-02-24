@@ -25,6 +25,8 @@ import {
 } from 'lucide-react'
 import { FILM_STATUS_LABELS } from '@/lib/constants'
 
+export const dynamic = 'force-dynamic'
+
 async function getStats() {
   const { getCached } = await import('@/lib/redis')
   return getCached('stats:cinema', async () => {

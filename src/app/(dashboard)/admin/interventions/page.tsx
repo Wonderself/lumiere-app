@@ -9,6 +9,8 @@ import {
 } from 'lucide-react'
 import type { Metadata } from 'next'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = { title: 'Admin — Interventions Requises' }
 
 type SeverityLevel = 'critical' | 'warning' | 'ok'

@@ -12,6 +12,8 @@ import {
 } from 'lucide-react'
 import type { Metadata } from 'next'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = { title: 'Admin — Aides Publiques' }
 
 const statusColors: Record<string, string> = {

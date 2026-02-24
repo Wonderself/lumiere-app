@@ -9,6 +9,8 @@ import { PurchaseForm } from './purchase-form'
 import { WithdrawForm } from './withdraw-form'
 import type { Metadata } from 'next'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = { title: 'Mes Lumens' }
 
 function getTxTypeBadge(type: string) {

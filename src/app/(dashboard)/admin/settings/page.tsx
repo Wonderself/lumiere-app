@@ -9,6 +9,8 @@ import { updateSettingsAction } from '@/app/actions/admin'
 import { Settings, Sun, Mail, Cpu, CreditCard, AlertTriangle } from 'lucide-react'
 import type { Metadata } from 'next'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = { title: 'Admin — Paramètres' }
 
 export default async function AdminSettingsPage() {

@@ -143,6 +143,20 @@
   - Links from ScreenwriterCTA and footer go directly to screenwriter registration
 - **Roadmap status update**: Phase 1 (IA & Qualite) now complete for frontend integration
 
+### 2026-02-24 — Security & Stability Hardening + Invest Page
+- **24 pages fixed with `force-dynamic`**: All Prisma-using pages now have runtime DB config
+  - Prevents build failures when DB is unavailable during static generation
+  - Covers: cinema, dashboard, profile, admin (14 admin pages), tasks, lumens, etc.
+- **Auth middleware created** (`src/middleware.ts`):
+  - Centralized route protection for /dashboard/*, /admin/*, /profile/*, /tasks/*, etc.
+  - Admin role check on /admin/* routes (redirects non-admins to /dashboard)
+  - Unauthenticated users redirected to /login with callbackUrl
+- **Login password minimum**: Fixed inconsistency (6->8 chars, matching registration)
+- **Investor page** (`/invest`): Professional landing page for investors
+  - Key metrics, 6 advantage cards, market comparison table, 4-phase timeline
+  - CTA with email link (invest@lumiere.film)
+  - Linked from footer "Investisseurs"
+
 ---
 
 ## ROADMAP — Etapes Detaillees

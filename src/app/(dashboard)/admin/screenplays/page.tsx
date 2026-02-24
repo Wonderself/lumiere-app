@@ -8,6 +8,8 @@ import { formatDate } from '@/lib/utils'
 import { FileText, CheckCircle, XCircle, Film } from 'lucide-react'
 import type { Metadata } from 'next'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = { title: 'Admin — Scénarios' }
 
 export default async function AdminScreenplaysPage() {

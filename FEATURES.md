@@ -10,10 +10,18 @@
 
 ### Registration & Login
 - Email/password registration with role selection
+- URL param auto-select role (e.g. `?role=SCREENWRITER`)
+- Custom welcome for screenwriters: "Devenez Scenariste"
 - Credential-based login via NextAuth 5
 - JWT stateless sessions
 - Password reset via token (1h expiry, email link)
 - Profile updates (name, bio, skills, languages, wallet address)
+
+### Route Protection (Middleware)
+- Centralized middleware (`src/middleware.ts`) for auth route protection
+- Protected: /dashboard/*, /admin/*, /profile/*, /tasks/*, /lumens/*, /notifications/*, /screenplays/*, /tokenization/*
+- Admin role check on /admin/* (redirects non-admins to /dashboard)
+- Unauthenticated users redirected to /login with callbackUrl
 
 ### Roles
 | Role | Description |
@@ -284,7 +292,8 @@ Each phase has: status (LOCKED/ACTIVE/COMPLETED), order, dependencies
 - **Actors** (`/actors`) — Browse AI actors
 - **Actor Profile** (`/actors/[slug]`) — Actor details, filmography
 - **Community Hub** (`/community`) — Scenarios & contests
-- **About** (`/about`) — Company info
+- **About** (`/about`) — Company info, team, philosophy, pipeline, business model
+- **Invest** (`/invest`) — Investor landing page, metrics, advantages, comparison table, timeline
 - **Roadmap** (`/roadmap`) — Product roadmap
 - **Leaderboard** (`/leaderboard`) — User rankings
 - **Legal** — Terms, privacy, cookies

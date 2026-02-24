@@ -8,6 +8,8 @@ import { formatDate, formatPrice } from '@/lib/utils'
 import { ClipboardCheck, CheckCircle, XCircle } from 'lucide-react'
 import type { Metadata } from 'next'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = { title: 'Admin — Reviews' }
 
 export default async function AdminReviewsPage() {

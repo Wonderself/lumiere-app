@@ -14,6 +14,8 @@ import { formatPrice, getStatusColor, getDifficultyColor } from '@/lib/utils'
 import { Star, Lock, ChevronRight, ChevronDown } from 'lucide-react'
 import type { Metadata } from 'next'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = { title: 'Tâches Disponibles' }
 
 type SearchParams = {

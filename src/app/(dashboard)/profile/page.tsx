@@ -19,6 +19,8 @@ import {
 import { ProfileEditDialog } from './profile-edit-dialog'
 import type { Metadata } from 'next'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = { title: 'Mon Profil' }
 
 const ROLE_LABELS: Record<string, string> = {

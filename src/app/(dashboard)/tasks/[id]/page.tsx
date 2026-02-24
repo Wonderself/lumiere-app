@@ -19,6 +19,8 @@ import { deleteCommentAction } from '@/app/actions/comments'
 import { CommentForm } from './comment-form'
 import type { Metadata } from 'next'
 
+export const dynamic = 'force-dynamic'
+
 type Props = { params: Promise<{ id: string }> }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

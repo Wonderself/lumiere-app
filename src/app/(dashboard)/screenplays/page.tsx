@@ -15,6 +15,8 @@ import {
 import { formatDate } from '@/lib/utils'
 import type { Metadata } from 'next'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = { title: 'Mes Scenarios' }
 
 const STATUS_CONFIG: Record<

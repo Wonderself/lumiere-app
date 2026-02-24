@@ -8,6 +8,8 @@ import { formatDate, getInitials, getLevelColor } from '@/lib/utils'
 import { CheckCircle, Clock, Users } from 'lucide-react'
 import type { Metadata } from 'next'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = { title: 'Admin — Utilisateurs' }
 
 export default async function AdminUsersPage() {

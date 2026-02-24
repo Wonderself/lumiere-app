@@ -9,6 +9,8 @@ import { TASK_STATUS_LABELS, TASK_TYPE_LABELS, DIFFICULTY_LABELS } from '@/lib/c
 import { formatPrice, getStatusColor, getDifficultyColor } from '@/lib/utils'
 import type { Metadata } from 'next'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = { title: 'Admin — Tâches' }
 
 export default async function AdminTasksPage() {

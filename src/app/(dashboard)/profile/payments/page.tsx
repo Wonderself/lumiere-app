@@ -4,6 +4,8 @@ import { redirect } from 'next/navigation'
 import { CreditCard, Clock, CheckCircle, AlertTriangle } from 'lucide-react'
 import type { Metadata } from 'next'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = {
   title: 'Mes Paiements',
   description: 'Historique de vos paiements et gains sur Lumière.',

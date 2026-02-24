@@ -14,6 +14,8 @@ import {
 import { formatPrice } from '@/lib/utils'
 import type { Metadata } from 'next'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = { title: 'Admin — Command Center' }
 
 export default async function AdminPage() {

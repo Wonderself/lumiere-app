@@ -19,6 +19,8 @@ import { markNotificationReadAction, markAllNotificationsReadAction } from '@/ap
 import Link from 'next/link'
 import type { Metadata } from 'next'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = { title: 'Notifications' }
 
 const NOTIF_ICONS: Record<string, typeof Bell> = {

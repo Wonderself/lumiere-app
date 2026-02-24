@@ -8,6 +8,8 @@ import { Film, Plus, Edit, Eye } from 'lucide-react'
 import { FILM_STATUS_LABELS } from '@/lib/constants'
 import type { Metadata } from 'next'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = { title: 'Admin — Films' }
 
 export default async function AdminFilmsPage() {
