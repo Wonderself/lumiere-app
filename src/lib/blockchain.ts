@@ -204,6 +204,39 @@ export async function recordContentOnChain(params: {
   return { eventId: event.id }
 }
 
+// ─── Generic Event Recording ────────────────────────────────────
+// Used for film lifecycle, task lifecycle, phase changes, tokenization, contracts
+
+export async function recordEvent(params: {
+  type: string
+  entityType: string
+  entityId: string
+  data: Record<string, unknown>
+}): Promise<{ eventId: string; proofHash: string }> {
+  const proofHash = generateProofHash({
+    type: params.type,
+    entityType: params.entityType,
+    entityId: params.entityId,
+    ...params.data,
+    timestamp: new Date().toISOString(),
+  })
+
+  const event = await prisma.blockchainEvent.create({
+    data: {
+      type: params.type as never,
+      entityType: params.entityType,
+      entityId: params.entityId,
+      chain: CHAIN,
+      data: { ...params.data, proofHash },
+      status: IS_LIVE ? 'SUBMITTED' : 'CONFIRMED',
+      txHash: IS_LIVE ? undefined : `0x${proofHash.slice(0, 64)}`,
+      confirmedAt: IS_LIVE ? undefined : new Date(),
+    },
+  })
+
+  return { eventId: event.id, proofHash }
+}
+
 // ─── Query Helpers ───────────────────────────────────────────────
 
 export async function getBlockchainEvents(entityType: string, entityId: string) {

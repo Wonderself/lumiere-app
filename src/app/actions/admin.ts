@@ -8,6 +8,8 @@ import { slugify } from '@/lib/utils'
 import { checkAndUpgradeLevel } from '@/lib/level'
 import { createNotification } from '@/lib/notifications'
 import { runMockAiReview } from '@/lib/ai-review'
+import { recordEvent } from '@/lib/blockchain'
+import { calculateReputationScore, getBadgeForScore } from '@/lib/reputation'
 
 async function requireAdmin() {
   const session = await auth()
@@ -62,6 +64,14 @@ export async function createFilmAction(formData: FormData) {
       },
     },
   })
+
+  // Record film creation on blockchain
+  await recordEvent({
+    type: 'FILM_CREATED',
+    entityType: 'Film',
+    entityId: finalSlug,
+    data: { title, genre, catalog, estimatedBudget: estimatedBudget ? parseFloat(estimatedBudget) : 0 },
+  }).catch(() => {})
 
   revalidatePath('/admin/films')
   revalidatePath('/films')
@@ -402,13 +412,47 @@ export async function approveSubmissionAction(formData: FormData) {
     href: `/tasks/${submission.taskId}`,
   })
 
-  // Check level upgrade
+  // Record task validation on blockchain
+  await recordEvent({
+    type: 'TASK_VALIDATED',
+    entityType: 'Task',
+    entityId: submission.taskId,
+    data: {
+      filmId: submission.task.filmId,
+      userId: submission.userId,
+      reviewerId: session.user.id,
+      aiScore: submission.aiScore,
+      priceEuros: submission.task.priceEuros,
+    },
+  }).catch(() => {})
+
+  // Check level upgrade + reputation
   const updatedUser = await prisma.user.findUnique({
     where: { id: submission.userId },
-    select: { points: true },
+    select: { points: true, tasksCompleted: true, tasksValidated: true, createdAt: true },
   })
   if (updatedUser) {
     await checkAndUpgradeLevel(submission.userId, updatedUser.points)
+
+    // Calculate and update reputation
+    const seniorityDays = Math.floor((Date.now() - updatedUser.createdAt.getTime()) / (1000 * 60 * 60 * 24))
+    const acceptanceRate = updatedUser.tasksCompleted > 0
+      ? Math.round((updatedUser.tasksValidated / updatedUser.tasksCompleted) * 100)
+      : 0
+    const score = calculateReputationScore({
+      deadlineRate: 80,
+      acceptanceRate,
+      qualityScore: submission.aiScore ?? 70,
+      collabReliability: 70,
+      engagementScore: 50,
+      seniorityDays,
+      taskCount: updatedUser.tasksCompleted,
+    })
+    const badge = getBadgeForScore(score)
+    await prisma.user.update({
+      where: { id: submission.userId },
+      data: { reputationScore: score, reputationBadge: badge.name },
+    }).catch(() => {})
   }
 
   revalidatePath('/admin/reviews')
@@ -648,6 +692,13 @@ export async function unlockPhaseAction(formData: FormData) {
     },
   })
 
+  await recordEvent({
+    type: 'PHASE_UNLOCKED',
+    entityType: 'FilmPhase',
+    entityId: phaseId,
+    data: { filmId: phase.filmId, phaseName: phase.phaseName },
+  }).catch(() => {})
+
   revalidatePath('/admin/films')
   revalidatePath(`/admin/films/${phase.filmId}/edit`)
   return { success: true }
@@ -688,13 +739,104 @@ export async function completePhaseAction(formData: FormData) {
   // Update film progress
   const completedCount = phase.film.phases.filter((p) => p.status === 'COMPLETED').length + 1
   const totalPhases = phase.film.phases.length
+  const newProgressPct = Math.round((completedCount / totalPhases) * 100)
   await prisma.film.update({
     where: { id: phase.filmId },
-    data: { progressPct: Math.round((completedCount / totalPhases) * 100) },
+    data: { progressPct: newProgressPct },
   })
+
+  await recordEvent({
+    type: 'PHASE_COMPLETED',
+    entityType: 'FilmPhase',
+    entityId: phaseId,
+    data: { filmId: phase.filmId, phaseName: phase.phaseName, progressPct: newProgressPct },
+  }).catch(() => {})
+
+  // If all phases completed, record film completion
+  if (newProgressPct >= 100) {
+    await recordEvent({
+      type: 'FILM_COMPLETED',
+      entityType: 'Film',
+      entityId: phase.filmId,
+      data: { title: phase.film.title, totalPhases },
+    }).catch(() => {})
+  }
 
   revalidatePath('/admin/films')
   revalidatePath(`/admin/films/${phase.filmId}/edit`)
   revalidatePath(`/films/${phase.film.slug}`)
   return { success: true }
+}
+
+// ─── Task Reassignment (Admin) ────────────────────────────────
+
+export async function reassignTaskAction(formData: FormData) {
+  await requireAdmin()
+
+  const taskId = formData.get('taskId') as string
+  if (!taskId) return { error: 'Tâche invalide.' }
+
+  const task = await prisma.task.findUnique({ where: { id: taskId } })
+  if (!task) return { error: 'Tâche introuvable.' }
+
+  // Release the task back to AVAILABLE
+  await prisma.task.update({
+    where: { id: taskId },
+    data: {
+      status: 'AVAILABLE',
+      claimedById: null,
+      claimedAt: null,
+      deadline: null,
+    },
+  })
+
+  // Notify previous claimer if any
+  if (task.claimedById) {
+    await createNotification(task.claimedById, 'SYSTEM', 'Tâche réattribuée', {
+      body: `La tâche "${task.title}" vous a été retirée par un administrateur.`,
+      href: '/tasks',
+    })
+  }
+
+  revalidatePath('/admin/tasks')
+  revalidatePath('/tasks')
+  revalidatePath(`/tasks/${taskId}`)
+  return { success: true }
+}
+
+// ─── Expired Task Cleanup ─────────────────────────────────────
+
+export async function cleanupExpiredTasksAction() {
+  await requireAdmin()
+
+  const expiredTasks = await prisma.task.findMany({
+    where: {
+      status: 'CLAIMED',
+      deadline: { lt: new Date() },
+    },
+    select: { id: true, title: true, claimedById: true },
+  })
+
+  for (const task of expiredTasks) {
+    await prisma.task.update({
+      where: { id: task.id },
+      data: {
+        status: 'AVAILABLE',
+        claimedById: null,
+        claimedAt: null,
+        deadline: null,
+      },
+    })
+
+    if (task.claimedById) {
+      await createNotification(task.claimedById, 'SYSTEM', 'Tâche expirée', {
+        body: `La tâche "${task.title}" a expiré et est de nouveau disponible.`,
+        href: '/tasks',
+      })
+    }
+  }
+
+  revalidatePath('/admin/tasks')
+  revalidatePath('/tasks')
+  return { count: expiredTasks.length }
 }

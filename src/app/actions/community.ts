@@ -9,7 +9,10 @@ import {
   recordVoteTallyOnChain,
   recordPrizeDistribution,
   recordContestClosed,
+  recordEvent,
 } from '@/lib/blockchain'
+import { slugify } from '@/lib/utils'
+import { decomposeFilmToTasks } from '@/lib/film-decomposer'
 
 // ============================================
 // SCENARIO PROPOSALS
@@ -232,8 +235,94 @@ export async function pickScenarioWinnerAction(formData: FormData) {
       data: { status: 'ARCHIVED' },
     })
 
+    // ── Auto-create Film from winning scenario ──
+    const filmSlugBase = slugify(proposal.title)
+    const existingSlug = await prisma.film.findUnique({ where: { slug: filmSlugBase } })
+    const filmSlug = existingSlug ? `${filmSlugBase}-${Date.now()}` : filmSlugBase
+
+    const film = await prisma.film.create({
+      data: {
+        title: proposal.title,
+        slug: filmSlug,
+        synopsis: proposal.synopsis || proposal.logline,
+        genre: proposal.genre || null,
+        catalog: 'LUMIERE',
+        status: 'DRAFT',
+        isPublic: false,
+        phases: {
+          create: [
+            { phaseName: 'SCRIPT', phaseOrder: 1, status: 'ACTIVE' },
+            { phaseName: 'STORYBOARD', phaseOrder: 2, status: 'LOCKED' },
+            { phaseName: 'PREVIZ', phaseOrder: 3, status: 'LOCKED' },
+            { phaseName: 'DESIGN', phaseOrder: 4, status: 'LOCKED' },
+            { phaseName: 'ANIMATION', phaseOrder: 5, status: 'LOCKED' },
+            { phaseName: 'VFX', phaseOrder: 6, status: 'LOCKED' },
+            { phaseName: 'AUDIO', phaseOrder: 7, status: 'LOCKED' },
+            { phaseName: 'EDITING', phaseOrder: 8, status: 'LOCKED' },
+            { phaseName: 'COLOR', phaseOrder: 9, status: 'LOCKED' },
+            { phaseName: 'FINAL', phaseOrder: 10, status: 'LOCKED' },
+          ],
+        },
+      },
+      include: { phases: true },
+    })
+
+    // Link scenario back to the new film
+    await prisma.scenarioProposal.update({
+      where: { id: proposalId },
+      data: { filmId: film.id },
+    })
+
+    // Auto-generate tasks from film-decomposer
+    const decomposedTasks = decomposeFilmToTasks(proposal.genre)
+    const phaseMap = new Map(film.phases.map((p) => [p.phaseName, p.id]))
+    let tasksCreated = 0
+
+    for (const task of decomposedTasks) {
+      const phaseId = phaseMap.get(task.phase as never)
+      if (!phaseId) continue
+
+      await prisma.task.create({
+        data: {
+          filmId: film.id,
+          phaseId,
+          title: task.title,
+          descriptionMd: task.description,
+          type: task.type as never,
+          difficulty: task.difficulty as never,
+          priceEuros: task.priceEuros,
+          status: task.phase === 'SCRIPT' ? 'AVAILABLE' : 'LOCKED',
+        },
+      })
+      tasksCreated++
+    }
+
+    // Update film totalTasks count
+    await prisma.film.update({
+      where: { id: film.id },
+      data: { totalTasks: tasksCreated },
+    })
+
+    // Record film creation on blockchain
+    await recordEvent({
+      type: 'FILM_CREATED_FROM_SCENARIO',
+      entityType: 'Film',
+      entityId: film.id,
+      data: {
+        filmTitle: proposal.title,
+        filmSlug,
+        scenarioId: proposalId,
+        scenarioRound: proposal.round,
+        genre: proposal.genre,
+        tasksGenerated: tasksCreated,
+        authorId: proposal.authorId,
+      },
+    }).catch(() => {})
+
     revalidatePath('/community/scenarios')
     revalidatePath('/admin/contests')
+    revalidatePath('/admin/films')
+    revalidatePath('/films')
     return { success: true }
   } catch (e) {
     console.error('pickScenarioWinnerAction error:', e)

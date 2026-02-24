@@ -7,6 +7,7 @@ import { revalidatePath } from 'next/cache'
 import { runMockAiReview } from '@/lib/ai-review'
 import { registerContentHash } from '@/lib/content-hash'
 import { createNotification } from '@/lib/notifications'
+import { recordEvent } from '@/lib/blockchain'
 
 export async function claimTaskAction(formData: FormData) {
   const session = await auth()
@@ -44,6 +45,14 @@ export async function claimTaskAction(formData: FormData) {
       deadline,
     },
   })
+
+  // Record task claim on blockchain
+  await recordEvent({
+    type: 'TASK_CLAIMED',
+    entityType: 'Task',
+    entityId: taskId,
+    data: { userId: session.user.id, filmId: task.filmId },
+  }).catch(() => {})
 
   revalidatePath(`/tasks/${taskId}`)
   redirect(`/tasks/${taskId}`)
@@ -109,6 +118,14 @@ export async function submitTaskAction(formData: FormData) {
       aiConfidenceScore: aiResult.score,
     },
   })
+
+  // Record task submission on blockchain
+  await recordEvent({
+    type: 'TASK_SUBMITTED',
+    entityType: 'Task',
+    entityId: taskId,
+    data: { userId: session.user.id, submissionId: submission.id, aiScore: aiResult.score },
+  }).catch(() => {})
 
   // Notify user about AI review
   await createNotification(session.user.id, 'SUBMISSION_REVIEWED', `Revue IA terminée`, {

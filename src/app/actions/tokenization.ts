@@ -5,6 +5,7 @@ import { prisma } from '@/lib/prisma'
 import { redirect } from 'next/navigation'
 import { revalidatePath } from 'next/cache'
 import { getTokenBalance, PLATFORM_FEE_PCT } from '@/lib/tokenization'
+import { recordEvent } from '@/lib/blockchain'
 
 // ============================================
 // BUY TOKENS (PRIMARY MARKET)
@@ -132,6 +133,14 @@ export async function buyTokensAction(
       }
     })
 
+    // Record token purchase on blockchain
+    await recordEvent({
+      type: 'TOKEN_PURCHASED',
+      entityType: 'FilmTokenPurchase',
+      entityId: offeringId,
+      data: { userId: session.user.id, tokenCount, amountPaid, offeringId },
+    }).catch(() => {})
+
     revalidatePath(`/tokenization/${offering.filmId}`)
     revalidatePath('/tokenization')
     revalidatePath('/tokenization/portfolio')
@@ -223,6 +232,14 @@ export async function listTokensForSaleAction(
       },
     })
 
+    // Record token listing on blockchain
+    await recordEvent({
+      type: 'TOKEN_LISTED_FOR_SALE',
+      entityType: 'FilmTokenTransfer',
+      entityId: offeringId,
+      data: { userId: session.user.id, tokenCount, pricePerToken, offeringId },
+    }).catch(() => {})
+
     revalidatePath(`/tokenization`)
     revalidatePath('/tokenization/portfolio')
 
@@ -294,6 +311,21 @@ export async function buyFromSecondaryAction(
         },
       })
     })
+
+    // Record secondary market purchase on blockchain
+    await recordEvent({
+      type: 'TOKEN_TRANSFERRED',
+      entityType: 'FilmTokenTransfer',
+      entityId: transferId,
+      data: {
+        fromUserId: transfer.fromUserId,
+        toUserId: session.user.id,
+        tokenCount: transfer.tokenCount,
+        pricePerToken: transfer.pricePerToken,
+        totalAmount: transfer.totalAmount,
+        offeringId: transfer.offeringId,
+      },
+    }).catch(() => {})
 
     revalidatePath('/tokenization')
     revalidatePath('/tokenization/portfolio')
@@ -371,6 +403,14 @@ export async function createProposalAction(
         deadline,
       },
     })
+
+    // Record governance proposal creation on blockchain
+    await recordEvent({
+      type: 'GOVERNANCE_PROPOSAL_CREATED',
+      entityType: 'GovernanceProposal',
+      entityId: offeringId,
+      data: { proposerId: session.user.id, title, type, offeringId },
+    }).catch(() => {})
 
     revalidatePath('/tokenization/governance')
     revalidatePath(`/tokenization/${offering.filmId}`)
@@ -474,6 +514,14 @@ export async function voteOnProposalAction(
       })
     })
 
+    // Record governance vote on blockchain
+    await recordEvent({
+      type: 'GOVERNANCE_VOTE_CAST',
+      entityType: 'GovernanceVote',
+      entityId: proposalId,
+      data: { voterId: session.user.id, vote, tokenWeight, proposalId },
+    }).catch(() => {})
+
     revalidatePath('/tokenization/governance')
 
     return { success: true }
@@ -546,6 +594,19 @@ export async function claimDividendAction(
         },
       })
     })
+
+    // Record dividend claim on blockchain
+    await recordEvent({
+      type: 'DIVIDEND_CLAIMED',
+      entityType: 'TokenDividend',
+      entityId: dividendId,
+      data: {
+        userId: session.user.id,
+        amount: dividend.amount,
+        period: dividend.period,
+        offeringId: dividend.offeringId,
+      },
+    }).catch(() => {})
 
     revalidatePath('/tokenization/portfolio')
 
