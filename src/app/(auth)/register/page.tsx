@@ -1,8 +1,8 @@
 'use client'
 
-import { useActionState, useState } from 'react'
+import { useActionState, useState, useEffect } from 'react'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -10,14 +10,19 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { registerAction } from '@/app/actions/auth'
 import { SKILLS, LANGUAGES } from '@/lib/constants'
 import { CheckCircle, UserPlus, User, Mail, Lock, Link2, Briefcase } from 'lucide-react'
-import { useEffect } from 'react'
+
+const VALID_ROLES = ['CONTRIBUTOR', 'ARTIST', 'STUNT_PERFORMER', 'SCREENWRITER', 'VIEWER']
 
 export default function RegisterPage() {
   const router = useRouter()
+  const searchParams = useSearchParams()
   const [state, action, isPending] = useActionState(registerAction, {})
   const [selectedSkills, setSelectedSkills] = useState<string[]>([])
   const [selectedLanguages, setSelectedLanguages] = useState<string[]>(['Français'])
-  const [role, setRole] = useState('CONTRIBUTOR')
+
+  // Auto-select role from URL param (e.g. ?role=SCREENWRITER)
+  const urlRole = searchParams.get('role')?.toUpperCase() || ''
+  const [role, setRole] = useState(VALID_ROLES.includes(urlRole) ? urlRole : 'CONTRIBUTOR')
 
   useEffect(() => {
     if (state.success) {
@@ -63,9 +68,13 @@ export default function RegisterPage() {
           <UserPlus className="h-8 w-8 text-[#D4AF37]" />
         </div>
         <h1 className="text-3xl sm:text-4xl font-bold text-white" style={{ fontFamily: 'var(--font-playfair)' }}>
-          <span className="text-shimmer">Rejoindre Lumière</span>
+          <span className="text-shimmer">{role === 'SCREENWRITER' ? 'Devenez Scenariste' : 'Rejoindre Lumière'}</span>
         </h1>
-        <p className="text-white/50 text-sm sm:text-base">Créez votre compte et commencez à contribuer.</p>
+        <p className="text-white/50 text-sm sm:text-base">
+          {role === 'SCREENWRITER'
+            ? 'Rejoignez nos 100 scenaristes et participez a la creation du cinema de demain.'
+            : 'Créez votre compte et commencez à contribuer.'}
+        </p>
       </div>
 
       {/* Form Card */}

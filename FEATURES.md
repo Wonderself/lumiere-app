@@ -214,6 +214,17 @@ Each phase has: status (LOCKED/ACTIVE/COMPLETED), order, dependencies
 - Validate or reject with human feedback
 - Configurable AI confidence threshold
 
+### AI Integration (Claude Haiku 4.5)
+- **AI Synopsis Generator**: "Generer avec l'IA" button in scenario submission form
+  - Auto-generates logline + synopsis from title + genre
+  - User can edit generated content before submitting
+- **AI Scenario Analysis**: auto-analyzes scenarios on submission (async, non-blocking)
+  - Score (0-100), analysis text, 3 suggestions
+  - Results displayed on scenario detail page (green/yellow/red score badge)
+- **AI Task Review**: evaluates task submissions with contextual scoring
+  - Score, feedback, verdict (AI_APPROVED / AI_FLAGGED)
+  - Falls back to mock when API unavailable
+
 ### Contest Management
 - Create/edit contests
 - Shortlist proposals for voting

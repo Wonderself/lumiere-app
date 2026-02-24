@@ -2,10 +2,11 @@
 
 import { useActionState, useState, useRef, useEffect } from 'react'
 import { submitScenarioAction } from '@/app/actions/community'
+import { generateSynopsisAction } from '@/app/actions/ai'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
-import { PenTool, ChevronDown, ChevronUp, CheckCircle, Sparkles } from 'lucide-react'
+import { PenTool, ChevronDown, ChevronUp, CheckCircle, Sparkles, Wand2, Loader2 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 const GENRES = [
@@ -27,13 +28,56 @@ export function SubmitScenarioForm() {
   const [isOpen, setIsOpen] = useState(false)
   const formRef = useRef<HTMLFormElement>(null)
 
+  // AI Synopsis Generator state
+  const [aiTitle, setAiTitle] = useState('')
+  const [aiGenre, setAiGenre] = useState('')
+  const [logline, setLogline] = useState('')
+  const [synopsis, setSynopsis] = useState('')
+  const [isGenerating, setIsGenerating] = useState(false)
+  const [aiError, setAiError] = useState('')
+
   useEffect(() => {
     if (state?.success && formRef.current) {
       formRef.current.reset()
-      // Keep the form open for a moment to show success, then collapse
+      setLogline('')
+      setSynopsis('')
+      setAiTitle('')
+      setAiGenre('')
       setTimeout(() => setIsOpen(false), 2500)
     }
   }, [state?.success])
+
+  const handleGenerate = async () => {
+    if (!aiTitle || aiTitle.length < 2) {
+      setAiError('Entrez un titre (minimum 2 caracteres) avant de generer.')
+      return
+    }
+    if (!aiGenre) {
+      setAiError('Choisissez un genre avant de generer.')
+      return
+    }
+
+    setAiError('')
+    setIsGenerating(true)
+
+    try {
+      const fd = new FormData()
+      fd.set('title', aiTitle)
+      fd.set('genre', aiGenre)
+      const result = await generateSynopsisAction(null, fd)
+
+      if (result?.error) {
+        setAiError(result.error)
+      } else if (result?.logline && result?.synopsis) {
+        setLogline(result.logline)
+        setSynopsis(result.synopsis)
+      }
+    } catch {
+      setAiError('Erreur lors de la generation. Reessayez.')
+    } finally {
+      setIsGenerating(false)
+    }
+  }
 
   return (
     <div className="rounded-2xl border border-gray-200 bg-gray-50 overflow-hidden">
@@ -62,7 +106,7 @@ export function SubmitScenarioForm() {
       <div
         className={cn(
           'overflow-hidden transition-all duration-500',
-          isOpen ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0'
+          isOpen ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'
         )}
       >
         <div className="px-5 pb-5 pt-0">
@@ -73,7 +117,7 @@ export function SubmitScenarioForm() {
                 <CheckCircle className="h-5 w-5 text-green-500 shrink-0" />
                 <div>
                   <p className="text-sm font-medium text-green-600">Proposition soumise avec succes !</p>
-                  <p className="text-xs text-green-500 mt-0.5">Elle sera examinee par notre equipe.</p>
+                  <p className="text-xs text-green-500 mt-0.5">Elle sera examinee par notre equipe et analysee par l&apos;IA.</p>
                 </div>
               </div>
             )}
@@ -98,7 +142,60 @@ export function SubmitScenarioForm() {
                   maxLength={200}
                   placeholder="Ex: Les Echos du Silence"
                   className="bg-white border-gray-200 focus:border-[#D4AF37]/40"
+                  value={aiTitle}
+                  onChange={(e) => setAiTitle(e.target.value)}
                 />
+              </div>
+
+              {/* Genre */}
+              <div>
+                <label className="block text-xs font-medium text-gray-500 mb-1.5">
+                  Genre
+                </label>
+                <select
+                  name="genre"
+                  value={aiGenre}
+                  onChange={(e) => setAiGenre(e.target.value)}
+                  className="flex h-10 w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/50 focus:border-[#D4AF37]/50 transition-all duration-200"
+                >
+                  <option value="">Choisir un genre...</option>
+                  {GENRES.map((g) => (
+                    <option key={g} value={g}>{g}</option>
+                  ))}
+                </select>
+              </div>
+
+              {/* AI Synopsis Generator */}
+              <div className="p-4 rounded-xl border border-dashed border-[#D4AF37]/30 bg-[#D4AF37]/[0.03]">
+                <div className="flex items-center justify-between gap-3 mb-2">
+                  <div className="flex items-center gap-2">
+                    <Wand2 className="h-4 w-4 text-[#D4AF37]" />
+                    <span className="text-xs font-semibold text-[#D4AF37]">Assistant IA</span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={handleGenerate}
+                    disabled={isGenerating}
+                    className={cn(
+                      'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-200',
+                      isGenerating
+                        ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                        : 'bg-[#D4AF37] text-black hover:bg-[#F0D060] hover:shadow-sm'
+                    )}
+                  >
+                    {isGenerating ? (
+                      <><Loader2 className="h-3 w-3 animate-spin" /> Generation...</>
+                    ) : (
+                      <><Sparkles className="h-3 w-3" /> Generer avec l&apos;IA</>
+                    )}
+                  </button>
+                </div>
+                <p className="text-[11px] text-gray-400">
+                  Remplissez le titre et le genre, puis laissez l&apos;IA generer une logline et un synopsis pour vous.
+                </p>
+                {aiError && (
+                  <p className="mt-2 text-xs text-red-500">{aiError}</p>
+                )}
               </div>
 
               {/* Logline */}
@@ -114,6 +211,8 @@ export function SubmitScenarioForm() {
                   rows={2}
                   placeholder="Un resume accrocheur de votre histoire en une ou deux phrases..."
                   className="bg-white border-gray-200 focus:border-[#D4AF37]/40"
+                  value={logline}
+                  onChange={(e) => setLogline(e.target.value)}
                 />
               </div>
 
@@ -127,23 +226,9 @@ export function SubmitScenarioForm() {
                   rows={5}
                   placeholder="Developpez votre histoire plus en detail..."
                   className="bg-white border-gray-200 focus:border-[#D4AF37]/40"
+                  value={synopsis}
+                  onChange={(e) => setSynopsis(e.target.value)}
                 />
-              </div>
-
-              {/* Genre */}
-              <div>
-                <label className="block text-xs font-medium text-gray-500 mb-1.5">
-                  Genre
-                </label>
-                <select
-                  name="genre"
-                  className="flex h-10 w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/50 focus:border-[#D4AF37]/50 transition-all duration-200"
-                >
-                  <option value="">Choisir un genre...</option>
-                  {GENRES.map((g) => (
-                    <option key={g} value={g}>{g}</option>
-                  ))}
-                </select>
               </div>
 
               {/* Submit */}

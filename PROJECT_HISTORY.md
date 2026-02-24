@@ -130,6 +130,19 @@
 - **Footer updated**: "Hollywood" removed → "Paris · Jerusalem", added "Investisseurs" link
 - Homepage flow: Hero Manifesto → Top 10 + CreatorBar → Manifesto Text → Films → HowItWorks → Pipeline → More Films → Comparison → ScreenwriterCTA → Dev Films → Social Proof → Final CTA → Footer
 
+### 2026-02-24 — AI Frontend Integration + Screenwriter UX
+- **AI Synopsis Generator UI**: "Generer avec l'IA" button in scenario submission form
+  - Calls Claude Haiku 4.5 via `generateSynopsisAction` to auto-fill logline + synopsis
+  - User enters title + genre, AI generates content, user can edit before submitting
+  - Loading state, error handling, gold-themed assistant panel
+- **AI Analysis Display**: scenario detail page now shows AI analysis when available
+  - Score badge (green/yellow/red), analysis text, bullet-point suggestions
+  - Auto-populated by async AI analysis on submission (non-blocking)
+- **Screenwriter Registration**: auto-select role from URL params (`?role=SCREENWRITER`)
+  - Custom welcome message for screenwriters: "Devenez Scenariste"
+  - Links from ScreenwriterCTA and footer go directly to screenwriter registration
+- **Roadmap status update**: Phase 1 (IA & Qualite) now complete for frontend integration
+
 ---
 
 ## ROADMAP — Etapes Detaillees

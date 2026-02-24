@@ -9,7 +9,7 @@ import {
   PenTool, Crown, Heart, User, ArrowLeft, BookOpen,
   Film, Calendar, Award, Sparkles, Lock,
 } from 'lucide-react'
-import { formatDate } from '@/lib/utils'
+import { formatDate, cn } from '@/lib/utils'
 import type { Metadata } from 'next'
 
 export const dynamic = 'force-dynamic'
@@ -182,6 +182,42 @@ export default async function ScenarioDetailPage({
                   <p className="text-sm font-medium text-white/70">
                     {scenario.film?.title || scenario.catalog?.title}
                   </p>
+                </div>
+              </div>
+            )}
+
+            {/* AI Analysis */}
+            {scenario.aiScore !== null && scenario.aiAnalysis && (
+              <div className="mb-8 sm:rounded-2xl rounded-xl border border-[#D4AF37]/10 bg-[#D4AF37]/[0.03] overflow-hidden">
+                <div className="px-6 py-4 border-b border-[#D4AF37]/10 flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <Sparkles className="h-4 w-4 text-[#D4AF37]" />
+                    <span className="text-sm font-semibold text-[#D4AF37]">Analyse IA</span>
+                  </div>
+                  <div className={cn(
+                    'px-3 py-1 rounded-full text-xs font-bold',
+                    scenario.aiScore >= 75 ? 'bg-green-500/15 text-green-400' :
+                    scenario.aiScore >= 50 ? 'bg-yellow-500/15 text-yellow-400' :
+                    'bg-red-500/15 text-red-400'
+                  )}>
+                    {scenario.aiScore}/100
+                  </div>
+                </div>
+                <div className="px-6 py-4 space-y-3">
+                  <p className="text-sm text-white/60 leading-relaxed">{scenario.aiAnalysis}</p>
+                  {scenario.aiSuggestions.length > 0 && (
+                    <div>
+                      <p className="text-xs font-medium text-white/40 mb-2">Suggestions</p>
+                      <ul className="space-y-1.5">
+                        {scenario.aiSuggestions.map((s: string, i: number) => (
+                          <li key={i} className="flex items-start gap-2 text-xs text-white/50">
+                            <span className="text-[#D4AF37] mt-0.5">&#8226;</span>
+                            {s}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
                 </div>
               </div>
             )}
