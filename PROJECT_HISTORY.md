@@ -107,6 +107,174 @@
 11. **Netflix-style UI** — Horizontal scroll rows, hero banner, dark+gold theme, creator bar integrated
 12. **Fallback data** — Homepage works without DB connection using hardcoded film cards
 
+### 2026-02-24 — Design Polish + Screenwriter CTA + Premium Footer
+- **Design refinement across all Netflix components**:
+  - HeroBanner: taller viewport, animated progress bar per slide, pause on hover, stronger typography
+  - FilmRow: consistent padding, rounded-xl cards with ring border, hover glow, gradient play button
+  - TopTenRow: refined number sizing, play button on hover, gold ring
+  - CreatorBar: refined animations (scale 0.96→1), taller cards, stronger icons
+  - Footer: 12-column grid, Lucide icons, gold accent line, "Powered by" bar
+- **ScreenwriterCTA section**: "100 Scenaristes. Un Film." — recruitment banner, benefits grid, stats bar
+- **Better fallback images**: Cinematic Unsplash images matched to each film theme
+- **Consistent padding**: All sections use `px-8 md:px-16 lg:px-20`
+
+---
+
+## ROADMAP — Etapes Detaillees
+
+> Chaque etape contient: description, prompt Claude, pre-requis utilisateur.
+> API Claude disponible dans .env (ANTHROPIC_API_KEY).
+
+### PHASE A — Fondations Visuelles (Semaines 1-2)
+
+#### A1. Generateur d'affiches IA pour les 20 films
+**Statut**: PRET (API Claude dispo)
+**Pre-requis utilisateur**: Aucun
+**Prompt Claude**:
+```
+L'API Anthropic est dans .env. Cree une route API /api/generate-poster qui:
+1. Prend un filmId
+2. Lit le film depuis Prisma (titre, genre, synopsis)
+3. Utilise Claude pour generer un prompt de poster cinematique
+4. Genere un SVG placeholder poster avec le prompt (titre en grand, gradient du genre)
+5. Sauvegarde dans /public/posters/{slug}.webp
+6. Met a jour coverImageUrl dans la DB
+Cree un script batch pour generer toutes les affiches.
+Optimise: max_tokens=200, envoie uniquement titre+genre+logline.
+```
+
+#### A2. Page d'inscription scenariste dediee
+**Statut**: PRET
+**Pre-requis utilisateur**: Texte des CGU scenaristes (a fournir)
+**Prompt Claude**:
+```
+Cree /register/screenwriter avec formulaire multi-etapes: Identite > Pitch > Portfolio > CGU Blockchain.
+Champs: nom, email, bio, portfolio, pitch (500 mots max), genres.
+CGU: credits blockchain acceptes. Server action createScreenwriterAction.
+Design: theme Netflix gold/dark. Lien depuis ScreenwriterCTA.
+```
+
+#### A3. Amelioration header + search
+**Statut**: PRET
+**Pre-requis utilisateur**: Aucun
+**Prompt Claude**:
+```
+Ameliore NetflixHeader: search expandable (films par titre/genre), icones mobile
+(notifications, lumens), transition slide-down fluide, active state dore plus visible.
+```
+
+### PHASE B — Intelligence Artificielle (Semaines 3-4)
+
+#### B1. AI Synopsis Generator
+**Statut**: PRET (API Claude dispo)
+**Pre-requis utilisateur**: Aucun
+**Prompt Claude**:
+```
+Cree generateSynopsisAction(filmId): lit film, appelle Claude API
+(system: scenariste pro, user: titre+genre+logline), met a jour synopsis.
+Bouton admin "Generer synopsis IA". max_tokens=300, temperature=0.8.
+```
+
+#### B2. AI Task Description Generator
+**Statut**: PRET
+**Pre-requis utilisateur**: Aucun
+**Prompt Claude**:
+```
+Dans film-decomposer.ts, appelle Claude pour enrichir chaque tache:
+descriptionMd + instructionsMd generes. Batch 10 taches/appel, JSON strict.
+```
+
+#### B3. AI Scenario Scoring
+**Statut**: PRET
+**Pre-requis utilisateur**: Aucun
+**Prompt Claude**:
+```
+Cree scoreScenarioAction(scenarioId): analyse scenario par Claude (originalite,
+potentiel commercial, faisabilite IA, qualite ecriture). Score/100 + feedback.
+Ajouter aiScore, aiFeedback dans ScenarioProposal. max_tokens=500.
+```
+
+### PHASE C — Experience Utilisateur (Semaines 5-6)
+
+#### C1. Editeur de soumission de scenario
+**Statut**: A FAIRE
+**Pre-requis utilisateur**: Format accepte (PDF/Markdown/texte)
+**Prompt Claude**:
+```
+Page /community/scenarios/submit: editeur riche, titre/genre/logline/synopsis,
+preview split-screen, upload PDF, submitScenarioAction + scoreScenarioAction auto.
+Design: dark, gold, typo scenariste.
+```
+
+#### C2. Dashboard scenariste
+**Statut**: A FAIRE
+**Pre-requis utilisateur**: Aucun
+**Prompt Claude**:
+```
+Page /dashboard/screenwriter: liste scenarios + statut + score IA, stats,
+notifications shortlist/victoire, CTA nouveau scenario, graphique votes.
+force-dynamic requis.
+```
+
+#### C3. Page de vote amelioree
+**Statut**: A FAIRE
+**Pre-requis utilisateur**: Aucun
+**Prompt Claude**:
+```
+Ameliore /community/scenarios: cartes scenario (titre, genre, logline, score IA,
+auteur), vote un-click dore, filtres genre/score/date, tri, barre progression votes.
+```
+
+### PHASE D — Production & Blockchain (Semaines 7-8)
+
+#### D1. Timeline visuelle de production
+**Statut**: A FAIRE
+**Pre-requis utilisateur**: Aucun
+**Prompt Claude**:
+```
+Composant FilmTimeline dans /films/[slug]: 10 phases en timeline Gantt, progression,
+click expand taches, couleurs par statut. Responsive vertical sur mobile.
+```
+
+#### D2. Smart contract preparation
+**Statut**: A FAIRE
+**Pre-requis utilisateur**: Choix blockchain (Polygon ou Base) + wallet deploiement
+**Prompt Claude**:
+```
+Cree src/lib/smart-contracts.ts: interfaces FilmToken (ERC-20), FilmNFT (ERC-721),
+GovernanceVote. ABI types, prepareTransaction(), config reseau testnet.
+```
+
+#### D3. Notifications temps reel
+**Statut**: A FAIRE
+**Pre-requis utilisateur**: Aucun
+**Prompt Claude**:
+```
+Route SSE /api/notifications/stream, hook useNotifications(), toast pour votes/taches/
+shortlist, badge temps reel header, son optionnel.
+```
+
+### PHASE E — Monetisation & Growth (Semaines 9-10)
+
+#### E1. Stripe integration
+**Statut**: A FAIRE
+**Pre-requis utilisateur**: Compte Stripe + cles API (test mode ok)
+**Prompt Claude**:
+```
+Integre Stripe: /api/stripe/checkout, /api/stripe/webhook, abonnement premium,
+page /pricing (Free/Premium/Producer), webhook met a jour tokens.
+```
+
+#### E2. Email transactionnel
+**Statut**: A FAIRE
+**Pre-requis utilisateur**: Compte Resend ou SendGrid + cle API
+**Prompt Claude**:
+```
+Integre Resend: templates bienvenue/confirmation/shortlist/victoire/vote,
+sendEmailAction generique, appel auto dans registration/submit/vote/winner.
+Templates HTML branding Lumiere gold/dark.
+```
+
 ---
 
 ## Important Files
@@ -121,5 +289,5 @@
 - `src/app/actions/tasks.ts` — Task claim, submit, abandon + blockchain events
 - `src/app/actions/tokenization.ts` — Token purchase, sale, governance, dividends + blockchain events
 - `next.config.ts` — Build & optimization configuration
-- `src/components/netflix/` — Netflix-style UI components (header, hero, film rows, creator bar)
-- `SLATE_DECK.md` — Full project pipeline with 15 projects details
+- `src/components/netflix/` — Netflix-style UI components (header, hero, film rows, creator bar, screenwriter CTA)
+- `SLATE_DECK.md` — Full project pipeline with 20 projects details

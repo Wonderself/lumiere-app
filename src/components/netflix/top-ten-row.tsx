@@ -3,7 +3,7 @@
 import { useRef, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { ChevronLeft, ChevronRight, Play } from 'lucide-react'
 
 interface FilmCard {
   id: string
@@ -17,10 +17,10 @@ interface FilmCard {
 }
 
 const FALLBACK_IMAGES = [
-  'https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=400&q=80',
-  'https://images.unsplash.com/photo-1485846234645-a62644f84728?w=400&q=80',
-  'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=400&q=80',
-  'https://images.unsplash.com/photo-1574375927938-d5a98e8d7e28?w=400&q=80',
+  'https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=800&h=1200&fit=crop',
+  'https://images.unsplash.com/photo-1485846234645-a62644f84728?w=800&h=1200&fit=crop',
+  'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=800&h=1200&fit=crop',
+  'https://images.unsplash.com/photo-1574375927938-d5a98e8d7e28?w=800&h=1200&fit=crop',
 ]
 
 export function TopTenRow({ films }: { films: FilmCard[] }) {
@@ -49,36 +49,48 @@ export function TopTenRow({ films }: { films: FilmCard[] }) {
   const topFilms = films.slice(0, 10)
 
   return (
-    <section className="relative group/row mb-8 md:mb-10">
-      <div className="px-4 md:px-12 mb-3">
-        <h2 className="text-lg md:text-xl font-bold text-white/90 tracking-tight" style={{ fontFamily: 'var(--font-playfair)' }}>
-          Top 10 des Projets
-        </h2>
+    <section className="relative group/row mb-12 md:mb-16">
+      {/* Section title */}
+      <div className="px-8 md:px-16 lg:px-20 mb-5">
+        <div className="flex items-center gap-3">
+          <div className="h-7 w-1.5 rounded-full bg-gradient-to-b from-[#D4AF37] to-[#8B6914]" />
+          <h2
+            className="text-lg md:text-xl lg:text-2xl font-bold text-white/90 tracking-tight"
+            style={{ fontFamily: 'var(--font-playfair)' }}
+          >
+            Top 10 des Projets
+          </h2>
+          <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#D4AF37]/50 ml-1">Lumiere</span>
+        </div>
       </div>
 
       <div className="relative">
         {showLeft && (
           <button
             onClick={() => scroll('left')}
-            className="absolute left-0 top-0 bottom-0 z-10 w-12 md:w-16 bg-gradient-to-r from-[#0A0A0A] to-transparent flex items-center justify-start pl-2 opacity-0 group-hover/row:opacity-100 transition-opacity"
+            className="absolute left-0 top-0 bottom-0 z-20 w-16 md:w-20 bg-gradient-to-r from-[#0A0A0A] via-[#0A0A0A]/80 to-transparent flex items-center justify-start pl-3 opacity-0 group-hover/row:opacity-100 transition-opacity duration-300"
           >
-            <ChevronLeft className="h-8 w-8 text-white/80" />
+            <div className="h-10 w-10 rounded-full bg-black/60 backdrop-blur-sm border border-white/10 flex items-center justify-center">
+              <ChevronLeft className="h-5 w-5 text-white/80" />
+            </div>
           </button>
         )}
 
         {showRight && (
           <button
             onClick={() => scroll('right')}
-            className="absolute right-0 top-0 bottom-0 z-10 w-12 md:w-16 bg-gradient-to-l from-[#0A0A0A] to-transparent flex items-center justify-end pr-2 opacity-0 group-hover/row:opacity-100 transition-opacity"
+            className="absolute right-0 top-0 bottom-0 z-20 w-16 md:w-20 bg-gradient-to-l from-[#0A0A0A] via-[#0A0A0A]/80 to-transparent flex items-center justify-end pr-3 opacity-0 group-hover/row:opacity-100 transition-opacity duration-300"
           >
-            <ChevronRight className="h-8 w-8 text-white/80" />
+            <div className="h-10 w-10 rounded-full bg-black/60 backdrop-blur-sm border border-white/10 flex items-center justify-center">
+              <ChevronRight className="h-5 w-5 text-white/80" />
+            </div>
           </button>
         )}
 
         <div
           ref={scrollRef}
           onScroll={updateArrows}
-          className="flex gap-2 overflow-x-auto scrollbar-hide px-4 md:px-12 scroll-smooth"
+          className="flex gap-0 md:gap-0 overflow-x-auto scrollbar-hide px-8 md:px-16 lg:px-20 scroll-smooth"
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
           {topFilms.map((film, idx) => (
@@ -87,19 +99,22 @@ export function TopTenRow({ films }: { films: FilmCard[] }) {
               href={film.type === 'catalog' ? `/streaming/${film.slug}` : `/films/${film.slug}`}
               className="group/card flex-shrink-0 flex items-end relative"
             >
-              {/* Big number */}
+              {/* Big number — positioned behind poster */}
               <div
-                className="text-[120px] sm:text-[140px] md:text-[160px] font-black leading-none text-transparent select-none mr-[-20px] z-10"
+                className="text-[90px] sm:text-[110px] md:text-[130px] lg:text-[150px] font-black leading-none select-none z-10 transition-all duration-500 group-hover/card:scale-105"
                 style={{
-                  WebkitTextStroke: '3px rgba(212, 175, 55, 0.4)',
+                  WebkitTextStroke: '2.5px rgba(212, 175, 55, 0.25)',
+                  color: 'transparent',
                   fontFamily: 'var(--font-playfair)',
+                  filter: 'drop-shadow(0 0 30px rgba(212, 175, 55, 0.06))',
+                  marginRight: '-18px',
                 }}
               >
                 {idx + 1}
               </div>
 
               {/* Poster */}
-              <div className="relative w-[120px] sm:w-[140px] md:w-[160px] aspect-[2/3] rounded-md overflow-hidden transition-all duration-300 group-hover/card:scale-105 group-hover/card:shadow-[0_8px_40px_rgba(212,175,55,0.15)]">
+              <div className="relative w-[105px] sm:w-[125px] md:w-[145px] lg:w-[158px] aspect-[2/3] rounded-xl overflow-hidden transition-all duration-300 group-hover/card:scale-105 ring-1 ring-white/5 group-hover/card:ring-[#D4AF37]/30 group-hover/card:shadow-[0_8px_40px_rgba(212,175,55,0.15)]">
                 <Image
                   src={film.coverImageUrl || FALLBACK_IMAGES[idx % FALLBACK_IMAGES.length]}
                   alt={film.title}
@@ -107,9 +122,19 @@ export function TopTenRow({ films }: { films: FilmCard[] }) {
                   className="object-cover"
                   sizes="160px"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity">
-                  <div className="absolute bottom-2 left-2 right-2">
-                    <p className="text-[10px] font-bold text-white truncate">{film.title}</p>
+                {/* Hover overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity duration-300">
+                  {/* Play icon */}
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover/card:opacity-100 transition-all duration-300 scale-75 group-hover/card:scale-100">
+                    <div className="h-10 w-10 rounded-full flex items-center justify-center shadow-[0_0_25px_rgba(212,175,55,0.4)]" style={{ background: 'linear-gradient(135deg, #D4AF37, #F0D060)' }}>
+                      <Play className="h-4 w-4 text-black fill-black ml-0.5" />
+                    </div>
+                  </div>
+                  <div className="absolute bottom-3 left-3 right-3">
+                    <p className="text-[11px] font-bold text-white truncate">{film.title}</p>
+                    {film.genre && (
+                      <p className="text-[9px] text-white/50 mt-0.5">{film.genre}</p>
+                    )}
                   </div>
                 </div>
               </div>

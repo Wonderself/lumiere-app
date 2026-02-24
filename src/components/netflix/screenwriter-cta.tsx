@@ -1,0 +1,159 @@
+'use client'
+
+import Link from 'next/link'
+import { Pen, Users, Award, TrendingUp, ArrowRight, Star, Shield } from 'lucide-react'
+import { motion } from 'framer-motion'
+
+const benefits = [
+  {
+    icon: Pen,
+    label: 'Ecrivez',
+    description: 'Soumettez votre scenario original',
+  },
+  {
+    icon: Users,
+    label: 'Communaute',
+    description: 'Le public vote pour ses favoris',
+  },
+  {
+    icon: Award,
+    label: 'Production',
+    description: 'Les gagnants sont produits en film',
+  },
+  {
+    icon: Shield,
+    label: 'Blockchain',
+    description: 'Credits et droits garantis on-chain',
+  },
+]
+
+export function ScreenwriterCTA() {
+  return (
+    <section className="relative mx-8 md:mx-16 lg:mx-20 mb-16 overflow-hidden rounded-2xl">
+      {/* Background — cinematic dark with gold accents */}
+      <div className="absolute inset-0 bg-gradient-to-br from-[#0F0F0F] via-[#1A1508] to-[#0F0F0F]" />
+      <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1455390582262-044cdead277a?w=1200&q=30')] bg-cover bg-center opacity-[0.06]" />
+
+      {/* Gold accent lines */}
+      <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#D4AF37]/40 to-transparent" />
+      <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#D4AF37]/20 to-transparent" />
+
+      {/* Corner accents */}
+      <div className="absolute top-0 left-0 w-20 h-20 bg-gradient-to-br from-[#D4AF37]/10 to-transparent" />
+      <div className="absolute bottom-0 right-0 w-20 h-20 bg-gradient-to-tl from-[#D4AF37]/10 to-transparent" />
+
+      {/* Content */}
+      <div className="relative z-10 px-8 md:px-12 lg:px-16 py-12 md:py-16">
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-10">
+          {/* Left: Main CTA */}
+          <div className="max-w-xl">
+            {/* Badge */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#D4AF37]/20 bg-[#D4AF37]/5 mb-6"
+            >
+              <Star className="h-3.5 w-3.5 text-[#D4AF37]" />
+              <span className="text-[11px] font-bold tracking-[0.15em] uppercase text-[#D4AF37]">
+                Appel a candidatures
+              </span>
+            </motion.div>
+
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              className="text-3xl md:text-4xl lg:text-[2.75rem] font-black text-white leading-[1.1] tracking-tight mb-5"
+              style={{ fontFamily: 'var(--font-playfair)' }}
+            >
+              100 Scenaristes.<br />
+              <span className="text-[#D4AF37]">Un Film.</span>
+            </motion.h2>
+
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+              className="text-sm md:text-[15px] text-white/45 leading-[1.7] mb-8 max-w-md"
+            >
+              Nous invitons 100 scenaristes a soumettre leurs projets au vote de la communaute.
+              Le scenario gagnant sera produit en film. Les auteurs sont automatiquement credites
+              et coproducteurs dans la blockchain.
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3 }}
+              className="flex flex-col sm:flex-row items-start sm:items-center gap-4"
+            >
+              <Link
+                href="/register?role=SCREENWRITER"
+                className="group inline-flex items-center gap-2.5 px-8 py-3.5 rounded-xl text-sm font-bold text-black transition-all duration-300 hover:shadow-[0_0_50px_rgba(212,175,55,0.4)] hover:scale-[1.03] active:scale-[0.97]"
+                style={{ background: 'linear-gradient(135deg, #D4AF37 0%, #F0D060 50%, #D4AF37 100%)' }}
+              >
+                <Pen className="h-4 w-4" />
+                Candidater maintenant
+                <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
+              <Link
+                href="/community/scenarios"
+                className="text-sm text-white/40 hover:text-[#D4AF37] transition-colors font-medium"
+              >
+                Voir les scenarios soumis
+              </Link>
+            </motion.div>
+          </div>
+
+          {/* Right: Benefits grid */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2, duration: 0.6 }}
+            className="grid grid-cols-2 gap-4 lg:gap-5 max-w-sm"
+          >
+            {benefits.map((benefit, idx) => (
+              <div
+                key={benefit.label}
+                className="group p-4 md:p-5 rounded-xl bg-white/[0.03] border border-white/[0.06] hover:border-[#D4AF37]/20 hover:bg-white/[0.05] transition-all duration-300"
+              >
+                <benefit.icon className="h-5 w-5 text-[#D4AF37]/70 mb-3 group-hover:text-[#D4AF37] transition-colors" />
+                <p className="text-[13px] font-bold text-white/80 mb-1">{benefit.label}</p>
+                <p className="text-[10px] text-white/30 leading-relaxed">{benefit.description}</p>
+              </div>
+            ))}
+          </motion.div>
+        </div>
+
+        {/* Bottom stats */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.4 }}
+          className="flex items-center gap-8 mt-10 pt-8 border-t border-white/[0.05]"
+        >
+          <div>
+            <p className="text-2xl md:text-3xl font-black text-[#D4AF37]" style={{ fontFamily: 'var(--font-playfair)' }}>100</p>
+            <p className="text-[10px] text-white/30 uppercase tracking-wider mt-0.5">Places</p>
+          </div>
+          <div className="h-8 w-[1px] bg-white/[0.06]" />
+          <div>
+            <p className="text-2xl md:text-3xl font-black text-white/80" style={{ fontFamily: 'var(--font-playfair)' }}>1</p>
+            <p className="text-[10px] text-white/30 uppercase tracking-wider mt-0.5">Film produit</p>
+          </div>
+          <div className="h-8 w-[1px] bg-white/[0.06]" />
+          <div>
+            <p className="text-2xl md:text-3xl font-black text-white/80" style={{ fontFamily: 'var(--font-playfair)' }}>&#x221E;</p>
+            <p className="text-[10px] text-white/30 uppercase tracking-wider mt-0.5">Royalties on-chain</p>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  )
+}

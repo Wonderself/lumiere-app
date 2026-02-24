@@ -293,3 +293,85 @@ Each phase has: status (LOCKED/ACTIVE/COMPLETED), order, dependencies
 - AI scoring and feedback
 - Modification tolerance tracking
 - Status management
+
+---
+
+## 15. Netflix-Style Homepage (2026-02-24)
+
+### Hero Banner
+- Full-viewport auto-rotating film carousel (65-92vh responsive)
+- Animated progress bar per slide with auto-advance (8s)
+- Pause on hover, manual navigation arrows + dot navigation
+- Cinematic multi-layer gradient overlays (left, bottom, top vignette)
+- Film grain texture overlay
+- Genre badge with gold accent line
+- Action buttons: "Decouvrir" (gold gradient) + "Plus d'infos" (frosted glass)
+- Smooth crossfade animation with framer-motion
+
+### Film Rows
+- Horizontal scrolling film card carousel
+- Card features: 2:3 aspect ratio posters, rounded-xl, ring border, hover glow
+- Status badges (colored by status) always visible
+- Hover overlay: play button (gold gradient), title, genre, progress bar
+- Scroll arrows appear on row hover
+- Categories: Top 10, Notre Selection, En Production, Streaming, Genres, En Dev
+
+### Top 10 Row
+- Large overlapping numbered rankings (90-150px)
+- Gold text-stroke numbers with drop shadow
+- Poster overlaps number with negative margin
+- Play button and film info on hover
+
+### Creator Bar
+- 4 interactive cards: Ecrire, Voter, Concours, Produire
+- Background images with dark overlay + gradient per type
+- Icon, title, description, CTA arrow on hover
+- Top accent line + bottom border glow on hover
+- Staggered animation on scroll into view
+
+### Screenwriter CTA Section (NEW)
+- "100 Scenaristes. Un Film." recruitment banner
+- Benefits grid: Ecrivez, Communaute, Production, Blockchain
+- Stats bar: 100 places, 1 film produit, royalties on-chain infini
+- Motion animations on scroll
+- CTA: "Candidater maintenant" linking to /register?role=SCREENWRITER
+
+### Netflix Header
+- Fixed, transparent → solid on scroll with backdrop blur
+- Logo + 6 navigation links (Accueil, Films, Streaming, Communaute, Acteurs, Classement)
+- Search icon, notifications, Lumens balance, user dropdown
+- Mobile hamburger menu with slide-down animation
+- Gold accent on active link
+
+### Premium Footer
+- 12-column grid layout (Brand, Plateforme, Contribuer, Legal)
+- Lucide icons in navigation links
+- Gold accent top line
+- "Powered by Next.js, Claude AI, Blockchain" bar
+- Cities: Paris, Tel Aviv, Hollywood
+
+---
+
+## 16. Consistent Design System
+
+### Spacing
+- All sections: `px-8 md:px-16 lg:px-20` (consistent horizontal padding)
+- Section gaps: `mb-12 md:mb-16`
+- Content max-width enforced via max-w-2xl on hero text
+
+### Typography
+- Headlines: Playfair Display, font-black, tracking-tight
+- Body: Inter, text-white/45-90 for contrast hierarchy
+- Sizes: 10px (labels) → 13px (body) → 2xl-5rem (hero titles)
+
+### Colors
+- Background: #0A0A0A (near-black)
+- Gold primary: #D4AF37 (accent), #F0D060 (light), #8B6914 (dark)
+- Status: Green (#10B981), Blue (#60A5FA), Purple (#A78BFA), Gray (#6B7280)
+- Text: white with opacity scale (15-90%)
+
+### Effects
+- Card hover: scale 1.06, ring-[#D4AF37]/30, shadow
+- Gradient buttons: linear-gradient(135deg, #D4AF37, #F0D060, #D4AF37)
+- Frosted glass: backdrop-blur-xl + bg-white/8
+- Transitions: 300-500ms, ease [0.25, 0.1, 0.25, 1]
