@@ -163,94 +163,97 @@ export default function RoadmapPage() {
   const progressPercent = Math.round((doneItems / totalItems) * 100)
 
   return (
-    <div className="min-h-screen py-16 px-4">
+    <div className="min-h-screen py-16 sm:py-24 px-4 sm:px-6 lg:px-8 relative">
+      {/* Ambient background */}
+      <div className="fixed inset-0 pointer-events-none -z-10">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[400px] rounded-full bg-[#D4AF37]/[0.03] blur-[200px]" />
+      </div>
+
       <div className="container mx-auto max-w-5xl">
         {/* Header */}
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#D4AF37]/10 border border-[#D4AF37]/20 text-[#D4AF37] text-sm font-medium mb-6">
-            <Rocket className="h-4 w-4" />
-            Plan de Développement
+        <div className="text-center mb-16 sm:mb-20">
+          <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-[#D4AF37]/[0.06] border border-[#D4AF37]/15 text-[#D4AF37] text-xs sm:text-sm font-medium mb-7">
+            <Rocket className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+            Plan de Developpement
           </div>
 
           <h1
-            className="text-4xl md:text-6xl font-bold mb-4"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-5 tracking-tight"
             style={{ fontFamily: 'var(--font-playfair)' }}
           >
             Roadmap{' '}
-            <span
-              style={{
-                background: 'linear-gradient(135deg, #D4AF37 0%, #F0D060 40%, #D4AF37 70%, #B8960C 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text',
-              }}
-            >
-              Lumière Cinema
+            <span className="text-shimmer">
+              Lumiere Cinema
             </span>
           </h1>
-          <p className="text-white/50 text-lg mb-10 max-w-2xl mx-auto">
-            7 phases pour construire le studio de cinéma IA le plus ambitieux au monde.
-            Chaque étape est concrète, réaliste, et nous rapproche du lancement.
+          <p className="text-white/40 text-base sm:text-lg mb-12 max-w-2xl mx-auto leading-relaxed">
+            7 phases pour construire le studio de cinema IA le plus ambitieux au monde.
+            Chaque etape est concrete, realiste, et nous rapproche du lancement.
           </p>
 
           {/* Progress */}
-          <div className="inline-flex flex-col items-center gap-3 p-6 rounded-2xl border border-white/5 bg-white/[0.02]">
-            <div className="flex items-center gap-3">
-              <div className="text-4xl font-bold text-[#D4AF37]">{progressPercent}%</div>
+          <div className="inline-flex flex-col items-center gap-4 p-6 sm:p-8 rounded-2xl sm:rounded-3xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm">
+            <div className="flex items-center gap-4">
+              <div className="text-4xl sm:text-5xl font-bold text-[#D4AF37]" style={{ fontFamily: 'var(--font-playfair)' }}>{progressPercent}%</div>
               <div className="text-left">
-                <div className="text-sm text-white/60">{doneItems} / {totalItems} complétés</div>
-                <div className="text-xs text-white/30">Phase {roadmap.findIndex(p => p.status === 'in_progress') + 1} en cours</div>
+                <div className="text-sm text-white/50">{doneItems} / {totalItems} completes</div>
+                <div className="text-xs text-white/25">Phase {roadmap.findIndex(p => p.status === 'in_progress') + 1} en cours</div>
               </div>
             </div>
-            <div className="w-72 h-2.5 bg-white/10 rounded-full overflow-hidden">
+            <div className="w-full max-w-72 h-2.5 bg-white/[0.06] rounded-full overflow-hidden">
               <div
                 className="h-full bg-gradient-to-r from-[#D4AF37] to-[#F0D060] rounded-full transition-all"
                 style={{ width: `${progressPercent}%` }}
               />
             </div>
-            <div className="flex gap-6 text-xs text-white/40">
-              <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-green-400" /> {doneItems} terminés</span>
-              <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-[#D4AF37]" /> {inProgressItems} en cours</span>
-              <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-white/20" /> {totalItems - doneItems - inProgressItems} à venir</span>
+            <div className="flex gap-6 text-xs text-white/30">
+              <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-green-400" /> {doneItems} termines</span>
+              <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-[#D4AF37]" /> {inProgressItems} en cours</span>
+              <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-white/15" /> {totalItems - doneItems - inProgressItems} a venir</span>
             </div>
           </div>
         </div>
 
         {/* Phases */}
-        <div className="space-y-12">
-          {roadmap.map((phase) => {
+        <div className="space-y-16">
+          {roadmap.map((phase, phaseIndex) => {
             const phaseConfig = STATUS_CONFIG[phase.status]
             const phaseDone = phase.items.filter((i) => i.status === 'done').length
             const phaseProgress = (phaseDone / phase.items.length) * 100
 
             return (
-              <div key={phase.id}>
+              <div key={phase.id} className="relative">
+                {/* Connecting line between phases */}
+                {phaseIndex < roadmap.length - 1 && (
+                  <div className="absolute left-6 top-full h-16 w-px bg-gradient-to-b from-white/[0.06] to-transparent hidden sm:block" />
+                )}
+
                 {/* Phase Header */}
-                <div className="flex items-center gap-4 mb-4">
-                  <div className={`flex items-center gap-2 px-4 py-2 rounded-full border text-sm font-semibold ${phaseConfig.bg} ${phaseConfig.color}`}>
-                    <span>{phase.emoji}</span>
+                <div className="flex items-center gap-4 mb-5">
+                  <div className={`flex items-center gap-2.5 px-5 py-2.5 rounded-2xl border text-sm font-semibold backdrop-blur-sm ${phaseConfig.bg} ${phaseConfig.color}`}>
+                    <span className="text-base">{phase.emoji}</span>
                     {phase.version} — {phase.name}
                     {phase.status === 'done' && <CheckCircle className="h-4 w-4 text-green-400" />}
                   </div>
-                  <div className="flex-1 h-px bg-white/5" />
-                  <span className="text-sm text-white/30">{phaseDone}/{phase.items.length}</span>
+                  <div className="flex-1 h-px bg-gradient-to-r from-white/[0.06] to-transparent" />
+                  <span className="text-sm text-white/30 font-medium tabular-nums">{phaseDone}/{phase.items.length}</span>
                 </div>
 
-                <p className="text-white/40 text-sm mb-4 ml-1">{phase.description}</p>
+                <p className="text-white/40 text-sm mb-5 ml-1 leading-relaxed">{phase.description}</p>
 
-                <div className="h-1 bg-white/5 rounded-full overflow-hidden mb-6">
+                <div className="h-1.5 bg-white/[0.04] rounded-full overflow-hidden mb-7">
                   <div
                     className={`h-full rounded-full transition-all duration-1000 ${
-                      phase.status === 'done' ? 'bg-green-500' :
+                      phase.status === 'done' ? 'bg-gradient-to-r from-green-500 to-emerald-400' :
                       phase.status === 'in_progress' ? 'bg-gradient-to-r from-[#D4AF37] to-[#F0D060]' :
-                      'bg-white/10'
+                      'bg-white/[0.06]'
                     }`}
                     style={{ width: `${phaseProgress}%` }}
                   />
                 </div>
 
                 {/* Items */}
-                <div className="grid sm:grid-cols-2 gap-3">
+                <div className="grid sm:grid-cols-2 gap-3 stagger-children">
                   {phase.items.map((item) => {
                     const itemConfig = STATUS_CONFIG[item.status]
                     const diffConfig = DIFFICULTY_CONFIG[item.difficulty]
@@ -258,21 +261,21 @@ export default function RoadmapPage() {
                     return (
                       <div
                         key={item.id}
-                        className={`flex items-start gap-3 p-4 rounded-xl border transition-all ${itemConfig.bg}`}
+                        className={`group flex items-start gap-3.5 p-4 sm:p-5 rounded-xl sm:rounded-2xl border transition-all duration-500 hover-lift ${itemConfig.bg}`}
                       >
-                        <itemConfig.icon className={`h-5 w-5 mt-0.5 shrink-0 ${itemConfig.color}`} />
+                        <itemConfig.icon className={`h-5 w-5 mt-0.5 shrink-0 transition-transform duration-500 group-hover:scale-110 ${itemConfig.color}`} />
                         <div className="flex-1 min-w-0">
-                          <div className="flex items-center gap-2 mb-1 flex-wrap">
-                            <p className={`text-sm font-medium ${item.status === 'done' ? 'text-white/60 line-through' : 'text-white'}`}>
+                          <div className="flex items-center gap-2 mb-1.5 flex-wrap">
+                            <p className={`text-sm font-medium ${item.status === 'done' ? 'text-white/50 line-through decoration-white/20' : 'text-white/90'}`}>
                               {item.title}
                             </p>
-                            <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full border text-[10px] font-medium ${diffConfig.color}`}>
+                            <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full border text-[10px] font-medium ${diffConfig.color}`}>
                               {diffConfig.text} {diffConfig.label}
                             </span>
                           </div>
                           <p className="text-xs text-white/30 leading-relaxed">{item.description}</p>
                           {item.note && (
-                            <p className="text-xs text-[#D4AF37]/60 mt-1 flex items-center gap-1">
+                            <p className="text-xs text-[#D4AF37]/50 mt-1.5 flex items-center gap-1.5">
                               <Sparkles className="h-3 w-3" /> {item.note}
                             </p>
                           )}
@@ -286,34 +289,47 @@ export default function RoadmapPage() {
           })}
         </div>
 
+        {/* Section separator */}
+        <div className="my-20 h-px bg-gradient-to-r from-transparent via-[#D4AF37]/10 to-transparent" />
+
         {/* Encouraging footer */}
-        <div className="mt-16 p-8 rounded-2xl border border-[#D4AF37]/20 bg-[#D4AF37]/5 text-center">
-          <PartyPopper className="h-8 w-8 text-[#D4AF37] mx-auto mb-4" />
-          <h3
-            className="text-xl font-bold mb-3 text-white"
-            style={{ fontFamily: 'var(--font-playfair)' }}
-          >
-            Le futur du cinéma se construit maintenant
-          </h3>
-          <p className="text-white/50 text-sm mb-6 max-w-xl mx-auto">
-            La majorité des fonctionnalités sont faciles à moyennes. Avec Claude IA comme assistant de développement,
-            chaque étape est documentée et guidée. Le MVP complet (V1→V3) peut être atteint rapidement.
-          </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-            <Link
-              href="/register"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#D4AF37] hover:bg-[#C5A028] text-white font-semibold transition-colors text-sm"
+        <div className="relative p-8 sm:p-12 rounded-2xl sm:rounded-3xl border border-[#D4AF37]/15 bg-[#D4AF37]/[0.03] text-center overflow-hidden backdrop-blur-sm">
+          {/* Background glow */}
+          <div className="absolute inset-0 pointer-events-none">
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[300px] rounded-full bg-[#D4AF37]/[0.04] blur-[120px]" />
+          </div>
+
+          <div className="relative z-10">
+            <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-[#D4AF37]/10 border border-[#D4AF37]/20 mb-6">
+              <PartyPopper className="h-7 w-7 text-[#D4AF37]" />
+            </div>
+            <h3
+              className="text-xl sm:text-2xl font-bold mb-4 text-white"
+              style={{ fontFamily: 'var(--font-playfair)' }}
             >
-              <Zap className="h-4 w-4" />
-              Rejoindre l&apos;Aventure
-            </Link>
-            <Link
-              href="/tasks"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-white/10 hover:border-[#D4AF37]/30 text-white/60 hover:text-white font-semibold transition-all text-sm"
-            >
-              Explorer les Tâches
-              <ChevronRight className="h-4 w-4" />
-            </Link>
+              Le futur du cinema se construit{' '}
+              <span className="text-shimmer">maintenant</span>
+            </h3>
+            <p className="text-white/40 text-sm sm:text-base mb-8 max-w-xl mx-auto leading-relaxed">
+              La majorite des fonctionnalites sont faciles a moyennes. Avec Claude IA comme assistant de developpement,
+              chaque etape est documentee et guidee. Le MVP complet (V1→V3) peut etre atteint rapidement.
+            </p>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <Link
+                href="/register"
+                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-2xl bg-[#D4AF37] hover:bg-[#C5A028] text-black font-semibold transition-all duration-500 text-sm shadow-lg shadow-[#D4AF37]/20 hover:shadow-[#D4AF37]/30 hover:scale-[1.02]"
+              >
+                <Zap className="h-4 w-4" />
+                Rejoindre l&apos;Aventure
+              </Link>
+              <Link
+                href="/tasks"
+                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-2xl border border-white/[0.08] hover:border-[#D4AF37]/30 text-white/50 hover:text-white font-semibold transition-all duration-500 text-sm hover:bg-white/[0.02]"
+              >
+                Explorer les Taches
+                <ChevronRight className="h-4 w-4" />
+              </Link>
+            </div>
           </div>
         </div>
       </div>

@@ -36,14 +36,16 @@ export default async function AdminScreenplaysPage() {
   }
 
   return (
-    <div className="p-8 space-y-8">
+    <div className="space-y-8">
       <div>
-        <h1 className="text-3xl font-bold mb-1" style={{ fontFamily: 'var(--font-playfair)' }}>Scénarios</h1>
+        <h1 className="text-3xl sm:text-4xl font-bold mb-1" style={{ fontFamily: 'var(--font-playfair)' }}>Scénarios</h1>
         <p className="text-white/50">{screenplays.length} scénario{screenplays.length > 1 ? 's' : ''} soumis</p>
       </div>
 
+      <div className="h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
+
       {screenplays.length === 0 ? (
-        <Card>
+        <Card className="sm:rounded-2xl">
           <CardContent className="p-12 text-center">
             <FileText className="h-12 w-12 text-white/20 mx-auto mb-3" />
             <p className="text-white/40">Aucun scénario soumis</p>
@@ -52,7 +54,7 @@ export default async function AdminScreenplaysPage() {
       ) : (
         <div className="space-y-4">
           {screenplays.map((s) => (
-            <Card key={s.id} className="hover:border-white/10 transition-all">
+            <Card key={s.id} className="sm:rounded-2xl hover:border-white/10 hover:shadow-md hover:-translate-y-[1px] transition-all duration-500">
               <CardContent className="p-6">
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex-1 min-w-0">

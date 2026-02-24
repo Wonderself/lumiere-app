@@ -29,11 +29,13 @@ export default async function AdminReviewsPage() {
   })
 
   return (
-    <div className="p-8 space-y-6">
+    <div className="space-y-8">
       <div>
-        <h1 className="text-3xl font-bold" style={{ fontFamily: 'var(--font-playfair)' }}>Queue de Review</h1>
+        <h1 className="text-3xl sm:text-4xl font-bold" style={{ fontFamily: 'var(--font-playfair)' }}>Queue de Review</h1>
         <p className="text-white/50">{submissions.length} soumission{submissions.length > 1 ? 's' : ''} en attente</p>
       </div>
+
+      <div className="h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
 
       {submissions.length === 0 ? (
         <div className="text-center py-24 text-white/30">
@@ -44,7 +46,7 @@ export default async function AdminReviewsPage() {
       ) : (
         <div className="space-y-6">
           {submissions.map((sub) => (
-            <div key={sub.id} className="rounded-xl border border-white/10 bg-white/[0.02] overflow-hidden">
+            <div key={sub.id} className="sm:rounded-2xl rounded-xl border border-white/10 bg-white/[0.02] overflow-hidden hover:shadow-md transition-all duration-500">
               {/* Header */}
               <div className="p-4 border-b border-white/5 flex items-center justify-between">
                 <div>
@@ -101,7 +103,7 @@ export default async function AdminReviewsPage() {
                 )}
                 {sub.fileUrl && (
                   <a href={sub.fileUrl} target="_blank" rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-sm text-[#D4AF37] hover:text-[#F0D060]">
+                    className="inline-flex items-center gap-2 text-sm text-[#D4AF37] hover:text-[#F0D060] transition-colors duration-300">
                     Voir le fichier soumis →
                   </a>
                 )}
@@ -116,7 +118,7 @@ export default async function AdminReviewsPage() {
                       type="text"
                       name="feedback"
                       placeholder="Commentaire optionnel..."
-                      className="flex-1 h-9 rounded-lg border border-white/10 bg-white/5 px-3 text-sm text-white placeholder:text-white/30 focus:outline-none focus:ring-1 focus:ring-green-500/50"
+                      className="flex-1 h-9 rounded-xl border border-white/10 bg-white/5 px-3 text-sm text-white placeholder:text-white/30 focus:outline-none focus:ring-1 focus:ring-green-500/50 transition-colors duration-300"
                     />
                     <Button type="submit" size="sm" className="bg-green-600 hover:bg-green-500 text-white shrink-0">
                       <CheckCircle className="h-4 w-4 mr-1" /> Approuver
@@ -132,7 +134,7 @@ export default async function AdminReviewsPage() {
                       name="feedback"
                       placeholder="Raison du rejet (obligatoire)..."
                       required
-                      className="h-9 w-48 rounded-lg border border-white/10 bg-white/5 px-3 text-sm text-white placeholder:text-white/30 focus:outline-none focus:ring-1 focus:ring-red-500/50"
+                      className="h-9 w-48 rounded-xl border border-white/10 bg-white/5 px-3 text-sm text-white placeholder:text-white/30 focus:outline-none focus:ring-1 focus:ring-red-500/50 transition-colors duration-300"
                     />
                     <Button type="submit" size="sm" variant="destructive" className="shrink-0">
                       <XCircle className="h-4 w-4 mr-1" /> Rejeter

@@ -9,7 +9,7 @@ export function Footer() {
           {/* Brand */}
           <div className="lg:col-span-2 space-y-5">
             <Image
-              src="/images/lumiere-brothers-logo-cinema-dark.png"
+              src="/images/lumiere-brothers-logo-cinema-dark.webp"
               alt="Lumière Brothers Pictures"
               width={180}
               height={50}

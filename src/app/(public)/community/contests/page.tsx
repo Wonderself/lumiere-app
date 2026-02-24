@@ -105,7 +105,7 @@ export default async function ContestsPage() {
         <div className="text-center mb-16">
           <div className="flex items-center justify-center gap-3 mb-4">
             <Trophy className="h-10 w-10 text-[#D4AF37]" />
-            <h1 className="text-5xl font-bold text-gray-900" style={{ fontFamily: 'var(--font-playfair)' }}>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900" style={{ fontFamily: 'var(--font-playfair)' }}>
               Concours
             </h1>
           </div>
@@ -114,7 +114,7 @@ export default async function ContestsPage() {
           </p>
           <Link
             href="/community"
-            className="inline-flex items-center gap-1 text-sm text-[#D4AF37] mt-4 hover:text-[#C4A030] transition-colors"
+            className="inline-flex items-center gap-1 text-sm text-[#D4AF37] mt-4 hover:text-[#C4A030] transition-colors duration-300"
           >
             &larr; Retour a la communaute
           </Link>
@@ -148,7 +148,7 @@ export default async function ContestsPage() {
 
                       return (
                         <Link key={contest.id} href={`/community/contests/${contest.id}`}>
-                          <Card variant={config.cardVariant} className="h-full group cursor-pointer border-gray-100 bg-white shadow-sm hover:shadow-md transition-shadow">
+                          <Card variant={config.cardVariant} className="h-full group cursor-pointer border-gray-100 bg-white shadow-sm hover:shadow-lg hover:shadow-[#D4AF37]/5 hover:-translate-y-[1px] transition-all duration-500">
                             <CardContent className="p-6">
                               {/* Top row */}
                               <div className="flex items-start justify-between mb-4">
@@ -162,7 +162,7 @@ export default async function ContestsPage() {
                               </div>
 
                               {/* Title & description */}
-                              <h3 className="text-lg font-semibold mb-2 text-gray-900 group-hover:text-[#D4AF37] transition-colors">
+                              <h3 className="text-lg font-semibold mb-2 text-gray-900 group-hover:text-[#D4AF37] transition-colors duration-300">
                                 {contest.title}
                               </h3>
                               {contest.description && (
@@ -180,7 +180,7 @@ export default async function ContestsPage() {
                               )}
 
                               {/* Meta */}
-                              <div className="flex items-center gap-4 text-xs text-gray-400 border-t border-gray-100 pt-3 mt-3">
+                              <div className="flex items-center gap-4 text-xs text-gray-400 border-t border-white/[0.06] pt-3 mt-3">
                                 {contest.film && (
                                   <span className="flex items-center gap-1">
                                     <Clapperboard className="h-3 w-3" />
@@ -209,7 +209,7 @@ export default async function ContestsPage() {
 
                               {/* CTA arrow */}
                               <div className="flex justify-end mt-3">
-                                <ArrowRight className="h-4 w-4 text-gray-300 group-hover:text-[#D4AF37] transition-colors" />
+                                <ArrowRight className="h-4 w-4 text-gray-300 group-hover:text-[#D4AF37] transition-colors duration-300" />
                               </div>
                             </CardContent>
                           </Card>

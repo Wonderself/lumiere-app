@@ -92,7 +92,7 @@ export default async function ContestDetailPage({
         {/* Breadcrumb */}
         <Link
           href="/community/contests"
-          className="inline-flex items-center gap-1.5 text-sm text-white/40 hover:text-[#D4AF37] transition-colors duration-200 mb-6 sm:mb-8 min-h-[44px]"
+          className="inline-flex items-center gap-1.5 text-sm text-white/40 hover:text-[#D4AF37] transition-colors duration-300 mb-6 sm:mb-8 min-h-[44px]"
         >
           <ArrowLeft className="h-4 w-4" />
           Retour aux concours
@@ -112,7 +112,7 @@ export default async function ContestDetailPage({
             )}
           </div>
 
-          <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4" style={{ fontFamily: 'var(--font-playfair)' }}>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4" style={{ fontFamily: 'var(--font-playfair)' }}>
             {contest.title}
           </h1>
 
@@ -144,7 +144,7 @@ export default async function ContestDetailPage({
 
           {/* Prize banner */}
           {contest.prizeDescription && (
-            <div className="mt-6 p-4 rounded-xl bg-[#D4AF37]/[0.05] border border-[#D4AF37]/20 flex items-center gap-3">
+            <div className="mt-6 p-4 sm:rounded-2xl rounded-xl bg-[#D4AF37]/[0.05] border border-[#D4AF37]/20 flex items-center gap-3 backdrop-blur-sm">
               <Gift className="h-5 w-5 text-[#D4AF37] shrink-0" />
               <div>
                 <span className="text-xs text-[#D4AF37]/60 uppercase tracking-wider font-medium">Prix</span>
@@ -162,16 +162,19 @@ export default async function ContestDetailPage({
         )}
 
         {isOpen && !userId && (
-          <div className="mb-10 p-5 rounded-xl border border-[#D4AF37]/20 bg-[#D4AF37]/[0.03] text-center">
+          <div className="mb-10 p-5 sm:rounded-2xl rounded-xl border border-[#D4AF37]/20 bg-[#D4AF37]/[0.03] text-center backdrop-blur-sm">
             <p className="text-white/60 mb-3">Connectez-vous pour participer a ce concours</p>
             <Link
               href="/login"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#D4AF37] text-black font-semibold hover:bg-[#F0D060] transition-colors text-sm"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#D4AF37] text-black font-semibold hover:bg-[#F0D060] transition-colors duration-300 text-sm"
             >
               Se connecter
             </Link>
           </div>
         )}
+
+        {/* Section separator */}
+        <div className="h-px bg-gradient-to-r from-transparent via-[#D4AF37]/10 to-transparent mb-6" />
 
         {/* Entries */}
         <div className="mb-6 flex items-center justify-between">
@@ -206,7 +209,7 @@ export default async function ContestDetailPage({
                 <Card
                   key={entry.id}
                   variant={isWinner ? 'gold' : 'default'}
-                  className="relative overflow-hidden"
+                  className="relative overflow-hidden hover:shadow-lg hover:shadow-[#D4AF37]/5 hover:-translate-y-[1px] transition-all duration-500"
                 >
                   {/* Winner crown */}
                   {isWinner && (
@@ -247,7 +250,7 @@ export default async function ContestDetailPage({
                         href={entry.videoUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 hover:opacity-100 transition-opacity"
+                        className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 hover:opacity-100 transition-opacity duration-300"
                       >
                         <div className="w-12 h-12 rounded-full bg-[#D4AF37] flex items-center justify-center shadow-lg">
                           <Play className="h-5 w-5 text-black ml-0.5" />
@@ -295,7 +298,7 @@ export default async function ContestDetailPage({
 
         {/* Bottom CTA */}
         {!userId && (isVoting || isOpen) && (
-          <div className="mt-10 text-center p-8 rounded-2xl border border-[#D4AF37]/20 bg-[#D4AF37]/[0.03]">
+          <div className="mt-10 text-center p-8 sm:rounded-3xl rounded-2xl border border-[#D4AF37]/20 bg-[#D4AF37]/[0.03] backdrop-blur-sm">
             <Trophy className="h-8 w-8 text-[#D4AF37] mx-auto mb-3" />
             <h3 className="text-xl font-bold mb-2" style={{ fontFamily: 'var(--font-playfair)' }}>
               {isVoting ? 'Connectez-vous pour voter' : 'Participez a ce concours'}
@@ -306,13 +309,13 @@ export default async function ContestDetailPage({
             <div className="flex flex-col sm:flex-row justify-center gap-3">
               <Link
                 href="/login"
-                className="px-5 py-2.5 rounded-full bg-[#D4AF37] text-black font-semibold hover:bg-[#F0D060] transition-all duration-200 text-sm text-center min-h-[44px] inline-flex items-center justify-center"
+                className="px-5 py-2.5 rounded-full bg-[#D4AF37] text-black font-semibold hover:bg-[#F0D060] transition-all duration-300 text-sm text-center min-h-[44px] inline-flex items-center justify-center"
               >
                 Se connecter
               </Link>
               <Link
                 href="/register"
-                className="px-5 py-2.5 rounded-full border border-[#D4AF37]/30 text-[#D4AF37] font-semibold hover:bg-[#D4AF37]/10 transition-all duration-200 text-sm text-center min-h-[44px] inline-flex items-center justify-center"
+                className="px-5 py-2.5 rounded-full border border-[#D4AF37]/30 text-[#D4AF37] font-semibold hover:bg-[#D4AF37]/10 transition-all duration-300 text-sm text-center min-h-[44px] inline-flex items-center justify-center"
               >
                 Creer un compte
               </Link>

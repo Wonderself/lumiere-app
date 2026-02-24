@@ -4,6 +4,12 @@ import { auth } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
 import { redirect } from 'next/navigation'
 import { revalidatePath } from 'next/cache'
+import {
+  recordVoteOnChain,
+  recordVoteTallyOnChain,
+  recordPrizeDistribution,
+  recordContestClosed,
+} from '@/lib/blockchain'
 
 // ============================================
 // SCENARIO PROPOSALS
@@ -77,11 +83,25 @@ export async function voteScenarioAction(formData: FormData) {
 
   try {
     // Create vote (unique constraint catches duplicates)
-    await prisma.scenarioVote.create({
+    const vote = await prisma.scenarioVote.create({
       data: {
         proposalId,
         userId: session.user.id,
       },
+    })
+
+    // Record on blockchain
+    const { proofHash } = await recordVoteOnChain({
+      voteType: 'SCENARIO',
+      entityId: vote.id,
+      voterId: session.user.id,
+      proposalId,
+    })
+
+    // Store txHash on vote
+    await prisma.scenarioVote.update({
+      where: { id: vote.id },
+      data: { txHash: `0x${proofHash.slice(0, 64)}` },
     })
 
     // Increment votesCount
@@ -135,11 +155,68 @@ export async function pickScenarioWinnerAction(formData: FormData) {
   try {
     const proposal = await prisma.scenarioProposal.findUnique({
       where: { id: proposalId },
+      include: { votes: true },
     })
 
     if (!proposal) return { error: 'Proposition introuvable.' }
 
-    // Set as winner
+    // Get all voting proposals for tally
+    const allProposals = await prisma.scenarioProposal.findMany({
+      where: { round: proposal.round, status: 'VOTING' },
+      orderBy: { votesCount: 'desc' },
+    })
+
+    // Build vote tally for blockchain
+    const results: Record<string, number> = {}
+    allProposals.forEach((p) => { results[p.id] = p.votesCount })
+
+    // Record tally on-chain
+    await recordVoteTallyOnChain({
+      contestType: 'SCENARIO',
+      contestId: `round-${proposal.round}`,
+      results,
+      winnerId: proposalId,
+    })
+
+    // Record contest closure on-chain
+    await recordContestClosed({
+      contestId: `round-${proposal.round}`,
+      contestType: 'SCENARIO',
+      winnerId: proposalId,
+      totalVotes: allProposals.reduce((sum, p) => sum + p.votesCount, 0),
+    })
+
+    // Distribute prize if pool exists
+    if (proposal.prizePoolEur > 0) {
+      await prisma.lumenTransaction.create({
+        data: {
+          userId: proposal.authorId,
+          amount: Math.round(proposal.prizePoolEur * 100),
+          type: 'BONUS',
+          description: `Prix scénario gagnant — "${proposal.title}"`,
+          relatedId: proposalId,
+        },
+      })
+      await prisma.user.update({
+        where: { id: proposal.authorId },
+        data: { lumenBalance: { increment: Math.round(proposal.prizePoolEur * 100) } },
+      })
+
+      await recordPrizeDistribution({
+        contestId: `round-${proposal.round}`,
+        contestType: 'SCENARIO',
+        winners: [{ userId: proposal.authorId, rank: 1, amountEur: proposal.prizePoolEur }],
+        totalPool: proposal.prizePoolEur,
+      })
+
+      // Mark prize as claimed
+      await prisma.scenarioProposal.update({
+        where: { id: proposalId },
+        data: { prizeClaimedAt: new Date() },
+      })
+    }
+
+    // Set as winner + store on-chain hash
     await prisma.scenarioProposal.update({
       where: { id: proposalId },
       data: { status: 'WINNER' },
@@ -178,6 +255,8 @@ export async function createContestAction(formData: FormData) {
   const startDate = formData.get('startDate') as string
   const endDate = formData.get('endDate') as string
   const prizeDescription = (formData.get('prizeDescription') as string)?.trim() || null
+  const prizePoolEur = parseFloat(formData.get('prizePoolEur') as string) || 0
+  const autoClose = formData.get('autoClose') === 'true'
 
   if (!title || title.length < 3) {
     return { error: 'Le titre doit contenir au moins 3 caractères.' }
@@ -192,6 +271,9 @@ export async function createContestAction(formData: FormData) {
         startDate: startDate ? new Date(startDate) : null,
         endDate: endDate ? new Date(endDate) : null,
         prizeDescription,
+        prizePoolEur,
+        prizeDistribution: { '1st': 60, '2nd': 25, '3rd': 15 },
+        autoClose,
         status: 'UPCOMING',
       },
     })
@@ -265,11 +347,24 @@ export async function voteTrailerAction(formData: FormData) {
   }
 
   try {
-    await prisma.trailerVote.create({
+    const vote = await prisma.trailerVote.create({
       data: {
         entryId,
         userId: session.user.id,
       },
+    })
+
+    // Record on blockchain
+    const { proofHash } = await recordVoteOnChain({
+      voteType: 'TRAILER',
+      entityId: vote.id,
+      voterId: session.user.id,
+    })
+
+    // Store txHash on vote
+    await prisma.trailerVote.update({
+      where: { id: vote.id },
+      data: { txHash: `0x${proofHash.slice(0, 64)}` },
     })
 
     await prisma.trailerEntry.update({
@@ -299,17 +394,90 @@ export async function updateContestStatusAction(formData: FormData) {
   if (!contestId || !newStatus) return { error: 'Paramètres manquants.' }
 
   try {
-    const updateData: any = { status: newStatus }
+    const updateData: Record<string, unknown> = { status: newStatus }
 
-    // If closing, find the winning entry
+    // If closing, find the winning entry + tally + distribute prizes
     if (newStatus === 'CLOSED') {
-      const topEntry = await prisma.trailerEntry.findFirst({
+      const entries = await prisma.trailerEntry.findMany({
         where: { contestId },
         orderBy: { votesCount: 'desc' },
+        include: { user: { select: { id: true } } },
       })
 
-      if (topEntry) {
-        updateData.winnerId = topEntry.id
+      const contest = await prisma.trailerContest.findUnique({
+        where: { id: contestId },
+      })
+
+      if (entries.length > 0) {
+        updateData.winnerId = entries[0].id
+
+        // Build vote tally for blockchain
+        const results: Record<string, number> = {}
+        entries.forEach((e) => { results[e.id] = e.votesCount })
+        const totalVotes = entries.reduce((sum, e) => sum + e.votesCount, 0)
+
+        // Record tally on-chain
+        await recordVoteTallyOnChain({
+          contestType: 'TRAILER',
+          contestId,
+          results,
+          winnerId: entries[0].id,
+        })
+
+        // Record contest closure on-chain
+        await recordContestClosed({
+          contestId,
+          contestType: 'TRAILER',
+          winnerId: entries[0].id,
+          totalVotes,
+        })
+
+        // Distribute prizes if pool exists
+        const pool = contest?.prizePoolEur || 0
+        if (pool > 0) {
+          const dist = (contest?.prizeDistribution as Record<string, number>) || { '1st': 60, '2nd': 25, '3rd': 15 }
+          const winners: Array<{ userId: string; rank: number; amountEur: number }> = []
+
+          const ranks = [
+            { key: '1st', rank: 1 },
+            { key: '2nd', rank: 2 },
+            { key: '3rd', rank: 3 },
+          ]
+
+          for (const r of ranks) {
+            const entry = entries[r.rank - 1]
+            if (!entry) break
+            const pct = dist[r.key] || 0
+            const amount = (pool * pct) / 100
+            if (amount > 0) {
+              winners.push({ userId: entry.user.id, rank: r.rank, amountEur: amount })
+              // Credit lumens (1 EUR = configurable lumen rate)
+              await prisma.lumenTransaction.create({
+                data: {
+                  userId: entry.user.id,
+                  amount: Math.round(amount * 100),
+                  type: 'BONUS',
+                  description: `Prix ${r.key} — ${contest?.title || 'Concours'}`,
+                  relatedId: contestId,
+                },
+              })
+              await prisma.user.update({
+                where: { id: entry.user.id },
+                data: { lumenBalance: { increment: Math.round(amount * 100) } },
+              })
+            }
+          }
+
+          // Record prize distribution on-chain
+          if (winners.length > 0) {
+            await recordPrizeDistribution({
+              contestId,
+              contestType: 'TRAILER',
+              winners,
+              totalPool: pool,
+            })
+          }
+        }
       }
     }
 

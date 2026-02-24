@@ -600,3 +600,101 @@ export async function updateSettingsAction(formData: FormData) {
 
   revalidatePath('/admin/settings')
 }
+
+// ─── Phase Timer Actions ──────────────────────────────────────────
+
+export async function setPhaseDeadlineAction(formData: FormData) {
+  await requireAdmin()
+
+  const phaseId = formData.get('phaseId') as string
+  const startsAt = formData.get('startsAt') as string
+  const endsAt = formData.get('endsAt') as string
+  const estimatedDays = parseInt(formData.get('estimatedDays') as string) || 30
+
+  if (!phaseId) return { error: 'Phase invalide.' }
+
+  await prisma.filmPhase.update({
+    where: { id: phaseId },
+    data: {
+      startsAt: startsAt ? new Date(startsAt) : null,
+      endsAt: endsAt ? new Date(endsAt) : null,
+      estimatedDays,
+    },
+  })
+
+  revalidatePath('/admin/films')
+  return { success: true }
+}
+
+export async function unlockPhaseAction(formData: FormData) {
+  await requireAdmin()
+
+  const phaseId = formData.get('phaseId') as string
+  if (!phaseId) return { error: 'Phase invalide.' }
+
+  const phase = await prisma.filmPhase.findUnique({
+    where: { id: phaseId },
+    include: { film: true },
+  })
+
+  if (!phase) return { error: 'Phase introuvable.' }
+
+  await prisma.filmPhase.update({
+    where: { id: phaseId },
+    data: {
+      status: 'ACTIVE',
+      startsAt: new Date(),
+      endsAt: new Date(Date.now() + phase.estimatedDays * 24 * 60 * 60 * 1000),
+    },
+  })
+
+  revalidatePath('/admin/films')
+  revalidatePath(`/admin/films/${phase.filmId}/edit`)
+  return { success: true }
+}
+
+export async function completePhaseAction(formData: FormData) {
+  await requireAdmin()
+
+  const phaseId = formData.get('phaseId') as string
+  if (!phaseId) return { error: 'Phase invalide.' }
+
+  const phase = await prisma.filmPhase.findUnique({
+    where: { id: phaseId },
+    include: { film: { include: { phases: { orderBy: { phaseOrder: 'asc' } } } } },
+  })
+
+  if (!phase) return { error: 'Phase introuvable.' }
+
+  // Complete current phase
+  await prisma.filmPhase.update({
+    where: { id: phaseId },
+    data: { status: 'COMPLETED', completedAt: new Date() },
+  })
+
+  // Auto-unlock next phase
+  const nextPhase = phase.film.phases.find((p) => p.phaseOrder === phase.phaseOrder + 1)
+  if (nextPhase && nextPhase.status === 'LOCKED') {
+    await prisma.filmPhase.update({
+      where: { id: nextPhase.id },
+      data: {
+        status: 'ACTIVE',
+        startsAt: new Date(),
+        endsAt: new Date(Date.now() + nextPhase.estimatedDays * 24 * 60 * 60 * 1000),
+      },
+    })
+  }
+
+  // Update film progress
+  const completedCount = phase.film.phases.filter((p) => p.status === 'COMPLETED').length + 1
+  const totalPhases = phase.film.phases.length
+  await prisma.film.update({
+    where: { id: phase.filmId },
+    data: { progressPct: Math.round((completedCount / totalPhases) * 100) },
+  })
+
+  revalidatePath('/admin/films')
+  revalidatePath(`/admin/films/${phase.filmId}/edit`)
+  revalidatePath(`/films/${phase.film.slug}`)
+  return { success: true }
+}

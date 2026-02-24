@@ -53,10 +53,10 @@ export default async function LumensPage() {
   const lumenPrice = settings?.lumenPrice ?? 1.0
 
   return (
-    <div className="p-8 space-y-8 max-w-5xl mx-auto">
+    <div className="space-y-8 max-w-5xl mx-auto">
       {/* Page Title */}
       <div>
-        <h1 className="text-3xl font-bold text-gray-900" style={{ fontFamily: 'var(--font-playfair)' }}>
+        <h1 className="text-3xl sm:text-4xl font-bold text-gray-900" style={{ fontFamily: 'var(--font-playfair)' }}>
           Mes Lumens
         </h1>
         <p className="text-gray-500 mt-1">
@@ -65,7 +65,7 @@ export default async function LumensPage() {
       </div>
 
       {/* Balance Card */}
-      <div className="relative overflow-hidden bg-white rounded-2xl shadow-sm border border-[#D4AF37]/20">
+      <div className="relative overflow-hidden bg-white sm:rounded-3xl rounded-2xl shadow-sm border border-[#D4AF37]/20">
         <div className="absolute inset-0 bg-gradient-to-br from-amber-50 via-transparent to-amber-50/30 pointer-events-none" />
         <div className="p-8 md:p-12 flex flex-col items-center text-center relative">
           <div className="w-16 h-16 rounded-full bg-amber-50 border border-[#D4AF37]/20 flex items-center justify-center mb-6">
@@ -86,11 +86,14 @@ export default async function LumensPage() {
         </div>
       </div>
 
+      {/* Section separator */}
+      <div className="h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
+
       {/* Purchase Section */}
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-100">
+      <div className="bg-white sm:rounded-3xl rounded-2xl shadow-sm border border-gray-100/80">
         <div className="p-6 pb-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-amber-50 border border-amber-100 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-xl bg-amber-50 border border-amber-100 flex items-center justify-center">
               <ShoppingCart className="h-5 w-5 text-[#D4AF37]" />
             </div>
             <div>
@@ -111,11 +114,14 @@ export default async function LumensPage() {
         </div>
       </div>
 
+      {/* Section separator */}
+      <div className="h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
+
       {/* Withdraw Section */}
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-100">
+      <div className="bg-white sm:rounded-3xl rounded-2xl shadow-sm border border-gray-100/80">
         <div className="p-6 pb-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-green-50 border border-green-100 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-xl bg-green-50 border border-green-100 flex items-center justify-center">
               <ArrowDownCircle className="h-5 w-5 text-green-500" />
             </div>
             <div>
@@ -136,11 +142,14 @@ export default async function LumensPage() {
         </div>
       </div>
 
+      {/* Section separator */}
+      <div className="h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
+
       {/* Transaction History */}
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-100">
+      <div className="bg-white sm:rounded-3xl rounded-2xl shadow-sm border border-gray-100/80">
         <div className="p-6 pb-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-gray-50 border border-gray-200 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-xl bg-gray-50 border border-gray-200 flex items-center justify-center">
               <Sparkles className="h-5 w-5 text-gray-500" />
             </div>
             <h2
@@ -164,7 +173,7 @@ export default async function LumensPage() {
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
-                  <tr className="border-b border-gray-100 text-left">
+                  <tr className="border-b border-gray-100/80 text-left">
                     <th className="pb-3 text-xs text-gray-400 font-medium">Date</th>
                     <th className="pb-3 text-xs text-gray-400 font-medium">Type</th>
                     <th className="pb-3 text-xs text-gray-400 font-medium">Description</th>
@@ -175,7 +184,7 @@ export default async function LumensPage() {
                   {transactions.map((tx) => (
                     <tr
                       key={tx.id}
-                      className="border-b border-gray-50 hover:bg-gray-50 transition-colors"
+                      className="border-b border-gray-50 hover:bg-gray-50 transition-colors duration-300"
                     >
                       <td className="py-3 pr-4 text-sm text-gray-600 whitespace-nowrap">
                         {formatDateShort(tx.createdAt)}

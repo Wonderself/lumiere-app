@@ -14,11 +14,13 @@ export default async function NewFilmPage() {
   if (!session?.user || session.user.role !== 'ADMIN') redirect('/dashboard')
 
   return (
-    <div className="p-8 max-w-2xl space-y-8">
+    <div className="max-w-2xl space-y-8">
       <div>
-        <h1 className="text-3xl font-bold" style={{ fontFamily: 'var(--font-playfair)' }}>Nouveau Film</h1>
+        <h1 className="text-3xl sm:text-4xl font-bold" style={{ fontFamily: 'var(--font-playfair)' }}>Nouveau Film</h1>
         <p className="text-white/50">Créez un nouveau projet de film sur la plateforme.</p>
       </div>
+
+      <div className="h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
 
       <form action={createFilmAction} className="space-y-6">
         <div className="grid grid-cols-2 gap-4">
@@ -32,7 +34,7 @@ export default async function NewFilmPage() {
             <select
               id="genre"
               name="genre"
-              className="h-10 w-full rounded-lg border border-white/10 bg-white/5 px-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/50"
+              className="h-10 w-full rounded-xl border border-white/10 bg-white/5 px-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/50 transition-colors duration-300"
             >
               <option value="">Sélectionner un genre</option>
               {GENRES.map((g) => <option key={g} value={g}>{g}</option>)}
@@ -44,7 +46,7 @@ export default async function NewFilmPage() {
             <select
               id="catalog"
               name="catalog"
-              className="h-10 w-full rounded-lg border border-white/10 bg-white/5 px-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/50"
+              className="h-10 w-full rounded-xl border border-white/10 bg-white/5 px-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/50 transition-colors duration-300"
             >
               {Object.entries(CATALOG_LABELS).map(([value, label]) => (
                 <option key={value} value={value}>{label}</option>
@@ -60,7 +62,7 @@ export default async function NewFilmPage() {
             name="description"
             rows={3}
             placeholder="Description affichée dans le catalogue..."
-            className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/50 resize-vertical"
+            className="w-full rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/50 resize-vertical transition-colors duration-300"
           />
         </div>
 
@@ -71,7 +73,7 @@ export default async function NewFilmPage() {
             name="synopsis"
             rows={5}
             placeholder="Synopsis détaillé du film..."
-            className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/50 resize-vertical"
+            className="w-full rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/50 resize-vertical transition-colors duration-300"
           />
         </div>
 

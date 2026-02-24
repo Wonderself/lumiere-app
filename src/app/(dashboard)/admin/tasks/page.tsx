@@ -31,16 +31,18 @@ export default async function AdminTasksPage() {
   })
 
   return (
-    <div className="p-8 space-y-6">
+    <div className="space-y-8">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold" style={{ fontFamily: 'var(--font-playfair)' }}>Tâches</h1>
+          <h1 className="text-3xl sm:text-4xl font-bold" style={{ fontFamily: 'var(--font-playfair)' }}>Tâches</h1>
           <p className="text-white/50">{tasks.length} tâche{tasks.length > 1 ? 's' : ''} au total</p>
         </div>
         <Link href="/admin/tasks/new">
           <Button><Plus className="h-4 w-4 mr-2" /> Nouvelle Tâche</Button>
         </Link>
       </div>
+
+      <div className="h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
 
       {tasks.length === 0 ? (
         <div className="text-center py-20 text-white/30">
@@ -50,7 +52,7 @@ export default async function AdminTasksPage() {
       ) : (
         <div className="space-y-2">
           {tasks.map((task) => (
-            <div key={task.id} className="flex items-center gap-4 p-4 rounded-xl border border-white/5 bg-white/[0.02] hover:border-white/10 transition-all">
+            <div key={task.id} className="flex items-center gap-4 p-4 sm:rounded-2xl rounded-xl border border-white/5 bg-white/[0.02] hover:border-white/10 hover:shadow-md hover:-translate-y-[1px] transition-all duration-500">
               <div className={`w-2 h-10 rounded-full shrink-0 ${
                 task.status === 'AVAILABLE' ? 'bg-green-500' :
                 task.status === 'VALIDATED' ? 'bg-[#D4AF37]' :
@@ -82,7 +84,7 @@ export default async function AdminTasksPage() {
                 {formatPrice(task.priceEuros)}
               </div>
 
-              <Link href={`/admin/tasks/${task.id}/edit`} className="text-white/20 hover:text-white/60 transition-colors shrink-0">
+              <Link href={`/admin/tasks/${task.id}/edit`} className="text-white/20 hover:text-white/60 transition-colors duration-300 shrink-0">
                 <Pencil className="h-4 w-4" />
               </Link>
             </div>

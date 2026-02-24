@@ -3,7 +3,7 @@ import { Sidebar } from '@/components/layout/sidebar'
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (
-    <>
+    <div className="light-theme">
       <Header />
       <div className="flex min-h-[calc(100vh-64px)]">
         <Sidebar />
@@ -13,6 +13,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           </div>
         </main>
       </div>
-    </>
+    </div>
   )
 }

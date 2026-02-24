@@ -80,14 +80,16 @@ export default async function AdminAnalyticsPage() {
   })
 
   return (
-    <div className="p-8 space-y-8">
+    <div className="space-y-8">
       <div>
-        <h1 className="text-3xl font-bold mb-1" style={{ fontFamily: 'var(--font-playfair)' }}>Analytics</h1>
+        <h1 className="text-3xl sm:text-4xl font-bold mb-1" style={{ fontFamily: 'var(--font-playfair)' }}>Analytics</h1>
         <p className="text-white/50">Données et tendances de la plateforme</p>
       </div>
 
+      <div className="h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
+
       <div className="grid lg:grid-cols-2 gap-6">
-        <Card>
+        <Card className="sm:rounded-2xl hover:shadow-md hover:-translate-y-[1px]">
           <CardHeader><CardTitle className="text-sm">Revenus dans le temps</CardTitle></CardHeader>
           <CardContent>
             {revenueData.length > 0 ? (
@@ -98,7 +100,7 @@ export default async function AdminAnalyticsPage() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="sm:rounded-2xl hover:shadow-md hover:-translate-y-[1px]">
           <CardHeader><CardTitle className="text-sm">Soumissions dans le temps</CardTitle></CardHeader>
           <CardContent>
             {subsData.length > 0 ? (
@@ -109,7 +111,7 @@ export default async function AdminAnalyticsPage() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="sm:rounded-2xl hover:shadow-md hover:-translate-y-[1px]">
           <CardHeader><CardTitle className="text-sm">Tâches par type</CardTitle></CardHeader>
           <CardContent>
             <BarChart data={tasksByType.map(t => ({
@@ -119,7 +121,7 @@ export default async function AdminAnalyticsPage() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="sm:rounded-2xl hover:shadow-md hover:-translate-y-[1px]">
           <CardHeader><CardTitle className="text-sm">Distribution des niveaux</CardTitle></CardHeader>
           <CardContent>
             <DonutChart data={usersByLevel.map(u => ({
@@ -130,14 +132,14 @@ export default async function AdminAnalyticsPage() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="sm:rounded-2xl hover:shadow-md hover:-translate-y-[1px]">
           <CardHeader><CardTitle className="text-sm">Taux de succès par difficulté</CardTitle></CardHeader>
           <CardContent>
             <BarChart data={successRateData} />
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="sm:rounded-2xl hover:shadow-md hover:-translate-y-[1px]">
           <CardHeader><CardTitle className="text-sm">Tâches par difficulté</CardTitle></CardHeader>
           <CardContent>
             <DonutChart data={tasksByDifficulty.map(t => ({

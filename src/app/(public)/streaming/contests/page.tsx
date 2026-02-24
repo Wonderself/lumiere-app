@@ -19,7 +19,7 @@ export default async function ContestsPage() {
   return (
     <div className="min-h-screen bg-[#0A0A0A]">
       <div className="max-w-6xl mx-auto px-6 py-12">
-        <Link href="/streaming" className="inline-flex items-center gap-2 text-white/40 hover:text-white/70 transition-colors mb-6">
+        <Link href="/streaming" className="inline-flex items-center gap-2 text-white/40 hover:text-white/70 transition-colors duration-300 mb-6">
           <ArrowLeft className="h-4 w-4" /> Retour au catalogue
         </Link>
 
@@ -27,7 +27,7 @@ export default async function ContestsPage() {
           <div className="inline-flex items-center justify-center h-16 w-16 rounded-full bg-[#D4AF37]/20 mb-4">
             <Trophy className="h-8 w-8 text-[#D4AF37]" />
           </div>
-          <h1 className="text-3xl md:text-4xl font-bold text-white font-[family-name:var(--font-playfair)]">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white font-[family-name:var(--font-playfair)]">
             Concours Mensuel
           </h1>
           <p className="text-white/50 mt-3 max-w-2xl mx-auto">
@@ -43,7 +43,7 @@ export default async function ContestsPage() {
             { position: '2ème', prize: '200€ + 500 tokens', color: '#C0C0C0' },
             { position: '3ème', prize: '100€ + 200 tokens', color: '#CD7F32' },
           ].map((p) => (
-            <Card key={p.position} className="bg-white/[0.03] border-white/10 text-center">
+            <Card key={p.position} className="bg-white/[0.03] border-white/[0.08] text-center backdrop-blur-sm">
               <CardContent className="p-6">
                 <Star className="h-8 w-8 mx-auto mb-2" style={{ color: p.color }} />
                 <p className="text-white text-xl font-bold">{p.position}</p>
@@ -52,6 +52,8 @@ export default async function ContestsPage() {
             </Card>
           ))}
         </div>
+
+        <div className="h-px bg-gradient-to-r from-transparent via-[#D4AF37]/10 to-transparent mb-8" />
 
         {/* Live Contest Films */}
         <h2 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
@@ -62,7 +64,7 @@ export default async function ContestsPage() {
           <div className="text-center py-16 mb-12">
             <Film className="h-12 w-12 text-white/10 mx-auto mb-3" />
             <p className="text-white/30">Aucun film en compétition ce mois-ci</p>
-            <Link href="/streaming/submit" className="inline-block mt-4 px-6 py-2.5 bg-[#D4AF37] text-black font-semibold rounded-lg hover:bg-[#F0D060] transition-colors">
+            <Link href="/streaming/submit" className="inline-block mt-4 px-6 py-2.5 bg-[#D4AF37] text-black font-semibold rounded-lg hover:bg-[#F0D060] transition-colors duration-300">
               Soumettre le premier
             </Link>
           </div>
@@ -70,7 +72,7 @@ export default async function ContestsPage() {
           <div className="space-y-4 mb-12">
             {liveFilms.map((film, index) => (
               <Link key={film.id} href={`/streaming/${film.slug}`}>
-                <Card className="bg-white/[0.03] border-white/10 hover:border-[#D4AF37]/30 transition-all">
+                <Card className="bg-white/[0.03] border-white/[0.08] hover:border-[#D4AF37]/30 hover:shadow-lg hover:shadow-[#D4AF37]/5 hover:-translate-y-[1px] transition-all duration-500 backdrop-blur-sm">
                   <CardContent className="p-4 flex items-center gap-4">
                     <div className="text-2xl font-bold text-white/20 w-10 text-center">
                       #{index + 1}
@@ -109,10 +111,11 @@ export default async function ContestsPage() {
         {/* Pending Films */}
         {pendingFilms.length > 0 && (
           <>
+            <div className="h-px bg-gradient-to-r from-transparent via-[#D4AF37]/10 to-transparent mb-8" />
             <h2 className="text-xl font-bold text-white/50 mb-4">En attente d&apos;approbation ({pendingFilms.length})</h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 opacity-60">
               {pendingFilms.map((film) => (
-                <Card key={film.id} className="bg-white/[0.02] border-white/5">
+                <Card key={film.id} className="bg-white/[0.02] border-white/[0.06] backdrop-blur-sm">
                   <CardContent className="p-3">
                     <div className="aspect-video rounded bg-white/5 mb-2 flex items-center justify-center">
                       <Film className="h-6 w-6 text-white/10" />

@@ -43,11 +43,13 @@ export default async function AdminPaymentsPage() {
   }
 
   return (
-    <div className="p-8 space-y-8">
+    <div className="space-y-8">
       <div>
-        <h1 className="text-3xl font-bold mb-1" style={{ fontFamily: 'var(--font-playfair)' }}>Paiements</h1>
+        <h1 className="text-3xl sm:text-4xl font-bold mb-1" style={{ fontFamily: 'var(--font-playfair)' }}>Paiements</h1>
         <p className="text-white/50">{payments.length} paiement{payments.length > 1 ? 's' : ''} au total</p>
       </div>
+
+      <div className="h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
 
       {/* Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
@@ -57,7 +59,7 @@ export default async function AdminPaymentsPage() {
           { icon: CreditCard, label: 'Total distribué', value: formatPrice(totalCompleted + totalPending), sub: 'toutes méthodes', color: 'text-[#D4AF37]' },
           { icon: AlertCircle, label: 'Moy. par paiement', value: formatPrice(countCompleted > 0 ? totalCompleted / countCompleted : 0), sub: 'paiements complétés', color: 'text-blue-400' },
         ].map((s) => (
-          <Card key={s.label}>
+          <Card key={s.label} className="sm:rounded-2xl hover:shadow-md hover:-translate-y-[1px]">
             <CardContent className="p-5">
               <s.icon className={`h-5 w-5 ${s.color} mb-2`} />
               <div className={`text-xl font-bold ${s.color}`}>{s.value}</div>
@@ -67,9 +69,11 @@ export default async function AdminPaymentsPage() {
         ))}
       </div>
 
+      <div className="h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
+
       {/* Payments table */}
       {payments.length === 0 ? (
-        <Card>
+        <Card className="sm:rounded-2xl">
           <CardContent className="p-12 text-center">
             <CreditCard className="h-12 w-12 text-white/20 mx-auto mb-3" />
             <p className="text-white/40">Aucun paiement</p>
@@ -89,7 +93,7 @@ export default async function AdminPaymentsPage() {
           </div>
 
           {payments.map((p) => (
-            <div key={p.id} className="grid grid-cols-12 gap-3 items-center px-4 py-3 rounded-xl border border-white/5 bg-white/[0.02] hover:border-white/10 transition-all">
+            <div key={p.id} className="grid grid-cols-12 gap-3 items-center px-4 py-3 sm:rounded-2xl rounded-xl border border-white/5 bg-white/[0.02] hover:border-white/10 hover:bg-gray-50/50 hover:shadow-md hover:-translate-y-[1px] transition-all duration-500">
               <div className="col-span-3 min-w-0">
                 <p className="text-sm font-medium truncate">{p.user.displayName}</p>
                 <p className="text-xs text-white/30 truncate">{p.user.email}</p>

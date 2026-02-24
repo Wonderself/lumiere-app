@@ -121,12 +121,16 @@ model Film {
 }
 
 model FilmPhase {
-  id          String      @id @default(cuid())
-  filmId      String
-  phaseName   PhaseName
-  phaseOrder  Int
-  status      PhaseStatus @default(LOCKED)
-  dependsOnId String?
+  id            String      @id @default(cuid())
+  filmId        String
+  phaseName     PhaseName
+  phaseOrder    Int
+  status        PhaseStatus @default(LOCKED)
+  dependsOnId   String?
+  startsAt      DateTime?
+  endsAt        DateTime?
+  estimatedDays Int         @default(30)
+  completedAt   DateTime?
 
   film       Film        @relation(fields: [filmId], references: [id], onDelete: Cascade)
   dependsOn  FilmPhase?  @relation("PhaseDeps", fields: [dependsOnId], references: [id])
@@ -1287,6 +1291,9 @@ model ScenarioProposal {
   status        ScenarioProposalStatus @default(SUBMITTED)
   round         Int                    @default(1)
   votesCount    Int                    @default(0)
+  prizePoolEur  Float                  @default(0)
+  prizeClaimedAt DateTime?
+  onChainHash   String?
   createdAt     DateTime               @default(now())
   updatedAt     DateTime               @updatedAt
 
@@ -1300,6 +1307,7 @@ model ScenarioVote {
   id         String   @id @default(cuid())
   proposalId String
   userId     String
+  txHash     String?
   createdAt  DateTime @default(now())
 
   proposal ScenarioProposal @relation(fields: [proposalId], references: [id], onDelete: Cascade)
@@ -1317,7 +1325,11 @@ model TrailerContest {
   startDate        DateTime?
   endDate          DateTime?
   prizeDescription String?
+  prizePoolEur     Float                 @default(0)
+  prizeDistribution Json?                // e.g. {"1st": 60, "2nd": 25, "3rd": 15}
   winnerId         String?
+  onChainHash      String?
+  autoClose        Boolean               @default(true)
   createdAt        DateTime              @default(now())
   updatedAt        DateTime              @updatedAt
 
@@ -1346,6 +1358,7 @@ model TrailerVote {
   id        String   @id @default(cuid())
   entryId   String
   userId    String
+  txHash    String?
   createdAt DateTime @default(now())
 
   entry TrailerEntry @relation(fields: [entryId], references: [id], onDelete: Cascade)
@@ -1401,4 +1414,44 @@ enum CreativeContestStatus {
   OPEN
   VOTING
   CLOSED
+}
+
+// ============================================
+// V7 — BLOCKCHAIN EVENT LOG
+// ============================================
+
+model BlockchainEvent {
+  id          String          @id @default(cuid())
+  type        BlockchainEventType
+  entityType  String          // "ScenarioVote", "TrailerVote", "GovernanceVote", "Prize", "TokenPurchase"
+  entityId    String
+  txHash      String?         @unique
+  chain       String          @default("polygon") // "polygon", "ethereum", "base"
+  blockNumber Int?
+  data        Json?           // Arbitrary payload (vote details, prize amount, etc.)
+  status      ChainTxStatus   @default(PENDING)
+  errorMsg    String?
+  createdAt   DateTime        @default(now())
+  confirmedAt DateTime?
+
+  @@index([entityType, entityId])
+}
+
+enum BlockchainEventType {
+  VOTE_CAST
+  VOTE_TALLY
+  PRIZE_DISTRIBUTED
+  CONTEST_CLOSED
+  TOKEN_MINTED
+  TOKEN_TRANSFERRED
+  GOVERNANCE_EXECUTED
+  CONTENT_REGISTERED
+}
+
+enum ChainTxStatus {
+  PENDING
+  SUBMITTED
+  CONFIRMED
+  FAILED
+  REVERTED
 }

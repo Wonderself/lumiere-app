@@ -3,1190 +3,843 @@ import Image from 'next/image'
 import {
   ArrowRight,
   Film,
-  Palette,
-  Sparkles,
-  Globe,
-  Users,
-  Zap,
-  Camera,
-  Star,
-  CheckCircle,
+  Vote,
   Play,
-  Mic,
-  Wand2,
-  TrendingUp,
-  Shield,
-  Award,
+  UserPlus,
+  ListChecks,
+  Send,
+  Gem,
+  Star,
+  Clock,
+  Eye,
+  Crown,
+  Check,
+  Clapperboard,
+  Tv,
+  Trophy,
 } from 'lucide-react'
+import { LandingMobileMenu } from '@/components/layout/landing-mobile-menu'
 
 export const metadata = {
-  title: 'Lumiere Brothers Pictures — Cinema & Creators Studio IA',
+  title: 'Lumiere Cinema — Creez. Votez. Regardez.',
   description:
-    'Studio IA tri-continental. Production de films IA, micro-taches creatives, outils pour createurs. Paris, Tel Aviv, Hollywood.',
+    'La premiere plateforme de cinema collaboratif propulsee par l\'IA. Micro-taches, streaming, production de films IA. Paris, Tel Aviv, Hollywood.',
 }
 
-/* ─── Instagram gradient palette ─── */
-const IG = {
-  purple: '#833AB4',
-  pink: '#E1306C',
-  orange: '#F77737',
-  yellow: '#FCAF45',
-  gold: '#D4AF37',
-}
+/* ─── Color tokens ─── */
+const GOLD = '#D4AF37'
+const GOLD_LIGHT = '#F0D060'
 
-export default function HubLandingPage() {
+export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-[#0A0A0A] text-white overflow-hidden">
+    <div className="min-h-screen bg-[#0A0A0A] text-white">
+
       {/* ═══════════════════════════════════════════
-          NAVIGATION BAR
+          NAVIGATION — Fixed header (landing only)
           ═══════════════════════════════════════════ */}
-      <nav className="fixed top-0 left-0 right-0 z-50 border-b border-white/5 bg-[#0A0A0A]/80 backdrop-blur-2xl">
-        <div className="container mx-auto flex h-16 items-center justify-between px-6">
-          <Link href="/" className="flex items-center gap-3">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-[#0A0A0A]/80 backdrop-blur-xl border-b border-white/[0.06]">
+        <div className="max-w-6xl mx-auto flex h-14 items-center justify-between px-4 sm:px-6">
+          <Link href="/" className="flex items-center">
             <Image
-              src="/images/lumiere-brothers-logo-cinema-dark.png"
-              alt="Lumiere Brothers Pictures"
-              width={140}
-              height={40}
-              className="h-8 w-auto object-contain"
+              src="/images/lumiere-brothers-logo-cinema-dark.webp"
+              alt="Lumiere Cinema"
+              width={120}
+              height={34}
+              className="h-6 w-auto object-contain"
               priority
             />
           </Link>
-          <div className="hidden md:flex items-center gap-8 text-sm">
-            <a href="#about" className="text-white/50 hover:text-white transition-colors">
-              Qui sommes-nous
-            </a>
-            <a href="#platforms" className="text-white/50 hover:text-white transition-colors">
-              Nos Plateformes
-            </a>
-            <a href="#pricing" className="text-white/50 hover:text-white transition-colors">
-              Tarification
-            </a>
-            <a href="#team" className="text-white/50 hover:text-white transition-colors">
-              L&apos;Equipe
-            </a>
+
+          <div className="hidden md:flex items-center gap-1">
+            {[
+              { label: 'Films', href: '/films' },
+              { label: 'Streaming', href: '#streaming' },
+              { label: 'Taches', href: '/tasks' },
+              { label: 'Classement', href: '/leaderboard' },
+            ].map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="text-xs text-white/40 hover:text-white px-3 py-1.5 rounded-md hover:bg-white/5 transition-all"
+              >
+                {link.label}
+              </Link>
+            ))}
           </div>
-          <div className="flex items-center gap-3">
+
+          <div className="flex items-center gap-2">
             <Link
               href="/login"
-              className="text-sm text-white/50 hover:text-white transition-colors hidden sm:block"
+              className="text-xs text-white/40 hover:text-white px-3 py-1.5 rounded-md hover:bg-white/5 transition-colors hidden sm:block"
             >
-              Se connecter
+              Connexion
             </Link>
             <Link
               href="/register"
-              className="text-sm px-5 py-2 rounded-full font-medium text-black transition-all hover:scale-105"
-              style={{
-                background: `linear-gradient(135deg, ${IG.purple}, ${IG.pink}, ${IG.orange}, ${IG.yellow})`,
-              }}
+              className="text-xs font-medium px-4 py-2 rounded-md text-black transition-all hover:opacity-90 hidden sm:block"
+              style={{ background: GOLD }}
             >
-              Commencer
+              S&apos;inscrire
             </Link>
+            <LandingMobileMenu />
           </div>
         </div>
       </nav>
 
       {/* ═══════════════════════════════════════════
-          HERO SECTION — Full viewport
+          1. HERO — Short, punchy, cinema backdrop
           ═══════════════════════════════════════════ */}
-      <section className="relative min-h-screen flex flex-col items-center justify-center text-center px-6 pt-16">
-        {/* Gradient orbs */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          <div
-            className="absolute top-1/4 left-1/4 w-[600px] h-[600px] rounded-full blur-[180px] opacity-20"
-            style={{ background: IG.purple }}
+      <section className="relative pt-24 pb-16 sm:pt-28 sm:pb-20 px-4 sm:px-6 overflow-hidden">
+        {/* Background image with heavy overlay */}
+        <div className="absolute inset-0">
+          <Image
+            src="https://images.unsplash.com/photo-1485846234645-a62644f84728?w=1200&q=80"
+            alt="Cinema camera"
+            fill
+            className="object-cover opacity-15"
+            sizes="100vw"
+            priority
           />
-          <div
-            className="absolute top-1/3 right-1/4 w-[500px] h-[500px] rounded-full blur-[160px] opacity-15"
-            style={{ background: IG.pink }}
-          />
-          <div
-            className="absolute bottom-1/4 left-1/3 w-[400px] h-[400px] rounded-full blur-[140px] opacity-10"
-            style={{ background: IG.orange }}
-          />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#0A0A0A] via-[#0A0A0A]/70 to-[#0A0A0A]" />
         </div>
 
-        <div className="relative z-10 max-w-5xl mx-auto">
-          {/* Badge */}
-          <div
-            className="inline-flex items-center gap-2 rounded-full border px-5 py-2.5 text-sm mb-10 backdrop-blur-sm"
-            style={{
-              borderColor: 'rgba(131, 58, 180, 0.3)',
-              background: 'rgba(131, 58, 180, 0.1)',
-            }}
-          >
-            <Sparkles className="h-4 w-4" style={{ color: IG.yellow }} />
-            <span className="text-white/70">
-              Cinema & Creative Studio — Paris &middot; Tel Aviv &middot; Hollywood
-            </span>
-          </div>
+        {/* Subtle gold radial glow */}
+        <div
+          className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[300px] rounded-full blur-[150px] opacity-[0.06] pointer-events-none"
+          style={{ background: GOLD }}
+        />
 
-          {/* Main heading */}
+        <div className="relative z-10 max-w-3xl mx-auto text-center">
           <h1
-            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-[0.95] mb-8"
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-[0.95] mb-5 tracking-tight"
             style={{ fontFamily: 'var(--font-playfair)' }}
           >
-            <span className="text-white">Le Studio de</span>
+            <span className="text-gold-gradient">Creez. Votez.</span>
             <br />
-            <span
-              className="bg-clip-text text-transparent"
-              style={{
-                backgroundImage: `linear-gradient(135deg, ${IG.purple}, ${IG.pink}, ${IG.orange}, ${IG.yellow})`,
-              }}
-            >
-              Demain.
-            </span>
+            <span className="text-gold-gradient">Regardez.</span>
           </h1>
 
-          <p className="text-lg md:text-xl text-white/45 max-w-2xl mx-auto mb-12 leading-relaxed">
-            Lumiere Brothers Pictures fusionne le meilleur du cinema traditionnel avec la
-            puissance de l&apos;intelligence artificielle. Deux plateformes, une vision.
+          <p className="text-sm sm:text-base text-white/45 max-w-lg mx-auto mb-8 leading-relaxed">
+            La premiere plateforme de cinema collaboratif propulsee par l&apos;IA.
+            Participez a la creation de films, votez sur les projets, et regardez le resultat en streaming.
           </p>
 
-          {/* Two CTA buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-20">
-            <a
-              href="#platforms"
-              className="group inline-flex items-center gap-2 px-8 py-4 rounded-full text-base font-semibold text-black transition-all hover:scale-105 hover:shadow-2xl"
-              style={{
-                background: `linear-gradient(135deg, ${IG.purple}, ${IG.pink}, ${IG.orange}, ${IG.yellow})`,
-              }}
-            >
-              Decouvrir nos Plateformes
-              <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
-            </a>
-            <a
-              href="#about"
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-full text-base font-semibold text-white border border-white/10 hover:border-white/20 hover:bg-white/5 transition-all"
-            >
-              Notre Histoire
-            </a>
-          </div>
-
-          {/* Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-3xl mx-auto">
-            {[
-              { label: 'Films en Production', value: '5+', icon: Film },
-              { label: 'Micro-Taches', value: '200+', icon: Star },
-              { label: 'Createurs Actifs', value: '50+', icon: Users },
-              { label: 'Continents', value: '3', icon: Globe },
-            ].map((stat) => (
-              <div key={stat.label} className="text-center">
-                <stat.icon className="h-5 w-5 mx-auto mb-2 text-white/20" />
-                <div
-                  className="text-3xl md:text-4xl font-bold mb-1 bg-clip-text text-transparent"
-                  style={{
-                    backgroundImage: `linear-gradient(135deg, ${IG.purple}, ${IG.pink}, ${IG.orange})`,
-                    fontFamily: 'var(--font-playfair)',
-                  }}
-                >
-                  {stat.value}
-                </div>
-                <div className="text-xs text-white/35 uppercase tracking-wider">{stat.label}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce">
-          <span className="text-xs text-white/20 uppercase tracking-widest">Scroll</span>
-          <div className="w-px h-8 bg-gradient-to-b from-white/20 to-transparent" />
-        </div>
-      </section>
-
-      {/* ═══════════════════════════════════════════
-          ABOUT SECTION — Qui sommes-nous
-          ═══════════════════════════════════════════ */}
-      <section id="about" className="py-32 px-6">
-        <div className="container mx-auto max-w-6xl">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <div>
-              <p
-                className="text-sm font-semibold uppercase tracking-[0.2em] mb-4 bg-clip-text text-transparent"
-                style={{
-                  backgroundImage: `linear-gradient(135deg, ${IG.purple}, ${IG.pink})`,
-                }}
-              >
-                Qui sommes-nous
-              </p>
-              <h2
-                className="text-4xl lg:text-5xl font-bold mb-6 leading-tight"
-                style={{ fontFamily: 'var(--font-playfair)' }}
-              >
-                We don&apos;t prompt.
-                <br />
-                <span
-                  className="bg-clip-text text-transparent"
-                  style={{
-                    backgroundImage: `linear-gradient(135deg, ${IG.purple}, ${IG.pink}, ${IG.orange})`,
-                  }}
-                >
-                  We direct AI.
-                </span>
-              </h2>
-              <p className="text-white/45 text-lg leading-relaxed mb-6">
-                Lumiere Brothers Pictures est un studio cinematographique IA de nouvelle generation,
-                fonde par des veterans de TF1, Lagardere et Shine. Nous ne generons pas du contenu.
-                Nous dirigeons l&apos;IA comme un realisateur dirige ses acteurs.
-              </p>
-              <p className="text-white/35 leading-relaxed mb-8">
-                Avec un reseau financier ancre dans le CPA #1 de France et un pont vers Hollywood,
-                nous transformons les histoires en experiences cinematographiques a l&apos;echelle
-                mondiale.
-              </p>
-              <div className="flex flex-wrap gap-3">
-                {['Production IA', 'Micro-Taches', 'Streaming', 'Book-to-Screen', 'Tokenisation'].map(
-                  (tag) => (
-                    <span
-                      key={tag}
-                      className="px-4 py-2 rounded-full text-xs font-medium border border-white/10 text-white/50 hover:border-white/20 transition-colors"
-                    >
-                      {tag}
-                    </span>
-                  )
-                )}
-              </div>
-            </div>
-            <div className="relative">
-              <div
-                className="absolute -inset-4 rounded-3xl blur-3xl opacity-10"
-                style={{
-                  background: `linear-gradient(135deg, ${IG.purple}, ${IG.pink}, ${IG.orange})`,
-                }}
-              />
-              <div className="relative aspect-[4/3] rounded-2xl overflow-hidden">
-                <Image
-                  src="/images/human-meets-ai-creative-collision.png"
-                  alt="L'humain rencontre l'IA - Vision creative Lumiere Brothers"
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/60 to-transparent" />
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ═══════════════════════════════════════════
-          THREE PILLARS
-          ═══════════════════════════════════════════ */}
-      <section className="py-24 px-6">
-        <div className="container mx-auto max-w-6xl">
-          <div className="text-center mb-16">
-            <p
-              className="text-sm font-semibold uppercase tracking-[0.2em] mb-3 bg-clip-text text-transparent"
-              style={{
-                backgroundImage: `linear-gradient(135deg, ${IG.pink}, ${IG.orange})`,
-              }}
-            >
-              Notre Ecosysteme
-            </p>
-            <h2
-              className="text-4xl lg:text-5xl font-bold mb-4"
-              style={{ fontFamily: 'var(--font-playfair)' }}
-            >
-              Un Studio. Deux Mondes.
-            </h2>
-            <p className="text-white/40 text-lg max-w-xl mx-auto">
-              Cinema pour les films. Creators pour les outils. Un seul compte, des possibilites
-              infinies.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                icon: Film,
-                title: 'Produire',
-                desc: 'Des films IA complets — de l\'horreur a l\'animation, du biopic au thriller. Chaque production est decoupee en micro-taches accessibles a tous.',
-                gradient: `${IG.purple}, ${IG.pink}`,
-              },
-              {
-                icon: Palette,
-                title: 'Creer',
-                desc: 'Outils de creation IA pour video, audio, design, branding. Generez du contenu professionnel guide etape par etape.',
-                gradient: `${IG.pink}, ${IG.orange}`,
-              },
-              {
-                icon: TrendingUp,
-                title: 'Gagner',
-                desc: 'Realisez des micro-taches, soyez paye instantanement. De 50 EUR a 500 EUR par tache. Seulement 20% de commission sur les tokens.',
-                gradient: `${IG.orange}, ${IG.yellow}`,
-              },
-            ].map((pillar) => (
-              <div
-                key={pillar.title}
-                className="group relative rounded-2xl border border-white/5 bg-white/[0.02] p-8 hover:border-white/10 transition-all duration-500"
-              >
-                <div
-                  className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10"
-                  style={{
-                    background: `linear-gradient(135deg, ${pillar.gradient})`,
-                    filter: 'blur(40px)',
-                    opacity: 0,
-                  }}
-                />
-                <div
-                  className="flex h-14 w-14 items-center justify-center rounded-xl mb-6"
-                  style={{
-                    background: `linear-gradient(135deg, ${pillar.gradient})`,
-                    opacity: 0.15,
-                  }}
-                >
-                  <pillar.icon className="h-6 w-6 text-white" />
-                </div>
-                <h3 className="text-xl font-bold mb-3">{pillar.title}</h3>
-                <p className="text-white/40 leading-relaxed text-sm">{pillar.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ═══════════════════════════════════════════
-          PLATFORMS SECTION — Choose your path
-          ═══════════════════════════════════════════ */}
-      <section id="platforms" className="py-32 px-6 relative">
-        <div
-          className="absolute inset-0 opacity-5"
-          style={{
-            background: `radial-gradient(ellipse at 30% 50%, ${IG.purple}, transparent 60%), radial-gradient(ellipse at 70% 50%, ${IG.orange}, transparent 60%)`,
-          }}
-        />
-
-        <div className="container mx-auto max-w-6xl relative z-10">
-          <div className="text-center mb-20">
-            <p
-              className="text-sm font-semibold uppercase tracking-[0.2em] mb-3 bg-clip-text text-transparent"
-              style={{
-                backgroundImage: `linear-gradient(135deg, ${IG.purple}, ${IG.pink}, ${IG.orange})`,
-              }}
-            >
-              Choisissez votre Univers
-            </p>
-            <h2
-              className="text-4xl lg:text-6xl font-bold mb-4"
-              style={{ fontFamily: 'var(--font-playfair)' }}
-            >
-              Deux Plateformes, Une Vision
-            </h2>
-          </div>
-
-          <div className="grid lg:grid-cols-2 gap-8">
-            {/* ─── Cinema Card ─── */}
-            <Link href="/cinema" className="group block">
-              <div className="relative rounded-3xl overflow-hidden border border-white/10 bg-[#0A0A0A] transition-all duration-500 hover:border-[#D4AF37]/30 hover:shadow-[0_0_60px_rgba(212,175,55,0.1)]">
-                <div className="relative h-64 overflow-hidden">
-                  <Image
-                    src="/images/cinema-clapperboard-clouds-hero.png"
-                    alt="Lumiere Cinema - Films IA"
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-700"
-                    sizes="(max-width: 1024px) 100vw, 50vw"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/40 to-transparent" />
-                  <div className="absolute top-4 left-4">
-                    <span className="px-3 py-1.5 rounded-full text-xs font-semibold bg-[#D4AF37] text-black">
-                      Cinema
-                    </span>
-                  </div>
-                </div>
-
-                <div className="p-8">
-                  <h3
-                    className="text-2xl font-bold mb-3 group-hover:text-[#D4AF37] transition-colors"
-                    style={{ fontFamily: 'var(--font-playfair)' }}
-                  >
-                    Lumiere Cinema
-                  </h3>
-                  <p className="text-white/40 leading-relaxed mb-6 text-sm">
-                    Production collaborative de films IA. Contribuez a des productions
-                    cinematographiques en realisant des micro-taches creatives payees. Streaming,
-                    bandes-annonces, votre visage dans le film.
-                  </p>
-
-                  <div className="grid grid-cols-2 gap-3 mb-6">
-                    {[
-                      { icon: Film, label: 'Films IA' },
-                      { icon: Play, label: 'Streaming' },
-                      { icon: Camera, label: 'Face-Swap' },
-                      { icon: Star, label: 'Micro-Taches' },
-                    ].map((item) => (
-                      <div
-                        key={item.label}
-                        className="flex items-center gap-2 text-xs text-white/35 p-2 rounded-lg bg-white/[0.02]"
-                      >
-                        <item.icon className="h-3.5 w-3.5 text-[#D4AF37]" />
-                        {item.label}
-                      </div>
-                    ))}
-                  </div>
-
-                  <div className="flex items-center gap-2 text-[#D4AF37] font-medium text-sm group-hover:gap-3 transition-all">
-                    Entrer dans le Cinema
-                    <ArrowRight className="h-4 w-4" />
-                  </div>
-                </div>
-
-                {/* Dark theme indicator */}
-                <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#D4AF37] to-[#F0D060]" />
-              </div>
-            </Link>
-
-            {/* ─── Creators Card ─── */}
-            <a
-              href={process.env.NEXT_PUBLIC_CREATORS_URL || 'http://localhost:3001'}
-              className="group block"
-            >
-              <div className="relative rounded-3xl overflow-hidden border border-white/10 bg-[#0A0A0A] transition-all duration-500 hover:border-white/20 hover:shadow-[0_0_60px_rgba(131,58,180,0.1)]">
-                <div className="relative h-64 overflow-hidden">
-                  <Image
-                    src="/images/ai-film-production-team-meeting.png"
-                    alt="Lumiere Creators - Outils IA pour createurs"
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-700"
-                    sizes="(max-width: 1024px) 100vw, 50vw"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/40 to-transparent" />
-                  <div className="absolute top-4 left-4">
-                    <span
-                      className="px-3 py-1.5 rounded-full text-xs font-semibold text-black"
-                      style={{
-                        background: `linear-gradient(135deg, ${IG.purple}, ${IG.pink})`,
-                      }}
-                    >
-                      Creators
-                    </span>
-                  </div>
-                </div>
-
-                <div className="p-8">
-                  <h3
-                    className="text-2xl font-bold mb-3 transition-colors"
-                    style={{ fontFamily: 'var(--font-playfair)' }}
-                  >
-                    <span
-                      className="group-hover:bg-clip-text group-hover:text-transparent transition-all"
-                      style={{
-                        backgroundImage: `linear-gradient(135deg, ${IG.purple}, ${IG.pink}, ${IG.orange})`,
-                      }}
-                    >
-                      Lumiere Creators
-                    </span>
-                  </h3>
-                  <p className="text-white/40 leading-relaxed mb-6 text-sm">
-                    Outils de creation IA guides etape par etape. Video, design, audio, branding.
-                    Marketplace de micro-taches style MALT. Gagnez de l&apos;argent en realisant des
-                    services IA pour des clients.
-                  </p>
-
-                  <div className="grid grid-cols-2 gap-3 mb-6">
-                    {[
-                      { icon: Wand2, label: 'Video IA' },
-                      { icon: Palette, label: 'Design' },
-                      { icon: Mic, label: 'Audio' },
-                      { icon: TrendingUp, label: 'Revenus' },
-                    ].map((item) => (
-                      <div
-                        key={item.label}
-                        className="flex items-center gap-2 text-xs text-white/35 p-2 rounded-lg bg-white/[0.02]"
-                      >
-                        <item.icon className="h-3.5 w-3.5" style={{ color: IG.pink }} />
-                        {item.label}
-                      </div>
-                    ))}
-                  </div>
-
-                  <div
-                    className="flex items-center gap-2 font-medium text-sm group-hover:gap-3 transition-all bg-clip-text text-transparent"
-                    style={{
-                      backgroundImage: `linear-gradient(135deg, ${IG.purple}, ${IG.pink})`,
-                    }}
-                  >
-                    Explorer les Outils Createurs
-                    <ArrowRight className="h-4 w-4 text-[#E1306C]" />
-                  </div>
-                </div>
-
-                {/* Gradient theme indicator */}
-                <div
-                  className="absolute bottom-0 left-0 right-0 h-1"
-                  style={{
-                    background: `linear-gradient(90deg, ${IG.purple}, ${IG.pink}, ${IG.orange}, ${IG.yellow})`,
-                  }}
-                />
-              </div>
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* ═══════════════════════════════════════════
-          SHOWCASE — What we create
-          ═══════════════════════════════════════════ */}
-      <section className="py-24 px-6">
-        <div className="container mx-auto max-w-6xl">
-          <div className="text-center mb-16">
-            <p
-              className="text-sm font-semibold uppercase tracking-[0.2em] mb-3 bg-clip-text text-transparent"
-              style={{
-                backgroundImage: `linear-gradient(135deg, ${IG.orange}, ${IG.yellow})`,
-              }}
-            >
-              Nos Creations
-            </p>
-            <h2
-              className="text-4xl lg:text-5xl font-bold mb-4"
-              style={{ fontFamily: 'var(--font-playfair)' }}
-            >
-              Du Concept au Grand Ecran
-            </h2>
-            <p className="text-white/40 text-lg max-w-xl mx-auto">
-              Animation, horreur, science-fiction, restauration, hybride live/IA — chaque genre est
-              notre terrain de jeu.
-            </p>
-          </div>
-
-          {/* Image grid like videoinu */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {[
-              {
-                src: '/images/genre-versatility-meeting-characters.png',
-                alt: 'Polyvalence des genres - personnages IA',
-                label: 'Animation 3D',
-              },
-              {
-                src: '/images/studio-workflow-maison-desk.png',
-                alt: 'Workflow maison - production IA',
-                label: 'Workflow Studio',
-              },
-              {
-                src: '/images/book-to-screen-film-reels-ip.png',
-                alt: 'Book-to-screen - IP cinema',
-                label: 'Book-to-Screen',
-              },
-              {
-                src: '/images/ai-film-production-team-meeting.png',
-                alt: 'Equipe de production IA',
-                label: 'Production IA',
-              },
-            ].map((img) => (
-              <div key={img.label} className="group relative aspect-square rounded-2xl overflow-hidden">
-                <Image
-                  src={img.src}
-                  alt={img.alt}
-                  fill
-                  className="object-cover group-hover:scale-110 transition-transform duration-700"
-                  sizes="(max-width: 768px) 50vw, 25vw"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
-                <div className="absolute bottom-3 left-3">
-                  <span className="text-xs font-medium px-3 py-1 rounded-full bg-white/10 backdrop-blur-sm border border-white/10">
-                    {img.label}
-                  </span>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Second row — wider images */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
-            {[
-              {
-                src: '/images/editions-ruppin-library-partnership.png',
-                alt: 'Editions Ruppin - Partenariat book-to-screen',
-                label: 'Editions Ruppin',
-              },
-              {
-                src: '/images/lumiere-team-startup-office.png',
-                alt: 'Equipe Lumiere Brothers',
-                label: 'Notre Equipe',
-              },
-              {
-                src: '/images/lumiere-office-contact-touch.png',
-                alt: 'Bureau Lumiere Brothers',
-                label: 'Nos Bureaux',
-              },
-            ].map((img) => (
-              <div
-                key={img.label}
-                className="group relative aspect-[16/10] rounded-2xl overflow-hidden"
-              >
-                <Image
-                  src={img.src}
-                  alt={img.alt}
-                  fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-700"
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
-                <div className="absolute bottom-3 left-3">
-                  <span className="text-xs font-medium px-3 py-1 rounded-full bg-white/10 backdrop-blur-sm border border-white/10">
-                    {img.label}
-                  </span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ═══════════════════════════════════════════
-          PRICING — 20% Token Advantage
-          ═══════════════════════════════════════════ */}
-      <section id="pricing" className="py-32 px-6 relative">
-        <div
-          className="absolute inset-0 opacity-5"
-          style={{
-            background: `radial-gradient(ellipse at 50% 0%, ${IG.pink}, transparent 60%)`,
-          }}
-        />
-
-        <div className="container mx-auto max-w-5xl relative z-10">
-          <div className="text-center mb-16">
-            <p
-              className="text-sm font-semibold uppercase tracking-[0.2em] mb-3 bg-clip-text text-transparent"
-              style={{
-                backgroundImage: `linear-gradient(135deg, ${IG.pink}, ${IG.orange})`,
-              }}
-            >
-              Tarification Revolutionnaire
-            </p>
-            <h2
-              className="text-4xl lg:text-5xl font-bold mb-4"
-              style={{ fontFamily: 'var(--font-playfair)' }}
-            >
-              75% Moins Cher que les Concurrents
-            </h2>
-            <p className="text-white/40 text-lg max-w-2xl mx-auto">
-              Pas d&apos;abonnement mensuel couteux. Nous ne prenons que 20% de commission sur les
-              tokens. Vous gardez 80% de vos revenus.
-            </p>
-          </div>
-
-          {/* Comparison */}
-          <div className="grid md:grid-cols-2 gap-8 mb-16">
-            {/* Competitors */}
-            <div className="rounded-2xl border border-white/5 bg-white/[0.02] p-8">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="h-10 w-10 rounded-full bg-red-500/10 flex items-center justify-center">
-                  <X className="h-5 w-5 text-red-400" />
-                </div>
-                <div>
-                  <h3 className="font-bold text-lg">Les Autres</h3>
-                  <p className="text-xs text-white/30">Modele classique</p>
-                </div>
-              </div>
-              <div className="space-y-4">
-                {[
-                  'Abonnement mensuel 29-99 EUR/mois',
-                  'Tokens limites par plan',
-                  'Fonctionnalites verrouillees',
-                  'Pas de revenus pour les createurs',
-                  'Support premium payant',
-                ].map((item) => (
-                  <div key={item} className="flex items-center gap-3 text-sm text-white/35">
-                    <div className="h-5 w-5 rounded-full bg-red-500/10 flex items-center justify-center shrink-0">
-                      <span className="text-red-400 text-xs">x</span>
-                    </div>
-                    {item}
-                  </div>
-                ))}
-              </div>
-              <div className="mt-8 pt-6 border-t border-white/5 text-center">
-                <span className="text-3xl font-bold text-white/20 line-through">99 EUR</span>
-                <span className="text-sm text-white/20 block mt-1">par mois</span>
-              </div>
-            </div>
-
-            {/* Lumiere */}
-            <div
-              className="rounded-2xl border p-8 relative overflow-hidden"
-              style={{ borderColor: 'rgba(131, 58, 180, 0.3)' }}
-            >
-              <div
-                className="absolute inset-0 opacity-5"
-                style={{
-                  background: `linear-gradient(135deg, ${IG.purple}, ${IG.pink}, ${IG.orange})`,
-                }}
-              />
-              <div className="relative z-10">
-                <div className="flex items-center gap-3 mb-6">
-                  <div
-                    className="h-10 w-10 rounded-full flex items-center justify-center"
-                    style={{
-                      background: `linear-gradient(135deg, ${IG.purple}, ${IG.pink})`,
-                      opacity: 0.2,
-                    }}
-                  >
-                    <CheckCircle className="h-5 w-5 text-white" />
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-lg">Lumiere Brothers</h3>
-                    <p className="text-xs text-white/30">Modele token</p>
-                  </div>
-                </div>
-                <div className="space-y-4">
-                  {[
-                    'Aucun abonnement — Payez uniquement ce que vous utilisez',
-                    'Seulement 20% de commission sur les tokens',
-                    'Toutes les fonctionnalites incluses',
-                    'Gagnez de l\'argent en realisant des taches',
-                    'Support communautaire gratuit + IA',
-                  ].map((item) => (
-                    <div key={item} className="flex items-center gap-3 text-sm text-white/50">
-                      <div
-                        className="h-5 w-5 rounded-full flex items-center justify-center shrink-0"
-                        style={{ background: `linear-gradient(135deg, ${IG.purple}, ${IG.pink})` }}
-                      >
-                        <CheckCircle className="h-3 w-3 text-white" />
-                      </div>
-                      {item}
-                    </div>
-                  ))}
-                </div>
-                <div className="mt-8 pt-6 border-t border-white/10 text-center">
-                  <span
-                    className="text-5xl font-bold bg-clip-text text-transparent"
-                    style={{
-                      backgroundImage: `linear-gradient(135deg, ${IG.purple}, ${IG.pink}, ${IG.orange})`,
-                      fontFamily: 'var(--font-playfair)',
-                    }}
-                  >
-                    20%
-                  </span>
-                  <span className="text-sm text-white/40 block mt-1">
-                    de commission sur les tokens uniquement
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Token tiers */}
-          <div className="grid grid-cols-3 gap-6">
-            {[
-              {
-                name: 'Starter',
-                tokens: '100',
-                price: '10 EUR',
-                desc: 'Ideal pour tester',
-                gradient: `${IG.purple}, ${IG.pink}`,
-              },
-              {
-                name: 'Pro',
-                tokens: '500',
-                price: '45 EUR',
-                desc: 'Pour les createurs reguliers',
-                gradient: `${IG.pink}, ${IG.orange}`,
-                featured: true,
-              },
-              {
-                name: 'Studio',
-                tokens: '2000',
-                price: '150 EUR',
-                desc: 'Pour les equipes et studios',
-                gradient: `${IG.orange}, ${IG.yellow}`,
-              },
-            ].map((tier) => (
-              <div
-                key={tier.name}
-                className={`rounded-2xl border p-6 text-center relative ${
-                  tier.featured ? 'border-white/15' : 'border-white/5'
-                } bg-white/[0.02]`}
-              >
-                {tier.featured && (
-                  <div
-                    className="absolute -top-3 left-1/2 -translate-x-1/2 text-xs font-bold px-4 py-1 rounded-full text-black"
-                    style={{
-                      background: `linear-gradient(135deg, ${tier.gradient})`,
-                    }}
-                  >
-                    Populaire
-                  </div>
-                )}
-                <h4 className="font-semibold text-sm text-white/60 uppercase tracking-wider mb-3">
-                  {tier.name}
-                </h4>
-                <div
-                  className="text-4xl font-bold mb-1 bg-clip-text text-transparent"
-                  style={{
-                    backgroundImage: `linear-gradient(135deg, ${tier.gradient})`,
-                    fontFamily: 'var(--font-playfair)',
-                  }}
-                >
-                  {tier.tokens}
-                </div>
-                <p className="text-xs text-white/30 mb-3">tokens</p>
-                <p className="text-lg font-bold text-white mb-1">{tier.price}</p>
-                <p className="text-xs text-white/30">{tier.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ═══════════════════════════════════════════
-          TEAM SECTION
-          ═══════════════════════════════════════════ */}
-      <section id="team" className="py-24 px-6">
-        <div className="container mx-auto max-w-6xl">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <div className="relative aspect-[4/3] rounded-2xl overflow-hidden">
-              <Image
-                src="/images/lumiere-team-startup-office.png"
-                alt="Equipe Lumiere Brothers Pictures"
-                fill
-                className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 50vw"
-              />
-              <div className="absolute inset-0 bg-gradient-to-r from-[#0A0A0A]/40 to-transparent" />
-            </div>
-            <div>
-              <p
-                className="text-sm font-semibold uppercase tracking-[0.2em] mb-4 bg-clip-text text-transparent"
-                style={{
-                  backgroundImage: `linear-gradient(135deg, ${IG.purple}, ${IG.pink})`,
-                }}
-              >
-                L&apos;Equipe
-              </p>
-              <h2
-                className="text-4xl font-bold mb-8"
-                style={{ fontFamily: 'var(--font-playfair)' }}
-              >
-                The Dreams Team
-              </h2>
-
-              <div className="space-y-8">
-                {/* Emmanuel */}
-                <div className="flex gap-4">
-                  <div
-                    className="h-12 w-12 rounded-xl flex items-center justify-center shrink-0"
-                    style={{
-                      background: `linear-gradient(135deg, ${IG.purple}, ${IG.pink})`,
-                      opacity: 0.15,
-                    }}
-                  >
-                    <Users className="h-5 w-5 text-white" />
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-lg">Emmanuel Smadja</h3>
-                    <p
-                      className="text-sm font-medium mb-2 bg-clip-text text-transparent"
-                      style={{
-                        backgroundImage: `linear-gradient(135deg, ${IG.purple}, ${IG.pink})`,
-                      }}
-                    >
-                      CEO & Co-Fondateur
-                    </p>
-                    <p className="text-sm text-white/35 leading-relaxed">
-                      Ex-TF1, Lagardere, Shine Group. Expertise en production audiovisuelle Prime
-                      Time, financement et distribution. CPA #1 de France, FinTech Advisory Board.
-                    </p>
-                  </div>
-                </div>
-
-                {/* Eric */}
-                <div className="flex gap-4">
-                  <div
-                    className="h-12 w-12 rounded-xl flex items-center justify-center shrink-0"
-                    style={{
-                      background: `linear-gradient(135deg, ${IG.pink}, ${IG.orange})`,
-                      opacity: 0.15,
-                    }}
-                  >
-                    <Camera className="h-5 w-5 text-white" />
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-lg">Eric Haldezos</h3>
-                    <p
-                      className="text-sm font-medium mb-2 bg-clip-text text-transparent"
-                      style={{
-                        backgroundImage: `linear-gradient(135deg, ${IG.pink}, ${IG.orange})`,
-                      }}
-                    >
-                      CCO & Co-Fondateur
-                    </p>
-                    <p className="text-sm text-white/35 leading-relaxed">
-                      Realisateur IA prime aux festivals internationaux. Pionnier de la direction
-                      artistique par IA. Expert en workflow proprietaire cinema IA.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="mt-8 grid grid-cols-3 gap-4">
-                {[
-                  { icon: Globe, label: '3 Continents' },
-                  { icon: Award, label: 'Festivals Prime' },
-                  { icon: Shield, label: 'CPA #1 France' },
-                ].map((badge) => (
-                  <div
-                    key={badge.label}
-                    className="flex items-center gap-2 text-xs text-white/30 p-3 rounded-xl border border-white/5 bg-white/[0.02]"
-                  >
-                    <badge.icon className="h-3.5 w-3.5" style={{ color: IG.yellow }} />
-                    {badge.label}
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ═══════════════════════════════════════════
-          PARTNERSHIP — Editions Ruppin
-          ═══════════════════════════════════════════ */}
-      <section className="py-24 px-6 bg-white/[0.01]">
-        <div className="container mx-auto max-w-6xl">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <div>
-              <p
-                className="text-sm font-semibold uppercase tracking-[0.2em] mb-4 bg-clip-text text-transparent"
-                style={{
-                  backgroundImage: `linear-gradient(135deg, ${IG.orange}, ${IG.yellow})`,
-                }}
-              >
-                Partenariat Strategique
-              </p>
-              <h2
-                className="text-4xl font-bold mb-6"
-                style={{ fontFamily: 'var(--font-playfair)' }}
-              >
-                Editions Ruppin : Du Livre a l&apos;Ecran
-              </h2>
-              <p className="text-white/40 leading-relaxed mb-6">
-                Nous detenons 33% d&apos;Editions Ruppin, que nous transformons en startup tech
-                &quot;Book-to-Screen&quot;. Acces prioritaire a chaque biographie et recit
-                historique pour en faire des films IA.
-              </p>
-              <div className="space-y-3">
-                {[
-                  'First-Look Deal sur toutes les publications',
-                  'IP Co-Detenue — droits cinematographiques inclus',
-                  'Pipeline : Heritage, Hybrid, Pulse',
-                ].map((item) => (
-                  <div key={item} className="flex items-center gap-3 text-sm text-white/45">
-                    <CheckCircle className="h-4 w-4 shrink-0" style={{ color: IG.yellow }} />
-                    {item}
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="relative aspect-[4/3] rounded-2xl overflow-hidden">
-              <Image
-                src="/images/editions-ruppin-library-partnership.png"
-                alt="Editions Ruppin - Partenariat Lumiere Brothers"
-                fill
-                className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 50vw"
-              />
-              <div className="absolute inset-0 bg-gradient-to-l from-[#0A0A0A]/30 to-transparent" />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ═══════════════════════════════════════════
-          CTA FINAL
-          ═══════════════════════════════════════════ */}
-      <section className="py-32 px-6 text-center relative">
-        <div
-          className="absolute inset-0 opacity-10"
-          style={{
-            background: `radial-gradient(ellipse at 50% 50%, ${IG.purple}, transparent 60%)`,
-          }}
-        />
-
-        <div className="relative z-10 container mx-auto max-w-3xl">
-          <Image
-            src="/images/lumiere-brothers-logo-cinema-dark.png"
-            alt="Lumiere Brothers Pictures"
-            width={200}
-            height={100}
-            className="mx-auto mb-8 opacity-30"
-          />
-          <h2
-            className="text-5xl lg:text-6xl font-bold mb-6"
-            style={{ fontFamily: 'var(--font-playfair)' }}
-          >
-            Pret a Entrer dans la
-            <br />
-            <span
-              className="bg-clip-text text-transparent"
-              style={{
-                backgroundImage: `linear-gradient(135deg, ${IG.purple}, ${IG.pink}, ${IG.orange}, ${IG.yellow})`,
-              }}
-            >
-              Lumiere ?
-            </span>
-          </h2>
-          <p className="text-xl text-white/40 mb-10">
-            Rejoignez la communaute qui invente le cinema et la creation de demain.
-          </p>
-
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link
               href="/register"
-              className="group inline-flex items-center gap-2 px-8 py-4 rounded-full text-base font-semibold text-black transition-all hover:scale-105"
-              style={{
-                background: `linear-gradient(135deg, ${IG.purple}, ${IG.pink}, ${IG.orange}, ${IG.yellow})`,
-              }}
+              className="inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-md text-sm font-semibold text-black transition-all hover:opacity-90 hover:shadow-[0_0_20px_rgba(212,175,55,0.3)]"
+              style={{ background: `linear-gradient(135deg, ${GOLD}, ${GOLD_LIGHT})` }}
             >
-              Creer mon Compte Gratuit
-              <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
+              Commencer Gratuitement
+              <ArrowRight className="h-3.5 w-3.5" />
             </Link>
-            <Link
-              href="/about"
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-full text-base font-semibold text-white border border-white/10 hover:border-white/20 hover:bg-white/5 transition-all"
+            <a
+              href="#pillars"
+              className="inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-md text-sm font-medium text-white/60 hover:text-white border border-white/10 hover:border-white/20 hover:bg-white/[0.04] transition-all"
             >
-              Decouvrir Notre Histoire
+              Decouvrir
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════
+          2. STATS BAR — Compact horizontal row
+          ═══════════════════════════════════════════ */}
+      <section className="border-y border-white/[0.06] py-5 px-4 sm:px-6">
+        <div className="max-w-4xl mx-auto grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6">
+          {[
+            { value: '12', label: 'Films', suffix: '' },
+            { value: '2,847', label: 'Taches', suffix: '' },
+            { value: '1,200+', label: 'Contributeurs', suffix: '' },
+            { value: '45,000', label: 'Distribues', suffix: ' EUR' },
+          ].map((stat) => (
+            <div key={stat.label} className="text-center">
+              <div className="text-lg sm:text-xl font-bold" style={{ color: GOLD }}>
+                {stat.suffix === ' EUR' ? `€${stat.value}` : stat.value}
+              </div>
+              <div className="text-[10px] text-white/30 uppercase tracking-widest mt-0.5">
+                {stat.label}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════
+          3. THREE PILLARS — Cards with Unsplash images
+          ═══════════════════════════════════════════ */}
+      <section id="pillars" className="py-14 sm:py-20 px-4 sm:px-6">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-10">
+            <p className="text-[10px] uppercase tracking-[0.2em] text-white/30 mb-2">
+              Trois Piliers
+            </p>
+            <h2
+              className="text-2xl sm:text-3xl font-bold"
+              style={{ fontFamily: 'var(--font-playfair)' }}
+            >
+              Un Ecosysteme <span className="text-shimmer">Complet</span>
+            </h2>
+          </div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {/* Pillar: Creez */}
+            <div className="group glass rounded-xl overflow-hidden hover:border-[#D4AF37]/20 transition-all">
+              <div className="relative h-36 overflow-hidden">
+                <Image
+                  src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=800&q=80"
+                  alt="Production de films"
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-500"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#111] via-[#111]/30 to-transparent" />
+                <div className="absolute bottom-3 left-3">
+                  <div className="h-7 w-7 rounded-md bg-[#D4AF37]/20 flex items-center justify-center">
+                    <Clapperboard className="h-3.5 w-3.5 text-[#D4AF37]" />
+                  </div>
+                </div>
+              </div>
+              <div className="p-4">
+                <h3
+                  className="text-base font-bold mb-1.5"
+                  style={{ fontFamily: 'var(--font-playfair)' }}
+                >
+                  Creez vos Films
+                </h3>
+                <p className="text-xs text-white/35 leading-relaxed mb-3">
+                  Participez a la production de films IA via des micro-taches creatives :
+                  prompts, images, revues, montage, son.
+                </p>
+                <Link
+                  href="/tasks"
+                  className="text-xs font-medium flex items-center gap-1.5 hover:gap-2.5 transition-all"
+                  style={{ color: GOLD }}
+                >
+                  Explorer les taches <ArrowRight className="h-3 w-3" />
+                </Link>
+              </div>
+            </div>
+
+            {/* Pillar: Votez */}
+            <div className="group glass rounded-xl overflow-hidden hover:border-[#D4AF37]/20 transition-all">
+              <div className="relative h-36 overflow-hidden">
+                <Image
+                  src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=800&q=80"
+                  alt="Salle de cinema"
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-500"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#111] via-[#111]/30 to-transparent" />
+                <div className="absolute bottom-3 left-3">
+                  <div className="h-7 w-7 rounded-md bg-[#D4AF37]/20 flex items-center justify-center">
+                    <Vote className="h-3.5 w-3.5 text-[#D4AF37]" />
+                  </div>
+                </div>
+              </div>
+              <div className="p-4">
+                <h3
+                  className="text-base font-bold mb-1.5"
+                  style={{ fontFamily: 'var(--font-playfair)' }}
+                >
+                  Votez sur les Projets
+                </h3>
+                <p className="text-xs text-white/35 leading-relaxed mb-3">
+                  Votez sur les scenarios, participez aux concours, influencez
+                  les decisions de la communaute.
+                </p>
+                <Link
+                  href="/films"
+                  className="text-xs font-medium flex items-center gap-1.5 hover:gap-2.5 transition-all"
+                  style={{ color: GOLD }}
+                >
+                  Voir les films <ArrowRight className="h-3 w-3" />
+                </Link>
+              </div>
+            </div>
+
+            {/* Pillar: Regardez */}
+            <div className="group glass rounded-xl overflow-hidden hover:border-[#D4AF37]/20 transition-all sm:col-span-2 lg:col-span-1">
+              <div className="relative h-36 overflow-hidden">
+                <Image
+                  src="https://images.unsplash.com/photo-1574375927938-d5a98e8d7e28?w=800&q=80"
+                  alt="Streaming"
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-500"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#111] via-[#111]/30 to-transparent" />
+                <div className="absolute bottom-3 left-3">
+                  <div className="h-7 w-7 rounded-md bg-[#D4AF37]/20 flex items-center justify-center">
+                    <Tv className="h-3.5 w-3.5 text-[#D4AF37]" />
+                  </div>
+                </div>
+              </div>
+              <div className="p-4">
+                <h3
+                  className="text-base font-bold mb-1.5"
+                  style={{ fontFamily: 'var(--font-playfair)' }}
+                >
+                  Regardez en Streaming
+                </h3>
+                <p className="text-xs text-white/35 leading-relaxed mb-3">
+                  Regardez les films IA termines, les bandes-annonces exclusives
+                  et le contenu bonus de la communaute.
+                </p>
+                <Link
+                  href="/films"
+                  className="text-xs font-medium flex items-center gap-1.5 hover:gap-2.5 transition-all"
+                  style={{ color: GOLD }}
+                >
+                  Decouvrir le catalogue <ArrowRight className="h-3 w-3" />
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════
+          4. HOW IT WORKS — 4 steps, minimal
+          ═══════════════════════════════════════════ */}
+      <section className="py-14 sm:py-20 px-4 sm:px-6 border-t border-white/[0.06]">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-10">
+            <p className="text-[10px] uppercase tracking-[0.2em] text-white/30 mb-2">
+              Comment ca marche
+            </p>
+            <h2
+              className="text-2xl sm:text-3xl font-bold"
+              style={{ fontFamily: 'var(--font-playfair)' }}
+            >
+              Quatre Etapes <span className="text-shimmer">Simples</span>
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            {[
+              {
+                step: '01',
+                icon: UserPlus,
+                title: 'Inscrivez-vous',
+                desc: 'Creez votre compte gratuitement en 30 secondes.',
+              },
+              {
+                step: '02',
+                icon: ListChecks,
+                title: 'Choisissez une tache',
+                desc: 'Parcourez les micro-taches disponibles selon vos competences.',
+              },
+              {
+                step: '03',
+                icon: Send,
+                title: 'Realisez et soumettez',
+                desc: 'Completez la tache et soumettez votre travail pour validation.',
+              },
+              {
+                step: '04',
+                icon: Gem,
+                title: 'Gagnez des Lumens',
+                desc: 'Recevez des points, des euros et montez en niveau.',
+              },
+            ].map((item) => (
+              <div
+                key={item.step}
+                className="text-center p-4 rounded-xl border border-white/[0.06] bg-white/[0.02] hover:border-[#D4AF37]/15 hover:bg-white/[0.04] transition-all"
+              >
+                <div
+                  className="text-2xl font-bold mb-3 opacity-80"
+                  style={{ color: GOLD, fontFamily: 'var(--font-playfair)' }}
+                >
+                  {item.step}
+                </div>
+                <item.icon className="h-5 w-5 mx-auto mb-2.5 text-white/25" />
+                <h3 className="text-sm font-semibold mb-1.5">{item.title}</h3>
+                <p className="text-[11px] text-white/30 leading-relaxed">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════
+          5. MICRO-TACHES PREVIEW — 3 sample cards
+          ═══════════════════════════════════════════ */}
+      <section className="py-14 sm:py-20 px-4 sm:px-6 border-t border-white/[0.06]">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-10">
+            <p className="text-[10px] uppercase tracking-[0.2em] text-white/30 mb-2">
+              Micro-taches
+            </p>
+            <h2
+              className="text-2xl sm:text-3xl font-bold"
+              style={{ fontFamily: 'var(--font-playfair)' }}
+            >
+              Taches <span className="text-shimmer">Disponibles</span>
+            </h2>
+          </div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            {[
+              {
+                title: 'Ecriture de prompt — Scene de poursuite',
+                film: 'Neon Requiem',
+                difficulty: 2,
+                price: 50,
+                status: 'Disponible',
+                statusColor: '#10B981',
+              },
+              {
+                title: 'Generation image — Decor futuriste Tokyo',
+                film: 'Blade of Dawn',
+                difficulty: 3,
+                price: 100,
+                status: 'Disponible',
+                statusColor: '#10B981',
+              },
+              {
+                title: 'Revue video — Continuite scene 12',
+                film: 'Les Ombres de Montmartre',
+                difficulty: 1,
+                price: 50,
+                status: 'En cours',
+                statusColor: '#F59E0B',
+              },
+            ].map((task) => (
+              <div
+                key={task.title}
+                className="glass rounded-lg p-4 hover:border-[#D4AF37]/20 transition-all"
+              >
+                <div className="flex items-center justify-between mb-2.5">
+                  <span
+                    className="text-[10px] font-medium px-2 py-0.5 rounded-full"
+                    style={{
+                      background: `${task.statusColor}15`,
+                      color: task.statusColor,
+                    }}
+                  >
+                    {task.status}
+                  </span>
+                  <div className="flex gap-0.5">
+                    {Array.from({ length: 4 }).map((_, i) => (
+                      <Star
+                        key={i}
+                        className="h-2.5 w-2.5"
+                        fill={i < task.difficulty ? GOLD : 'transparent'}
+                        stroke={i < task.difficulty ? GOLD : 'rgba(255,255,255,0.15)'}
+                      />
+                    ))}
+                  </div>
+                </div>
+                <h4 className="text-xs font-semibold mb-1.5 leading-snug">{task.title}</h4>
+                <div className="flex items-center gap-1.5 mb-3">
+                  <Film className="h-2.5 w-2.5 text-white/20" />
+                  <span className="text-[10px] text-white/30">{task.film}</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm font-bold" style={{ color: GOLD }}>
+                    {task.price} EUR
+                  </span>
+                  <Clock className="h-3 w-3 text-white/15" />
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="text-center mt-6">
+            <Link
+              href="/tasks"
+              className="inline-flex items-center gap-1.5 text-xs font-medium hover:gap-2.5 transition-all"
+              style={{ color: GOLD }}
+            >
+              Voir toutes les taches <ArrowRight className="h-3 w-3" />
             </Link>
           </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════
+          6. STREAMING — Film poster cards
+          ═══════════════════════════════════════════ */}
+      <section id="streaming" className="py-14 sm:py-20 px-4 sm:px-6 border-t border-white/[0.06]">
+        <div className="max-w-5xl mx-auto">
+          <div className="flex items-end justify-between mb-8">
+            <div>
+              <p className="text-[10px] uppercase tracking-[0.2em] text-white/30 mb-2">
+                Streaming
+              </p>
+              <h2
+                className="text-2xl sm:text-3xl font-bold"
+                style={{ fontFamily: 'var(--font-playfair)' }}
+              >
+                A l&apos;Affiche
+              </h2>
+            </div>
+            <Link
+              href="/films"
+              className="text-xs font-medium flex items-center gap-1.5 hover:gap-2.5 transition-all hidden sm:flex"
+              style={{ color: GOLD }}
+            >
+              Tout voir <ArrowRight className="h-3 w-3" />
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+            {[
+              {
+                title: 'Neon Requiem',
+                genre: 'Sci-Fi',
+                views: '12.4k',
+                img: 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=400&q=80',
+              },
+              {
+                title: 'Les Ombres de Montmartre',
+                genre: 'Thriller',
+                views: '8.9k',
+                img: 'https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=400&q=80',
+              },
+              {
+                title: 'Blade of Dawn',
+                genre: 'Action',
+                views: '15.2k',
+                img: 'https://images.unsplash.com/photo-1598899134739-24c46f58b8c0?w=400&q=80',
+              },
+              {
+                title: 'Chroniques Bibliques',
+                genre: 'Historique',
+                views: '6.1k',
+                img: 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=400&q=80',
+              },
+            ].map((film) => (
+              <div
+                key={film.title}
+                className="group relative rounded-lg overflow-hidden border border-white/[0.06] bg-[#111] hover:border-[#D4AF37]/20 transition-all"
+              >
+                <div className="relative aspect-[2/3] overflow-hidden">
+                  <Image
+                    src={film.img}
+                    alt={film.title}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#111] via-transparent to-transparent" />
+
+                  {/* Play button overlay */}
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                    <div className="h-10 w-10 rounded-full bg-[#D4AF37]/90 flex items-center justify-center">
+                      <Play className="h-4 w-4 text-black ml-0.5" fill="black" />
+                    </div>
+                  </div>
+
+                  {/* Genre badge */}
+                  <div className="absolute top-2 left-2">
+                    <span className="text-[9px] font-medium px-2 py-0.5 rounded bg-black/60 backdrop-blur-sm text-white/70">
+                      {film.genre}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="p-3">
+                  <h4 className="text-xs font-semibold truncate mb-1">{film.title}</h4>
+                  <div className="flex items-center gap-1">
+                    <Eye className="h-2.5 w-2.5 text-white/20" />
+                    <span className="text-[10px] text-white/25">{film.views} vues</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="text-center mt-5 sm:hidden">
+            <Link
+              href="/films"
+              className="inline-flex items-center gap-1.5 text-xs font-medium"
+              style={{ color: GOLD }}
+            >
+              Tout voir <ArrowRight className="h-3 w-3" />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════
+          7. PRICING — 3 compact tiers
+          ═══════════════════════════════════════════ */}
+      <section className="py-14 sm:py-20 px-4 sm:px-6 border-t border-white/[0.06]">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-10">
+            <p className="text-[10px] uppercase tracking-[0.2em] text-white/30 mb-2">
+              Tarifs
+            </p>
+            <h2
+              className="text-2xl sm:text-3xl font-bold"
+              style={{ fontFamily: 'var(--font-playfair)' }}
+            >
+              Choisissez votre <span className="text-shimmer">Niveau</span>
+            </h2>
+          </div>
+
+          <div className="grid sm:grid-cols-3 gap-3">
+            {/* Free */}
+            <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-5 hover:border-white/10 transition-all">
+              <div className="text-[10px] uppercase tracking-widest text-white/30 mb-3">
+                Gratuit
+              </div>
+              <div
+                className="text-3xl font-bold mb-1"
+                style={{ fontFamily: 'var(--font-playfair)', color: GOLD }}
+              >
+                0 EUR
+              </div>
+              <p className="text-[10px] text-white/25 mb-5">Pour toujours</p>
+              <ul className="space-y-2.5 mb-6">
+                {[
+                  'Acces aux taches de base',
+                  'Profil contributeur',
+                  'Streaming gratuit (ads)',
+                  'Classement communautaire',
+                ].map((item) => (
+                  <li key={item} className="flex items-start gap-2 text-[11px] text-white/40">
+                    <Check className="h-3 w-3 shrink-0 mt-0.5" style={{ color: GOLD }} />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+              <Link
+                href="/register"
+                className="block text-center text-xs font-medium py-2 rounded-md border border-white/10 hover:border-white/20 hover:bg-white/[0.04] transition-all"
+              >
+                Commencer
+              </Link>
+            </div>
+
+            {/* Pro — highlighted */}
+            <div className="rounded-xl border p-5 relative overflow-hidden transition-all" style={{ borderColor: `${GOLD}30`, background: `${GOLD}08` }}>
+              <div
+                className="absolute top-0 left-0 right-0 h-[2px]"
+                style={{ background: `linear-gradient(90deg, ${GOLD}, ${GOLD_LIGHT}, ${GOLD})` }}
+              />
+              <div className="flex items-center gap-2 mb-3">
+                <div className="text-[10px] uppercase tracking-widest" style={{ color: GOLD }}>
+                  Pro
+                </div>
+                <span
+                  className="text-[9px] font-bold px-1.5 py-0.5 rounded text-black"
+                  style={{ background: GOLD }}
+                >
+                  Populaire
+                </span>
+              </div>
+              <div
+                className="text-3xl font-bold mb-1"
+                style={{ fontFamily: 'var(--font-playfair)', color: GOLD }}
+              >
+                19 EUR
+              </div>
+              <p className="text-[10px] text-white/25 mb-5">par mois</p>
+              <ul className="space-y-2.5 mb-6">
+                {[
+                  'Taches prioritaires',
+                  'Gains x2 sur les Lumens',
+                  'Streaming sans pub',
+                  'Badge Pro sur le profil',
+                  'Acces aux concours VIP',
+                ].map((item) => (
+                  <li key={item} className="flex items-start gap-2 text-[11px] text-white/50">
+                    <Check className="h-3 w-3 shrink-0 mt-0.5" style={{ color: GOLD }} />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+              <Link
+                href="/register"
+                className="block text-center text-xs font-semibold py-2 rounded-md text-black transition-all hover:opacity-90"
+                style={{ background: `linear-gradient(135deg, ${GOLD}, ${GOLD_LIGHT})` }}
+              >
+                Devenir Pro
+              </Link>
+            </div>
+
+            {/* VIP */}
+            <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-5 hover:border-white/10 transition-all">
+              <div className="flex items-center gap-2 mb-3">
+                <div className="text-[10px] uppercase tracking-widest text-white/30">
+                  VIP
+                </div>
+                <Crown className="h-3 w-3 text-[#D4AF37]/50" />
+              </div>
+              <div
+                className="text-3xl font-bold mb-1"
+                style={{ fontFamily: 'var(--font-playfair)', color: GOLD }}
+              >
+                49 EUR
+              </div>
+              <p className="text-[10px] text-white/25 mb-5">par mois</p>
+              <ul className="space-y-2.5 mb-6">
+                {[
+                  'Tout Pro inclus',
+                  'Acces exclusif aux films',
+                  'Vote de gouvernance',
+                  'Red carpet virtuel',
+                  'Support prioritaire',
+                ].map((item) => (
+                  <li key={item} className="flex items-start gap-2 text-[11px] text-white/40">
+                    <Check className="h-3 w-3 shrink-0 mt-0.5" style={{ color: GOLD }} />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+              <Link
+                href="/register"
+                className="block text-center text-xs font-medium py-2 rounded-md border border-white/10 hover:border-white/20 hover:bg-white/[0.04] transition-all"
+              >
+                Rejoindre le VIP
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════
+          8. CTA FINAL — Short closing
+          ═══════════════════════════════════════════ */}
+      <section className="py-16 sm:py-24 px-4 sm:px-6 border-t border-white/[0.06] relative overflow-hidden">
+        {/* Subtle gold glow */}
+        <div
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[200px] rounded-full blur-[140px] opacity-[0.06] pointer-events-none"
+          style={{ background: GOLD }}
+        />
+
+        <div className="relative z-10 max-w-2xl mx-auto text-center">
+          <Trophy className="h-8 w-8 mx-auto mb-4" style={{ color: `${GOLD}50` }} />
+          <h2
+            className="text-2xl sm:text-4xl font-bold mb-4"
+            style={{ fontFamily: 'var(--font-playfair)' }}
+          >
+            Rejoignez la Revolution
+            <br />
+            <span className="text-shimmer">du Cinema IA</span>
+          </h2>
+          <p className="text-sm text-white/35 mb-8 max-w-md mx-auto">
+            Des milliers de contributeurs creent deja les films de demain.
+            Votre talent peut faire la difference.
+          </p>
+          <Link
+            href="/register"
+            className="inline-flex items-center justify-center gap-2 px-7 py-3 rounded-md text-sm font-semibold text-black transition-all hover:opacity-90 hover:shadow-[0_0_30px_rgba(212,175,55,0.3)]"
+            style={{ background: `linear-gradient(135deg, ${GOLD}, ${GOLD_LIGHT})` }}
+          >
+            Commencer Gratuitement
+            <ArrowRight className="h-4 w-4" />
+          </Link>
         </div>
       </section>
 
       {/* ═══════════════════════════════════════════
           FOOTER
           ═══════════════════════════════════════════ */}
-      <footer className="border-t border-white/5 py-16 px-6">
-        <div className="container mx-auto max-w-6xl">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
+      <footer className="border-t border-white/[0.06] py-10 px-4 sm:px-6">
+        <div className="max-w-5xl mx-auto">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 mb-10">
             {/* Brand */}
-            <div className="lg:col-span-2 space-y-5">
+            <div className="col-span-2 sm:col-span-1">
               <Image
-                src="/images/lumiere-brothers-logo-cinema-dark.png"
-                alt="Lumiere Brothers Pictures"
-                width={180}
-                height={50}
-                className="h-10 w-auto object-contain"
+                src="/images/lumiere-brothers-logo-cinema-dark.webp"
+                alt="Lumiere Cinema"
+                width={120}
+                height={34}
+                className="h-6 w-auto object-contain mb-3"
               />
-              <p className="text-sm text-white/35 leading-relaxed max-w-sm">
-                Cinema & Creative Studio. Le studio aux possibilites infinies. Nous dirigeons
-                l&apos;IA pour creer le cinema de demain.
+              <p className="text-[10px] text-white/20 leading-relaxed mb-2">
+                Le studio de cinema IA collaboratif.
               </p>
-              <p className="text-xs text-white/20">Paris &middot; Tel Aviv &middot; Hollywood</p>
+              <p className="text-[10px] text-white/15">
+                Paris &middot; Tel Aviv &middot; Hollywood
+              </p>
             </div>
 
-            {/* Cinema */}
-            <div className="space-y-3">
-              <h4 className="text-xs font-semibold text-white/50 uppercase tracking-widest">
-                Cinema
+            {/* Plateforme */}
+            <div>
+              <h4 className="text-[10px] font-semibold text-white/40 uppercase tracking-[0.15em] mb-4">
+                Plateforme
               </h4>
-              <ul className="space-y-2.5">
-                <li>
-                  <Link
-                    href="/films"
-                    className="text-sm text-white/30 hover:text-[#D4AF37] transition-colors"
-                  >
-                    Films
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/streaming"
-                    className="text-sm text-white/30 hover:text-[#D4AF37] transition-colors"
-                  >
-                    Streaming
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/tasks"
-                    className="text-sm text-white/30 hover:text-[#D4AF37] transition-colors"
-                  >
-                    Taches
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/leaderboard"
-                    className="text-sm text-white/30 hover:text-[#D4AF37] transition-colors"
-                  >
-                    Classement
-                  </Link>
-                </li>
+              <ul className="space-y-2">
+                {[
+                  { label: 'Films', href: '/films' },
+                  { label: 'Streaming', href: '/streaming' },
+                  { label: 'Taches', href: '/tasks' },
+                  { label: 'A Propos', href: '/about' },
+                  { label: 'Roadmap', href: '/roadmap' },
+                ].map((link) => (
+                  <li key={link.label + link.href}>
+                    <Link
+                      href={link.href}
+                      className="text-[11px] text-white/20 hover:text-[#D4AF37] transition-colors"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </div>
 
-            {/* Creators */}
-            <div className="space-y-3">
-              <h4 className="text-xs font-semibold text-white/50 uppercase tracking-widest">
-                Creators
+            {/* Communaute */}
+            <div>
+              <h4 className="text-[10px] font-semibold text-white/40 uppercase tracking-[0.15em] mb-4">
+                Communaute
               </h4>
-              <ul className="space-y-2.5">
-                <li>
-                  <a
-                    href={process.env.NEXT_PUBLIC_CREATORS_URL || 'http://localhost:3001'}
-                    className="text-sm text-white/30 hover:text-[#E1306C] transition-colors"
-                  >
-                    Outils IA
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href={(process.env.NEXT_PUBLIC_CREATORS_URL || 'http://localhost:3001') + '/tasks'}
-                    className="text-sm text-white/30 hover:text-[#E1306C] transition-colors"
-                  >
-                    Marketplace
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href={(process.env.NEXT_PUBLIC_CREATORS_URL || 'http://localhost:3001') + '/about'}
-                    className="text-sm text-white/30 hover:text-[#E1306C] transition-colors"
-                  >
-                    A Propos
-                  </a>
-                </li>
+              <ul className="space-y-2">
+                {[
+                  { label: 'Classement', href: '/leaderboard' },
+                  { label: 'Concours', href: '/community/contests' },
+                  { label: 'Communaute', href: '/community' },
+                ].map((link) => (
+                  <li key={link.label}>
+                    <Link
+                      href={link.href}
+                      className="text-[11px] text-white/20 hover:text-[#D4AF37] transition-colors"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </div>
 
             {/* Legal */}
-            <div className="space-y-3">
-              <h4 className="text-xs font-semibold text-white/50 uppercase tracking-widest">
+            <div>
+              <h4 className="text-[10px] font-semibold text-white/40 uppercase tracking-[0.15em] mb-4">
                 Legal
               </h4>
-              <ul className="space-y-2.5">
-                <li>
-                  <Link
-                    href="/legal/terms"
-                    className="text-sm text-white/30 hover:text-white/50 transition-colors"
-                  >
-                    CGU
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/legal/privacy"
-                    className="text-sm text-white/30 hover:text-white/50 transition-colors"
-                  >
-                    Confidentialite
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/legal/cookies"
-                    className="text-sm text-white/30 hover:text-white/50 transition-colors"
-                  >
-                    Cookies
-                  </Link>
-                </li>
+              <ul className="space-y-2">
+                {[
+                  { label: 'CGU', href: '/legal/terms' },
+                  { label: 'Confidentialite', href: '/legal/privacy' },
+                  { label: 'Cookies', href: '/legal/cookies' },
+                ].map((link) => (
+                  <li key={link.label}>
+                    <Link
+                      href={link.href}
+                      className="text-[11px] text-white/20 hover:text-white/40 transition-colors"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </div>
           </div>
 
-          <div className="mt-12 pt-8 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-4">
-            <p className="text-xs text-white/15">
+          {/* Bottom bar */}
+          <div className="pt-6 border-t border-white/[0.04] flex flex-col sm:flex-row items-center justify-between gap-2">
+            <p className="text-[10px] text-white/15">
               &copy; 2026 Lumiere Brothers Pictures. Tous droits reserves.
             </p>
-            <p className="text-xs text-white/15">
-              Construit avec passion a Paris, Tel Aviv & Hollywood
+            <p className="text-[10px] text-white/15">
+              Paris &middot; Tel Aviv &middot; Hollywood
             </p>
           </div>
         </div>

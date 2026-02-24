@@ -22,16 +22,18 @@ export default async function AdminFilmsPage() {
   })
 
   return (
-    <div className="p-8 space-y-6">
+    <div className="space-y-8">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold" style={{ fontFamily: 'var(--font-playfair)' }}>Films</h1>
+          <h1 className="text-3xl sm:text-4xl font-bold" style={{ fontFamily: 'var(--font-playfair)' }}>Films</h1>
           <p className="text-white/50">{films.length} film{films.length > 1 ? 's' : ''} au total</p>
         </div>
         <Link href="/admin/films/new">
           <Button><Plus className="h-4 w-4 mr-2" /> Nouveau Film</Button>
         </Link>
       </div>
+
+      <div className="h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
 
       {films.length === 0 ? (
         <div className="text-center py-20 text-white/30">
@@ -42,8 +44,8 @@ export default async function AdminFilmsPage() {
       ) : (
         <div className="space-y-3">
           {films.map((film) => (
-            <div key={film.id} className="flex items-center gap-4 p-4 rounded-xl border border-white/5 bg-white/[0.02] hover:border-white/10 transition-all">
-              <div className="h-14 w-20 rounded-lg bg-gradient-to-br from-[#D4AF37]/10 to-purple-900/20 shrink-0 overflow-hidden">
+            <div key={film.id} className="flex items-center gap-4 p-4 sm:rounded-2xl rounded-xl border border-white/5 bg-white/[0.02] hover:border-white/10 hover:shadow-md hover:-translate-y-[1px] transition-all duration-500">
+              <div className="h-14 w-20 rounded-xl bg-gradient-to-br from-[#D4AF37]/10 to-purple-900/20 shrink-0 overflow-hidden">
                 {film.coverImageUrl ? (
                   <img src={film.coverImageUrl} alt={film.title} className="w-full h-full object-cover" />
                 ) : (

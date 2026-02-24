@@ -91,15 +91,15 @@ export default async function ProfilePage() {
   ]
 
   return (
-    <div className="p-8 space-y-8 max-w-4xl mx-auto">
+    <div className="space-y-8 max-w-4xl mx-auto">
       {/* ── User Info Card ── */}
-      <div className="relative overflow-hidden bg-white rounded-2xl shadow-sm border border-gray-100">
+      <div className="relative overflow-hidden bg-white sm:rounded-3xl rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-500">
         {/* Decorative gradient */}
         <div className="absolute inset-0 bg-gradient-to-br from-amber-50/50 via-transparent to-purple-50/30 pointer-events-none" />
-        <div className="relative p-8">
+        <div className="relative p-6 sm:p-8">
           <div className="flex flex-col sm:flex-row items-start gap-6">
             {/* Avatar */}
-            <Avatar className="h-24 w-24 border-2 border-[#D4AF37]/20 shadow-md">
+            <Avatar className="h-24 w-24 border-2 border-[#D4AF37]/20 shadow-lg ring-4 ring-[#D4AF37]/5">
               {user.avatarUrl && (
                 <AvatarImage src={user.avatarUrl} alt={user.displayName || 'Avatar'} />
               )}
@@ -168,15 +168,18 @@ export default async function ProfilePage() {
         </div>
       </div>
 
+      {/* Separator */}
+      <div className="h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
+
       {/* ── Stats Row ── */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {stats.map((stat) => (
           <div
             key={stat.label}
-            className={`border bg-white rounded-2xl shadow-sm ${stat.bgColor}`}
+            className={`border bg-white sm:rounded-2xl rounded-xl shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-500 ${stat.bgColor}`}
           >
             <div className="p-5 text-center">
-              <div className={`inline-flex items-center justify-center h-10 w-10 rounded-full ${stat.bgColor} mb-3`}>
+              <div className={`inline-flex items-center justify-center h-11 w-11 rounded-xl ${stat.bgColor} mb-3`}>
                 <stat.icon className={`h-5 w-5 ${stat.color}`} />
               </div>
               <div className={`text-2xl font-bold ${stat.color}`} style={{ fontFamily: 'var(--font-playfair)' }}>
@@ -190,20 +193,20 @@ export default async function ProfilePage() {
 
       {/* ── Profile Completion CTA ── */}
       {!user.bio && user.skills.length === 0 && user.languages.length === 0 && (
-        <div className="relative overflow-hidden bg-white rounded-2xl shadow-sm border border-[#D4AF37]/20">
+        <div className="relative overflow-hidden bg-white sm:rounded-3xl rounded-2xl shadow-sm border border-[#D4AF37]/20 hover:shadow-md transition-shadow duration-500">
           <div className="absolute inset-0 bg-gradient-to-br from-amber-50 via-transparent to-transparent pointer-events-none" />
-          <div className="relative p-8 text-center">
-            <div className="inline-flex items-center justify-center h-14 w-14 rounded-2xl bg-amber-50 border border-[#D4AF37]/20 mb-5">
-              <Clapperboard className="h-7 w-7 text-[#D4AF37]" />
+          <div className="relative p-8 sm:p-10 text-center">
+            <div className="inline-flex items-center justify-center h-16 w-16 rounded-2xl bg-amber-50 border border-[#D4AF37]/20 mb-5">
+              <Clapperboard className="h-8 w-8 text-[#D4AF37]" />
             </div>
             <h2
               className="text-xl font-bold text-gray-900 mb-3"
               style={{ fontFamily: 'var(--font-playfair)' }}
             >
-              Completez votre profil
+              Complétez votre profil
             </h2>
             <p className="text-gray-500 text-sm leading-relaxed max-w-md mx-auto mb-6">
-              Un profil complet augmente votre visibilite dans la communaute et vous donne acces a plus de missions.
+              Un profil complet augmente votre visibilité dans la communauté et vous donne accès à plus de missions.
             </p>
             <ProfileEditDialog
               user={{
@@ -222,12 +225,12 @@ export default async function ProfilePage() {
 
       {/* ── Bio Section ── */}
       {user.bio && (
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <div className="bg-white sm:rounded-2xl rounded-xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-shadow duration-500">
           <h2
             className="text-lg font-semibold text-gray-900 mb-3"
             style={{ fontFamily: 'var(--font-playfair)' }}
           >
-            A propos
+            À propos
           </h2>
           <p className="text-gray-600 leading-relaxed whitespace-pre-wrap">{user.bio}</p>
         </div>
@@ -237,7 +240,7 @@ export default async function ProfilePage() {
       <div className="grid md:grid-cols-2 gap-6">
         {/* Skills */}
         {user.skills.length > 0 && (
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+          <div className="bg-white sm:rounded-2xl rounded-xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-shadow duration-500">
             <h2
               className="text-lg font-semibold text-gray-900 mb-4"
               style={{ fontFamily: 'var(--font-playfair)' }}
@@ -248,7 +251,7 @@ export default async function ProfilePage() {
               {user.skills.map((skill) => (
                 <span
                   key={skill}
-                  className="px-3 py-1.5 rounded-full text-xs font-medium bg-amber-50 text-[#D4AF37] border border-amber-200"
+                  className="px-3.5 py-2 rounded-xl text-xs font-medium bg-amber-50 text-[#D4AF37] border border-amber-200 hover:bg-amber-100/50 transition-colors duration-300"
                 >
                   {skill}
                 </span>
@@ -259,7 +262,7 @@ export default async function ProfilePage() {
 
         {/* Languages */}
         {user.languages.length > 0 && (
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+          <div className="bg-white sm:rounded-2xl rounded-xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-shadow duration-500">
             <h2
               className="text-lg font-semibold text-gray-900 mb-4"
               style={{ fontFamily: 'var(--font-playfair)' }}
@@ -270,7 +273,7 @@ export default async function ProfilePage() {
               {user.languages.map((lang) => (
                 <span
                   key={lang}
-                  className="px-3 py-1.5 rounded-full text-xs font-medium bg-gray-50 text-gray-600 border border-gray-200"
+                  className="px-3.5 py-2 rounded-xl text-xs font-medium bg-gray-50 text-gray-600 border border-gray-200 hover:bg-gray-100/50 transition-colors duration-300"
                 >
                   {lang}
                 </span>

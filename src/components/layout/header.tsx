@@ -60,7 +60,7 @@ export function Header() {
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2.5 group shrink-0">
           <Image
-            src="/images/lumiere-brothers-logo-cinema-dark.png"
+            src="/images/lumiere-brothers-logo-cinema-dark.webp"
             alt="Lumière Brothers Pictures"
             width={140}
             height={40}

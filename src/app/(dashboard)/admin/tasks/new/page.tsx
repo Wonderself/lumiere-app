@@ -21,11 +21,13 @@ export default async function NewTaskPage() {
   })
 
   return (
-    <div className="p-8 max-w-2xl space-y-8">
+    <div className="max-w-2xl space-y-8">
       <div>
-        <h1 className="text-3xl font-bold" style={{ fontFamily: 'var(--font-playfair)' }}>Nouvelle Tâche</h1>
+        <h1 className="text-3xl sm:text-4xl font-bold" style={{ fontFamily: 'var(--font-playfair)' }}>Nouvelle Tâche</h1>
         <p className="text-white/50">Créer une nouvelle tâche pour un film.</p>
       </div>
+
+      <div className="h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
 
       <form action={createTaskAction} className="space-y-6">
         <div className="grid grid-cols-2 gap-4">
@@ -40,7 +42,7 @@ export default async function NewTaskPage() {
               id="filmId"
               name="filmId"
               required
-              className="h-10 w-full rounded-lg border border-white/10 bg-white/5 px-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/50"
+              className="h-10 w-full rounded-xl border border-white/10 bg-white/5 px-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/50 transition-colors duration-300"
             >
               <option value="">Sélectionner un film</option>
               {films.map((film) => (
@@ -55,7 +57,7 @@ export default async function NewTaskPage() {
               id="phaseId"
               name="phaseId"
               required
-              className="h-10 w-full rounded-lg border border-white/10 bg-white/5 px-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/50"
+              className="h-10 w-full rounded-xl border border-white/10 bg-white/5 px-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/50 transition-colors duration-300"
             >
               <option value="">Sélectionner une phase</option>
               {films.flatMap((film) =>
@@ -74,7 +76,7 @@ export default async function NewTaskPage() {
               id="type"
               name="type"
               required
-              className="h-10 w-full rounded-lg border border-white/10 bg-white/5 px-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/50"
+              className="h-10 w-full rounded-xl border border-white/10 bg-white/5 px-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/50 transition-colors duration-300"
             >
               {Object.entries(TASK_TYPE_LABELS).map(([value, label]) => (
                 <option key={value} value={value}>{label}</option>
@@ -87,7 +89,7 @@ export default async function NewTaskPage() {
             <select
               id="difficulty"
               name="difficulty"
-              className="h-10 w-full rounded-lg border border-white/10 bg-white/5 px-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/50"
+              className="h-10 w-full rounded-xl border border-white/10 bg-white/5 px-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/50 transition-colors duration-300"
             >
               {Object.entries(DIFFICULTY_LABELS).map(([value, label]) => (
                 <option key={value} value={value}>{label}</option>
@@ -100,7 +102,7 @@ export default async function NewTaskPage() {
             <select
               id="priceEuros"
               name="priceEuros"
-              className="h-10 w-full rounded-lg border border-white/10 bg-white/5 px-3 text-sm text-white focus:outline-none"
+              className="h-10 w-full rounded-xl border border-white/10 bg-white/5 px-3 text-sm text-white focus:outline-none"
             >
               <option value="50">50 €</option>
               <option value="100">100 €</option>
@@ -113,7 +115,7 @@ export default async function NewTaskPage() {
             <select
               id="status"
               name="status"
-              className="h-10 w-full rounded-lg border border-white/10 bg-white/5 px-3 text-sm text-white focus:outline-none"
+              className="h-10 w-full rounded-xl border border-white/10 bg-white/5 px-3 text-sm text-white focus:outline-none"
             >
               <option value="AVAILABLE">Disponible</option>
               <option value="LOCKED">Verrouillée</option>
@@ -125,7 +127,7 @@ export default async function NewTaskPage() {
             <select
               id="requiredLevel"
               name="requiredLevel"
-              className="h-10 w-full rounded-lg border border-white/10 bg-white/5 px-3 text-sm text-white focus:outline-none"
+              className="h-10 w-full rounded-xl border border-white/10 bg-white/5 px-3 text-sm text-white focus:outline-none"
             >
               <option value="ROOKIE">Rookie</option>
               <option value="PRO">Pro</option>
@@ -143,7 +145,7 @@ export default async function NewTaskPage() {
             required
             rows={4}
             placeholder="Description de la tâche (markdown supporté)..."
-            className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/50 resize-vertical"
+            className="w-full rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/50 resize-vertical transition-colors duration-300"
           />
         </div>
 
@@ -154,7 +156,7 @@ export default async function NewTaskPage() {
             name="instructionsMd"
             rows={5}
             placeholder="Instructions pas-à-pas pour le contributeur..."
-            className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/50 resize-vertical"
+            className="w-full rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/50 resize-vertical transition-colors duration-300"
           />
         </div>
 

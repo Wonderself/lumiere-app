@@ -47,11 +47,11 @@ export default async function PaymentsPage() {
   const completedCount = stats._count ?? 0
 
   return (
-    <div className="p-8 space-y-8 max-w-5xl mx-auto">
+    <div className="space-y-8 max-w-5xl mx-auto">
       {/* Page Header */}
       <div>
         <h1
-          className="text-3xl font-bold mb-2"
+          className="text-3xl sm:text-4xl font-bold mb-2"
           style={{ fontFamily: 'var(--font-playfair)' }}
         >
           Mes Paiements
@@ -61,9 +61,12 @@ export default async function PaymentsPage() {
         </p>
       </div>
 
+      {/* Section separator */}
+      <div className="h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
+
       {/* Stats Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div className="bg-white/[0.03] backdrop-blur border border-white/10 rounded-2xl p-6">
+        <div className="bg-white/[0.03] backdrop-blur border border-white/10 sm:rounded-3xl rounded-2xl p-6 hover:shadow-md transition-all duration-500">
           <div className="flex items-center gap-3 mb-3">
             <div className="h-10 w-10 rounded-xl bg-[#D4AF37]/10 border border-[#D4AF37]/20 flex items-center justify-center">
               <CreditCard className="h-5 w-5 text-[#D4AF37]" />
@@ -75,7 +78,7 @@ export default async function PaymentsPage() {
           </p>
         </div>
 
-        <div className="bg-white/[0.03] backdrop-blur border border-white/10 rounded-2xl p-6">
+        <div className="bg-white/[0.03] backdrop-blur border border-white/10 sm:rounded-3xl rounded-2xl p-6 hover:shadow-md transition-all duration-500">
           <div className="flex items-center gap-3 mb-3">
             <div className="h-10 w-10 rounded-xl bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center">
               <Clock className="h-5 w-5 text-yellow-400" />
@@ -85,7 +88,7 @@ export default async function PaymentsPage() {
           <p className="text-2xl font-bold text-yellow-400">{pendingCount}</p>
         </div>
 
-        <div className="bg-white/[0.03] backdrop-blur border border-white/10 rounded-2xl p-6">
+        <div className="bg-white/[0.03] backdrop-blur border border-white/10 sm:rounded-3xl rounded-2xl p-6 hover:shadow-md transition-all duration-500">
           <div className="flex items-center gap-3 mb-3">
             <div className="h-10 w-10 rounded-xl bg-green-500/10 border border-green-500/20 flex items-center justify-center">
               <CheckCircle className="h-5 w-5 text-green-400" />
@@ -96,10 +99,13 @@ export default async function PaymentsPage() {
         </div>
       </div>
 
+      {/* Section separator */}
+      <div className="h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
+
       {/* Payments Table */}
       {payments.length === 0 ? (
-        <div className="bg-white/[0.03] backdrop-blur border border-white/10 rounded-2xl p-16 text-center">
-          <div className="h-16 w-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center mx-auto mb-4">
+        <div className="bg-white/[0.03] backdrop-blur border border-white/10 sm:rounded-3xl rounded-2xl p-16 text-center">
+          <div className="h-16 w-16 sm:rounded-3xl rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center mx-auto mb-4">
             <CreditCard className="h-8 w-8 text-white/20" />
           </div>
           <h3 className="text-lg font-semibold text-white/60 mb-2">Aucun paiement</h3>
@@ -109,7 +115,7 @@ export default async function PaymentsPage() {
           </p>
         </div>
       ) : (
-        <div className="bg-white/[0.03] backdrop-blur border border-white/10 rounded-2xl overflow-hidden">
+        <div className="bg-white/[0.03] backdrop-blur border border-white/10 sm:rounded-3xl rounded-2xl overflow-hidden">
           {/* Desktop Table */}
           <div className="hidden md:block overflow-x-auto">
             <table className="w-full">
@@ -139,7 +145,7 @@ export default async function PaymentsPage() {
                 {payments.map((payment) => {
                   const statusConfig = STATUS_CONFIG[payment.status] ?? STATUS_CONFIG.PENDING
                   return (
-                    <tr key={payment.id} className="hover:bg-white/[0.02] transition-colors">
+                    <tr key={payment.id} className="hover:bg-white/[0.02] transition-colors duration-300">
                       <td className="px-6 py-4">
                         <span className="text-sm text-white font-medium truncate block max-w-[200px]">
                           {payment.task.title}

@@ -8,23 +8,26 @@ export const metadata: Metadata = {
 
 export default function PrivacyPage() {
   return (
-    <div className="min-h-screen py-16 px-4">
+    <div className="min-h-screen py-16 sm:py-20 px-4">
       <div className="container mx-auto max-w-4xl">
         {/* Header */}
-        <div className="text-center mb-12">
+        <div className="text-center mb-12 sm:mb-16">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#D4AF37]/10 border border-[#D4AF37]/20 text-[#D4AF37] text-xs font-medium tracking-wider uppercase mb-6">
+            Protection des Données
+          </div>
           <h1
-            className="text-4xl md:text-5xl font-bold mb-4"
+            className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4"
             style={{ fontFamily: 'var(--font-playfair)' }}
           >
             Politique de Confidentialité
           </h1>
-          <p className="text-white/50 text-sm">
+          <p className="text-white/40 text-sm">
             Dernière mise à jour : 22 février 2026
           </p>
         </div>
 
         {/* Content */}
-        <div className="rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl p-8 md:p-12 space-y-10">
+        <div className="sm:rounded-3xl rounded-2xl border border-white/[0.08] bg-white/[0.03] backdrop-blur-xl p-6 sm:p-8 md:p-12 space-y-10 shadow-2xl shadow-black/10">
           {/* Introduction */}
           <section>
             <p className="text-white/70 leading-relaxed">

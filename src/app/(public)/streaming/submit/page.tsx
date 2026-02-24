@@ -26,12 +26,12 @@ export default async function SubmitFilmPage() {
   return (
     <div className="min-h-screen bg-[#0A0A0A]">
       <div className="max-w-4xl mx-auto px-6 py-12">
-        <Link href="/streaming" className="text-white/40 hover:text-white/70 text-sm transition-colors">
+        <Link href="/streaming" className="text-white/40 hover:text-white/70 text-sm transition-colors duration-300">
           ← Retour au catalogue
         </Link>
 
         <div className="mt-6 mb-8">
-          <h1 className="text-3xl font-bold text-white font-[family-name:var(--font-playfair)]">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white font-[family-name:var(--font-playfair)]">
             Soumettre votre film
           </h1>
           <p className="text-white/50 mt-2">
@@ -41,25 +41,27 @@ export default async function SubmitFilmPage() {
 
         {/* Revenue Info */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-          <Card className="bg-[#D4AF37]/5 border-[#D4AF37]/20">
+          <Card className="bg-[#D4AF37]/5 border-[#D4AF37]/20 backdrop-blur-sm">
             <CardContent className="p-4 text-center">
               <p className="text-[#D4AF37] text-2xl font-bold">50%</p>
               <p className="text-white/50 text-sm">Part créateur par défaut</p>
             </CardContent>
           </Card>
-          <Card className="bg-white/[0.03] border-white/10">
+          <Card className="bg-white/[0.03] border-white/[0.08] backdrop-blur-sm">
             <CardContent className="p-4 text-center">
               <p className="text-white text-2xl font-bold">+10%</p>
               <p className="text-white/50 text-sm">Bonus exclusivité</p>
             </CardContent>
           </Card>
-          <Card className="bg-white/[0.03] border-white/10">
+          <Card className="bg-white/[0.03] border-white/[0.08] backdrop-blur-sm">
             <CardContent className="p-4 text-center">
               <p className="text-white text-2xl font-bold">Mensuel</p>
               <p className="text-white/50 text-sm">Paiement fin de mois</p>
             </CardContent>
           </Card>
         </div>
+
+        <div className="h-px bg-gradient-to-r from-transparent via-[#D4AF37]/10 to-transparent mb-8" />
 
         <form action={async (formData: FormData) => {
           'use server'
@@ -68,7 +70,7 @@ export default async function SubmitFilmPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Left — Form */}
             <div className="space-y-6">
-              <Card className="bg-white/[0.03] border-white/10">
+              <Card className="bg-white/[0.03] border-white/[0.08] backdrop-blur-sm">
                 <CardHeader>
                   <CardTitle className="text-white flex items-center gap-2">
                     <Film className="h-5 w-5 text-[#D4AF37]" /> Informations du film
@@ -77,36 +79,36 @@ export default async function SubmitFilmPage() {
                 <CardContent className="space-y-4">
                   <div>
                     <Label className="text-white/60">Titre *</Label>
-                    <Input name="title" required className="bg-white/5 border-white/10 text-white mt-1" placeholder="Le titre de votre film" />
+                    <Input name="title" required className="bg-white/5 border-white/[0.08] text-white mt-1" placeholder="Le titre de votre film" />
                   </div>
                   <div>
                     <Label className="text-white/60">Synopsis *</Label>
-                    <Textarea name="synopsis" required className="bg-white/5 border-white/10 text-white mt-1" rows={4} placeholder="Décrivez votre film..." />
+                    <Textarea name="synopsis" required className="bg-white/5 border-white/[0.08] text-white mt-1" rows={4} placeholder="Décrivez votre film..." />
                   </div>
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <Label className="text-white/60">Genre</Label>
-                      <Input name="genre" className="bg-white/5 border-white/10 text-white mt-1" placeholder="Sci-Fi, Drame..." />
+                      <Input name="genre" className="bg-white/5 border-white/[0.08] text-white mt-1" placeholder="Sci-Fi, Drame..." />
                     </div>
                     <div>
                       <Label className="text-white/60">Année</Label>
-                      <Input name="year" type="number" className="bg-white/5 border-white/10 text-white mt-1" placeholder="2026" />
+                      <Input name="year" type="number" className="bg-white/5 border-white/[0.08] text-white mt-1" placeholder="2026" />
                     </div>
                   </div>
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <Label className="text-white/60">Durée (secondes)</Label>
-                      <Input name="duration" type="number" className="bg-white/5 border-white/10 text-white mt-1" placeholder="5400" />
+                      <Input name="duration" type="number" className="bg-white/5 border-white/[0.08] text-white mt-1" placeholder="5400" />
                     </div>
                     <div>
                       <Label className="text-white/60">Langue</Label>
-                      <Input name="language" defaultValue="fr" className="bg-white/5 border-white/10 text-white mt-1" />
+                      <Input name="language" defaultValue="fr" className="bg-white/5 border-white/[0.08] text-white mt-1" />
                     </div>
                   </div>
                 </CardContent>
               </Card>
 
-              <Card className="bg-white/[0.03] border-white/10">
+              <Card className="bg-white/[0.03] border-white/[0.08] backdrop-blur-sm">
                 <CardHeader>
                   <CardTitle className="text-white flex items-center gap-2">
                     <Upload className="h-5 w-5 text-[#D4AF37]" /> Fichiers
@@ -115,21 +117,21 @@ export default async function SubmitFilmPage() {
                 <CardContent className="space-y-4">
                   <div>
                     <Label className="text-white/60">URL de la vidéo *</Label>
-                    <Input name="videoUrl" required className="bg-white/5 border-white/10 text-white mt-1" placeholder="https://..." />
+                    <Input name="videoUrl" required className="bg-white/5 border-white/[0.08] text-white mt-1" placeholder="https://..." />
                     <p className="text-white/20 text-xs mt-1">Lien direct vers le fichier vidéo (MP4, WebM)</p>
                   </div>
                   <div>
                     <Label className="text-white/60">URL bande-annonce</Label>
-                    <Input name="trailerUrl" className="bg-white/5 border-white/10 text-white mt-1" placeholder="https://..." />
+                    <Input name="trailerUrl" className="bg-white/5 border-white/[0.08] text-white mt-1" placeholder="https://..." />
                   </div>
                   <div>
                     <Label className="text-white/60">URL affiche / thumbnail</Label>
-                    <Input name="thumbnailUrl" className="bg-white/5 border-white/10 text-white mt-1" placeholder="https://..." />
+                    <Input name="thumbnailUrl" className="bg-white/5 border-white/[0.08] text-white mt-1" placeholder="https://..." />
                   </div>
                 </CardContent>
               </Card>
 
-              <Card className="bg-white/[0.03] border-white/10">
+              <Card className="bg-white/[0.03] border-white/[0.08] backdrop-blur-sm">
                 <CardHeader>
                   <CardTitle className="text-white flex items-center gap-2">
                     <Shield className="h-5 w-5 text-[#D4AF37]" /> Options
@@ -156,7 +158,7 @@ export default async function SubmitFilmPage() {
 
             {/* Right — Contract Preview */}
             <div className="space-y-6">
-              <Card className="bg-white/[0.03] border-white/10">
+              <Card className="bg-white/[0.03] border-white/[0.08] backdrop-blur-sm">
                 <CardHeader>
                   <CardTitle className="text-white flex items-center gap-2">
                     <FileText className="h-5 w-5 text-[#D4AF37]" /> Contrat de distribution
@@ -169,7 +171,7 @@ export default async function SubmitFilmPage() {
                 </CardContent>
               </Card>
 
-              <Card className="bg-[#D4AF37]/5 border-[#D4AF37]/20">
+              <Card className="bg-[#D4AF37]/5 border-[#D4AF37]/20 backdrop-blur-sm">
                 <CardContent className="p-5">
                   <label className="flex items-start gap-3 cursor-pointer">
                     <input type="checkbox" name="acceptTerms" value="true" required className="mt-1 accent-[#D4AF37]" />
@@ -183,7 +185,7 @@ export default async function SubmitFilmPage() {
 
               <button
                 type="submit"
-                className="w-full py-3 bg-[#D4AF37] text-black font-bold rounded-lg hover:bg-[#F0D060] transition-colors text-lg"
+                className="w-full py-3 bg-[#D4AF37] text-black font-bold rounded-lg hover:bg-[#F0D060] transition-colors duration-300 text-lg"
               >
                 Soumettre mon film
               </button>

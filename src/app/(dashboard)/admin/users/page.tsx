@@ -24,14 +24,16 @@ export default async function AdminUsersPage() {
   const ROLE_OPTIONS = ['CONTRIBUTOR', 'ARTIST', 'STUNT_PERFORMER', 'SCREENWRITER', 'VIEWER', 'ADMIN']
 
   return (
-    <div className="p-8 space-y-6">
+    <div className="space-y-8">
       <div>
-        <h1 className="text-3xl font-bold" style={{ fontFamily: 'var(--font-playfair)' }}>Utilisateurs</h1>
+        <h1 className="text-3xl sm:text-4xl font-bold" style={{ fontFamily: 'var(--font-playfair)' }}>Utilisateurs</h1>
         <p className="text-white/50">
           {users.length} utilisateur{users.length > 1 ? 's' : ''} —{' '}
           {users.filter((u) => !u.isVerified).length} en attente de validation
         </p>
       </div>
+
+      <div className="h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
 
       {/* Pending first */}
       {users.some((u) => !u.isVerified) && (
@@ -41,8 +43,8 @@ export default async function AdminUsersPage() {
           </h2>
           <div className="space-y-2">
             {users.filter((u) => !u.isVerified).map((user) => (
-              <div key={user.id} className="flex items-center gap-4 p-4 rounded-xl border border-yellow-500/20 bg-yellow-500/5">
-                <div className="h-10 w-10 rounded-full bg-[#D4AF37]/20 border border-[#D4AF37]/30 flex items-center justify-center text-sm font-bold text-[#D4AF37] shrink-0">
+              <div key={user.id} className="flex items-center gap-4 p-4 sm:rounded-2xl rounded-xl border border-yellow-500/20 bg-yellow-500/5 hover:shadow-md transition-all duration-500">
+                <div className="h-10 w-10 rounded-xl bg-[#D4AF37]/20 border border-[#D4AF37]/30 flex items-center justify-center text-sm font-bold text-[#D4AF37] shrink-0">
                   {getInitials(user.displayName || user.email)}
                 </div>
                 <div className="flex-1 min-w-0">
@@ -65,6 +67,8 @@ export default async function AdminUsersPage() {
         </div>
       )}
 
+      <div className="h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
+
       {/* All users */}
       <div>
         <h2 className="text-lg font-semibold mb-3 flex items-center gap-2">
@@ -72,8 +76,8 @@ export default async function AdminUsersPage() {
         </h2>
         <div className="space-y-2">
           {users.filter((u) => u.isVerified).map((user) => (
-            <div key={user.id} className="flex items-center gap-4 p-4 rounded-xl border border-white/5 bg-white/[0.02] hover:border-white/10 transition-all">
-              <div className="h-10 w-10 rounded-full bg-white/10 flex items-center justify-center text-sm font-bold shrink-0">
+            <div key={user.id} className="flex items-center gap-4 p-4 sm:rounded-2xl rounded-xl border border-white/5 bg-white/[0.02] hover:border-white/10 hover:shadow-md hover:-translate-y-[1px] transition-all duration-500">
+              <div className="h-10 w-10 rounded-xl bg-white/10 flex items-center justify-center text-sm font-bold shrink-0">
                 {getInitials(user.displayName || user.email)}
               </div>
 
@@ -95,7 +99,7 @@ export default async function AdminUsersPage() {
                 <select
                   name="role"
                   defaultValue={user.role}
-                  className="h-8 rounded border border-white/10 bg-white/5 px-2 text-xs text-white focus:outline-none"
+                  className="h-8 rounded-xl border border-white/10 bg-white/5 px-2 text-xs text-white focus:outline-none transition-colors duration-300"
                 >
                   {ROLE_OPTIONS.map((r) => <option key={r} value={r}>{r}</option>)}
                 </select>

@@ -100,11 +100,11 @@ export default function ScreenplayNewPage() {
   }
 
   return (
-    <div className="p-8 max-w-3xl mx-auto space-y-6">
+    <div className="max-w-3xl mx-auto space-y-8">
       {/* Header */}
       <div>
         <h1
-          className="text-3xl font-bold"
+          className="text-3xl sm:text-4xl font-bold"
           style={{ fontFamily: 'var(--font-playfair)' }}
         >
           Soumettre un Scenario
@@ -113,6 +113,9 @@ export default function ScreenplayNewPage() {
           Soumettez votre scenario pour evaluation par notre IA
         </p>
       </div>
+
+      {/* Section separator */}
+      <div className="h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
 
       {/* Step Indicator */}
       <div className="flex items-center gap-1">
@@ -126,7 +129,7 @@ export default function ScreenplayNewPage() {
               <button
                 onClick={() => index <= currentStep && setCurrentStep(index)}
                 disabled={index > currentStep}
-                className={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium transition-all w-full ${
+                className={`flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-medium transition-all duration-500 w-full ${
                   isActive
                     ? 'bg-[#D4AF37]/15 text-[#D4AF37] border border-[#D4AF37]/20'
                     : isCompleted
@@ -280,7 +283,7 @@ export default function ScreenplayNewPage() {
                 </div>
               </div>
 
-              <div className="rounded-lg bg-[#D4AF37]/5 border border-[#D4AF37]/15 p-4">
+              <div className="rounded-xl bg-[#D4AF37]/5 border border-[#D4AF37]/15 p-4">
                 <div className="flex items-start gap-3">
                   <Info className="h-4 w-4 text-[#D4AF37] mt-0.5 shrink-0" />
                   <div className="text-sm text-white/50">
@@ -331,7 +334,7 @@ export default function ScreenplayNewPage() {
                 </div>
               </div>
 
-              <div className="rounded-lg bg-white/[0.03] border border-white/10 p-4">
+              <div className="rounded-xl bg-white/[0.03] border border-white/10 p-4">
                 <div className="flex items-start gap-3">
                   <Info className="h-4 w-4 text-white/40 mt-0.5 shrink-0" />
                   <p className="text-sm text-white/40">
@@ -369,7 +372,7 @@ export default function ScreenplayNewPage() {
               </div>
 
               <div className="space-y-4">
-                <div className="rounded-lg bg-white/[0.03] border border-white/10 p-4 space-y-3">
+                <div className="rounded-xl bg-white/[0.03] border border-white/10 p-4 space-y-3">
                   <div className="flex justify-between">
                     <span className="text-sm text-white/40">Titre</span>
                     <span className="text-sm font-medium">{title}</span>
@@ -412,7 +415,7 @@ export default function ScreenplayNewPage() {
                 </div>
 
                 {state?.error && (
-                  <div className="rounded-lg bg-red-500/10 border border-red-500/20 p-4">
+                  <div className="rounded-xl bg-red-500/10 border border-red-500/20 p-4">
                     <p className="text-sm text-red-400">{state.error}</p>
                   </div>
                 )}

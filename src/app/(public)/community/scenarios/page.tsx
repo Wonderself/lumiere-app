@@ -90,7 +90,7 @@ export default async function ScenariosPage() {
         <div className="text-center mb-16">
           <div className="flex items-center justify-center gap-3 mb-4">
             <PenTool className="h-10 w-10 text-[#D4AF37]" />
-            <h1 className="text-5xl font-bold text-gray-900" style={{ fontFamily: 'var(--font-playfair)' }}>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900" style={{ fontFamily: 'var(--font-playfair)' }}>
               Scenarios
             </h1>
           </div>
@@ -99,7 +99,7 @@ export default async function ScenariosPage() {
           </p>
           <Link
             href="/community"
-            className="inline-flex items-center gap-1 text-sm text-[#D4AF37] mt-4 hover:text-[#C4A030] transition-colors"
+            className="inline-flex items-center gap-1 text-sm text-[#D4AF37] mt-4 hover:text-[#C4A030] transition-colors duration-300"
           >
             <ArrowLeft className="h-3.5 w-3.5" />
             Retour a la communaute
@@ -121,7 +121,7 @@ export default async function ScenariosPage() {
 
               {/* Premium notice */}
               {!isPremium && userId && (
-                <div className="mb-6 p-4 rounded-xl border border-[#D4AF37]/20 bg-[#D4AF37]/[0.03] flex items-center gap-3">
+                <div className="mb-6 p-4 sm:rounded-2xl rounded-xl border border-[#D4AF37]/20 bg-[#D4AF37]/[0.03] flex items-center gap-3 backdrop-blur-sm">
                   <Crown className="h-5 w-5 text-[#D4AF37] shrink-0" />
                   <div className="flex-1">
                     <p className="text-sm text-gray-600">
@@ -131,7 +131,7 @@ export default async function ScenariosPage() {
                   </div>
                   <Link
                     href="/subscription"
-                    className="shrink-0 px-4 py-2 rounded-full bg-[#D4AF37] text-white text-xs font-semibold hover:bg-[#C4A030] transition-colors"
+                    className="shrink-0 px-4 py-2 rounded-full bg-[#D4AF37] text-white text-xs font-semibold hover:bg-[#C4A030] transition-colors duration-300"
                   >
                     Devenir Premium
                   </Link>
@@ -141,7 +141,7 @@ export default async function ScenariosPage() {
               <div className="space-y-4">
                 {voting.map((scenario, idx) => (
                   <div key={scenario.id} className="group">
-                    <Card variant={idx === 0 ? 'gold' : 'default'} className="relative overflow-hidden border-gray-100 bg-white shadow-sm hover:shadow-md transition-shadow">
+                    <Card variant={idx === 0 ? 'gold' : 'default'} className="relative overflow-hidden border-gray-100 bg-white shadow-sm hover:shadow-lg hover:shadow-[#D4AF37]/5 transition-all duration-500">
                       {/* Top rank indicator */}
                       {idx < 3 && (
                         <div className={`absolute top-0 left-0 w-1 h-full ${
@@ -164,7 +164,7 @@ export default async function ScenariosPage() {
                           {/* Content */}
                           <div className="flex-1 min-w-0">
                             <Link href={`/community/scenarios/${scenario.id}`}>
-                              <h3 className="text-lg font-semibold text-gray-900 hover:text-[#D4AF37] transition-colors">
+                              <h3 className="text-lg font-semibold text-gray-900 hover:text-[#D4AF37] transition-colors duration-300">
                                 {scenario.title}
                               </h3>
                             </Link>
@@ -200,6 +200,8 @@ export default async function ScenariosPage() {
             </section>
           )}
 
+          <div className="h-px bg-gradient-to-r from-transparent via-[#D4AF37]/10 to-transparent" />
+
           {/* === PROPOSALS SECTION === */}
           {allProposals.length > 0 && (
             <section>
@@ -214,7 +216,7 @@ export default async function ScenariosPage() {
               <div className="grid md:grid-cols-2 gap-4">
                 {allProposals.map((scenario) => (
                   <Link key={scenario.id} href={`/community/scenarios/${scenario.id}`}>
-                    <Card className="h-full group cursor-pointer border-gray-100 bg-white shadow-sm hover:shadow-md transition-shadow">
+                    <Card className="h-full group cursor-pointer border-gray-100 bg-white shadow-sm hover:shadow-lg hover:shadow-[#D4AF37]/5 hover:-translate-y-[1px] transition-all duration-500">
                       <CardContent className="p-5">
                         <div className="flex items-start justify-between mb-2">
                           <Badge variant={scenario.status === 'SHORTLISTED' ? 'warning' : 'secondary'}>
@@ -224,7 +226,7 @@ export default async function ScenariosPage() {
                             {formatDate(scenario.createdAt)}
                           </span>
                         </div>
-                        <h3 className="font-semibold text-sm text-gray-900 group-hover:text-[#D4AF37] transition-colors mb-1.5">
+                        <h3 className="font-semibold text-sm text-gray-900 group-hover:text-[#D4AF37] transition-colors duration-300 mb-1.5">
                           {scenario.title}
                         </h3>
                         <p className="text-xs text-gray-400 line-clamp-2 italic mb-3">
@@ -247,6 +249,8 @@ export default async function ScenariosPage() {
             </section>
           )}
 
+          <div className="h-px bg-gradient-to-r from-transparent via-[#D4AF37]/10 to-transparent" />
+
           {/* === WINNERS SECTION === */}
           {winners.length > 0 && (
             <section>
@@ -260,14 +264,14 @@ export default async function ScenariosPage() {
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {winners.map((scenario) => (
                   <Link key={scenario.id} href={`/community/scenarios/${scenario.id}`}>
-                    <Card variant="gold" className="h-full group cursor-pointer border-[#D4AF37]/20 bg-white shadow-sm hover:shadow-md transition-shadow">
+                    <Card variant="gold" className="h-full group cursor-pointer border-[#D4AF37]/20 bg-white shadow-sm hover:shadow-lg hover:shadow-[#D4AF37]/5 hover:-translate-y-[1px] transition-all duration-500">
                       <CardContent className="p-5">
                         <div className="flex items-center gap-2 mb-3">
                           <Crown className="h-4 w-4 text-[#D4AF37]" />
                           <Badge>Gagnant</Badge>
                           <Badge variant="secondary" className="text-[10px]">Round {scenario.round}</Badge>
                         </div>
-                        <h3 className="font-semibold text-sm text-gray-900 group-hover:text-[#D4AF37] transition-colors mb-1.5">
+                        <h3 className="font-semibold text-sm text-gray-900 group-hover:text-[#D4AF37] transition-colors duration-300 mb-1.5">
                           {scenario.title}
                         </h3>
                         <p className="text-xs text-gray-400 line-clamp-2 italic mb-3">
@@ -291,6 +295,8 @@ export default async function ScenariosPage() {
             </section>
           )}
 
+          <div className="h-px bg-gradient-to-r from-transparent via-[#D4AF37]/10 to-transparent" />
+
           {/* === SUBMIT FORM === */}
           <section>
             <div className="flex items-center gap-3 mb-6">
@@ -310,13 +316,13 @@ export default async function ScenariosPage() {
                   <div className="flex justify-center gap-3">
                     <Link
                       href="/login"
-                      className="px-5 py-2.5 rounded-full bg-[#D4AF37] text-white font-semibold hover:bg-[#C4A030] transition-colors text-sm"
+                      className="px-5 py-2.5 rounded-full bg-[#D4AF37] text-white font-semibold hover:bg-[#C4A030] transition-colors duration-300 text-sm"
                     >
                       Se connecter
                     </Link>
                     <Link
                       href="/register"
-                      className="px-5 py-2.5 rounded-full border border-[#D4AF37]/30 text-[#D4AF37] font-semibold hover:bg-[#D4AF37]/10 transition-colors text-sm"
+                      className="px-5 py-2.5 rounded-full border border-[#D4AF37]/30 text-[#D4AF37] font-semibold hover:bg-[#D4AF37]/10 transition-colors duration-300 text-sm"
                     >
                       Creer un compte
                     </Link>

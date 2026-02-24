@@ -120,7 +120,7 @@ export default async function ScenarioDetailPage({
         {/* Breadcrumb */}
         <Link
           href="/community/scenarios"
-          className="inline-flex items-center gap-1.5 text-sm text-white/40 hover:text-[#D4AF37] transition-colors mb-8"
+          className="inline-flex items-center gap-1.5 text-sm text-white/40 hover:text-[#D4AF37] transition-colors duration-300 mb-8"
         >
           <ArrowLeft className="h-4 w-4" />
           Retour aux scenarios
@@ -144,13 +144,13 @@ export default async function ScenarioDetailPage({
             </div>
 
             {/* Title */}
-            <h1 className="text-3xl md:text-4xl font-bold mb-6" style={{ fontFamily: 'var(--font-playfair)' }}>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6" style={{ fontFamily: 'var(--font-playfair)' }}>
               {isWinner && <span className="text-[#D4AF37]">&#9733; </span>}
               {scenario.title}
             </h1>
 
             {/* Logline */}
-            <div className="mb-8 p-6 rounded-xl border border-white/[0.06] bg-white/[0.02]">
+            <div className="mb-8 p-6 sm:rounded-2xl rounded-xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm">
               <p className="text-lg text-white/70 italic leading-relaxed" style={{ fontFamily: 'var(--font-playfair)' }}>
                 &ldquo;{scenario.logline}&rdquo;
               </p>
@@ -175,7 +175,7 @@ export default async function ScenarioDetailPage({
 
             {/* Film reference */}
             {(scenario.film || scenario.catalog) && (
-              <div className="mb-8 p-4 rounded-xl border border-white/[0.06] bg-white/[0.02] flex items-center gap-3">
+              <div className="mb-8 p-4 sm:rounded-2xl rounded-xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm flex items-center gap-3">
                 <Film className="h-5 w-5 text-[#D4AF37] shrink-0" />
                 <div>
                   <span className="text-xs text-white/40">Film associe</span>
@@ -222,7 +222,7 @@ export default async function ScenarioDetailPage({
                     <p className="text-xs text-white/40">Connectez-vous pour voter</p>
                     <Link
                       href="/login"
-                      className="inline-flex items-center gap-1.5 text-sm text-[#D4AF37] hover:text-[#F0D060] transition-colors"
+                      className="inline-flex items-center gap-1.5 text-sm text-[#D4AF37] hover:text-[#F0D060] transition-colors duration-300"
                     >
                       Se connecter
                     </Link>
@@ -274,7 +274,7 @@ export default async function ScenarioDetailPage({
                   </p>
                   <Link
                     href="/subscription"
-                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#D4AF37] text-black text-xs font-semibold hover:bg-[#F0D060] transition-colors"
+                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#D4AF37] text-black text-xs font-semibold hover:bg-[#F0D060] transition-colors duration-300"
                   >
                     <Sparkles className="h-3.5 w-3.5" />
                     Passer Premium
@@ -285,9 +285,12 @@ export default async function ScenarioDetailPage({
           </div>
         </div>
 
+        {/* Section separator */}
+        <div className="h-px bg-gradient-to-r from-transparent via-[#D4AF37]/10 to-transparent mt-16" />
+
         {/* Related Scenarios */}
         {related.length > 0 && (
-          <section className="mt-16">
+          <section className="mt-10">
             <h2 className="flex items-center gap-2 text-xl font-bold mb-6" style={{ fontFamily: 'var(--font-playfair)' }}>
               <Sparkles className="h-5 w-5 text-[#D4AF37]" />
               Scenarios similaires
@@ -297,10 +300,10 @@ export default async function ScenarioDetailPage({
                 const sStatus = STATUS_CONFIG[s.status] || STATUS_CONFIG.SUBMITTED
                 return (
                   <Link key={s.id} href={`/community/scenarios/${s.id}`}>
-                    <Card className="h-full group cursor-pointer">
+                    <Card className="h-full group cursor-pointer hover:shadow-lg hover:shadow-[#D4AF37]/5 hover:-translate-y-[1px] transition-all duration-500">
                       <CardContent className="p-5">
                         <Badge variant={sStatus.variant} className="mb-2">{sStatus.label}</Badge>
-                        <h3 className="font-semibold text-sm group-hover:text-[#D4AF37] transition-colors mb-1.5">
+                        <h3 className="font-semibold text-sm group-hover:text-[#D4AF37] transition-colors duration-300 mb-1.5">
                           {s.title}
                         </h3>
                         <p className="text-xs text-white/40 line-clamp-2 italic mb-2">{s.logline}</p>

@@ -50,12 +50,12 @@ export default async function ScreenplaysPage() {
   })
 
   return (
-    <div className="p-8 max-w-5xl mx-auto space-y-6">
+    <div className="max-w-5xl mx-auto space-y-8">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
           <h1
-            className="text-3xl font-bold"
+            className="text-3xl sm:text-4xl font-bold"
             style={{ fontFamily: 'var(--font-playfair)' }}
           >
             Mes Scenarios
@@ -71,6 +71,9 @@ export default async function ScreenplaysPage() {
           </Button>
         </Link>
       </div>
+
+      {/* Section separator */}
+      <div className="h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
 
       {/* Screenplays Grid */}
       {screenplays.length === 0 ? (
@@ -94,7 +97,7 @@ export default async function ScreenplaysPage() {
           {screenplays.map((screenplay) => {
             const statusConfig = STATUS_CONFIG[screenplay.status] || STATUS_CONFIG.SUBMITTED
             return (
-              <Card key={screenplay.id} variant="glass" className="hover:border-[#D4AF37]/20 transition-all">
+              <Card key={screenplay.id} variant="glass" className="hover:border-[#D4AF37]/20 hover:shadow-md hover:-translate-y-0.5 transition-all duration-500">
                 <CardContent className="p-6">
                   {/* Title & Status */}
                   <div className="flex items-start justify-between gap-3 mb-3">

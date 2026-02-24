@@ -121,11 +121,11 @@ export default async function CommunityPage() {
 
         <div className="container mx-auto max-w-5xl relative z-10 text-center">
           <div className="flex items-center justify-center gap-3 mb-4 sm:mb-6">
-            <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-[#D4AF37]/10 border border-[#D4AF37]/20 flex items-center justify-center">
+            <div className="w-12 h-12 sm:w-14 sm:h-14 sm:rounded-3xl rounded-2xl bg-[#D4AF37]/10 border border-[#D4AF37]/20 flex items-center justify-center">
               <Users className="h-6 w-6 sm:h-7 sm:w-7 text-[#D4AF37]" />
             </div>
           </div>
-          <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold mb-3 sm:mb-4 text-gray-900" style={{ fontFamily: 'var(--font-playfair)' }}>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4 text-gray-900" style={{ fontFamily: 'var(--font-playfair)' }}>
             Communaute <span className="text-[#D4AF37]">Creative</span>
           </h1>
           <p className="text-base sm:text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed">
@@ -137,21 +137,21 @@ export default async function CommunityPage() {
           <div className="flex flex-wrap justify-center gap-3 mt-6 sm:mt-8">
             <Link
               href="/community/scenarios"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gray-100 border border-gray-200 text-sm font-medium text-gray-700 hover:border-[#D4AF37]/30 hover:text-[#D4AF37] hover:bg-[#D4AF37]/[0.04] transition-all duration-200 min-h-[44px]"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gray-100 border border-gray-200 text-sm font-medium text-gray-700 hover:border-[#D4AF37]/30 hover:text-[#D4AF37] hover:bg-[#D4AF37]/[0.04] transition-all duration-300 min-h-[44px]"
             >
               <PenTool className="h-4 w-4" />
               Scenarios
             </Link>
             <Link
               href="/community/contests"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#D4AF37] text-white text-sm font-semibold hover:bg-[#C4A030] transition-all duration-200 shadow-sm min-h-[44px]"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#D4AF37] text-white text-sm font-semibold hover:bg-[#C4A030] transition-all duration-300 shadow-sm min-h-[44px]"
             >
               <Trophy className="h-4 w-4" />
               Concours
             </Link>
             <Link
               href="/leaderboard"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gray-100 border border-gray-200 text-sm font-medium text-gray-700 hover:border-[#D4AF37]/30 hover:text-[#D4AF37] hover:bg-[#D4AF37]/[0.04] transition-all duration-200 min-h-[44px]"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gray-100 border border-gray-200 text-sm font-medium text-gray-700 hover:border-[#D4AF37]/30 hover:text-[#D4AF37] hover:bg-[#D4AF37]/[0.04] transition-all duration-300 min-h-[44px]"
             >
               <Crown className="h-4 w-4" />
               Classement
@@ -162,6 +162,9 @@ export default async function CommunityPage() {
 
       <div className="container mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 pb-16 sm:pb-20 space-y-10 sm:space-y-16">
 
+        {/* Section separator */}
+        <div className="h-px bg-gradient-to-r from-transparent via-[#D4AF37]/10 to-transparent" />
+
         {/* Stats Row */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
           {[
@@ -170,13 +173,15 @@ export default async function CommunityPage() {
             { label: 'Concours termines', value: stats.totalContests, icon: Trophy, color: 'text-[#D4AF37]' },
             { label: 'Participations', value: stats.totalEntries, icon: Film, color: 'text-purple-500' },
           ].map((stat) => (
-            <div key={stat.label} className="text-center p-5 rounded-2xl border border-gray-100 bg-white shadow-sm">
+            <div key={stat.label} className="text-center p-5 sm:rounded-3xl rounded-2xl border border-gray-100 bg-white shadow-sm backdrop-blur-sm">
               <stat.icon className={`h-5 w-5 ${stat.color} mx-auto mb-2`} />
               <div className="text-2xl font-bold text-gray-900">{stat.value.toLocaleString()}</div>
               <div className="text-xs text-gray-400 mt-1">{stat.label}</div>
             </div>
           ))}
         </div>
+
+        <div className="h-px bg-gradient-to-r from-transparent via-[#D4AF37]/10 to-transparent" />
 
         {/* Active Contests */}
         <section>
@@ -189,7 +194,7 @@ export default async function CommunityPage() {
             </div>
             <Link
               href="/community/contests"
-              className="text-sm text-[#D4AF37] hover:text-[#C4A030] transition-colors flex items-center gap-1"
+              className="text-sm text-[#D4AF37] hover:text-[#C4A030] transition-colors duration-300 flex items-center gap-1"
             >
               Tous les concours <ArrowRight className="h-4 w-4" />
             </Link>
@@ -213,7 +218,7 @@ export default async function CommunityPage() {
 
                 return (
                   <Link key={contest.id} href={`/community/contests/${contest.id}`}>
-                    <Card variant={contest.status === 'VOTING' ? 'gold' : 'default'} className="h-full group cursor-pointer border-gray-100 bg-white shadow-sm hover:shadow-md transition-shadow">
+                    <Card variant={contest.status === 'VOTING' ? 'gold' : 'default'} className="h-full group cursor-pointer border-gray-100 bg-white shadow-sm hover:shadow-lg hover:shadow-[#D4AF37]/5 hover:-translate-y-[1px] transition-all duration-500">
                       <CardContent className="p-6">
                         <div className="flex items-start justify-between mb-3">
                           <Badge variant={statusInfo.variant}>{statusInfo.label}</Badge>
@@ -224,7 +229,7 @@ export default async function CommunityPage() {
                             </div>
                           )}
                         </div>
-                        <h3 className="text-lg font-semibold mb-2 text-gray-900 group-hover:text-[#D4AF37] transition-colors">
+                        <h3 className="text-lg font-semibold mb-2 text-gray-900 group-hover:text-[#D4AF37] transition-colors duration-300">
                           {contest.title}
                         </h3>
                         {contest.description && (
@@ -253,6 +258,8 @@ export default async function CommunityPage() {
           )}
         </section>
 
+        <div className="h-px bg-gradient-to-r from-transparent via-[#D4AF37]/10 to-transparent" />
+
         {/* Scenarios in Vote */}
         <section>
           <div className="flex items-center justify-between mb-6">
@@ -264,7 +271,7 @@ export default async function CommunityPage() {
             </div>
             <Link
               href="/community/scenarios"
-              className="text-sm text-[#D4AF37] hover:text-[#C4A030] transition-colors flex items-center gap-1"
+              className="text-sm text-[#D4AF37] hover:text-[#C4A030] transition-colors duration-300 flex items-center gap-1"
             >
               Tous les scenarios <ArrowRight className="h-4 w-4" />
             </Link>
@@ -282,12 +289,12 @@ export default async function CommunityPage() {
             <div className="space-y-3">
               {votingScenarios.map((scenario, idx) => (
                 <Link key={scenario.id} href={`/community/scenarios/${scenario.id}`}>
-                  <div className="group flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-xl border border-gray-100 bg-white hover:border-[#D4AF37]/30 hover:shadow-sm transition-all duration-200 min-h-[56px] shadow-sm">
+                  <div className="group flex items-center gap-3 sm:gap-4 p-3 sm:p-4 sm:rounded-2xl rounded-xl border border-gray-100 bg-white hover:border-[#D4AF37]/30 hover:shadow-lg hover:shadow-[#D4AF37]/5 hover:-translate-y-[1px] transition-all duration-500 min-h-[56px] shadow-sm backdrop-blur-sm">
                     <div className="w-8 h-8 rounded-lg bg-[#D4AF37]/10 flex items-center justify-center text-sm font-bold text-[#D4AF37] shrink-0">
                       {idx + 1}
                     </div>
                     <div className="flex-1 min-w-0">
-                      <h4 className="font-semibold text-sm text-gray-900 group-hover:text-[#D4AF37] transition-colors truncate">
+                      <h4 className="font-semibold text-sm text-gray-900 group-hover:text-[#D4AF37] transition-colors duration-300 truncate">
                         {scenario.title}
                       </h4>
                       <p className="text-xs text-gray-400 truncate mt-0.5">
@@ -311,6 +318,8 @@ export default async function CommunityPage() {
           )}
         </section>
 
+        <div className="h-px bg-gradient-to-r from-transparent via-[#D4AF37]/10 to-transparent" />
+
         {/* Recent Winners */}
         {(winners.scenarioWinners.length > 0 || winners.contestWinners.length > 0) && (
           <section>
@@ -324,13 +333,13 @@ export default async function CommunityPage() {
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
               {winners.scenarioWinners.map((w) => (
                 <Link key={w.id} href={`/community/scenarios/${w.id}`}>
-                  <Card variant="gold" className="h-full group cursor-pointer border-[#D4AF37]/20 bg-[#D4AF37]/[0.03] hover:shadow-md transition-shadow">
+                  <Card variant="gold" className="h-full group cursor-pointer border-[#D4AF37]/20 bg-[#D4AF37]/[0.03] hover:shadow-lg hover:shadow-[#D4AF37]/5 hover:-translate-y-[1px] transition-all duration-500">
                     <CardContent className="p-5">
                       <div className="flex items-center gap-2 mb-3">
                         <Crown className="h-4 w-4 text-[#D4AF37]" />
                         <Badge>Scenario Gagnant</Badge>
                       </div>
-                      <h4 className="font-semibold text-sm text-gray-900 group-hover:text-[#D4AF37] transition-colors mb-1">
+                      <h4 className="font-semibold text-sm text-gray-900 group-hover:text-[#D4AF37] transition-colors duration-300 mb-1">
                         {w.title}
                       </h4>
                       <p className="text-xs text-gray-500 line-clamp-2 mb-2">{w.logline}</p>
@@ -344,13 +353,13 @@ export default async function CommunityPage() {
                 const winner = c.entries[0]
                 return (
                   <Link key={c.id} href={`/community/contests/${c.id}`}>
-                    <Card variant="gold" className="h-full group cursor-pointer border-[#D4AF37]/20 bg-[#D4AF37]/[0.03] hover:shadow-md transition-shadow">
+                    <Card variant="gold" className="h-full group cursor-pointer border-[#D4AF37]/20 bg-[#D4AF37]/[0.03] hover:shadow-lg hover:shadow-[#D4AF37]/5 hover:-translate-y-[1px] transition-all duration-500">
                       <CardContent className="p-5">
                         <div className="flex items-center gap-2 mb-3">
                           <Trophy className="h-4 w-4 text-[#D4AF37]" />
                           <Badge>Concours Gagnant</Badge>
                         </div>
-                        <h4 className="font-semibold text-sm text-gray-900 group-hover:text-[#D4AF37] transition-colors mb-1">
+                        <h4 className="font-semibold text-sm text-gray-900 group-hover:text-[#D4AF37] transition-colors duration-300 mb-1">
                           {c.title}
                         </h4>
                         {winner && (
@@ -367,8 +376,10 @@ export default async function CommunityPage() {
           </section>
         )}
 
+        <div className="h-px bg-gradient-to-r from-transparent via-[#D4AF37]/10 to-transparent" />
+
         {/* CTA */}
-        <div className="text-center p-6 sm:p-10 rounded-2xl border border-[#D4AF37]/20 bg-gradient-to-br from-[#D4AF37]/[0.04] to-white relative overflow-hidden shadow-sm">
+        <div className="text-center p-6 sm:p-10 sm:rounded-3xl rounded-2xl border border-[#D4AF37]/20 bg-gradient-to-br from-[#D4AF37]/[0.04] to-white relative overflow-hidden shadow-sm">
           <div className="absolute top-0 right-0 w-40 h-40 bg-[#D4AF37]/[0.05] rounded-full blur-[60px] pointer-events-none" />
           <Sparkles className="h-8 w-8 text-[#D4AF37] mx-auto mb-4" />
           <h2 className="text-xl sm:text-2xl font-bold mb-2 text-gray-900" style={{ fontFamily: 'var(--font-playfair)' }}>
@@ -380,14 +391,14 @@ export default async function CommunityPage() {
           <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-3">
             <Link
               href="/community/scenarios"
-              className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-[#D4AF37] text-white font-semibold hover:bg-[#C4A030] transition-all duration-200 shadow-sm min-h-[44px]"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-[#D4AF37] text-white font-semibold hover:bg-[#C4A030] transition-all duration-300 shadow-sm min-h-[44px]"
             >
               <PenTool className="h-4 w-4" />
               Proposer un scenario
             </Link>
             <Link
               href="/register"
-              className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full border border-[#D4AF37]/30 text-[#D4AF37] font-semibold hover:bg-[#D4AF37]/[0.06] transition-all duration-200 min-h-[44px]"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full border border-[#D4AF37]/30 text-[#D4AF37] font-semibold hover:bg-[#D4AF37]/[0.06] transition-all duration-300 min-h-[44px]"
             >
               <Star className="h-4 w-4" />
               Rejoindre Lumiere

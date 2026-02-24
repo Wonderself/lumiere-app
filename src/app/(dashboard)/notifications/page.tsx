@@ -97,12 +97,12 @@ export default async function NotificationsPage() {
   const grouped = groupByDate(notifications)
 
   return (
-    <div className="p-8 max-w-3xl mx-auto space-y-6">
+    <div className="max-w-3xl mx-auto space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between flex-wrap gap-4">
         <div>
           <h1
-            className="text-3xl font-bold text-gray-900"
+            className="text-3xl sm:text-4xl font-bold text-gray-900"
             style={{ fontFamily: 'var(--font-playfair)' }}
           >
             Notifications
@@ -115,7 +115,7 @@ export default async function NotificationsPage() {
         </div>
         {unreadCount > 0 && (
           <form action={markAllNotificationsReadAction}>
-            <Button variant="outline" size="sm" type="submit">
+            <Button variant="outline" size="sm" type="submit" className="rounded-xl border-[#D4AF37]/30 text-[#D4AF37] hover:bg-[#D4AF37]/5 transition-all duration-300">
               <CheckCircle className="h-4 w-4 mr-2" />
               Tout marquer comme lu
             </Button>
@@ -123,24 +123,29 @@ export default async function NotificationsPage() {
         )}
       </div>
 
+      {/* Separator */}
+      <div className="h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
+
       {/* Notifications List */}
       {notifications.length === 0 ? (
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-12 text-center">
-          <InboxIcon className="h-12 w-12 text-gray-200 mx-auto mb-4" />
+        <div className="bg-white sm:rounded-3xl rounded-2xl shadow-sm border border-gray-100 p-12 text-center">
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gray-50 mb-4">
+            <InboxIcon className="h-8 w-8 text-gray-300" />
+          </div>
           <p className="text-gray-500 text-lg mb-1">Aucune notification</p>
           <p className="text-gray-400 text-sm">
-            Vos notifications apparaitront ici
+            Vos notifications apparaîtront ici
           </p>
         </div>
       ) : (
         <div className="space-y-8">
           {grouped.map((group) => (
             <div key={group.label}>
-              <h2 className="text-sm font-medium text-gray-400 uppercase tracking-wider mb-3 px-1">
+              <h2 className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-3 px-1">
                 {group.label}
               </h2>
               {/* Date group container */}
-              <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-3 space-y-2">
+              <div className="bg-white sm:rounded-2xl rounded-xl border border-gray-100 shadow-sm p-3 sm:p-4 space-y-2">
                 {group.items.map((notification) => {
                   const Icon = NOTIF_ICONS[notification.type] || Bell
                   const iconColor = NOTIF_COLORS[notification.type] || 'text-gray-400'
@@ -149,22 +154,22 @@ export default async function NotificationsPage() {
                   return (
                     <div
                       key={notification.id}
-                      className={`rounded-xl border transition-all p-4 ${
+                      className={`rounded-xl border transition-all duration-300 p-4 hover:bg-gray-50/50 ${
                         isUnread
                           ? 'border-l-2 border-l-[#D4AF37] border-gray-100 bg-amber-50/30'
-                          : 'border-gray-50 opacity-70'
+                          : 'border-gray-50 opacity-70 hover:opacity-100'
                       }`}
                     >
                       <div className="flex items-start gap-4">
                         {/* Icon with gold dot for unread */}
                         <div className="relative mt-0.5">
                           <div
-                            className={`p-2 rounded-lg bg-gray-50 ${iconColor}`}
+                            className={`p-2.5 rounded-xl bg-gray-50 ${iconColor}`}
                           >
                             <Icon className="h-4 w-4" />
                           </div>
                           {isUnread && (
-                            <div className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-[#D4AF37] border-2 border-white" />
+                            <div className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-[#D4AF37] border-2 border-white shadow-sm shadow-[#D4AF37]/20" />
                           )}
                         </div>
 
@@ -180,21 +185,21 @@ export default async function NotificationsPage() {
                                 {notification.title}
                               </p>
                               {notification.body && (
-                                <p className="text-xs text-gray-400 mt-1 line-clamp-2">
+                                <p className="text-xs text-gray-400 mt-1 line-clamp-2 leading-relaxed">
                                   {notification.body}
                                 </p>
                               )}
                             </div>
-                            <span className="text-xs text-gray-300 shrink-0 mt-0.5">
+                            <span className="text-[11px] text-gray-300 shrink-0 mt-0.5 tabular-nums">
                               {timeAgo(notification.createdAt)}
                             </span>
                           </div>
 
                           {/* Actions */}
-                          <div className="flex items-center gap-2 mt-2">
+                          <div className="flex items-center gap-2 mt-2.5">
                             {notification.href && (
                               <Link href={notification.href}>
-                                <Button variant="ghost" size="sm" className="h-7 text-xs text-[#D4AF37] hover:text-[#C5A028]">
+                                <Button variant="ghost" size="sm" className="h-7 text-xs rounded-lg text-[#D4AF37] hover:text-[#C5A028] hover:bg-[#D4AF37]/5 transition-all duration-300">
                                   Voir <ExternalLink className="h-3 w-3 ml-1" />
                                 </Button>
                               </Link>
@@ -205,7 +210,7 @@ export default async function NotificationsPage() {
                                   variant="ghost"
                                   size="sm"
                                   type="submit"
-                                  className="h-7 text-xs text-gray-400 hover:text-gray-600"
+                                  className="h-7 text-xs rounded-lg text-gray-400 hover:text-gray-600 transition-all duration-300"
                                 >
                                   Marquer comme lu
                                 </Button>
