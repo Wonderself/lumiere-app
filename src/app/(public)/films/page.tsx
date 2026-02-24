@@ -1,4 +1,5 @@
 import { prisma } from '@/lib/prisma'
+import { getCached } from '@/lib/redis'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Film, ChevronRight, Star, Users, CheckCircle, Clapperboard } from 'lucide-react'
@@ -38,16 +39,18 @@ async function getFilms(searchParams: { [key: string]: string | undefined }) {
 }
 
 async function getHeroStats() {
-  try {
-    const [filmsCount, tasksCount, contributorsCount] = await Promise.all([
-      prisma.film.count({ where: { isPublic: true } }),
-      prisma.task.count(),
-      prisma.user.count({ where: { isVerified: true } }),
-    ])
-    return { filmsCount, tasksCount, contributorsCount }
-  } catch {
-    return { filmsCount: 0, tasksCount: 0, contributorsCount: 0 }
-  }
+  return getCached('films:hero-stats', async () => {
+    try {
+      const [filmsCount, tasksCount, contributorsCount] = await Promise.all([
+        prisma.film.count({ where: { isPublic: true } }),
+        prisma.task.count(),
+        prisma.user.count({ where: { isVerified: true } }),
+      ])
+      return { filmsCount, tasksCount, contributorsCount }
+    } catch {
+      return { filmsCount: 0, tasksCount: 0, contributorsCount: 0 }
+    }
+  }, 300) // 5 min cache
 }
 
 const STATUS_ORDER = ['IN_PRODUCTION', 'PRE_PRODUCTION', 'POST_PRODUCTION', 'RELEASED', 'DRAFT']

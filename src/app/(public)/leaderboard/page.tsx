@@ -1,4 +1,5 @@
 import { prisma } from '@/lib/prisma'
+import { getCached } from '@/lib/redis'
 import { Trophy, Star, Medal, Crown, Zap, Film } from 'lucide-react'
 import { formatPrice } from '@/lib/utils'
 import type { Metadata } from 'next'
@@ -11,40 +12,44 @@ export const metadata: Metadata = {
 }
 
 async function getLeaderboard() {
-  try {
-    return await prisma.user.findMany({
-      where: { isVerified: true },
-      select: {
-        id: true,
-        displayName: true,
-        level: true,
-        points: true,
-        tasksCompleted: true,
-        tasksValidated: true,
-        role: true,
-      },
-      orderBy: [{ points: 'desc' }, { tasksCompleted: 'desc' }],
-      take: 50,
-    })
-  } catch {
-    return []
-  }
+  return getCached('leaderboard:top50', async () => {
+    try {
+      return await prisma.user.findMany({
+        where: { isVerified: true },
+        select: {
+          id: true,
+          displayName: true,
+          level: true,
+          points: true,
+          tasksCompleted: true,
+          tasksValidated: true,
+          role: true,
+        },
+        orderBy: [{ points: 'desc' }, { tasksCompleted: 'desc' }],
+        take: 50,
+      })
+    } catch {
+      return []
+    }
+  }, 120) // 2 min cache
 }
 
 async function getStats() {
-  try {
-    const [totalUsers, totalTasks, totalPaid] = await Promise.all([
-      prisma.user.count({ where: { isVerified: true } }),
-      prisma.task.count({ where: { status: 'VALIDATED' } }),
-      prisma.payment.aggregate({
-        _sum: { amountEur: true },
-        where: { status: 'COMPLETED' },
-      }),
-    ])
-    return { totalUsers, totalTasks, totalPaid: totalPaid._sum.amountEur || 0 }
-  } catch {
-    return { totalUsers: 0, totalTasks: 0, totalPaid: 0 }
-  }
+  return getCached('leaderboard:stats', async () => {
+    try {
+      const [totalUsers, totalTasks, totalPaid] = await Promise.all([
+        prisma.user.count({ where: { isVerified: true } }),
+        prisma.task.count({ where: { status: 'VALIDATED' } }),
+        prisma.payment.aggregate({
+          _sum: { amountEur: true },
+          where: { status: 'COMPLETED' },
+        }),
+      ])
+      return { totalUsers, totalTasks, totalPaid: totalPaid._sum.amountEur || 0 }
+    } catch {
+      return { totalUsers: 0, totalTasks: 0, totalPaid: 0 }
+    }
+  }, 300) // 5 min cache
 }
 
 const LEVEL_COLORS: Record<string, string> = {

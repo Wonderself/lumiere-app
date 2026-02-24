@@ -5,7 +5,8 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { formatPrice, formatDate } from '@/lib/utils'
-import { CreditCard, CheckCircle, Clock, AlertCircle } from 'lucide-react'
+import { CreditCard, CheckCircle, Clock, AlertCircle, Download } from 'lucide-react'
+import Link from 'next/link'
 import { markPaymentPaidAction } from '@/app/actions/admin'
 import type { Metadata } from 'next'
 
@@ -46,9 +47,17 @@ export default async function AdminPaymentsPage() {
 
   return (
     <div className="space-y-8">
-      <div>
-        <h1 className="text-3xl sm:text-4xl font-bold mb-1" style={{ fontFamily: 'var(--font-playfair)' }}>Paiements</h1>
-        <p className="text-white/50">{payments.length} paiement{payments.length > 1 ? 's' : ''} au total</p>
+      <div className="flex items-center justify-between flex-wrap gap-4">
+        <div>
+          <h1 className="text-3xl sm:text-4xl font-bold mb-1" style={{ fontFamily: 'var(--font-playfair)' }}>Paiements</h1>
+          <p className="text-white/50">{payments.length} paiement{payments.length > 1 ? 's' : ''} au total</p>
+        </div>
+        <Link href="/api/admin/export-payments" target="_blank">
+          <Button variant="outline" size="sm" className="rounded-xl border-[#D4AF37]/30 text-[#D4AF37] hover:bg-[#D4AF37]/5">
+            <Download className="h-4 w-4 mr-2" />
+            Export CSV
+          </Button>
+        </Link>
       </div>
 
       <div className="h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />

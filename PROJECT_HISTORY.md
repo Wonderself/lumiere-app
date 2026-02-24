@@ -440,6 +440,58 @@ Templates HTML branding Lumiere gold/dark.
 - V5-7: Lumen analytics → done
 - V5-8: Notification filters → done
 
+### 2026-02-24 — Task DAG + Cron + Payments Export + Earnings + Monthly Contests + Redis Cache
+
+**Task Dependencies DAG (v2-4)**
+- Added dependency validation in `claimTaskAction`: checks all `dependsOnIds` tasks are VALIDATED before allowing claim
+- Added phase status check: task's phase must be ACTIVE (not LOCKED)
+- Enables proper sequential unlocking of tasks within production pipeline
+
+**Timer 48h + Auto-Release Cron (v2-5)**
+- Created `src/app/api/cron/route.ts` — automated maintenance endpoint
+- 3 maintenance tasks: expired task auto-release, contest auto-close, phase auto-complete
+- Phase auto-complete: when all tasks in a phase are VALIDATED, phase completes + next phase unlocks
+- Secured with CRON_SECRET env var, callable via external cron service or Coolify
+- Notifications sent to users when tasks expire
+
+**Admin Payments CSV Export (v3-3)**
+- Created `src/app/api/admin/export-payments/route.ts` — CSV download for accounting
+- Exports: date, user, email, film, task, amount, method, status, payment date
+- Admin-only endpoint with proper auth check
+- Export button added to admin payments page with Download icon
+
+**Contributor Earnings Dashboard (v3-4)**
+- Created `src/app/(dashboard)/dashboard/earnings/page.tsx`
+- Stats cards: total earned, pending, completed count, Lumens balance
+- Monthly revenue chart (last 6 months) — simple bar chart with gold gradient
+- Full payment history list with status badges (Paye, En attente, En cours, Echoue)
+- Empty state with CTA to find tasks
+- Earnings banner added to main dashboard
+
+**Monthly Themed Contests (v5-4)**
+- 12 monthly themes defined in `community.ts` (Janvier→Decembre with descriptions)
+- `createMonthlyContestAction` — admin creates monthly themed contest with 1 click
+- Auto-checks if contest already exists for current month
+- Default prize pool: 500 EUR with 60/25/15% distribution
+- Themes: Nouveau Depart, Amour, Femmes, Nature, Travail, Musique, Aventure, Sci-Fi, Rentree, Frissons, Memoire, Lumiere
+
+**Redis Cache & Performance (v7-4)**
+- Added `getCached()` to 3 high-traffic public pages:
+  - Films page hero stats (5 min TTL)
+  - Leaderboard top 50 + global stats (2-5 min TTL)
+  - Community stats (3 min TTL)
+- Graceful degradation: falls back to direct DB query if Redis unavailable
+- Significant load reduction on frequently-accessed public queries
+
+**Roadmap Updated**
+- V2-4: Task dependencies → done
+- V2-5: Timer 48h + auto-release → done
+- V3-3: Admin payments export → done
+- V3-4: Earnings dashboard → done
+- V5-4: Monthly contests → done
+- V7-4: Redis cache → done
+- V3 phase status: todo → in_progress
+
 ---
 
 ## Important Files

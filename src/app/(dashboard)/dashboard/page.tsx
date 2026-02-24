@@ -10,7 +10,7 @@ import {
   Building2, CreditCard, Key, ShieldCheck,
   Landmark, Globe, Server, ExternalLink,
   AlertCircle, Square, ChevronRight,
-  Scale, Search, Clapperboard, PlayCircle, PiggyBank, Users, Sparkles, Zap,
+  Scale, Search, Clapperboard, PlayCircle, PiggyBank, Users, Sparkles, Zap, Banknote,
 } from 'lucide-react'
 import { getRecommendedTasks } from '@/app/actions/recommendations'
 import { TASK_TYPE_LABELS, DIFFICULTY_LABELS } from '@/lib/constants'
@@ -297,6 +297,22 @@ export default async function DashboardPage() {
             </div>
           </div>
           <ChevronRight className="h-5 w-5 text-gray-300 group-hover:text-purple-500 transition-colors" />
+        </div>
+      </Link>
+
+      {/* Earnings Banner */}
+      <Link href="/dashboard/earnings" className="block p-5 rounded-2xl bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200/50 hover:shadow-md transition-all group">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="h-10 w-10 rounded-xl bg-green-100 flex items-center justify-center">
+              <Banknote className="h-5 w-5 text-green-600" />
+            </div>
+            <div>
+              <h3 className="font-semibold text-gray-800 text-sm">Mes Revenus</h3>
+              <p className="text-xs text-gray-500">Historique des gains, stats mensuelles et previsions</p>
+            </div>
+          </div>
+          <ChevronRight className="h-5 w-5 text-gray-300 group-hover:text-green-600 transition-colors" />
         </div>
       </Link>
 

@@ -19,6 +19,20 @@ export async function claimTaskAction(formData: FormData) {
   const task = await prisma.task.findUnique({ where: { id: taskId } })
   if (!task || task.status !== 'AVAILABLE') return
 
+  // Check task dependencies (DAG): all dependent tasks must be VALIDATED
+  if (task.dependsOnIds.length > 0) {
+    const depTasks = await prisma.task.findMany({
+      where: { id: { in: task.dependsOnIds } },
+      select: { id: true, status: true },
+    })
+    const allDepsValidated = depTasks.every(d => d.status === 'VALIDATED')
+    if (!allDepsValidated) return // Dependencies not yet completed
+  }
+
+  // Check that the phase is ACTIVE (not LOCKED)
+  const phase = await prisma.filmPhase.findUnique({ where: { id: task.phaseId } })
+  if (phase && phase.status === 'LOCKED') return // Phase not yet unlocked
+
   // Check concurrent task limit
   const settings = await prisma.adminSettings.findUnique({ where: { id: 'singleton' } })
   const maxConcurrent = settings?.maxConcurrentTasks || 3

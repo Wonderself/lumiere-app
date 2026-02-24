@@ -546,3 +546,69 @@ Each phase has: status (LOCKED/ACTIVE/COMPLETED), order, dependencies
 - Each row links to the user's public profile (`/users/{id}`)
 - **Gold hover effect** on rows (`hover:border-[#D4AF37]/20`)
 - **Top 3 podium** remains static cards; ranks 4+ are interactive links
+
+---
+
+## 30. Task Dependencies (DAG)
+- **Dependency validation** in `claimTaskAction` (`src/app/actions/tasks.ts`)
+- Tasks with `dependsOnIds` can only be claimed when all dependencies are VALIDATED
+- **Phase gate**: task's phase must be ACTIVE (not LOCKED) to allow claiming
+- **Enables**: sequential production pipeline where tasks unlock in order
+- **Backward-compatible**: tasks with empty `dependsOnIds` array work as before
+
+---
+
+## 31. Automated Cron Maintenance
+- **API endpoint** `GET /api/cron?key=CRON_SECRET` (`src/app/api/cron/route.ts`)
+- **3 automated tasks**:
+  1. **Expired task release**: CLAIMED tasks past 48h deadline → reset to AVAILABLE + notify user
+  2. **Contest auto-close**: VOTING contests past endDate with autoClose=true
+  3. **Phase auto-complete**: when ALL tasks in an ACTIVE phase are VALIDATED → complete phase, unlock next, update film progress
+- **Secured** with CRON_SECRET env var
+- **Returns** JSON with counts of each action taken
+- Callable by Coolify cron, external service, or manually
+
+---
+
+## 32. Admin Payments CSV Export
+- **API endpoint** `GET /api/admin/export-payments` — admin-only
+- **CSV columns**: Date, Utilisateur, Email, Film, Tache, Montant EUR, Methode, Statut, Date Paiement, ID
+- **Proper escaping**: quotes in fields handled with double-quote CSV convention
+- **Dynamic filename**: `lumiere-paiements-YYYY-MM-DD.csv`
+- **Export button** added to admin payments page with Download icon
+
+---
+
+## 33. Contributor Earnings Dashboard
+- **Page** at `/dashboard/earnings` (`src/app/(dashboard)/dashboard/earnings/page.tsx`)
+- **Stats cards**: total earned, pending amount, completed payments count, Lumen balance
+- **Monthly revenue chart**: bar graph of last 6 months with gold gradient
+- **Payment history list**: each payment with task info, film, amount, date, status badge
+- **Status labels**: Paye (green), En attente (yellow), En cours (blue), Echoue (red)
+- **Empty state**: CTA linking to task marketplace
+- **Dashboard banner**: earnings link on main dashboard with green gradient
+
+---
+
+## 34. Monthly Themed Contests
+- **12 monthly themes** defined in `src/app/actions/community.ts`:
+  - Jan: Nouveau Depart | Fev: Amour & Connexion | Mar: Femmes de Cinema
+  - Avr: Nature & Environnement | Mai: Travail & Passion | Jun: Musique & Rythme
+  - Jul: Aventure Estivale | Aou: Science-Fiction | Sep: Rentree des Createurs
+  - Oct: Frissons & Mystere | Nov: Memoire & Heritage | Dec: Lumiere & Espoir
+- **`createMonthlyContestAction`**: admin action, 1-click contest creation
+- **Duplicate prevention**: checks if contest already exists for current month
+- **Default config**: 500 EUR prize pool, 60/25/15% distribution, auto-close enabled
+- **Integrated** with existing trailer contest system (entries, votes, prize distribution)
+
+---
+
+## 35. Redis Cache & Performance
+- **`getCached()`** from `src/lib/redis.ts` applied to high-traffic public pages:
+  - Films hero stats (filmsCount, tasksCount, contributorsCount) — 5 min TTL
+  - Leaderboard top 50 users — 2 min TTL
+  - Leaderboard global stats (users, tasks, paid) — 5 min TTL
+  - Community stats (votes, scenarios, contests, entries) — 3 min TTL
+- **Graceful degradation**: if Redis unavailable, falls back to direct Prisma query
+- **No user impact**: cache-miss still returns fresh data, just slightly slower
+- **Significant load reduction** on PostgreSQL for frequently-accessed public pages

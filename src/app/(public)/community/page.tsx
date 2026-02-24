@@ -1,4 +1,5 @@
 import { prisma } from '@/lib/prisma'
+import { getCached } from '@/lib/redis'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent } from '@/components/ui/card'
 import Link from 'next/link'
@@ -22,19 +23,21 @@ export const metadata: Metadata = {
 }
 
 async function getCommunityStats() {
-  try {
-    const [totalVotes, totalScenarios, totalContests, totalEntries] = await Promise.all([
-      prisma.scenarioVote.count().then((sv) =>
-        prisma.trailerVote.count().then((tv) => sv + tv)
-      ),
-      prisma.scenarioProposal.count(),
-      prisma.trailerContest.count({ where: { status: 'CLOSED' } }),
-      prisma.trailerEntry.count(),
-    ])
-    return { totalVotes, totalScenarios, totalContests, totalEntries }
-  } catch {
-    return { totalVotes: 0, totalScenarios: 0, totalContests: 0, totalEntries: 0 }
-  }
+  return getCached('community:stats', async () => {
+    try {
+      const [totalVotes, totalScenarios, totalContests, totalEntries] = await Promise.all([
+        prisma.scenarioVote.count().then((sv) =>
+          prisma.trailerVote.count().then((tv) => sv + tv)
+        ),
+        prisma.scenarioProposal.count(),
+        prisma.trailerContest.count({ where: { status: 'CLOSED' } }),
+        prisma.trailerEntry.count(),
+      ])
+      return { totalVotes, totalScenarios, totalContests, totalEntries }
+    } catch {
+      return { totalVotes: 0, totalScenarios: 0, totalContests: 0, totalEntries: 0 }
+    }
+  }, 180) // 3 min cache
 }
 
 async function getActiveContests() {

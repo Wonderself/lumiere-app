@@ -500,6 +500,82 @@ export async function voteTrailerAction(formData: FormData) {
   }
 }
 
+// ============================================
+// MONTHLY THEMED CONTESTS
+// ============================================
+
+const MONTHLY_THEMES = [
+  { month: 1, theme: 'Nouveau Depart', description: 'Films sur les nouveaux commencements, les resolutions et les transformations.' },
+  { month: 2, theme: 'Amour & Connexion', description: 'Explorez l\'amour sous toutes ses formes — romantique, familial, amitie.' },
+  { month: 3, theme: 'Femmes de Cinema', description: 'Celebrez les femmes dans le cinema — creatrices, actrices, personnages.' },
+  { month: 4, theme: 'Nature & Environnement', description: 'Films eco-conscients, nature, survie et notre lien a la planete.' },
+  { month: 5, theme: 'Travail & Passion', description: 'Histoires de metiers, vocations et la quete de sens au quotidien.' },
+  { month: 6, theme: 'Musique & Rythme', description: 'Le cinema rencontre la musique — clips, comédies musicales, biopics.' },
+  { month: 7, theme: 'Aventure Estivale', description: 'Road trips, voyages, decouvertes et liberte sous le soleil.' },
+  { month: 8, theme: 'Science-Fiction', description: 'Futur, espace, technologie, IA — imaginez demain.' },
+  { month: 9, theme: 'Rentree des Createurs', description: 'Retour a la creation — histoires d\'ecoles, d\'apprentissage, de mentorat.' },
+  { month: 10, theme: 'Frissons & Mystere', description: 'Thriller, horreur, suspense — faites frissonner le public.' },
+  { month: 11, theme: 'Memoire & Heritage', description: 'Histoires de transmission, d\'histoire, de racines et de memoire collective.' },
+  { month: 12, theme: 'Lumiere & Espoir', description: 'Films lumineux pour terminer l\'annee — espoir, solidarite, magie.' },
+]
+
+/**
+ * Auto-create the monthly themed contest. Admin-only.
+ * Creates a scenario contest and a trailer contest for the current month.
+ */
+export async function createMonthlyContestAction() {
+  const session = await auth()
+  if (!session?.user || session.user.role !== 'ADMIN') redirect('/dashboard')
+
+  const now = new Date()
+  const month = now.getMonth() + 1
+  const year = now.getFullYear()
+  const theme = MONTHLY_THEMES.find(t => t.month === month) || MONTHLY_THEMES[0]
+
+  const monthLabel = now.toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' })
+  const title = `${theme.theme} — ${monthLabel}`
+
+  // Check if already created this month
+  const existing = await prisma.trailerContest.findFirst({
+    where: {
+      title: { contains: monthLabel },
+      createdAt: { gte: new Date(year, month - 1, 1) },
+    },
+  })
+
+  if (existing) {
+    return { error: `Le concours mensuel de ${monthLabel} existe deja.` }
+  }
+
+  // Start of month → end of month
+  const startDate = new Date(year, month - 1, 1)
+  const endDate = new Date(year, month, 0, 23, 59, 59)
+
+  try {
+    await prisma.trailerContest.create({
+      data: {
+        title,
+        description: theme.description,
+        startDate,
+        endDate,
+        prizeDescription: `Theme: ${theme.theme}. Meilleure creation recompensee en Lumens.`,
+        prizePoolEur: 500,
+        prizeDistribution: { '1st': 60, '2nd': 25, '3rd': 15 },
+        autoClose: true,
+        status: 'OPEN',
+      },
+    })
+
+    revalidatePath('/community')
+    revalidatePath('/community/contests')
+    revalidatePath('/admin/contests')
+    return { success: true, theme: theme.theme }
+  } catch (e) {
+    console.error('createMonthlyContestAction error:', e)
+    return { error: 'Erreur lors de la creation du concours mensuel.' }
+  }
+}
+
 export async function updateContestStatusAction(formData: FormData) {
   const session = await auth()
   if (!session?.user || session.user.role !== 'ADMIN') redirect('/dashboard')
