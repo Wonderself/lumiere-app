@@ -6,6 +6,7 @@ import { redirect } from 'next/navigation'
 import { revalidatePath } from 'next/cache'
 import { slugify } from '@/lib/utils'
 import { checkAndUpgradeLevel } from '@/lib/level'
+import { checkTaskBadges } from '@/lib/achievements'
 import { createNotification } from '@/lib/notifications'
 import { runAiReview } from '@/lib/ai-review'
 import { recordEvent } from '@/lib/blockchain'
@@ -146,7 +147,7 @@ export async function generateTasksForFilmAction(formData: FormData) {
 
   let created = 0
   for (const task of tasks) {
-    const phaseId = phaseMap.get(task.phase)
+    const phaseId = phaseMap.get(task.phase as never)
     if (!phaseId) continue
 
     await prisma.task.create({
@@ -498,6 +499,9 @@ export async function approveSubmissionAction(formData: FormData) {
   })
   if (updatedUser) {
     await checkAndUpgradeLevel(submission.userId, updatedUser.points)
+
+    // Check and award achievement badges
+    await checkTaskBadges(submission.userId).catch(() => {})
 
     // Calculate and update reputation
     const seniorityDays = Math.floor((Date.now() - updatedUser.createdAt.getTime()) / (1000 * 60 * 60 * 24))

@@ -14,6 +14,7 @@ import {
 import { slugify } from '@/lib/utils'
 import { decomposeFilmToTasks } from '@/lib/film-decomposer'
 import { analyzeScenario } from '@/lib/ai-review'
+import { checkCommunityBadges } from '@/lib/achievements'
 
 // ============================================
 // SCENARIO PROPOSALS
@@ -67,6 +68,9 @@ export async function submitScenarioAction(prevState: { error?: string; success?
         }
       })
       .catch((err) => console.error('[AI] Scenario analysis failed:', err))
+
+    // Badge check (non-blocking)
+    checkCommunityBadges(session.user.id as string, 'scenario_submit').catch(() => {})
 
     revalidatePath('/community/scenarios')
     return { success: true }
@@ -129,6 +133,9 @@ export async function voteScenarioAction(formData: FormData) {
       where: { id: proposalId },
       data: { votesCount: { increment: 1 } },
     })
+
+    // Badge check (non-blocking)
+    checkCommunityBadges(session.user.id as string, 'vote').catch(() => {})
 
     revalidatePath('/community/scenarios')
     revalidatePath(`/community/scenarios/${proposalId}`)
@@ -241,6 +248,9 @@ export async function pickScenarioWinnerAction(formData: FormData) {
       where: { id: proposalId },
       data: { status: 'WINNER' },
     })
+
+    // Badge check for winner (non-blocking)
+    checkCommunityBadges(proposal.authorId, 'scenario_win').catch(() => {})
 
     // Archive other VOTING proposals in the same round
     await prisma.scenarioProposal.updateMany({

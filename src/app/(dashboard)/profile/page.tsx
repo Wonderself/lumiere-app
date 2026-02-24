@@ -17,6 +17,9 @@ import {
   Clapperboard,
 } from 'lucide-react'
 import { ProfileEditDialog } from './profile-edit-dialog'
+import { getUserBadges, BADGES } from '@/lib/achievements'
+import { BadgeShowcase } from '@/components/badge-showcase'
+import { LevelProgress } from '@/components/level-progress'
 import type { Metadata } from 'next'
 
 export const dynamic = 'force-dynamic'
@@ -60,6 +63,15 @@ export default async function ProfilePage() {
   })
 
   if (!user) redirect('/login')
+
+  // Get user badges
+  const userBadges = await getUserBadges(user.id)
+  const earnedTypes = new Set(userBadges.map(b => b.achievementType))
+  const allBadgesWithStatus = BADGES.map(b => ({
+    ...b,
+    earned: earnedTypes.has(b.type),
+    earnedAt: userBadges.find(ub => ub.achievementType === b.type)?.earnedAt || null,
+  }))
 
   const stats = [
     {
@@ -192,6 +204,82 @@ export default async function ProfilePage() {
           </div>
         ))}
       </div>
+
+      {/* ── Level Progress ── */}
+      <div className="bg-white sm:rounded-2xl rounded-xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-shadow duration-500">
+        <h2
+          className="text-lg font-semibold text-gray-900 mb-4"
+          style={{ fontFamily: 'var(--font-playfair)' }}
+        >
+          Progression
+        </h2>
+        <div className="relative">
+          {/* Level bar (light theme adaptation) */}
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-sm font-bold text-[#D4AF37]">{user.level}</span>
+            <span className="text-xs text-gray-400">{user.points.toLocaleString('fr-FR')} points</span>
+          </div>
+          <div className="h-2.5 bg-gray-100 rounded-full overflow-hidden">
+            <div
+              className="h-full bg-gradient-to-r from-[#D4AF37] to-[#F0D060] rounded-full transition-all duration-1000"
+              style={{ width: `${(() => {
+                const thresholds: Record<string, number> = { ROOKIE: 0, PRO: 500, EXPERT: 2500, VIP: 10000 }
+                const order = ['ROOKIE', 'PRO', 'EXPERT', 'VIP']
+                const idx = order.indexOf(user.level)
+                if (idx >= order.length - 1) return 100
+                const curr = thresholds[user.level] || 0
+                const next = thresholds[order[idx + 1]] || curr
+                return Math.min(100, Math.round(((user.points - curr) / (next - curr)) * 100))
+              })()}%` }}
+            />
+          </div>
+          <div className="flex justify-between mt-1.5">
+            {['ROOKIE', 'PRO', 'EXPERT', 'VIP'].map((lvl) => (
+              <span key={lvl} className={`text-[10px] ${lvl === user.level ? 'text-[#D4AF37] font-bold' : 'text-gray-300'}`}>
+                {lvl}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* ── Badges ── */}
+      {allBadgesWithStatus.some(b => b.earned) && (
+        <div className="bg-white sm:rounded-2xl rounded-xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-shadow duration-500">
+          <h2
+            className="text-lg font-semibold text-gray-900 mb-4"
+            style={{ fontFamily: 'var(--font-playfair)' }}
+          >
+            Badges ({allBadgesWithStatus.filter(b => b.earned).length}/{allBadgesWithStatus.length})
+          </h2>
+          <div className="flex flex-wrap gap-2">
+            {allBadgesWithStatus.filter(b => b.earned).map((badge) => (
+              <span
+                key={badge.type}
+                className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-medium bg-amber-50 text-[#D4AF37] border border-amber-200"
+                title={badge.description}
+              >
+                <span>{badge.icon}</span>
+                {badge.name}
+              </span>
+            ))}
+          </div>
+          {allBadgesWithStatus.some(b => !b.earned) && (
+            <div className="mt-3 flex flex-wrap gap-1.5">
+              {allBadgesWithStatus.filter(b => !b.earned).map((badge) => (
+                <span
+                  key={badge.type}
+                  className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-[10px] bg-gray-50 text-gray-300 border border-gray-100"
+                  title={badge.description}
+                >
+                  <span className="grayscale">{badge.icon}</span>
+                  {badge.name}
+                </span>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
 
       {/* ── Profile Completion CTA ── */}
       {!user.bio && user.skills.length === 0 && user.languages.length === 0 && (

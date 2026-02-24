@@ -367,6 +367,46 @@ Templates HTML branding Lumiere gold/dark.
 
 ---
 
+### 2026-02-24 — Gamification: Badges + Parrainage + Niveaux + Enrichissement IA
+
+**Badge System (13 badges)**
+- Created `src/lib/achievements.ts` with full badge logic
+- 4 categories: contribution (4), quality (3), community (4), special (2)
+- Auto-award triggers integrated into:
+  - `admin.ts` → `approveSubmissionAction` calls `checkTaskBadges()`
+  - `community.ts` → scenario submit/vote/winner calls `checkCommunityBadges()`
+  - `referral.ts` → referral completion calls `checkCommunityBadges()`
+- `BadgeShowcase` component with compact and full grid views
+- Badges displayed on private profile and public user profiles
+
+**Referral System**
+- Created `src/app/actions/referral.ts` with 4 server actions
+- `getReferralCode()` generates unique code (LUM-XXXXXX-XXXXX)
+- `applyReferralCode()` creates PENDING referral record
+- `completeReferral()` awards 30 Lumens to referrer + 10 to referred
+- `getReferralStats()` returns counts and earnings
+- Full UI page at `/dashboard/referral` with share link, stats, referral list
+- Referral banner added to main dashboard
+
+**Level Progress Visualization**
+- Created `src/components/level-progress.tsx` — ROOKIE → PRO → EXPERT → VIP
+- Shows current level, points, progress bar, distance to next level
+- Integrated into private profile page and public user profiles
+- Compact and full modes available
+
+**AI Task Enrichment**
+- Added `enrichTaskDescriptionAction` to `src/app/actions/ai.ts`
+- Claude generates description, instructions, deliverables, quality criteria
+- Admin-only action using Claude Haiku 4.5
+
+**Roadmap Updated**
+- V2-8: AI task enrichment → done
+- V5-1: Level progress visualization → done
+- V5-2: Badges & achievements → done
+- V5-5: Parrainage → done
+
+---
+
 ## Important Files
 - `prisma/schema.prisma` — Full database schema (70+ models, 23 BlockchainEventType values)
 - `src/lib/auth.ts` — Authentication configuration
@@ -374,10 +414,13 @@ Templates HTML branding Lumiere gold/dark.
 - `src/lib/redis.ts` — Redis caching layer
 - `src/lib/film-decomposer.ts` — Auto-generates tasks/budget/timeline from genre
 - `src/lib/reputation.ts` — Weighted reputation scoring system
+- `src/lib/achievements.ts` — Badge/achievement system (13 badges, auto-award)
 - `src/app/actions/admin.ts` — Film, task, phase, review management + reassignment + cleanup
 - `src/app/actions/community.ts` — Scenarios, contests + auto-film from winner
 - `src/app/actions/tasks.ts` — Task claim, submit, abandon + blockchain events
 - `src/app/actions/tokenization.ts` — Token purchase, sale, governance, dividends + blockchain events
+- `src/app/actions/referral.ts` — Referral system (codes, bonuses, stats)
+- `src/app/actions/ai.ts` — AI synopsis generation, scenario analysis, task enrichment
 - `next.config.ts` — Build & optimization configuration
 - `src/components/netflix/` — Netflix-style UI components (header, hero, film rows, creator bar, screenwriter CTA)
 - `SLATE_DECK.md` — Full project pipeline with 20 projects details

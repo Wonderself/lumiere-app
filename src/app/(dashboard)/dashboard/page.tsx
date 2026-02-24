@@ -10,7 +10,7 @@ import {
   Building2, CreditCard, Key, ShieldCheck,
   Landmark, Globe, Server, ExternalLink,
   AlertCircle, Square, ChevronRight,
-  Scale, Search, Clapperboard, PlayCircle, PiggyBank,
+  Scale, Search, Clapperboard, PlayCircle, PiggyBank, Users,
 } from 'lucide-react'
 import type { Metadata } from 'next'
 
@@ -238,6 +238,22 @@ export default async function DashboardPage() {
           </div>
         </Link>
       )}
+
+      {/* Referral Banner */}
+      <Link href="/dashboard/referral" className="block p-5 rounded-2xl bg-gradient-to-r from-purple-50 to-pink-50 border border-purple-200/50 hover:shadow-md transition-all group">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="h-10 w-10 rounded-xl bg-purple-100 flex items-center justify-center">
+              <Users className="h-5 w-5 text-purple-500" />
+            </div>
+            <div>
+              <h3 className="font-semibold text-gray-800 text-sm">Parrainage</h3>
+              <p className="text-xs text-gray-500">Invitez des amis et gagnez 30 Lumens par filleul</p>
+            </div>
+          </div>
+          <ChevronRight className="h-5 w-5 text-gray-300 group-hover:text-purple-500 transition-colors" />
+        </div>
+      </Link>
 
       {/* Quick Actions */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">

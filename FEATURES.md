@@ -452,3 +452,54 @@ Each phase has: status (LOCKED/ACTIVE/COMPLETED), order, dependencies
 - **Task status dots**: Green (validated), gold (available), blue (claimed)
 - **Phase indicators**: Completed (green checkmark), Active (gold pulse), Locked (gray lock)
 - **Replaces** static phase display on film detail pages
+
+---
+
+## 22. Badge & Achievement System
+- **13 badges** across 4 categories (`src/lib/achievements.ts`)
+- **Contribution**: Premiere Lumiere (1st task), Marathonien (10), Centurion (100), Polyvalent (5 types)
+- **Quality**: Perfectionniste (95%+ AI x3), Regulier (10 on-time), Zero Rejet (20 no rejections)
+- **Community**: Scenariste (1st scenario), Scenariste Star (winner), Votant (5 votes), Parrain (3 referrals)
+- **Special**: Early Adopter (first 100 users), Investisseur (token purchase)
+- **Auto-award** triggers integrated in admin.ts, community.ts, referral.ts
+- **BadgeShowcase component** (`src/components/badge-showcase.tsx`) — compact row or full grid
+- **Displayed** on private profile page and public user profiles
+- **Notifications** sent when a badge is earned
+
+---
+
+## 23. Referral System
+- **Server actions** in `src/app/actions/referral.ts`
+- `getReferralCode()` — Generates unique code (LUM-XXXXXX-XXXXX)
+- `applyReferralCode()` — Links new user to referrer (PENDING status)
+- `completeReferral()` — Awards 30 Lumens to referrer + 10 to referred user
+- `getReferralStats()` — Returns referral count, completed count, total earnings
+- **Dashboard page** at `/dashboard/referral` with:
+  - How-it-works section (3 steps)
+  - Copyable referral code and share link
+  - Stats grid (total, active, Lumens earned)
+  - Referral list with status indicators
+- **Dashboard banner** linking to referral page on main dashboard
+- **Lumen transactions** created for both parties
+- **Notifications** sent to both referrer and referred
+
+---
+
+## 24. Level Progress Visualization
+- **LevelProgress component** (`src/components/level-progress.tsx`)
+- **4 levels**: ROOKIE (0 pts) → PRO (500) → EXPERT (2500) → VIP (10000)
+- **Progress bar** showing current position within level range
+- **Distance indicator** showing points needed for next level
+- **Milestone markers** for all 4 levels
+- **Compact mode** for inline use (just bar + labels)
+- **Full mode** with detailed card view
+- **Integrated** in private profile page (light theme) and public profiles (dark theme)
+
+---
+
+## 25. AI Task Description Enrichment
+- **Server action** `enrichTaskDescriptionAction` in `src/app/actions/ai.ts`
+- **Admin-only** — Uses Claude Haiku 4.5 to enhance task descriptions
+- **Generates**: description, instructions, deliverables, quality criteria
+- **Context-aware**: Uses task title, type, film genre, film title
+- **JSON output** structured for direct use in task creation forms

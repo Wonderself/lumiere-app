@@ -6,6 +6,9 @@ import { Button } from '@/components/ui/button'
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 import { User, Star, CheckCircle, Trophy, Film, Sparkles, ExternalLink, ArrowLeft } from 'lucide-react'
 import { getInitials } from '@/lib/utils'
+import { getUserBadges, BADGES } from '@/lib/achievements'
+import { BadgeShowcase } from '@/components/badge-showcase'
+import { LevelProgress } from '@/components/level-progress'
 import type { Metadata } from 'next'
 
 export const dynamic = 'force-dynamic'
@@ -58,11 +61,20 @@ export default async function PublicUserProfilePage({ params }: Props) {
       languages: true,
       portfolioUrl: true,
       createdAt: true,
-      emailVerified: true,
+      isVerified: true,
     },
   })
 
   if (!user) notFound()
+
+  // Get user badges
+  const userBadges = await getUserBadges(user.id)
+  const earnedTypes = new Set(userBadges.map(b => b.achievementType))
+  const allBadgesWithStatus = BADGES.map(b => ({
+    ...b,
+    earned: earnedTypes.has(b.type),
+    earnedAt: userBadges.find(ub => ub.achievementType === b.type)?.earnedAt || null,
+  }))
 
   // Get recent completed tasks
   const recentTasks = await prisma.task.findMany({
@@ -117,7 +129,7 @@ export default async function PublicUserProfilePage({ params }: Props) {
                 <h1 className="text-2xl sm:text-3xl font-bold" style={{ fontFamily: 'var(--font-playfair)' }}>
                   {name}
                 </h1>
-                {user.emailVerified && (
+                {user.isVerified && (
                   <CheckCircle className="h-5 w-5 text-blue-400" />
                 )}
               </div>
@@ -167,6 +179,18 @@ export default async function PublicUserProfilePage({ params }: Props) {
             </div>
           ))}
         </div>
+
+        {/* Level Progress */}
+        <div className="mb-8">
+          <LevelProgress level={user.level} points={user.points} />
+        </div>
+
+        {/* Badges */}
+        {allBadgesWithStatus.some(b => b.earned) && (
+          <div className="mb-8 p-6 rounded-xl border border-white/[0.06] bg-white/[0.02]">
+            <BadgeShowcase badges={allBadgesWithStatus} compact />
+          </div>
+        )}
 
         {/* Skills & Languages */}
         {(user.skills.length > 0 || user.languages.length > 0) && (

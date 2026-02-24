@@ -84,7 +84,7 @@ export function FilmTimeline({ phases }: FilmTimelineProps) {
                     isCompleted ? 'text-green-400/60' : isActive ? 'text-[#D4AF37]' : 'text-white/20',
                     'group-hover:text-white/50'
                   )}>
-                    {PHASE_LABELS[phase.phaseName] || phase.phaseName}
+                    {(PHASE_LABELS as Record<string, string>)[phase.phaseName] || phase.phaseName}
                   </span>
                   <span className="text-[9px] text-white/15 mt-0.5">
                     {phase._count.tasks} tache{phase._count.tasks !== 1 ? 's' : ''}
@@ -130,7 +130,7 @@ export function FilmTimeline({ phases }: FilmTimelineProps) {
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2">
                     <span className="text-sm font-semibold truncate">
-                      {PHASE_LABELS[phase.phaseName] || phase.phaseName}
+                      {(PHASE_LABELS as Record<string, string>)[phase.phaseName] || phase.phaseName}
                     </span>
                     {isActive && (
                       <span className="px-2 py-0.5 rounded-full bg-[#D4AF37]/15 text-[#D4AF37] text-[10px] font-bold">
