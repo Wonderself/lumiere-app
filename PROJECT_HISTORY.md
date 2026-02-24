@@ -405,6 +405,41 @@ Templates HTML branding Lumiere gold/dark.
 - V5-2: Badges & achievements → done
 - V5-5: Parrainage → done
 
+### 2026-02-24 — Deployment Fix + Recommendations + Analytics + UX Improvements
+
+**Prisma Runtime Fix (Docker)**
+- Root cause identified: `serverExternalPackages: ['@prisma/adapter-pg', 'pg']` in next.config.ts means Next.js does NOT bundle these modules — they must exist in node_modules at runtime
+- Dockerfile runner stage only copied `@prisma/*` and `prisma`, but NOT `pg` and its 12 dependencies
+- **Fixed Dockerfile**: Added 13 COPY lines for pg, pg-pool, pg-protocol, pg-types, pg-connection-string, pg-int8, pg-cloudflare, pgpass, postgres-array, postgres-bytea, postgres-date, postgres-interval, split2
+- **Improved start.sh**: Added pg module verification check, DATABASE_URL presence check, retry with --accept-data-loss for first deploy
+
+**Task Recommendation Engine**
+- Created `src/app/actions/recommendations.ts` — personalized task suggestions
+- Skill-to-task-type mapping covering 16 skills → matching task types
+- Difficulty filtering by user level (ROOKIE→EASY/MEDIUM, VIP→MEDIUM/HARD/EXPERT)
+- Scoring algorithm: skill match (+10), previous success (+5), pay rate (+1/50€)
+- Returns top 6 recommendations with match indicators
+- "Recommande pour vous" section added to main dashboard
+
+**Lumen Analytics**
+- Added analytics stats cards on Lumens page (`/lumens`)
+- Shows: total earned, total spent, task rewards, bonuses
+- Computed from transaction history with color-coded cards
+
+**Notification Type Filters**
+- Added URL-based filter pills on notifications page
+- Filter types: Toutes, Validees, Rejetees, Paiements, Niveaux, Systeme
+- Active filter highlighted with gold accent
+
+**Leaderboard Enhancement**
+- Made ranking rows clickable → navigate to public user profiles (`/users/{id}`)
+- Added gold hover border effect on rows
+
+**Roadmap Updated**
+- V5-6: Task recommendations → done
+- V5-7: Lumen analytics → done
+- V5-8: Notification filters → done
+
 ---
 
 ## Important Files

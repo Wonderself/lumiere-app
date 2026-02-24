@@ -109,6 +109,9 @@ const roadmap: Phase[] = [
       { id: 'v5-3', title: 'Profils publics', description: 'Page publique createur avec stats, badges, niveau, contributions', status: 'done', difficulty: 'easy', note: '/users/[id] avec badges + level progress' },
       { id: 'v5-4', title: 'Concours mensuels', description: 'Thèmes, votes communautaires, récompenses automatiques', status: 'todo', difficulty: 'medium' },
       { id: 'v5-5', title: 'Parrainage', description: 'Liens uniques, bonus 30+10 Lumens, page dashboard', status: 'done', difficulty: 'easy', note: 'referral.ts + /dashboard/referral' },
+      { id: 'v5-6', title: 'Recommandations de taches', description: 'Algorithme skill-matching, taches recommandees sur le dashboard', status: 'done', difficulty: 'easy', note: 'recommendations.ts + dashboard' },
+      { id: 'v5-7', title: 'Analytics Lumens', description: 'Statistiques earned/spent/rewards/bonus sur la page Lumens', status: 'done', difficulty: 'trivial', note: 'Inline stats cards' },
+      { id: 'v5-8', title: 'Filtres notifications', description: 'Filtrage par type (validees, rejetees, paiements, systeme)', status: 'done', difficulty: 'trivial', note: 'URL-based filters' },
     ],
   },
   {

@@ -503,3 +503,46 @@ Each phase has: status (LOCKED/ACTIVE/COMPLETED), order, dependencies
 - **Generates**: description, instructions, deliverables, quality criteria
 - **Context-aware**: Uses task title, type, film genre, film title
 - **JSON output** structured for direct use in task creation forms
+
+---
+
+## 26. Task Recommendation Engine
+- **Server action** `getRecommendedTasks()` in `src/app/actions/recommendations.ts`
+- **Skill-to-task-type mapping**: 16 user skills mapped to matching task types
+  - e.g. "Image Generation" → IMAGE_GEN, CHARACTER_DESIGN, ENV_DESIGN
+  - e.g. "QA / Review" → QA_REVIEW, CONTINUITY_CHECK, VIDEO_REVIEW
+- **Difficulty filtering** by user level:
+  - ROOKIE: EASY, MEDIUM | PRO: EASY, MEDIUM, HARD | EXPERT/VIP: MEDIUM, HARD, EXPERT
+- **Scoring algorithm**: skill match (+10), previously completed type (+5), pay rate (+1 per 50€)
+- **Returns** top 6 recommendations with: title, type, difficulty, price, film info, match score
+- **Dashboard integration**: "Recommande pour vous" section with gold MATCH badges on skill-matched tasks
+- **Fallback**: Shows nothing gracefully if no tasks available
+
+---
+
+## 27. Lumen Analytics
+- **Stats cards** on Lumens page (`/lumens`) below balance card
+- **4 metrics computed** from transaction history:
+  - Total earned (green) — sum of positive transactions
+  - Total spent (red) — sum of negative transactions
+  - Task rewards (gold) — TASK_REWARD type transactions
+  - Bonuses (purple) — BONUS type transactions
+- **Color-coded cards** with matching icons (TrendingUp, TrendingDown, Sparkles, Coins)
+- **Only shown** when user has at least one transaction
+
+---
+
+## 28. Notification Type Filters
+- **URL-based filtering** on notifications page (`/notifications?type=TASK_VALIDATED`)
+- **Filter pills**: Toutes, Validees, Rejetees, Paiements, Niveaux, Systeme
+- **Active filter** highlighted with gold accent (`bg-[#D4AF37]/10 text-[#D4AF37]`)
+- **Inactive filters** in subtle gray with hover state
+- **Grouped by date**: Aujourd'hui, Hier, Plus ancien — groups with 0 items hidden
+
+---
+
+## 29. Leaderboard → Public Profiles Link
+- **Clickable ranking rows** on leaderboard page (`/leaderboard`)
+- Each row links to the user's public profile (`/users/{id}`)
+- **Gold hover effect** on rows (`hover:border-[#D4AF37]/20`)
+- **Top 3 podium** remains static cards; ranks 4+ are interactive links

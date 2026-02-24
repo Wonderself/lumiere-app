@@ -10,8 +10,10 @@ import {
   Building2, CreditCard, Key, ShieldCheck,
   Landmark, Globe, Server, ExternalLink,
   AlertCircle, Square, ChevronRight,
-  Scale, Search, Clapperboard, PlayCircle, PiggyBank, Users,
+  Scale, Search, Clapperboard, PlayCircle, PiggyBank, Users, Sparkles, Zap,
 } from 'lucide-react'
+import { getRecommendedTasks } from '@/app/actions/recommendations'
+import { TASK_TYPE_LABELS, DIFFICULTY_LABELS } from '@/lib/constants'
 import type { Metadata } from 'next'
 
 export const dynamic = 'force-dynamic'
@@ -64,6 +66,9 @@ export default async function DashboardPage() {
   const unvotedProposals = activeProposals - userVotesOnActive
 
   const isAdmin = user.role === 'ADMIN'
+
+  // Get personalized task recommendations
+  const recommendations = await getRecommendedTasks().catch(() => [])
 
   const now = new Date()
   const frenchDate = now.toLocaleDateString('fr-FR', {
@@ -140,6 +145,46 @@ export default async function DashboardPage() {
               </div>
             </Link>
           )}
+        </div>
+      )}
+
+      {/* Task Recommendations */}
+      {recommendations.length > 0 && (
+        <div>
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-2">
+              <Sparkles className="h-5 w-5 text-[#D4AF37]" />
+              <h2 className="text-gray-900 font-bold" style={{ fontFamily: 'var(--font-playfair)' }}>
+                Recommande pour vous
+              </h2>
+            </div>
+            <Link href="/tasks" className="text-xs text-[#D4AF37] hover:underline">
+              Voir toutes →
+            </Link>
+          </div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            {recommendations.map((rec) => (
+              <Link key={rec.id} href={`/tasks/${rec.id}`}>
+                <div className="relative bg-white rounded-xl shadow-sm border border-gray-100 p-4 hover:border-[#D4AF37]/30 hover:shadow-md transition-all group">
+                  {rec.isSkillMatch && (
+                    <span className="absolute top-3 right-3 px-2 py-0.5 rounded-full bg-[#D4AF37]/10 text-[#D4AF37] text-[9px] font-bold">
+                      MATCH
+                    </span>
+                  )}
+                  <p className="text-sm font-semibold text-gray-800 mb-1 line-clamp-1 pr-12">{rec.title}</p>
+                  <p className="text-xs text-gray-400 mb-2 truncate">
+                    {rec.filmTitle} · {(TASK_TYPE_LABELS as Record<string, string>)[rec.type] || rec.type}
+                  </p>
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs text-gray-400">
+                      {(DIFFICULTY_LABELS as Record<string, string>)[rec.difficulty] || rec.difficulty}
+                    </span>
+                    <span className="text-sm font-bold text-[#D4AF37]">{rec.priceEuros}€</span>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
         </div>
       )}
 

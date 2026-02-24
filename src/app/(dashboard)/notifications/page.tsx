@@ -85,18 +85,35 @@ function groupByDate<T extends { createdAt: Date }>(notifications: T[]): {
   return groups.filter((g) => g.items.length > 0)
 }
 
-export default async function NotificationsPage() {
+export default async function NotificationsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ type?: string }>
+}) {
   const session = await auth()
   if (!session?.user) redirect('/login')
+  const params = await searchParams
 
   const notifications = await prisma.notification.findMany({
-    where: { userId: session.user.id },
+    where: {
+      userId: session.user.id,
+      ...(params.type ? { type: params.type as never } : {}),
+    },
     orderBy: { createdAt: 'desc' },
     take: 100,
   })
 
   const unreadCount = notifications.filter((n) => !n.read).length
   const grouped = groupByDate(notifications)
+
+  const FILTER_TYPES = [
+    { value: '', label: 'Toutes' },
+    { value: 'TASK_VALIDATED', label: 'Validees' },
+    { value: 'TASK_REJECTED', label: 'Rejetees' },
+    { value: 'PAYMENT_RECEIVED', label: 'Paiements' },
+    { value: 'LEVEL_UP', label: 'Niveaux' },
+    { value: 'SYSTEM', label: 'Systeme' },
+  ]
 
   return (
     <div className="max-w-3xl mx-auto space-y-6">
@@ -123,6 +140,26 @@ export default async function NotificationsPage() {
             </Button>
           </form>
         )}
+      </div>
+
+      {/* Type Filters */}
+      <div className="flex flex-wrap gap-2">
+        {FILTER_TYPES.map((filter) => {
+          const isActive = (params.type || '') === filter.value
+          return (
+            <Link
+              key={filter.value}
+              href={filter.value ? `/notifications?type=${filter.value}` : '/notifications'}
+              className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition-all border ${
+                isActive
+                  ? 'bg-[#D4AF37]/10 text-[#D4AF37] border-[#D4AF37]/30'
+                  : 'bg-gray-50 text-gray-500 border-gray-100 hover:border-gray-200 hover:text-gray-700'
+              }`}
+            >
+              {filter.label}
+            </Link>
+          )
+        })}
       </div>
 
       {/* Separator */}

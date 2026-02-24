@@ -3,7 +3,7 @@ import { prisma } from '@/lib/prisma'
 import { redirect } from 'next/navigation'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { Sun, ArrowDownCircle, Gift, Sparkles, ShoppingCart } from 'lucide-react'
+import { Sun, ArrowDownCircle, Gift, Sparkles, ShoppingCart, TrendingUp, TrendingDown, Coins } from 'lucide-react'
 import { formatDateShort } from '@/lib/utils'
 import { PurchaseForm } from './purchase-form'
 import { WithdrawForm } from './withdraw-form'
@@ -87,6 +87,30 @@ export default async function LumensPage() {
           </p>
         </div>
       </div>
+
+      {/* Lumen Analytics */}
+      {transactions.length > 0 && (() => {
+        const totalEarned = transactions.filter(t => t.amount > 0).reduce((s, t) => s + t.amount, 0)
+        const totalSpent = transactions.filter(t => t.amount < 0).reduce((s, t) => s + Math.abs(t.amount), 0)
+        const taskRewards = transactions.filter(t => t.type === 'TASK_REWARD').reduce((s, t) => s + t.amount, 0)
+        const bonuses = transactions.filter(t => t.type === 'BONUS').reduce((s, t) => s + t.amount, 0)
+        return (
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            {[
+              { label: 'Total gagne', value: `+${totalEarned}`, icon: TrendingUp, color: 'text-green-500', bg: 'bg-green-50 border-green-100' },
+              { label: 'Total depense', value: `-${totalSpent}`, icon: TrendingDown, color: 'text-red-500', bg: 'bg-red-50 border-red-100' },
+              { label: 'Rewards taches', value: `+${taskRewards}`, icon: Sparkles, color: 'text-[#D4AF37]', bg: 'bg-amber-50 border-amber-100' },
+              { label: 'Bonus', value: `+${bonuses}`, icon: Coins, color: 'text-purple-500', bg: 'bg-purple-50 border-purple-100' },
+            ].map((stat) => (
+              <div key={stat.label} className={`p-4 rounded-xl border ${stat.bg}`}>
+                <stat.icon className={`h-4 w-4 mb-2 ${stat.color}`} />
+                <div className={`text-lg font-bold ${stat.color}`}>{stat.value}</div>
+                <div className="text-[11px] text-gray-400 mt-0.5">{stat.label}</div>
+              </div>
+            ))}
+          </div>
+        )
+      })()}
 
       {/* Section separator */}
       <div className="h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />

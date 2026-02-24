@@ -226,9 +226,10 @@ export default async function LeaderboardPage() {
               {rest.length > 0 && (
                 <div className="space-y-2">
                   {rest.map((user, idx) => (
-                    <div
+                    <a
                       key={user.id}
-                      className="flex items-center gap-4 p-4 rounded-xl border border-white/[0.06] bg-white/[0.03] hover:border-white/10 transition-all duration-500"
+                      href={`/users/${user.id}`}
+                      className="flex items-center gap-4 p-4 rounded-xl border border-white/[0.06] bg-white/[0.03] hover:border-[#D4AF37]/20 hover:bg-white/[0.04] transition-all duration-500 cursor-pointer"
                     >
                       <div className="w-8 text-center text-sm font-bold text-white/40 shrink-0">
                         #{idx + 4}
@@ -256,7 +257,7 @@ export default async function LeaderboardPage() {
                         </div>
                         <div className="text-xs text-white/40">points</div>
                       </div>
-                    </div>
+                    </a>
                   ))}
                 </div>
               )}
