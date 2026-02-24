@@ -1,5 +1,6 @@
 import { prisma } from '@/lib/prisma'
 import Link from 'next/link'
+import Image from 'next/image'
 import { Play, Search, Star, Eye, Clock, Film, Coins, Crown, ArrowRight } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
@@ -146,7 +147,7 @@ export default async function StreamingPage(props: { searchParams: Promise<{ gen
                 <Card className="bg-white/[0.02] border-white/5 overflow-hidden hover:border-[#D4AF37]/30 transition-all duration-300">
                   <div className="aspect-[2/3] relative bg-gradient-to-br from-white/5 to-transparent">
                     {film.thumbnailUrl ? (
-                      <img src={film.thumbnailUrl} alt={film.title} className="w-full h-full object-cover" />
+                      <Image src={film.thumbnailUrl} alt={film.title} fill className="object-cover" sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, 20vw" />
                     ) : (
                       <div className="flex items-center justify-center h-full">
                         <Film className="h-12 w-12 text-white/10" />

@@ -26,30 +26,36 @@ import {
 import { FILM_STATUS_LABELS } from '@/lib/constants'
 
 async function getStats() {
-  try {
-    const [filmsCount, tasksCount, usersCount, availableTasks] = await Promise.all([
-      prisma.film.count({ where: { isPublic: true } }),
-      prisma.task.count({ where: { status: 'VALIDATED' } }),
-      prisma.user.count({ where: { isVerified: true } }),
-      prisma.task.count({ where: { status: 'AVAILABLE' } }),
-    ])
-    return { filmsCount, tasksCount, usersCount, availableTasks }
-  } catch {
-    return { filmsCount: 5, tasksCount: 200, usersCount: 50, availableTasks: 30 }
-  }
+  const { getCached } = await import('@/lib/redis')
+  return getCached('stats:cinema', async () => {
+    try {
+      const [filmsCount, tasksCount, usersCount, availableTasks] = await Promise.all([
+        prisma.film.count({ where: { isPublic: true } }),
+        prisma.task.count({ where: { status: 'VALIDATED' } }),
+        prisma.user.count({ where: { isVerified: true } }),
+        prisma.task.count({ where: { status: 'AVAILABLE' } }),
+      ])
+      return { filmsCount, tasksCount, usersCount, availableTasks }
+    } catch {
+      return { filmsCount: 5, tasksCount: 200, usersCount: 50, availableTasks: 30 }
+    }
+  }, 300)
 }
 
 async function getPublicFilms() {
-  try {
-    return await prisma.film.findMany({
-      where: { isPublic: true },
-      orderBy: { progressPct: 'desc' },
-      take: 3,
-      include: { _count: { select: { tasks: true } } },
-    })
-  } catch {
-    return []
-  }
+  const { getCached } = await import('@/lib/redis')
+  return getCached('films:public:top3', async () => {
+    try {
+      return await prisma.film.findMany({
+        where: { isPublic: true },
+        orderBy: { progressPct: 'desc' },
+        take: 3,
+        include: { _count: { select: { tasks: true } } },
+      })
+    } catch {
+      return []
+    }
+  }, 300)
 }
 
 const steps = [
@@ -390,7 +396,7 @@ export default async function CinemaPage() {
                   <div className="group rounded-2xl sm:rounded-3xl border border-white/[0.06] bg-white/[0.02] overflow-hidden hover:border-[#D4AF37]/15 transition-all duration-500 hover-lift">
                     <div className="relative h-48 sm:h-56 bg-gradient-to-br from-[#D4AF37]/[0.06] to-purple-900/[0.1]">
                       {film.coverImageUrl ? (
-                        <img src={film.coverImageUrl} alt={`Film IA ${film.title} - Lumiere Brothers`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                        <Image src={film.coverImageUrl} alt={`Film IA ${film.title} - Lumiere Brothers`} fill className="object-cover group-hover:scale-105 transition-transform duration-700" sizes="(max-width: 768px) 100vw, 33vw" />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center">
                           <Film className="h-16 w-16 text-[#D4AF37]/20" />

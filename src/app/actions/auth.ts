@@ -87,11 +87,12 @@ export async function loginAction(
       password,
       redirectTo: callbackUrl,
     })
-  } catch (error: any) {
-    if (error?.message?.includes('CredentialsSignin') || error?.type === 'CredentialsSignin') {
+  } catch (error: unknown) {
+    const err = error as Record<string, string | undefined>
+    if (err?.message?.includes('CredentialsSignin') || err?.type === 'CredentialsSignin') {
       return { error: 'Email ou mot de passe incorrect.' }
     }
-    if (error?.digest?.startsWith('NEXT_REDIRECT')) {
+    if (err?.digest?.startsWith('NEXT_REDIRECT')) {
       throw error
     }
     return { error: 'Une erreur est survenue.' }

@@ -15,7 +15,7 @@ import {
 // SCENARIO PROPOSALS
 // ============================================
 
-export async function submitScenarioAction(prevState: any, formData: FormData) {
+export async function submitScenarioAction(prevState: { error?: string; success?: boolean } | null, formData: FormData) {
   const session = await auth()
   if (!session?.user) redirect('/login')
 
@@ -113,9 +113,9 @@ export async function voteScenarioAction(formData: FormData) {
     revalidatePath('/community/scenarios')
     revalidatePath(`/community/scenarios/${proposalId}`)
     return { success: true }
-  } catch (e: any) {
+  } catch (e: unknown) {
     // Unique constraint violation = already voted
-    if (e?.code === 'P2002') {
+    if ((e as { code?: string })?.code === 'P2002') {
       return { error: 'Vous avez déjà voté pour cette proposition.' }
     }
     console.error('voteScenarioAction error:', e)
@@ -287,7 +287,7 @@ export async function createContestAction(formData: FormData) {
   }
 }
 
-export async function submitTrailerEntryAction(prevState: any, formData: FormData) {
+export async function submitTrailerEntryAction(prevState: { error?: string; success?: boolean } | null, formData: FormData) {
   const session = await auth()
   if (!session?.user) redirect('/login')
 
@@ -375,8 +375,8 @@ export async function voteTrailerAction(formData: FormData) {
     revalidatePath('/community/contests')
     revalidatePath(`/community/contests/${entry.contestId}`)
     return { success: true }
-  } catch (e: any) {
-    if (e?.code === 'P2002') {
+  } catch (e: unknown) {
+    if ((e as { code?: string })?.code === 'P2002') {
       return { error: 'Vous avez déjà voté pour cette entrée.' }
     }
     console.error('voteTrailerAction error:', e)

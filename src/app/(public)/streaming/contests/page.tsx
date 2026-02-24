@@ -1,5 +1,6 @@
 import { prisma } from '@/lib/prisma'
 import Link from 'next/link'
+import Image from 'next/image'
 import { Trophy, Eye, Clock, Film, ArrowLeft, Star } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
@@ -79,7 +80,7 @@ export default async function ContestsPage() {
                     </div>
                     <div className="h-16 w-24 rounded-lg bg-white/5 overflow-hidden shrink-0">
                       {film.thumbnailUrl ? (
-                        <img src={film.thumbnailUrl} alt={film.title} className="w-full h-full object-cover" />
+                        <Image src={film.thumbnailUrl} alt={film.title} fill className="object-cover" sizes="96px" />
                       ) : (
                         <div className="flex items-center justify-center h-full"><Film className="h-6 w-6 text-white/10" /></div>
                       )}

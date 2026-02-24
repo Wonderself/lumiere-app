@@ -85,7 +85,7 @@ export default async function ActorProfilePage({ params }: Props) {
     .filter((r) => r.catalogFilmId)
     .map((r) => r.catalogFilmId!)
 
-  let similarActors: any[] = []
+  let similarActors: Awaited<ReturnType<typeof prisma.aIActor.findMany>> = []
   if (filmIds.length > 0 || catalogFilmIds.length > 0) {
     try {
       similarActors = await prisma.aIActor.findMany({

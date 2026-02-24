@@ -1,14 +1,16 @@
 // Redis cache with graceful degradation (works without Redis running)
 
-let redis: any = null
+import type Redis from 'ioredis'
+
+let redis: Redis | null = null
 
 async function getRedisClient() {
   if (redis) return redis
   if (!process.env.REDIS_URL) return null
 
   try {
-    const { default: Redis } = await import('ioredis')
-    redis = new Redis(process.env.REDIS_URL, {
+    const { default: IoRedis } = await import('ioredis')
+    redis = new IoRedis(process.env.REDIS_URL, {
       maxRetriesPerRequest: 1,
       retryStrategy: () => null, // Don't retry — fallback to DB
       lazyConnect: true,

@@ -1,6 +1,7 @@
 import { prisma } from '@/lib/prisma'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
+import Image from 'next/image'
 import { Play, Eye, Clock, User, Calendar, ArrowLeft, Share2, Heart, Film } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent } from '@/components/ui/card'
@@ -222,7 +223,7 @@ export default async function StreamingFilmPage(props: { params: Promise<{ slug:
                 <Link key={f.id} href={`/streaming/${f.slug}`} className="group">
                   <div className="aspect-[2/3] rounded-lg overflow-hidden bg-white/5 relative mb-2">
                     {f.thumbnailUrl ? (
-                      <img src={f.thumbnailUrl} alt={f.title} className="w-full h-full object-cover" />
+                      <Image src={f.thumbnailUrl} alt={f.title} fill className="object-cover" sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, 20vw" />
                     ) : (
                       <div className="flex items-center justify-center h-full"><Film className="h-8 w-8 text-white/10" /></div>
                     )}

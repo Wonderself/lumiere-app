@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge'
 import { Progress } from '@/components/ui/progress'
 
 export const dynamic = 'force-dynamic'
+import Image from 'next/image'
 import { Film, ChevronRight, Lock, CheckCircle, Loader2, Star, ArrowRight, Coins, Crown, Vote, TrendingUp, Bell } from 'lucide-react'
 import { FILM_STATUS_LABELS, PHASE_LABELS, TASK_TYPE_LABELS, DIFFICULTY_LABELS } from '@/lib/constants'
 import { formatPrice } from '@/lib/utils'
@@ -73,7 +74,7 @@ export default async function FilmDetailPage({ params }: Props) {
       {/* Banner */}
       <div className="relative h-72 md:h-96">
         {film.coverImageUrl ? (
-          <img src={film.coverImageUrl} alt={film.title} className="w-full h-full object-cover" />
+          <Image src={film.coverImageUrl} alt={film.title} fill className="object-cover" sizes="100vw" priority />
         ) : (
           <div className="w-full h-full bg-gradient-to-br from-[#D4AF37]/10 via-purple-900/20 to-black flex items-center justify-center">
             <Film className="h-24 w-24 text-[#D4AF37]/20" />
