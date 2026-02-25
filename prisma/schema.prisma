@@ -89,6 +89,13 @@ model User {
   commentLikes      CommentLike[]
   playlists         Playlist[]
   featuredCreator   FeaturedCreator[]
+
+  // V14 — Trailer Studio & Credits
+  trailerProjects    TrailerProject[]
+  trailerMicroTasks  TrailerMicroTask[]    @relation("TaskAssignee")
+  trailerChoiceVotes TrailerChoiceVote[]
+  creditAccount      CreditAccount?
+  creditTransactions CreditTransaction[]
 }
 
 // ============================================
@@ -128,6 +135,9 @@ model Film {
   bonusContent BonusContent[]
   scenarios    ScenarioProposal[]
   contests     TrailerContest[]
+
+  // V14 — Trailer Studio
+  trailerProjects TrailerProject[]
 }
 
 model FilmPhase {
@@ -1414,8 +1424,9 @@ model TrailerContest {
   createdAt        DateTime              @default(now())
   updatedAt        DateTime              @updatedAt
 
-  film    Film?          @relation(fields: [filmId], references: [id])
-  entries TrailerEntry[]
+  film            Film?              @relation(fields: [filmId], references: [id])
+  entries         TrailerEntry[]
+  trailerProjects TrailerProject[]
 }
 
 model TrailerEntry {
@@ -1668,4 +1679,309 @@ model FeaturedCreator {
 
   @@unique([weekStart])
   @@index([isActive, weekStart])
+}
+
+// ============================================
+// V14 — TRAILER STUDIO (AI Trailer Creation)
+// ============================================
+
+model TrailerProject {
+  id              String              @id @default(cuid())
+  userId          String
+  filmId          String?             // Link to existing Film (optional for open concept)
+  contestId       String?             // If created for a contest
+  title           String
+  concept         String?             // Core concept / logline
+  synopsis        String?             // Detailed synopsis
+  genre           String?
+  style           String?             // Visual style: cinematic, anime, noir, documentary, etc.
+  mood            String?             // Mood: epic, dark, funny, emotional, mysterious
+  duration        TrailerDuration     @default(STANDARD_60S)
+  targetAudience  String?
+  referenceUrls   String[]            @default([])  // Reference images/videos URLs
+  referenceNotes  String?             // Notes about references
+  colorPalette    String[]            @default([])  // Hex colors for the trailer
+  musicMood       String?             // Music mood: epic, suspenseful, emotional, upbeat
+  status          TrailerProjectStatus @default(DRAFT)
+  currentPhase    TrailerPhase        @default(CONCEPT)
+  totalTasks      Int                 @default(0)
+  completedTasks  Int                 @default(0)
+  progressPct     Float               @default(0)
+  estimatedCredits Int                @default(0)   // Estimated AI credits needed
+  creditsUsed     Int                 @default(0)   // Actual credits used
+  finalVideoUrl   String?             // Final assembled trailer
+  finalThumbnail  String?
+  communityVoteEnabled Boolean        @default(false) // Allow community to vote on choices
+  isInternal      Boolean             @default(false) // Internal Lumière production (fully automated)
+  metadata        Json?               // Extra config (AI model prefs, etc.)
+  createdAt       DateTime            @default(now())
+  updatedAt       DateTime            @updatedAt
+
+  user     User                @relation(fields: [userId], references: [id])
+  film     Film?               @relation(fields: [filmId], references: [id])
+  contest  TrailerContest?     @relation(fields: [contestId], references: [id])
+  tasks    TrailerMicroTask[]
+  choices  TrailerChoice[]
+
+  @@index([userId, status])
+  @@index([contestId])
+}
+
+model TrailerMicroTask {
+  id              String              @id @default(cuid())
+  projectId       String
+  assigneeId      String?             // User who will execute (null = AI auto)
+  taskType        TrailerTaskType
+  phase           TrailerPhase
+  title           String
+  description     String?
+  instructions    String?             // Detailed instructions for AI or human
+  order           Int                 @default(0)   // Execution order within phase
+  status          TrailerMicroTaskStatus @default(PENDING)
+  dependsOnIds    String[]            @default([])  // IDs of tasks that must complete first
+  // AI execution
+  aiPrompt        String?             // The prompt sent to AI
+  aiModel         String?             // Which AI model was used
+  aiProvider      String?             // Provider name (runway, replicate, etc.)
+  aiResult        String?             // AI output (URL or text)
+  aiScore         Int?                // Quality score 0-100
+  aiFeedback      String?             // AI self-evaluation
+  aiRetries       Int                 @default(0)
+  // User choices
+  userChoice      Json?               // Options the user selected for this task
+  communityVoteEnabled Boolean        @default(false)
+  // Credits
+  estimatedCredits Int               @default(0)
+  creditsUsed     Int                 @default(0)
+  rawCost         Float               @default(0)   // Real AI token cost in EUR
+  commission      Float               @default(0)   // 20% commission in EUR
+  // Timing
+  startedAt       DateTime?
+  completedAt     DateTime?
+  createdAt       DateTime            @default(now())
+  updatedAt       DateTime            @updatedAt
+
+  project  TrailerProject @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  assignee User?          @relation("TaskAssignee", fields: [assigneeId], references: [id])
+  choices  TrailerChoice[]
+
+  @@index([projectId, phase, order])
+  @@index([status])
+}
+
+model TrailerChoice {
+  id              String   @id @default(cuid())
+  projectId       String
+  taskId          String?  // Related micro-task (optional)
+  question        String   // e.g. "Quel style visuel pour la scène d'ouverture?"
+  category        String?  // "visual_style", "character", "music", "setting", "mood"
+  options         Json     // Array of { id, label, description, imageUrl? }
+  selectedOption  String?  // ID of chosen option
+  isOpenToVote    Boolean  @default(false) // Community can vote
+  voteDeadline    DateTime?
+  votesData       Json?    // { optionId: voteCount }
+  resolvedAt      DateTime?
+  createdAt       DateTime @default(now())
+
+  project TrailerProject   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  task    TrailerMicroTask? @relation(fields: [taskId], references: [id], onDelete: SetNull)
+  votes   TrailerChoiceVote[]
+
+  @@index([projectId])
+  @@index([isOpenToVote, resolvedAt])
+}
+
+model TrailerChoiceVote {
+  id        String   @id @default(cuid())
+  choiceId  String
+  userId    String
+  optionId  String   // Which option the user voted for
+  txHash    String?  // Blockchain proof
+  createdAt DateTime @default(now())
+
+  choice TrailerChoice @relation(fields: [choiceId], references: [id], onDelete: Cascade)
+  user   User          @relation(fields: [userId], references: [id])
+
+  @@unique([choiceId, userId])
+}
+
+// ============================================
+// V14 — CREDIT SYSTEM (AI Token Billing)
+// ============================================
+
+model CreditAccount {
+  id              String   @id @default(cuid())
+  userId          String   @unique
+  balance         Int      @default(0)      // Current credit balance
+  totalPurchased  Int      @default(0)      // Lifetime credits purchased
+  totalGranted    Int      @default(0)      // Lifetime credits granted (admin/subscription)
+  totalUsed       Int      @default(0)      // Lifetime credits consumed
+  totalRefunded   Int      @default(0)
+  weeklyFreeUsed  Int      @default(0)      // Free trailers used this week (premium)
+  weeklyFreeReset DateTime @default(now())  // When weekly counter resets
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  user         User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  transactions CreditTransaction[]
+
+  @@index([userId])
+}
+
+model CreditTransaction {
+  id              String        @id @default(cuid())
+  userId          String
+  accountId       String
+  amount          Int           // Positive = add, negative = deduct
+  type            CreditTxType
+  description     String?
+  // Billing details for AI usage
+  aiProvider      String?       // "runway", "replicate", "openai", etc.
+  aiModel         String?       // Specific model used
+  rawTokenCount   Int?          // Raw AI tokens consumed
+  rawCostEur      Float?        // Real cost in EUR
+  commissionEur   Float?        // 20% commission in EUR
+  totalChargedEur Float?        // rawCost + commission
+  // Relations
+  trailerProjectId String?
+  trailerTaskId    String?
+  // Metadata
+  balanceBefore   Int           @default(0)
+  balanceAfter    Int           @default(0)
+  metadata        Json?         // Extra data (pack ID, admin note, etc.)
+  createdAt       DateTime      @default(now())
+
+  user    User          @relation(fields: [userId], references: [id])
+  account CreditAccount @relation(fields: [accountId], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt])
+  @@index([accountId])
+  @@index([type])
+}
+
+model CreditPack {
+  id          String   @id @default(cuid())
+  name        String   // "Starter", "Pro", "Studio"
+  credits     Int      // Base credits in pack
+  bonusCredits Int     @default(0)  // Extra bonus credits
+  priceEur    Float    // Price in EUR
+  pricePerCredit Float @default(0)  // For display: price/total credits
+  description String?
+  features    String[] @default([]) // Bullet points for UI
+  isPopular   Boolean  @default(false)
+  isActive    Boolean  @default(true)
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// ============================================
+// V14 — NEW ENUMS
+// ============================================
+
+enum TrailerProjectStatus {
+  DRAFT
+  DECOMPOSING      // AI is breaking down into micro-tasks
+  AWAITING_INPUT   // Waiting for user choices
+  IN_PROGRESS      // Tasks being executed
+  COMMUNITY_VOTE   // Community voting on choices
+  ASSEMBLING       // Final assembly
+  REVIEW           // Quality review
+  COMPLETED
+  SUBMITTED        // Submitted to contest
+  CANCELLED
+}
+
+enum TrailerPhase {
+  CONCEPT          // Concept & brief definition
+  SCRIPT           // Script, narration, dialogue
+  VISUAL_DESIGN    // Character design, environments, color palette
+  STORYBOARD       // Scene-by-scene storyboard
+  PRODUCTION       // AI video generation per scene
+  AUDIO            // Music, sound design, voiceover
+  POST_PRODUCTION  // Color grading, VFX, transitions
+  ASSEMBLY         // Final editing and assembly
+}
+
+enum TrailerDuration {
+  TEASER_15S       // 15 second teaser
+  TEASER_30S       // 30 second teaser
+  STANDARD_60S     // Standard 1 minute
+  EXTENDED_90S     // Extended 90 seconds
+  FULL_120S        // Full 2 minute trailer
+}
+
+enum TrailerTaskType {
+  // Phase: CONCEPT
+  CONCEPT_BRIEF
+  TARGET_AUDIENCE
+  REFERENCE_MOOD_BOARD
+  GENRE_TONE_DEFINITION
+  // Phase: SCRIPT
+  TRAILER_STRUCTURE
+  NARRATION_SCRIPT
+  DIALOGUE_SNIPPETS
+  KEY_MOMENTS
+  // Phase: VISUAL_DESIGN
+  CHARACTER_DESIGN_MAIN
+  CHARACTER_DESIGN_SECONDARY
+  ENVIRONMENT_DESIGN
+  PROPS_DESIGN
+  COLOR_PALETTE_DESIGN
+  TYPOGRAPHY_TITLES
+  // Phase: STORYBOARD
+  SCENE_STORYBOARD_HOOK
+  SCENE_STORYBOARD_INTRO
+  SCENE_STORYBOARD_BUILD
+  SCENE_STORYBOARD_CLIMAX
+  SCENE_STORYBOARD_TAG
+  TRANSITION_PLANNING
+  // Phase: PRODUCTION
+  SCENE_VIDEO_GEN_HOOK
+  SCENE_VIDEO_GEN_INTRO
+  SCENE_VIDEO_GEN_BUILD
+  SCENE_VIDEO_GEN_CLIMAX
+  SCENE_VIDEO_GEN_TAG
+  TITLE_CARD_GEN
+  VFX_OVERLAY_GEN
+  // Phase: AUDIO
+  MUSIC_SELECTION
+  MUSIC_GENERATION
+  SOUND_EFFECTS
+  VOICEOVER_GEN
+  DIALOGUE_RECORDING
+  // Phase: POST_PRODUCTION
+  COLOR_GRADING
+  VFX_COMPOSITING
+  TRANSITION_EFFECTS
+  SUBTITLE_GEN
+  // Phase: ASSEMBLY
+  ROUGH_CUT
+  FINAL_ASSEMBLY
+  QUALITY_REVIEW
+  EXPORT_FORMATS
+}
+
+enum TrailerMicroTaskStatus {
+  PENDING          // Not started yet
+  BLOCKED          // Waiting for dependencies
+  READY            // Dependencies met, ready to execute
+  GENERATING       // AI is working on it
+  AWAITING_CHOICE  // Waiting for user/community choice
+  IN_REVIEW        // Generated, needs review
+  APPROVED         // Approved, moving on
+  REJECTED         // Rejected, needs redo
+  COMPLETED        // Done
+  SKIPPED          // Skipped by user
+}
+
+enum CreditTxType {
+  PACK_PURCHASE      // Bought a credit pack
+  ADMIN_GRANT        // Admin manually granted credits
+  SUBSCRIPTION_GRANT // Weekly free credits from subscription
+  AI_USAGE           // Used credits for AI generation
+  REFUND             // Refunded credits
+  CONTEST_PRIZE      // Won credits from contest
+  REFERRAL_BONUS     // Referral reward
+  PROMO_CODE         // Promotional code
 }

@@ -11,6 +11,7 @@ const loginSchema = z.object({
 })
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
+  trustHost: true,
   session: { strategy: 'jwt' },
   pages: {
     signIn: '/login',
@@ -24,32 +25,39 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         password: { label: 'Mot de passe', type: 'password' },
       },
       async authorize(credentials) {
+        const parsed = loginSchema.safeParse(credentials)
+        if (!parsed.success) {
+          throw new Error('Invalid credentials format')
+        }
+
+        const { email, password } = parsed.data
+
+        let user
         try {
-          const parsed = loginSchema.safeParse(credentials)
-          if (!parsed.success) return null
-
-          const { email, password } = parsed.data
-
-          const user = await prisma.user.findUnique({
+          user = await prisma.user.findUnique({
             where: { email: email.toLowerCase() },
           })
+        } catch (dbError) {
+          console.error('[auth] Database error in authorize:', dbError)
+          throw new Error('Database connection error')
+        }
 
-          if (!user || !user.passwordHash) return null
+        if (!user || !user.passwordHash) {
+          throw new Error('Invalid email or password')
+        }
 
-          const valid = await bcrypt.compare(password, user.passwordHash)
-          if (!valid) return null
+        const valid = await bcrypt.compare(password, user.passwordHash)
+        if (!valid) {
+          throw new Error('Invalid email or password')
+        }
 
-          return {
-            id: user.id,
-            email: user.email,
-            name: user.displayName,
-            role: user.role,
-            level: user.level,
-            isVerified: user.isVerified,
-          }
-        } catch (error) {
-          console.error('[auth] authorize error:', error)
-          return null
+        return {
+          id: user.id,
+          email: user.email,
+          name: user.displayName,
+          role: user.role,
+          level: user.level,
+          isVerified: user.isVerified,
         }
       },
     }),

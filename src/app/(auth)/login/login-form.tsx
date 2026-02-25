@@ -1,22 +1,17 @@
 'use client'
 
-import { useActionState, useRef, useState } from 'react'
-import { useSearchParams } from 'next/navigation'
+import { useActionState, useRef, useState, useEffect } from 'react'
+import { useSearchParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { loginAction } from '@/app/actions/auth'
+import type { LoginFormState } from '@/app/actions/auth'
 import { Mail, Lock, Sparkles, Eye, EyeOff } from 'lucide-react'
 
-/**
- * Validate that a callback URL is safe (relative path only).
- * Prevents open redirect attacks via callbackUrl parameter.
- */
 function sanitizeCallbackUrl(url: string | null): string {
   if (!url) return '/dashboard'
-  // Must start with / and must NOT start with // (protocol-relative URL)
-  // Also reject URLs with backslashes which some browsers normalize to forward slashes
   if (url.startsWith('/') && !url.startsWith('//') && !url.includes('\\')) {
     return url
   }
@@ -25,17 +20,26 @@ function sanitizeCallbackUrl(url: string | null): string {
 
 export function LoginForm() {
   const searchParams = useSearchParams()
+  const router = useRouter()
   const callbackUrl = sanitizeCallbackUrl(searchParams.get('callbackUrl'))
-  const [state, action, isPending] = useActionState(loginAction, {})
+  const [state, action, isPending] = useActionState<LoginFormState, FormData>(loginAction, {})
   const formRef = useRef<HTMLFormElement>(null)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
 
+  // Fallback redirect: if signIn's redirect() didn't propagate through the framework,
+  // redirect via client-side router. This is a safety net for Next.js 16 compatibility.
+  useEffect(() => {
+    if (state.redirectTo) {
+      router.push(state.redirectTo)
+      router.refresh()
+    }
+  }, [state.redirectTo, router])
+
   const loginAsDemo = (demoEmail: string, demoPassword: string) => {
     setEmail(demoEmail)
     setPassword(demoPassword)
-    // Submit on next tick after state update renders
     setTimeout(() => formRef.current?.requestSubmit(), 0)
   }
 

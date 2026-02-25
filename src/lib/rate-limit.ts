@@ -63,17 +63,20 @@ export function createRateLimiter(opts: {
 }
 
 // Pre-configured limiters for auth endpoints
+// More generous in development to avoid blocking during testing
+const isDev = process.env.NODE_ENV !== 'production'
+
 export const loginLimiter = createRateLimiter({
-  maxAttempts: 5,
-  windowMs: 15 * 60 * 1000, // 5 attempts per 15 minutes
+  maxAttempts: isDev ? 50 : 5,
+  windowMs: isDev ? 60 * 1000 : 15 * 60 * 1000,
 })
 
 export const registerLimiter = createRateLimiter({
-  maxAttempts: 3,
-  windowMs: 60 * 60 * 1000, // 3 registrations per hour
+  maxAttempts: isDev ? 50 : 3,
+  windowMs: isDev ? 60 * 1000 : 60 * 60 * 1000,
 })
 
 export const passwordResetLimiter = createRateLimiter({
-  maxAttempts: 3,
-  windowMs: 15 * 60 * 1000, // 3 reset requests per 15 minutes
+  maxAttempts: isDev ? 50 : 3,
+  windowMs: isDev ? 60 * 1000 : 15 * 60 * 1000,
 })

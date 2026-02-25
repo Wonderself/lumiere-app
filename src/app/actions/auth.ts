@@ -116,13 +116,27 @@ export async function registerAction(
 
 // ─── Login ───────────────────────────────────────────────────
 
+export type LoginFormState = {
+  error?: string
+  redirectTo?: string
+}
+
 export async function loginAction(
-  prevState: { error?: string },
+  prevState: LoginFormState,
   formData: FormData
-): Promise<{ error?: string }> {
+): Promise<LoginFormState> {
   const email = formData.get('email') as string
   const password = formData.get('password') as string
   const callbackUrl = (formData.get('callbackUrl') as string) || '/dashboard'
+
+  // Sanitize callbackUrl
+  const safeCallbackUrl = callbackUrl.startsWith('/') && !callbackUrl.startsWith('//') && !callbackUrl.includes('\\')
+    ? callbackUrl
+    : '/dashboard'
+
+  if (!email || !password) {
+    return { error: 'Email et mot de passe requis.' }
+  }
 
   // Rate limiting by IP + email combo
   const ip = await getClientIP()
@@ -131,30 +145,56 @@ export async function loginAction(
     return { error: `Trop de tentatives. Réessayez dans ${rl.retryAfterSeconds}s.` }
   }
 
+  // Step 1: Validate credentials BEFORE calling signIn
+  // This gives us clear error messages and avoids ambiguous AuthError behavior
+  let user
+  try {
+    user = await prisma.user.findUnique({
+      where: { email: email.toLowerCase() },
+    })
+  } catch (dbError) {
+    console.error('[loginAction] Database error:', dbError)
+    return { error: 'Erreur de connexion à la base de données. Réessayez.' }
+  }
+
+  if (!user || !user.passwordHash) {
+    return { error: 'Email ou mot de passe incorrect.' }
+  }
+
+  const valid = await bcrypt.compare(password, user.passwordHash)
+  if (!valid) {
+    return { error: 'Email ou mot de passe incorrect.' }
+  }
+
+  // Step 2: Credentials are valid — call signIn to create the session cookie
   try {
     await signIn('credentials', {
       email,
       password,
-      redirectTo: callbackUrl,
+      redirectTo: safeCallbackUrl,
     })
+    // signIn with redirect calls redirect() internally which throws NEXT_REDIRECT
+    // If we somehow reach here, return redirect URL as fallback
+    return { redirectTo: safeCallbackUrl }
   } catch (error: unknown) {
-    // NextAuth v5: only catch AuthError — re-throw everything else (redirects, etc.)
-    if (error instanceof AuthError) {
-      console.error('[loginAction] AuthError:', error.type, error.message)
-      switch (error.type) {
-        case 'CredentialsSignin':
-          return { error: 'Email ou mot de passe incorrect.' }
-        case 'CallbackRouteError':
-          return { error: 'Email ou mot de passe incorrect.' }
-        default:
-          return { error: 'Une erreur est survenue lors de la connexion.' }
+    // NEXT_REDIRECT from signIn's internal redirect() — let it propagate
+    if (error && typeof error === 'object' && 'digest' in error) {
+      const digest = (error as { digest: string }).digest
+      if (typeof digest === 'string' && digest.startsWith('NEXT_REDIRECT')) {
+        throw error
       }
     }
-    // Re-throw all non-auth errors (NEXT_REDIRECT, etc.)
-    throw error
-  }
 
-  return {}
+    // AuthError shouldn't happen since we pre-validated, but handle it
+    if (error instanceof AuthError) {
+      return { error: 'Erreur lors de la création de la session.' }
+    }
+
+    // Unknown error — still return redirect URL since credentials ARE valid
+    // The session cookie might have been set even if an error occurred after
+    console.error('[loginAction] Post-signIn error:', error)
+    return { redirectTo: safeCallbackUrl }
+  }
 }
 
 // ─── Forgot Password ──────────────────────────────────────────

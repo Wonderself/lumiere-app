@@ -83,6 +83,7 @@ const mainNavSections: NavSection[] = [
     icon: Clapperboard,
     dotColor: 'bg-[#8B5CF6]',
     links: [
+      { href: '/trailer-studio', label: 'Studio Bande-Annonce', icon: Wand2, badge: 'NEW' },
       { href: '/tasks', label: 'Micro-tâches', icon: Star },
       { href: '/films', label: 'Films', icon: Film },
       { href: '/screenplays', label: 'Scénarios', icon: FileText },
@@ -106,6 +107,7 @@ const mainNavSections: NavSection[] = [
     dotColor: 'bg-[#10B981]',
     links: [
       { href: '/profile', label: 'Profil', icon: User },
+      { href: '/credits', label: 'Crédits IA', icon: Coins, badge: 'NEW' },
       { href: '/profile/payments', label: 'Paiements', icon: CreditCard },
       { href: '/lumens', label: 'Mes Tokens', icon: Sun },
       { href: '/tokenization', label: 'Investir', icon: Coins, exact: true },

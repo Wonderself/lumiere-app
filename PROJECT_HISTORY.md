@@ -18,6 +18,70 @@
 
 ## Version History
 
+## v9.0 — Trailer Studio, AI Credits & Auth Overhaul (2026-02-25)
+
+### Authentication Overhaul
+- **Fixed login flow**: Manual credential validation BEFORE NextAuth signIn (clear error messages for DB vs wrong password)
+- **Fallback redirect**: Client-side redirect via `useEffect` + `router.push` if server-side redirect fails
+- **trustHost**: Added `trustHost: true` to NextAuth config (fixes host validation issues)
+- **HSTS dev fix**: Disabled HSTS header in development to prevent persistent HTTPS enforcement in browsers
+- **Rate limits dev**: 50 attempts in dev mode (was 3-5) for easier testing
+- **proxy.ts hardened**: Fallback cookie name detection, CSP inlined, new protected paths added
+- **LoginFormState**: New type with `redirectTo` field for robust redirect handling
+
+### Trailer Studio (NEW Feature)
+- **Full trailer creation system** with AI micro-task decomposition
+- **8 production phases**: Concept → Script → Visual Design → Storyboard → Production IA → Audio → Post-Production → Assembly
+- **25-35+ micro-tasks per trailer**: genre-specific tasks (Sci-Fi, Action, Drama, Horror, Comedy, Animation, Documentary, Musical)
+- **Task types**: 32 specialized types (CONCEPT_BRIEF, SCRIPT_STRUCTURE, MOODBOARD, STORYBOARD_PANELS, AI_IMAGE_GEN, AI_VIDEO_GEN, VOICE_RECORDING, MUSIC_SELECTION, COLOR_GRADING, etc.)
+- **Duration tiers**: Teaser 15s (0.5x), Teaser 30s (0.7x), Standard 60s (1.0x), Extended 90s (1.3x), Full 2min (1.8x)
+- **Community vote toggle**: Allow community to vote on creative choices (actors, settings, music...)
+- **Contest integration**: Submit trailers to open contests
+- **Progress tracking**: Per-phase progress bars, global progress percentage, task status indicators
+
+### AI Credit System (NEW Feature)
+- **Prepaid credit accounts**: Users buy credit packs to use AI features
+- **20% commission**: Platform takes 20% on real AI token costs
+- **Credit rate**: 1 credit = 0.05€
+- **Atomic transactions**: All balance mutations via `prisma.$transaction()` for billing integrity
+- **Weekly free trailer**: Premium subscribers get 1 free trailer per week
+- **Credit packs**: 100cr (5€), 500cr (20€, -20%), 1500cr (50€, -33%), 5000cr (125€, -50%)
+- **Full transaction history**: Every credit movement tracked with rawCost, commission, balanceBefore/After
+
+### New Prisma Models
+- `TrailerProject` — Main trailer creation project with metadata, credits, progress
+- `TrailerMicroTask` — Individual AI-executable tasks with phase, dependencies, AI prompt/result
+- `TrailerChoice` — Community voting questions with options and vote data
+- `TrailerChoiceVote` — Individual votes with blockchain proof
+- `CreditAccount` — User prepaid balance with weekly free tracking
+- `CreditTransaction` — Every credit movement with billing details
+- `CreditPack` — Available credit packs for purchase
+- New enums: TrailerProjectStatus (10), TrailerPhase (8), TrailerDuration (5), TrailerTaskType (32), TrailerMicroTaskStatus (10), CreditTxType (8)
+
+### New Pages
+- `/trailer-studio` — Main studio page with project listing, contests banner, how-it-works guide
+- `/trailer-studio/new` — Create new trailer project form (genre, style, mood, duration selectors)
+- `/trailer-studio/[id]` — Individual project view with tasks by phase, progress, pending choices
+- `/credits` — Credit balance, available packs, transaction history
+
+### New Files
+- `src/lib/trailer-decomposer.ts` — Trailer micro-task decomposition engine
+- `src/lib/credits.ts` — Credit tracking system (13 functions, atomic transactions)
+- `src/app/actions/trailer.ts` — 12 server actions for trailer CRUD and workflow
+- `src/app/(dashboard)/trailer-studio/` — 3 pages + form component
+- `src/app/(dashboard)/credits/page.tsx` — Credit management page
+
+### Sidebar Updated
+- Added "Studio Bande-Annonce" with NEW badge (Cinema section)
+- Added "Crédits IA" with NEW badge (Mon Compte section)
+- Added `/trailer-studio` and `/credits` to proxy.ts protected paths
+
+### Files Changed
+- ~20 new/modified files
+- 0 TypeScript errors
+
+---
+
 ## v8.3 — Security Hardening, Accessibility, Code Quality & UX Polish (2026-02-25)
 
 ### Security Hardening

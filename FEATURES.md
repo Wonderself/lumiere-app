@@ -24,7 +24,7 @@
 
 ### Route Protection (Proxy)
 - Centralized proxy (`src/proxy.ts`) for auth route protection (Next.js 16 — proxy.ts replaces middleware.ts)
-- Protected paths: /dashboard, /tasks, /profile, /lumens, /notifications, /screenplays, /tokenization
+- Protected paths: /dashboard, /tasks, /profile, /lumens, /notifications, /screenplays, /tokenization, /trailer-studio, /credits
 - Admin paths: /admin (non-admin redirected to /dashboard)
 - Auth paths: /login, /register, /forgot-password, /reset-password, /verify-email (redirect to /dashboard if logged in)
 - Security headers applied to all responses
@@ -1159,3 +1159,93 @@ Each phase has: status (LOCKED/ACTIVE/COMPLETED), order, dependencies
   - `autoSelectFeaturedCreatorAction()` — admin: auto-sélectionne top contributeur de la semaine
 - **Calcul semaine**: lundi UTC de la semaine courante
 - **Auto-sélection**: basée sur le nombre de tâches validées dans les 7 derniers jours
+
+---
+
+## 83. Trailer Studio — AI Trailer Creation (v9.0)
+
+### Trailer Project Management
+- **Create trailer projects** with title, concept, synopsis, genre, style, mood, duration, target audience
+- **Community vote toggle**: Enable/disable community voting on creative choices
+- **Contest submission**: Submit trailers to open trailer contests
+- **Progress tracking**: Global %, per-phase progress, task completion counts
+- **Credits tracking**: Estimated credits, used credits, remaining balance
+
+### Trailer Decomposer Engine (`src/lib/trailer-decomposer.ts`)
+- **8 production phases**: CONCEPT → SCRIPT → VISUAL_DESIGN → STORYBOARD → PRODUCTION → AUDIO → POST_PRODUCTION → ASSEMBLY
+- **25-35+ auto-generated micro-tasks** per trailer project
+- **Genre-specific tasks**: Sci-Fi (FX, vehicles), Action (stunts, explosions), Drama (emotions, environments), Horror (atmospheric), Comedy (timing), Animation (character design), Documentary (archive), Musical (choreography, musical numbers)
+- **Duration multipliers**: TEASER_15S (0.5x) → FULL_120S (1.8x) affect credit estimates
+- **Credit estimation per task**: text 5-15, images 20-50, video 100-300, audio 30-80, post-prod 40-100
+
+### 32 Task Types
+- **Concept**: CONCEPT_BRIEF, CONCEPT_KEYWORDS, REFERENCE_IMAGES
+- **Script**: SCRIPT_STRUCTURE, SCRIPT_DIALOGUES, SCRIPT_VOICEOVER
+- **Visual Design**: MOODBOARD, COLOR_PALETTE, CHARACTER_DESIGN, ENVIRONMENT_DESIGN
+- **Storyboard**: STORYBOARD_PANELS, STORYBOARD_TIMING, SHOT_LIST
+- **Production**: AI_IMAGE_GEN, AI_VIDEO_GEN, FACE_SWAP, STYLE_TRANSFER, MOTION_GEN
+- **Audio**: VOICE_RECORDING, VOICE_CLONE, MUSIC_SELECTION, MUSIC_GEN, SOUND_EFFECTS, AUDIO_MIX
+- **Post-Production**: COLOR_GRADING, VFX_COMPOSITING, TITLE_CARD, SUBTITLE_GEN, TRANSITION_DESIGN
+- **Assembly**: ROUGH_CUT, FINE_CUT, FINAL_RENDER, THUMBNAIL_GEN, TRAILER_POSTER
+
+### Task Status Flow
+- PENDING → BLOCKED → READY → GENERATING → AWAITING_CHOICE → IN_REVIEW → APPROVED/REJECTED → COMPLETED/SKIPPED
+
+### Server Actions (`src/app/actions/trailer.ts`)
+- `createTrailerProjectAction` — Create new project
+- `decomposeTrailerAction` — Generate micro-tasks via decomposer
+- `startTrailerGenerationAction` — Start AI generation for a task
+- `completeTrailerTaskAction` — Mark task as completed with result
+- `updateTrailerChoiceAction` — Resolve a community choice
+- `submitTrailerToContestAction` — Submit to open contest
+- `createTrailerChoiceAction` — Create community voting question
+- `voteOnTrailerChoiceAction` — Cast vote on a choice
+- `getMyTrailerProjectsAction` — List user's projects
+- `getTrailerProjectAction` — Get single project with tasks
+- `deleteTrailerProjectAction` — Delete draft project
+- `getOpenContestsAction` — List open contests
+
+### UI Pages
+- `/trailer-studio` — Main studio (project list, contest banner, 4-step how-it-works)
+- `/trailer-studio/new` — Create form (genre/style/mood selectors, duration picker, community vote toggle)
+- `/trailer-studio/[id]` — Project detail (phase progress, task list, pending choices, credit usage)
+- Sidebar: "Studio Bande-Annonce" with NEW badge in Cinema section
+
+---
+
+## 84. AI Credit System (v9.0)
+
+### Credit Accounts (`src/lib/credits.ts`)
+- **Prepaid balance system**: Users buy credits before using AI features
+- **20% commission**: Platform takes 20% on all AI token costs (`COMMISSION_RATE = 0.20`)
+- **Credit rate**: 1 credit = 0.05€ (`CREDIT_TO_EUR = 0.05`)
+- **Atomic transactions**: All balance mutations via `prisma.$transaction()` (no partial state)
+
+### Credit Operations (13 Functions)
+- `getOrCreateCreditAccount(userId)` — Lazy account creation
+- `addCredits(userId, amount, txType, description)` — Add credits (pack purchase, free grant)
+- `deductCredits(userId, amount, rawCostEur, description, taskId?)` — Deduct with commission tracking
+- `refundCredits(userId, amount, originalTxId, reason)` — Full or partial refund
+- `checkBalance(userId, amount)` — Check if user has enough credits
+- `checkWeeklyFreeTrailer(userId)` — Check if premium free trailer available this week
+- `useWeeklyFreeTrailer(userId)` — Consume weekly free trailer
+- `getCreditHistory(userId, limit?, offset?)` — Paginated transaction history
+- `estimateCreditCost(tasks[])` — Estimate total credit cost for a set of tasks
+
+### Credit Packs (`CreditPack` model)
+| Pack | Credits | Price | Discount |
+|------|---------|-------|----------|
+| Starter | 100 | 5€ | — |
+| Creator | 500 | 20€ | -20% |
+| Studio | 1500 | 50€ | -33% |
+| Enterprise | 5000 | 125€ | -50% |
+
+### Transaction Tracking
+- Every credit movement logged with: amount, type, description, rawCostEur, commissionEur, totalChargedEur, balanceBefore, balanceAfter, relatedTaskId
+- Types: PACK_PURCHASE, FREE_GRANT, TASK_DEDUCTION, TASK_REFUND, WEEKLY_FREE, PROMO, ADMIN_ADJUST, PAYOUT
+
+### Credit Management Page (`/credits`)
+- Balance display with gold accent
+- 4 credit packs (disabled "Bientot disponible" for now — no Stripe yet)
+- Transaction history list with type icons and amounts
+- Sidebar: "Credits IA" with NEW badge in Mon Compte section
