@@ -135,20 +135,84 @@ export async function subscribeToPlanAction(formData: FormData) {
 }
 
 /**
+ * Cancel user's subscription.
+ * Sets status to 'cancelled'. The subscription remains accessible until expiresAt.
+ * If on a free plan, returns an error.
+ */
+export async function cancelSubscriptionAction() {
+  const session = await auth()
+  if (!session?.user?.id) return { error: 'Non authentifié' }
+
+  const sub = await prisma.subscription.findUnique({
+    where: { userId: session.user.id },
+  })
+
+  if (!sub || sub.plan === 'FREE') {
+    return { error: 'Vous êtes sur le plan gratuit, aucun abonnement à annuler.' }
+  }
+
+  if (sub.status === 'cancelled') {
+    return { error: 'Votre abonnement est déjà annulé.' }
+  }
+
+  // If Stripe is configured, cancel the Stripe subscription
+  if (process.env.STRIPE_SECRET_KEY && sub.stripeSubId) {
+    // Stripe cancellation placeholder
+    // const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
+    // await stripe.subscriptions.update(sub.stripeSubId, { cancel_at_period_end: true })
+  }
+
+  await prisma.subscription.update({
+    where: { userId: session.user.id },
+    data: { status: 'cancelled' },
+  })
+
+  const config = PLAN_CONFIGS[sub.plan] || PLAN_CONFIGS.FREE
+
+  // Notify user
+  await createNotification(session.user.id, 'SYSTEM' as never, 'Abonnement annulé', {
+    body: `Votre abonnement ${config.name} a été annulé. Vous conservez l'accès jusqu'à la fin de la période en cours.`,
+    href: '/dashboard/subscription',
+  })
+
+  // Record on blockchain
+  await recordEvent({
+    type: 'SUBSCRIPTION_CHANGED',
+    entityType: 'Subscription',
+    entityId: session.user.id,
+    data: { action: 'cancelled', plan: sub.plan },
+  }).catch(() => {})
+
+  revalidatePath('/dashboard/subscription')
+  revalidatePath('/streaming')
+  revalidatePath('/dashboard')
+  return { success: true }
+}
+
+/**
  * Get user's current subscription status.
  */
-export async function getUserSubscription(userId: string) {
+export type UserSubscription = PlanConfig & {
+  plan: string
+  active: boolean
+  status: 'active' | 'cancelled' | 'expired'
+  expired?: boolean
+  expiresAt?: Date | null
+  startedAt?: Date | null
+}
+
+export async function getUserSubscription(userId: string): Promise<UserSubscription> {
   const sub = await prisma.subscription.findUnique({
     where: { userId },
   })
 
   if (!sub) {
-    return { plan: 'FREE', ...PLAN_CONFIGS.FREE, active: true }
+    return { plan: 'FREE', ...PLAN_CONFIGS.FREE, active: true, status: 'active' }
   }
 
   // Check if expired
   if (sub.expiresAt && sub.expiresAt < new Date()) {
-    return { plan: 'FREE', ...PLAN_CONFIGS.FREE, active: true, expired: true }
+    return { plan: 'FREE', ...PLAN_CONFIGS.FREE, active: true, expired: true, status: 'expired' }
   }
 
   const config = PLAN_CONFIGS[sub.plan] || PLAN_CONFIGS.FREE
@@ -156,6 +220,7 @@ export async function getUserSubscription(userId: string) {
     plan: sub.plan,
     ...config,
     active: sub.status === 'active',
+    status: sub.status as 'active' | 'cancelled',
     expiresAt: sub.expiresAt,
     startedAt: sub.startedAt,
   }

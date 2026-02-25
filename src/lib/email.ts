@@ -61,26 +61,38 @@ function goldButton(text: string, href: string): string {
 
 // ─── Email Templates ─────────────────────────────────────────
 
-/** Welcome email sent after registration */
-export async function sendWelcomeEmail(to: string, displayName: string): Promise<boolean> {
+/** Welcome email sent after registration (with optional verification link) */
+export async function sendWelcomeEmail(to: string, displayName: string, verificationToken?: string): Promise<boolean> {
+  const baseUrl = process.env.NEXTAUTH_URL || 'https://cinema.lumiere.film'
+  const verifySection = verificationToken
+    ? `
+    <div style="text-align:center;margin-bottom:24px;">
+      ${goldButton('Vérifier mon Email', `${baseUrl}/verify-email?token=${verificationToken}`)}
+    </div>
+    <p style="color:#ffffff60;font-size:13px;margin:0 0 24px;text-align:center;">
+      Ce lien expire dans <strong>24 heures</strong>.
+    </p>`
+    : ''
+
   const html = layout('Bienvenue sur Lumière', `
     <h1 style="font-size:24px;margin:0 0 16px;color:#D4AF37;">Bienvenue, ${displayName} !</h1>
     <p style="color:#ffffffcc;line-height:1.6;margin:0 0 16px;">
       Vous faites maintenant partie de la communauté Lumière Cinema — le premier studio de cinéma collaboratif propulsé par l'IA.
     </p>
+    ${verifySection}
     <p style="color:#ffffffcc;line-height:1.6;margin:0 0 24px;">
       Explorez les films en production, contribuez vos talents, et gagnez des récompenses pour chaque tâche validée.
     </p>
     <div style="text-align:center;">
-      ${goldButton('Découvrir les Films', 'https://cinema.lumiere.film/films')}
+      ${goldButton('Découvrir les Films', `${baseUrl}/films`)}
     </div>
     <div style="margin-top:24px;padding-top:20px;border-top:1px solid #ffffff10;">
       <p style="color:#ffffff60;font-size:13px;margin:0;">
-        💡 <strong>Astuce :</strong> Complétez votre profil et vos compétences pour recevoir des recommandations de tâches personnalisées.
+        Complétez votre profil et vos compétences pour recevoir des recommandations de tâches personnalisées.
       </p>
     </div>
   `)
-  return send(to, 'Bienvenue sur Lumière Cinema ✨', html)
+  return send(to, 'Bienvenue sur Lumière Cinema', html)
 }
 
 /** Password reset email */

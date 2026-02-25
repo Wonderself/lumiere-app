@@ -52,4 +52,19 @@ declare module 'next-auth' {
       isVerified: boolean
     }
   }
+
+  interface User {
+    role?: string
+    level?: string
+    isVerified?: boolean
+  }
+}
+
+declare module 'next-auth/jwt' {
+  interface JWT {
+    id?: string
+    role?: string
+    level?: string
+    isVerified?: boolean
+  }
 }

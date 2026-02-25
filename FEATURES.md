@@ -13,13 +13,15 @@
 - URL param auto-select role (e.g. `?role=SCREENWRITER`)
 - Custom welcome for screenwriters: "Devenez Scenariste"
 - Credential-based login via NextAuth 5 (no PrismaAdapter — pure JWT + Credentials)
-- JWT stateless sessions
+- JWT stateless sessions with type-safe callbacks (no more `as any` casts)
 - Clickable demo login buttons (Admin + Contributeur) with controlled form inputs
 - Password reset via token (1h expiry, email link)
 - Profile updates (name, bio, skills, languages, wallet address)
+- CREATOR role available at registration (in addition to SCREENWRITER, CONTRIBUTOR, etc.)
 
-### Route Protection (Proxy)
+### Route Protection (Proxy + Middleware)
 - Centralized proxy (`src/proxy.ts`) for auth route protection (Next.js 16)
+- Middleware route protection (`src/middleware.ts`) — NextAuth v5 `auth()` wrapper
 - Protected: /dashboard/*, /admin/*, /profile/*, /tasks/*, /lumens/*, /notifications/*, /screenplays/*, /tokenization/*
 - Admin role check on /admin/* (redirects non-admins to /dashboard)
 - Unauthenticated users redirected to /login with callbackUrl
@@ -729,6 +731,7 @@ Each phase has: status (LOCKED/ACTIVE/COMPLETED), order, dependencies
   - `subscribeToPlanAction(planId)` — active l'abonnement
   - `getUserSubscription()` — retourne plan actuel + vérification expiration
   - `cancelSubscriptionAction()` — annule l'abonnement
+- **Type explicite**: `UserSubscription` — type TypeScript dédié pour les données d'abonnement retournées
 - **Stripe-ready**: préparé pour intégration Stripe Checkout, fonctionne sans Stripe en attendant
 - **Design**: cards avec badges "Populaire" / "Pro", gradient gold pour le plan Premium
 
@@ -966,7 +969,100 @@ Each phase has: status (LOCKED/ACTIVE/COMPLETED), order, dependencies
 ## 65. Email Verification
 - **Action**: `resendVerificationAction()` dans `src/app/actions/auth.ts`
 - **Flow**: inscription → email de bienvenue avec prompt de vérification
+- **Modèle Prisma**: `EmailVerification` — token unique, expiration, lié au userId
+- **Page dédiée**: `/verify-email` — vérifie le token et active le compte
 - **Rate limited**: 3 renvois max par 15 min (via passwordResetLimiter)
 - **Auth-gated**: seuls les utilisateurs connectés peuvent re-demander
 - **Login check**: avertissement si `isVerified === false` (soft, pas bloquant)
 - **Champ DB**: `isVerified` dans modèle User (existait déjà)
+
+---
+
+## 66. Gestion Abonnement (Cancel Subscription)
+- **Page**: `/dashboard/subscription` — gestion complète de l'abonnement
+- **Affiche**: plan actuel (Free/Basic/Premium), statut, prix, dates
+- **Actions**: annulation (CancelButton), lien vers upgrade
+- **Détails plan**: qualité max, films/mois, downloads, features
+- **États**: actif (vert), annulé (rouge avec notice), expiré (gris)
+- **Bannière upgrade**: pour les utilisateurs gratuits avec liens vers plans payants
+- **Server actions**: `cancelSubscriptionAction()`, `getUserSubscription()`
+
+## 67. Historique de Visionnage (Watch History)
+- **Fichier**: `src/app/actions/watch-history.ts`
+- **Actions**:
+  - `recordWatchProgressAction()` — enregistre la progression de visionnage
+  - `getWatchHistoryAction()` — historique des films vus
+  - `getContinueWatchingAction()` — films en cours (0 < progress < 95%)
+  - `markAsWatchedAction()` — marquer comme vu
+- **Stockage**: via modèle `FilmView` (userId, filmId, watchDuration, completionPct)
+
+## 68. Watchlist / Ma Liste
+- **Fichier**: `src/app/actions/watchlist.ts`
+- **Modèle Prisma dédié**: `Watchlist` — relation userId + filmId avec contrainte unique
+- **Actions**:
+  - `addToWatchlistAction()` — ajouter un film à la liste personnelle
+  - `removeFromWatchlistAction()` — retirer un film de la liste
+  - `getWatchlistAction()` — liste complète avec détails des films (titre, slug, coverImage, genre, status)
+  - `isInWatchlistAction()` — vérifier si un film est dans la watchlist
+
+## 69. Film Reviews & Ratings
+- **Server actions**: `src/app/actions/reviews.ts`
+  - `submitReviewAction()` — soumettre un avis (1-5 étoiles + commentaire optionnel)
+  - `getFilmReviewsAction()` — récupérer les avis d'un film (paginé, 10 par page)
+  - `getFilmRatingAction()` — note moyenne + distribution des notes (1-5 étoiles)
+  - `deleteReviewAction()` — supprimer son propre avis
+- **Modèle Prisma**: `Review` — persistence avec relation userId + filmId
+- **Contrainte**: un seul avis par utilisateur par film (upsert — mise à jour si existant)
+- **Pagination**: listing paginé des avis (10 par page)
+- **Agrégation**: note moyenne calculée + distribution des notes par étoile
+- **Composant**: `src/components/film-reviews.tsx`
+  - Affichage étoiles remplies/vides (lucide Star)
+  - Note moyenne + nombre d'avis
+  - Liste des avis avec nom, date, note, commentaire
+  - Formulaire "Écrire un avis" (connecté uniquement)
+
+## 70. Partage Social
+- **Composant**: `src/components/social-share.tsx`
+- **Props**: `{ url, title, description? }`
+- **Boutons**: Copier le lien, X/Twitter, Facebook, WhatsApp
+- **Feedback**: "Lien copié !" après copie clipboard
+- **Design**: petite rangée horizontale d'icônes, hover gold
+
+## 71. Transcoding Job Queue
+- **Fichier**: `src/lib/transcoding-queue.ts`
+- **Fonctions**: createTranscodeJob, getTranscodeJob, updateTranscodeJob, listTranscodeJobs, cancelTranscodeJob, getQueueStats, getNextPendingJob, cleanupOldJobs
+- **Statuts**: PENDING → PROCESSING → COMPLETED/FAILED/CANCELLED
+- **Priorité**: 0 (normal), 1 (high), 2 (urgent)
+- **Store**: en mémoire (Map), prêt pour Redis/DB en production
+
+## 72. Thumbnail Generation
+- **Fichier**: `src/lib/thumbnails.ts`
+- **Fonctions**:
+  - `buildThumbnailCommand()` — commande FFmpeg pour extraire une vignette
+  - `buildThumbnailBatchCommands()` — extraction à intervalles
+  - `buildSpriteSheetCommand()` — sprite sheet pour preview hover
+  - `parseFFmpegProgress()` — parsing progression FFmpeg
+  - `getThumbnailUrls()` — URLs attendues pour un film
+- **Config par défaut**: intervalles [10s, 30s, 1m, 2m, 5m, 10m], 480px, webp, qualité 80
+
+## 73. CDN Configuration
+- **Fichier**: `src/lib/cdn.ts`
+- **Providers**: Cloudflare Stream, Mux, self-hosted
+- **Fonctions**: getCDNConfig, getVideoPlaybackUrl, getHLSUrl, getCDNThumbnailUrl, isCDNConfigured, getSignedVideoUrl
+- **Env vars**: CDN_PROVIDER, CDN_BASE_URL, CDN_API_KEY, CDN_ACCOUNT_ID, CDN_SIGNING_SECRET
+- **Signed URLs**: HMAC-SHA256 pour contenu premium
+
+## 74. RGPD Account Management
+- **Fichier**: `src/app/actions/account.ts`
+- **Actions**:
+  - `exportPersonalDataAction()` — téléchargement JSON complet (profil, tâches, paiements, Lumens, scénarios, etc.)
+  - `requestAccountDeletionAction()` — anonymisation des données (nom → "Utilisateur supprimé", email → hash)
+- **Intégrité**: conservation des données de contribution pour les films, mais anonymisées
+- **Sécurité**: vérification email pour la suppression
+
+## 75. Health Check API
+- **Endpoint**: `GET /api/health`
+- **Checks**: PostgreSQL (latency), Redis (latency)
+- **Réponse**: status (healthy/degraded), timestamp, uptime, version, latency, checks
+- **HTTP**: 200 si healthy, 503 si degraded
+- **Utilisé par**: Docker healthcheck, monitoring, orchestrateurs

@@ -18,6 +18,39 @@
 
 ## Version History
 
+## v8.1 — Auth Fix & Data Models (2026-02-25)
+
+### Authentication System Overhaul
+- **Fixed JWT type safety**: Removed all `as any` casts in JWT callbacks, added proper `next-auth` and `next-auth/jwt` module augmentations in `src/types/index.ts`
+- **Added middleware.ts**: Route protection middleware at `src/middleware.ts` — protects `/dashboard`, `/admin`, `/profile`, `/tasks`, `/tokenization`. Redirects unauthenticated users to login. Blocks non-admin users from `/admin` routes
+- **Email verification system**: Added `EmailVerification` Prisma model, `verifyEmailAction()`, verification page at `/verify-email`, updated `sendWelcomeEmail()` with verification link, 24h token expiry
+- **Fixed `resendVerificationAction()`**: Now properly generates and stores tokens in EmailVerification table
+- **Fixed subscription TypeScript error**: Added explicit `UserSubscription` return type to `getUserSubscription()` — was blocking build
+- **Added CREATOR role** to registration schema (was missing)
+
+### New Prisma Models
+- **Review**: Proper film review system with `filmId_userId` unique constraint, replaces in-memory Map storage
+- **Watchlist**: Dedicated watchlist model with `userId_filmId` unique constraint, replaces UserAchievement workaround
+- **EmailVerification**: Token-based email verification with expiry and usage tracking
+
+### Server Actions Migrated
+- `reviews.ts`: Migrated from in-memory Map to Prisma queries (submitReviewAction, getFilmReviewsAction, getFilmRatingAction, deleteReviewAction)
+- `watchlist.ts`: Migrated from UserAchievement workaround to dedicated Watchlist model (addToWatchlistAction, removeFromWatchlistAction, getWatchlistAction, isInWatchlistAction)
+
+### Files Changed
+- `prisma/schema.prisma` — Added EmailVerification, Review, Watchlist models + relations
+- `src/lib/auth.ts` — Type-safe JWT callbacks, imported type augmentations
+- `src/types/index.ts` — Added JWT and User module augmentations for next-auth
+- `src/middleware.ts` — NEW: Route protection middleware
+- `src/app/actions/auth.ts` — Email verification flow, CREATOR role, proper token storage
+- `src/app/actions/reviews.ts` — Migrated to Prisma
+- `src/app/actions/watchlist.ts` — Migrated to dedicated Watchlist model
+- `src/app/actions/subscriptions.ts` — Added UserSubscription type, fixed TS error
+- `src/lib/email.ts` — Updated sendWelcomeEmail with verification link
+- `src/app/(auth)/verify-email/page.tsx` — NEW: Email verification page
+
+---
+
 ### V1-V2 — Core Platform
 - Film production system with phases and micro-tasks
 - User registration, authentication, role-based access
@@ -830,3 +863,33 @@ Templates HTML branding Lumiere gold/dark.
 **Roadmap Updates**:
 - V8-7 (Loading states & 404): marked done
 - V8 status: in_progress (5/7 done)
+
+### 2026-02-25 — Roadmap Extension + Feature Inventory Update
+
+**Roadmap Extended (V11, V12, V13)**:
+- V11: Infrastructure Vidéo (5 items) — transcoding queue, thumbnails, CDN, DRM, bitrate config
+- V12: Conformité & Sécurité (5 items) — 2FA, suppression compte, export données, sessions, audit log
+- V13: Social & Engagement (4 items) — commentaires films, génériques, playlists, créateur à la une
+- V8 extended: +5 items (cancel sub, watch history, watchlist, cookies, health check)
+- V10 extended: +2 items (film reviews, social sharing)
+
+**Features Recognized as Already Complete**:
+- v8-6 CDN vidéo → done (cdn.ts multi-provider + transcoding.ts 4 profils)
+- v8-9 Annulation abonnement → done (/dashboard/subscription page complète)
+- v8-10 Historique visionnage → done (watch-history.ts via FilmView)
+- v8-11 Watchlist → done (watchlist.ts actions)
+- v8-12 Cookie consent → done (CookieBanner + CookieConsent components)
+- v8-13 Health check → done (/api/health — DB + Redis checks)
+- v10-5 Avis & notations → done (reviews.ts + FilmReviews component)
+- v10-6 Partage social → done (SocialShare component)
+- v11-1 Transcoding queue → done (transcoding-queue.ts)
+- v11-2 Thumbnails → done (thumbnails.ts)
+- v11-3 CDN config → done (cdn.ts)
+- v12-2 Suppression compte → done (account.ts)
+- v12-3 Export données → done (account.ts)
+
+**Phase Statuses Updated**:
+- V8: in_progress (11/13 done)
+- V11: in_progress (3/5 done)
+- V12: in_progress (2/5 done)
+- V13: todo (0/4)

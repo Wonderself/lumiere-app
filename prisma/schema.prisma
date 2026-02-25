@@ -46,7 +46,10 @@ model User {
   comments          TaskComment[]
   lumenTransactions LumenTransaction[]
   contentHashes     ContentHash[]
-  passwordResets    PasswordReset[]
+  passwordResets       PasswordReset[]
+  emailVerifications   EmailVerification[]
+  reviews              Review[]
+  watchlistItems       Watchlist[]
 
   // V3 — New modules
   reputationScore   Float               @default(50)
@@ -367,6 +370,48 @@ model PasswordReset {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
+model EmailVerification {
+  id        String    @id @default(cuid())
+  userId    String
+  token     String    @unique
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime  @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+// ============================================
+// REVIEWS & WATCHLIST
+// ============================================
+
+model Review {
+  id        String   @id @default(cuid())
+  filmId    String
+  userId    String
+  rating    Int      // 1-5 stars
+  comment   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  film CatalogFilm @relation(fields: [filmId], references: [id], onDelete: Cascade)
+  user User        @relation(fields: [userId], references: [id])
+
+  @@unique([filmId, userId])
+}
+
+model Watchlist {
+  id      String   @id @default(cuid())
+  userId  String
+  filmId  String
+  addedAt DateTime @default(now())
+
+  user User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  film CatalogFilm @relation(fields: [filmId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, filmId])
+}
+
 // ============================================
 // ADMIN
 // ============================================
@@ -655,6 +700,10 @@ model CatalogFilm {
   contract    CatalogContract?
   views       FilmView[]
   payouts     CreatorPayout[]
+
+  // Reviews & Watchlist
+  reviews        Review[]
+  watchlistItems Watchlist[]
 
   // V6 — Film Universe
   castRoles      FilmCastRole[]

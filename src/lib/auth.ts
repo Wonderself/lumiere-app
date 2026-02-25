@@ -3,6 +3,7 @@ import Credentials from 'next-auth/providers/credentials'
 import { prisma } from '@/lib/prisma'
 import bcrypt from 'bcryptjs'
 import { z } from 'zod'
+import '@/types' // Load type augmentations
 
 const loginSchema = z.object({
   email: z.string().email(),
@@ -66,9 +67,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id
-        token.role = (user as any).role
-        token.level = (user as any).level
-        token.isVerified = (user as any).isVerified
+        token.role = user.role
+        token.level = user.level
+        token.isVerified = user.isVerified
       }
       return token
     },

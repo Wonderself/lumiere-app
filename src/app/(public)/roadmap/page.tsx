@@ -166,10 +166,14 @@ const roadmap: Phase[] = [
       { id: 'v8-3', title: 'IA Generative (images/video)', description: 'Génération d\'affiches, storyboards, previsualisations par IA', status: 'todo', difficulty: 'guided' },
       { id: 'v8-4', title: 'Analytics avancées', description: 'Dashboard analytics admin avec graphiques, cohortes, prédictions', status: 'done', difficulty: 'medium', note: 'KPI cards + charts + top contributors + pipeline' },
       { id: 'v8-5', title: 'Whisper sous-titres auto', description: 'Transcription automatique audio → sous-titres multi-langues', status: 'todo', difficulty: 'guided' },
-      { id: 'v8-6', title: 'CDN vidéo + HLS streaming', description: 'Distribution vidéo multi-région via Cloudflare Stream ou Mux, HLS adaptive bitrate', status: 'todo', difficulty: 'medium', note: 'transcoding.ts prêt (4 profils HLS), manque exécution FFmpeg + CDN' },
+      { id: 'v8-6', title: 'CDN vidéo + HLS streaming', description: 'Distribution vidéo multi-région via Cloudflare Stream ou Mux, HLS adaptive bitrate', status: 'done', difficulty: 'medium', note: 'cdn.ts (Cloudflare/Mux/self-hosted) + transcoding.ts (4 profils HLS) + signed URLs' },
       { id: 'v8-7', title: 'Loading states & 404', description: 'Squelettes de chargement (spinner gold), page 404 cinéma', status: 'done', difficulty: 'trivial', note: 'loading.tsx (root + public + dashboard) + not-found.tsx' },
       { id: 'v8-8', title: 'Email verification', description: 'Vérification email à l\'inscription, token + action resendVerification', status: 'done', difficulty: 'easy', note: 'isVerified check + resendVerificationAction dans auth.ts' },
-      { id: 'v8-9', title: 'Annulation abonnement', description: 'Bouton annulation dans le profil, cancelSubscriptionAction complète', status: 'todo', difficulty: 'easy', note: 'Action documentée, UI à créer dans /profile ou /dashboard' },
+      { id: 'v8-9', title: 'Annulation abonnement', description: 'Bouton annulation dans le profil, cancelSubscriptionAction complète', status: 'done', difficulty: 'easy', note: '/dashboard/subscription — plan actuel, annulation, upgrade, dates' },
+      { id: 'v8-10', title: 'Historique de visionnage', description: 'Continue watching, historique des films vus, progression sauvegardée', status: 'done', difficulty: 'easy', note: 'watch-history.ts — recordProgress, getContinueWatching, getHistory via FilmView' },
+      { id: 'v8-11', title: 'Watchlist / Ma Liste', description: 'Ajouter/retirer des films de sa liste personnelle, section dédiée', status: 'done', difficulty: 'easy', note: 'watchlist.ts — add/remove/get/isInWatchlist via tags utilisateur' },
+      { id: 'v8-12', title: 'Consentement cookies (RGPD)', description: 'Bannière cookie conforme RGPD avec granularité par catégorie', status: 'done', difficulty: 'easy', note: 'CookieBanner + CookieConsent components dans layout.tsx' },
+      { id: 'v8-13', title: 'Health check API', description: 'Endpoint /api/health pour monitoring, uptime, et orchestrateurs', status: 'done', difficulty: 'trivial', note: '/api/health — DB + Redis checks, latency, uptime' },
     ],
   },
   {
@@ -199,6 +203,52 @@ const roadmap: Phase[] = [
       { id: 'v10-2', title: 'Marketplace créatifs', description: 'Vente d\'assets (musique, SFX, 3D) entre créateurs', status: 'todo', difficulty: 'guided' },
       { id: 'v10-3', title: 'Partenariats studios', description: 'Intégration avec studios partenaires pour co-productions', status: 'todo', difficulty: 'guided' },
       { id: 'v10-4', title: 'App native iOS/Android', description: 'Application mobile native avec streaming optimisé', status: 'todo', difficulty: 'guided' },
+      { id: 'v10-5', title: 'Avis & notations films', description: 'Notes étoiles (1-5) et critiques textuelles par les spectateurs', status: 'done', difficulty: 'easy', note: 'reviews.ts + FilmReviews component avec étoiles et formulaire' },
+      { id: 'v10-6', title: 'Partage social', description: 'Boutons de partage (Twitter, Facebook, copie lien) sur les films et profils', status: 'done', difficulty: 'trivial', note: 'SocialShare component — copie lien, X, Facebook, WhatsApp' },
+    ],
+  },
+  {
+    id: 'v11',
+    name: 'Infrastructure Vidéo',
+    version: 'V11',
+    description: 'Pipeline vidéo complet : transcoding, CDN, DRM, thumbnails. Le streaming passe à l\'échelle.',
+    status: 'in_progress',
+    emoji: '📡',
+    items: [
+      { id: 'v11-1', title: 'File d\'attente transcoding', description: 'Gestion des jobs FFmpeg avec statut, priorité, retry et webhooks', status: 'done', difficulty: 'medium', note: 'transcoding-queue.ts — CRUD jobs, stats, priority, cleanup' },
+      { id: 'v11-2', title: 'Génération auto de thumbnails', description: 'Extraction de vignettes à intervalles réguliers pour preview et timeline', status: 'done', difficulty: 'easy', note: 'thumbnails.ts — FFmpeg commands, sprite sheets, progress parsing' },
+      { id: 'v11-3', title: 'CDN vidéo (Cloudflare/Mux)', description: 'Distribution vidéo multi-région avec cache edge et protection hotlink', status: 'done', difficulty: 'guided', note: 'cdn.ts — multi-provider (Cloudflare/Mux/self-hosted), signed URLs' },
+      { id: 'v11-4', title: 'Protection DRM', description: 'Widevine / FairPlay pour protéger le contenu premium des abonnés', status: 'todo', difficulty: 'guided' },
+      { id: 'v11-5', title: 'Configuration bitrate adaptatif', description: 'Interface admin pour configurer les profils qualité par film', status: 'todo', difficulty: 'easy' },
+    ],
+  },
+  {
+    id: 'v12',
+    name: 'Conformité & Sécurité',
+    version: 'V12',
+    description: 'RGPD complet, audit trail, 2FA, gestion des sessions. La plateforme est conforme et sécurisée.',
+    status: 'in_progress',
+    emoji: '🔒',
+    items: [
+      { id: 'v12-1', title: 'Authentification deux facteurs (2FA)', description: 'TOTP via app authenticator (Google Auth, Authy) pour les comptes sensibles', status: 'todo', difficulty: 'medium' },
+      { id: 'v12-2', title: 'Suppression de compte (Art. 17)', description: 'Droit à l\'effacement : suppression complète des données personnelles', status: 'done', difficulty: 'easy', note: 'account.ts — requestAccountDeletionAction, anonymisation des données' },
+      { id: 'v12-3', title: 'Export données personnelles (Art. 20)', description: 'Téléchargement JSON de toutes les données de l\'utilisateur', status: 'done', difficulty: 'easy', note: 'account.ts — exportPersonalDataAction, JSON complet' },
+      { id: 'v12-4', title: 'Gestion des sessions', description: 'Voir et révoquer les sessions actives depuis le profil', status: 'todo', difficulty: 'medium' },
+      { id: 'v12-5', title: 'Journal d\'audit admin', description: 'Log de toutes les actions admin (création, validation, suppression) avec horodatage', status: 'todo', difficulty: 'medium' },
+    ],
+  },
+  {
+    id: 'v13',
+    name: 'Social & Engagement',
+    version: 'V13',
+    description: 'Commentaires, génériques, playlists, créateurs en vedette. La communauté s\'enrichit.',
+    status: 'todo',
+    emoji: '💬',
+    items: [
+      { id: 'v13-1', title: 'Commentaires sur les films', description: 'Discussion par film avec réponses, likes et modération', status: 'todo', difficulty: 'medium' },
+      { id: 'v13-2', title: 'Générique / crédits d\'équipe', description: 'Page crédits interactive par film listant tous les contributeurs et rôles', status: 'todo', difficulty: 'easy' },
+      { id: 'v13-3', title: 'Collections & playlists', description: 'Créer des playlists thématiques de films partagées ou personnelles', status: 'todo', difficulty: 'medium' },
+      { id: 'v13-4', title: 'Créateur à la une', description: 'Mise en avant hebdomadaire d\'un créateur avec interview et stats', status: 'todo', difficulty: 'easy' },
     ],
   },
 ]
@@ -247,7 +297,7 @@ export default function RoadmapPage() {
             </span>
           </h1>
           <p className="text-white/40 text-base sm:text-lg mb-12 max-w-2xl mx-auto leading-relaxed">
-            10 phases pour construire le studio de cinema IA le plus ambitieux au monde.
+            13 phases pour construire le studio de cinema IA le plus ambitieux au monde.
             Chaque etape est concrete, realiste, et nous rapproche du lancement.
           </p>
 

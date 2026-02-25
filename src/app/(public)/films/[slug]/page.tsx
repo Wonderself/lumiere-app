@@ -9,6 +9,8 @@ import Image from 'next/image'
 import { Film, ArrowRight, Coins, Crown, Vote, TrendingUp, Bell } from 'lucide-react'
 import { FILM_STATUS_LABELS } from '@/lib/constants'
 import { FilmTimeline } from '@/components/film-timeline'
+import { SocialShare } from '@/components/social-share'
+import { FilmReviews } from '@/components/film-reviews'
 import type { Metadata } from 'next'
 
 type Props = { params: Promise<{ slug: string }> }
@@ -103,6 +105,13 @@ export default async function FilmDetailPage({ params }: Props) {
               <h1 className="text-4xl md:text-5xl font-bold" style={{ fontFamily: 'var(--font-playfair)' }}>
                 {film.title}
               </h1>
+              <div className="mt-3">
+                <SocialShare
+                  url={`https://cinema.lumiere.film/films/${film.slug}`}
+                  title={`${film.title} — Film en Production | Lumiere`}
+                  description={film.synopsis || film.description || undefined}
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -306,6 +315,9 @@ export default async function FilmDetailPage({ params }: Props) {
             )}
           </div>
         </div>
+
+        {/* Community Reviews */}
+        <FilmReviews filmId={film.id} />
       </div>
     </div>
   )

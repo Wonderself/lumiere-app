@@ -4,6 +4,7 @@ import './globals.css'
 import { Toaster } from 'sonner'
 import { AuthSessionProvider } from '@/components/layout/session-provider'
 import { CookieBanner } from '@/components/layout/cookie-banner'
+import { CookieConsent } from '@/components/cookie-consent'
 import { ServiceWorkerRegister } from '@/components/layout/sw-register'
 import { NextIntlClientProvider } from 'next-intl'
 import { getLocale, getMessages } from 'next-intl/server'
@@ -84,6 +85,7 @@ export default async function RootLayout({
         <AuthSessionProvider>
         {children}
         <CookieBanner />
+        <CookieConsent />
         <ServiceWorkerRegister />
         <Toaster
           theme="dark"

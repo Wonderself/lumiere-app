@@ -27,7 +27,7 @@ const registerSchema = z.object({
   email: z.string().email('Email invalide'),
   password: z.string().min(8, 'Minimum 8 caractères'),
   displayName: z.string().min(2, 'Minimum 2 caractères'),
-  role: z.enum(['CONTRIBUTOR', 'ARTIST', 'STUNT_PERFORMER', 'VIEWER', 'SCREENWRITER']).default('CONTRIBUTOR'),
+  role: z.enum(['CONTRIBUTOR', 'ARTIST', 'STUNT_PERFORMER', 'VIEWER', 'SCREENWRITER', 'CREATOR']).default('CONTRIBUTOR'),
   portfolioUrl: z.string().url('URL invalide').optional().or(z.literal('')),
   skills: z.array(z.string()).optional(),
   languages: z.array(z.string()).optional(),
@@ -79,13 +79,15 @@ export async function registerAction(
 
     // Generate email verification token
     const verificationToken = randomBytes(32).toString('hex')
+    const verificationExpires = new Date()
+    verificationExpires.setHours(verificationExpires.getHours() + 24) // 24h validity
 
-    await prisma.user.create({
+    const newUser = await prisma.user.create({
       data: {
         email: email.toLowerCase(),
         passwordHash,
         displayName,
-        role: role as any,
+        role: role as never,
         portfolioUrl: portfolioUrl || null,
         skills: skills || [],
         languages: languages || [],
@@ -93,8 +95,17 @@ export async function registerAction(
       },
     })
 
+    // Store email verification token
+    await prisma.passwordReset.create({
+      data: {
+        userId: newUser.id,
+        token: verificationToken,
+        expiresAt: verificationExpires,
+      },
+    })
+
     // Send welcome email with verification link (non-blocking)
-    sendWelcomeEmail(email.toLowerCase(), displayName).catch(() => {})
+    sendWelcomeEmail(email.toLowerCase(), displayName, verificationToken).catch(() => {})
 
     return { success: true }
   } catch (error) {
@@ -233,6 +244,33 @@ export async function resetPasswordAction(
 
 // ─── Email Verification ──────────────────────────────────────
 
+export async function verifyEmailAction(token: string) {
+  if (!token) return { error: 'Token manquant.' }
+
+  // Use PasswordReset table with 'verify:' prefix for email verification tokens
+  const record = await prisma.passwordReset.findUnique({
+    where: { token: `verify:${token}` },
+    include: { user: true },
+  })
+
+  if (!record) return { error: 'Lien de verification invalide.' }
+  if (record.usedAt) return { error: 'Ce lien a deja ete utilise.' }
+  if (record.expiresAt < new Date()) return { error: 'Ce lien a expire. Demandez un nouveau lien.' }
+
+  await prisma.$transaction([
+    prisma.user.update({
+      where: { id: record.userId },
+      data: { isVerified: true, verifiedAt: new Date() },
+    }),
+    prisma.passwordReset.update({
+      where: { id: record.id },
+      data: { usedAt: new Date() },
+    }),
+  ])
+
+  return { success: true }
+}
+
 export async function resendVerificationAction() {
   const session = await auth()
   if (!session?.user?.id) return { error: 'Non authentifié' }
@@ -247,8 +285,32 @@ export async function resendVerificationAction() {
     return { error: `Trop de tentatives. Réessayez dans ${rl.retryAfterSeconds}s.` }
   }
 
-  // Send verification email (non-blocking)
-  sendWelcomeEmail(user.email, user.displayName || 'Utilisateur').catch(() => {})
+  // Delete old verification tokens (those with 'verify:' prefix)
+  const oldTokens = await prisma.passwordReset.findMany({
+    where: { userId: user.id, token: { startsWith: 'verify:' } },
+    select: { id: true },
+  })
+  if (oldTokens.length > 0) {
+    await prisma.passwordReset.deleteMany({
+      where: { id: { in: oldTokens.map(t => t.id) } },
+    })
+  }
+
+  // Generate new verification token
+  const verificationToken = randomBytes(32).toString('hex')
+  const expiresAt = new Date()
+  expiresAt.setHours(expiresAt.getHours() + 24)
+
+  await prisma.passwordReset.create({
+    data: {
+      userId: user.id,
+      token: `verify:${verificationToken}`,
+      expiresAt,
+    },
+  })
+
+  // Send verification email
+  sendWelcomeEmail(user.email, user.displayName || 'Utilisateur', verificationToken).catch(() => {})
 
   return { success: true }
 }

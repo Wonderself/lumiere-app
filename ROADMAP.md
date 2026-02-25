@@ -315,6 +315,161 @@
 
 ---
 
+## PHASE 9 — SCALE & INTELLIGENCE (En cours)
+
+### 9.1 App mobile PWA ✅
+> Service worker, manifest, meta tags, mode offline cache-first.
+
+### 9.2 Internationalisation (i18n) ✅
+> next-intl + FR/EN + switcher + header traduit.
+
+### 9.3 Analytics avancees ✅
+> Dashboard admin avec KPIs, graphiques, top contributors, pipeline.
+
+### 9.4 CDN video + HLS ✅
+> cdn.ts multi-provider (Cloudflare/Mux/self-hosted), signed URLs, transcoding 4 profils.
+
+### 9.5 Annulation abonnement ✅
+> Page /dashboard/subscription — gestion plan, annulation, upgrade, dates.
+
+### 9.6 Historique de visionnage ✅
+> watch-history.ts — recordProgress, getContinueWatching, getHistory via FilmView.
+
+### 9.7 Watchlist / Ma Liste ✅
+> watchlist.ts — add/remove/get/isInWatchlist.
+
+### 9.8 Cookie consent RGPD ✅
+> CookieBanner + CookieConsent dans layout.tsx.
+
+### 9.9 Health check API ✅
+> /api/health — DB + Redis checks, latency, uptime.
+
+### 9.10 IA Generative
+**Statut**: A FAIRE
+**Prerequis**: API Runway/Luma/Kling
+> Generation d'affiches, storyboards, previsualisations par IA.
+
+### 9.11 Whisper sous-titres auto
+**Statut**: A FAIRE
+**Prerequis**: OpenAI Whisper API ou modele local
+> Transcription automatique audio → sous-titres multi-langues.
+
+---
+
+## PHASE 10 — BLOCKCHAIN LIVE
+
+### 10.1 Deploy smart contracts
+**Statut**: A FAIRE
+**Prerequis**: Wallet MetaMask + RPC Polygon/Base + cles deploiement
+> ERC-20 FilmToken + ERC-721 ContributionNFT sur Polygon/Base.
+
+### 10.2 Wallet Connect
+**Statut**: A FAIRE
+> Connexion MetaMask/WalletConnect pour acheter tokens et voter.
+
+### 10.3 NFT contributeur
+**Statut**: A FAIRE
+> Mint automatique d'un NFT preuve-de-contribution a chaque tache validee.
+
+### 10.4 Gouvernance on-chain
+**Statut**: A FAIRE
+> Votes token-weighted pour decisions de production.
+
+### 10.5 Dividendes automatiques
+**Statut**: A FAIRE
+> Distribution automatique des revenus aux detenteurs de tokens.
+
+---
+
+## PHASE 11 — INFRASTRUCTURE VIDEO (En cours)
+
+### 11.1 File d'attente transcoding ✅
+> transcoding-queue.ts — CRUD jobs, stats, priorite, cleanup.
+
+### 11.2 Generation auto de thumbnails ✅
+> thumbnails.ts — FFmpeg commands, sprite sheets, progress parsing.
+
+### 11.3 CDN video (Cloudflare/Mux) ✅
+> cdn.ts — multi-provider, signed URLs, hotlink protection.
+
+### 11.4 Protection DRM
+**Statut**: A FAIRE
+**Prerequis**: Licence Widevine/FairPlay
+> Protection du contenu premium des abonnes.
+
+### 11.5 Configuration bitrate adaptatif
+**Statut**: A FAIRE
+> Interface admin pour configurer les profils qualite par film.
+
+---
+
+## PHASE 12 — CONFORMITE & SECURITE (En cours)
+
+### 12.1 Authentification deux facteurs (2FA)
+**Statut**: A FAIRE
+> TOTP via app authenticator (Google Auth, Authy).
+
+### 12.2 Suppression de compte (RGPD Art. 17) ✅
+> account.ts — requestAccountDeletionAction, anonymisation des donnees.
+
+### 12.3 Export donnees personnelles (RGPD Art. 20) ✅
+> account.ts — exportPersonalDataAction, JSON complet.
+
+### 12.4 Gestion des sessions
+**Statut**: A FAIRE
+> Voir et revoquer les sessions actives depuis le profil.
+
+### 12.5 Journal d'audit admin
+**Statut**: A FAIRE
+> Log de toutes les actions admin avec horodatage.
+
+---
+
+## PHASE 13 — SOCIAL & ENGAGEMENT
+
+### 13.1 Commentaires sur les films
+**Statut**: A FAIRE
+> Discussion par film avec reponses, likes et moderation.
+
+### 13.2 Generique / credits d'equipe
+**Statut**: A FAIRE
+> Page credits interactive par film listant tous les contributeurs et roles.
+
+### 13.3 Collections & playlists
+**Statut**: A FAIRE
+> Playlists thematiques de films partagees ou personnelles.
+
+### 13.4 Createur a la une
+**Statut**: A FAIRE
+> Mise en avant hebdomadaire d'un createur avec interview et stats.
+
+---
+
+## FEATURES TRANSVERSALES (Fait)
+
+### Avis & notations films ✅
+> reviews.ts + FilmReviews component — etoiles 1-5, formulaire, listing.
+
+### Partage social ✅
+> SocialShare component — copie lien, X/Twitter, Facebook, WhatsApp.
+
+### Tests unitaires (85 tests Vitest) ✅
+> 5 suites: utils, reputation, invoices, film-decomposer, rate-limiter.
+
+### CI/CD GitHub Actions ✅
+> Pipeline 3 jobs: lint, test, build sur chaque push/PR.
+
+### Rate Limiting ✅
+> Login (5/15min), register (3/h), password reset (3/15min).
+
+### Security Headers ✅
+> CSP, HSTS, X-Frame-Options, X-Content-Type-Options, Permissions-Policy.
+
+### Email Verification ✅
+> isVerified check + resendVerificationAction.
+
+---
+
 ## CHECKLIST PREREQUIS FONDATEUR
 
 | Etape | Ce que tu dois fournir | Gratuit? |
@@ -322,11 +477,13 @@
 | 1.1 IA Review | Cle Anthropic API | 5$ credit gratuit |
 | 2.1 Invitations | Compte Resend + domaine verifie | 100 emails/jour gratuit |
 | 3.1 Paiements | Compte Stripe (mode test) | Gratuit en test |
-| 4.1 Blockchain | Wallet MetaMask + RPC Polygon | Gratuit (testnet) |
-| 5.1 Video IA | API Runway/Luma/Kling | ~0.05$/video |
-| 5.2 CDN | Cloudflare R2 | 10GB gratuit |
+| 10.x Blockchain | Wallet MetaMask + RPC Polygon | Gratuit (testnet) |
+| 9.10 Video IA | API Runway/Luma/Kling | ~0.05$/video |
+| 11.3 CDN | Cloudflare R2/Stream | 10GB gratuit |
 | 7.1 Hosting | Vercel ou VPS | Gratuit (Vercel hobby) |
+| 11.4 DRM | Licence Widevine | Gratuit (Shaka Player) |
+| 9.11 Whisper | OpenAI Whisper API | ~0.006$/min |
 
 ---
 
-*Derniere mise a jour: 24 Fevrier 2026*
+*Derniere mise a jour: 25 Fevrier 2026*
