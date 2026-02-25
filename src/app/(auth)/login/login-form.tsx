@@ -10,6 +10,8 @@ import { loginAction } from '@/app/actions/auth'
 import type { LoginFormState } from '@/app/actions/auth'
 import { Mail, Lock, Sparkles, Eye, EyeOff } from 'lucide-react'
 
+const SHOW_DEMO = process.env.NEXT_PUBLIC_SHOW_DEMO === 'true' || process.env.NODE_ENV === 'development'
+
 function sanitizeCallbackUrl(url: string | null): string {
   if (!url) return '/dashboard'
   if (url.startsWith('/') && !url.startsWith('//') && !url.includes('\\')) {
@@ -132,48 +134,50 @@ export function LoginForm() {
             </div>
           </form>
 
-          {/* Separator */}
-          <div className="mt-7 flex items-center gap-3">
-            <div className="flex-1 h-px bg-gradient-to-r from-transparent to-white/[0.06]" />
-            <span className="text-xs text-white/20 uppercase tracking-widest">comptes demo</span>
-            <div className="flex-1 h-px bg-gradient-to-l from-transparent to-white/[0.06]" />
-          </div>
-
-          {/* Demo accounts — click to auto-fill AND submit */}
-          <div className="mt-5 space-y-2.5">
-            <button
-              type="button"
-              disabled={isPending}
-              onClick={() => loginAsDemo('admin@lumiere.film', 'Admin1234!')}
-              className="w-full rounded-xl bg-[#D4AF37]/[0.06] border border-[#D4AF37]/15 hover:border-[#D4AF37]/30 hover:bg-[#D4AF37]/10 p-3.5 text-left transition-all duration-300 group cursor-pointer disabled:opacity-50"
-            >
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-xs font-semibold text-[#D4AF37]/80 group-hover:text-[#D4AF37]">Admin</p>
-                  <p className="text-[11px] text-white/35 mt-0.5">admin@lumiere.film / Admin1234!</p>
-                </div>
-                <span className="text-[10px] text-[#D4AF37]/40 group-hover:text-[#D4AF37]/70 uppercase tracking-wider font-medium">
-                  {isPending ? 'Connexion...' : 'Connexion rapide'}
-                </span>
+          {/* Demo accounts — only visible in dev or when NEXT_PUBLIC_SHOW_DEMO=true */}
+          {SHOW_DEMO && (
+            <>
+              <div className="mt-7 flex items-center gap-3">
+                <div className="flex-1 h-px bg-gradient-to-r from-transparent to-white/[0.06]" />
+                <span className="text-xs text-white/20 uppercase tracking-widest">comptes demo</span>
+                <div className="flex-1 h-px bg-gradient-to-l from-transparent to-white/[0.06]" />
               </div>
-            </button>
-            <button
-              type="button"
-              disabled={isPending}
-              onClick={() => loginAsDemo('contributeur@lumiere.film', 'Test1234!')}
-              className="w-full rounded-xl bg-white/[0.02] border border-white/[0.06] hover:border-white/[0.12] hover:bg-white/[0.04] p-3.5 text-left transition-all duration-300 group cursor-pointer disabled:opacity-50"
-            >
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-xs font-semibold text-white/50 group-hover:text-white/70">Contributeur</p>
-                  <p className="text-[11px] text-white/25 mt-0.5">contributeur@lumiere.film / Test1234!</p>
-                </div>
-                <span className="text-[10px] text-white/20 group-hover:text-white/40 uppercase tracking-wider font-medium">
-                  {isPending ? 'Connexion...' : 'Connexion rapide'}
-                </span>
+              <div className="mt-5 space-y-2.5">
+                <button
+                  type="button"
+                  disabled={isPending}
+                  onClick={() => loginAsDemo('admin@lumiere.film', 'Admin1234!')}
+                  className="w-full rounded-xl bg-[#D4AF37]/[0.06] border border-[#D4AF37]/15 hover:border-[#D4AF37]/30 hover:bg-[#D4AF37]/10 p-3.5 text-left transition-all duration-300 group cursor-pointer disabled:opacity-50"
+                >
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-xs font-semibold text-[#D4AF37]/80 group-hover:text-[#D4AF37]">Admin</p>
+                      <p className="text-[11px] text-white/35 mt-0.5">admin@lumiere.film</p>
+                    </div>
+                    <span className="text-[10px] text-[#D4AF37]/40 group-hover:text-[#D4AF37]/70 uppercase tracking-wider font-medium">
+                      {isPending ? 'Connexion...' : 'Connexion rapide'}
+                    </span>
+                  </div>
+                </button>
+                <button
+                  type="button"
+                  disabled={isPending}
+                  onClick={() => loginAsDemo('contributeur@lumiere.film', 'Test1234!')}
+                  className="w-full rounded-xl bg-white/[0.02] border border-white/[0.06] hover:border-white/[0.12] hover:bg-white/[0.04] p-3.5 text-left transition-all duration-300 group cursor-pointer disabled:opacity-50"
+                >
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-xs font-semibold text-white/50 group-hover:text-white/70">Contributeur</p>
+                      <p className="text-[11px] text-white/25 mt-0.5">contributeur@lumiere.film</p>
+                    </div>
+                    <span className="text-[10px] text-white/20 group-hover:text-white/40 uppercase tracking-wider font-medium">
+                      {isPending ? 'Connexion...' : 'Connexion rapide'}
+                    </span>
+                  </div>
+                </button>
               </div>
-            </button>
-          </div>
+            </>
+          )}
         </div>
       </div>
 

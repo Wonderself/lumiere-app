@@ -14,7 +14,7 @@
 - Custom welcome for screenwriters: "Devenez Scenariste"
 - Credential-based login via NextAuth 5 (no PrismaAdapter — pure JWT + Credentials)
 - JWT stateless sessions with type-safe callbacks (no more `as any` casts)
-- Clickable demo login buttons (Admin + Contributeur) with controlled form inputs
+- Clickable demo login buttons (Admin + Contributeur) — gated behind `NEXT_PUBLIC_SHOW_DEMO` or dev mode
 - Password visibility toggle (eye icon) on login and register forms
 - Password reset via token (1h expiry, email link)
 - Email verification with `verify:` prefix tokens (fixed in v8.2)

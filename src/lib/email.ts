@@ -97,7 +97,8 @@ export async function sendWelcomeEmail(to: string, displayName: string, verifica
 
 /** Password reset email */
 export async function sendPasswordResetEmail(to: string, token: string): Promise<boolean> {
-  const resetUrl = `https://cinema.lumiere.film/reset-password?token=${token}`
+  const baseUrl = process.env.NEXTAUTH_URL || 'https://cinema.lumiere.film'
+  const resetUrl = `${baseUrl}/reset-password?token=${token}`
   const html = layout('Réinitialisation du mot de passe', `
     <h1 style="font-size:24px;margin:0 0 16px;color:#D4AF37;">Mot de passe oublié ?</h1>
     <p style="color:#ffffffcc;line-height:1.6;margin:0 0 16px;">

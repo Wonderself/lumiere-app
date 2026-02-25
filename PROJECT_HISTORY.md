@@ -18,6 +18,35 @@
 
 ## Version History
 
+## v9.1 — Deep Audit, Dead Code Cleanup & Trailer Fix (2026-02-25)
+
+### Authentication Audit Fixes
+- **Password reset URL**: Fixed hardcoded production URL → uses `NEXTAUTH_URL` env variable
+- **Token deletion fix**: `forgotPasswordAction` no longer deletes `verify:` email verification tokens
+- **Demo credentials gated**: Hidden behind `NEXT_PUBLIC_SHOW_DEMO=true` or `NODE_ENV=development`
+
+### Trailer Studio Audit Fixes (Critical)
+- **Decomposer signature fix**: Action now builds proper `TrailerDecomposeConfig` (was passing raw project object)
+- **dependsOnTypes→dependsOnIds**: Two-phase task creation resolves type names to actual DB IDs
+- **CreditTxType fix**: `AI_GENERATION` → `AI_USAGE` (correct enum value)
+- **Atomic credit deduction**: Wrapped in `prisma.$transaction()` to prevent race conditions
+- **Dependency status**: Now includes COMPLETED, APPROVED, and SKIPPED (was only COMPLETED)
+- **currentPhase update**: Automatically advances based on `TRAILER_PHASE_ORDER`
+- **TrailerActions component**: New client component for decompose/start/delete/choice buttons
+- **Credits page**: Fixed subscription status check to handle both `ACTIVE` and `active`
+
+### Dead Code Cleanup (~1,400 lines removed)
+- Deleted `src/lib/security-headers.ts` (duplicate of inline proxy.ts headers)
+- Deleted `src/lib/credits.ts` (unused 594-line credit utility)
+- Deleted `src/lib/cdn.ts` (unused 246-line CDN utility)
+- Deleted `src/lib/thumbnails.ts` (unused 206-line FFmpeg utility)
+- Deleted `src/lib/anti-detection.ts` (unused 116-line anti-detection module)
+- Deleted `src/lib/smart-contracts.ts` (unused contract interfaces)
+- Deleted `src/lib/tokens.ts` (unused 78-line token pricing)
+- Removed `EmailVerification` Prisma model (email verification uses `PasswordReset` table with `verify:` prefix)
+
+---
+
 ## v9.0 — Trailer Studio, AI Credits & Auth Overhaul (2026-02-25)
 
 ### Authentication Overhaul

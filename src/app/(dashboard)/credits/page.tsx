@@ -84,7 +84,7 @@ export default async function CreditsPage() {
   const balance = creditAccount?.balance ?? 0
   const totalUsed = creditAccount?.totalUsed ?? 0
   const totalPurchased = creditAccount?.totalPurchased ?? 0
-  const isPremium = subscription?.plan === 'PREMIUM' && subscription?.status === 'ACTIVE'
+  const isPremium = subscription?.plan === 'PREMIUM' && (subscription?.status === 'ACTIVE' || subscription?.status === 'active')
 
   return (
     <div className="space-y-8">

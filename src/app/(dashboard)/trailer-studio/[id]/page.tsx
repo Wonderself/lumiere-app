@@ -3,13 +3,13 @@ import { prisma } from '@/lib/prisma'
 import { redirect, notFound } from 'next/navigation'
 import Link from 'next/link'
 import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
 import {
   ArrowLeft, CheckCircle2, Clock, Loader2, Wand2,
   Film, Palette, Music, Clapperboard, Scissors, Sparkles,
-  Play, Vote, ChevronRight, Coins, AlertCircle, Lock,
+  Play, Heart, Coins, AlertCircle, Lock,
 } from 'lucide-react'
 import type { Metadata } from 'next'
+import { TrailerActions } from './trailer-actions'
 
 export const dynamic = 'force-dynamic'
 
@@ -47,7 +47,7 @@ export default async function TrailerProjectPage({ params }: { params: Promise<{
   const project = await prisma.trailerProject.findUnique({
     where: { id },
     include: {
-      tasks: { orderBy: [{ phase: 'asc' as never }, { order: 'asc' }] },
+      tasks: { orderBy: [{ order: 'asc' }] },
       choices: { orderBy: { createdAt: 'desc' } },
     },
   })
@@ -57,7 +57,7 @@ export default async function TrailerProjectPage({ params }: { params: Promise<{
     redirect('/trailer-studio')
   }
 
-  // Group tasks by phase
+  // Group tasks by phase (using PHASE_CONFIG key order)
   const tasksByPhase = new Map<string, typeof project.tasks>()
   for (const task of project.tasks) {
     const phase = task.phase
@@ -66,6 +66,7 @@ export default async function TrailerProjectPage({ params }: { params: Promise<{
   }
 
   const phases = Object.keys(PHASE_CONFIG)
+  const pendingChoices = project.choices.filter(c => !c.resolvedAt)
 
   return (
     <div className="space-y-8">
@@ -134,47 +135,19 @@ export default async function TrailerProjectPage({ params }: { params: Promise<{
         </div>
       )}
 
-      {/* Pending Choices */}
-      {project.choices.filter(c => !c.resolvedAt).length > 0 && (
-        <div className="rounded-2xl border border-amber-200 bg-amber-50/50 p-6">
-          <div className="flex items-center gap-2 mb-4">
-            <AlertCircle className="h-5 w-5 text-amber-600" />
-            <h2 className="text-sm font-semibold text-amber-800">
-              Choix en attente ({project.choices.filter(c => !c.resolvedAt).length})
-            </h2>
-          </div>
-          <div className="space-y-3">
-            {project.choices.filter(c => !c.resolvedAt).map((choice) => {
-              const options = choice.options as Array<{ id: string; label: string; description?: string }>
-              return (
-                <div key={choice.id} className="rounded-xl border border-amber-200 bg-white p-4">
-                  <p className="text-sm font-medium text-[#1A1A2E]">{choice.question}</p>
-                  {choice.category && (
-                    <Badge variant="outline" className="text-[10px] mt-1 text-amber-600 border-amber-300">{choice.category}</Badge>
-                  )}
-                  <div className="grid grid-cols-2 gap-2 mt-3">
-                    {options.map((opt) => (
-                      <button
-                        key={opt.id}
-                        className="rounded-lg border border-gray-200 p-3 text-left hover:border-[#D4AF37] hover:bg-[#D4AF37]/5 transition-all text-sm"
-                      >
-                        <p className="font-medium text-[#1A1A2E]">{opt.label}</p>
-                        {opt.description && <p className="text-xs text-gray-500 mt-0.5">{opt.description}</p>}
-                      </button>
-                    ))}
-                  </div>
-                  {choice.isOpenToVote && (
-                    <div className="flex items-center gap-1 mt-2 text-xs text-pink-600">
-                      <Vote className="h-3 w-3" />
-                      Ouvert au vote communautaire
-                    </div>
-                  )}
-                </div>
-              )
-            })}
-          </div>
-        </div>
-      )}
+      {/* Client-side action buttons (decompose, start, delete, choices) */}
+      <TrailerActions
+        projectId={project.id}
+        projectStatus={project.status}
+        hasTasks={project.tasks.length > 0}
+        pendingChoices={pendingChoices.map(c => ({
+          id: c.id,
+          question: c.question,
+          category: c.category,
+          isOpenToVote: c.isOpenToVote,
+          options: c.options as Array<{ id: string; label: string; description?: string }>,
+        }))}
+      />
 
       {/* Tasks by Phase */}
       <div className="space-y-4">
@@ -184,11 +157,7 @@ export default async function TrailerProjectPage({ params }: { params: Promise<{
           <div className="rounded-2xl border border-gray-200 bg-white p-8 text-center">
             <Wand2 className="h-10 w-10 text-gray-300 mx-auto mb-3" />
             <p className="text-sm text-gray-500">Le projet n&apos;a pas encore été décomposé en micro-tâches</p>
-            <p className="text-xs text-gray-400 mt-1">Cliquez sur &quot;Décomposer&quot; pour que l&apos;IA crée les tâches</p>
-            <Button className="mt-4 bg-[#D4AF37] hover:bg-[#F0D060] text-black font-semibold">
-              <Wand2 className="h-4 w-4 mr-2" />
-              Décomposer en micro-tâches
-            </Button>
+            <p className="text-xs text-gray-400 mt-1">Utilisez le bouton ci-dessus pour décomposer le projet</p>
           </div>
         ) : (
           <div className="space-y-3">

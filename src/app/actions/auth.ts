@@ -225,8 +225,10 @@ export async function forgotPasswordAction(
   const expiresAt = new Date()
   expiresAt.setHours(expiresAt.getHours() + 1)
 
-  // Delete existing reset tokens for this user
-  await prisma.passwordReset.deleteMany({ where: { userId: user.id } })
+  // Delete existing reset tokens for this user (but NOT verification tokens with verify: prefix)
+  await prisma.passwordReset.deleteMany({
+    where: { userId: user.id, token: { not: { startsWith: 'verify:' } } },
+  })
 
   // Create new reset token
   await prisma.passwordReset.create({

@@ -47,7 +47,7 @@ model User {
   lumenTransactions LumenTransaction[]
   contentHashes     ContentHash[]
   passwordResets       PasswordReset[]
-  emailVerifications   EmailVerification[]
+
   reviews              Review[]
   watchlistItems       Watchlist[]
 
@@ -400,16 +400,7 @@ model PasswordReset {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
-model EmailVerification {
-  id        String    @id @default(cuid())
-  userId    String
-  token     String    @unique
-  expiresAt DateTime
-  usedAt    DateTime?
-  createdAt DateTime  @default(now())
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-}
+// EmailVerification model removed — verification uses PasswordReset table with 'verify:' prefix
 
 // ============================================
 // REVIEWS & WATCHLIST

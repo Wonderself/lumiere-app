@@ -4,39 +4,11 @@ import { prisma } from '@/lib/prisma'
 import { auth } from '@/lib/auth'
 import { z } from 'zod'
 import { revalidatePath } from 'next/cache'
-
-// These modules may not exist yet — all calls are wrapped in try/catch
-let decomposeTrailerToTasks: ((project: {
-  id: string
-  title: string
-  concept: string | null
-  synopsis: string | null
-  genre: string | null
-  style: string | null
-  mood: string | null
-  duration: string
-  targetAudience: string | null
-  referenceNotes: string | null
-  musicMood: string | null
-}) => Promise<Array<{
-  taskType: string
-  phase: string
-  title: string
-  description: string
-  instructions: string
-  order: number
-  dependsOnIds: string[]
-  estimatedCredits: number
-  aiPrompt: string | null
-}>>) | null = null
-
-try {
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
-  const mod = require('@/lib/trailer-decomposer')
-  decomposeTrailerToTasks = mod.decomposeTrailerToTasks
-} catch {
-  // Module not available yet — decomposeTrailerAction will return an error
-}
+import {
+  decomposeTrailerToTasks,
+  TRAILER_PHASE_ORDER,
+} from '@/lib/trailer-decomposer'
+import type { TrailerDecomposeConfig } from '@/lib/trailer-decomposer'
 
 // ============================================
 // Zod Schemas
@@ -74,6 +46,13 @@ const createChoiceSchema = z.object({
   })).min(2, 'Au moins 2 options requises'),
   isOpenToVote: z.boolean().optional(),
 })
+
+// ============================================
+// Helpers
+// ============================================
+
+/** Statuses that count as "done" for dependency resolution */
+const DONE_STATUSES = ['COMPLETED', 'APPROVED', 'SKIPPED']
 
 // ============================================
 // 1. Create Trailer Project
@@ -171,30 +150,20 @@ export async function decomposeTrailerAction(projectId: string) {
       data: { status: 'DECOMPOSING' as never },
     })
 
-    if (!decomposeTrailerToTasks) {
-      // Revert status if decomposer not available
-      await prisma.trailerProject.update({
-        where: { id: projectId },
-        data: { status: 'DRAFT' as never },
-      })
-      return { error: 'Le module de décomposition n\'est pas encore disponible' }
+    // Build the config the decomposer expects
+    const config: TrailerDecomposeConfig = {
+      genre: project.genre || 'Drama',
+      duration: (project.duration || 'STANDARD_60S') as TrailerDecomposeConfig['duration'],
+      style: project.style || 'Cinématique',
+      isInternal: false,
+      hasVoiceover: true,
+      hasDialogue: false,
+      communityVoteEnabled: project.communityVoteEnabled,
     }
 
-    let tasks: Awaited<ReturnType<typeof decomposeTrailerToTasks>>
+    let taskDefs: ReturnType<typeof decomposeTrailerToTasks>
     try {
-      tasks = await decomposeTrailerToTasks({
-        id: project.id,
-        title: project.title,
-        concept: project.concept,
-        synopsis: project.synopsis,
-        genre: project.genre,
-        style: project.style,
-        mood: project.mood,
-        duration: project.duration,
-        targetAudience: project.targetAudience,
-        referenceNotes: project.referenceNotes,
-        musicMood: project.musicMood,
-      })
+      taskDefs = decomposeTrailerToTasks(config)
     } catch (decomposeErr) {
       console.error('[trailer] decomposeTrailerToTasks error:', decomposeErr)
       await prisma.trailerProject.update({
@@ -204,25 +173,56 @@ export async function decomposeTrailerAction(projectId: string) {
       return { error: 'Erreur lors de la décomposition du trailer' }
     }
 
-    // Create all micro-tasks
+    // Delete any existing tasks (in case of re-decomposition)
+    await prisma.trailerMicroTask.deleteMany({ where: { projectId } })
+
+    // Phase 1: Create all tasks WITHOUT dependsOnIds (we need real IDs first)
     let totalEstimatedCredits = 0
+    const taskTypeToId = new Map<string, string>()
 
-    for (const task of tasks) {
-      totalEstimatedCredits += task.estimatedCredits
+    for (const def of taskDefs) {
+      totalEstimatedCredits += def.estimatedCredits
 
-      await prisma.trailerMicroTask.create({
+      const created = await prisma.trailerMicroTask.create({
         data: {
           projectId,
-          taskType: task.taskType as never,
-          phase: task.phase as never,
-          title: task.title,
-          description: task.description || null,
-          instructions: task.instructions || null,
-          order: task.order,
-          dependsOnIds: task.dependsOnIds,
-          estimatedCredits: task.estimatedCredits,
-          aiPrompt: task.aiPrompt || null,
-          status: task.dependsOnIds.length === 0 ? ('READY' as never) : ('BLOCKED' as never),
+          taskType: def.taskType as never,
+          phase: def.phase as never,
+          title: def.title,
+          description: def.description || null,
+          instructions: def.instructions || null,
+          order: def.order,
+          dependsOnIds: [], // Will be populated in phase 2
+          estimatedCredits: def.estimatedCredits,
+          status: 'PENDING' as never,
+        },
+      })
+
+      // Map taskType → created DB ID (first one wins for duplicates)
+      if (!taskTypeToId.has(def.taskType)) {
+        taskTypeToId.set(def.taskType, created.id)
+      }
+    }
+
+    // Phase 2: Resolve dependsOnTypes → dependsOnIds and set correct initial status
+    for (const def of taskDefs) {
+      const taskId = taskTypeToId.get(def.taskType)
+      if (!taskId) continue
+
+      // Resolve type references to actual IDs
+      const resolvedIds: string[] = []
+      for (const depType of def.dependsOnTypes) {
+        const depId = taskTypeToId.get(depType)
+        if (depId) resolvedIds.push(depId)
+      }
+
+      // Update with resolved dependency IDs and correct initial status
+      const initialStatus = resolvedIds.length === 0 ? 'READY' : 'BLOCKED'
+      await prisma.trailerMicroTask.update({
+        where: { id: taskId },
+        data: {
+          dependsOnIds: resolvedIds,
+          status: initialStatus as never,
         },
       })
     }
@@ -231,7 +231,7 @@ export async function decomposeTrailerAction(projectId: string) {
     await prisma.trailerProject.update({
       where: { id: projectId },
       data: {
-        totalTasks: tasks.length,
+        totalTasks: taskDefs.length,
         estimatedCredits: totalEstimatedCredits,
         status: 'AWAITING_INPUT' as never,
       },
@@ -240,7 +240,7 @@ export async function decomposeTrailerAction(projectId: string) {
     revalidatePath(`/trailer-studio/${projectId}`)
     revalidatePath('/dashboard')
 
-    return { success: true, tasksCount: tasks.length }
+    return { success: true, tasksCount: taskDefs.length }
   } catch (err) {
     console.error('[trailer] decomposeTrailerAction error:', err)
     return { error: 'Erreur lors de la décomposition' }
@@ -282,24 +282,19 @@ export async function updateTrailerChoiceAction(
       },
     })
 
-    // Check if all choices in current phase are resolved
-    const currentPhase = choice.project.currentPhase
+    // Check if all choices for this project are resolved (not just current phase)
     const unresolvedChoices = await prisma.trailerChoice.count({
       where: {
         projectId: choice.project.id,
         resolvedAt: null,
-        task: {
-          phase: currentPhase as never,
-        },
       },
     })
 
-    // If all choices in phase are resolved, advance tasks that were awaiting choices
+    // If all choices are resolved, advance tasks that were awaiting choices
     if (unresolvedChoices === 0) {
       await prisma.trailerMicroTask.updateMany({
         where: {
           projectId: choice.project.id,
-          phase: currentPhase as never,
           status: 'AWAITING_CHOICE' as never,
         },
         data: {
@@ -397,6 +392,9 @@ export async function completeTrailerTaskAction(
   }
 ) {
   try {
+    const session = await auth()
+    if (!session?.user?.id) return { error: 'Non authentifié' }
+
     const task = await prisma.trailerMicroTask.findUnique({
       where: { id: taskId },
       include: {
@@ -406,12 +404,18 @@ export async function completeTrailerTaskAction(
             userId: true,
             totalTasks: true,
             completedTasks: true,
+            currentPhase: true,
           },
         },
       },
     })
 
     if (!task) return { error: 'Tâche introuvable' }
+
+    // Verify ownership or admin
+    if (task.project.userId !== session.user.id && session.user.role !== 'ADMIN') {
+      return { error: 'Non autorisé' }
+    }
 
     // Update task to COMPLETED
     await prisma.trailerMicroTask.update({
@@ -427,34 +431,33 @@ export async function completeTrailerTaskAction(
       },
     })
 
-    // Record credit usage if applicable
+    // Record credit usage atomically
     if (result.creditsUsed && result.creditsUsed > 0) {
       try {
-        const creditAccount = await prisma.creditAccount.findUnique({
-          where: { userId: task.project.userId },
-        })
+        await prisma.$transaction(async (tx) => {
+          const creditAccount = await tx.creditAccount.findUnique({
+            where: { userId: task.project.userId },
+          })
+          if (!creditAccount) return
 
-        if (creditAccount) {
           const balanceBefore = creditAccount.balance
-          const balanceAfter = balanceBefore - result.creditsUsed
+          const balanceAfter = balanceBefore - result.creditsUsed!
 
-          await prisma.creditAccount.update({
+          await tx.creditAccount.update({
             where: { userId: task.project.userId },
             data: {
-              balance: { decrement: result.creditsUsed },
-              totalUsed: { increment: result.creditsUsed },
+              balance: { decrement: result.creditsUsed! },
+              totalUsed: { increment: result.creditsUsed! },
             },
           })
 
-          await prisma.creditTransaction.create({
+          await tx.creditTransaction.create({
             data: {
               userId: task.project.userId,
               accountId: creditAccount.id,
-              amount: -result.creditsUsed,
-              type: 'AI_GENERATION' as never,
-              description: `Trailer task: ${task.title}`,
-              aiProvider: task.aiProvider,
-              aiModel: task.aiModel,
+              amount: -result.creditsUsed!,
+              type: 'AI_USAGE' as never,
+              description: `Trailer: ${task.title}`,
               rawCostEur: result.rawCost ?? 0,
               commissionEur: (result.rawCost ?? 0) * 0.2,
               totalChargedEur: (result.rawCost ?? 0) * 1.2,
@@ -464,50 +467,63 @@ export async function completeTrailerTaskAction(
               balanceAfter,
             },
           })
-        }
+        })
       } catch (creditErr) {
         console.error('[trailer] Credit recording error:', creditErr)
-        // Don't fail the task completion if credit recording fails
       }
     }
 
-    // Advance dependent tasks to READY
-    if (task.id) {
-      const dependentTasks = await prisma.trailerMicroTask.findMany({
-        where: {
-          projectId: task.projectId,
-          status: 'BLOCKED' as never,
-          dependsOnIds: { has: task.id },
-        },
-      })
+    // Advance dependent tasks: find BLOCKED tasks that depend on this one
+    const dependentTasks = await prisma.trailerMicroTask.findMany({
+      where: {
+        projectId: task.projectId,
+        status: 'BLOCKED' as never,
+        dependsOnIds: { has: task.id },
+      },
+    })
 
-      for (const depTask of dependentTasks) {
-        // Check if ALL dependencies are completed
-        if (depTask.dependsOnIds.length > 0) {
-          const completedDeps = await prisma.trailerMicroTask.count({
-            where: {
-              id: { in: depTask.dependsOnIds },
-              status: 'COMPLETED' as never,
-            },
+    for (const depTask of dependentTasks) {
+      if (depTask.dependsOnIds.length > 0) {
+        // Check if ALL dependencies are done (COMPLETED, APPROVED, or SKIPPED)
+        const doneDeps = await prisma.trailerMicroTask.count({
+          where: {
+            id: { in: depTask.dependsOnIds },
+            status: { in: DONE_STATUSES.map(s => s as never) },
+          },
+        })
+
+        if (doneDeps === depTask.dependsOnIds.length) {
+          await prisma.trailerMicroTask.update({
+            where: { id: depTask.id },
+            data: { status: 'READY' as never },
           })
-
-          if (completedDeps === depTask.dependsOnIds.length) {
-            await prisma.trailerMicroTask.update({
-              where: { id: depTask.id },
-              data: { status: 'READY' as never },
-            })
-          }
         }
       }
     }
 
-    // Update project progress
+    // Update project progress and currentPhase
     const newCompletedCount = task.project.completedTasks + 1
     const progressPct = task.project.totalTasks > 0
       ? Math.round((newCompletedCount / task.project.totalTasks) * 100)
       : 0
 
-    // Determine if all tasks are done
+    // Determine current phase: first phase that has non-done tasks
+    const allTasks = await prisma.trailerMicroTask.findMany({
+      where: { projectId: task.projectId },
+      select: { phase: true, status: true },
+    })
+
+    let currentPhase = task.project.currentPhase
+    for (const phase of TRAILER_PHASE_ORDER) {
+      const phaseTasks = allTasks.filter(t => t.phase === phase)
+      if (phaseTasks.length === 0) continue
+      const allDoneInPhase = phaseTasks.every(t => DONE_STATUSES.includes(t.status))
+      if (!allDoneInPhase) {
+        currentPhase = phase
+        break
+      }
+    }
+
     const allDone = newCompletedCount >= task.project.totalTasks
     const newStatus = allDone ? 'ASSEMBLING' : undefined
 
@@ -517,6 +533,7 @@ export async function completeTrailerTaskAction(
         completedTasks: newCompletedCount,
         progressPct,
         creditsUsed: { increment: result.creditsUsed ?? 0 },
+        currentPhase: currentPhase as never,
         ...(newStatus ? { status: newStatus as never } : {}),
       },
     })
@@ -570,19 +587,14 @@ export async function submitTrailerToContestAction(
       return { error: 'Ce concours n\'est pas ouvert aux soumissions' }
     }
 
-    // Check if user already submitted to this contest
+    // Check duplicate
     const existingEntry = await prisma.trailerEntry.findFirst({
-      where: {
-        contestId,
-        userId: session.user.id,
-      },
+      where: { contestId, userId: session.user.id },
     })
-
     if (existingEntry) {
       return { error: 'Vous avez déjà soumis un trailer à ce concours' }
     }
 
-    // Create trailer entry
     await prisma.trailerEntry.create({
       data: {
         contestId,
@@ -593,7 +605,6 @@ export async function submitTrailerToContestAction(
       },
     })
 
-    // Update project status to SUBMITTED and link contest
     await prisma.trailerProject.update({
       where: { id: projectId },
       data: {
@@ -603,8 +614,7 @@ export async function submitTrailerToContestAction(
     })
 
     revalidatePath(`/trailer-studio/${projectId}`)
-    revalidatePath(`/contests/${contestId}`)
-    revalidatePath('/contests')
+    revalidatePath('/trailer-studio')
 
     return { success: true }
   } catch (err) {
@@ -626,61 +636,29 @@ export async function getTrailerProjectAction(projectId: string) {
       where: { id: projectId },
       include: {
         tasks: {
-          orderBy: [
-            { phase: 'asc' },
-            { order: 'asc' },
-          ],
-          include: {
-            choices: {
-              include: {
-                votes: {
-                  select: {
-                    id: true,
-                    userId: true,
-                    optionId: true,
-                  },
-                },
-              },
-            },
-          },
+          orderBy: [{ order: 'asc' }],
         },
         choices: {
           orderBy: { createdAt: 'asc' },
           include: {
             votes: {
-              select: {
-                id: true,
-                userId: true,
-                optionId: true,
-              },
+              select: { id: true, userId: true, optionId: true },
             },
           },
         },
         contest: {
-          select: {
-            id: true,
-            title: true,
-            status: true,
-            endDate: true,
-          },
+          select: { id: true, title: true, status: true, endDate: true },
         },
         user: {
-          select: {
-            id: true,
-            displayName: true,
-            avatarUrl: true,
-          },
+          select: { id: true, displayName: true, avatarUrl: true },
         },
       },
     })
 
     if (!project) return { error: 'Projet introuvable' }
-
-    // Check ownership or admin
-    const isOwner = project.userId === session.user.id
-    const isAdmin = session.user.role === 'ADMIN'
-
-    if (!isOwner && !isAdmin) return { error: 'Non autorisé' }
+    if (project.userId !== session.user.id && session.user.role !== 'ADMIN') {
+      return { error: 'Non autorisé' }
+    }
 
     return { success: true, project }
   } catch (err) {
@@ -721,11 +699,7 @@ export async function getMyTrailerProjectsAction() {
         createdAt: true,
         updatedAt: true,
         contest: {
-          select: {
-            id: true,
-            title: true,
-            status: true,
-          },
+          select: { id: true, title: true, status: true },
         },
       },
     })
@@ -758,7 +732,6 @@ export async function deleteTrailerProjectAction(projectId: string) {
       return { error: 'Seuls les projets en brouillon ou annulés peuvent être supprimés' }
     }
 
-    // Cascade delete will handle tasks and choices (defined in schema)
     await prisma.trailerProject.delete({
       where: { id: projectId },
     })
@@ -797,7 +770,6 @@ export async function createTrailerChoiceAction(params: {
 
     const data = parsed.data
 
-    // Verify project ownership
     const project = await prisma.trailerProject.findUnique({
       where: { id: data.projectId },
       select: { id: true, userId: true },
@@ -806,7 +778,6 @@ export async function createTrailerChoiceAction(params: {
     if (!project) return { error: 'Projet introuvable' }
     if (project.userId !== session.user.id) return { error: 'Non autorisé' }
 
-    // If taskId provided, verify it belongs to the project
     if (data.taskId) {
       const task = await prisma.trailerMicroTask.findUnique({
         where: { id: data.taskId },
@@ -817,7 +788,6 @@ export async function createTrailerChoiceAction(params: {
       }
     }
 
-    // Initialize votesData with 0 for each option
     const votesData: Record<string, number> = {}
     for (const opt of data.options) {
       votesData[opt.id] = 0
@@ -873,31 +843,23 @@ export async function voteOnTrailerChoiceAction(
     if (!choice.isOpenToVote) return { error: 'Ce choix n\'est pas ouvert au vote' }
     if (choice.resolvedAt) return { error: 'Ce choix a déjà été résolu' }
 
-    // Check vote deadline
     if (choice.voteDeadline && new Date() > choice.voteDeadline) {
       return { error: 'La période de vote est terminée' }
     }
 
-    // Validate optionId
     const options = choice.options as Array<{ id: string }>
     const validOption = options.find(opt => opt.id === optionId)
     if (!validOption) return { error: 'Option invalide' }
 
-    // Check if user already voted (unique constraint will also enforce this)
     const existingVote = await prisma.trailerChoiceVote.findUnique({
       where: {
-        choiceId_userId: {
-          choiceId,
-          userId: session.user.id,
-        },
+        choiceId_userId: { choiceId, userId: session.user.id },
       },
     })
-
     if (existingVote) {
       return { error: 'Vous avez déjà voté pour ce choix' }
     }
 
-    // Create vote
     await prisma.trailerChoiceVote.create({
       data: {
         choiceId,
@@ -906,7 +868,6 @@ export async function voteOnTrailerChoiceAction(
       },
     })
 
-    // Update votesData
     const votesData = (choice.votesData as Record<string, number>) || {}
     votesData[optionId] = (votesData[optionId] || 0) + 1
 
@@ -931,9 +892,7 @@ export async function voteOnTrailerChoiceAction(
 export async function getOpenContestsAction() {
   try {
     const contests = await prisma.trailerContest.findMany({
-      where: {
-        status: 'OPEN' as never,
-      },
+      where: { status: 'OPEN' as never },
       orderBy: { endDate: 'asc' },
       select: {
         id: true,
@@ -949,16 +908,9 @@ export async function getOpenContestsAction() {
         autoClose: true,
         createdAt: true,
         film: {
-          select: {
-            id: true,
-            title: true,
-            slug: true,
-            coverImageUrl: true,
-          },
+          select: { id: true, title: true, slug: true, coverImageUrl: true },
         },
-        _count: {
-          select: { entries: true },
-        },
+        _count: { select: { entries: true } },
       },
     })
 
