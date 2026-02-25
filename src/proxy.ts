@@ -17,7 +17,7 @@ export async function proxy(req: NextRequest) {
 
   const protectedPaths = ['/dashboard', '/tasks', '/profile', '/lumens', '/notifications', '/screenplays', '/tokenization']
   const adminPaths = ['/admin']
-  const authPaths = ['/login', '/register']
+  const authPaths = ['/login', '/register', '/forgot-password', '/reset-password', '/verify-email']
 
   const isProtected = protectedPaths.some((p) => nextUrl.pathname.startsWith(p))
   const isAdminPath = adminPaths.some((p) => nextUrl.pathname.startsWith(p))

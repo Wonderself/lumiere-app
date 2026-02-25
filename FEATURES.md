@@ -19,12 +19,12 @@
 - Profile updates (name, bio, skills, languages, wallet address)
 - CREATOR role available at registration (in addition to SCREENWRITER, CONTRIBUTOR, etc.)
 
-### Route Protection (Proxy + Middleware)
-- Centralized proxy (`src/proxy.ts`) for auth route protection (Next.js 16)
-- Middleware route protection (`src/middleware.ts`) — NextAuth v5 `auth()` wrapper
-- Protected: /dashboard/*, /admin/*, /profile/*, /tasks/*, /lumens/*, /notifications/*, /screenplays/*, /tokenization/*
-- Admin role check on /admin/* (redirects non-admins to /dashboard)
-- Unauthenticated users redirected to /login with callbackUrl
+### Route Protection (Proxy)
+- Centralized proxy (`src/proxy.ts`) for auth route protection (Next.js 16 — proxy.ts replaces middleware.ts)
+- Protected paths: /dashboard, /tasks, /profile, /lumens, /notifications, /screenplays, /tokenization
+- Admin paths: /admin (non-admin redirected to /dashboard)
+- Auth paths: /login, /register, /forgot-password, /reset-password, /verify-email (redirect to /dashboard if logged in)
+- Security headers applied to all responses
 
 ### Roles
 | Role | Description |
@@ -886,12 +886,13 @@ Each phase has: status (LOCKED/ACTIVE/COMPLETED), order, dependencies
 - Header Netflix traduit: navigation, dropdown, menu mobile
 - `next.config.ts` mis à jour avec `createNextIntlPlugin`
 
-## 57. Middleware d'Authentification
-- `src/middleware.ts` — Protection routes NextAuth v5
-- Routes protégées: /dashboard, /admin, /profile, /tasks, /lumens, /notifications, /screenplays, /tokenization
-- Redirection vers /login avec callbackUrl pour utilisateurs non connectés
-- Blocage non-admin sur /admin (redirection vers /dashboard)
-- Pattern: `export default auth((req) => { ... })` avec matcher
+## 57. Route Protection (Proxy — Next.js 16)
+- `src/proxy.ts` — Protection routes via proxy (Next.js 16, remplace middleware.ts)
+- Routes protégées: /dashboard, /tasks, /profile, /lumens, /notifications, /screenplays, /tokenization
+- Routes admin: /admin (non-admin redirigé vers /dashboard)
+- Routes auth: /login, /register, /forgot-password, /reset-password, /verify-email (redirige vers /dashboard si connecté)
+- Security headers appliqués sur chaque réponse (CSP, HSTS, X-Frame-Options, etc.)
+- Pattern: `export async function proxy(req: NextRequest) { ... }` avec getToken JWT
 
 ## 58. Navigation Améliorée
 - Header Netflix redesigné avec split navigation:

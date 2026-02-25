@@ -22,11 +22,13 @@
 
 ### Authentication System Overhaul
 - **Fixed JWT type safety**: Removed all `as any` casts in JWT callbacks, added proper `next-auth` and `next-auth/jwt` module augmentations in `src/types/index.ts`
-- **Added middleware.ts**: Route protection middleware at `src/middleware.ts` — protects `/dashboard`, `/admin`, `/profile`, `/tasks`, `/tokenization`. Redirects unauthenticated users to login. Blocks non-admin users from `/admin` routes
+- **Updated proxy.ts**: Added `/forgot-password`, `/reset-password`, `/verify-email` to auth paths in `src/proxy.ts` (Next.js 16 uses proxy.ts, NOT middleware.ts)
 - **Email verification system**: Added `EmailVerification` Prisma model, `verifyEmailAction()`, verification page at `/verify-email`, updated `sendWelcomeEmail()` with verification link, 24h token expiry
 - **Fixed `resendVerificationAction()`**: Now properly generates and stores tokens in EmailVerification table
 - **Fixed subscription TypeScript error**: Added explicit `UserSubscription` return type to `getUserSubscription()` — was blocking build
 - **Added CREATOR role** to registration schema (was missing)
+- **Auth verified end-to-end**: Admin login, contributor login, new user register+login all tested and passing
+- **Cleaned up debug logging**: Removed all debug console.logs from auth.ts authorize function
 
 ### New Prisma Models
 - **Review**: Proper film review system with `filmId_userId` unique constraint, replaces in-memory Map storage
@@ -41,7 +43,7 @@
 - `prisma/schema.prisma` — Added EmailVerification, Review, Watchlist models + relations
 - `src/lib/auth.ts` — Type-safe JWT callbacks, imported type augmentations
 - `src/types/index.ts` — Added JWT and User module augmentations for next-auth
-- `src/middleware.ts` — NEW: Route protection middleware
+- `src/proxy.ts` — Updated auth paths (forgot-password, reset-password, verify-email)
 - `src/app/actions/auth.ts` — Email verification flow, CREATOR role, proper token storage
 - `src/app/actions/reviews.ts` — Migrated to Prisma
 - `src/app/actions/watchlist.ts` — Migrated to dedicated Watchlist model

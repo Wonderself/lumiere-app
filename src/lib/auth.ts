@@ -26,10 +26,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       async authorize(credentials) {
         try {
           const parsed = loginSchema.safeParse(credentials)
-          if (!parsed.success) {
-            console.error('[auth] Invalid credentials format:', parsed.error.issues)
-            return null
-          }
+          if (!parsed.success) return null
 
           const { email, password } = parsed.data
 
@@ -37,16 +34,10 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             where: { email: email.toLowerCase() },
           })
 
-          if (!user || !user.passwordHash) {
-            console.error('[auth] User not found or no password:', email.toLowerCase())
-            return null
-          }
+          if (!user || !user.passwordHash) return null
 
           const valid = await bcrypt.compare(password, user.passwordHash)
-          if (!valid) {
-            console.error('[auth] Invalid password for:', email.toLowerCase())
-            return null
-          }
+          if (!valid) return null
 
           return {
             id: user.id,
