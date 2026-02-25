@@ -87,19 +87,19 @@ export default async function CreditsPage() {
   const isPremium = subscription?.plan === 'PREMIUM' && (subscription?.status === 'ACTIVE' || subscription?.status === 'active')
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-10">
       {/* Header */}
       <div>
         <h1 className="text-2xl font-bold text-[#1A1A2E] font-[family-name:var(--font-playfair)]">
           Crédits IA
         </h1>
-        <p className="text-sm text-gray-500 mt-1">
+        <p className="text-sm text-gray-500 mt-2">
           Gérez vos crédits pour la création de bandes-annonces et contenu IA
         </p>
       </div>
 
       {/* Balance Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
         <div className="rounded-2xl border border-[#D4AF37]/20 bg-gradient-to-br from-[#D4AF37]/5 to-transparent p-6">
           <div className="flex items-center gap-3">
             <div className="h-10 w-10 rounded-xl bg-[#D4AF37]/10 flex items-center justify-center">
@@ -151,7 +151,7 @@ export default async function CreditsPage() {
       {/* Credit Packs */}
       <div>
         <h2 className="text-lg font-semibold text-[#1A1A2E] mb-4">Acheter des crédits</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {CREDIT_PACKS.map((pack) => (
             <div
               key={pack.name}
@@ -181,7 +181,7 @@ export default async function CreditsPage() {
                   {(pack.price / (pack.credits + pack.bonus) * 100).toFixed(1)} centimes/crédit
                 </p>
               </div>
-              <ul className="space-y-2 mb-5">
+              <ul className="space-y-2.5 mb-5">
                 {pack.features.map((feature) => (
                   <li key={feature} className="flex items-center gap-2 text-xs text-gray-600">
                     <CheckCircle2 className="h-3.5 w-3.5 text-[#D4AF37] shrink-0" />
@@ -202,14 +202,14 @@ export default async function CreditsPage() {
             </div>
           ))}
         </div>
-        <div className="mt-3 flex items-center gap-2 text-xs text-gray-400">
+        <div className="mt-4 flex items-center gap-2 text-xs text-gray-400">
           <Info className="h-3.5 w-3.5" />
           <span>Les paiements seront activés prochainement. Contactez l&apos;admin pour un crédit manuel.</span>
         </div>
       </div>
 
       {/* Commission Info */}
-      <div className="rounded-2xl border border-blue-100 bg-blue-50/50 p-5">
+      <div className="rounded-2xl border border-blue-100 bg-blue-50/50 p-6">
         <div className="flex items-start gap-3">
           <Info className="h-5 w-5 text-blue-500 mt-0.5 shrink-0" />
           <div>
@@ -240,7 +240,7 @@ export default async function CreditsPage() {
                 const TxIcon = config.icon
                 const isPositive = tx.amount > 0
                 return (
-                  <div key={tx.id} className="flex items-center gap-4 p-4 hover:bg-gray-50 transition-colors">
+                  <div key={tx.id} className="flex items-center gap-4 p-5 hover:bg-gray-50 transition-colors">
                     <div className={`h-9 w-9 rounded-lg flex items-center justify-center ${isPositive ? 'bg-green-50' : 'bg-orange-50'}`}>
                       <TxIcon className={`h-4 w-4 ${config.color}`} />
                     </div>

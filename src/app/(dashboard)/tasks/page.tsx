@@ -89,7 +89,7 @@ export default async function TasksPage({
       <div className="h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
 
       {/* Filters */}
-      <div className="flex flex-wrap gap-4 p-6 sm:rounded-2xl rounded-xl border border-gray-200/80 bg-white shadow-sm">
+      <div className="flex flex-wrap gap-4 p-7 sm:rounded-2xl rounded-xl border border-gray-200/80 bg-white shadow-sm">
         <form method="GET" className="flex flex-wrap gap-4 w-full items-center">
           <div className="relative">
             <select
@@ -166,10 +166,10 @@ export default async function TasksPage({
           <p className="text-sm mt-2 text-gray-400">Modifiez vos filtres ou revenez plus tard.</p>
         </div>
       ) : (
-        <div className="space-y-4">
+        <div className="space-y-5">
           {tasks.map((task) => (
             <Link key={task.id} href={`/tasks/${task.id}`}>
-              <div className="group flex items-center gap-5 p-5 sm:p-6 sm:rounded-2xl rounded-xl border border-gray-100 bg-white hover:border-[#D4AF37]/30 hover:shadow-md shadow-sm transition-all duration-500 hover:-translate-y-[1px]">
+              <div className="group flex items-center gap-5 p-6 sm:p-7 sm:rounded-2xl rounded-xl border border-gray-100 bg-white hover:border-[#D4AF37]/30 hover:shadow-md shadow-sm transition-all duration-500 hover:-translate-y-[1px]">
                 {/* Status indicator */}
                 <div className={`w-1.5 h-12 rounded-full transition-all duration-500 group-hover:h-14 ${
                   task.status === 'AVAILABLE' ? 'bg-green-500' :

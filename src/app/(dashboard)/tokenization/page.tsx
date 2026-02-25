@@ -95,7 +95,7 @@ export default async function TokenizationMarketplacePage() {
       <TokenizationNav active="marketplace" />
 
       {/* Hero */}
-      <div className="relative overflow-hidden rounded-2xl border border-[#D4AF37]/20 bg-gradient-to-br from-amber-50 to-white p-6 sm:p-8 lg:p-10">
+      <div className="relative overflow-hidden rounded-2xl border border-[#D4AF37]/20 bg-gradient-to-br from-amber-50 to-white p-7 sm:p-9 lg:p-11">
         <div className="absolute top-0 right-0 w-64 h-64 bg-[#D4AF37]/[0.06] rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
 
         <div className="relative flex flex-col lg:flex-row lg:items-center gap-8">
@@ -128,7 +128,7 @@ export default async function TokenizationMarketplacePage() {
           </div>
 
           {/* Platform Stats */}
-          <div className="grid grid-cols-2 gap-4 lg:w-72">
+          <div className="grid grid-cols-2 gap-5 lg:w-72">
             {[
               { label: 'Co-produit', value: formatEur(platformStats.totalRaised), color: 'text-[#D4AF37]' },
               { label: 'Films ouverts', value: platformStats.activeOfferings.toString(), color: 'text-blue-500' },
@@ -166,7 +166,7 @@ export default async function TokenizationMarketplacePage() {
             </Link>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {offerings.map((offering) => {
               const progress = getOfferingProgress(offering)
               const timeLeft = getTimeRemaining(offering.closesAt)
@@ -198,7 +198,7 @@ export default async function TokenizationMarketplacePage() {
                       </div>
                     </div>
 
-                    <div className="p-4 space-y-3">
+                    <div className="p-5 space-y-3">
                       {/* Progress Bar */}
                       <div>
                         <Progress value={progress} className="h-1.5" />
@@ -241,7 +241,7 @@ export default async function TokenizationMarketplacePage() {
           <h2 className="text-lg sm:text-xl font-bold text-gray-900 font-[family-name:var(--font-playfair)] mb-4">
             Co-Productions Financees
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {recentlyFunded.map((offering) => (
               <Link key={offering.id} href={`/tokenization/${offering.filmId}`}>
                 <div className="bg-white rounded-2xl shadow-sm border border-gray-100 hover:border-green-200 transition-all group p-4 flex items-center gap-3">
@@ -265,14 +265,14 @@ export default async function TokenizationMarketplacePage() {
         <h2 className="text-lg font-bold text-gray-900 font-[family-name:var(--font-playfair)] mb-5">
           Comment Devenir Co-Producteur
         </h2>
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
           {[
             { title: 'Choisissez', desc: 'Parcourez les films ouverts a la co-production', icon: Film, color: 'text-blue-500', bg: 'bg-blue-50' },
             { title: 'Co-Produisez', desc: 'Tokens de co-production des 10\u20AC', icon: Coins, color: 'text-[#D4AF37]', bg: 'bg-amber-50' },
             { title: 'Decidez', desc: 'Votez sur les choix creatifs du film', icon: Vote, color: 'text-purple-500', bg: 'bg-purple-50' },
             { title: 'Gagnez', desc: 'Revenus partages + nom au generique', icon: TrendingUp, color: 'text-green-500', bg: 'bg-green-50' },
           ].map((item) => (
-            <div key={item.title} className="text-center p-5 rounded-2xl border border-gray-100 bg-white shadow-sm hover:border-[#D4AF37]/20 hover:shadow-md transition-all duration-300">
+            <div key={item.title} className="text-center p-6 rounded-2xl border border-gray-100 bg-white shadow-sm hover:border-[#D4AF37]/20 hover:shadow-md transition-all duration-300">
               <div className={`h-10 w-10 rounded-lg ${item.bg} flex items-center justify-center mx-auto mb-3`}>
                 <item.icon className={`h-5 w-5 ${item.color}`} />
               </div>

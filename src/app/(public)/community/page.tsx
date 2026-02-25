@@ -128,10 +128,10 @@ export default async function CommunityPage() {
               <Users className="h-6 w-6 sm:h-7 sm:w-7 text-[#D4AF37]" />
             </div>
           </div>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4 text-gray-900 font-playfair">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-5 text-gray-900 font-playfair">
             Communaute <span className="text-[#D4AF37]">Creative</span>
           </h1>
-          <p className="text-base sm:text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed mb-2">
+          <p className="text-base sm:text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed mb-4">
             Le cinema se fait ensemble. Proposez des scenarios, votez pour vos favoris,
             participez aux concours de trailers. La communaute decide, le film se cree.
           </p>
@@ -169,7 +169,7 @@ export default async function CommunityPage() {
         <div className="h-px bg-gradient-to-r from-transparent via-[#D4AF37]/10 to-transparent" />
 
         {/* Stats Row */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-5">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-5 sm:gap-6">
           {[
             { label: 'Votes exprimes', value: stats.totalVotes, icon: Heart, color: 'text-red-500' },
             { label: 'Scenarios proposes', value: stats.totalScenarios, icon: PenTool, color: 'text-blue-500' },
@@ -292,7 +292,7 @@ export default async function CommunityPage() {
             <div className="space-y-3">
               {votingScenarios.map((scenario, idx) => (
                 <Link key={scenario.id} href={`/community/scenarios/${scenario.id}`}>
-                  <div className="group flex items-center gap-3 sm:gap-4 p-3 sm:p-4 sm:rounded-2xl rounded-xl border border-gray-100 bg-white hover:border-[#D4AF37]/30 hover:shadow-lg hover:shadow-[#D4AF37]/5 hover:-translate-y-[1px] transition-all duration-500 min-h-[56px] shadow-sm backdrop-blur-sm">
+                  <div className="group flex items-center gap-3 sm:gap-4 p-4 sm:p-5 sm:rounded-2xl rounded-xl border border-gray-100 bg-white hover:border-[#D4AF37]/30 hover:shadow-lg hover:shadow-[#D4AF37]/5 hover:-translate-y-[1px] transition-all duration-500 min-h-[56px] shadow-sm backdrop-blur-sm">
                     <div className="w-8 h-8 rounded-lg bg-[#D4AF37]/10 flex items-center justify-center text-sm font-bold text-[#D4AF37] shrink-0">
                       {idx + 1}
                     </div>

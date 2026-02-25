@@ -77,7 +77,7 @@ export default async function AdminPage() {
       {/* Header */}
       <div className="flex items-start justify-between">
         <div>
-          <h1 className="text-3xl font-bold mb-2 font-playfair">
+          <h1 className="text-3xl font-bold mb-3 font-playfair">
             Command Center
           </h1>
           <p className="text-white/50">Vue globale de la plateforme Lumière</p>
@@ -91,7 +91,7 @@ export default async function AdminPage() {
       {/* Alert */}
       {pendingReviews > 0 && (
         <Link href="/admin/reviews">
-          <div className="flex items-center gap-3 p-4 rounded-xl border border-yellow-500/30 bg-yellow-500/10 hover:bg-yellow-500/15 transition-colors">
+          <div className="flex items-center gap-3 p-5 rounded-xl border border-yellow-500/30 bg-yellow-500/10 hover:bg-yellow-500/15 transition-colors">
             <AlertCircle className="h-5 w-5 text-yellow-400 shrink-0" />
             <p className="font-medium text-yellow-400 flex-1">{pendingReviews} soumission{pendingReviews > 1 ? 's' : ''} en attente de review humaine</p>
             <ChevronRight className="h-5 w-5 text-yellow-400" />
@@ -100,11 +100,11 @@ export default async function AdminPage() {
       )}
 
       {/* KPIs with sparklines */}
-      <div className="grid grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-2 lg:grid-cols-3 gap-7">
         {kpis.map((kpi) => (
           <Link key={kpi.label} href={kpi.href}>
             <Card className="hover:border-white/10 transition-all cursor-pointer h-full">
-              <CardContent className="p-6">
+              <CardContent className="p-7">
                 <div className="flex items-center justify-between mb-4">
                   <kpi.icon className={`h-5 w-5 ${kpi.color}`} />
                   <Sparkline data={kpi.sparkline} color={kpi.color === 'text-[#D4AF37]' ? '#D4AF37' : undefined} />
@@ -123,7 +123,7 @@ export default async function AdminPage() {
         ))}
       </div>
 
-      <div className="grid lg:grid-cols-2 gap-10">
+      <div className="grid lg:grid-cols-2 gap-12">
         {/* TODO List */}
         <Card>
           <CardHeader className="pb-3">
@@ -132,12 +132,12 @@ export default async function AdminPage() {
               <Link href="/admin/todo-fondateur" className="text-xs text-[#D4AF37]">Voir tout →</Link>
             </div>
           </CardHeader>
-          <CardContent className="space-y-2.5">
+          <CardContent className="space-y-3">
             {todos.length === 0 ? (
               <p className="text-sm text-white/30 text-center py-4">Aucune tâche admin</p>
             ) : (
               todos.map((todo) => (
-                <div key={todo.id} className={`flex items-center gap-3.5 p-3.5 rounded-lg border ${todo.completed ? 'border-white/5 opacity-50' : 'border-white/10'}`}>
+                <div key={todo.id} className={`flex items-center gap-3.5 p-4 rounded-lg border ${todo.completed ? 'border-white/5 opacity-50' : 'border-white/10'}`}>
                   {todo.completed ? (
                     <CheckCircle className="h-4 w-4 text-green-400 shrink-0" />
                   ) : (
@@ -160,12 +160,12 @@ export default async function AdminPage() {
           <CardHeader className="pb-3">
             <CardTitle className="text-base">Activité Récente</CardTitle>
           </CardHeader>
-          <CardContent className="space-y-2.5">
+          <CardContent className="space-y-3">
             {recentNotifications.length === 0 && recentSubmissions.length === 0 ? (
               <p className="text-sm text-white/30 text-center py-4">Aucune activité</p>
             ) : (
               [...recentSubmissions.slice(0, 5)].map((sub) => (
-                <div key={sub.id} className="flex items-center gap-3.5 p-3.5 rounded-lg border border-white/5">
+                <div key={sub.id} className="flex items-center gap-3.5 p-4 rounded-lg border border-white/5">
                   <div className={`w-2 h-2 rounded-full shrink-0 ${
                     sub.status === 'AI_APPROVED' ? 'bg-green-400' :
                     sub.status === 'AI_FLAGGED' ? 'bg-yellow-400' :
@@ -185,7 +185,7 @@ export default async function AdminPage() {
       </div>
 
       {/* Quick Actions */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
         {[
           { icon: Film, label: 'Nouveau Film', href: '/admin/films/new' },
           { icon: Star, label: 'Nouvelle Tâche', href: '/admin/tasks/new' },
@@ -193,8 +193,8 @@ export default async function AdminPage() {
           { icon: Eye, label: 'Reviews', href: '/admin/reviews' },
         ].map((action) => (
           <Link key={action.label} href={action.href}>
-            <div className="group p-6 rounded-xl border border-white/5 bg-white/[0.02] hover:border-[#D4AF37]/20 transition-all text-center">
-              <action.icon className="h-5 w-5 text-[#D4AF37] mx-auto mb-4" />
+            <div className="group p-7 rounded-xl border border-white/5 bg-white/[0.02] hover:border-[#D4AF37]/20 transition-all text-center">
+              <action.icon className="h-5 w-5 text-[#D4AF37] mx-auto mb-5" />
               <p className="text-sm font-medium">{action.label}</p>
             </div>
           </Link>

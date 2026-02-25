@@ -89,7 +89,7 @@ export function NetflixHeader() {
           : 'bg-gradient-to-b from-[#0A0A0A]/80 to-transparent'
       )}
     >
-      <div className="flex h-16 md:h-[68px] items-center justify-between px-4 md:px-12">
+      <div className="flex h-16 md:h-[68px] items-center justify-between px-5 md:px-12">
         {/* Left: Logo + Nav */}
         <div className="flex items-center gap-6 md:gap-10">
           {/* Logo */}
@@ -180,7 +180,7 @@ export function NetflixHeader() {
         </div>
 
         {/* Right: Search + Lang + Profile */}
-        <div className="flex items-center gap-2 sm:gap-3">
+        <div className="flex items-center gap-3 sm:gap-4">
           {/* Search */}
           <SearchOverlay />
           {/* Language */}
@@ -295,7 +295,7 @@ export function NetflixHeader() {
             transition={{ duration: 0.2 }}
             className="lg:hidden bg-[#0A0A0A]/98 backdrop-blur-xl overflow-hidden border-t border-white/5"
           >
-            <div className="px-4 py-4 space-y-1 max-h-[80vh] overflow-y-auto">
+            <div className="px-5 py-4 space-y-2 max-h-[80vh] overflow-y-auto">
               {/* Primary nav */}
               {primaryLinks.map((link) => (
                 <Link

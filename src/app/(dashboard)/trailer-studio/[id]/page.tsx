@@ -69,7 +69,7 @@ export default async function TrailerProjectPage({ params }: { params: Promise<{
   const pendingChoices = project.choices.filter(c => !c.resolvedAt)
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-10">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
         <div>
@@ -100,8 +100,8 @@ export default async function TrailerProjectPage({ params }: { params: Promise<{
       </div>
 
       {/* Progress Overview */}
-      <div className="rounded-2xl border border-gray-200 bg-white p-6">
-        <div className="flex items-center justify-between mb-4">
+      <div className="rounded-2xl border border-gray-200 bg-white p-7">
+        <div className="flex items-center justify-between mb-5">
           <h2 className="text-sm font-semibold text-[#1A1A2E]">Progression globale</h2>
           <span className="text-sm font-bold text-[#D4AF37]">{Math.round(project.progressPct)}%</span>
         </div>
@@ -119,7 +119,7 @@ export default async function TrailerProjectPage({ params }: { params: Promise<{
 
       {/* Concept & Synopsis */}
       {(project.concept || project.synopsis) && (
-        <div className="rounded-2xl border border-gray-200 bg-white p-6 space-y-3">
+        <div className="rounded-2xl border border-gray-200 bg-white p-7 space-y-4">
           {project.concept && (
             <div>
               <p className="text-xs font-medium text-gray-400 uppercase tracking-wider">Concept</p>
@@ -150,7 +150,7 @@ export default async function TrailerProjectPage({ params }: { params: Promise<{
       />
 
       {/* Tasks by Phase */}
-      <div className="space-y-4">
+      <div className="space-y-5">
         <h2 className="text-lg font-semibold text-[#1A1A2E]">Micro-tâches par phase</h2>
 
         {project.tasks.length === 0 ? (
@@ -160,7 +160,7 @@ export default async function TrailerProjectPage({ params }: { params: Promise<{
             <p className="text-xs text-gray-400 mt-1">Utilisez le bouton ci-dessus pour décomposer le projet</p>
           </div>
         ) : (
-          <div className="space-y-3">
+          <div className="space-y-4">
             {phases.map((phase) => {
               const phaseTasks = tasksByPhase.get(phase)
               if (!phaseTasks || phaseTasks.length === 0) return null
@@ -172,7 +172,7 @@ export default async function TrailerProjectPage({ params }: { params: Promise<{
               return (
                 <div key={phase} className="rounded-2xl border border-gray-200 bg-white overflow-hidden">
                   {/* Phase header */}
-                  <div className="flex items-center gap-3 p-4 border-b border-gray-100">
+                  <div className="flex items-center gap-3 p-5 border-b border-gray-100">
                     <div className={`h-8 w-8 rounded-lg flex items-center justify-center ${phaseConfig.color}`}>
                       <PhaseIcon className="h-4 w-4" />
                     </div>
@@ -195,7 +195,7 @@ export default async function TrailerProjectPage({ params }: { params: Promise<{
                     {phaseTasks.map((task) => {
                       const statusConfig = TASK_STATUS_CONFIG[task.status] || TASK_STATUS_CONFIG.PENDING
                       return (
-                        <div key={task.id} className="flex items-center gap-3 p-3 px-4 hover:bg-gray-50/50 transition-colors">
+                        <div key={task.id} className="flex items-center gap-3 p-4 px-5 hover:bg-gray-50/50 transition-colors">
                           {task.status === 'COMPLETED' || task.status === 'APPROVED' ? (
                             <CheckCircle2 className="h-4 w-4 text-green-500 shrink-0" />
                           ) : task.status === 'GENERATING' ? (

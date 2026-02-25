@@ -46,10 +46,10 @@ export function LoginForm() {
   }
 
   return (
-    <div className="space-y-10">
+    <div className="space-y-12">
       {/* Header */}
-      <div className="text-center space-y-5">
-        <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-[#D4AF37]/10 border border-[#D4AF37]/20 mb-3">
+      <div className="text-center space-y-6">
+        <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-[#D4AF37]/10 border border-[#D4AF37]/20 mb-4">
           <Sparkles className="h-8 w-8 text-[#D4AF37]" />
         </div>
         <h1 className="text-3xl sm:text-4xl font-bold text-white font-playfair">
@@ -63,8 +63,8 @@ export function LoginForm() {
         {/* Gold glow behind card */}
         <div className="absolute -inset-1 bg-gradient-to-b from-[#D4AF37]/10 via-transparent to-[#D4AF37]/5 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
 
-        <div className="relative sm:rounded-3xl rounded-2xl border border-white/[0.08] bg-white/[0.03] backdrop-blur-sm p-8 sm:p-10 shadow-2xl shadow-black/20">
-          <form ref={formRef} action={action} className="space-y-6">
+        <div className="relative sm:rounded-3xl rounded-2xl border border-white/[0.08] bg-white/[0.03] backdrop-blur-sm p-10 sm:p-12 shadow-2xl shadow-black/20">
+          <form ref={formRef} action={action} className="space-y-8">
             <input type="hidden" name="callbackUrl" value={callbackUrl} />
 
             {state.error && (
@@ -73,7 +73,7 @@ export function LoginForm() {
               </div>
             )}
 
-            <div className="space-y-2.5">
+            <div className="space-y-3">
               <Label htmlFor="email" className="text-white/70 text-sm font-medium">Email</Label>
               <div className="relative">
                 <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-white/25" />
@@ -91,7 +91,7 @@ export function LoginForm() {
               </div>
             </div>
 
-            <div className="space-y-2.5">
+            <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <Label htmlFor="password" className="text-white/70 text-sm font-medium">Mot de passe</Label>
                 <Link href="/forgot-password" className="text-xs text-white/30 hover:text-[#D4AF37] transition-colors duration-300">
@@ -122,7 +122,7 @@ export function LoginForm() {
               </div>
             </div>
 
-            <div className="pt-1">
+            <div className="pt-3">
               <Button
                 type="submit"
                 className="w-full h-12 rounded-xl bg-[#D4AF37] hover:bg-[#F0D060] text-black font-semibold shadow-lg shadow-[#D4AF37]/20 hover:shadow-[#D4AF37]/30 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300"
@@ -137,12 +137,12 @@ export function LoginForm() {
           {/* Demo accounts — only visible in dev or when NEXT_PUBLIC_SHOW_DEMO=true */}
           {SHOW_DEMO && (
             <>
-              <div className="mt-7 flex items-center gap-3">
+              <div className="mt-10 flex items-center gap-3">
                 <div className="flex-1 h-px bg-gradient-to-r from-transparent to-white/[0.06]" />
                 <span className="text-xs text-white/20 uppercase tracking-widest">comptes demo</span>
                 <div className="flex-1 h-px bg-gradient-to-l from-transparent to-white/[0.06]" />
               </div>
-              <div className="mt-5 space-y-2.5">
+              <div className="mt-5 space-y-3.5">
                 <button
                   type="button"
                   disabled={isPending}

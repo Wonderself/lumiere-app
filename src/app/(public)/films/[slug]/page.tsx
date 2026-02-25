@@ -134,7 +134,7 @@ export default async function FilmDetailPage({ params }: Props) {
 
           <div className="space-y-4">
             {/* Progress card */}
-            <div className="rounded-xl border border-white/5 bg-white/[0.02] p-7">
+            <div className="rounded-xl border border-white/5 bg-white/[0.02] p-8">
               <h3 className="text-sm font-medium text-white/50 mb-4 uppercase tracking-wider">Progression globale</h3>
               <div className="text-5xl font-bold text-[#D4AF37] mb-3 font-playfair">
                 {Math.round(film.progressPct)}%
@@ -145,7 +145,7 @@ export default async function FilmDetailPage({ params }: Props) {
                   style={{ width: `${film.progressPct}%` }}
                 />
               </div>
-              <div className="grid grid-cols-2 gap-4 text-center">
+              <div className="grid grid-cols-2 gap-5 text-center">
                 <div>
                   <div className="text-xl font-bold">{film.completedTasks}</div>
                   <div className="text-xs text-white/30">Validées</div>
@@ -158,7 +158,7 @@ export default async function FilmDetailPage({ params }: Props) {
             </div>
 
             {/* Stats */}
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-2 gap-4">
               {[
                 { label: 'Tâches dispo', value: availableTasks },
                 { label: 'Votes', value: film._count.votes },
@@ -207,7 +207,7 @@ export default async function FilmDetailPage({ params }: Props) {
             {film.tokenOffering && film.tokenOffering.status === 'OPEN' ? (
               <div className="space-y-6">
                 {/* Offering stats */}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
                   <div className="rounded-xl border border-[#D4AF37]/10 bg-white/[0.03] p-4 text-center">
                     <div className="text-2xl font-bold text-[#D4AF37] font-playfair">
                       {film.tokenOffering.tokenPrice}&#8364;

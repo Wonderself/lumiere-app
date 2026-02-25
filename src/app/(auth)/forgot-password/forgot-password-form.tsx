@@ -12,10 +12,10 @@ export function ForgotPasswordForm() {
   const [state, action, isPending] = useActionState(forgotPasswordAction, null)
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-10">
       {/* Header */}
-      <div className="text-center space-y-3">
-        <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-[#D4AF37]/10 border border-[#D4AF37]/20 mb-2">
+      <div className="text-center space-y-5">
+        <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-[#D4AF37]/10 border border-[#D4AF37]/20 mb-4">
           <KeyRound className="h-8 w-8 text-[#D4AF37]" />
         </div>
         <h1 className="text-3xl sm:text-4xl font-bold text-white font-playfair">
@@ -30,9 +30,9 @@ export function ForgotPasswordForm() {
       <div className="relative group">
         <div className="absolute -inset-1 bg-gradient-to-b from-[#D4AF37]/10 via-transparent to-[#D4AF37]/5 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
 
-        <div className="relative sm:rounded-3xl rounded-2xl border border-white/[0.08] bg-white/[0.03] backdrop-blur-sm p-6 sm:p-8 shadow-2xl shadow-black/20">
+        <div className="relative sm:rounded-3xl rounded-2xl border border-white/[0.08] bg-white/[0.03] backdrop-blur-sm p-8 sm:p-10 shadow-2xl shadow-black/20">
           {state?.success ? (
-            <div className="text-center space-y-5 py-4">
+            <div className="text-center space-y-5 py-8">
               <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-[#D4AF37]/10 border border-[#D4AF37]/20">
                 <CheckCircle className="h-8 w-8 text-[#D4AF37]" />
               </div>
@@ -44,14 +44,14 @@ export function ForgotPasswordForm() {
               </p>
             </div>
           ) : (
-            <form action={action} className="space-y-5">
+            <form action={action} className="space-y-6">
               {state?.error && (
                 <div className="rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-400 backdrop-blur-sm">
                   {state.error}
                 </div>
               )}
 
-              <div className="space-y-2">
+              <div className="space-y-3">
                 <Label htmlFor="email" className="text-white/70 text-sm font-medium">Adresse email</Label>
                 <div className="relative">
                   <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-white/25" />

@@ -13,9 +13,9 @@ export default function ResetPasswordForm({ token }: { token?: string }) {
 
   if (!token) {
     return (
-      <div className="space-y-8">
-        <div className="text-center space-y-3">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-red-500/10 border border-red-500/20 mb-2">
+      <div className="space-y-10">
+        <div className="text-center space-y-5">
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-red-500/10 border border-red-500/20 mb-4">
             <AlertTriangle className="h-8 w-8 text-red-400" />
           </div>
           <h1 className="text-3xl sm:text-4xl font-bold text-white font-playfair">
@@ -28,7 +28,7 @@ export default function ResetPasswordForm({ token }: { token?: string }) {
 
         <div className="relative group">
           <div className="absolute -inset-1 bg-gradient-to-b from-red-500/10 via-transparent to-red-500/5 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-          <div className="relative sm:rounded-3xl rounded-2xl border border-white/[0.08] bg-white/[0.03] backdrop-blur-sm p-6 sm:p-8 shadow-2xl shadow-black/20 text-center space-y-5">
+          <div className="relative sm:rounded-3xl rounded-2xl border border-white/[0.08] bg-white/[0.03] backdrop-blur-sm p-8 sm:p-10 shadow-2xl shadow-black/20 text-center space-y-5">
             <p className="text-white/50 text-sm leading-relaxed">
               Veuillez demander un nouveau lien de reinitialisation.
             </p>
@@ -55,10 +55,10 @@ export default function ResetPasswordForm({ token }: { token?: string }) {
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-10">
       {/* Header */}
-      <div className="text-center space-y-3">
-        <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-[#D4AF37]/10 border border-[#D4AF37]/20 mb-2">
+      <div className="text-center space-y-5">
+        <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-[#D4AF37]/10 border border-[#D4AF37]/20 mb-4">
           <ShieldCheck className="h-8 w-8 text-[#D4AF37]" />
         </div>
         <h1 className="text-3xl sm:text-4xl font-bold text-white font-playfair">
@@ -73,9 +73,9 @@ export default function ResetPasswordForm({ token }: { token?: string }) {
       <div className="relative group">
         <div className="absolute -inset-1 bg-gradient-to-b from-[#D4AF37]/10 via-transparent to-[#D4AF37]/5 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
 
-        <div className="relative sm:rounded-3xl rounded-2xl border border-white/[0.08] bg-white/[0.03] backdrop-blur-sm p-6 sm:p-8 shadow-2xl shadow-black/20">
+        <div className="relative sm:rounded-3xl rounded-2xl border border-white/[0.08] bg-white/[0.03] backdrop-blur-sm p-8 sm:p-10 shadow-2xl shadow-black/20">
           {state?.success ? (
-            <div className="text-center space-y-5 py-4">
+            <div className="text-center space-y-5 py-8">
               <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-green-500/10 border border-green-500/20">
                 <CheckCircle className="h-10 w-10 text-green-400" />
               </div>
@@ -93,7 +93,7 @@ export default function ResetPasswordForm({ token }: { token?: string }) {
               </Link>
             </div>
           ) : (
-            <form action={action} className="space-y-5">
+            <form action={action} className="space-y-6">
               <input type="hidden" name="token" value={token} />
 
               {state?.error && (
@@ -102,7 +102,7 @@ export default function ResetPasswordForm({ token }: { token?: string }) {
                 </div>
               )}
 
-              <div className="space-y-2">
+              <div className="space-y-3">
                 <Label htmlFor="password" className="text-white/70 text-sm font-medium">Nouveau mot de passe</Label>
                 <div className="relative">
                   <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-white/25" />
@@ -119,7 +119,7 @@ export default function ResetPasswordForm({ token }: { token?: string }) {
                 </div>
               </div>
 
-              <div className="space-y-2">
+              <div className="space-y-3">
                 <Label htmlFor="confirmPassword" className="text-white/70 text-sm font-medium">Confirmer le mot de passe</Label>
                 <div className="relative">
                   <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-white/25" />

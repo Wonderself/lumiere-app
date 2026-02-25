@@ -79,7 +79,7 @@ export default async function DashboardPage() {
   })
 
   return (
-    <div className="space-y-10">
+    <div className="space-y-12">
       {/* Welcome */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
@@ -103,14 +103,14 @@ export default async function DashboardPage() {
       </div>
 
       {/* KPI Row */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-5">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-5 sm:gap-6">
         {[
           { label: 'Taches completees', value: user.tasksCompleted, icon: CheckCircle2, color: 'text-green-500', bg: 'bg-green-50' },
           { label: 'Points', value: user.points, icon: TrendingUp, color: 'text-purple-500', bg: 'bg-purple-50' },
           { label: 'Reputation', value: `${user.reputationScore}/100`, icon: Star, color: 'text-[#D4AF37]', bg: 'bg-amber-50' },
           { label: 'Tokens Film', value: totalTokensHeld, icon: Coins, color: 'text-amber-500', bg: 'bg-amber-50' },
         ].map((kpi) => (
-          <div key={kpi.label} className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 sm:p-6">
+          <div key={kpi.label} className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 sm:p-7">
             <div className="flex items-center gap-3 sm:gap-4 min-h-[52px]">
               <div className={`h-10 w-10 sm:h-11 sm:w-11 rounded-xl ${kpi.bg} flex items-center justify-center shrink-0`}>
                 <kpi.icon className={`h-5 w-5 ${kpi.color}`} />
@@ -162,10 +162,10 @@ export default async function DashboardPage() {
           </Link>
         </div>
         {recommendations.length > 0 ? (
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {recommendations.map((rec) => (
               <Link key={rec.id} href={`/tasks/${rec.id}`}>
-                <div className="relative bg-white rounded-xl shadow-sm border border-gray-100 p-5 hover:border-[#D4AF37]/30 hover:shadow-md transition-all group">
+                <div className="relative bg-white rounded-xl shadow-sm border border-gray-100 p-6 hover:border-[#D4AF37]/30 hover:shadow-md transition-all group">
                   {rec.isSkillMatch && (
                     <span className="absolute top-4 right-4 px-2.5 py-0.5 rounded-full bg-[#D4AF37]/10 text-[#D4AF37] text-[10px] font-bold">
                       MATCH
@@ -201,10 +201,10 @@ export default async function DashboardPage() {
       </div>
 
       {/* Modules Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         {/* Module 1 -- Studio Films */}
         <Link href="/tasks">
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 hover:border-[#D4AF37]/40 hover:shadow-md transition-all h-full group p-5 sm:p-7 space-y-4">
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 hover:border-[#D4AF37]/40 hover:shadow-md transition-all h-full group p-6 sm:p-8 space-y-5">
             <div className="flex items-center justify-between">
               <div className="h-11 w-11 rounded-xl bg-amber-50 flex items-center justify-center">
                 <Film className="h-5 w-5 text-[#D4AF37]" />
@@ -223,7 +223,7 @@ export default async function DashboardPage() {
 
         {/* Module 2 -- Streaming */}
         <Link href="/streaming">
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 hover:border-red-300 hover:shadow-md transition-all h-full group p-5 sm:p-7 space-y-4">
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 hover:border-red-300 hover:shadow-md transition-all h-full group p-6 sm:p-8 space-y-5">
             <div className="flex items-center justify-between">
               <div className="h-11 w-11 rounded-xl bg-red-50 flex items-center justify-center">
                 <Tv className="h-5 w-5 text-red-500" />
@@ -240,7 +240,7 @@ export default async function DashboardPage() {
 
         {/* Module 3 -- Investissement */}
         <Link href="/tokenization">
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 hover:border-amber-300 hover:shadow-md transition-all h-full group p-5 sm:p-7 space-y-4">
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 hover:border-amber-300 hover:shadow-md transition-all h-full group p-6 sm:p-8 space-y-5">
             <div className="flex items-center justify-between">
               <div className="h-11 w-11 rounded-xl bg-amber-50 flex items-center justify-center">
                 <Coins className="h-5 w-5 text-amber-500" />
@@ -264,7 +264,7 @@ export default async function DashboardPage() {
         {/* Module 4 -- Admin (admin only) */}
         {isAdmin && (
           <Link href="/admin">
-            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 hover:border-orange-300 hover:shadow-md transition-all h-full group p-5 sm:p-7 space-y-4">
+            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 hover:border-orange-300 hover:shadow-md transition-all h-full group p-6 sm:p-8 space-y-5">
               <div className="flex items-center justify-between">
                 <div className="h-11 w-11 rounded-xl bg-orange-50 flex items-center justify-center">
                   <Settings className="h-5 w-5 text-orange-500" />
@@ -280,7 +280,7 @@ export default async function DashboardPage() {
 
       {/* Screenwriter Banner */}
       {(user.role === 'SCREENWRITER' || user.role === 'ADMIN') && (
-        <Link href="/dashboard/screenwriter" className="block p-5 rounded-2xl bg-gradient-to-r from-amber-50 to-yellow-50 border border-amber-200/50 hover:shadow-md transition-all group">
+        <Link href="/dashboard/screenwriter" className="block p-6 rounded-2xl bg-gradient-to-r from-amber-50 to-yellow-50 border border-amber-200/50 hover:shadow-md transition-all group">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="h-10 w-10 rounded-xl bg-[#D4AF37]/15 flex items-center justify-center">
@@ -297,7 +297,7 @@ export default async function DashboardPage() {
       )}
 
       {/* Referral Banner */}
-      <Link href="/dashboard/referral" className="block p-5 rounded-2xl bg-gradient-to-r from-purple-50 to-pink-50 border border-purple-200/50 hover:shadow-md transition-all group">
+      <Link href="/dashboard/referral" className="block p-6 rounded-2xl bg-gradient-to-r from-purple-50 to-pink-50 border border-purple-200/50 hover:shadow-md transition-all group">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="h-10 w-10 rounded-xl bg-purple-100 flex items-center justify-center">
@@ -313,7 +313,7 @@ export default async function DashboardPage() {
       </Link>
 
       {/* Earnings Banner */}
-      <Link href="/dashboard/earnings" className="block p-5 rounded-2xl bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200/50 hover:shadow-md transition-all group">
+      <Link href="/dashboard/earnings" className="block p-6 rounded-2xl bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200/50 hover:shadow-md transition-all group">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="h-10 w-10 rounded-xl bg-green-100 flex items-center justify-center">
@@ -329,7 +329,7 @@ export default async function DashboardPage() {
       </Link>
 
       {/* Quick Actions */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-5">
         {[
           { label: 'Trouver une tache', href: '/tasks', icon: Search, color: 'text-[#D4AF37]', bg: 'bg-amber-50' },
           { label: 'Decouvrir les films', href: '/films', icon: Clapperboard, color: 'text-blue-500', bg: 'bg-blue-50' },
@@ -339,7 +339,7 @@ export default async function DashboardPage() {
           <Link
             key={action.label}
             href={action.href}
-            className={`flex items-center gap-3 p-5 rounded-xl ${action.bg} border border-gray-100 hover:border-gray-200 hover:shadow-sm transition-all min-h-[60px] group`}
+            className={`flex items-center gap-3 p-6 rounded-xl ${action.bg} border border-gray-100 hover:border-gray-200 hover:shadow-sm transition-all min-h-[60px] group`}
           >
             <action.icon className={`h-5 w-5 shrink-0 ${action.color}`} />
             <span className="text-gray-600 text-sm font-medium group-hover:text-gray-800 transition-colors">{action.label}</span>
@@ -350,7 +350,7 @@ export default async function DashboardPage() {
       {/* Launch Checklist -- Admin Only */}
       {isAdmin && (
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-          <div className="p-6 pb-4">
+          <div className="p-7 pb-5">
             <div className="flex items-center gap-3">
               <div className="h-10 w-10 rounded-xl bg-amber-50 flex items-center justify-center">
                 <AlertCircle className="h-5 w-5 text-[#D4AF37]" />
@@ -365,8 +365,8 @@ export default async function DashboardPage() {
               </div>
             </div>
           </div>
-          <div className="px-6 pb-6">
-            <div className="space-y-2">
+          <div className="px-7 pb-7">
+            <div className="space-y-3">
               {([
                 {
                   title: 'Creer une entite legale en Israel (Ltd)',

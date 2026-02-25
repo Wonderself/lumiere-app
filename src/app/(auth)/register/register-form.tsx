@@ -62,10 +62,10 @@ export function RegisterForm() {
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-10">
       {/* Header */}
-      <div className="text-center space-y-3">
-        <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-[#D4AF37]/10 border border-[#D4AF37]/20 mb-2">
+      <div className="text-center space-y-5">
+        <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-[#D4AF37]/10 border border-[#D4AF37]/20 mb-4">
           <UserPlus className="h-8 w-8 text-[#D4AF37]" />
         </div>
         <h1 className="text-3xl sm:text-4xl font-bold text-white font-playfair">
@@ -82,8 +82,8 @@ export function RegisterForm() {
       <div className="relative group">
         <div className="absolute -inset-1 bg-gradient-to-b from-[#D4AF37]/10 via-transparent to-[#D4AF37]/5 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
 
-        <div className="relative sm:rounded-3xl rounded-2xl border border-white/[0.08] bg-white/[0.03] backdrop-blur-sm p-6 sm:p-8 shadow-2xl shadow-black/20">
-          <form action={action} className="space-y-6">
+        <div className="relative sm:rounded-3xl rounded-2xl border border-white/[0.08] bg-white/[0.03] backdrop-blur-sm p-8 sm:p-10 shadow-2xl shadow-black/20">
+          <form action={action} className="space-y-7">
             {/* Hidden fields for arrays */}
             {selectedSkills.map((skill) => (
               <input key={skill} type="hidden" name="skills" value={skill} />
@@ -101,7 +101,7 @@ export function RegisterForm() {
 
             {/* Name + Email */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="space-y-2">
+              <div className="space-y-3">
                 <Label htmlFor="displayName" className="text-white/70 text-sm font-medium">Nom / Pseudo</Label>
                 <div className="relative">
                   <User className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-white/25" />
@@ -115,7 +115,7 @@ export function RegisterForm() {
                   />
                 </div>
               </div>
-              <div className="space-y-2">
+              <div className="space-y-3">
                 <Label htmlFor="email" className="text-white/70 text-sm font-medium">Email</Label>
                 <div className="relative">
                   <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-white/25" />
@@ -132,7 +132,7 @@ export function RegisterForm() {
             </div>
 
             {/* Password */}
-            <div className="space-y-2">
+            <div className="space-y-3">
               <Label htmlFor="password" className="text-white/70 text-sm font-medium">Mot de passe</Label>
               <div className="relative">
                 <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-white/25" />
@@ -160,7 +160,7 @@ export function RegisterForm() {
             <div className="h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent" />
 
             {/* Role */}
-            <div className="space-y-2">
+            <div className="space-y-3">
               <Label className="text-white/70 text-sm font-medium flex items-center gap-2">
                 <Briefcase className="h-3.5 w-3.5 text-[#D4AF37]/60" />
                 Rôle souhaité
@@ -180,7 +180,7 @@ export function RegisterForm() {
             </div>
 
             {/* Portfolio URL */}
-            <div className="space-y-2">
+            <div className="space-y-3">
               <Label htmlFor="portfolioUrl" className="text-white/70 text-sm font-medium flex items-center gap-2">
                 <Link2 className="h-3.5 w-3.5 text-[#D4AF37]/60" />
                 Portfolio URL <span className="text-white/25">(optionnel)</span>
@@ -202,7 +202,7 @@ export function RegisterForm() {
               <Label className="text-white/70 text-sm font-medium">
                 Compétences <span className="text-[#D4AF37]/60">({selectedSkills.length})</span>
               </Label>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-2.5">
                 {SKILLS.map((skill) => (
                   <button
                     key={skill}
@@ -223,7 +223,7 @@ export function RegisterForm() {
             {/* Languages */}
             <div className="space-y-3">
               <Label className="text-white/70 text-sm font-medium">Langues maîtrisées</Label>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-2.5">
                 {LANGUAGES.map((lang) => (
                   <button
                     key={lang}
@@ -241,14 +241,16 @@ export function RegisterForm() {
               </div>
             </div>
 
-            <Button
-              type="submit"
-              className="w-full h-12 rounded-xl bg-[#D4AF37] hover:bg-[#F0D060] text-black font-semibold shadow-lg shadow-[#D4AF37]/20 hover:shadow-[#D4AF37]/30 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300"
-              size="lg"
-              loading={isPending}
-            >
-              {isPending ? 'Création du compte...' : 'Créer mon Compte'}
-            </Button>
+            <div className="pt-2">
+              <Button
+                type="submit"
+                className="w-full h-12 rounded-xl bg-[#D4AF37] hover:bg-[#F0D060] text-black font-semibold shadow-lg shadow-[#D4AF37]/20 hover:shadow-[#D4AF37]/30 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300"
+                size="lg"
+                loading={isPending}
+              >
+                {isPending ? 'Création du compte...' : 'Créer mon Compte'}
+              </Button>
+            </div>
 
             <p className="text-xs text-white/25 text-center leading-relaxed">
               En créant un compte, vous acceptez nos{' '}

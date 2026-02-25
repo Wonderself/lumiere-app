@@ -195,7 +195,7 @@ export default async function CinemaPage() {
           </div>
 
           {/* Stats with glass cards */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 max-w-3xl mx-auto w-full">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-5 max-w-3xl mx-auto w-full">
             {[
               { label: 'Films en Production', value: stats.filmsCount > 0 ? stats.filmsCount : '5+', icon: Film },
               { label: 'Taches Validees', value: stats.tasksCount > 0 ? stats.tasksCount : '200+', icon: CheckCircle },
@@ -204,7 +204,7 @@ export default async function CinemaPage() {
             ].map((stat) => (
               <div
                 key={stat.label}
-                className="text-center p-4 sm:p-5 rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm hover:border-[#D4AF37]/15 hover:bg-white/[0.04] transition-all duration-500"
+                className="text-center p-5 sm:p-6 rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm hover:border-[#D4AF37]/15 hover:bg-white/[0.04] transition-all duration-500"
               >
                 <stat.icon className="h-4 w-4 mx-auto mb-3 text-[#D4AF37]/40" />
                 <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#D4AF37] mb-1 font-playfair">
@@ -279,7 +279,7 @@ export default async function CinemaPage() {
             </h2>
             <p className="text-white/35 text-base sm:text-lg max-w-xl mx-auto">Simple, rapide, et remunerateur. En 3 etapes.</p>
           </div>
-          <div className="grid md:grid-cols-3 gap-5 sm:gap-6 stagger-children">
+          <div className="grid md:grid-cols-3 gap-6 sm:gap-8 stagger-children">
             {steps.map((step, i) => (
               <div
                 key={step.number}
@@ -318,7 +318,7 @@ export default async function CinemaPage() {
             </h2>
             <p className="text-white/35 text-base sm:text-lg max-w-xl mx-auto">Du trailer a l&apos;affiche, du face-swap au streaming.</p>
           </div>
-          <div className="grid sm:grid-cols-2 gap-5 sm:gap-6">
+          <div className="grid sm:grid-cols-2 gap-6 sm:gap-8">
             {services.map((service) => (
               <div
                 key={service.title}
@@ -391,7 +391,7 @@ export default async function CinemaPage() {
                 Voir tous les films <ChevronRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
               </Link>
             </div>
-            <div className="grid md:grid-cols-3 gap-5 sm:gap-6">
+            <div className="grid md:grid-cols-3 gap-6 sm:gap-8">
               {films.map((film) => (
                 <Link key={film.id} href={`/films/${film.slug}`}>
                   <div className="group rounded-2xl sm:rounded-3xl border border-white/[0.06] bg-white/[0.02] overflow-hidden hover:border-[#D4AF37]/15 transition-all duration-500 hover-lift">
@@ -410,8 +410,8 @@ export default async function CinemaPage() {
                         </span>
                       </div>
                     </div>
-                    <div className="p-5 sm:p-6">
-                      <h3 className="font-semibold text-lg mb-2 group-hover:text-[#D4AF37] transition-colors duration-300">{film.title}</h3>
+                    <div className="p-6 sm:p-7">
+                      <h3 className="font-semibold text-lg mb-3 group-hover:text-[#D4AF37] transition-colors duration-300">{film.title}</h3>
                       {film.description && <p className="text-sm text-white/30 mb-4 line-clamp-2">{film.description}</p>}
                       <div className="space-y-2">
                         <div className="flex justify-between text-xs">
@@ -496,9 +496,9 @@ export default async function CinemaPage() {
               L&apos;Avantage <span className="text-shimmer">Lumiere</span>
             </h2>
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 stagger-children">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 stagger-children">
             {features.map((feature) => (
-              <div key={feature.title} className="rounded-2xl sm:rounded-3xl border border-white/[0.06] bg-white/[0.02] p-7 sm:p-8 hover:border-[#D4AF37]/15 hover:bg-white/[0.04] transition-all duration-500 group hover-lift">
+              <div key={feature.title} className="rounded-2xl sm:rounded-3xl border border-white/[0.06] bg-white/[0.02] p-8 sm:p-9 hover:border-[#D4AF37]/15 hover:bg-white/[0.04] transition-all duration-500 group hover-lift">
                 <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#D4AF37]/[0.08] border border-[#D4AF37]/15 mb-5 group-hover:bg-[#D4AF37]/[0.12] group-hover:scale-110 transition-all duration-500">
                   <feature.icon className="h-5 w-5 text-[#D4AF37]" />
                 </div>
@@ -569,7 +569,7 @@ export default async function CinemaPage() {
             Des Taches pour <span className="text-gold-gradient">Chaque Niveau</span>
           </h2>
           <p className="text-white/35 mb-14">Plus la tache est complexe, plus la recompense est elevee.</p>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 sm:gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8">
             {[
               { level: 'Debutant', price: '50EUR', desc: 'Prompt writing, revue qualite, traduction, sous-titres', color: 'from-emerald-500/[0.06] to-transparent', borderColor: 'border-white/[0.06]' },
               { level: 'Avance', price: '100EUR', desc: 'Design, animation, sound design, colorimetrie', color: 'from-blue-500/[0.06] to-transparent', borderColor: 'border-white/[0.06]' },

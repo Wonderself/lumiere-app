@@ -185,13 +185,13 @@ export default async function ProfilePage() {
       <div className="h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
 
       {/* ── Stats Row ── */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
         {stats.map((stat) => (
           <div
             key={stat.label}
             className={`border bg-white sm:rounded-2xl rounded-xl shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-500 ${stat.bgColor}`}
           >
-            <div className="p-5 text-center">
+            <div className="p-6 text-center">
               <div className={`inline-flex items-center justify-center h-11 w-11 rounded-xl ${stat.bgColor} mb-3`}>
                 <stat.icon className={`h-5 w-5 ${stat.color}`} />
               </div>
@@ -205,9 +205,9 @@ export default async function ProfilePage() {
       </div>
 
       {/* ── Level Progress ── */}
-      <div className="bg-white sm:rounded-2xl rounded-xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-shadow duration-500">
+      <div className="bg-white sm:rounded-2xl rounded-xl shadow-sm border border-gray-100 p-7 hover:shadow-md transition-shadow duration-500">
         <h2
-          className="text-lg font-semibold text-gray-900 mb-4"
+          className="text-lg font-semibold text-gray-900 mb-5"
         >
           Progression
         </h2>
@@ -243,13 +243,13 @@ export default async function ProfilePage() {
 
       {/* ── Badges ── */}
       {allBadgesWithStatus.some(b => b.earned) && (
-        <div className="bg-white sm:rounded-2xl rounded-xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-shadow duration-500">
+        <div className="bg-white sm:rounded-2xl rounded-xl shadow-sm border border-gray-100 p-7 hover:shadow-md transition-shadow duration-500">
           <h2
-            className="text-lg font-semibold text-gray-900 mb-4"
+            className="text-lg font-semibold text-gray-900 mb-5"
           >
             Badges ({allBadgesWithStatus.filter(b => b.earned).length}/{allBadgesWithStatus.length})
           </h2>
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-3">
             {allBadgesWithStatus.filter(b => b.earned).map((badge) => (
               <span
                 key={badge.type}
@@ -322,16 +322,16 @@ export default async function ProfilePage() {
       )}
 
       {/* ── Skills & Languages ── */}
-      <div className="grid md:grid-cols-2 gap-6">
+      <div className="grid md:grid-cols-2 gap-7">
         {/* Skills */}
         {user.skills.length > 0 && (
-          <div className="bg-white sm:rounded-2xl rounded-xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-shadow duration-500">
+          <div className="bg-white sm:rounded-2xl rounded-xl shadow-sm border border-gray-100 p-7 hover:shadow-md transition-shadow duration-500">
             <h2
-              className="text-lg font-semibold text-gray-900 mb-4"
+              className="text-lg font-semibold text-gray-900 mb-5"
             >
               Competences
             </h2>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-3">
               {user.skills.map((skill) => (
                 <span
                   key={skill}
@@ -346,13 +346,13 @@ export default async function ProfilePage() {
 
         {/* Languages */}
         {user.languages.length > 0 && (
-          <div className="bg-white sm:rounded-2xl rounded-xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-shadow duration-500">
+          <div className="bg-white sm:rounded-2xl rounded-xl shadow-sm border border-gray-100 p-7 hover:shadow-md transition-shadow duration-500">
             <h2
-              className="text-lg font-semibold text-gray-900 mb-4"
+              className="text-lg font-semibold text-gray-900 mb-5"
             >
               Langues
             </h2>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-3">
               {user.languages.map((lang) => (
                 <span
                   key={lang}
@@ -368,9 +368,9 @@ export default async function ProfilePage() {
 
       {/* ── Portfolio Link ── */}
       {user.portfolioUrl && (
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-7">
           <h2
-            className="text-lg font-semibold text-gray-900 mb-3"
+            className="text-lg font-semibold text-gray-900 mb-4"
           >
             Portfolio
           </h2>

@@ -52,7 +52,7 @@ export default async function ScreenplaysPage() {
   })
 
   return (
-    <div className="max-w-5xl mx-auto space-y-8">
+    <div className="max-w-5xl mx-auto space-y-10">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
@@ -94,12 +94,12 @@ export default async function ScreenplaysPage() {
           </CardContent>
         </Card>
       ) : (
-        <div className="grid md:grid-cols-2 gap-4">
+        <div className="grid md:grid-cols-2 gap-5">
           {screenplays.map((screenplay) => {
             const statusConfig = STATUS_CONFIG[screenplay.status] || STATUS_CONFIG.SUBMITTED
             return (
               <Card key={screenplay.id} variant="glass" className="hover:border-[#D4AF37]/20 hover:shadow-md hover:-translate-y-0.5 transition-all duration-500">
-                <CardContent className="p-6">
+                <CardContent className="p-7">
                   {/* Title & Status */}
                   <div className="flex items-start justify-between gap-3 mb-3">
                     <h3 className="font-semibold text-white truncate">

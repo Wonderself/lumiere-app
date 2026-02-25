@@ -118,7 +118,7 @@ export default async function FilmsPage({
           </p>
 
           {/* Stats row */}
-          <div className="grid grid-cols-3 gap-5 sm:gap-8 max-w-2xl mx-auto">
+          <div className="grid grid-cols-3 gap-6 sm:gap-10 max-w-2xl mx-auto">
             {[
               { label: 'Films', value: heroStats.filmsCount, icon: Film },
               { label: 'Taches', value: heroStats.tasksCount, icon: CheckCircle },
@@ -126,7 +126,7 @@ export default async function FilmsPage({
             ].map((stat) => (
               <div
                 key={stat.label}
-                className="rounded-2xl sm:rounded-3xl border border-white/[0.06] bg-white/[0.03] p-4 sm:p-5 text-center transition-all duration-500"
+                className="rounded-2xl sm:rounded-3xl border border-white/[0.06] bg-white/[0.03] p-5 sm:p-6 text-center transition-all duration-500"
               >
                 <div className="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-[#D4AF37]/10 border border-[#D4AF37]/20 mx-auto mb-2">
                   <stat.icon className="h-4 w-4 text-[#D4AF37]" />
@@ -182,7 +182,7 @@ export default async function FilmsPage({
               <p className="text-sm mt-2 text-white/40">Les films seront bientot disponibles.</p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 sm:gap-7">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 sm:gap-8">
               {films.map((film) => (
                 <Link key={film.id} href={`/films/${film.slug}`}>
                   <div className="group rounded-2xl sm:rounded-3xl border border-white/[0.06] bg-white/[0.03] overflow-hidden hover:border-[#D4AF37]/30 transition-all duration-500 h-full flex flex-col hover-lift">
@@ -217,7 +217,7 @@ export default async function FilmsPage({
                     </div>
 
                     {/* Content */}
-                    <div className="p-5 sm:p-6 flex flex-col flex-1">
+                    <div className="p-6 sm:p-7 flex flex-col flex-1">
                       <h3 className="font-semibold text-base mb-2 text-white group-hover:text-[#D4AF37] transition-colors line-clamp-2">
                         {film.title}
                       </h3>
@@ -231,7 +231,7 @@ export default async function FilmsPage({
                       )}
 
                       {/* Progress */}
-                      <div className="space-y-1.5 mt-auto">
+                      <div className="space-y-2.5 mt-auto">
                         <div className="flex justify-between text-xs">
                           <span className="text-white/40">Progression</span>
                           <span className="text-[#D4AF37] font-medium">{Math.round(film.progressPct)}%</span>

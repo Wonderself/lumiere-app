@@ -114,7 +114,7 @@ export default async function ActorsPage({
           </div>
 
           {/* Stats Row */}
-          <div className="flex justify-center gap-6 sm:gap-8 md:gap-16 mb-8 sm:mb-12">
+          <div className="flex justify-center gap-8 sm:gap-10 md:gap-16 mb-10 sm:mb-14">
             {[
               { label: 'Acteurs', value: stats.actors, icon: Users },
               { label: 'Films', value: stats.films, icon: Film },
@@ -148,7 +148,7 @@ export default async function ActorsPage({
           </div>
 
           {/* Style Filter Pills */}
-          <div className="flex flex-wrap justify-center gap-2 sm:gap-3">
+          <div className="flex flex-wrap justify-center gap-3 sm:gap-4">
             {styles.map((s) => {
               const isActive = (!params.style && s === 'ALL') || params.style === s
               const href =
@@ -190,7 +190,7 @@ export default async function ActorsPage({
             </p>
           </div>
         ) : (
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-7">
             {actors.map((actor) => (
               <Link key={actor.id} href={`/actors/${actor.slug}`}>
                 <div className="group relative rounded-2xl border border-gray-100 bg-white overflow-hidden hover:border-[#D4AF37]/30 transition-all duration-500 hover:shadow-md shadow-sm">

@@ -53,7 +53,7 @@ export default async function TrailerStudioPage() {
   const creditBalance = creditAccount?.balance ?? 0
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-10">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
@@ -82,7 +82,7 @@ export default async function TrailerStudioPage() {
 
       {/* Open Contests Banner */}
       {openContests.length > 0 && (
-        <div className="rounded-2xl border border-[#D4AF37]/20 bg-gradient-to-r from-[#D4AF37]/5 to-transparent p-5">
+        <div className="rounded-2xl border border-[#D4AF37]/20 bg-gradient-to-r from-[#D4AF37]/5 to-transparent p-6">
           <div className="flex items-start gap-4">
             <div className="h-10 w-10 rounded-xl bg-[#D4AF37]/10 flex items-center justify-center shrink-0">
               <Trophy className="h-5 w-5 text-[#D4AF37]" />
@@ -123,14 +123,14 @@ export default async function TrailerStudioPage() {
               Notre IA décompose la création de votre bande-annonce en micro-tâches intelligentes et les exécute automatiquement.
             </p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {[
               { step: '1', title: 'Décrivez votre concept', desc: 'Genre, style, ambiance, durée — donnez le brief créatif' },
               { step: '2', title: 'Faites vos choix', desc: 'Personnages, décors, musique — l\'IA vous propose, vous choisissez' },
               { step: '3', title: 'L\'IA génère tout', desc: 'Chaque scène, chaque plan, chaque son est créé par l\'IA' },
               { step: '4', title: 'Soumettez au concours', desc: 'Participez et gagnez la production de votre film !' },
             ].map((item) => (
-              <div key={item.step} className="relative rounded-xl border border-gray-100 bg-gray-50 p-5">
+              <div key={item.step} className="relative rounded-xl border border-gray-100 bg-gray-50 p-6">
                 <div className="absolute -top-3 -left-1 w-7 h-7 rounded-full bg-[#D4AF37] text-black text-xs font-bold flex items-center justify-center shadow-sm">
                   {item.step}
                 </div>
@@ -152,9 +152,9 @@ export default async function TrailerStudioPage() {
 
       {/* Projects List */}
       {projects.length > 0 && (
-        <div className="space-y-3">
+        <div className="space-y-4">
           <h2 className="text-lg font-semibold text-[#1A1A2E]">Mes projets</h2>
-          <div className="grid gap-3">
+          <div className="grid gap-4">
             {projects.map((project) => {
               const statusInfo = STATUS_CONFIG[project.status] || STATUS_CONFIG.DRAFT
               const StatusIcon = statusInfo.icon
@@ -162,7 +162,7 @@ export default async function TrailerStudioPage() {
                 <Link
                   key={project.id}
                   href={`/trailer-studio/${project.id}`}
-                  className="group rounded-xl border border-gray-200 bg-white hover:border-[#D4AF37]/30 hover:shadow-sm transition-all p-5"
+                  className="group rounded-xl border border-gray-200 bg-white hover:border-[#D4AF37]/30 hover:shadow-sm transition-all p-6"
                 >
                   <div className="flex items-center gap-4">
                     <div className="h-12 w-12 rounded-xl bg-[#D4AF37]/10 flex items-center justify-center shrink-0 group-hover:bg-[#D4AF37]/15 transition-colors">
@@ -206,8 +206,8 @@ export default async function TrailerStudioPage() {
       )}
 
       {/* Quick actions */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-        <Link href="/credits" className="group rounded-xl border border-gray-200 bg-white hover:border-[#D4AF37]/30 p-4 transition-all">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <Link href="/credits" className="group rounded-xl border border-gray-200 bg-white hover:border-[#D4AF37]/30 p-5 transition-all">
           <div className="flex items-center gap-3">
             <Coins className="h-5 w-5 text-[#D4AF37]" />
             <div>
@@ -217,7 +217,7 @@ export default async function TrailerStudioPage() {
             <ArrowRight className="h-4 w-4 text-gray-300 ml-auto group-hover:text-[#D4AF37] transition-colors" />
           </div>
         </Link>
-        <Link href="/community/contests" className="group rounded-xl border border-gray-200 bg-white hover:border-[#D4AF37]/30 p-4 transition-all">
+        <Link href="/community/contests" className="group rounded-xl border border-gray-200 bg-white hover:border-[#D4AF37]/30 p-5 transition-all">
           <div className="flex items-center gap-3">
             <Trophy className="h-5 w-5 text-[#D4AF37]" />
             <div>
@@ -227,7 +227,7 @@ export default async function TrailerStudioPage() {
             <ArrowRight className="h-4 w-4 text-gray-300 ml-auto group-hover:text-[#D4AF37] transition-colors" />
           </div>
         </Link>
-        <Link href="/films" className="group rounded-xl border border-gray-200 bg-white hover:border-[#D4AF37]/30 p-4 transition-all">
+        <Link href="/films" className="group rounded-xl border border-gray-200 bg-white hover:border-[#D4AF37]/30 p-5 transition-all">
           <div className="flex items-center gap-3">
             <Film className="h-5 w-5 text-[#D4AF37]" />
             <div>

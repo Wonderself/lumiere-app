@@ -77,9 +77,9 @@ export function FilmRow({ title, films, href }: FilmRowProps) {
   if (films.length === 0) return null
 
   return (
-    <section className="relative group/row mb-24 md:mb-28">
+    <section className="relative group/row mb-28 md:mb-32">
       {/* Row title */}
-      <div className="flex items-center justify-between px-6 sm:px-10 md:px-16 lg:px-20 mb-10">
+      <div className="flex items-center justify-between px-6 sm:px-10 md:px-16 lg:px-20 mb-12">
         <h2
           className="text-lg md:text-xl lg:text-2xl font-bold text-white/90 tracking-tight"
         >
@@ -126,7 +126,7 @@ export function FilmRow({ title, films, href }: FilmRowProps) {
         <div
           ref={scrollRef}
           onScroll={updateArrows}
-          className="flex gap-5 md:gap-6 overflow-x-auto scrollbar-hide px-6 sm:px-10 md:px-16 lg:px-20 scroll-smooth"
+          className="flex gap-6 md:gap-7 overflow-x-auto scrollbar-hide px-6 sm:px-10 md:px-16 lg:px-20 scroll-smooth"
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
           {films.map((film, idx) => (
