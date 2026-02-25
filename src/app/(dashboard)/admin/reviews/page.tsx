@@ -31,7 +31,7 @@ export default async function AdminReviewsPage() {
   })
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-10">
       <div>
         <h1 className="text-3xl sm:text-4xl font-bold" style={{ fontFamily: 'var(--font-playfair)' }}>Queue de Review</h1>
         <p className="text-white/50">{submissions.length} soumission{submissions.length > 1 ? 's' : ''} en attente</p>

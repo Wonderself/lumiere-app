@@ -26,7 +26,7 @@ export default async function AdminUsersPage() {
   const ROLE_OPTIONS = ['CONTRIBUTOR', 'ARTIST', 'STUNT_PERFORMER', 'SCREENWRITER', 'VIEWER', 'ADMIN']
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-10">
       <div>
         <h1 className="text-3xl sm:text-4xl font-bold" style={{ fontFamily: 'var(--font-playfair)' }}>Utilisateurs</h1>
         <p className="text-white/50">
@@ -40,7 +40,7 @@ export default async function AdminUsersPage() {
       {/* Pending first */}
       {users.some((u) => !u.isVerified) && (
         <div>
-          <h2 className="text-lg font-semibold mb-3 text-yellow-400 flex items-center gap-2">
+          <h2 className="text-lg font-semibold mb-4 text-yellow-400 flex items-center gap-2">
             <Clock className="h-5 w-5" /> En attente de validation
           </h2>
           <div className="space-y-2">
@@ -73,7 +73,7 @@ export default async function AdminUsersPage() {
 
       {/* All users */}
       <div>
-        <h2 className="text-lg font-semibold mb-3 flex items-center gap-2">
+        <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
           <Users className="h-5 w-5" /> Tous les Utilisateurs
         </h2>
         <div className="space-y-2">

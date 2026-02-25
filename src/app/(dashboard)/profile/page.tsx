@@ -105,7 +105,7 @@ export default async function ProfilePage() {
   ]
 
   return (
-    <div className="space-y-8 max-w-4xl mx-auto">
+    <div className="space-y-10 max-w-4xl mx-auto">
       {/* ── User Info Card ── */}
       <div className="relative overflow-hidden bg-white sm:rounded-3xl rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-500">
         {/* Decorative gradient */}
@@ -186,7 +186,7 @@ export default async function ProfilePage() {
       <div className="h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
 
       {/* ── Stats Row ── */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
         {stats.map((stat) => (
           <div
             key={stat.label}

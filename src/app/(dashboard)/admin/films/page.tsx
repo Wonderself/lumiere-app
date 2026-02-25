@@ -24,7 +24,7 @@ export default async function AdminFilmsPage() {
   })
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-10">
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl sm:text-4xl font-bold" style={{ fontFamily: 'var(--font-playfair)' }}>Films</h1>
@@ -44,7 +44,7 @@ export default async function AdminFilmsPage() {
           <p className="text-sm mt-2">Créez votre premier film.</p>
         </div>
       ) : (
-        <div className="space-y-3">
+        <div className="space-y-4">
           {films.map((film) => (
             <div key={film.id} className="flex items-center gap-4 p-4 sm:rounded-2xl rounded-xl border border-white/5 bg-white/[0.02] hover:border-white/10 hover:shadow-md hover:-translate-y-[1px] transition-all duration-500">
               <div className="h-14 w-20 rounded-xl bg-gradient-to-br from-[#D4AF37]/10 to-purple-900/20 shrink-0 overflow-hidden">

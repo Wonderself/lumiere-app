@@ -38,9 +38,9 @@ export default async function AdminScreenplaysPage() {
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-10">
       <div>
-        <h1 className="text-3xl sm:text-4xl font-bold mb-1" style={{ fontFamily: 'var(--font-playfair)' }}>Scénarios</h1>
+        <h1 className="text-3xl sm:text-4xl font-bold mb-2" style={{ fontFamily: 'var(--font-playfair)' }}>Scénarios</h1>
         <p className="text-white/50">{screenplays.length} scénario{screenplays.length > 1 ? 's' : ''} soumis</p>
       </div>
 

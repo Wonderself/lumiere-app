@@ -97,7 +97,7 @@ export default async function FilmsPage({
 
           {/* Title */}
           <h1
-            className="text-4xl sm:text-5xl md:text-6xl font-bold mb-5 text-white"
+            className="text-4xl sm:text-5xl md:text-6xl font-bold mb-8 text-white"
             style={{ fontFamily: 'var(--font-playfair)' }}
           >
             Films &{' '}
@@ -119,7 +119,7 @@ export default async function FilmsPage({
           </p>
 
           {/* Stats row */}
-          <div className="grid grid-cols-3 gap-4 sm:gap-6 max-w-2xl mx-auto">
+          <div className="grid grid-cols-3 gap-5 sm:gap-8 max-w-2xl mx-auto">
             {[
               { label: 'Films', value: heroStats.filmsCount, icon: Film },
               { label: 'Taches', value: heroStats.tasksCount, icon: CheckCircle },

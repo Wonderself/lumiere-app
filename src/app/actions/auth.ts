@@ -95,11 +95,11 @@ export async function registerAction(
       },
     })
 
-    // Store email verification token
+    // Store email verification token (with verify: prefix to match verifyEmailAction lookup)
     await prisma.passwordReset.create({
       data: {
         userId: newUser.id,
-        token: verificationToken,
+        token: `verify:${verificationToken}`,
         expiresAt: verificationExpires,
       },
     })
@@ -351,19 +351,24 @@ export async function updateProfileAction(
 
   const { displayName, bio, avatarUrl, portfolioUrl, skills, languages, walletAddress } = parsed.data
 
-  await prisma.user.update({
-    where: { id: session.user.id },
-    data: {
-      displayName,
-      bio: bio || null,
-      avatarUrl: avatarUrl || null,
-      portfolioUrl: portfolioUrl || null,
-      skills: skills || [],
-      languages: languages || [],
-      walletAddress: walletAddress || null,
-    },
-  })
+  try {
+    await prisma.user.update({
+      where: { id: session.user.id },
+      data: {
+        displayName,
+        bio: bio || null,
+        avatarUrl: avatarUrl || null,
+        portfolioUrl: portfolioUrl || null,
+        skills: skills || [],
+        languages: languages || [],
+        walletAddress: walletAddress || null,
+      },
+    })
 
-  revalidatePath('/profile')
-  return { success: true }
+    revalidatePath('/profile')
+    return { success: true }
+  } catch (error) {
+    console.error('Profile update error:', error)
+    return { error: 'Une erreur est survenue lors de la mise à jour.' }
+  }
 }

@@ -119,10 +119,10 @@ export default async function AdminAnalyticsPage() {
   ] : []
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-10">
       {/* Header */}
       <div>
-        <h1 className="text-3xl sm:text-4xl font-bold mb-1" style={{ fontFamily: 'var(--font-playfair)' }}>
+        <h1 className="text-3xl sm:text-4xl font-bold mb-2" style={{ fontFamily: 'var(--font-playfair)' }}>
           Analytics{' '}
           <span className="text-shimmer">Avancees</span>
         </h1>
@@ -133,7 +133,7 @@ export default async function AdminAnalyticsPage() {
 
       {/* KPI Grid */}
       {data && (
-        <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-3 sm:gap-4">
+        <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4 sm:gap-5">
           {kpis.map((kpi) => (
             <Card key={kpi.label} className="sm:rounded-2xl border-white/5 bg-white/[0.02] hover:border-white/10 hover:shadow-md hover:-translate-y-[1px] transition-all duration-300">
               <CardContent className="p-4 sm:p-5">
@@ -301,7 +301,7 @@ export default async function AdminAnalyticsPage() {
               {data.engagement.topContributors.map((user, i) => (
                 <div
                   key={user.id}
-                  className="flex items-center gap-4 p-3 rounded-xl bg-white/[0.02] border border-white/[0.04] hover:border-white/[0.08] transition-all"
+                  className="flex items-center gap-4 p-4 rounded-xl bg-white/[0.02] border border-white/[0.04] hover:border-white/[0.08] transition-all"
                 >
                   <div className={`w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold shrink-0 ${
                     i === 0 ? 'bg-[#D4AF37]/20 text-[#D4AF37]' :

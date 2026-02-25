@@ -87,6 +87,10 @@ export async function addCommentAction(
 
   if (!filmId) return { error: 'Film manquant.' }
 
+  // Validate film exists before creating comment
+  const film = await prisma.catalogFilm.findUnique({ where: { id: filmId }, select: { id: true } })
+  if (!film) return { error: 'Film introuvable.' }
+
   const trimmed = content?.trim() ?? ''
   if (trimmed.length < 1 || trimmed.length > 2000) {
     return { error: 'Le commentaire doit contenir entre 1 et 2000 caractères.' }

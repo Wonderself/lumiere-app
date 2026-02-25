@@ -90,7 +90,7 @@ export default async function TokenizationMarketplacePage() {
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-10">
       {/* Sub-Nav */}
       <TokenizationNav active="marketplace" />
 

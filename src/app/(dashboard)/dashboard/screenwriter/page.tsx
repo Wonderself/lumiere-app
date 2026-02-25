@@ -54,7 +54,7 @@ export default async function ScreenwriterDashboardPage() {
   const inVoting = scenarios.filter(s => s.status === 'VOTING').length
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-10">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
@@ -119,7 +119,7 @@ export default async function ScreenwriterDashboardPage() {
             </Link>
           </div>
         ) : (
-          <div className="space-y-3">
+          <div className="space-y-4">
             {scenarios.map((s) => {
               const config = STATUS_CONFIG[s.status] || STATUS_CONFIG.ARCHIVED
               return (

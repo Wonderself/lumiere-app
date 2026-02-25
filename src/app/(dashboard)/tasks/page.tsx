@@ -71,10 +71,10 @@ export default async function TasksPage({
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-10">
       <div className="flex items-end justify-between flex-wrap gap-4">
         <div>
-          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-2" style={{ fontFamily: 'var(--font-playfair)' }}>
+          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-3" style={{ fontFamily: 'var(--font-playfair)' }}>
             Marketplace de Tâches
           </h1>
           <p className="text-gray-500">{tasks.length} tâche{tasks.length > 1 ? 's' : ''} trouvée{tasks.length > 1 ? 's' : ''}</p>
@@ -90,8 +90,8 @@ export default async function TasksPage({
       <div className="h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
 
       {/* Filters */}
-      <div className="flex flex-wrap gap-3 p-5 sm:rounded-2xl rounded-xl border border-gray-200/80 bg-white shadow-sm">
-        <form method="GET" className="flex flex-wrap gap-3 w-full items-center">
+      <div className="flex flex-wrap gap-4 p-6 sm:rounded-2xl rounded-xl border border-gray-200/80 bg-white shadow-sm">
+        <form method="GET" className="flex flex-wrap gap-4 w-full items-center">
           <div className="relative">
             <select
               name="film"
@@ -167,10 +167,10 @@ export default async function TasksPage({
           <p className="text-sm mt-2 text-gray-400">Modifiez vos filtres ou revenez plus tard.</p>
         </div>
       ) : (
-        <div className="space-y-3">
+        <div className="space-y-4">
           {tasks.map((task) => (
             <Link key={task.id} href={`/tasks/${task.id}`}>
-              <div className="group flex items-center gap-4 p-4 sm:p-5 sm:rounded-2xl rounded-xl border border-gray-100 bg-white hover:border-[#D4AF37]/30 hover:shadow-md shadow-sm transition-all duration-500 hover:-translate-y-[1px]">
+              <div className="group flex items-center gap-5 p-5 sm:p-6 sm:rounded-2xl rounded-xl border border-gray-100 bg-white hover:border-[#D4AF37]/30 hover:shadow-md shadow-sm transition-all duration-500 hover:-translate-y-[1px]">
                 {/* Status indicator */}
                 <div className={`w-1.5 h-12 rounded-full transition-all duration-500 group-hover:h-14 ${
                   task.status === 'AVAILABLE' ? 'bg-green-500' :

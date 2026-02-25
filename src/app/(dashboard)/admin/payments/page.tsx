@@ -46,10 +46,10 @@ export default async function AdminPaymentsPage() {
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-10">
       <div className="flex items-center justify-between flex-wrap gap-4">
         <div>
-          <h1 className="text-3xl sm:text-4xl font-bold mb-1" style={{ fontFamily: 'var(--font-playfair)' }}>Paiements</h1>
+          <h1 className="text-3xl sm:text-4xl font-bold mb-2" style={{ fontFamily: 'var(--font-playfair)' }}>Paiements</h1>
           <p className="text-white/50">{payments.length} paiement{payments.length > 1 ? 's' : ''} au total</p>
         </div>
         <Link href="/api/admin/export-payments" target="_blank">
@@ -72,7 +72,7 @@ export default async function AdminPaymentsPage() {
         ].map((s) => (
           <Card key={s.label} className="sm:rounded-2xl hover:shadow-md hover:-translate-y-[1px]">
             <CardContent className="p-5">
-              <s.icon className={`h-5 w-5 ${s.color} mb-2`} />
+              <s.icon className={`h-5 w-5 ${s.color} mb-3`} />
               <div className={`text-xl font-bold ${s.color}`}>{s.value}</div>
               <div className="text-xs text-white/40 mt-0.5">{s.sub}</div>
             </CardContent>
@@ -93,7 +93,7 @@ export default async function AdminPaymentsPage() {
       ) : (
         <div className="space-y-2">
           {/* Header */}
-          <div className="grid grid-cols-12 gap-3 px-4 py-2 text-xs text-white/30 font-medium">
+          <div className="grid grid-cols-12 gap-4 px-4 py-2 text-xs text-white/30 font-medium">
             <div className="col-span-3">Utilisateur</div>
             <div className="col-span-3">Tâche / Film</div>
             <div className="col-span-2">Montant</div>
@@ -104,7 +104,7 @@ export default async function AdminPaymentsPage() {
           </div>
 
           {payments.map((p) => (
-            <div key={p.id} className="grid grid-cols-12 gap-3 items-center px-4 py-3 sm:rounded-2xl rounded-xl border border-white/5 bg-white/[0.02] hover:border-white/10 hover:bg-gray-50/50 hover:shadow-md hover:-translate-y-[1px] transition-all duration-500">
+            <div key={p.id} className="grid grid-cols-12 gap-4 items-center px-4 py-4 sm:rounded-2xl rounded-xl border border-white/5 bg-white/[0.02] hover:border-white/10 hover:bg-gray-50/50 hover:shadow-md hover:-translate-y-[1px] transition-all duration-500">
               <div className="col-span-3 min-w-0">
                 <p className="text-sm font-medium truncate">{p.user.displayName}</p>
                 <p className="text-xs text-white/30 truncate">{p.user.email}</p>

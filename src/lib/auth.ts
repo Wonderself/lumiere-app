@@ -66,10 +66,10 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     },
     async session({ session, token }) {
       if (token && session.user) {
-        session.user.id = token.id as string
-        session.user.role = token.role as string
-        session.user.level = token.level as string
-        session.user.isVerified = token.isVerified as boolean
+        session.user.id = (token.id as string) || ''
+        session.user.role = (token.role as string) || 'CONTRIBUTOR'
+        session.user.level = (token.level as string) || 'ROOKIE'
+        session.user.isVerified = (token.isVerified as boolean) ?? false
       }
       return session
     },

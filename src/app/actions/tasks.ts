@@ -128,7 +128,8 @@ export async function submitTaskAction(formData: FormData) {
   })
 
   // Update task status based on AI verdict
-  const newTaskStatus = aiResult.verdict === 'AI_APPROVED' ? 'HUMAN_REVIEW' : 'HUMAN_REVIEW'
+  // AI_APPROVED → advance to HUMAN_REVIEW; AI_FLAGGED → revert to SUBMITTED for rework
+  const newTaskStatus = aiResult.verdict === 'AI_APPROVED' ? 'HUMAN_REVIEW' : 'SUBMITTED'
   await prisma.task.update({
     where: { id: taskId },
     data: {

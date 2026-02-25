@@ -55,7 +55,7 @@ export default async function LumensPage() {
   const lumenPrice = settings?.lumenPrice ?? 1.0
 
   return (
-    <div className="space-y-8 max-w-5xl mx-auto">
+    <div className="space-y-10 max-w-5xl mx-auto">
       {/* Page Title */}
       <div>
         <h1 className="text-3xl sm:text-4xl font-bold text-gray-900" style={{ fontFamily: 'var(--font-playfair)' }}>

@@ -184,6 +184,10 @@ model Task {
   submissions TaskSubmission[]
   payment     Payment?
   comments    TaskComment[]
+
+  @@index([claimedById, status])
+  @@index([phaseId, status])
+  @@index([status, createdAt])
 }
 
 model TaskSubmission {
@@ -202,6 +206,9 @@ model TaskSubmission {
   task     Task  @relation(fields: [taskId], references: [id], onDelete: Cascade)
   user     User  @relation(fields: [userId], references: [id])
   reviewer User? @relation("ReviewedSubmissions", fields: [humanReviewerId], references: [id])
+
+  @@index([userId, status])
+  @@index([taskId, status])
 }
 
 model TaskComment {
@@ -234,6 +241,8 @@ model Payment {
 
   user User @relation(fields: [userId], references: [id])
   task Task @relation(fields: [taskId], references: [id])
+
+  @@index([userId, status])
 }
 
 model LumenTransaction {
@@ -246,6 +255,8 @@ model LumenTransaction {
   createdAt   DateTime    @default(now())
 
   user User @relation(fields: [userId], references: [id])
+
+  @@index([userId, type])
 }
 
 // ============================================
@@ -342,6 +353,8 @@ model Notification {
   createdAt DateTime  @default(now())
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, read])
 }
 
 // ============================================
@@ -721,6 +734,9 @@ model CatalogFilm {
   // V13 — Social
   filmComments   FilmComment[]
   playlistItems  PlaylistItem[]
+
+  @@index([submittedById, status])
+  @@index([status, createdAt])
 }
 
 model CatalogContract {
@@ -932,6 +948,8 @@ model ReputationEvent {
   createdAt DateTime         @default(now())
 
   user User @relation(fields: [userId], references: [id])
+
+  @@index([userId, createdAt])
 }
 
 // ============================================
@@ -1498,6 +1516,7 @@ model BlockchainEvent {
   confirmedAt DateTime?
 
   @@index([entityType, entityId])
+  @@index([chain])
 }
 
 enum BlockchainEventType {

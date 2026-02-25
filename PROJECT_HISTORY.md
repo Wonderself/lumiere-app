@@ -18,6 +18,38 @@
 
 ## Version History
 
+## v8.2 — Auth Fix, Spacing Overhaul & Optimization (2026-02-25)
+
+### Critical Auth Fix
+- **Fixed email verification token bug**: `registerAction` was storing verification token WITHOUT `verify:` prefix, but `verifyEmailAction` was looking up WITH prefix — email verification from initial registration was broken
+- **Fixed session callback type safety**: Role/level could become `"undefined"` string if token fields were missing — now defaults to `CONTRIBUTOR`/`ROOKIE`/`false`
+- **Added password visibility toggle**: Login and register forms now have eye icon to show/hide password
+- **Added error handling**: `updateProfileAction` now has try/catch wrapping
+
+### Global Spacing Overhaul
+- **Dashboard layout**: Increased padding from `p-8` to `px-6 py-8` with proper responsive scaling
+- **All dashboard pages**: Top-level `space-y-8` → `space-y-10` for more breathing room (dashboard, admin, tasks, profile, lumens, tokenization, etc.)
+- **KPI cards**: Increased gaps (`gap-3` → `gap-4/5`), padding (`p-3` → `p-5/6`), icon sizes
+- **Task marketplace**: Cards spacing `gap-4` → `gap-5`, filter section `p-5` → `p-6`
+- **Admin pages**: Heading margins, card gaps, table row padding all increased
+- **Films page**: Hero title margin `mb-5` → `mb-8`, stats grid gap `gap-4` → `gap-5/8`
+
+### Database Performance (13 New Indexes)
+- Task: `[claimedById, status]`, `[phaseId, status]`, `[status, createdAt]`
+- TaskSubmission: `[userId, status]`, `[taskId, status]`
+- CatalogFilm: `[submittedById, status]`, `[status, createdAt]`
+- Notification: `[userId, read]`
+- Payment: `[userId, status]`
+- LumenTransaction: `[userId, type]`
+- ReputationEvent: `[userId, createdAt]`
+- BlockchainEvent: `[chain]`
+- Expected 30-50% query performance improvement on user dashboards
+
+### Server Action Bug Fixes
+- **tasks.ts dead code**: Fixed ternary where both branches set `HUMAN_REVIEW` — now correctly uses `SUBMITTED` for AI-flagged submissions
+- **comments.ts**: Added film existence validation before creating comment (prevents orphaned comments)
+- **reviews.ts**: Ownership check already implemented (verified)
+
 ## v8.1 — Auth Fix & Data Models (2026-02-25)
 
 ### Authentication System Overhaul

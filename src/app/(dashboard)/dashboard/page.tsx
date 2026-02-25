@@ -79,15 +79,15 @@ export default async function DashboardPage() {
   })
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-10">
       {/* Welcome */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <p className="text-gray-400 text-sm capitalize mb-1">{frenchDate}</p>
+          <p className="text-gray-400 text-sm capitalize mb-2">{frenchDate}</p>
           <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 font-[family-name:var(--font-playfair)]">
             Bonjour, {user.displayName || 'Contributeur'}
           </h1>
-          <p className="text-gray-400 mt-1.5 text-sm">Votre hub central</p>
+          <p className="text-gray-400 mt-2 text-sm">Votre hub central</p>
         </div>
         <div className="flex items-center gap-3">
           <Badge className="border-[#D4AF37]/30 bg-[#D4AF37]/10 text-[#D4AF37]">
@@ -103,21 +103,21 @@ export default async function DashboardPage() {
       </div>
 
       {/* KPI Row */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-5">
         {[
           { label: 'Taches completees', value: user.tasksCompleted, icon: CheckCircle2, color: 'text-green-500', bg: 'bg-green-50' },
           { label: 'Points', value: user.points, icon: TrendingUp, color: 'text-purple-500', bg: 'bg-purple-50' },
           { label: 'Reputation', value: `${user.reputationScore}/100`, icon: Star, color: 'text-[#D4AF37]', bg: 'bg-amber-50' },
           { label: 'Tokens Film', value: totalTokensHeld, icon: Coins, color: 'text-amber-500', bg: 'bg-amber-50' },
         ].map((kpi) => (
-          <div key={kpi.label} className="bg-white rounded-2xl shadow-sm border border-gray-100 p-3 sm:p-4">
-            <div className="flex items-center gap-2.5 sm:gap-3 min-h-[52px]">
-              <div className={`h-9 w-9 sm:h-10 sm:w-10 rounded-lg ${kpi.bg} flex items-center justify-center shrink-0`}>
-                <kpi.icon className={`h-4 w-4 sm:h-5 sm:w-5 ${kpi.color}`} />
+          <div key={kpi.label} className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 sm:p-6">
+            <div className="flex items-center gap-3 sm:gap-4 min-h-[52px]">
+              <div className={`h-10 w-10 sm:h-11 sm:w-11 rounded-xl ${kpi.bg} flex items-center justify-center shrink-0`}>
+                <kpi.icon className={`h-5 w-5 ${kpi.color}`} />
               </div>
               <div className="min-w-0">
                 <p className="text-gray-900 text-lg sm:text-xl font-bold leading-tight truncate">{kpi.value}</p>
-                <p className="text-gray-400 text-[11px] sm:text-xs mt-0.5 truncate">{kpi.label}</p>
+                <p className="text-gray-400 text-xs mt-1 truncate">{kpi.label}</p>
               </div>
             </div>
           </div>
@@ -151,28 +151,28 @@ export default async function DashboardPage() {
       {/* Task Recommendations */}
       {recommendations.length > 0 && (
         <div>
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-2">
+          <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center gap-3">
               <Sparkles className="h-5 w-5 text-[#D4AF37]" />
-              <h2 className="text-gray-900 font-bold" style={{ fontFamily: 'var(--font-playfair)' }}>
-                Recommande pour vous
+              <h2 className="text-gray-900 font-bold text-lg" style={{ fontFamily: 'var(--font-playfair)' }}>
+                Recommandé pour vous
               </h2>
             </div>
-            <Link href="/tasks" className="text-xs text-[#D4AF37] hover:underline">
+            <Link href="/tasks" className="text-sm text-[#D4AF37] hover:underline">
               Voir toutes →
             </Link>
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {recommendations.map((rec) => (
               <Link key={rec.id} href={`/tasks/${rec.id}`}>
-                <div className="relative bg-white rounded-xl shadow-sm border border-gray-100 p-4 hover:border-[#D4AF37]/30 hover:shadow-md transition-all group">
+                <div className="relative bg-white rounded-xl shadow-sm border border-gray-100 p-5 hover:border-[#D4AF37]/30 hover:shadow-md transition-all group">
                   {rec.isSkillMatch && (
-                    <span className="absolute top-3 right-3 px-2 py-0.5 rounded-full bg-[#D4AF37]/10 text-[#D4AF37] text-[9px] font-bold">
+                    <span className="absolute top-4 right-4 px-2.5 py-0.5 rounded-full bg-[#D4AF37]/10 text-[#D4AF37] text-[10px] font-bold">
                       MATCH
                     </span>
                   )}
-                  <p className="text-sm font-semibold text-gray-800 mb-1 line-clamp-1 pr-12">{rec.title}</p>
-                  <p className="text-xs text-gray-400 mb-2 truncate">
+                  <p className="text-sm font-semibold text-gray-800 mb-2 line-clamp-1 pr-14">{rec.title}</p>
+                  <p className="text-xs text-gray-400 mb-3 truncate">
                     {rec.filmTitle} · {(TASK_TYPE_LABELS as Record<string, string>)[rec.type] || rec.type}
                   </p>
                   <div className="flex items-center justify-between">
@@ -189,10 +189,10 @@ export default async function DashboardPage() {
       )}
 
       {/* Modules Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
         {/* Module 1 -- Studio Films */}
         <Link href="/tasks">
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 hover:border-[#D4AF37]/40 hover:shadow-md transition-all h-full group p-4 sm:p-6 space-y-3">
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 hover:border-[#D4AF37]/40 hover:shadow-md transition-all h-full group p-5 sm:p-7 space-y-4">
             <div className="flex items-center justify-between">
               <div className="h-11 w-11 rounded-xl bg-amber-50 flex items-center justify-center">
                 <Film className="h-5 w-5 text-[#D4AF37]" />
@@ -211,7 +211,7 @@ export default async function DashboardPage() {
 
         {/* Module 2 -- Streaming */}
         <Link href="/streaming">
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 hover:border-red-300 hover:shadow-md transition-all h-full group p-4 sm:p-6 space-y-3">
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 hover:border-red-300 hover:shadow-md transition-all h-full group p-5 sm:p-7 space-y-4">
             <div className="flex items-center justify-between">
               <div className="h-11 w-11 rounded-xl bg-red-50 flex items-center justify-center">
                 <Tv className="h-5 w-5 text-red-500" />
@@ -228,7 +228,7 @@ export default async function DashboardPage() {
 
         {/* Module 3 -- Investissement */}
         <Link href="/tokenization">
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 hover:border-amber-300 hover:shadow-md transition-all h-full group p-4 sm:p-6 space-y-3">
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 hover:border-amber-300 hover:shadow-md transition-all h-full group p-5 sm:p-7 space-y-4">
             <div className="flex items-center justify-between">
               <div className="h-11 w-11 rounded-xl bg-amber-50 flex items-center justify-center">
                 <Coins className="h-5 w-5 text-amber-500" />
@@ -252,7 +252,7 @@ export default async function DashboardPage() {
         {/* Module 4 -- Admin (admin only) */}
         {isAdmin && (
           <Link href="/admin">
-            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 hover:border-orange-300 hover:shadow-md transition-all h-full group p-4 sm:p-6 space-y-3">
+            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 hover:border-orange-300 hover:shadow-md transition-all h-full group p-5 sm:p-7 space-y-4">
               <div className="flex items-center justify-between">
                 <div className="h-11 w-11 rounded-xl bg-orange-50 flex items-center justify-center">
                   <Settings className="h-5 w-5 text-orange-500" />
@@ -317,7 +317,7 @@ export default async function DashboardPage() {
       </Link>
 
       {/* Quick Actions */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
         {[
           { label: 'Trouver une tache', href: '/tasks', icon: Search, color: 'text-[#D4AF37]', bg: 'bg-amber-50' },
           { label: 'Decouvrir les films', href: '/films', icon: Clapperboard, color: 'text-blue-500', bg: 'bg-blue-50' },
@@ -327,7 +327,7 @@ export default async function DashboardPage() {
           <Link
             key={action.label}
             href={action.href}
-            className={`flex items-center gap-3 p-4 rounded-xl ${action.bg} border border-gray-100 hover:border-gray-200 hover:shadow-sm transition-all min-h-[56px] group`}
+            className={`flex items-center gap-3 p-5 rounded-xl ${action.bg} border border-gray-100 hover:border-gray-200 hover:shadow-sm transition-all min-h-[60px] group`}
           >
             <action.icon className={`h-5 w-5 shrink-0 ${action.color}`} />
             <span className="text-gray-600 text-sm font-medium group-hover:text-gray-800 transition-colors">{action.label}</span>

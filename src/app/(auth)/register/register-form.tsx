@@ -9,7 +9,7 @@ import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { registerAction } from '@/app/actions/auth'
 import { SKILLS, LANGUAGES } from '@/lib/constants'
-import { CheckCircle, UserPlus, User, Mail, Lock, Link2, Briefcase } from 'lucide-react'
+import { CheckCircle, UserPlus, User, Mail, Lock, Link2, Briefcase, Eye, EyeOff } from 'lucide-react'
 
 const VALID_ROLES = ['CONTRIBUTOR', 'ARTIST', 'STUNT_PERFORMER', 'SCREENWRITER', 'VIEWER']
 
@@ -19,6 +19,7 @@ export function RegisterForm() {
   const [state, action, isPending] = useActionState(registerAction, {})
   const [selectedSkills, setSelectedSkills] = useState<string[]>([])
   const [selectedLanguages, setSelectedLanguages] = useState<string[]>(['Français'])
+  const [showPassword, setShowPassword] = useState(false)
 
   // Auto-select role from URL param (e.g. ?role=SCREENWRITER)
   const urlRole = searchParams.get('role')?.toUpperCase() || ''
@@ -138,12 +139,20 @@ export function RegisterForm() {
                 <Input
                   id="password"
                   name="password"
-                  type="password"
+                  type={showPassword ? 'text' : 'password'}
                   placeholder="Minimum 8 caractères"
                   required
                   minLength={8}
-                  className="pl-11 h-12 rounded-xl bg-white/[0.04] border-white/[0.08] text-white placeholder:text-white/25 focus:border-[#D4AF37]/40 focus:ring-[#D4AF37]/20 transition-all duration-300"
+                  className="pl-11 pr-11 h-12 rounded-xl bg-white/[0.04] border-white/[0.08] text-white placeholder:text-white/25 focus:border-[#D4AF37]/40 focus:ring-[#D4AF37]/20 transition-all duration-300"
                 />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-white/25 hover:text-white/50 transition-colors"
+                  aria-label={showPassword ? 'Masquer le mot de passe' : 'Afficher le mot de passe'}
+                >
+                  {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                </button>
               </div>
             </div>
 
