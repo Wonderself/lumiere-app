@@ -1,7 +1,8 @@
 import { auth } from '@/lib/auth'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
-import { getUserSubscription, cancelSubscriptionAction, PLAN_CONFIGS } from '@/app/actions/subscriptions'
+import { getUserSubscription, cancelSubscriptionAction } from '@/app/actions/subscriptions'
+import { PLAN_CONFIGS } from '@/lib/subscription-plans'
 import { Badge } from '@/components/ui/badge'
 import {
   CreditCard,

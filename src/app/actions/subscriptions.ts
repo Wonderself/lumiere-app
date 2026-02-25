@@ -5,6 +5,8 @@ import { prisma } from '@/lib/prisma'
 import { revalidatePath } from 'next/cache'
 import { createNotification } from '@/lib/notifications'
 import { recordEvent } from '@/lib/blockchain'
+import { PLAN_CONFIGS } from '@/lib/subscription-plans'
+import type { PlanConfig } from '@/lib/subscription-plans'
 
 /**
  * Subscription management for streaming plans.
@@ -14,50 +16,6 @@ import { recordEvent } from '@/lib/blockchain'
  * - With STRIPE_SECRET_KEY: real payment via Stripe Checkout
  * - Without: subscription is activated directly (dev/testing mode)
  */
-
-type PlanConfig = {
-  id: string
-  name: string
-  priceEur: number
-  features: string[]
-  maxStreams: number
-  maxQuality: '720p' | '1080p' | '4K'
-  offlineDownloads: number
-  adFree: boolean
-}
-
-export const PLAN_CONFIGS: Record<string, PlanConfig> = {
-  FREE: {
-    id: 'FREE',
-    name: 'Gratuit',
-    priceEur: 0,
-    features: ['5 films/mois', '720p', 'Publicités'],
-    maxStreams: 5,
-    maxQuality: '720p',
-    offlineDownloads: 0,
-    adFree: false,
-  },
-  BASIC: {
-    id: 'BASIC',
-    name: 'Basic',
-    priceEur: 4.99,
-    features: ['Illimité', '1080p', 'Sans pubs', 'Sous-titres', '5 downloads'],
-    maxStreams: -1,
-    maxQuality: '1080p',
-    offlineDownloads: 5,
-    adFree: true,
-  },
-  PREMIUM: {
-    id: 'PREMIUM',
-    name: 'Premium',
-    priceEur: 9.99,
-    features: ['Illimité', '4K', 'Sans pubs', 'Dolby Atmos', 'Downloads illimités'],
-    maxStreams: -1,
-    maxQuality: '4K',
-    offlineDownloads: -1,
-    adFree: true,
-  },
-}
 
 /**
  * Subscribe to a plan.
