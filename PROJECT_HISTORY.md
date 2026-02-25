@@ -895,3 +895,65 @@ Templates HTML branding Lumiere gold/dark.
 - V11: in_progress (3/5 done)
 - V12: in_progress (2/5 done)
 - V13: todo (0/4)
+
+### 2026-02-25 — V11-V13 Server Actions Batch (7 roadmap items)
+
+**v11-5: Configuration Bitrate Adaptatif** (DONE)
+- Created `src/app/actions/bitrate-config.ts`
+- `getBitrateProfilesAction()` — returns 4 HLS quality profiles from transcoding.ts
+- `getFilmBitrateConfigAction(filmId)` — reads per-film config from CatalogFilm tags
+- `setFilmBitrateConfigAction(filmId, profiles[])` — stores enabled profiles in tags
+
+**v12-4: Gestion des Sessions** (DONE)
+- Created `src/app/actions/sessions.ts`
+- `recordSessionAction()` — tracks login with IP, userAgent parsing (device/browser/OS)
+- `getActiveSessionsAction()` — lists non-revoked sessions
+- `revokeSessionAction(sessionId)` / `revokeAllSessionsAction()` — revocation
+- Added `UserSession` Prisma model
+
+**v12-5: Journal d'Audit Admin** (DONE)
+- Created `src/app/actions/audit.ts`
+- `logAuditEvent(action, entity, entityId?, details?)` — internal utility, auto IP capture
+- `getAuditLogAction(page?, entity?, userId?)` — paginated admin log with user names
+- `getAuditStatsAction()` — today/week counts, top actors, top action types
+- Added `AuditLog` Prisma model with indexes
+
+**v13-1: Commentaires Films** (DONE)
+- Created `src/app/actions/comments.ts` (extended existing task comments file)
+- `addCommentAction(filmId, content, parentId?)` — threaded replies
+- `getFilmCommentsAction(filmId, page?)` — paginated with 3 replies per comment
+- `likeCommentAction(commentId)` — toggle like/unlike
+- `deleteCommentAction(commentId)` — soft delete (isHidden)
+- `editCommentAction(commentId, content)` — owner edit with isEdited flag
+- Added `FilmComment` + `CommentLike` Prisma models
+
+**v13-2: Générique / Crédits** (DONE)
+- Created `src/app/actions/credits.ts`
+- `getFilmCreditsAction(filmSlug)` — groups validated tasks by phase with contributor info
+- Includes scenario WINNER author as screenwriter credit
+
+**v13-3: Collections & Playlists** (DONE)
+- Created `src/app/actions/playlists.ts`
+- Full CRUD: create/update/delete playlists (max 50 per user)
+- Add/remove films (max 200 per playlist, duplicate-safe)
+- Public/private visibility, owner-only mutations
+- `getUserPlaylistsAction()` with item counts
+- Added `Playlist` + `PlaylistItem` Prisma models
+
+**v13-4: Créateur à la Une** (DONE)
+- Created `src/app/actions/featured-creator.ts`
+- `getFeaturedCreatorAction()` — returns current week's featured creator
+- `setFeaturedCreatorAction(userId, headline, achievement)` — admin manual pick
+- `autoSelectFeaturedCreatorAction()` — auto-selects top contributor of the week
+- Added `FeaturedCreator` Prisma model (@@unique weekStart)
+
+**Prisma Schema Changes**:
+- 7 new models: AuditLog, UserSession, FilmComment, CommentLike, Playlist, PlaylistItem, FeaturedCreator
+- New relations on User: sessions, filmComments, commentLikes, playlists, featuredCreator
+- New relations on CatalogFilm: filmComments, playlistItems
+- Indexes for performance on AuditLog and FilmComment
+
+**Phase Statuses Updated**:
+- V11: in_progress (4/5 done)
+- V12: in_progress (4/5 done)
+- V13: DONE (4/4)

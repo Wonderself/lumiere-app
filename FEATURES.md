@@ -1067,3 +1067,77 @@ Each phase has: status (LOCKED/ACTIVE/COMPLETED), order, dependencies
 - **Réponse**: status (healthy/degraded), timestamp, uptime, version, latency, checks
 - **HTTP**: 200 si healthy, 503 si degraded
 - **Utilisé par**: Docker healthcheck, monitoring, orchestrateurs
+
+---
+
+## 76. Configuration Bitrate Adaptatif (v11-5)
+- **Fichier**: `src/app/actions/bitrate-config.ts`
+- **Actions**:
+  - `getBitrateProfilesAction()` — retourne les 4 profils HLS (360p, 720p, 1080p, 4K)
+  - `getFilmBitrateConfigAction(filmId)` — config par film stockée dans tags CatalogFilm
+  - `setFilmBitrateConfigAction(filmId, enabledProfiles)` — active/désactive profils par film
+- **Stockage**: tag `bitrate:360p,720p,1080p,4k` dans CatalogFilm.tags
+- **Fallback**: tous profils activés si aucune config custom
+
+## 77. Gestion des Sessions (v12-4)
+- **Fichier**: `src/app/actions/sessions.ts`
+- **Modèle Prisma**: `UserSession` — ip, userAgent, device, browser, os, country, lastActive, revokedAt
+- **Actions**:
+  - `recordSessionAction()` — enregistre une session avec parsing user-agent (device/browser/OS)
+  - `getActiveSessionsAction()` — liste les sessions non-révoquées
+  - `revokeSessionAction(sessionId)` — révoque une session spécifique
+  - `revokeAllSessionsAction()` — révoque toutes les sessions
+- **Parsing UA**: détection Chrome/Firefox/Safari/Edge, Windows/macOS/iOS/Android, Desktop/Mobile/Tablet
+
+## 78. Journal d'Audit Admin (v12-5)
+- **Fichier**: `src/app/actions/audit.ts`
+- **Modèle Prisma**: `AuditLog` — userId, action, entity, entityId, details (Json), ip, createdAt
+- **Actions**:
+  - `logAuditEvent(action, entity, entityId?, details?)` — utilitaire interne pour logger actions
+  - `getAuditLogAction(page?, entity?, userId?)` — log paginé avec noms utilisateurs
+  - `getAuditStatsAction()` — stats: actions aujourd'hui/semaine, top acteurs, top types
+- **Indexes**: userId, entity+entityId, createdAt pour requêtes rapides
+- **Usage**: à intégrer dans admin.ts, community.ts etc. via `logAuditEvent()`
+
+## 79. Commentaires Films (v13-1)
+- **Fichier**: `src/app/actions/comments.ts`
+- **Modèle Prisma**: `FilmComment` — filmId, userId, parentId (self-relation), content, likes, isEdited, isHidden
+- **Modèle Prisma**: `CommentLike` — commentId, userId (@@unique)
+- **Actions**:
+  - `addCommentAction(filmId, content, parentId?)` — commentaire ou réponse threadée
+  - `getFilmCommentsAction(filmId, page?)` — paginé (15/page) avec 3 réponses par commentaire
+  - `likeCommentAction(commentId)` — toggle like/unlike avec compteur
+  - `deleteCommentAction(commentId)` — soft delete (isHidden), owner ou admin
+  - `editCommentAction(commentId, content)` — modification avec flag isEdited
+- **Threaded**: réponses imbriquées via parentId self-relation
+- **Modération**: soft delete + isHidden pour masquer sans supprimer
+
+## 80. Générique / Crédits d'Équipe (v13-2)
+- **Fichier**: `src/app/actions/credits.ts`
+- **Action**: `getFilmCreditsAction(filmSlug)` — public
+- **Données**: tâches VALIDATED groupées par phase avec contributeur (displayName, avatarUrl, role)
+- **Scénariste**: inclut l'auteur du ScenarioProposal WINNER lié au film
+- **Format retour**: `{ filmTitle, credits: [{ phase, tasks: [{ title, type, contributor }] }] }`
+
+## 81. Collections & Playlists (v13-3)
+- **Fichier**: `src/app/actions/playlists.ts`
+- **Modèle Prisma**: `Playlist` — userId, title, description, isPublic, coverUrl
+- **Modèle Prisma**: `PlaylistItem` — playlistId, filmId, sortOrder (@@unique playlistId+filmId)
+- **Actions**:
+  - `createPlaylistAction(title, description?, isPublic?)` — max 50 playlists par user
+  - `addToPlaylistAction(playlistId, filmId)` — max 200 items, gère doublons
+  - `removeFromPlaylistAction(playlistId, filmId)`
+  - `getPlaylistAction(playlistId)` — public ou privé (owner)
+  - `getUserPlaylistsAction(userId?)` — listes propres ou publiques d'un user
+  - `deletePlaylistAction(playlistId)` — cascade sur items
+  - `updatePlaylistAction(playlistId, data)` — titre, description, visibilité
+
+## 82. Créateur à la Une (v13-4)
+- **Fichier**: `src/app/actions/featured-creator.ts`
+- **Modèle Prisma**: `FeaturedCreator` — userId, weekStart (@@unique), headline, achievement, isActive
+- **Actions**:
+  - `getFeaturedCreatorAction()` — retourne le créateur mis en avant cette semaine
+  - `setFeaturedCreatorAction(userId, headline, achievement)` — admin: sélection manuelle
+  - `autoSelectFeaturedCreatorAction()` — admin: auto-sélectionne top contributeur de la semaine
+- **Calcul semaine**: lundi UTC de la semaine courante
+- **Auto-sélection**: basée sur le nombre de tâches validées dans les 7 derniers jours

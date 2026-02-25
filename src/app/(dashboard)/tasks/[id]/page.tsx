@@ -15,7 +15,7 @@ import {
 import { formatPrice, formatDate, getStatusColor, getDifficultyColor, getInitials } from '@/lib/utils'
 import { Star, Lock, Clock, CheckCircle, Download, AlertCircle, Trash2, MessageCircle } from 'lucide-react'
 import { claimTaskAction, submitTaskAction } from '@/app/actions/tasks'
-import { deleteCommentAction } from '@/app/actions/comments'
+import { deleteTaskCommentAction } from '@/app/actions/comments'
 import { CommentForm } from './comment-form'
 import type { Metadata } from 'next'
 
@@ -312,7 +312,7 @@ export default async function TaskDetailPage({ params }: Props) {
 
                         {/* Delete button (only for own comments) */}
                         {comment.userId === session.user.id && (
-                          <form action={deleteCommentAction} className="shrink-0">
+                          <form action={deleteTaskCommentAction} className="shrink-0">
                             <input type="hidden" name="commentId" value={comment.id} />
                             <button
                               type="submit"

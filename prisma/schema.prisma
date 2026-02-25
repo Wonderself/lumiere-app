@@ -82,6 +82,13 @@ model User {
   scenarioVotes     ScenarioVote[]
   trailerEntries    TrailerEntry[]
   trailerVotes      TrailerVote[]
+
+  // V12-V13 — Audit, Sessions, Social
+  sessions          UserSession[]
+  filmComments      FilmComment[]
+  commentLikes      CommentLike[]
+  playlists         Playlist[]
+  featuredCreator   FeaturedCreator[]
 }
 
 // ============================================
@@ -710,6 +717,10 @@ model CatalogFilm {
   bonusContent   BonusContent[]
   scenarios      ScenarioProposal[]
   trailerEntries TrailerEntry[]
+
+  // V13 — Social
+  filmComments   FilmComment[]
+  playlistItems  PlaylistItem[]
 }
 
 model CatalogContract {
@@ -1521,4 +1532,121 @@ enum ChainTxStatus {
   CONFIRMED
   FAILED
   REVERTED
+}
+
+// ============================================
+// V12 — AUDIT LOG & SESSION MANAGEMENT
+// ============================================
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  userId    String
+  action    String   // "film.create", "task.validate", "user.delete", etc.
+  entity    String   // "Film", "Task", "User", etc.
+  entityId  String?
+  details   Json?    // Additional context
+  ip        String?
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([entity, entityId])
+  @@index([createdAt])
+}
+
+model UserSession {
+  id        String    @id @default(cuid())
+  userId    String
+  ip        String?
+  userAgent String?
+  device    String?   // "Desktop", "Mobile", "Tablet"
+  browser   String?   // "Chrome", "Firefox", "Safari"
+  os        String?   // "Windows", "macOS", "iOS", "Android"
+  country   String?
+  lastActive DateTime @default(now())
+  revokedAt DateTime?
+  createdAt DateTime  @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+// ============================================
+// V13 — SOCIAL & ENGAGEMENT
+// ============================================
+
+model FilmComment {
+  id        String   @id @default(cuid())
+  filmId    String
+  userId    String
+  parentId  String?  // For threaded replies
+  content   String
+  likes     Int      @default(0)
+  isEdited  Boolean  @default(false)
+  isHidden  Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  film     CatalogFilm   @relation(fields: [filmId], references: [id], onDelete: Cascade)
+  user     User          @relation(fields: [userId], references: [id])
+  parent   FilmComment?  @relation("CommentReplies", fields: [parentId], references: [id])
+  replies  FilmComment[] @relation("CommentReplies")
+  likedBy  CommentLike[]
+
+  @@index([filmId, createdAt])
+}
+
+model CommentLike {
+  id        String   @id @default(cuid())
+  commentId String
+  userId    String
+  createdAt DateTime @default(now())
+
+  comment FilmComment @relation(fields: [commentId], references: [id], onDelete: Cascade)
+  user    User        @relation(fields: [userId], references: [id])
+
+  @@unique([commentId, userId])
+}
+
+model Playlist {
+  id          String   @id @default(cuid())
+  userId      String
+  title       String
+  description String?
+  isPublic    Boolean  @default(false)
+  coverUrl    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user  User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items PlaylistItem[]
+}
+
+model PlaylistItem {
+  id         String   @id @default(cuid())
+  playlistId String
+  filmId     String
+  sortOrder  Int      @default(0)
+  addedAt    DateTime @default(now())
+
+  playlist Playlist    @relation(fields: [playlistId], references: [id], onDelete: Cascade)
+  film     CatalogFilm @relation(fields: [filmId], references: [id], onDelete: Cascade)
+
+  @@unique([playlistId, filmId])
+}
+
+model FeaturedCreator {
+  id          String   @id @default(cuid())
+  userId      String
+  weekStart   DateTime // Monday of the featured week
+  headline    String?
+  bio         String?
+  achievement String?  // Why they're featured
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@unique([weekStart])
+  @@index([isActive, weekStart])
 }

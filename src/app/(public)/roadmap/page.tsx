@@ -219,7 +219,7 @@ const roadmap: Phase[] = [
       { id: 'v11-2', title: 'Génération auto de thumbnails', description: 'Extraction de vignettes à intervalles réguliers pour preview et timeline', status: 'done', difficulty: 'easy', note: 'thumbnails.ts — FFmpeg commands, sprite sheets, progress parsing' },
       { id: 'v11-3', title: 'CDN vidéo (Cloudflare/Mux)', description: 'Distribution vidéo multi-région avec cache edge et protection hotlink', status: 'done', difficulty: 'guided', note: 'cdn.ts — multi-provider (Cloudflare/Mux/self-hosted), signed URLs' },
       { id: 'v11-4', title: 'Protection DRM', description: 'Widevine / FairPlay pour protéger le contenu premium des abonnés', status: 'todo', difficulty: 'guided' },
-      { id: 'v11-5', title: 'Configuration bitrate adaptatif', description: 'Interface admin pour configurer les profils qualité par film', status: 'todo', difficulty: 'easy' },
+      { id: 'v11-5', title: 'Configuration bitrate adaptatif', description: 'Interface admin pour configurer les profils qualité par film', status: 'done', difficulty: 'easy', note: 'bitrate-config.ts — get/set profils par film via tags CatalogFilm' },
     ],
   },
   {
@@ -233,8 +233,8 @@ const roadmap: Phase[] = [
       { id: 'v12-1', title: 'Authentification deux facteurs (2FA)', description: 'TOTP via app authenticator (Google Auth, Authy) pour les comptes sensibles', status: 'todo', difficulty: 'medium' },
       { id: 'v12-2', title: 'Suppression de compte (Art. 17)', description: 'Droit à l\'effacement : suppression complète des données personnelles', status: 'done', difficulty: 'easy', note: 'account.ts — requestAccountDeletionAction, anonymisation des données' },
       { id: 'v12-3', title: 'Export données personnelles (Art. 20)', description: 'Téléchargement JSON de toutes les données de l\'utilisateur', status: 'done', difficulty: 'easy', note: 'account.ts — exportPersonalDataAction, JSON complet' },
-      { id: 'v12-4', title: 'Gestion des sessions', description: 'Voir et révoquer les sessions actives depuis le profil', status: 'todo', difficulty: 'medium' },
-      { id: 'v12-5', title: 'Journal d\'audit admin', description: 'Log de toutes les actions admin (création, validation, suppression) avec horodatage', status: 'todo', difficulty: 'medium' },
+      { id: 'v12-4', title: 'Gestion des sessions', description: 'Voir et révoquer les sessions actives depuis le profil', status: 'done', difficulty: 'medium', note: 'sessions.ts — record/get/revoke/revokeAll + parsing userAgent' },
+      { id: 'v12-5', title: 'Journal d\'audit admin', description: 'Log de toutes les actions admin (création, validation, suppression) avec horodatage', status: 'done', difficulty: 'medium', note: 'audit.ts — logAuditEvent + getAuditLog paginé + stats' },
     ],
   },
   {
@@ -242,13 +242,13 @@ const roadmap: Phase[] = [
     name: 'Social & Engagement',
     version: 'V13',
     description: 'Commentaires, génériques, playlists, créateurs en vedette. La communauté s\'enrichit.',
-    status: 'todo',
+    status: 'done',
     emoji: '💬',
     items: [
-      { id: 'v13-1', title: 'Commentaires sur les films', description: 'Discussion par film avec réponses, likes et modération', status: 'todo', difficulty: 'medium' },
-      { id: 'v13-2', title: 'Générique / crédits d\'équipe', description: 'Page crédits interactive par film listant tous les contributeurs et rôles', status: 'todo', difficulty: 'easy' },
-      { id: 'v13-3', title: 'Collections & playlists', description: 'Créer des playlists thématiques de films partagées ou personnelles', status: 'todo', difficulty: 'medium' },
-      { id: 'v13-4', title: 'Créateur à la une', description: 'Mise en avant hebdomadaire d\'un créateur avec interview et stats', status: 'todo', difficulty: 'easy' },
+      { id: 'v13-1', title: 'Commentaires sur les films', description: 'Discussion par film avec réponses, likes et modération', status: 'done', difficulty: 'medium', note: 'comments.ts — add/edit/delete/like + replies threadées + soft delete' },
+      { id: 'v13-2', title: 'Générique / crédits d\'équipe', description: 'Page crédits interactive par film listant tous les contributeurs et rôles', status: 'done', difficulty: 'easy', note: 'credits.ts — getFilmCredits groupé par phase + scénariste gagnant' },
+      { id: 'v13-3', title: 'Collections & playlists', description: 'Créer des playlists thématiques de films partagées ou personnelles', status: 'done', difficulty: 'medium', note: 'playlists.ts — CRUD + add/remove films + public/privé + max 50/200' },
+      { id: 'v13-4', title: 'Créateur à la une', description: 'Mise en avant hebdomadaire d\'un créateur avec interview et stats', status: 'done', difficulty: 'easy', note: 'featured-creator.ts — get/set/autoSelect top contributeur de la semaine' },
     ],
   },
 ]

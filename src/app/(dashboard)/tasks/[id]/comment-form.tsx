@@ -1,7 +1,7 @@
 'use client'
 
 import { useActionState, useEffect, useRef } from 'react'
-import { addCommentAction } from '@/app/actions/comments'
+import { addTaskCommentAction } from '@/app/actions/comments'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import { Send } from 'lucide-react'
@@ -11,7 +11,7 @@ interface CommentFormProps {
 }
 
 export function CommentForm({ taskId }: CommentFormProps) {
-  const [state, formAction, isPending] = useActionState(addCommentAction, null)
+  const [state, formAction, isPending] = useActionState(addTaskCommentAction, null)
   const formRef = useRef<HTMLFormElement>(null)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
