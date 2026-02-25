@@ -54,7 +54,6 @@ export default async function PaymentsPage() {
       <div>
         <h1
           className="text-3xl sm:text-4xl font-bold mb-2"
-          style={{ fontFamily: 'var(--font-playfair)' }}
         >
           Mes Paiements
         </h1>

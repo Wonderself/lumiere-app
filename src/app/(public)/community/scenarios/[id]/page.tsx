@@ -144,14 +144,14 @@ export default async function ScenarioDetailPage({
             </div>
 
             {/* Title */}
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6" style={{ fontFamily: 'var(--font-playfair)' }}>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 font-playfair">
               {isWinner && <span className="text-[#D4AF37]">&#9733; </span>}
               {scenario.title}
             </h1>
 
             {/* Logline */}
             <div className="mb-8 p-6 sm:rounded-2xl rounded-xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm">
-              <p className="text-lg text-white/70 italic leading-relaxed" style={{ fontFamily: 'var(--font-playfair)' }}>
+              <p className="text-lg text-white/70 italic leading-relaxed font-playfair">
                 &ldquo;{scenario.logline}&rdquo;
               </p>
             </div>
@@ -327,7 +327,7 @@ export default async function ScenarioDetailPage({
         {/* Related Scenarios */}
         {related.length > 0 && (
           <section className="mt-10">
-            <h2 className="flex items-center gap-2 text-xl font-bold mb-6" style={{ fontFamily: 'var(--font-playfair)' }}>
+            <h2 className="flex items-center gap-2 text-xl font-bold mb-6 font-playfair">
               <Sparkles className="h-5 w-5 text-[#D4AF37]" />
               Scenarios similaires
             </h2>

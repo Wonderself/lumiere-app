@@ -14,7 +14,6 @@ export default function NotFound() {
         <div className="space-y-3">
           <h1
             className="text-7xl font-bold text-white"
-            style={{ fontFamily: 'var(--font-playfair)' }}
           >
             404
           </h1>

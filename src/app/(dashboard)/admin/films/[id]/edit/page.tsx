@@ -43,7 +43,7 @@ export default async function EditFilmPage({ params }: Props) {
     <div className="p-8 max-w-2xl space-y-8">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold" style={{ fontFamily: 'var(--font-playfair)' }}>
+          <h1 className="text-3xl font-bold font-playfair">
             Éditer Film
           </h1>
           <p className="text-white/50">{film.title}</p>

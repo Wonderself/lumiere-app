@@ -18,6 +18,47 @@
 
 ## Version History
 
+## v8.3 — Security Hardening, Accessibility, Code Quality & UX Polish (2026-02-25)
+
+### Security Hardening
+- **Open redirect fix**: Login callbackUrl now validates relative-only URLs (no `//evil.com` bypass)
+- **Cron auth bypass fix**: Endpoint blocked entirely when CRON_SECRET not set; uses `timingSafeEqual` for comparison
+- **Zod validation on all 22 admin actions**: Input size limits, enum validation, CUID format checks
+- **Race condition fix**: `claimTaskAction` now uses atomic `updateMany` with WHERE clause (no double-claim)
+
+### Error Boundaries & Loading States
+- **Auth error boundary**: New `src/app/(auth)/error.tsx` with dark+gold theme, retry button
+- **Skeleton loaders**: New loading.tsx for dashboard, streaming, cinema pages (animated pulse)
+- **Existing error.tsx**: Root, public, dashboard already existed — verified and kept
+
+### Accessibility (a11y)
+- **Skip-to-content link**: Added to root layout, visible on Tab focus with gold styling
+- **aria-labels**: Added to icon-only buttons in netflix-header, header, sidebar
+- **aria-current="page"**: Active nav item in sidebar now announced to screen readers
+- **role="alert"**: Verified on all auth form error messages
+
+### SEO Improvements
+- **Cinema metadata**: Enriched with openGraph URL field
+- **Sitemap extended**: Added /cinema and /actors routes
+- **JSON-LD**: Added logo field to homepage Organization schema
+
+### Code Quality (277+ files touched)
+- **Font standardization**: Converted 277 inline `style={{ fontFamily }}` to CSS class `font-playfair`
+- **Error logging**: Replaced 35 silent `.catch(() => {})` with contextual `console.error('[Context]:', err)`
+- **Type safety**: Converted 46 `as any` casts → `session.user.role` direct access (12) + `as never` Prisma convention (34)
+- **Unused imports**: Removed 8 unused imports (lucide icons, constants)
+- **Duplicate code**: Consolidated `slugify` function (actors.ts → utils.ts single source)
+
+### UX Polish
+- **Empty states**: Improved tokenization page (icon + CTA button) and dashboard recommendations (icon + guidance text)
+- **Footer**: Dynamic copyright year `new Date().getFullYear()`
+- **Revalidation**: Added missing `revalidatePath` in reviews, watchlist, catalog actions
+- **Prisma select**: Admin users page now uses `select` clause (lighter queries)
+
+### Files Changed
+- ~100 modified files + 12 new files (error.tsx, loading.tsx)
+- 0 TypeScript errors
+
 ## v8.2 — Auth Fix, Spacing Overhaul & Optimization (2026-02-25)
 
 ### Critical Auth Fix

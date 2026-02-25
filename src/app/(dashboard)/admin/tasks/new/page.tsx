@@ -24,7 +24,7 @@ export default async function NewTaskPage() {
   return (
     <div className="max-w-2xl space-y-8">
       <div>
-        <h1 className="text-3xl sm:text-4xl font-bold" style={{ fontFamily: 'var(--font-playfair)' }}>Nouvelle Tâche</h1>
+        <h1 className="text-3xl sm:text-4xl font-bold font-playfair">Nouvelle Tâche</h1>
         <p className="text-white/50">Créer une nouvelle tâche pour un film.</p>
       </div>
 

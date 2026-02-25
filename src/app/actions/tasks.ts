@@ -50,15 +50,31 @@ export async function claimTaskAction(formData: FormData) {
   const deadline = new Date()
   deadline.setHours(deadline.getHours() + 48)
 
-  await prisma.task.update({
-    where: { id: taskId },
-    data: {
-      status: 'CLAIMED',
-      claimedById: session.user.id,
-      claimedAt: new Date(),
-      deadline,
-    },
-  })
+  // Atomic update: use updateMany with status+claimedById in WHERE to prevent race conditions.
+  // If two users try to claim simultaneously, only one will succeed (the other gets count=0).
+  let claimed = false
+  try {
+    const result = await prisma.task.updateMany({
+      where: { id: taskId, status: 'AVAILABLE', claimedById: null },
+      data: {
+        status: 'CLAIMED',
+        claimedById: session.user.id,
+        claimedAt: new Date(),
+        deadline,
+      },
+    })
+    claimed = result.count > 0
+  } catch {
+    // DB error or concurrent modification — task was not claimed
+    claimed = false
+  }
+
+  if (!claimed) {
+    // Another user claimed the task between our read and write, or DB error
+    revalidatePath(`/tasks/${taskId}`)
+    revalidatePath('/tasks')
+    redirect(`/tasks/${taskId}`)
+  }
 
   // Record task claim on blockchain
   await recordEvent({
@@ -66,7 +82,7 @@ export async function claimTaskAction(formData: FormData) {
     entityType: 'Task',
     entityId: taskId,
     data: { userId: session.user.id, filmId: task.filmId },
-  }).catch(() => {})
+  }).catch((err) => console.error("[Blockchain] Failed to record TASK_CLAIMED:", err))
 
   revalidatePath(`/tasks/${taskId}`)
   redirect(`/tasks/${taskId}`)
@@ -144,7 +160,7 @@ export async function submitTaskAction(formData: FormData) {
     entityType: 'Task',
     entityId: taskId,
     data: { userId: session.user.id, submissionId: submission.id, aiScore: aiResult.score },
-  }).catch(() => {})
+  }).catch((err) => console.error("[Blockchain] Failed to record TASK_SUBMITTED:", err))
 
   // Notify user about AI review
   await createNotification(session.user.id, 'SUBMISSION_REVIEWED', `Revue IA terminée`, {

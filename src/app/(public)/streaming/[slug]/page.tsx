@@ -99,7 +99,7 @@ export default async function StreamingFilmPage(props: { params: Promise<{ slug:
                 {/* Subtle pulse animation */}
                 <div className="absolute inset-0 rounded-full bg-[#D4AF37]/10 animate-ping" style={{ animationDuration: '3s' }} />
               </div>
-              <p className="text-white/70 text-lg font-semibold mb-2" style={{ fontFamily: 'var(--font-playfair)' }}>
+              <p className="text-white/70 text-lg font-semibold mb-2 font-playfair">
                 En cours de production
               </p>
               <p className="text-white/30 text-sm mb-1">

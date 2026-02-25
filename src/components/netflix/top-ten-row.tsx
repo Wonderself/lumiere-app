@@ -56,7 +56,6 @@ export function TopTenRow({ films }: { films: FilmCard[] }) {
           <div className="h-7 w-1.5 rounded-full bg-gradient-to-b from-[#D4AF37] to-[#8B6914]" />
           <h2
             className="text-lg md:text-xl lg:text-2xl font-bold text-white/90 tracking-tight"
-            style={{ fontFamily: 'var(--font-playfair)' }}
           >
             Top 10 des Projets
           </h2>
@@ -101,11 +100,10 @@ export function TopTenRow({ films }: { films: FilmCard[] }) {
             >
               {/* Big number — positioned behind poster */}
               <div
-                className="text-[70px] sm:text-[90px] md:text-[130px] lg:text-[150px] font-black leading-none select-none z-10 transition-all duration-500 group-hover/card:scale-105"
+                className="text-[70px] sm:text-[90px] md:text-[130px] lg:text-[150px] font-black leading-none select-none z-10 transition-all duration-500 group-hover/card:scale-105 font-playfair"
                 style={{
                   WebkitTextStroke: '2px rgba(212, 175, 55, 0.25)',
                   color: 'transparent',
-                  fontFamily: 'var(--font-playfair)',
                   filter: 'drop-shadow(0 0 30px rgba(212, 175, 55, 0.06))',
                   marginRight: '-12px',
                 }}

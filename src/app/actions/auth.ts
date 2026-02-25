@@ -105,7 +105,7 @@ export async function registerAction(
     })
 
     // Send welcome email with verification link (non-blocking)
-    sendWelcomeEmail(email.toLowerCase(), displayName, verificationToken).catch(() => {})
+    sendWelcomeEmail(email.toLowerCase(), displayName, verificationToken).catch((err) => console.error("[Email] Failed to send welcome email:", err))
 
     return { success: true }
   } catch (error) {
@@ -310,7 +310,7 @@ export async function resendVerificationAction() {
   })
 
   // Send verification email
-  sendWelcomeEmail(user.email, user.displayName || 'Utilisateur', verificationToken).catch(() => {})
+  sendWelcomeEmail(user.email, user.displayName || 'Utilisateur', verificationToken).catch((err) => console.error("[Email] Failed to send verification email:", err))
 
   return { success: true }
 }

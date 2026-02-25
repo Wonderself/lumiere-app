@@ -130,7 +130,6 @@ export function HeroBanner({ films }: { films: HeroFilm[] }) {
             {/* Title — strong cinema typography */}
             <h1
               className="text-[2.5rem] sm:text-5xl md:text-6xl lg:text-[5rem] font-black mb-8 md:mb-10 text-white leading-[0.92] tracking-[-0.02em]"
-              style={{ fontFamily: 'var(--font-playfair)' }}
             >
               {film.title}
             </h1>

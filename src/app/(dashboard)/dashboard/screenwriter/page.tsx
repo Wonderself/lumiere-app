@@ -58,7 +58,7 @@ export default async function ScreenwriterDashboardPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl sm:text-4xl font-bold" style={{ fontFamily: 'var(--font-playfair)' }}>
+          <h1 className="text-3xl sm:text-4xl font-bold font-playfair">
             Espace Scenariste
           </h1>
           <p className="text-white/50">Gerez vos scenarios et suivez leur progression.</p>
@@ -81,7 +81,7 @@ export default async function ScreenwriterDashboardPage() {
         ].map((stat) => (
           <div key={stat.label} className="p-5 rounded-xl border border-white/[0.06] bg-white/[0.02]">
             <stat.icon className={`h-5 w-5 mb-3 ${stat.color}`} />
-            <div className="text-2xl font-bold" style={{ fontFamily: 'var(--font-playfair)' }}>{stat.value}</div>
+            <div className="text-2xl font-bold font-playfair">{stat.value}</div>
             <div className="text-xs text-white/30 mt-1">{stat.label}</div>
           </div>
         ))}
@@ -104,7 +104,7 @@ export default async function ScreenwriterDashboardPage() {
 
       {/* Scenarios list */}
       <div>
-        <h2 className="text-xl font-bold mb-4" style={{ fontFamily: 'var(--font-playfair)' }}>
+        <h2 className="text-xl font-bold mb-4 font-playfair">
           Mes Scenarios
         </h2>
 

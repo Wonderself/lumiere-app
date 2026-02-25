@@ -27,7 +27,7 @@ export default async function AdminFilmsPage() {
     <div className="space-y-10">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl sm:text-4xl font-bold" style={{ fontFamily: 'var(--font-playfair)' }}>Films</h1>
+          <h1 className="text-3xl sm:text-4xl font-bold font-playfair">Films</h1>
           <p className="text-white/50">{films.length} film{films.length > 1 ? 's' : ''} au total</p>
         </div>
         <Link href="/admin/films/new">

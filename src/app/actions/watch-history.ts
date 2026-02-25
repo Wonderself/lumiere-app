@@ -192,7 +192,7 @@ export async function markAsWatchedAction(filmId: string) {
     await prisma.catalogFilm.update({
       where: { id: filmId },
       data: { viewCount: { increment: 1 } },
-    }).catch(() => {})
+    }).catch((err) => console.error("[WatchHistory] Failed to increment view count:", err))
   }
 
   return { success: true }

@@ -24,15 +24,6 @@ export function formatFollowers(count: number): string {
   return count.toString()
 }
 
-export function slugify(name: string): string {
-  return name
-    .toLowerCase()
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/(^-|-$)/g, '')
-}
-
 export const NATIONALITY_FLAGS: Record<string, string> = {
   'Francaise': '\u{1F1EB}\u{1F1F7}',
   'Americaine': '\u{1F1FA}\u{1F1F8}',

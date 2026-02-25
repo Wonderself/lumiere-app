@@ -42,7 +42,7 @@ export async function updateFundingStatusAction(formData: FormData) {
 
   await prisma.publicFunding.update({
     where: { id: fundingId },
-    data: { status: status as any },
+    data: { status: status as never },
   })
 
   revalidatePath('/admin/funding')
@@ -88,7 +88,7 @@ export async function createFundingAction(
     data: {
       name,
       organism,
-      type: type as any,
+      type: type as never,
       description,
       eligibility,
       maxAmount,

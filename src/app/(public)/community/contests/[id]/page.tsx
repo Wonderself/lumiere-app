@@ -112,7 +112,7 @@ export default async function ContestDetailPage({
             )}
           </div>
 
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4" style={{ fontFamily: 'var(--font-playfair)' }}>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4 font-playfair">
             {contest.title}
           </h1>
 
@@ -178,7 +178,7 @@ export default async function ContestDetailPage({
 
         {/* Entries */}
         <div className="mb-6 flex items-center justify-between">
-          <h2 className="text-xl font-bold" style={{ fontFamily: 'var(--font-playfair)' }}>
+          <h2 className="text-xl font-bold font-playfair">
             {isVoting ? 'Votez pour votre favori' : isClosed ? 'Resultats' : 'Participations'}
           </h2>
           {isVoting && (
@@ -300,7 +300,7 @@ export default async function ContestDetailPage({
         {!userId && (isVoting || isOpen) && (
           <div className="mt-10 text-center p-8 sm:rounded-3xl rounded-2xl border border-[#D4AF37]/20 bg-[#D4AF37]/[0.03] backdrop-blur-sm">
             <Trophy className="h-8 w-8 text-[#D4AF37] mx-auto mb-3" />
-            <h3 className="text-xl font-bold mb-2" style={{ fontFamily: 'var(--font-playfair)' }}>
+            <h3 className="text-xl font-bold mb-2 font-playfair">
               {isVoting ? 'Connectez-vous pour voter' : 'Participez a ce concours'}
             </h3>
             <p className="text-white/40 text-sm mb-4">

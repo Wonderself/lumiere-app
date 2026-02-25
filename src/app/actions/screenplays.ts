@@ -116,7 +116,7 @@ export async function submitScreenplayAction(
     })
     if (user?.email) {
       const sharePct = revenueShareBps / 100
-      sendScreenplayAcceptedEmail(user.email, user.displayName || 'Auteur', title, sharePct).catch(() => {})
+      sendScreenplayAcceptedEmail(user.email, user.displayName || 'Auteur', title, sharePct).catch((err) => console.error("[Email] Failed to send screenplay accepted email:", err))
     }
   }
 
@@ -175,7 +175,7 @@ export async function generateScreenplayDealAction(formData: FormData) {
     entityType: 'Screenplay',
     entityId: screenplayId,
     data: { userId: screenplay.userId, revenueSharePct, title: screenplay.title },
-  }).catch(() => {})
+  }).catch((err) => console.error("[Blockchain] Failed to record SCREENPLAY_DEAL_CREATED:", err))
 
   // Send email
   if (screenplay.user.email) {
@@ -184,7 +184,7 @@ export async function generateScreenplayDealAction(formData: FormData) {
       screenplay.user.displayName || 'Auteur',
       screenplay.title,
       revenueSharePct
-    ).catch(() => {})
+    ).catch((err) => console.error("[Email] Failed to send screenplay deal email:", err))
   }
 
   revalidatePath('/admin/screenplays')

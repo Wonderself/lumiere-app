@@ -62,7 +62,6 @@ export default async function SubscriptionPage() {
       <div>
         <h1
           className="text-3xl sm:text-4xl font-bold text-gray-900"
-          style={{ fontFamily: 'var(--font-playfair)' }}
         >
           Mon Abonnement
         </h1>
@@ -83,7 +82,6 @@ export default async function SubscriptionPage() {
                 <div className="flex items-center gap-3">
                   <h2
                     className="text-2xl font-bold text-gray-900"
-                    style={{ fontFamily: 'var(--font-playfair)' }}
                   >
                     Plan {subscription.name}
                   </h2>
@@ -214,7 +212,6 @@ export default async function SubscriptionPage() {
             <div className="flex-1">
               <h3
                 className="text-lg font-bold text-gray-900"
-                style={{ fontFamily: 'var(--font-playfair)' }}
               >
                 Passez à un plan supérieur
               </h3>

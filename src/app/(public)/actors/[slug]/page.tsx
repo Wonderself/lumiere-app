@@ -150,7 +150,7 @@ export default async function ActorProfilePage({ params }: Props) {
                   className="w-full h-full object-cover"
                 />
               ) : (
-                <div className="w-full h-full flex items-center justify-center text-[#D4AF37]/50 text-5xl font-bold" style={{ fontFamily: 'var(--font-playfair)' }}>
+                <div className="w-full h-full flex items-center justify-center text-[#D4AF37]/50 text-5xl font-bold font-playfair">
                   {actor.name.charAt(0)}
                 </div>
               )}
@@ -162,7 +162,6 @@ export default async function ActorProfilePage({ params }: Props) {
             <div className="flex flex-wrap items-center gap-3 mb-2">
               <h1
                 className="text-2xl sm:text-4xl md:text-5xl font-bold text-gray-900"
-                style={{ fontFamily: 'var(--font-playfair)' }}
               >
                 {actor.name}
               </h1>
@@ -187,7 +186,7 @@ export default async function ActorProfilePage({ params }: Props) {
             {actor.quote && (
               <div className="flex items-start gap-3 mb-6">
                 <Quote className="h-5 w-5 text-[#D4AF37]/40 shrink-0 mt-0.5" />
-                <p className="text-[#D4AF37]/80 italic text-base sm:text-lg leading-relaxed" style={{ fontFamily: 'var(--font-playfair)' }}>
+                <p className="text-[#D4AF37]/80 italic text-base sm:text-lg leading-relaxed font-playfair">
                   {actor.quote}
                 </p>
               </div>
@@ -217,7 +216,7 @@ export default async function ActorProfilePage({ params }: Props) {
             {/* Bio */}
             {actor.bio && (
               <section className="rounded-2xl border border-gray-100 bg-white shadow-sm p-6 md:p-8">
-                <h2 className="text-xl font-bold mb-4 flex items-center gap-2 text-gray-900" style={{ fontFamily: 'var(--font-playfair)' }}>
+                <h2 className="text-xl font-bold mb-4 flex items-center gap-2 text-gray-900 font-playfair">
                   <Sparkles className="h-5 w-5 text-[#D4AF37]" />
                   Biographie
                 </h2>
@@ -228,7 +227,7 @@ export default async function ActorProfilePage({ params }: Props) {
             {/* Filmography */}
             {actor.castRoles.length > 0 && (
               <section className="rounded-2xl border border-gray-100 bg-white shadow-sm p-6 md:p-8">
-                <h2 className="text-xl font-bold mb-6 flex items-center gap-2 text-gray-900" style={{ fontFamily: 'var(--font-playfair)' }}>
+                <h2 className="text-xl font-bold mb-6 flex items-center gap-2 text-gray-900 font-playfair">
                   <Film className="h-5 w-5 text-[#D4AF37]" />
                   Filmographie
                 </h2>
@@ -287,7 +286,7 @@ export default async function ActorProfilePage({ params }: Props) {
             {/* Bonus Content */}
             {actor.bonusContent.length > 0 && (
               <section className="rounded-2xl border border-gray-100 bg-white shadow-sm p-6 md:p-8">
-                <h2 className="text-xl font-bold mb-6 flex items-center gap-2 text-gray-900" style={{ fontFamily: 'var(--font-playfair)' }}>
+                <h2 className="text-xl font-bold mb-6 flex items-center gap-2 text-gray-900 font-playfair">
                   <Play className="h-5 w-5 text-[#D4AF37]" />
                   Contenu Bonus
                 </h2>

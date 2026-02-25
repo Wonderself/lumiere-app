@@ -42,7 +42,6 @@ export function ManifestoSection() {
               viewport={{ once: true, margin: '-50px' }}
               transition={{ duration: 0.6, delay: idx * 0.08 }}
               className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-light text-white/50 leading-[1.6] md:leading-[1.5]"
-              style={{ fontFamily: 'var(--font-playfair)' }}
             >
               {line.normal}{' '}
               <span className="font-bold text-[#D4AF37]">{line.gold}</span>
@@ -56,7 +55,6 @@ export function ManifestoSection() {
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.8 }}
           className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-white mt-16 md:mt-24"
-          style={{ fontFamily: 'var(--font-playfair)' }}
         >
           Bienvenue dans le <span className="text-[#D4AF37]">futur du cinema.</span>
         </motion.p>
@@ -116,7 +114,6 @@ export function HowItWorks() {
       >
         <h2
           className="text-3xl md:text-4xl lg:text-5xl font-black text-white mb-6"
-          style={{ fontFamily: 'var(--font-playfair)' }}
         >
           Comment ca marche
         </h2>
@@ -178,7 +175,6 @@ export function PipelineVisual() {
       >
         <h2
           className="text-3xl md:text-4xl lg:text-5xl font-black text-white mb-6"
-          style={{ fontFamily: 'var(--font-playfair)' }}
         >
           De l&apos;idee au <span className="text-[#D4AF37]">grand ecran</span>
         </h2>
@@ -279,7 +275,6 @@ export function ComparisonTable() {
       >
         <h2
           className="text-3xl md:text-4xl lg:text-5xl font-black text-white mb-6"
-          style={{ fontFamily: 'var(--font-playfair)' }}
         >
           Pourquoi <span className="text-[#D4AF37]">Lumiere</span>
         </h2>
@@ -387,7 +382,6 @@ export function SocialProof() {
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
             className="text-lg md:text-xl lg:text-2xl text-white/50 font-light leading-relaxed italic"
-            style={{ fontFamily: 'var(--font-playfair)' }}
           >
             &laquo;&nbsp;Nous ne remplacons pas les artistes. Nous donnons a chaque artiste
             un studio de cinema dans sa poche.&nbsp;&raquo;
@@ -422,7 +416,6 @@ export function FinalCTA() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="text-3xl md:text-4xl lg:text-5xl font-black text-white mb-10 leading-tight"
-          style={{ fontFamily: 'var(--font-playfair)' }}
         >
           Le cinema de demain se construit{' '}
           <span className="text-[#D4AF37]">maintenant.</span>

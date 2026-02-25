@@ -99,7 +99,7 @@ function AnimatedCounter({ end, suffix = '', prefix = '' }: { end: number; suffi
 
   return (
     <div ref={ref} className="text-center">
-      <p className="text-2xl sm:text-3xl md:text-4xl font-black text-[#D4AF37] tabular-nums" style={{ fontFamily: 'var(--font-playfair)' }}>
+      <p className="text-2xl sm:text-3xl md:text-4xl font-black text-[#D4AF37] tabular-nums font-playfair">
         {prefix}{count.toLocaleString('fr-FR')}{suffix}
       </p>
     </div>
@@ -147,7 +147,6 @@ export function HeroManifesto({ filmCount }: { filmCount: number }) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
           className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black text-white leading-[1.05] tracking-tight max-w-5xl mb-10"
-          style={{ fontFamily: 'var(--font-playfair)' }}
         >
           Le premier studio de cinema{' '}
           <br className="hidden sm:block" />
@@ -214,7 +213,7 @@ export function HeroManifesto({ filmCount }: { filmCount: number }) {
             <p className="text-[11px] text-white/25 uppercase tracking-[0.2em] mt-3 font-medium">par film</p>
           </div>
           <div className="text-center">
-            <p className="text-2xl sm:text-3xl md:text-4xl font-black text-white/60" style={{ fontFamily: 'var(--font-playfair)' }}>
+            <p className="text-2xl sm:text-3xl md:text-4xl font-black text-white/60 font-playfair">
               Paris &middot; Jerusalem
             </p>
             <p className="text-[11px] text-white/25 uppercase tracking-[0.2em] mt-3 font-medium">double ecosysteme</p>

@@ -122,7 +122,6 @@ export default async function NotificationsPage({
         <div>
           <h1
             className="text-3xl sm:text-4xl font-bold text-gray-900"
-            style={{ fontFamily: 'var(--font-playfair)' }}
           >
             Notifications
           </h1>

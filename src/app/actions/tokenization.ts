@@ -139,7 +139,7 @@ export async function buyTokensAction(
       entityType: 'FilmTokenPurchase',
       entityId: offeringId,
       data: { userId: session.user.id, tokenCount, amountPaid, offeringId },
-    }).catch(() => {})
+    }).catch((err) => console.error("[Blockchain] Failed to record TOKEN_PURCHASED:", err))
 
     revalidatePath(`/tokenization/${offering.filmId}`)
     revalidatePath('/tokenization')
@@ -238,7 +238,7 @@ export async function listTokensForSaleAction(
       entityType: 'FilmTokenTransfer',
       entityId: offeringId,
       data: { userId: session.user.id, tokenCount, pricePerToken, offeringId },
-    }).catch(() => {})
+    }).catch((err) => console.error("[Blockchain] Failed to record TOKEN_LISTED_FOR_SALE:", err))
 
     revalidatePath(`/tokenization`)
     revalidatePath('/tokenization/portfolio')
@@ -325,7 +325,7 @@ export async function buyFromSecondaryAction(
         totalAmount: transfer.totalAmount,
         offeringId: transfer.offeringId,
       },
-    }).catch(() => {})
+    }).catch((err) => console.error("[Blockchain] Failed to record TOKEN_TRANSFERRED:", err))
 
     revalidatePath('/tokenization')
     revalidatePath('/tokenization/portfolio')
@@ -397,7 +397,7 @@ export async function createProposalAction(
         proposerId: session.user.id,
         title,
         description,
-        type: type as any,
+        type: type as never,
         status: 'ACTIVE',
         quorumPct: offering.distributionPct >= 50 ? 20 : 30,
         deadline,
@@ -410,7 +410,7 @@ export async function createProposalAction(
       entityType: 'GovernanceProposal',
       entityId: offeringId,
       data: { proposerId: session.user.id, title, type, offeringId },
-    }).catch(() => {})
+    }).catch((err) => console.error("[Blockchain] Failed to record GOVERNANCE_PROPOSAL_CREATED:", err))
 
     revalidatePath('/tokenization/governance')
     revalidatePath(`/tokenization/${offering.filmId}`)
@@ -520,7 +520,7 @@ export async function voteOnProposalAction(
       entityType: 'GovernanceVote',
       entityId: proposalId,
       data: { voterId: session.user.id, vote, tokenWeight, proposalId },
-    }).catch(() => {})
+    }).catch((err) => console.error("[Blockchain] Failed to record GOVERNANCE_VOTE_CAST:", err))
 
     revalidatePath('/tokenization/governance')
 
@@ -606,7 +606,7 @@ export async function claimDividendAction(
         period: dividend.period,
         offeringId: dividend.offeringId,
       },
-    }).catch(() => {})
+    }).catch((err) => console.error("[Blockchain] Failed to record DIVIDEND_CLAIMED:", err))
 
     revalidatePath('/tokenization/portfolio')
 

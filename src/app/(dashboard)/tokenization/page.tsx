@@ -154,10 +154,16 @@ export default async function TokenizationMarketplacePage() {
         </div>
 
         {offerings.length === 0 ? (
-          <div className="py-16 text-center">
-            <Sparkles className="h-10 w-10 text-gray-200 mx-auto mb-4" />
-            <p className="text-gray-500 text-sm">Aucune offre active pour le moment.</p>
-            <p className="text-gray-400 text-xs mt-1">De nouvelles opportunités arrivent bientôt.</p>
+          <div className="py-20 text-center bg-white rounded-2xl border border-gray-100 shadow-sm">
+            <div className="mx-auto w-16 h-16 rounded-2xl bg-amber-50 flex items-center justify-center mb-5">
+              <Sparkles className="h-8 w-8 text-[#D4AF37]/60" />
+            </div>
+            <p className="text-gray-700 text-lg font-semibold mb-2">Aucune offre active pour le moment</p>
+            <p className="text-gray-400 text-sm max-w-md mx-auto mb-6 px-4">De nouvelles opportunites de co-production arrivent bientot. Revenez regulierement pour decouvrir les prochains films ouverts.</p>
+            <Link href="/films" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#D4AF37] text-white text-sm font-medium hover:bg-[#C5A028] transition-colors">
+              <Film className="h-4 w-4" />
+              Decouvrir les films en production
+            </Link>
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">

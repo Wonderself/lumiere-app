@@ -127,7 +127,7 @@ export async function subscribeToPlanAction(formData: FormData) {
     entityType: 'Subscription',
     entityId: session.user.id,
     data: { plan, priceEur: planConfig.priceEur },
-  }).catch(() => {})
+  }).catch((err) => console.error("[Blockchain] Failed to record SUBSCRIPTION_CHANGED:", err))
 
   revalidatePath('/streaming')
   revalidatePath('/dashboard')
@@ -181,7 +181,7 @@ export async function cancelSubscriptionAction() {
     entityType: 'Subscription',
     entityId: session.user.id,
     data: { action: 'cancelled', plan: sub.plan },
-  }).catch(() => {})
+  }).catch((err) => console.error("[Blockchain] Failed to record SUBSCRIPTION_CHANGED:", err))
 
   revalidatePath('/dashboard/subscription')
   revalidatePath('/streaming')

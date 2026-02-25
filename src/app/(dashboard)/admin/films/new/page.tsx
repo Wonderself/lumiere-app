@@ -16,7 +16,7 @@ export default async function NewFilmPage() {
   return (
     <div className="max-w-2xl space-y-8">
       <div>
-        <h1 className="text-3xl sm:text-4xl font-bold" style={{ fontFamily: 'var(--font-playfair)' }}>Nouveau Film</h1>
+        <h1 className="text-3xl sm:text-4xl font-bold font-playfair">Nouveau Film</h1>
         <p className="text-white/50">Créez un nouveau projet de film sur la plateforme.</p>
       </div>
 

@@ -219,7 +219,7 @@ export async function generateTrendingVideoAction(
       await prisma.publishSchedule.create({
         data: {
           videoId: video.id,
-          platform: platform as any,
+          platform: platform as never,
           scheduledAt: new Date(),
           status: 'SCHEDULED',
         },
@@ -260,10 +260,10 @@ export async function connectSocialAccountAction(
   if (!platform || !handle) return { error: 'Plateforme et identifiant requis' }
 
   await prisma.socialAccount.upsert({
-    where: { userId_platform: { userId: session.user.id, platform: platform as any } },
+    where: { userId_platform: { userId: session.user.id, platform: platform as never } },
     create: {
       userId: session.user.id,
-      platform: platform as any,
+      platform: platform as never,
       handle,
     },
     update: { handle },

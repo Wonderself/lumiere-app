@@ -71,7 +71,7 @@ export function Footer() {
         {/* Bottom bar */}
         <div className="mt-24 pt-14 border-t border-white/[0.04] flex flex-col md:flex-row items-center justify-between gap-6">
           <p className="text-[11px] text-white/15">
-            &copy; 2026 Lumiere Brothers Pictures SAS. Tous droits reserves.
+            &copy; {new Date().getFullYear()} Lumiere Brothers Pictures SAS. Tous droits reserves.
           </p>
           <div className="flex items-center gap-3">
             <span className="text-[10px] text-white/10 tracking-wider">Powered by</span>

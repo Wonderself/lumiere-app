@@ -28,6 +28,21 @@
 - Admin paths: /admin (non-admin redirected to /dashboard)
 - Auth paths: /login, /register, /forgot-password, /reset-password, /verify-email (redirect to /dashboard if logged in)
 - Security headers applied to all responses
+- Open redirect protection: callbackUrl validated as relative-only (no protocol-relative bypass)
+
+### Security Hardening (v8.3)
+- Cron endpoint: Blocked when CRON_SECRET not set, uses `timingSafeEqual` for timing-attack-safe comparison
+- Zod validation on all 22 admin actions: input size limits, enum validation, CUID format checks
+- Race condition prevention: `claimTaskAction` uses atomic WHERE clause (prevents double-claim)
+- Rate limiting: Login (5/15min), Register (3/hr), Password reset (3/15min) via in-memory sliding window
+
+### Accessibility (v8.3)
+- Skip-to-content link (visible on Tab focus, gold styling)
+- aria-labels on all icon-only buttons (header, sidebar, netflix-header)
+- aria-current="page" on active sidebar navigation item
+- role="alert" on all auth form error messages
+- Error boundaries: root, public, dashboard, auth (dark+gold theme, retry button)
+- Skeleton loading pages: dashboard, streaming, cinema (animated pulse)
 
 ### Roles
 | Role | Description |

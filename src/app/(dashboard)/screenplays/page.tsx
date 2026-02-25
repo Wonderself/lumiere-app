@@ -58,7 +58,6 @@ export default async function ScreenplaysPage() {
         <div>
           <h1
             className="text-3xl sm:text-4xl font-bold"
-            style={{ fontFamily: 'var(--font-playfair)' }}
           >
             Mes Scenarios
           </h1>

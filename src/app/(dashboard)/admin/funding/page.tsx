@@ -227,7 +227,7 @@ export default async function AdminFundingPage() {
     <div className="p-8 space-y-8">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold flex items-center gap-3" style={{ fontFamily: 'var(--font-playfair)' }}>
+        <h1 className="text-3xl font-bold flex items-center gap-3 font-playfair">
           <Landmark className="h-7 w-7 text-[#D4AF37]" /> Aides Publiques
         </h1>
         <p className="text-white/50">Suivi des aides BPI, CNC, RIAM, CIR et autres financements publics.</p>

@@ -70,7 +70,7 @@ export async function submitScenarioAction(prevState: { error?: string; success?
       .catch((err) => console.error('[AI] Scenario analysis failed:', err))
 
     // Badge check (non-blocking)
-    checkCommunityBadges(session.user.id as string, 'scenario_submit').catch(() => {})
+    checkCommunityBadges(session.user.id as string, 'scenario_submit').catch((err) => console.error("[Badges] Failed to check scenario_submit badges:", err))
 
     revalidatePath('/community/scenarios')
     return { success: true }
@@ -135,7 +135,7 @@ export async function voteScenarioAction(formData: FormData) {
     })
 
     // Badge check (non-blocking)
-    checkCommunityBadges(session.user.id as string, 'vote').catch(() => {})
+    checkCommunityBadges(session.user.id as string, 'vote').catch((err) => console.error("[Badges] Failed to check vote badges:", err))
 
     revalidatePath('/community/scenarios')
     revalidatePath(`/community/scenarios/${proposalId}`)
@@ -250,7 +250,7 @@ export async function pickScenarioWinnerAction(formData: FormData) {
     })
 
     // Badge check for winner (non-blocking)
-    checkCommunityBadges(proposal.authorId, 'scenario_win').catch(() => {})
+    checkCommunityBadges(proposal.authorId, 'scenario_win').catch((err) => console.error("[Badges] Failed to check scenario_win badges:", err))
 
     // Archive other VOTING proposals in the same round
     await prisma.scenarioProposal.updateMany({
@@ -344,7 +344,7 @@ export async function pickScenarioWinnerAction(formData: FormData) {
         tasksGenerated: tasksCreated,
         authorId: proposal.authorId,
       },
-    }).catch(() => {})
+    }).catch((err) => console.error("[Blockchain] Failed to record FILM_CREATED_FROM_SCENARIO:", err))
 
     revalidatePath('/community/scenarios')
     revalidatePath('/admin/contests')

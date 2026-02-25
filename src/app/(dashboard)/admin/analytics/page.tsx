@@ -122,7 +122,7 @@ export default async function AdminAnalyticsPage() {
     <div className="space-y-10">
       {/* Header */}
       <div>
-        <h1 className="text-3xl sm:text-4xl font-bold mb-2" style={{ fontFamily: 'var(--font-playfair)' }}>
+        <h1 className="text-3xl sm:text-4xl font-bold mb-2 font-playfair">
           Analytics{' '}
           <span className="text-shimmer">Avancees</span>
         </h1>
@@ -144,7 +144,7 @@ export default async function AdminAnalyticsPage() {
                   {kpi.trend === 'up' && <ArrowUpRight className="h-4 w-4 text-green-400" />}
                   {kpi.trend === 'down' && <ArrowDownRight className="h-4 w-4 text-red-400" />}
                 </div>
-                <div className="text-2xl font-bold text-white mb-0.5" style={{ fontFamily: 'var(--font-playfair)' }}>
+                <div className="text-2xl font-bold text-white mb-0.5 font-playfair">
                   {kpi.value}
                 </div>
                 <div className="text-[11px] text-white/30 mb-2">{kpi.label}</div>
@@ -344,7 +344,7 @@ export default async function AdminAnalyticsPage() {
                 { label: 'Total', value: data.tasks.total, color: '#9ca3af' },
               ].map((item) => (
                 <div key={item.label} className="text-center p-4 rounded-xl bg-white/[0.02] border border-white/[0.04]">
-                  <div className="text-2xl font-bold mb-1" style={{ color: item.color, fontFamily: 'var(--font-playfair)' }}>
+                  <div className="text-2xl font-bold mb-1 font-playfair" style={{ color: item.color }}>
                     {item.value}
                   </div>
                   <div className="text-[11px] text-white/40">{item.label}</div>

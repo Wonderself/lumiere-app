@@ -38,7 +38,7 @@ export async function createBonusContentAction(formData: FormData) {
       filmId: filmId || null,
       catalogFilmId: catalogFilmId || null,
       actorId: actorId || null,
-      type: type as any,
+      type: type as never,
       title,
       description: description || null,
       contentUrl: contentUrl || null,

@@ -30,7 +30,7 @@ export default async function AdminSettingsPage() {
   return (
     <div className="max-w-2xl space-y-8">
       <div>
-        <h1 className="text-3xl sm:text-4xl font-bold flex items-center gap-3" style={{ fontFamily: 'var(--font-playfair)' }}>
+        <h1 className="text-3xl sm:text-4xl font-bold flex items-center gap-3 font-playfair">
           <Settings className="h-7 w-7 text-[#D4AF37]" /> Paramètres
         </h1>
         <p className="text-white/50">Configuration globale de la plateforme.</p>

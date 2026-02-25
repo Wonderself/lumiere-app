@@ -102,7 +102,7 @@ export default async function FilmDetailPage({ params }: Props) {
                   <Badge variant="success">{availableTasks} tâches disponibles</Badge>
                 )}
               </div>
-              <h1 className="text-4xl md:text-5xl font-bold" style={{ fontFamily: 'var(--font-playfair)' }}>
+              <h1 className="text-4xl md:text-5xl font-bold font-playfair">
                 {film.title}
               </h1>
               <div className="mt-3">
@@ -136,7 +136,7 @@ export default async function FilmDetailPage({ params }: Props) {
             {/* Progress card */}
             <div className="rounded-xl border border-white/5 bg-white/[0.02] p-7">
               <h3 className="text-sm font-medium text-white/50 mb-4 uppercase tracking-wider">Progression globale</h3>
-              <div className="text-5xl font-bold text-[#D4AF37] mb-3" style={{ fontFamily: 'var(--font-playfair)' }}>
+              <div className="text-5xl font-bold text-[#D4AF37] mb-3 font-playfair">
                 {Math.round(film.progressPct)}%
               </div>
               <div className="h-2 bg-white/10 rounded-full overflow-hidden mb-4">
@@ -194,7 +194,7 @@ export default async function FilmDetailPage({ params }: Props) {
               <div className="h-10 w-10 rounded-xl bg-[#D4AF37]/15 border border-[#D4AF37]/25 flex items-center justify-center">
                 <Crown className="h-5 w-5 text-[#D4AF37]" />
               </div>
-              <h2 className="text-2xl md:text-3xl font-bold" style={{ fontFamily: 'var(--font-playfair)' }}>
+              <h2 className="text-2xl md:text-3xl font-bold font-playfair">
                 Devenez Co-Producteur
               </h2>
             </div>
@@ -209,26 +209,26 @@ export default async function FilmDetailPage({ params }: Props) {
                 {/* Offering stats */}
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                   <div className="rounded-xl border border-[#D4AF37]/10 bg-white/[0.03] p-4 text-center">
-                    <div className="text-2xl font-bold text-[#D4AF37]" style={{ fontFamily: 'var(--font-playfair)' }}>
+                    <div className="text-2xl font-bold text-[#D4AF37] font-playfair">
                       {film.tokenOffering.tokenPrice}&#8364;
                     </div>
                     <div className="text-xs text-white/30 mt-1">Prix / token</div>
                   </div>
                   <div className="rounded-xl border border-[#D4AF37]/10 bg-white/[0.03] p-4 text-center">
-                    <div className="text-2xl font-bold text-white" style={{ fontFamily: 'var(--font-playfair)' }}>
+                    <div className="text-2xl font-bold text-white font-playfair">
                       {Math.round(film.tokenOffering.raised).toLocaleString('fr-FR')}&#8364;
                     </div>
                     <div className="text-xs text-white/30 mt-1">Leves</div>
                   </div>
                   <div className="rounded-xl border border-[#D4AF37]/10 bg-white/[0.03] p-4 text-center">
-                    <div className="text-2xl font-bold text-white" style={{ fontFamily: 'var(--font-playfair)' }}>
+                    <div className="text-2xl font-bold text-white font-playfair">
                       {film.tokenOffering.tokensSold}
                     </div>
                     <div className="text-xs text-white/30 mt-1">Tokens vendus</div>
                   </div>
                   {film.tokenOffering.projectedROI && (
                     <div className="rounded-xl border border-emerald-500/10 bg-emerald-500/[0.03] p-4 text-center">
-                      <div className="text-2xl font-bold text-emerald-400" style={{ fontFamily: 'var(--font-playfair)' }}>
+                      <div className="text-2xl font-bold text-emerald-400 font-playfair">
                         ~{film.tokenOffering.projectedROI}%
                       </div>
                       <div className="text-xs text-white/30 mt-1">ROI estime</div>

@@ -29,7 +29,7 @@ export function FilmTimeline({ phases }: FilmTimelineProps) {
     <div>
       {/* Progress header */}
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-2xl font-bold" style={{ fontFamily: 'var(--font-playfair)' }}>
+        <h2 className="text-2xl font-bold font-playfair">
           Timeline de Production
         </h2>
         <span className="text-sm text-white/40">

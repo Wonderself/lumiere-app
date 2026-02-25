@@ -17,7 +17,6 @@ export default function PrivacyPage() {
           </div>
           <h1
             className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4"
-            style={{ fontFamily: 'var(--font-playfair)' }}
           >
             Politique de Confidentialité
           </h1>
@@ -45,7 +44,6 @@ export default function PrivacyPage() {
           <section>
             <h2
               className="text-2xl font-bold text-[#D4AF37] mb-4"
-              style={{ fontFamily: 'var(--font-playfair)' }}
             >
               1. Responsable du traitement
             </h2>
@@ -68,7 +66,6 @@ export default function PrivacyPage() {
           <section>
             <h2
               className="text-2xl font-bold text-[#D4AF37] mb-4"
-              style={{ fontFamily: 'var(--font-playfair)' }}
             >
               2. Données collectées
             </h2>
@@ -131,7 +128,6 @@ export default function PrivacyPage() {
           <section>
             <h2
               className="text-2xl font-bold text-[#D4AF37] mb-4"
-              style={{ fontFamily: 'var(--font-playfair)' }}
             >
               3. Bases légales du traitement
             </h2>
@@ -189,7 +185,6 @@ export default function PrivacyPage() {
           <section>
             <h2
               className="text-2xl font-bold text-[#D4AF37] mb-4"
-              style={{ fontFamily: 'var(--font-playfair)' }}
             >
               4. Finalités du traitement
             </h2>
@@ -215,7 +210,6 @@ export default function PrivacyPage() {
           <section>
             <h2
               className="text-2xl font-bold text-[#D4AF37] mb-4"
-              style={{ fontFamily: 'var(--font-playfair)' }}
             >
               5. Destinataires des données
             </h2>
@@ -254,7 +248,6 @@ export default function PrivacyPage() {
           <section>
             <h2
               className="text-2xl font-bold text-[#D4AF37] mb-4"
-              style={{ fontFamily: 'var(--font-playfair)' }}
             >
               6. Durée de conservation
             </h2>
@@ -308,7 +301,6 @@ export default function PrivacyPage() {
           <section>
             <h2
               className="text-2xl font-bold text-[#D4AF37] mb-4"
-              style={{ fontFamily: 'var(--font-playfair)' }}
             >
               7. Vos droits (Articles 15 à 22 du RGPD)
             </h2>
@@ -376,7 +368,6 @@ export default function PrivacyPage() {
           <section>
             <h2
               className="text-2xl font-bold text-[#D4AF37] mb-4"
-              style={{ fontFamily: 'var(--font-playfair)' }}
             >
               8. Délégué à la Protection des Données (DPO)
             </h2>
@@ -399,7 +390,6 @@ export default function PrivacyPage() {
           <section>
             <h2
               className="text-2xl font-bold text-[#D4AF37] mb-4"
-              style={{ fontFamily: 'var(--font-playfair)' }}
             >
               9. Cookies
             </h2>
@@ -418,7 +408,6 @@ export default function PrivacyPage() {
           <section>
             <h2
               className="text-2xl font-bold text-[#D4AF37] mb-4"
-              style={{ fontFamily: 'var(--font-playfair)' }}
             >
               10. Transferts de données hors Union européenne
             </h2>
@@ -454,7 +443,6 @@ export default function PrivacyPage() {
           <section>
             <h2
               className="text-2xl font-bold text-[#D4AF37] mb-4"
-              style={{ fontFamily: 'var(--font-playfair)' }}
             >
               11. Sécurité des données
             </h2>
@@ -477,7 +465,6 @@ export default function PrivacyPage() {
           <section>
             <h2
               className="text-2xl font-bold text-[#D4AF37] mb-4"
-              style={{ fontFamily: 'var(--font-playfair)' }}
             >
               12. Modification de la politique
             </h2>

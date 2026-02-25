@@ -58,7 +58,7 @@ export default async function LumensPage() {
     <div className="space-y-10 max-w-5xl mx-auto">
       {/* Page Title */}
       <div>
-        <h1 className="text-3xl sm:text-4xl font-bold text-gray-900" style={{ fontFamily: 'var(--font-playfair)' }}>
+        <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 font-playfair">
           Mes Lumens
         </h1>
         <p className="text-gray-500 mt-1">
@@ -75,7 +75,6 @@ export default async function LumensPage() {
           </div>
           <h2
             className="text-lg font-semibold text-gray-600 mb-2"
-            style={{ fontFamily: 'var(--font-playfair)' }}
           >
             Mes Lumens
           </h2>
@@ -125,7 +124,6 @@ export default async function LumensPage() {
             <div>
               <h2
                 className="text-xl font-bold text-gray-900"
-                style={{ fontFamily: 'var(--font-playfair)' }}
               >
                 Acheter des Lumens
               </h2>
@@ -153,7 +151,6 @@ export default async function LumensPage() {
             <div>
               <h2
                 className="text-xl font-bold text-gray-900"
-                style={{ fontFamily: 'var(--font-playfair)' }}
               >
                 Convertir en euros
               </h2>
@@ -180,7 +177,6 @@ export default async function LumensPage() {
             </div>
             <h2
               className="text-xl font-bold text-gray-900"
-              style={{ fontFamily: 'var(--font-playfair)' }}
             >
               Historique
             </h2>

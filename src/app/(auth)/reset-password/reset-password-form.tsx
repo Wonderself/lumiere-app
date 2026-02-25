@@ -18,7 +18,7 @@ export default function ResetPasswordForm({ token }: { token?: string }) {
           <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-red-500/10 border border-red-500/20 mb-2">
             <AlertTriangle className="h-8 w-8 text-red-400" />
           </div>
-          <h1 className="text-3xl sm:text-4xl font-bold text-white" style={{ fontFamily: 'var(--font-playfair)' }}>
+          <h1 className="text-3xl sm:text-4xl font-bold text-white font-playfair">
             Lien invalide
           </h1>
           <p className="text-white/50 text-sm sm:text-base">
@@ -61,7 +61,7 @@ export default function ResetPasswordForm({ token }: { token?: string }) {
         <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-[#D4AF37]/10 border border-[#D4AF37]/20 mb-2">
           <ShieldCheck className="h-8 w-8 text-[#D4AF37]" />
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold text-white" style={{ fontFamily: 'var(--font-playfair)' }}>
+        <h1 className="text-3xl sm:text-4xl font-bold text-white font-playfair">
           <span className="text-shimmer">Nouveau mot de passe</span>
         </h1>
         <p className="text-white/50 text-sm sm:text-base">
@@ -79,7 +79,7 @@ export default function ResetPasswordForm({ token }: { token?: string }) {
               <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-green-500/10 border border-green-500/20">
                 <CheckCircle className="h-10 w-10 text-green-400" />
               </div>
-              <h2 className="text-xl font-bold text-white" style={{ fontFamily: 'var(--font-playfair)' }}>
+              <h2 className="text-xl font-bold text-white font-playfair">
                 Mot de passe reinitialise !
               </h2>
               <p className="text-white/50 text-sm leading-relaxed">

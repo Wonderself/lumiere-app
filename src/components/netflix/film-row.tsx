@@ -82,7 +82,6 @@ export function FilmRow({ title, films, href }: FilmRowProps) {
       <div className="flex items-center justify-between px-6 sm:px-10 md:px-16 lg:px-20 mb-10">
         <h2
           className="text-lg md:text-xl lg:text-2xl font-bold text-white/90 tracking-tight"
-          style={{ fontFamily: 'var(--font-playfair)' }}
         >
           {title}
         </h2>

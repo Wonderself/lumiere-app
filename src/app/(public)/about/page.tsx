@@ -46,7 +46,7 @@ export default function AboutPage() {
             <Clapperboard className="h-3.5 w-3.5" />
             Cinema & Creative Studio
           </div>
-          <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold mb-6 tracking-tight" style={{ fontFamily: 'var(--font-playfair)' }}>
+          <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold mb-6 tracking-tight font-playfair">
             <span className="text-shimmer">The Dreams Team</span>
           </h1>
           <p className="text-lg sm:text-xl md:text-2xl text-white/45 max-w-3xl mx-auto leading-relaxed mb-4">
@@ -78,7 +78,7 @@ export default function AboutPage() {
             </div>
             <div>
               <p className="text-[#D4AF37] text-xs sm:text-sm font-medium uppercase tracking-widest mb-4">Les Fondateurs</p>
-              <h2 className="text-3xl sm:text-4xl font-bold mb-8 tracking-tight" style={{ fontFamily: 'var(--font-playfair)' }}>
+              <h2 className="text-3xl sm:text-4xl font-bold mb-8 tracking-tight font-playfair">
                 L&apos;Expertise <span className="text-gold-gradient">Prime Time</span> a l&apos;Ere de l&apos;IA
               </h2>
 
@@ -137,7 +137,7 @@ export default function AboutPage() {
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <div>
               <p className="text-[#D4AF37] text-xs sm:text-sm font-medium uppercase tracking-widest mb-4">Notre Philosophie</p>
-              <h2 className="text-3xl sm:text-4xl font-bold mb-6 tracking-tight" style={{ fontFamily: 'var(--font-playfair)' }}>
+              <h2 className="text-3xl sm:text-4xl font-bold mb-6 tracking-tight font-playfair">
                 <span className="text-shimmer">&quot;We don&apos;t prompt. We direct AI.&quot;</span>
               </h2>
               <p className="text-white/45 leading-relaxed mb-8">
@@ -198,7 +198,7 @@ export default function AboutPage() {
             </div>
             <div className="order-1 lg:order-2">
               <p className="text-[#D4AF37] text-xs sm:text-sm font-medium uppercase tracking-widest mb-4">L&apos;Atout Strategique</p>
-              <h2 className="text-3xl sm:text-4xl font-bold mb-6 tracking-tight" style={{ fontFamily: 'var(--font-playfair)' }}>
+              <h2 className="text-3xl sm:text-4xl font-bold mb-6 tracking-tight font-playfair">
                 IP & Equity :{' '}
                 <span className="text-gold-gradient">Editions Ruppin</span>
               </h2>
@@ -246,7 +246,7 @@ export default function AboutPage() {
         <div className="container mx-auto max-w-6xl relative">
           <div className="text-center mb-16 sm:mb-20">
             <p className="text-[#D4AF37] text-xs sm:text-sm font-medium uppercase tracking-widest mb-3">L&apos;Infrastructure</p>
-            <h2 className="text-3xl sm:text-4xl font-bold mb-5 tracking-tight" style={{ fontFamily: 'var(--font-playfair)' }}>
+            <h2 className="text-3xl sm:text-4xl font-bold mb-5 tracking-tight font-playfair">
               Un Backbone de <span className="text-gold-gradient">Qualite Industrielle</span>
             </h2>
             <p className="text-white/35 max-w-2xl mx-auto leading-relaxed">
@@ -312,7 +312,7 @@ export default function AboutPage() {
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <div>
               <p className="text-[#D4AF37] text-xs sm:text-sm font-medium uppercase tracking-widest mb-4">Le Pipeline</p>
-              <h2 className="text-3xl sm:text-4xl font-bold mb-6 tracking-tight" style={{ fontFamily: 'var(--font-playfair)' }}>
+              <h2 className="text-3xl sm:text-4xl font-bold mb-6 tracking-tight font-playfair">
                 Projets en <span className="text-gold-gradient">Developpement</span>
               </h2>
               <p className="text-white/45 leading-relaxed mb-8">
@@ -358,7 +358,7 @@ export default function AboutPage() {
         <div className="container mx-auto max-w-4xl relative">
           <div className="text-center mb-14">
             <p className="text-[#D4AF37] text-xs sm:text-sm font-medium uppercase tracking-widest mb-3">Le Modele</p>
-            <h2 className="text-3xl sm:text-4xl font-bold mb-4 tracking-tight" style={{ fontFamily: 'var(--font-playfair)' }}>
+            <h2 className="text-3xl sm:text-4xl font-bold mb-4 tracking-tight font-playfair">
               Double Moteur de <span className="text-gold-gradient">Croissance</span>
             </h2>
           </div>
@@ -391,7 +391,7 @@ export default function AboutPage() {
         <div className="container mx-auto max-w-5xl">
           <div className="text-center mb-14 sm:mb-16">
             <p className="text-[#D4AF37] text-xs sm:text-sm font-medium uppercase tracking-widest mb-3">La Technologie</p>
-            <h2 className="text-3xl sm:text-4xl font-bold mb-4 tracking-tight" style={{ fontFamily: 'var(--font-playfair)' }}>
+            <h2 className="text-3xl sm:text-4xl font-bold mb-4 tracking-tight font-playfair">
               Notre Stack <span className="text-gold-gradient">Technique</span>
             </h2>
           </div>
@@ -438,7 +438,7 @@ export default function AboutPage() {
               <div className="absolute inset-0 bg-[#D4AF37]/[0.03] opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
             </div>
             <div className="text-center lg:text-left">
-              <h2 className="text-3xl sm:text-4xl font-bold mb-8 tracking-tight" style={{ fontFamily: 'var(--font-playfair)' }}>
+              <h2 className="text-3xl sm:text-4xl font-bold mb-8 tracking-tight font-playfair">
                 Le Studio de Demain.{' '}
                 <span className="text-shimmer">Ouvert Aujourd&apos;hui.</span>
               </h2>

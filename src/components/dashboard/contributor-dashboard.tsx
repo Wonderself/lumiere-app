@@ -84,7 +84,6 @@ export async function ContributorDashboard({ user }: ContributorDashboardProps) 
         <div>
           <h1
             className="text-3xl font-bold mb-1"
-            style={{ fontFamily: 'var(--font-playfair)' }}
           >
             Bonjour, {user.displayName || 'Createur'}
           </h1>

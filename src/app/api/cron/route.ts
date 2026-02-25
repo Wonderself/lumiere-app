@@ -1,7 +1,20 @@
 import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
+import { timingSafeEqual } from 'crypto'
 
 export const dynamic = 'force-dynamic'
+
+/**
+ * Timing-safe string comparison to prevent timing attacks on secret comparison.
+ */
+function safeCompare(a: string, b: string): boolean {
+  if (a.length !== b.length) return false
+  try {
+    return timingSafeEqual(Buffer.from(a), Buffer.from(b))
+  } catch {
+    return false
+  }
+}
 
 /**
  * Cron endpoint for automated maintenance tasks.
@@ -17,7 +30,14 @@ export async function GET(request: Request) {
   const key = searchParams.get('key')
 
   // Verify cron secret (set CRON_SECRET env var)
-  if (process.env.CRON_SECRET && key !== process.env.CRON_SECRET) {
+  // SECURITY: If CRON_SECRET is not configured, the endpoint is completely blocked.
+  // Uses timing-safe comparison to prevent timing attacks.
+  const CRON_SECRET = process.env.CRON_SECRET
+  if (!CRON_SECRET || CRON_SECRET.length < 16) {
+    console.error('[CRON] CRON_SECRET is not set or too short (min 16 chars). Endpoint blocked.')
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+  if (!key || !safeCompare(key, CRON_SECRET)) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
@@ -54,7 +74,7 @@ export async function GET(request: Request) {
             body: `La tache "${task.title}" a expire (delai 48h depasse) et est de nouveau disponible.`,
             href: '/tasks',
           },
-        }).catch(() => {})
+        }).catch((err) => console.error("[Cron] Failed to create expiry notification:", err))
       }
     }
     results.expiredTasksReleased = expiredTasks.length

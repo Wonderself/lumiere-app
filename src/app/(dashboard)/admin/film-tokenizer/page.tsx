@@ -31,7 +31,7 @@ export const metadata: Metadata = { title: 'Admin — Film Tokenizer' }
 async function createOfferingFromFilmAction(formData: FormData) {
   'use server'
   const session = await auth()
-  if (!session?.user || (session.user as any).role !== 'ADMIN') return
+  if (!session?.user || session.user.role !== 'ADMIN') return
 
   const filmId = formData.get('filmId') as string
   const totalTokens = parseInt(formData.get('totalTokens') as string)
@@ -97,7 +97,7 @@ async function createOfferingFromFilmAction(formData: FormData) {
 async function autoGenerateTasksAction(formData: FormData) {
   'use server'
   const session = await auth()
-  if (!session?.user || (session.user as any).role !== 'ADMIN') return
+  if (!session?.user || session.user.role !== 'ADMIN') return
 
   const filmId = formData.get('filmId') as string
   const genre = formData.get('genre') as string
@@ -118,11 +118,11 @@ async function autoGenerateTasksAction(formData: FormData) {
 
   let phaseOrder = film.phases.length
   for (const phaseName of phaseNames) {
-    if (!existingPhases.includes(phaseName as any)) {
+    if (!existingPhases.includes(phaseName as never)) {
       await prisma.filmPhase.create({
         data: {
           filmId,
-          phaseName: phaseName as any,
+          phaseName: phaseName as never,
           phaseOrder: phaseOrder++,
           status: 'LOCKED',
         },
@@ -151,8 +151,8 @@ async function autoGenerateTasksAction(formData: FormData) {
         phaseId,
         title: task.title,
         descriptionMd: task.description,
-        type: task.type as any,
-        difficulty: task.difficulty as any,
+        type: task.type as never,
+        difficulty: task.difficulty as never,
         priceEuros: task.priceEuros,
         status: 'LOCKED',
         requiredLevel: task.difficulty === 'EXPERT' ? 'EXPERT' : task.difficulty === 'HARD' ? 'PRO' : 'ROOKIE',
@@ -188,7 +188,7 @@ const riskColors: Record<string, string> = {
 
 export default async function AdminFilmTokenizerPage() {
   const session = await auth()
-  if (!session?.user || (session.user as any).role !== 'ADMIN') redirect('/dashboard')
+  if (!session?.user || session.user.role !== 'ADMIN') redirect('/dashboard')
 
   // Get films without token offerings
   const allFilms = await prisma.film.findMany({

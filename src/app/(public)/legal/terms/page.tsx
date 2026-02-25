@@ -17,7 +17,6 @@ export default function TermsPage() {
           </div>
           <h1
             className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4"
-            style={{ fontFamily: 'var(--font-playfair)' }}
           >
             Conditions Générales d&apos;Utilisation
           </h1>
@@ -48,7 +47,6 @@ export default function TermsPage() {
           <section>
             <h2
               className="text-2xl font-bold text-[#D4AF37] mb-4"
-              style={{ fontFamily: 'var(--font-playfair)' }}
             >
               Article 1 — Objet du service
             </h2>
@@ -75,7 +73,6 @@ export default function TermsPage() {
           <section>
             <h2
               className="text-2xl font-bold text-[#D4AF37] mb-4"
-              style={{ fontFamily: 'var(--font-playfair)' }}
             >
               Article 2 — Inscription et comptes utilisateurs
             </h2>
@@ -115,7 +112,6 @@ export default function TermsPage() {
           <section>
             <h2
               className="text-2xl font-bold text-[#D4AF37] mb-4"
-              style={{ fontFamily: 'var(--font-playfair)' }}
             >
               Article 3 — Système de crédits « Lumens »
             </h2>
@@ -165,7 +161,6 @@ export default function TermsPage() {
           <section>
             <h2
               className="text-2xl font-bold text-[#D4AF37] mb-4"
-              style={{ fontFamily: 'var(--font-playfair)' }}
             >
               Article 4 — Propriété intellectuelle
             </h2>
@@ -211,7 +206,6 @@ export default function TermsPage() {
           <section>
             <h2
               className="text-2xl font-bold text-[#D4AF37] mb-4"
-              style={{ fontFamily: 'var(--font-playfair)' }}
             >
               Article 5 — Obligations des utilisateurs
             </h2>
@@ -239,7 +233,6 @@ export default function TermsPage() {
           <section>
             <h2
               className="text-2xl font-bold text-[#D4AF37] mb-4"
-              style={{ fontFamily: 'var(--font-playfair)' }}
             >
               Article 6 — Responsabilité de la plateforme
             </h2>
@@ -273,7 +266,6 @@ export default function TermsPage() {
           <section>
             <h2
               className="text-2xl font-bold text-[#D4AF37] mb-4"
-              style={{ fontFamily: 'var(--font-playfair)' }}
             >
               Article 7 — Paiements et rémunération
             </h2>
@@ -313,7 +305,6 @@ export default function TermsPage() {
           <section>
             <h2
               className="text-2xl font-bold text-[#D4AF37] mb-4"
-              style={{ fontFamily: 'var(--font-playfair)' }}
             >
               Article 8 — Données personnelles
             </h2>
@@ -332,7 +323,6 @@ export default function TermsPage() {
           <section>
             <h2
               className="text-2xl font-bold text-[#D4AF37] mb-4"
-              style={{ fontFamily: 'var(--font-playfair)' }}
             >
               Article 9 — Modification des CGU
             </h2>
@@ -354,7 +344,6 @@ export default function TermsPage() {
           <section>
             <h2
               className="text-2xl font-bold text-[#D4AF37] mb-4"
-              style={{ fontFamily: 'var(--font-playfair)' }}
             >
               Article 10 — Résiliation
             </h2>
@@ -376,7 +365,6 @@ export default function TermsPage() {
           <section>
             <h2
               className="text-2xl font-bold text-[#D4AF37] mb-4"
-              style={{ fontFamily: 'var(--font-playfair)' }}
             >
               Article 11 — Droit applicable et juridiction
             </h2>
@@ -398,7 +386,6 @@ export default function TermsPage() {
           <section>
             <h2
               className="text-2xl font-bold text-[#D4AF37] mb-4"
-              style={{ fontFamily: 'var(--font-playfair)' }}
             >
               Article 12 — Contact
             </h2>

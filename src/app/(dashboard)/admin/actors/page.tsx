@@ -44,7 +44,7 @@ export default async function AdminActorsPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold" style={{ fontFamily: 'var(--font-playfair)' }}>
+          <h1 className="text-3xl font-bold font-playfair">
             Acteurs IA
           </h1>
           <p className="text-white/50">Gerez les acteurs virtuels de la plateforme.</p>
@@ -71,7 +71,7 @@ export default async function AdminActorsPage() {
               <stat.icon className={`h-5 w-5 ${stat.color}`} />
               <span className="text-xs text-white/40 uppercase tracking-wider">{stat.label}</span>
             </div>
-            <div className="text-3xl font-bold text-white" style={{ fontFamily: 'var(--font-playfair)' }}>
+            <div className="text-3xl font-bold text-white font-playfair">
               {stat.value}
             </div>
           </div>
@@ -101,7 +101,7 @@ export default async function AdminActorsPage() {
                     className="w-full h-full object-cover"
                   />
                 ) : (
-                  <div className="w-full h-full flex items-center justify-center text-[#D4AF37]/40 text-lg font-bold" style={{ fontFamily: 'var(--font-playfair)' }}>
+                  <div className="w-full h-full flex items-center justify-center text-[#D4AF37]/40 text-lg font-bold font-playfair">
                     {actor.name.charAt(0)}
                   </div>
                 )}

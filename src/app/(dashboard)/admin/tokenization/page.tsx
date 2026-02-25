@@ -24,7 +24,7 @@ export const metadata: Metadata = { title: 'Admin — Gestion des Tokens' }
 async function openOfferingAction(formData: FormData) {
   'use server'
   const session = await auth()
-  if (!session?.user || (session.user as any).role !== 'ADMIN') return
+  if (!session?.user || session.user.role !== 'ADMIN') return
 
   const offeringId = formData.get('offeringId') as string
   await prisma.filmTokenOffering.update({
@@ -37,7 +37,7 @@ async function openOfferingAction(formData: FormData) {
 async function closeOfferingAction(formData: FormData) {
   'use server'
   const session = await auth()
-  if (!session?.user || (session.user as any).role !== 'ADMIN') return
+  if (!session?.user || session.user.role !== 'ADMIN') return
 
   const offeringId = formData.get('offeringId') as string
   await prisma.filmTokenOffering.update({
@@ -50,7 +50,7 @@ async function closeOfferingAction(formData: FormData) {
 async function suspendOfferingAction(formData: FormData) {
   'use server'
   const session = await auth()
-  if (!session?.user || (session.user as any).role !== 'ADMIN') return
+  if (!session?.user || session.user.role !== 'ADMIN') return
 
   const offeringId = formData.get('offeringId') as string
   await prisma.filmTokenOffering.update({
@@ -63,7 +63,7 @@ async function suspendOfferingAction(formData: FormData) {
 async function distributeRevenueAction(formData: FormData) {
   'use server'
   const session = await auth()
-  if (!session?.user || (session.user as any).role !== 'ADMIN') return
+  if (!session?.user || session.user.role !== 'ADMIN') return
 
   const offeringId = formData.get('offeringId') as string
   const period = formData.get('period') as string
@@ -129,7 +129,7 @@ async function distributeRevenueAction(formData: FormData) {
 async function addRevenueAction(formData: FormData) {
   'use server'
   const session = await auth()
-  if (!session?.user || (session.user as any).role !== 'ADMIN') return
+  if (!session?.user || session.user.role !== 'ADMIN') return
 
   const offeringId = formData.get('offeringId') as string
   const source = formData.get('source') as string
@@ -174,7 +174,7 @@ const statusLabels: Record<string, string> = {
 
 export default async function AdminTokenizationPage() {
   const session = await auth()
-  if (!session?.user || (session.user as any).role !== 'ADMIN') redirect('/dashboard')
+  if (!session?.user || session.user.role !== 'ADMIN') redirect('/dashboard')
 
   const [offerings, allPurchases, allTransfers, allDividends, allRevenues] = await Promise.all([
     prisma.filmTokenOffering.findMany({

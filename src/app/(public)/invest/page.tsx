@@ -82,7 +82,6 @@ export default function InvestPage() {
           </div>
           <h1
             className="text-4xl sm:text-5xl md:text-7xl font-bold mb-6 tracking-tight"
-            style={{ fontFamily: 'var(--font-playfair)' }}
           >
             Investissez dans le{' '}
             <span className="text-shimmer">Cinema de Demain</span>
@@ -119,7 +118,6 @@ export default function InvestPage() {
             </p>
             <h2
               className="text-3xl sm:text-4xl font-bold mb-4 tracking-tight"
-              style={{ fontFamily: 'var(--font-playfair)' }}
             >
               Un Modele <span className="text-gold-gradient">Unique au Monde</span>
             </h2>
@@ -157,7 +155,6 @@ export default function InvestPage() {
             </p>
             <h2
               className="text-3xl sm:text-4xl font-bold tracking-tight"
-              style={{ fontFamily: 'var(--font-playfair)' }}
             >
               Lumiere vs Le <span className="text-gold-gradient">Marche</span>
             </h2>
@@ -208,7 +205,6 @@ export default function InvestPage() {
             </p>
             <h2
               className="text-3xl sm:text-4xl font-bold tracking-tight"
-              style={{ fontFamily: 'var(--font-playfair)' }}
             >
               <span className="text-gold-gradient">Ou en Sommes-Nous</span>
             </h2>
@@ -276,7 +272,6 @@ export default function InvestPage() {
         <div className="container mx-auto max-w-3xl relative text-center">
           <h2
             className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 tracking-tight"
-            style={{ fontFamily: 'var(--font-playfair)' }}
           >
             Parlons de{' '}
             <span className="text-shimmer">Votre Investissement</span>

@@ -14,7 +14,7 @@ export default function GlobalError({
     if (process.env.NEXT_PUBLIC_SENTRY_DSN) {
       import('@sentry/nextjs')
         .then((Sentry) => Sentry.captureException(error))
-        .catch(() => {})
+        .catch((err) => console.error("[Sentry] Failed to load Sentry:", err))
     }
     console.error('[GlobalError]', error)
   }, [error])

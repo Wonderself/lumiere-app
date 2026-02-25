@@ -39,7 +39,6 @@ export async function ViewerDashboard({ user }: ViewerDashboardProps) {
       <div>
         <h1
           className="text-3xl font-bold mb-1"
-          style={{ fontFamily: 'var(--font-playfair)' }}
         >
           Bienvenue, {user.displayName || 'Spectateur'}
         </h1>

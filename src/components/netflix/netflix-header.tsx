@@ -15,7 +15,6 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import {
-  Film,
   LayoutDashboard,
   LogOut,
   Menu,
@@ -26,7 +25,6 @@ import {
   CreditCard,
   FileText,
   ChevronDown,
-  Play,
   Sparkles,
   Info,
   MapPin,
@@ -34,7 +32,6 @@ import {
   Code2,
   TrendingUp,
   Users,
-  BookOpen,
 } from 'lucide-react'
 import { cn, getInitials } from '@/lib/utils'
 import { AnimatePresence, MotionDiv } from '@/components/ui/motion'
@@ -192,12 +189,12 @@ export function NetflixHeader() {
           {session?.user ? (
             <div className="hidden lg:flex items-center gap-2">
               <NotificationBell />
-              <Link href="/lumens" className="flex items-center gap-1.5 px-2.5 py-1 rounded text-sm text-white/50 hover:text-[#D4AF37] transition-all">
+              <Link href="/lumens" className="flex items-center gap-1.5 px-2.5 py-1 rounded text-sm text-white/50 hover:text-[#D4AF37] transition-all" aria-label="Mes Lumens">
                 <Sun className="h-4 w-4 text-[#D4AF37]" />
               </Link>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <button className="flex items-center gap-1.5 rounded px-1 py-1 hover:bg-white/5 transition-all outline-none">
+                  <button className="flex items-center gap-1.5 rounded px-1 py-1 hover:bg-white/5 transition-all outline-none" aria-label="Menu du profil">
                     <Avatar className="h-8 w-8 rounded">
                       {session.user.image && <AvatarImage src={session.user.image} alt={userName} />}
                       <AvatarFallback className="text-xs rounded bg-[#D4AF37]/20 text-[#D4AF37]">{getInitials(userName)}</AvatarFallback>

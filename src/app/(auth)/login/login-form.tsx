@@ -9,9 +9,23 @@ import { Label } from '@/components/ui/label'
 import { loginAction } from '@/app/actions/auth'
 import { Mail, Lock, Sparkles, Eye, EyeOff } from 'lucide-react'
 
+/**
+ * Validate that a callback URL is safe (relative path only).
+ * Prevents open redirect attacks via callbackUrl parameter.
+ */
+function sanitizeCallbackUrl(url: string | null): string {
+  if (!url) return '/dashboard'
+  // Must start with / and must NOT start with // (protocol-relative URL)
+  // Also reject URLs with backslashes which some browsers normalize to forward slashes
+  if (url.startsWith('/') && !url.startsWith('//') && !url.includes('\\')) {
+    return url
+  }
+  return '/dashboard'
+}
+
 export function LoginForm() {
   const searchParams = useSearchParams()
-  const callbackUrl = searchParams.get('callbackUrl') || '/dashboard'
+  const callbackUrl = sanitizeCallbackUrl(searchParams.get('callbackUrl'))
   const [state, action, isPending] = useActionState(loginAction, {})
   const formRef = useRef<HTMLFormElement>(null)
   const [email, setEmail] = useState('')
@@ -32,7 +46,7 @@ export function LoginForm() {
         <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-[#D4AF37]/10 border border-[#D4AF37]/20 mb-3">
           <Sparkles className="h-8 w-8 text-[#D4AF37]" />
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold text-white" style={{ fontFamily: 'var(--font-playfair)' }}>
+        <h1 className="text-3xl sm:text-4xl font-bold text-white font-playfair">
           <span className="text-shimmer">Bienvenue</span>
         </h1>
         <p className="text-white/50 text-sm sm:text-base">Connectez-vous à votre compte Lumière.</p>

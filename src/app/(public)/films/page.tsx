@@ -25,8 +25,8 @@ async function getFilms(searchParams: { [key: string]: string | undefined }) {
       where: {
         isPublic: true,
         ...(genre ? { genre } : {}),
-        ...(catalog ? { catalog: catalog as any } : {}),
-        ...(status ? { status: status as any } : {}),
+        ...(catalog ? { catalog: catalog as never } : {}),
+        ...(status ? { status: status as never } : {}),
       },
       include: {
         _count: { select: { tasks: true, votes: true } },
@@ -98,7 +98,6 @@ export default async function FilmsPage({
           {/* Title */}
           <h1
             className="text-4xl sm:text-5xl md:text-6xl font-bold mb-8 text-white"
-            style={{ fontFamily: 'var(--font-playfair)' }}
           >
             Films &{' '}
             <span
@@ -134,7 +133,6 @@ export default async function FilmsPage({
                 </div>
                 <div
                   className="text-2xl sm:text-3xl font-bold text-[#D4AF37]"
-                  style={{ fontFamily: 'var(--font-playfair)' }}
                 >
                   {stat.value > 0 ? stat.value.toLocaleString('fr-FR') : '--'}
                 </div>

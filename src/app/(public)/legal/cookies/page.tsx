@@ -17,7 +17,6 @@ export default function CookiesPage() {
           </div>
           <h1
             className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4"
-            style={{ fontFamily: 'var(--font-playfair)' }}
           >
             Politique Cookies
           </h1>
@@ -46,7 +45,6 @@ export default function CookiesPage() {
           <section>
             <h2
               className="text-2xl font-bold text-[#D4AF37] mb-4"
-              style={{ fontFamily: 'var(--font-playfair)' }}
             >
               1. Qu&apos;est-ce qu&apos;un cookie ?
             </h2>
@@ -68,7 +66,6 @@ export default function CookiesPage() {
           <section>
             <h2
               className="text-2xl font-bold text-[#D4AF37] mb-4"
-              style={{ fontFamily: 'var(--font-playfair)' }}
             >
               2. Cookies strictement nécessaires
             </h2>
@@ -117,7 +114,6 @@ export default function CookiesPage() {
           <section>
             <h2
               className="text-2xl font-bold text-[#D4AF37] mb-4"
-              style={{ fontFamily: 'var(--font-playfair)' }}
             >
               3. Cookies analytiques
             </h2>
@@ -159,7 +155,6 @@ export default function CookiesPage() {
           <section>
             <h2
               className="text-2xl font-bold text-[#D4AF37] mb-4"
-              style={{ fontFamily: 'var(--font-playfair)' }}
             >
               4. Cookies de personnalisation
             </h2>
@@ -207,7 +202,6 @@ export default function CookiesPage() {
           <section>
             <h2
               className="text-2xl font-bold text-[#D4AF37] mb-4"
-              style={{ fontFamily: 'var(--font-playfair)' }}
             >
               5. Gestion de vos préférences
             </h2>
@@ -251,7 +245,6 @@ export default function CookiesPage() {
           <section>
             <h2
               className="text-2xl font-bold text-[#D4AF37] mb-4"
-              style={{ fontFamily: 'var(--font-playfair)' }}
             >
               6. Durée de conservation des cookies
             </h2>
@@ -284,7 +277,6 @@ export default function CookiesPage() {
           <section>
             <h2
               className="text-2xl font-bold text-[#D4AF37] mb-4"
-              style={{ fontFamily: 'var(--font-playfair)' }}
             >
               7. Contact
             </h2>

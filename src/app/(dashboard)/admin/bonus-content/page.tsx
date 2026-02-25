@@ -79,7 +79,7 @@ export default async function AdminBonusContentPage(props: { searchParams: Promi
 
   // Fetch bonus content
   const bonusItems = await prisma.bonusContent.findMany({
-    where: filterType ? { type: filterType as any } : undefined,
+    where: filterType ? { type: filterType as never } : undefined,
     include: {
       film: { select: { id: true, title: true } },
       catalogFilm: { select: { id: true, title: true } },

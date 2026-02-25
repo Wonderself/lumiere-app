@@ -68,7 +68,7 @@ export default async function AdminTaskEditPage({ params }: { params: Promise<{ 
           <ArrowLeft className="h-5 w-5" />
         </Link>
         <div>
-          <h1 className="text-2xl font-bold" style={{ fontFamily: 'var(--font-playfair)' }}>Modifier la Tâche</h1>
+          <h1 className="text-2xl font-bold font-playfair">Modifier la Tâche</h1>
           <p className="text-sm text-white/40">
             {task.film.title} · Phase {task.phase.phaseName}
           </p>

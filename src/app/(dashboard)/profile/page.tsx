@@ -127,7 +127,6 @@ export default async function ProfilePage() {
               <div className="flex items-center gap-3 mb-2 flex-wrap">
                 <h1
                   className="text-3xl font-bold text-gray-900"
-                  style={{ fontFamily: 'var(--font-playfair)' }}
                 >
                   {user.displayName || 'Createur'}
                 </h1>
@@ -196,7 +195,7 @@ export default async function ProfilePage() {
               <div className={`inline-flex items-center justify-center h-11 w-11 rounded-xl ${stat.bgColor} mb-3`}>
                 <stat.icon className={`h-5 w-5 ${stat.color}`} />
               </div>
-              <div className={`text-2xl font-bold ${stat.color}`} style={{ fontFamily: 'var(--font-playfair)' }}>
+              <div className={`text-2xl font-bold ${stat.color}`}>
                 {stat.value}
               </div>
               <div className="text-xs text-gray-400 mt-1">{stat.label}</div>
@@ -209,7 +208,6 @@ export default async function ProfilePage() {
       <div className="bg-white sm:rounded-2xl rounded-xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-shadow duration-500">
         <h2
           className="text-lg font-semibold text-gray-900 mb-4"
-          style={{ fontFamily: 'var(--font-playfair)' }}
         >
           Progression
         </h2>
@@ -248,7 +246,6 @@ export default async function ProfilePage() {
         <div className="bg-white sm:rounded-2xl rounded-xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-shadow duration-500">
           <h2
             className="text-lg font-semibold text-gray-900 mb-4"
-            style={{ fontFamily: 'var(--font-playfair)' }}
           >
             Badges ({allBadgesWithStatus.filter(b => b.earned).length}/{allBadgesWithStatus.length})
           </h2>
@@ -291,7 +288,6 @@ export default async function ProfilePage() {
             </div>
             <h2
               className="text-xl font-bold text-gray-900 mb-3"
-              style={{ fontFamily: 'var(--font-playfair)' }}
             >
               Complétez votre profil
             </h2>
@@ -318,7 +314,6 @@ export default async function ProfilePage() {
         <div className="bg-white sm:rounded-2xl rounded-xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-shadow duration-500">
           <h2
             className="text-lg font-semibold text-gray-900 mb-3"
-            style={{ fontFamily: 'var(--font-playfair)' }}
           >
             À propos
           </h2>
@@ -333,7 +328,6 @@ export default async function ProfilePage() {
           <div className="bg-white sm:rounded-2xl rounded-xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-shadow duration-500">
             <h2
               className="text-lg font-semibold text-gray-900 mb-4"
-              style={{ fontFamily: 'var(--font-playfair)' }}
             >
               Competences
             </h2>
@@ -355,7 +349,6 @@ export default async function ProfilePage() {
           <div className="bg-white sm:rounded-2xl rounded-xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-shadow duration-500">
             <h2
               className="text-lg font-semibold text-gray-900 mb-4"
-              style={{ fontFamily: 'var(--font-playfair)' }}
             >
               Langues
             </h2>
@@ -378,7 +371,6 @@ export default async function ProfilePage() {
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
           <h2
             className="text-lg font-semibold text-gray-900 mb-3"
-            style={{ fontFamily: 'var(--font-playfair)' }}
           >
             Portfolio
           </h2>

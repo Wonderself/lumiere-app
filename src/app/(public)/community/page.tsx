@@ -128,7 +128,7 @@ export default async function CommunityPage() {
               <Users className="h-6 w-6 sm:h-7 sm:w-7 text-[#D4AF37]" />
             </div>
           </div>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4 text-gray-900" style={{ fontFamily: 'var(--font-playfair)' }}>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4 text-gray-900 font-playfair">
             Communaute <span className="text-[#D4AF37]">Creative</span>
           </h1>
           <p className="text-base sm:text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed mb-2">
@@ -191,7 +191,7 @@ export default async function CommunityPage() {
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-3">
               <Trophy className="h-6 w-6 text-[#D4AF37]" />
-              <h2 className="text-2xl font-bold text-gray-900" style={{ fontFamily: 'var(--font-playfair)' }}>
+              <h2 className="text-2xl font-bold text-gray-900 font-playfair">
                 Concours Actifs
               </h2>
             </div>
@@ -268,7 +268,7 @@ export default async function CommunityPage() {
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-3">
               <Vote className="h-6 w-6 text-[#D4AF37]" />
-              <h2 className="text-2xl font-bold text-gray-900" style={{ fontFamily: 'var(--font-playfair)' }}>
+              <h2 className="text-2xl font-bold text-gray-900 font-playfair">
                 Scenarios en Vote
               </h2>
             </div>
@@ -328,7 +328,7 @@ export default async function CommunityPage() {
           <section>
             <div className="flex items-center gap-3 mb-6">
               <Crown className="h-6 w-6 text-[#D4AF37]" />
-              <h2 className="text-2xl font-bold text-gray-900" style={{ fontFamily: 'var(--font-playfair)' }}>
+              <h2 className="text-2xl font-bold text-gray-900 font-playfair">
                 Palmares Recent
               </h2>
             </div>
@@ -385,7 +385,7 @@ export default async function CommunityPage() {
         <div className="text-center p-6 sm:p-10 sm:rounded-3xl rounded-2xl border border-[#D4AF37]/20 bg-gradient-to-br from-[#D4AF37]/[0.04] to-white relative overflow-hidden shadow-sm">
           <div className="absolute top-0 right-0 w-40 h-40 bg-[#D4AF37]/[0.05] rounded-full blur-[60px] pointer-events-none" />
           <Sparkles className="h-8 w-8 text-[#D4AF37] mx-auto mb-4" />
-          <h2 className="text-xl sm:text-2xl font-bold mb-2 text-gray-900" style={{ fontFamily: 'var(--font-playfair)' }}>
+          <h2 className="text-xl sm:text-2xl font-bold mb-2 text-gray-900 font-playfair">
             La communaute decide, le cinema se cree
           </h2>
           <p className="text-gray-500 mb-6 text-sm max-w-md mx-auto">

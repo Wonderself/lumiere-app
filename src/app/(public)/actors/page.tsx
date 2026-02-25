@@ -41,7 +41,7 @@ async function getActors(search?: string, style?: string) {
               ],
             }
           : {}),
-        ...(style && style !== 'ALL' ? { style: style as any } : {}),
+        ...(style && style !== 'ALL' ? { style: style as never } : {}),
       },
       orderBy: [{ filmCount: 'desc' }, { socialFollowers: 'desc' }, { name: 'asc' }],
     })
@@ -94,7 +94,6 @@ export default async function ActorsPage({
             </div>
             <h1
               className="text-3xl sm:text-5xl md:text-7xl font-bold mb-4 sm:mb-6 text-gray-900"
-              style={{ fontFamily: 'var(--font-playfair)' }}
             >
               Nos{' '}
               <span
@@ -124,7 +123,7 @@ export default async function ActorsPage({
               <div key={stat.label} className="text-center">
                 <div className="flex items-center justify-center gap-2 mb-1">
                   <stat.icon className="h-4 w-4 sm:h-5 sm:w-5 text-[#D4AF37]/60" />
-                  <span className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900" style={{ fontFamily: 'var(--font-playfair)' }}>
+                  <span className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 font-playfair">
                     {stat.value}
                   </span>
                 </div>
@@ -211,7 +210,7 @@ export default async function ActorsPage({
                               className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                             />
                           ) : (
-                            <div className="w-full h-full flex items-center justify-center text-[#D4AF37]/40 text-2xl font-bold" style={{ fontFamily: 'var(--font-playfair)' }}>
+                            <div className="w-full h-full flex items-center justify-center text-[#D4AF37]/40 text-2xl font-bold font-playfair">
                               {actor.name.charAt(0)}
                             </div>
                           )}

@@ -66,7 +66,6 @@ export function ScreenwriterCTA() {
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
               className="text-3xl md:text-4xl lg:text-[2.75rem] font-black text-white leading-[1.1] tracking-tight mb-7"
-              style={{ fontFamily: 'var(--font-playfair)' }}
             >
               100 Scenaristes.<br />
               <span className="text-[#D4AF37]">Un Film.</span>
@@ -139,17 +138,17 @@ export function ScreenwriterCTA() {
           className="flex flex-wrap items-center gap-6 sm:gap-10 mt-12 pt-10 border-t border-white/[0.05]"
         >
           <div>
-            <p className="text-2xl md:text-3xl font-black text-[#D4AF37]" style={{ fontFamily: 'var(--font-playfair)' }}>100</p>
+            <p className="text-2xl md:text-3xl font-black text-[#D4AF37] font-playfair">100</p>
             <p className="text-[10px] text-white/30 uppercase tracking-wider mt-0.5">Places</p>
           </div>
           <div className="h-8 w-[1px] bg-white/[0.06]" />
           <div>
-            <p className="text-2xl md:text-3xl font-black text-white/80" style={{ fontFamily: 'var(--font-playfair)' }}>1</p>
+            <p className="text-2xl md:text-3xl font-black text-white/80 font-playfair">1</p>
             <p className="text-[10px] text-white/30 uppercase tracking-wider mt-0.5">Film produit</p>
           </div>
           <div className="h-8 w-[1px] bg-white/[0.06]" />
           <div>
-            <p className="text-2xl md:text-3xl font-black text-white/80" style={{ fontFamily: 'var(--font-playfair)' }}>&#x221E;</p>
+            <p className="text-2xl md:text-3xl font-black text-white/80 font-playfair">&#x221E;</p>
             <p className="text-[10px] text-white/30 uppercase tracking-wider mt-0.5">Royalties on-chain</p>
           </div>
         </motion.div>

@@ -42,7 +42,7 @@ export default function ReferralPage() {
     <div className="space-y-10">
       {/* Header */}
       <div>
-        <h1 className="text-3xl sm:text-4xl font-bold" style={{ fontFamily: 'var(--font-playfair)' }}>
+        <h1 className="text-3xl sm:text-4xl font-bold font-playfair">
           Parrainage
         </h1>
         <p className="text-gray-400 mt-1">
@@ -133,7 +133,7 @@ export default function ReferralPage() {
                 <div className={`inline-flex items-center justify-center h-10 w-10 rounded-xl ${stat.bg} mb-3`}>
                   <stat.icon className={`h-5 w-5 ${stat.color}`} />
                 </div>
-                <div className="text-2xl font-bold text-gray-900" style={{ fontFamily: 'var(--font-playfair)' }}>
+                <div className="text-2xl font-bold text-gray-900 font-playfair">
                   {stat.value}
                 </div>
                 <div className="text-xs text-gray-400 mt-1">{stat.label}</div>

@@ -71,7 +71,7 @@ export function BadgeShowcase({ badges, compact = false }: BadgeShowcaseProps) {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h2 className="text-xl font-bold" style={{ fontFamily: 'var(--font-playfair)' }}>
+        <h2 className="text-xl font-bold font-playfair">
           Badges & Achievements
         </h2>
         <span className="text-sm text-white/30">

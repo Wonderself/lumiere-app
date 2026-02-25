@@ -85,7 +85,7 @@ export default async function AdminContestsPage() {
       {/* Header */}
       <div className="flex items-start justify-between">
         <div>
-          <h1 className="text-3xl font-bold mb-1" style={{ fontFamily: 'var(--font-playfair)' }}>
+          <h1 className="text-3xl font-bold mb-1 font-playfair">
             Concours & Scenarios
           </h1>
           <p className="text-white/50">Gerez les concours de trailers et les propositions de scenarios</p>

@@ -105,7 +105,6 @@ export default function ScreenplayNewPage() {
       <div>
         <h1
           className="text-3xl sm:text-4xl font-bold"
-          style={{ fontFamily: 'var(--font-playfair)' }}
         >
           Soumettre un Scenario
         </h1>

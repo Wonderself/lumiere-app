@@ -18,7 +18,7 @@ export function ForgotPasswordForm() {
         <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-[#D4AF37]/10 border border-[#D4AF37]/20 mb-2">
           <KeyRound className="h-8 w-8 text-[#D4AF37]" />
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold text-white" style={{ fontFamily: 'var(--font-playfair)' }}>
+        <h1 className="text-3xl sm:text-4xl font-bold text-white font-playfair">
           Mot de passe oublié
         </h1>
         <p className="text-white/50 text-sm sm:text-base">

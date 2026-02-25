@@ -149,19 +149,19 @@ export default async function DashboardPage() {
       )}
 
       {/* Task Recommendations */}
-      {recommendations.length > 0 && (
-        <div>
-          <div className="flex items-center justify-between mb-6">
-            <div className="flex items-center gap-3">
-              <Sparkles className="h-5 w-5 text-[#D4AF37]" />
-              <h2 className="text-gray-900 font-bold text-lg" style={{ fontFamily: 'var(--font-playfair)' }}>
-                Recommandé pour vous
-              </h2>
-            </div>
-            <Link href="/tasks" className="text-sm text-[#D4AF37] hover:underline">
-              Voir toutes →
-            </Link>
+      <div>
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center gap-3">
+            <Sparkles className="h-5 w-5 text-[#D4AF37]" />
+            <h2 className="text-gray-900 font-bold text-lg font-playfair">
+              Recommande pour vous
+            </h2>
           </div>
+          <Link href="/tasks" className="text-sm text-[#D4AF37] hover:underline">
+            Voir toutes →
+          </Link>
+        </div>
+        {recommendations.length > 0 ? (
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {recommendations.map((rec) => (
               <Link key={rec.id} href={`/tasks/${rec.id}`}>
@@ -185,8 +185,20 @@ export default async function DashboardPage() {
               </Link>
             ))}
           </div>
-        </div>
-      )}
+        ) : (
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 text-center">
+            <div className="mx-auto w-14 h-14 rounded-2xl bg-amber-50 flex items-center justify-center mb-4">
+              <Zap className="h-6 w-6 text-[#D4AF37]/60" />
+            </div>
+            <p className="text-gray-600 font-semibold mb-1">Pas encore de recommandations</p>
+            <p className="text-gray-400 text-sm max-w-sm mx-auto mb-5">Completez votre profil et realisez vos premieres taches pour recevoir des recommandations personnalisees.</p>
+            <Link href="/tasks" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#D4AF37] text-white text-sm font-medium hover:bg-[#C5A028] transition-colors">
+              Explorer les taches disponibles
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+        )}
+      </div>
 
       {/* Modules Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">

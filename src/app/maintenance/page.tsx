@@ -23,7 +23,6 @@ export default function MaintenancePage() {
           </div>
           <h1
             className="text-4xl font-bold text-white mb-2"
-            style={{ fontFamily: 'var(--font-playfair)' }}
           >
             Lumière
           </h1>

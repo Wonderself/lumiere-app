@@ -457,7 +457,7 @@ export default function PilotagePage() {
     <div className="p-6 lg:p-8 space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-2xl lg:text-3xl font-bold flex items-center gap-3" style={{ fontFamily: 'var(--font-playfair)' }}>
+        <h1 className="text-2xl lg:text-3xl font-bold flex items-center gap-3 font-playfair">
           <Landmark className="h-7 w-7 text-[#D4AF37]" />
           Pilotage &amp; Subventions
         </h1>

@@ -94,7 +94,6 @@ export function AccountSettings() {
       <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-shadow duration-300">
         <h3
           className="text-lg font-semibold text-gray-900 mb-2"
-          style={{ fontFamily: 'var(--font-playfair)' }}
         >
           Exporter mes donn&eacute;es
         </h3>
@@ -141,7 +140,6 @@ export function AccountSettings() {
       <div className="bg-white rounded-2xl shadow-sm border border-red-100 p-6 hover:shadow-md transition-shadow duration-300">
         <h3
           className="text-lg font-semibold text-gray-900 mb-2"
-          style={{ fontFamily: 'var(--font-playfair)' }}
         >
           Supprimer mon compte
         </h3>

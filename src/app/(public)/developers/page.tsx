@@ -165,7 +165,6 @@ export default function DevelopersPage() {
 
           <h1
             className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-5 tracking-tight"
-            style={{ fontFamily: 'var(--font-playfair)' }}
           >
             API{' '}
             <span className="text-shimmer">Developers</span>
@@ -278,7 +277,7 @@ export default function DevelopersPage() {
 
         <div className="rounded-2xl sm:rounded-3xl border border-white/[0.06] bg-white/[0.02] overflow-hidden">
           <div className="px-5 sm:px-7 py-5 sm:py-6 border-b border-white/[0.04]">
-            <h3 className="text-lg font-bold text-white" style={{ fontFamily: 'var(--font-playfair)' }}>
+            <h3 className="text-lg font-bold text-white font-playfair">
               Quick Start
             </h3>
           </div>

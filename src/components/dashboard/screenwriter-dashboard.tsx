@@ -60,7 +60,6 @@ export async function ScreenwriterDashboard({ user }: ScreenwriterDashboardProps
         <div>
           <h1
             className="text-3xl font-bold mb-1"
-            style={{ fontFamily: 'var(--font-playfair)' }}
           >
             Mes Scenarios
           </h1>

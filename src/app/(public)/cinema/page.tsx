@@ -166,7 +166,6 @@ export default async function CinemaPage() {
 
           <h1
             className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold leading-[0.92] mb-7 sm:mb-9 max-w-5xl tracking-tight"
-            style={{ fontFamily: 'var(--font-playfair)' }}
           >
             Le Studio de{' '}
             <span className="text-shimmer">Demain.</span>
@@ -208,7 +207,7 @@ export default async function CinemaPage() {
                 className="text-center p-4 sm:p-5 rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm hover:border-[#D4AF37]/15 hover:bg-white/[0.04] transition-all duration-500"
               >
                 <stat.icon className="h-4 w-4 mx-auto mb-3 text-[#D4AF37]/40" />
-                <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#D4AF37] mb-1" style={{ fontFamily: 'var(--font-playfair)' }}>
+                <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#D4AF37] mb-1 font-playfair">
                   {stat.value}
                 </div>
                 <div className="text-[9px] sm:text-[10px] text-white/30 uppercase tracking-[0.15em]">{stat.label}</div>
@@ -233,7 +232,7 @@ export default async function CinemaPage() {
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
             <div>
               <p className="text-[#D4AF37] text-xs sm:text-sm font-medium uppercase tracking-[0.25em] mb-5">Notre Vision</p>
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-7 leading-[1.1]" style={{ fontFamily: 'var(--font-playfair)' }}>
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-7 leading-[1.1] font-playfair">
                 La disruption, ce n&apos;est pas detruire le passe.
                 <br />
                 <span className="text-shimmer">C&apos;est l&apos;upgrader.</span>
@@ -275,7 +274,7 @@ export default async function CinemaPage() {
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-14 sm:mb-18">
             <p className="text-[#D4AF37] text-xs sm:text-sm font-medium uppercase tracking-[0.25em] mb-4">Le Processus</p>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-5" style={{ fontFamily: 'var(--font-playfair)' }}>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-5 font-playfair">
               Comment ca <span className="text-gold-gradient">Marche</span>
             </h2>
             <p className="text-white/35 text-base sm:text-lg max-w-xl mx-auto">Simple, rapide, et remunerateur. En 3 etapes.</p>
@@ -293,7 +292,7 @@ export default async function CinemaPage() {
                   <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#D4AF37]/[0.08] border border-[#D4AF37]/15 group-hover:bg-[#D4AF37]/[0.12] group-hover:scale-110 transition-all duration-500">
                     <step.icon className="h-6 w-6 text-[#D4AF37]" />
                   </div>
-                  <span className="text-6xl font-bold text-white/[0.03]" style={{ fontFamily: 'var(--font-playfair)' }}>
+                  <span className="text-6xl font-bold text-white/[0.03] font-playfair">
                     {step.number}
                   </span>
                 </div>
@@ -314,7 +313,7 @@ export default async function CinemaPage() {
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-14 sm:mb-18">
             <p className="text-[#D4AF37] text-xs sm:text-sm font-medium uppercase tracking-[0.25em] mb-4">Services</p>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-5" style={{ fontFamily: 'var(--font-playfair)' }}>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-5 font-playfair">
               Le Studio aux <span className="text-shimmer">Possibilites Infinies</span>
             </h2>
             <p className="text-white/35 text-base sm:text-lg max-w-xl mx-auto">Du trailer a l&apos;affiche, du face-swap au streaming.</p>
@@ -355,7 +354,7 @@ export default async function CinemaPage() {
             </div>
             <div>
               <p className="text-[#D4AF37] text-xs sm:text-sm font-medium uppercase tracking-[0.25em] mb-5">Genre-Agnostic</p>
-              <h2 className="text-3xl sm:text-4xl font-bold mb-7 leading-[1.1]" style={{ fontFamily: 'var(--font-playfair)' }}>
+              <h2 className="text-3xl sm:text-4xl font-bold mb-7 leading-[1.1] font-playfair">
                 De l&apos;Horreur Glacante au{' '}
                 <span className="text-gold-gradient">Divertissement Familial</span>
               </h2>
@@ -384,7 +383,7 @@ export default async function CinemaPage() {
             <div className="flex items-center justify-between mb-14">
               <div>
                 <p className="text-[#D4AF37] text-xs sm:text-sm font-medium uppercase tracking-[0.25em] mb-3">Pipeline</p>
-                <h2 className="text-3xl sm:text-4xl font-bold" style={{ fontFamily: 'var(--font-playfair)' }}>
+                <h2 className="text-3xl sm:text-4xl font-bold font-playfair">
                   Films en <span className="text-gold-gradient">Production</span>
                 </h2>
               </div>
@@ -444,7 +443,7 @@ export default async function CinemaPage() {
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
             <div>
               <p className="text-[#D4AF37] text-xs sm:text-sm font-medium uppercase tracking-[0.25em] mb-5">Workflow Proprietaire</p>
-              <h2 className="text-3xl sm:text-4xl font-bold mb-7 leading-[1.1]" style={{ fontFamily: 'var(--font-playfair)' }}>
+              <h2 className="text-3xl sm:text-4xl font-bold mb-7 leading-[1.1] font-playfair">
                 Des Micro-Taches pour{' '}
                 <span className="text-gold-gradient">Chaque Talent</span>
               </h2>
@@ -493,7 +492,7 @@ export default async function CinemaPage() {
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-14 sm:mb-18">
             <p className="text-[#D4AF37] text-xs sm:text-sm font-medium uppercase tracking-[0.25em] mb-4">Pourquoi Nous</p>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-5" style={{ fontFamily: 'var(--font-playfair)' }}>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-5 font-playfair">
               L&apos;Avantage <span className="text-shimmer">Lumiere</span>
             </h2>
           </div>
@@ -530,7 +529,7 @@ export default async function CinemaPage() {
             </div>
             <div className="order-1 lg:order-2">
               <p className="text-[#D4AF37] text-xs sm:text-sm font-medium uppercase tracking-[0.25em] mb-5">Partenariat Strategique</p>
-              <h2 className="text-3xl sm:text-4xl font-bold mb-7 leading-[1.1]" style={{ fontFamily: 'var(--font-playfair)' }}>
+              <h2 className="text-3xl sm:text-4xl font-bold mb-7 leading-[1.1] font-playfair">
                 Editions Ruppin :{' '}
                 <span className="text-gold-gradient">Du Livre a l&apos;Ecran</span>
               </h2>
@@ -566,7 +565,7 @@ export default async function CinemaPage() {
         <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#D4AF37]/10 to-transparent" />
         <div className="container mx-auto max-w-4xl text-center">
           <p className="text-[#D4AF37] text-xs sm:text-sm font-medium uppercase tracking-[0.25em] mb-4">Tarification</p>
-          <h2 className="text-3xl sm:text-4xl font-bold mb-5" style={{ fontFamily: 'var(--font-playfair)' }}>
+          <h2 className="text-3xl sm:text-4xl font-bold mb-5 font-playfair">
             Des Taches pour <span className="text-gold-gradient">Chaque Niveau</span>
           </h2>
           <p className="text-white/35 mb-14">Plus la tache est complexe, plus la recompense est elevee.</p>
@@ -588,7 +587,7 @@ export default async function CinemaPage() {
                     </div>
                   </>
                 )}
-                <div className={`text-4xl sm:text-5xl font-bold mb-2 ${tier.featured ? 'text-[#D4AF37]' : 'text-white/90'}`} style={{ fontFamily: 'var(--font-playfair)' }}>
+                <div className={`text-4xl sm:text-5xl font-bold mb-2 ${tier.featured ? 'text-[#D4AF37]' : 'text-white/90'}`}>
                   {tier.price}
                 </div>
                 <div className="text-sm text-white/30 mb-1">par tache</div>
@@ -616,7 +615,7 @@ export default async function CinemaPage() {
 
         <div className="relative z-10 container mx-auto max-w-3xl">
           <Infinity className="h-10 w-10 sm:h-12 sm:w-12 mx-auto mb-8 text-[#D4AF37]/20" strokeWidth={1} />
-          <h2 className="text-4xl sm:text-5xl lg:text-7xl font-bold mb-7 leading-[1.05]" style={{ fontFamily: 'var(--font-playfair)' }}>
+          <h2 className="text-4xl sm:text-5xl lg:text-7xl font-bold mb-7 leading-[1.05] font-playfair">
             Pret a Entrer dans la
             <br />
             <span className="text-shimmer">Lumiere ?</span>

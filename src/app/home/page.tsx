@@ -357,7 +357,6 @@ export default async function HomePage() {
         {/* Headline */}
         <h1
           className="relative text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold leading-[1.1] mb-8 max-w-6xl text-gray-900"
-          style={{ fontFamily: 'var(--font-playfair)' }}
         >
           <span className="block">Devenez</span>
           <span className="block mt-2">
@@ -426,7 +425,6 @@ export default async function HomePage() {
                 </div>
                 <div
                   className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#D4AF37]"
-                  style={{ fontFamily: 'var(--font-playfair)' }}
                 >
                   {stat.value}
                 </div>
@@ -458,7 +456,6 @@ export default async function HomePage() {
             </div>
             <h2
               className="text-3xl sm:text-4xl md:text-5xl font-bold mb-5 text-gray-900"
-              style={{ fontFamily: 'var(--font-playfair)' }}
             >
               Comment ca{' '}
               <span
@@ -489,7 +486,6 @@ export default async function HomePage() {
                   {/* Step number watermark */}
                   <span
                     className="absolute top-4 right-4 text-6xl font-bold text-gray-100 select-none"
-                    style={{ fontFamily: 'var(--font-playfair)' }}
                   >
                     {step.number}
                   </span>
@@ -503,7 +499,6 @@ export default async function HomePage() {
                   </div>
                   <h3
                     className="text-xl font-bold mb-3 text-gray-900 group-hover:text-[#D4AF37] transition-colors duration-300"
-                    style={{ fontFamily: 'var(--font-playfair)' }}
                   >
                     {step.title}
                   </h3>
@@ -528,7 +523,6 @@ export default async function HomePage() {
             </div>
             <h2
               className="text-3xl sm:text-4xl md:text-5xl font-bold mb-5 text-gray-900"
-              style={{ fontFamily: 'var(--font-playfair)' }}
             >
               Un Ecosysteme{' '}
               <span
@@ -581,7 +575,6 @@ export default async function HomePage() {
                   {/* Content */}
                   <h3
                     className="text-xl font-bold mb-3 text-gray-900 transition-colors duration-300"
-                    style={{ fontFamily: 'var(--font-playfair)' }}
                   >
                     <span className="group-hover:text-gray-900">{mod.title}</span>
                   </h3>
@@ -605,7 +598,6 @@ export default async function HomePage() {
               </div>
               <h3
                 className="text-xl font-bold mb-3 text-[#D4AF37]"
-                style={{ fontFamily: 'var(--font-playfair)' }}
               >
                 Votre Nom au Generique
               </h3>
@@ -643,7 +635,6 @@ export default async function HomePage() {
               </div>
               <h2
                 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 leading-tight text-gray-900"
-                style={{ fontFamily: 'var(--font-playfair)' }}
               >
                 Mettez Votre{' '}
                 <span
@@ -757,7 +748,6 @@ export default async function HomePage() {
               </div>
               <h2
                 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 text-gray-900"
-                style={{ fontFamily: 'var(--font-playfair)' }}
               >
                 Films en{' '}
                 <span
@@ -815,7 +805,6 @@ export default async function HomePage() {
                     <div className="p-5">
                       <h3
                         className="font-bold text-lg mb-2 text-gray-900 group-hover:text-[#D4AF37] transition-colors duration-300"
-                        style={{ fontFamily: 'var(--font-playfair)' }}
                       >
                         {film.title}
                       </h3>
@@ -884,7 +873,6 @@ export default async function HomePage() {
             </div>
             <h2
               className="text-3xl sm:text-4xl md:text-5xl font-bold mb-5 text-gray-900"
-              style={{ fontFamily: 'var(--font-playfair)' }}
             >
               Ils nous font{' '}
               <span
@@ -911,7 +899,6 @@ export default async function HomePage() {
               <div key={stat.label} className="text-center py-6 rounded-2xl border border-gray-100 bg-white shadow-sm">
                 <div
                   className="text-3xl sm:text-4xl font-bold text-[#D4AF37] mb-2"
-                  style={{ fontFamily: 'var(--font-playfair)' }}
                 >
                   {stat.value}
                 </div>
@@ -989,7 +976,6 @@ export default async function HomePage() {
                 </div>
                 <h2
                   className="text-3xl sm:text-4xl font-bold mb-5 leading-tight text-gray-900"
-                  style={{ fontFamily: 'var(--font-playfair)' }}
                 >
                   Invitez vos Amis,{' '}
                   <span className="text-[#D4AF37]">Gagnez des Tokens</span>
@@ -1017,7 +1003,7 @@ export default async function HomePage() {
                   </div>
                   <div>
                     <div className="text-sm font-semibold text-gray-900 mb-0.5">Vous parrainez</div>
-                    <div className="text-2xl font-bold text-[#D4AF37]" style={{ fontFamily: 'var(--font-playfair)' }}>+30 Lumens</div>
+                    <div className="text-2xl font-bold text-[#D4AF37] font-playfair">+30 Lumens</div>
                     <div className="text-xs text-gray-400">Credites instantanement</div>
                   </div>
                 </div>
@@ -1028,7 +1014,7 @@ export default async function HomePage() {
                   </div>
                   <div>
                     <div className="text-sm font-semibold text-gray-900 mb-0.5">Votre ami recoit</div>
-                    <div className="text-2xl font-bold text-purple-500" style={{ fontFamily: 'var(--font-playfair)' }}>+30 Lumens</div>
+                    <div className="text-2xl font-bold text-purple-500 font-playfair">+30 Lumens</div>
                     <div className="text-xs text-gray-400">Des son inscription</div>
                   </div>
                 </div>
@@ -1057,7 +1043,6 @@ export default async function HomePage() {
             </div>
             <h2
               className="text-3xl sm:text-4xl md:text-5xl font-bold mb-5 text-gray-900"
-              style={{ fontFamily: 'var(--font-playfair)' }}
             >
               Un Plan pour{' '}
               <span
@@ -1097,8 +1082,7 @@ export default async function HomePage() {
                 {/* Price */}
                 <div className="flex items-baseline gap-1 mb-1">
                   <span
-                    className={`text-4xl sm:text-5xl font-bold ${plan.featured ? 'text-[#D4AF37]' : 'text-gray-900'}`}
-                    style={{ fontFamily: 'var(--font-playfair)' }}
+                    className={`text-4xl sm:text-5xl font-bold font-playfair ${plan.featured ? 'text-[#D4AF37]' : 'text-gray-900'}`}
                   >
                     {plan.price}&#8364;
                   </span>
@@ -1161,7 +1145,6 @@ export default async function HomePage() {
 
           <h2
             className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 leading-tight text-gray-900"
-            style={{ fontFamily: 'var(--font-playfair)' }}
           >
             Rejoignez la{' '}
             <span

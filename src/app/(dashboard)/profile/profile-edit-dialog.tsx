@@ -49,7 +49,7 @@ export function ProfileEditDialog({ user }: ProfileEditDialogProps) {
       </DialogTrigger>
       <DialogContent className="max-w-lg">
         <DialogHeader>
-          <DialogTitle style={{ fontFamily: 'var(--font-playfair)' }}>
+          <DialogTitle className="font-playfair">
             Modifier mon profil
           </DialogTitle>
           <DialogDescription>

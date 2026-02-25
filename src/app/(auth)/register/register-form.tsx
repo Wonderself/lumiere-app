@@ -37,7 +37,7 @@ export function RegisterForm() {
         <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-green-500/10 border border-green-500/20">
           <CheckCircle className="h-10 w-10 text-green-400" />
         </div>
-        <h2 className="text-2xl font-bold text-white" style={{ fontFamily: 'var(--font-playfair)' }}>Compte créé !</h2>
+        <h2 className="text-2xl font-bold text-white font-playfair">Compte créé !</h2>
         <p className="text-white/50 leading-relaxed">
           Votre compte est en attente de validation par notre équipe. Vous recevrez un email dès que votre compte sera activé.
         </p>
@@ -68,7 +68,7 @@ export function RegisterForm() {
         <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-[#D4AF37]/10 border border-[#D4AF37]/20 mb-2">
           <UserPlus className="h-8 w-8 text-[#D4AF37]" />
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold text-white" style={{ fontFamily: 'var(--font-playfair)' }}>
+        <h1 className="text-3xl sm:text-4xl font-bold text-white font-playfair">
           <span className="text-shimmer">{role === 'SCREENWRITER' ? 'Devenez Scenariste' : 'Rejoindre Lumière'}</span>
         </h1>
         <p className="text-white/50 text-sm sm:text-base">

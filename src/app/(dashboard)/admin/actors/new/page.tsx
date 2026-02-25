@@ -26,7 +26,7 @@ export default async function NewActorPage() {
           <ArrowLeft className="h-4 w-4" />
           Retour aux acteurs
         </Link>
-        <h1 className="text-3xl font-bold" style={{ fontFamily: 'var(--font-playfair)' }}>
+        <h1 className="text-3xl font-bold font-playfair">
           Nouvel Acteur IA
         </h1>
         <p className="text-white/50">Creez un nouveau talent virtuel pour la plateforme.</p>
@@ -35,7 +35,7 @@ export default async function NewActorPage() {
       <form action={createActorAction} className="space-y-8">
         {/* Identity Section */}
         <section className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-6 space-y-5">
-          <h2 className="text-lg font-semibold text-[#D4AF37]" style={{ fontFamily: 'var(--font-playfair)' }}>
+          <h2 className="text-lg font-semibold text-[#D4AF37] font-playfair">
             Identite
           </h2>
 
@@ -86,7 +86,7 @@ export default async function NewActorPage() {
 
         {/* Bio & Quote Section */}
         <section className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-6 space-y-5">
-          <h2 className="text-lg font-semibold text-[#D4AF37]" style={{ fontFamily: 'var(--font-playfair)' }}>
+          <h2 className="text-lg font-semibold text-[#D4AF37] font-playfair">
             Biographie
           </h2>
 
@@ -113,7 +113,7 @@ export default async function NewActorPage() {
 
         {/* Personality Section */}
         <section className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-6 space-y-5">
-          <h2 className="text-lg font-semibold text-[#D4AF37]" style={{ fontFamily: 'var(--font-playfair)' }}>
+          <h2 className="text-lg font-semibold text-[#D4AF37] font-playfair">
             Personnalite
           </h2>
 
@@ -149,7 +149,7 @@ export default async function NewActorPage() {
 
         {/* Media Section */}
         <section className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-6 space-y-5">
-          <h2 className="text-lg font-semibold text-[#D4AF37]" style={{ fontFamily: 'var(--font-playfair)' }}>
+          <h2 className="text-lg font-semibold text-[#D4AF37] font-playfair">
             Media & Social
           </h2>
 

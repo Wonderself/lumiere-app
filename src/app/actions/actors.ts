@@ -4,7 +4,7 @@ import { auth } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
 import { redirect } from 'next/navigation'
 import { revalidatePath } from 'next/cache'
-import { slugify } from '@/lib/actors'
+import { slugify } from '@/lib/utils'
 
 async function requireAdmin() {
   const session = await auth()
@@ -52,7 +52,7 @@ export async function createActorAction(formData: FormData) {
       nationality: nationality || null,
       birthYear: birthYear ? parseInt(birthYear, 10) : null,
       debutYear: debutYear ? parseInt(debutYear, 10) : null,
-      style: style as any,
+      style: style as never,
       personalityTraits,
       funFacts,
       quote: quote || null,
@@ -105,7 +105,7 @@ export async function updateActorAction(formData: FormData) {
       nationality: nationality || null,
       birthYear: birthYear ? parseInt(birthYear, 10) : null,
       debutYear: debutYear ? parseInt(debutYear, 10) : null,
-      style: style as any,
+      style: style as never,
       personalityTraits,
       funFacts,
       quote: quote || null,
@@ -156,7 +156,7 @@ export async function assignCastRoleAction(formData: FormData) {
       filmId: filmId || null,
       catalogFilmId: catalogFilmId || null,
       characterName,
-      role: role as any,
+      role: role as never,
       description: description || null,
     },
   })

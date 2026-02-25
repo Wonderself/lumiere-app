@@ -103,7 +103,7 @@ export default async function TaskDetailPage({ params }: Props) {
           </span>
         </div>
 
-        <h1 className="text-3xl font-bold" style={{ fontFamily: 'var(--font-playfair)' }}>
+        <h1 className="text-3xl font-bold font-playfair">
           {task.title}
         </h1>
 
@@ -114,7 +114,7 @@ export default async function TaskDetailPage({ params }: Props) {
               {DIFFICULTY_LABELS[task.difficulty]}
             </span>
           </div>
-          <div className="text-3xl font-bold text-[#D4AF37]" style={{ fontFamily: 'var(--font-playfair)' }}>
+          <div className="text-3xl font-bold text-[#D4AF37] font-playfair">
             {formatPrice(task.priceEuros)}
           </div>
           {task.claimedAt && isClaimedByMe && (
@@ -254,7 +254,7 @@ export default async function TaskDetailPage({ params }: Props) {
             <CardHeader>
               <CardTitle className="text-base flex items-center gap-2">
                 <MessageCircle className="h-5 w-5 text-[#D4AF37]" />
-                <span style={{ fontFamily: 'var(--font-playfair)' }}>Commentaires</span>
+                <span className="font-playfair">Commentaires</span>
                 {comments.length > 0 && (
                   <span className="text-xs font-normal text-white/40 ml-1">
                     ({comments.length})

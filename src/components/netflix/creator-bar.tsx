@@ -74,7 +74,6 @@ export function CreatorBar() {
         <div>
           <h2
             className="text-xl md:text-2xl font-bold text-white tracking-tight"
-            style={{ fontFamily: 'var(--font-playfair)' }}
           >
             Participez a la Creation
           </h2>
@@ -133,7 +132,6 @@ export function CreatorBar() {
                 <div>
                   <h3
                     className="text-base md:text-lg font-bold text-white mb-2 group-hover:text-white transition-colors leading-tight"
-                    style={{ fontFamily: 'var(--font-playfair)' }}
                   >
                     {action.title}
                   </h3>

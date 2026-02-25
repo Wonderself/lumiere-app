@@ -397,7 +397,6 @@ export default async function AdminTodoFondateurPage() {
       <div>
         <h1
           className="text-3xl font-bold flex items-center gap-3"
-          style={{ fontFamily: 'var(--font-playfair)' }}
         >
           <ListTodo className="h-7 w-7 text-[#D4AF37]" /> TODO Fondateur
         </h1>
@@ -568,7 +567,7 @@ export default async function AdminTodoFondateurPage() {
       {/* Bottom CTA */}
       <div className="text-center p-8 rounded-2xl border border-white/5 bg-white/[0.02]">
         <Sparkles className="h-8 w-8 text-[#D4AF37] mx-auto mb-4" />
-        <h3 className="text-xl font-bold mb-2" style={{ fontFamily: 'var(--font-playfair)' }}>
+        <h3 className="text-xl font-bold mb-2 font-playfair">
           Prochaine etape recommandee
         </h3>
         <p className="text-white/40 text-sm mb-6 max-w-lg mx-auto">

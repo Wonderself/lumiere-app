@@ -7,9 +7,9 @@ import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { Sparkline } from '@/components/admin/charts/sparkline'
 import {
-  Users, Film, Star, CreditCard, ClipboardCheck, TrendingUp,
+  Users, Film, Star, CreditCard, ClipboardCheck,
   ChevronRight, AlertCircle, Plus, CheckCircle, Clock, BarChart3,
-  Zap, Target, Eye, ArrowUpRight, ArrowDownRight,
+  Target, Eye, ArrowUpRight,
 } from 'lucide-react'
 import { formatPrice } from '@/lib/utils'
 import type { Metadata } from 'next'
@@ -77,7 +77,7 @@ export default async function AdminPage() {
       {/* Header */}
       <div className="flex items-start justify-between">
         <div>
-          <h1 className="text-3xl font-bold mb-2" style={{ fontFamily: 'var(--font-playfair)' }}>
+          <h1 className="text-3xl font-bold mb-2 font-playfair">
             Command Center
           </h1>
           <p className="text-white/50">Vue globale de la plateforme Lumière</p>

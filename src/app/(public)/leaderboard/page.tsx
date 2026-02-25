@@ -99,7 +99,6 @@ export default async function LeaderboardPage() {
           {/* Title */}
           <h1
             className="text-4xl sm:text-5xl md:text-6xl font-bold mb-5 text-white"
-            style={{ fontFamily: 'var(--font-playfair)' }}
           >
             <span
               style={{
@@ -275,7 +274,7 @@ export default async function LeaderboardPage() {
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-32 bg-[#D4AF37]/[0.05] rounded-full blur-[60px]" />
             </div>
             <div className="relative">
-              <h2 className="text-2xl font-bold mb-2 text-white" style={{ fontFamily: 'var(--font-playfair)' }}>
+              <h2 className="text-2xl font-bold mb-2 text-white font-playfair">
                 Rejoignez le classement
               </h2>
               <p className="text-white/50 mb-6 text-sm">

@@ -288,7 +288,7 @@ const humanOnly: AutomationItem[] = [
 
 export default async function AdminAIAutomationPage() {
   const session = await auth()
-  if (!session?.user || (session.user as any).role !== 'ADMIN') redirect('/dashboard')
+  if (!session?.user || session.user.role !== 'ADMIN') redirect('/dashboard')
 
   const totalItems = fullyAutomated.length + assisted.length + humanOnly.length
   const automationPct = Math.round((fullyAutomated.length / totalItems) * 100)

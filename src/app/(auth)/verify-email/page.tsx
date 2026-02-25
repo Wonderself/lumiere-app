@@ -21,7 +21,7 @@ export default async function VerifyEmailPage({
         <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-amber-500/10 border border-amber-500/20">
           <Mail className="h-10 w-10 text-amber-400" />
         </div>
-        <h2 className="text-2xl font-bold text-white" style={{ fontFamily: 'var(--font-playfair)' }}>
+        <h2 className="text-2xl font-bold text-white font-playfair">
           Lien manquant
         </h2>
         <p className="text-white/50 leading-relaxed">
@@ -45,7 +45,7 @@ export default async function VerifyEmailPage({
         <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-green-500/10 border border-green-500/20">
           <CheckCircle className="h-10 w-10 text-green-400" />
         </div>
-        <h2 className="text-2xl font-bold text-white" style={{ fontFamily: 'var(--font-playfair)' }}>
+        <h2 className="text-2xl font-bold text-white font-playfair">
           Email verifie !
         </h2>
         <p className="text-white/50 leading-relaxed">
@@ -66,7 +66,7 @@ export default async function VerifyEmailPage({
       <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-red-500/10 border border-red-500/20">
         <XCircle className="h-10 w-10 text-red-400" />
       </div>
-      <h2 className="text-2xl font-bold text-white" style={{ fontFamily: 'var(--font-playfair)' }}>
+      <h2 className="text-2xl font-bold text-white font-playfair">
         Verification echouee
       </h2>
       <p className="text-white/50 leading-relaxed">

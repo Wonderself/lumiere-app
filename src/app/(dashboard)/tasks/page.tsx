@@ -7,10 +7,9 @@ import { Button } from '@/components/ui/button'
 import {
   TASK_STATUS_LABELS,
   TASK_TYPE_LABELS,
-  DIFFICULTY_LABELS,
   PHASE_LABELS,
 } from '@/lib/constants'
-import { formatPrice, getStatusColor, getDifficultyColor } from '@/lib/utils'
+import { formatPrice, getStatusColor } from '@/lib/utils'
 import { Star, Lock, ChevronRight, ChevronDown } from 'lucide-react'
 import type { Metadata } from 'next'
 
@@ -39,9 +38,9 @@ export default async function TasksPage({
   const tasks = await prisma.task.findMany({
     where: {
       ...(params.film ? { filmId: params.film } : {}),
-      ...(params.type ? { type: params.type as any } : {}),
-      ...(params.difficulty ? { difficulty: params.difficulty as any } : {}),
-      status: (params.status as any) || { in: ['AVAILABLE', 'CLAIMED', 'VALIDATED'] },
+      ...(params.type ? { type: params.type as never } : {}),
+      ...(params.difficulty ? { difficulty: params.difficulty as never } : {}),
+      status: (params.status as never) || { in: ['AVAILABLE', 'CLAIMED', 'VALIDATED'] },
       ...(params.minPrice ? { priceEuros: { gte: parseFloat(params.minPrice) } } : {}),
       ...(params.maxPrice ? { priceEuros: { lte: parseFloat(params.maxPrice) } } : {}),
     },
@@ -74,7 +73,7 @@ export default async function TasksPage({
     <div className="space-y-10">
       <div className="flex items-end justify-between flex-wrap gap-4">
         <div>
-          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-3" style={{ fontFamily: 'var(--font-playfair)' }}>
+          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-3 font-playfair">
             Marketplace de Tâches
           </h1>
           <p className="text-gray-500">{tasks.length} tâche{tasks.length > 1 ? 's' : ''} trouvée{tasks.length > 1 ? 's' : ''}</p>

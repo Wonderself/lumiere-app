@@ -206,13 +206,12 @@ export function FilmReviews({ filmId }: { filmId: string }) {
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <h2
           className="text-2xl font-bold text-white"
-          style={{ fontFamily: 'var(--font-playfair)' }}
         >
           Avis et Notes
         </h2>
         {rating && rating.count > 0 && (
           <div className="flex items-center gap-3">
-            <div className="text-3xl font-bold text-[#D4AF37]" style={{ fontFamily: 'var(--font-playfair)' }}>
+            <div className="text-3xl font-bold text-[#D4AF37] font-playfair">
               {rating.average}
             </div>
             <div>

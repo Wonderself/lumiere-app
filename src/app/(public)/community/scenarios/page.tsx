@@ -90,7 +90,7 @@ export default async function ScenariosPage() {
         <div className="text-center mb-16">
           <div className="flex items-center justify-center gap-3 mb-4">
             <PenTool className="h-10 w-10 text-[#D4AF37]" />
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900" style={{ fontFamily: 'var(--font-playfair)' }}>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 font-playfair">
               Scenarios
             </h1>
           </div>
@@ -113,7 +113,7 @@ export default async function ScenariosPage() {
             <section>
               <div className="flex items-center gap-3 mb-6">
                 <Vote className="h-6 w-6 text-[#D4AF37]" />
-                <h2 className="text-2xl font-bold text-gray-900" style={{ fontFamily: 'var(--font-playfair)' }}>
+                <h2 className="text-2xl font-bold text-gray-900 font-playfair">
                   En Vote
                 </h2>
                 <Badge>{voting.length}</Badge>
@@ -207,7 +207,7 @@ export default async function ScenariosPage() {
             <section>
               <div className="flex items-center gap-3 mb-6">
                 <BookOpen className="h-6 w-6 text-blue-500" />
-                <h2 className="text-2xl font-bold text-gray-900" style={{ fontFamily: 'var(--font-playfair)' }}>
+                <h2 className="text-2xl font-bold text-gray-900 font-playfair">
                   Propositions
                 </h2>
                 <Badge variant="secondary">{allProposals.length}</Badge>
@@ -256,7 +256,7 @@ export default async function ScenariosPage() {
             <section>
               <div className="flex items-center gap-3 mb-6">
                 <Crown className="h-6 w-6 text-[#D4AF37]" />
-                <h2 className="text-2xl font-bold text-gray-900" style={{ fontFamily: 'var(--font-playfair)' }}>
+                <h2 className="text-2xl font-bold text-gray-900 font-playfair">
                   Gagnants
                 </h2>
               </div>
@@ -301,7 +301,7 @@ export default async function ScenariosPage() {
           <section>
             <div className="flex items-center gap-3 mb-6">
               <Sparkles className="h-6 w-6 text-[#D4AF37]" />
-              <h2 className="text-2xl font-bold text-gray-900" style={{ fontFamily: 'var(--font-playfair)' }}>
+              <h2 className="text-2xl font-bold text-gray-900 font-playfair">
                 Votre Idee
               </h2>
             </div>

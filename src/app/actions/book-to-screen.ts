@@ -207,7 +207,7 @@ export async function submitBookForAdaptationAction(
       publisher,
       adaptationScore: analysis.score,
     },
-  }).catch(() => {})
+  }).catch((err) => console.error("[Blockchain] Failed to record book-to-screen submission:", err))
 
   revalidatePath('/screenplays')
   return { success: true, analysis }

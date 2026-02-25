@@ -289,7 +289,6 @@ export default function RoadmapPage() {
 
           <h1
             className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-5 tracking-tight"
-            style={{ fontFamily: 'var(--font-playfair)' }}
           >
             Roadmap{' '}
             <span className="text-shimmer">
@@ -304,7 +303,7 @@ export default function RoadmapPage() {
           {/* Progress */}
           <div className="inline-flex flex-col items-center gap-4 p-6 sm:p-8 rounded-2xl sm:rounded-3xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm">
             <div className="flex items-center gap-4">
-              <div className="text-4xl sm:text-5xl font-bold text-[#D4AF37]" style={{ fontFamily: 'var(--font-playfair)' }}>{progressPercent}%</div>
+              <div className="text-4xl sm:text-5xl font-bold text-[#D4AF37] font-playfair">{progressPercent}%</div>
               <div className="text-left">
                 <div className="text-sm text-white/50">{doneItems} / {totalItems} completes</div>
                 <div className="text-xs text-white/25">Phase {roadmap.findIndex(p => p.status === 'in_progress') + 1} en cours</div>
@@ -421,7 +420,6 @@ export default function RoadmapPage() {
             </div>
             <h3
               className="text-xl sm:text-2xl font-bold mb-4 text-white"
-              style={{ fontFamily: 'var(--font-playfair)' }}
             >
               Le futur du cinema se construit{' '}
               <span className="text-shimmer">maintenant</span>

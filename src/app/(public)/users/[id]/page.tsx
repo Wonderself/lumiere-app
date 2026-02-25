@@ -126,7 +126,7 @@ export default async function PublicUserProfilePage({ params }: Props) {
 
             <div className="flex-1 text-center sm:text-left">
               <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2 mb-2">
-                <h1 className="text-2xl sm:text-3xl font-bold" style={{ fontFamily: 'var(--font-playfair)' }}>
+                <h1 className="text-2xl sm:text-3xl font-bold font-playfair">
                   {name}
                 </h1>
                 {user.isVerified && (
@@ -174,7 +174,7 @@ export default async function PublicUserProfilePage({ params }: Props) {
           ].map((stat) => (
             <div key={stat.label} className="p-5 rounded-xl border border-white/[0.06] bg-white/[0.02] text-center">
               <stat.icon className={`h-5 w-5 mx-auto mb-2 ${stat.color}`} />
-              <div className="text-2xl font-bold" style={{ fontFamily: 'var(--font-playfair)' }}>{stat.value}</div>
+              <div className="text-2xl font-bold font-playfair">{stat.value}</div>
               <div className="text-xs text-white/30 mt-1">{stat.label}</div>
             </div>
           ))}
@@ -225,7 +225,7 @@ export default async function PublicUserProfilePage({ params }: Props) {
         {/* Recent Validated Tasks */}
         {recentTasks.length > 0 && (
           <div className="mb-8">
-            <h2 className="text-xl font-bold mb-4" style={{ fontFamily: 'var(--font-playfair)' }}>
+            <h2 className="text-xl font-bold mb-4 font-playfair">
               Contributions Recentes
             </h2>
             <div className="grid sm:grid-cols-2 gap-3">
@@ -249,7 +249,7 @@ export default async function PublicUserProfilePage({ params }: Props) {
         {/* Scenarios */}
         {scenarios.length > 0 && (
           <div>
-            <h2 className="text-xl font-bold mb-4" style={{ fontFamily: 'var(--font-playfair)' }}>
+            <h2 className="text-xl font-bold mb-4 font-playfair">
               Scenarios Proposes
             </h2>
             <div className="space-y-3">

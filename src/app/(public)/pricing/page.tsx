@@ -94,7 +94,6 @@ export default function PricingPage() {
           </div>
           <h1
             className="text-3xl sm:text-4xl md:text-5xl font-bold mb-5 tracking-tight"
-            style={{ fontFamily: 'var(--font-playfair)' }}
           >
             Le cinema IA,{' '}
             <span className="text-shimmer">accessible a tous</span>
@@ -119,7 +118,7 @@ export default function PricingPage() {
 
               <div className="mb-6">
                 <plan.icon className={`h-8 w-8 mb-3 ${plan.color}`} />
-                <h3 className="text-xl font-bold text-white" style={{ fontFamily: 'var(--font-playfair)' }}>
+                <h3 className="text-xl font-bold text-white font-playfair">
                   {plan.name}
                 </h3>
                 <p className="text-white/40 text-sm mt-1">{plan.description}</p>
@@ -157,7 +156,7 @@ export default function PricingPage() {
         <div className="text-center">
           <div className="inline-flex flex-col items-center gap-4 p-8 rounded-2xl border border-white/[0.06] bg-white/[0.02]">
             <Users className="h-8 w-8 text-[#D4AF37]" />
-            <h3 className="text-lg font-bold" style={{ fontFamily: 'var(--font-playfair)' }}>
+            <h3 className="text-lg font-bold font-playfair">
               Vous etes createur ?
             </h3>
             <p className="text-white/40 text-sm max-w-md">

@@ -105,7 +105,7 @@ export default async function ContestsPage() {
         <div className="text-center mb-16">
           <div className="flex items-center justify-center gap-3 mb-4">
             <Trophy className="h-10 w-10 text-[#D4AF37]" />
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900" style={{ fontFamily: 'var(--font-playfair)' }}>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 font-playfair">
               Concours
             </h1>
           </div>

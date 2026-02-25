@@ -24,7 +24,7 @@ export const metadata: Metadata = { title: 'Admin — Conformité Juridique Isra
 async function updateLegalItemAction(formData: FormData) {
   'use server'
   const session = await auth()
-  if (!session?.user || (session.user as any).role !== 'ADMIN') return
+  if (!session?.user || session.user.role !== 'ADMIN') return
 
   const itemId = formData.get('itemId') as string
   const status = formData.get('status') as string
@@ -206,7 +206,7 @@ const DEFAULT_LEGAL_CHECKLIST = [
 
 export default async function AdminLegalPage() {
   const session = await auth()
-  if (!session?.user || (session.user as any).role !== 'ADMIN') redirect('/dashboard')
+  if (!session?.user || session.user.role !== 'ADMIN') redirect('/dashboard')
 
   const items = await prisma.legalChecklist.findMany({
     orderBy: [{ priority: 'desc' }, { category: 'asc' }, { createdAt: 'asc' }],

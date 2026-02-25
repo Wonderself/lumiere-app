@@ -104,7 +104,7 @@ export function useNotifications({ enabled = true, onNotification }: UseNotifica
     fetch('/api/notifications/count')
       .then(r => r.json())
       .then(d => setUnreadCount(d.count || 0))
-      .catch(() => {})
+      .catch((err) => console.error("[Notifications] Failed to fetch unread count:", err))
   }, [enabled])
 
   return { unreadCount, notifications, connected }

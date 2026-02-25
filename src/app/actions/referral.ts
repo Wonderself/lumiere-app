@@ -126,7 +126,7 @@ export async function completeReferral(userId: string) {
   })
 
   // Check referral badge
-  await checkCommunityBadges(referral.referrerId, 'referral').catch(() => {})
+  await checkCommunityBadges(referral.referrerId, 'referral').catch((err) => console.error("[Badges] Failed to check referral badges:", err))
 }
 
 /**

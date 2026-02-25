@@ -82,7 +82,6 @@ export default async function EarningsPage() {
       <div>
         <h1
           className="text-3xl sm:text-4xl font-bold text-gray-900"
-          style={{ fontFamily: 'var(--font-playfair)' }}
         >
           Mes Revenus
         </h1>
@@ -114,7 +113,7 @@ export default async function EarningsPage() {
             <CalendarDays className="h-5 w-5 text-[#D4AF37]" />
           </div>
           <div>
-            <h2 className="text-lg font-bold text-gray-900" style={{ fontFamily: 'var(--font-playfair)' }}>
+            <h2 className="text-lg font-bold text-gray-900 font-playfair">
               Revenus mensuels
             </h2>
             <p className="text-gray-400 text-sm">6 derniers mois</p>
@@ -148,7 +147,6 @@ export default async function EarningsPage() {
             </div>
             <h2
               className="text-lg font-bold text-gray-900"
-              style={{ fontFamily: 'var(--font-playfair)' }}
             >
               Historique des paiements
             </h2>

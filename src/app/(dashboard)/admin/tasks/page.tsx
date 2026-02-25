@@ -36,7 +36,7 @@ export default async function AdminTasksPage() {
     <div className="space-y-10">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl sm:text-4xl font-bold" style={{ fontFamily: 'var(--font-playfair)' }}>Tâches</h1>
+          <h1 className="text-3xl sm:text-4xl font-bold font-playfair">Tâches</h1>
           <p className="text-white/50">{tasks.length} tâche{tasks.length > 1 ? 's' : ''} au total</p>
         </div>
         <Link href="/admin/tasks/new">

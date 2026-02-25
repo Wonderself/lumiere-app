@@ -20,7 +20,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
             <Clapperboard className="h-7 w-7 text-[#D4AF37] transition-transform duration-500 group-hover:scale-110" />
             <div className="absolute inset-0 bg-[#D4AF37]/20 blur-lg rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
           </div>
-          <span className="text-lg font-bold text-white/90 tracking-wider" style={{ fontFamily: 'var(--font-playfair)' }}>
+          <span className="text-lg font-bold text-white/90 tracking-wider font-playfair">
             LUMIÈRE
           </span>
         </Link>
