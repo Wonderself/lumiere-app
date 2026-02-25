@@ -73,9 +73,19 @@ COPY --from=builder /app/node_modules/split2 ./node_modules/split2
 COPY start.sh ./start.sh
 RUN chmod +x ./start.sh
 
+# Prisma CLI runtime deps (prisma db push needs valibot via @prisma/dev)
+COPY --from=builder /app/node_modules/valibot ./node_modules/valibot
+
 # Copy seed files (for initial deploy)
 COPY --from=builder /app/prisma/seed.ts ./prisma/seed.ts
 COPY --from=builder /app/node_modules/ts-node ./node_modules/ts-node
+COPY --from=builder /app/node_modules/yn ./node_modules/yn
+COPY --from=builder /app/node_modules/arg ./node_modules/arg
+COPY --from=builder /app/node_modules/make-error ./node_modules/make-error
+COPY --from=builder /app/node_modules/v8-compile-cache-lib ./node_modules/v8-compile-cache-lib
+COPY --from=builder /app/node_modules/create-require ./node_modules/create-require
+COPY --from=builder /app/node_modules/acorn ./node_modules/acorn
+COPY --from=builder /app/node_modules/acorn-walk ./node_modules/acorn-walk
 COPY --from=builder /app/node_modules/typescript ./node_modules/typescript
 COPY --from=builder /app/node_modules/dotenv ./node_modules/dotenv
 COPY --from=builder /app/node_modules/bcryptjs ./node_modules/bcryptjs
