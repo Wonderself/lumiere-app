@@ -53,7 +53,7 @@ export default async function AdminPaymentsPage() {
           <p className="text-white/50">{payments.length} paiement{payments.length > 1 ? 's' : ''} au total</p>
         </div>
         <Link href="/api/admin/export-payments" target="_blank">
-          <Button variant="outline" size="sm" className="rounded-xl border-[#D4AF37]/30 text-[#D4AF37] hover:bg-[#D4AF37]/5">
+          <Button variant="outline" size="sm" className="rounded-xl border-[#E50914]/30 text-[#E50914] hover:bg-[#E50914]/5">
             <Download className="h-4 w-4 mr-2" />
             Export CSV
           </Button>
@@ -67,7 +67,7 @@ export default async function AdminPaymentsPage() {
         {[
           { icon: CheckCircle, label: 'Complétés', value: formatPrice(totalCompleted), sub: `${countCompleted} paiements`, color: 'text-green-400' },
           { icon: Clock, label: 'En attente', value: formatPrice(totalPending), sub: `${countPending} paiements`, color: 'text-yellow-400' },
-          { icon: CreditCard, label: 'Total distribué', value: formatPrice(totalCompleted + totalPending), sub: 'toutes méthodes', color: 'text-[#D4AF37]' },
+          { icon: CreditCard, label: 'Total distribué', value: formatPrice(totalCompleted + totalPending), sub: 'toutes méthodes', color: 'text-[#E50914]' },
           { icon: AlertCircle, label: 'Moy. par paiement', value: formatPrice(countCompleted > 0 ? totalCompleted / countCompleted : 0), sub: 'paiements complétés', color: 'text-blue-400' },
         ].map((s) => (
           <Card key={s.label} className="sm:rounded-2xl hover:shadow-md hover:-translate-y-[1px]">
@@ -114,7 +114,7 @@ export default async function AdminPaymentsPage() {
                 <p className="text-xs text-white/30 truncate">{p.task.film.title}</p>
               </div>
               <div className="col-span-2">
-                <span className="text-sm font-bold text-[#D4AF37]">{formatPrice(p.amountEur)}</span>
+                <span className="text-sm font-bold text-[#E50914]">{formatPrice(p.amountEur)}</span>
               </div>
               <div className="col-span-1">
                 <Badge variant="secondary" className="text-xs">{p.method}</Badge>

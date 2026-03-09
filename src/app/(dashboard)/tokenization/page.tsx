@@ -40,7 +40,7 @@ function TokenizationNav({ active }: { active: string }) {
           href={tab.href}
           className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 min-h-[44px] ${
             active === tab.key
-              ? 'bg-white text-[#D4AF37] shadow-sm'
+              ? 'bg-white text-[#E50914] shadow-sm'
               : 'text-gray-400 hover:text-gray-600'
           }`}
         >
@@ -95,12 +95,12 @@ export default async function TokenizationMarketplacePage() {
       <TokenizationNav active="marketplace" />
 
       {/* Hero */}
-      <div className="relative overflow-hidden rounded-2xl border border-[#D4AF37]/20 bg-gradient-to-br from-amber-50 to-white p-7 sm:p-9 lg:p-11">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-[#D4AF37]/[0.06] rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
+      <div className="relative overflow-hidden rounded-2xl border border-[#E50914]/20 bg-gradient-to-br from-amber-50 to-white p-7 sm:p-9 lg:p-11">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-[#E50914]/[0.06] rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
 
         <div className="relative flex flex-col lg:flex-row lg:items-center gap-8">
           <div className="flex-1 space-y-4">
-            <Badge className="border-[#D4AF37]/20 bg-[#D4AF37]/10 text-[#D4AF37] text-xs">
+            <Badge className="border-[#E50914]/20 bg-[#E50914]/10 text-[#E50914] text-xs">
               <Crown className="h-3 w-3 mr-1" />
               Co-Production Cinematographique
             </Badge>
@@ -120,7 +120,7 @@ export default async function TokenizationMarketplacePage() {
                 { icon: Crown, label: 'Nom au generique' },
               ].map((b) => (
                 <span key={b.label} className="inline-flex items-center gap-1.5 text-xs text-gray-500 bg-white border border-gray-200 rounded-full px-3 py-1 shadow-sm">
-                  <b.icon className="h-3 w-3 text-[#D4AF37]" />
+                  <b.icon className="h-3 w-3 text-[#E50914]" />
                   {b.label}
                 </span>
               ))}
@@ -130,7 +130,7 @@ export default async function TokenizationMarketplacePage() {
           {/* Platform Stats */}
           <div className="grid grid-cols-2 gap-5 lg:w-72">
             {[
-              { label: 'Co-produit', value: formatEur(platformStats.totalRaised), color: 'text-[#D4AF37]' },
+              { label: 'Co-produit', value: formatEur(platformStats.totalRaised), color: 'text-[#E50914]' },
               { label: 'Films ouverts', value: platformStats.activeOfferings.toString(), color: 'text-blue-500' },
               { label: 'Co-producteurs', value: platformStats.totalInvestors.toString(), color: 'text-green-500' },
               { label: 'ROI moyen', value: `${platformStats.avgROI}%`, color: 'text-purple-500' },
@@ -156,11 +156,11 @@ export default async function TokenizationMarketplacePage() {
         {offerings.length === 0 ? (
           <div className="py-20 text-center bg-white rounded-2xl border border-gray-100 shadow-sm">
             <div className="mx-auto w-16 h-16 rounded-2xl bg-amber-50 flex items-center justify-center mb-5">
-              <Sparkles className="h-8 w-8 text-[#D4AF37]/60" />
+              <Sparkles className="h-8 w-8 text-[#E50914]/60" />
             </div>
             <p className="text-gray-700 text-lg font-semibold mb-2">Aucune offre active pour le moment</p>
             <p className="text-gray-400 text-sm max-w-md mx-auto mb-6 px-4">De nouvelles opportunites de co-production arrivent bientot. Revenez regulierement pour decouvrir les prochains films ouverts.</p>
-            <Link href="/films" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#D4AF37] text-white text-sm font-medium hover:bg-[#C5A028] transition-colors">
+            <Link href="/films" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#E50914] text-white text-sm font-medium hover:bg-[#FF2D2D] transition-colors">
               <Film className="h-4 w-4" />
               Decouvrir les films en production
             </Link>
@@ -173,7 +173,7 @@ export default async function TokenizationMarketplacePage() {
 
               return (
                 <Link key={offering.id} href={`/tokenization/${offering.filmId}`}>
-                  <div className="bg-white rounded-2xl shadow-sm border border-gray-100 hover:border-[#D4AF37]/30 hover:shadow-md transition-all h-full group overflow-hidden">
+                  <div className="bg-white rounded-2xl shadow-sm border border-gray-100 hover:border-[#E50914]/30 hover:shadow-md transition-all h-full group overflow-hidden">
                     {/* Film Cover */}
                     <div className="relative h-36 bg-gradient-to-br from-amber-50 to-gray-50 overflow-hidden">
                       {offering.film.coverImageUrl ? (
@@ -203,7 +203,7 @@ export default async function TokenizationMarketplacePage() {
                       <div>
                         <Progress value={progress} className="h-1.5" />
                         <div className="flex items-center justify-between mt-2">
-                          <span className="text-[#D4AF37] text-sm font-semibold">{formatEur(offering.raised)}</span>
+                          <span className="text-[#E50914] text-sm font-semibold">{formatEur(offering.raised)}</span>
                           <span className="text-gray-400 text-xs">/ {formatEur(offering.hardCap)}</span>
                         </div>
                       </div>
@@ -268,11 +268,11 @@ export default async function TokenizationMarketplacePage() {
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
           {[
             { title: 'Choisissez', desc: 'Parcourez les films ouverts a la co-production', icon: Film, color: 'text-blue-500', bg: 'bg-blue-50' },
-            { title: 'Co-Produisez', desc: 'Tokens de co-production des 10\u20AC', icon: Coins, color: 'text-[#D4AF37]', bg: 'bg-amber-50' },
+            { title: 'Co-Produisez', desc: 'Tokens de co-production des 10\u20AC', icon: Coins, color: 'text-[#E50914]', bg: 'bg-amber-50' },
             { title: 'Decidez', desc: 'Votez sur les choix creatifs du film', icon: Vote, color: 'text-purple-500', bg: 'bg-purple-50' },
             { title: 'Gagnez', desc: 'Revenus partages + nom au generique', icon: TrendingUp, color: 'text-green-500', bg: 'bg-green-50' },
           ].map((item) => (
-            <div key={item.title} className="text-center p-6 rounded-2xl border border-gray-100 bg-white shadow-sm hover:border-[#D4AF37]/20 hover:shadow-md transition-all duration-300">
+            <div key={item.title} className="text-center p-6 rounded-2xl border border-gray-100 bg-white shadow-sm hover:border-[#E50914]/20 hover:shadow-md transition-all duration-300">
               <div className={`h-10 w-10 rounded-lg ${item.bg} flex items-center justify-center mx-auto mb-3`}>
                 <item.icon className={`h-5 w-5 ${item.color}`} />
               </div>

@@ -96,7 +96,7 @@ export default async function EarningsPage() {
           { label: 'Total gagne', value: formatPrice(totalEarned), icon: TrendingUp, color: 'text-green-500', bg: 'bg-green-50 border-green-100' },
           { label: 'En attente', value: formatPrice(totalPending), icon: Clock, color: 'text-yellow-500', bg: 'bg-yellow-50 border-yellow-100' },
           { label: 'Paiements recus', value: String(completedCount), icon: CheckCircle, color: 'text-blue-500', bg: 'bg-blue-50 border-blue-100' },
-          { label: 'Lumens', value: String(user?.lumenBalance || 0), icon: Wallet, color: 'text-[#D4AF37]', bg: 'bg-amber-50 border-amber-100' },
+          { label: 'Lumens', value: String(user?.lumenBalance || 0), icon: Wallet, color: 'text-[#E50914]', bg: 'bg-amber-50 border-amber-100' },
         ].map((stat) => (
           <div key={stat.label} className={`p-4 rounded-xl border ${stat.bg}`}>
             <stat.icon className={`h-4 w-4 mb-2 ${stat.color}`} />
@@ -110,7 +110,7 @@ export default async function EarningsPage() {
       <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
         <div className="flex items-center gap-3 mb-6">
           <div className="w-10 h-10 rounded-xl bg-amber-50 border border-amber-100 flex items-center justify-center">
-            <CalendarDays className="h-5 w-5 text-[#D4AF37]" />
+            <CalendarDays className="h-5 w-5 text-[#E50914]" />
           </div>
           <div>
             <h2 className="text-lg font-bold text-gray-900 font-playfair">
@@ -126,7 +126,7 @@ export default async function EarningsPage() {
                 {m.amount > 0 ? formatPrice(m.amount) : ''}
               </span>
               <div
-                className="w-full rounded-t-lg bg-gradient-to-t from-[#D4AF37] to-[#F0D060] transition-all duration-500"
+                className="w-full rounded-t-lg bg-gradient-to-t from-[#E50914] to-[#FF2D2D] transition-all duration-500"
                 style={{ height: `${Math.max((m.amount / maxMonthly) * 100, 4)}%` }}
               />
               <span className="text-[10px] text-gray-400">{m.month}</span>
@@ -163,7 +163,7 @@ export default async function EarningsPage() {
               </p>
               <Link
                 href="/tasks"
-                className="inline-flex items-center gap-1.5 mt-4 text-sm text-[#D4AF37] hover:text-[#C5A028] font-medium"
+                className="inline-flex items-center gap-1.5 mt-4 text-sm text-[#E50914] hover:text-[#FF2D2D] font-medium"
               >
                 Trouver des taches <ArrowUpRight className="h-3.5 w-3.5" />
               </Link>

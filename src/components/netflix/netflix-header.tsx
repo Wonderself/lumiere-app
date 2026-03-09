@@ -133,7 +133,7 @@ export function NetflixHeader() {
                 className={cn(
                   'px-3 py-1.5 rounded text-[13px] font-medium transition-all duration-200 flex items-center gap-1',
                   pathname.startsWith('/tasks')
-                    ? 'text-[#D4AF37] font-bold'
+                    ? 'text-[#E50914] font-bold'
                     : 'text-white/60 hover:text-white/90'
                 )}
               >
@@ -165,7 +165,7 @@ export function NetflixHeader() {
                       className={cn(
                         'flex items-center gap-2.5 cursor-pointer',
                         (pathname === link.href || pathname.startsWith(link.href + '/'))
-                          ? 'text-[#D4AF37]'
+                          ? 'text-[#E50914]'
                           : 'text-white/70 hover:text-white'
                       )}
                     >
@@ -189,15 +189,15 @@ export function NetflixHeader() {
           {session?.user ? (
             <div className="hidden lg:flex items-center gap-2">
               <NotificationBell />
-              <Link href="/lumens" className="flex items-center gap-1.5 px-2.5 py-1 rounded text-sm text-white/50 hover:text-[#D4AF37] transition-all" aria-label="Mes Lumens">
-                <Sun className="h-4 w-4 text-[#D4AF37]" />
+              <Link href="/lumens" className="flex items-center gap-1.5 px-2.5 py-1 rounded text-sm text-white/50 hover:text-[#E50914] transition-all" aria-label="Mes Lumens">
+                <Sun className="h-4 w-4 text-[#E50914]" />
               </Link>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <button className="flex items-center gap-1.5 rounded px-1 py-1 hover:bg-white/5 transition-all outline-none" aria-label="Menu du profil">
                     <Avatar className="h-8 w-8 rounded">
                       {session.user.image && <AvatarImage src={session.user.image} alt={userName} />}
-                      <AvatarFallback className="text-xs rounded bg-[#D4AF37]/20 text-[#D4AF37]">{getInitials(userName)}</AvatarFallback>
+                      <AvatarFallback className="text-xs rounded bg-[#E50914]/20 text-[#E50914]">{getInitials(userName)}</AvatarFallback>
                     </Avatar>
                     <ChevronDown className="h-3 w-3 text-white/30" />
                   </button>
@@ -267,8 +267,8 @@ export function NetflixHeader() {
               </Link>
               <Link
                 href="/register"
-                className="text-sm font-bold px-5 py-2 rounded-lg text-black hover:shadow-[0_0_30px_rgba(212,175,55,0.3)] hover:scale-[1.02] transition-all"
-                style={{ background: 'linear-gradient(135deg, #D4AF37, #F0D060)' }}
+                className="text-sm font-bold px-5 py-2 rounded-lg text-black hover:shadow-[0_0_30px_rgba(229,9,20,0.3)] hover:scale-[1.02] transition-all"
+                style={{ background: 'linear-gradient(135deg, #E50914, #FF2D2D)' }}
               >
                 {t('register')}
               </Link>
@@ -305,7 +305,7 @@ export function NetflixHeader() {
                   className={cn(
                     'flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-medium transition-all',
                     (link.href === '/' ? pathname === '/' : pathname.startsWith(link.href))
-                      ? 'text-[#D4AF37] bg-[#D4AF37]/10'
+                      ? 'text-[#E50914] bg-[#E50914]/10'
                       : 'text-white/60 hover:text-white hover:bg-white/5'
                   )}
                 >
@@ -319,7 +319,7 @@ export function NetflixHeader() {
                   className={cn(
                     'flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-medium transition-all',
                     pathname.startsWith('/tasks')
-                      ? 'text-[#D4AF37] bg-[#D4AF37]/10'
+                      ? 'text-[#E50914] bg-[#E50914]/10'
                       : 'text-white/60 hover:text-white hover:bg-white/5'
                   )}
                 >
@@ -338,7 +338,7 @@ export function NetflixHeader() {
                   className={cn(
                     'flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all',
                     (pathname === link.href || pathname.startsWith(link.href + '/'))
-                      ? 'text-[#D4AF37] bg-[#D4AF37]/10'
+                      ? 'text-[#E50914] bg-[#E50914]/10'
                       : 'text-white/50 hover:text-white hover:bg-white/5'
                   )}
                 >
@@ -373,7 +373,7 @@ export function NetflixHeader() {
                   <Link href="/login" onClick={() => setMobileOpen(false)} className="flex-1 text-center text-sm text-white/60 border border-white/10 rounded-lg py-2.5 hover:bg-white/5 transition-all">
                     {t('login')}
                   </Link>
-                  <Link href="/register" onClick={() => setMobileOpen(false)} className="flex-1 text-center text-sm font-semibold text-black rounded-lg py-2.5" style={{ background: 'linear-gradient(135deg, #D4AF37, #F0D060)' }}>
+                  <Link href="/register" onClick={() => setMobileOpen(false)} className="flex-1 text-center text-sm font-semibold text-white rounded-lg py-2.5" style={{ background: 'linear-gradient(135deg, #E50914, #FF2D2D)' }}>
                     {t('register')}
                   </Link>
                 </div>

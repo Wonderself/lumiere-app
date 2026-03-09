@@ -46,7 +46,7 @@ function getStatusColor(status: string) {
   switch (status) {
     case 'RELEASED':
     case 'LIVE': return '#10B981'
-    case 'IN_PRODUCTION': return '#D4AF37'
+    case 'IN_PRODUCTION': return '#E50914'
     case 'PRE_PRODUCTION': return '#60A5FA'
     case 'POST_PRODUCTION': return '#A78BFA'
     default: return '#6B7280'
@@ -88,7 +88,7 @@ export function FilmRow({ title, films, href }: FilmRowProps) {
         {href && (
           <Link
             href={href}
-            className="text-xs md:text-sm text-[#D4AF37]/60 hover:text-[#D4AF37] transition-colors font-medium tracking-wide group/link flex items-center gap-1"
+            className="text-xs md:text-sm text-[#E50914]/60 hover:text-[#E50914] transition-colors font-medium tracking-wide group/link flex items-center gap-1"
           >
             Tout voir
             <ChevronRight className="h-3.5 w-3.5 group-hover/link:translate-x-0.5 transition-transform" />
@@ -104,7 +104,7 @@ export function FilmRow({ title, films, href }: FilmRowProps) {
             onClick={() => scroll('left')}
             className="absolute left-0 top-0 bottom-0 z-20 w-16 md:w-20 bg-gradient-to-r from-[#0A0A0A] via-[#0A0A0A]/80 to-transparent flex items-center justify-start pl-3 opacity-0 group-hover/row:opacity-100 transition-opacity duration-300"
           >
-            <div className="h-10 w-10 rounded-full bg-black/60 backdrop-blur-sm border border-white/10 flex items-center justify-center hover:bg-black/80 hover:border-[#D4AF37]/30 transition-all">
+            <div className="h-10 w-10 rounded-full bg-black/60 backdrop-blur-sm border border-white/10 flex items-center justify-center hover:bg-black/80 hover:border-[#E50914]/30 transition-all">
               <ChevronLeft className="h-5 w-5 text-white/80" />
             </div>
           </button>
@@ -116,7 +116,7 @@ export function FilmRow({ title, films, href }: FilmRowProps) {
             onClick={() => scroll('right')}
             className="absolute right-0 top-0 bottom-0 z-20 w-16 md:w-20 bg-gradient-to-l from-[#0A0A0A] via-[#0A0A0A]/80 to-transparent flex items-center justify-end pr-3 opacity-0 group-hover/row:opacity-100 transition-opacity duration-300"
           >
-            <div className="h-10 w-10 rounded-full bg-black/60 backdrop-blur-sm border border-white/10 flex items-center justify-center hover:bg-black/80 hover:border-[#D4AF37]/30 transition-all">
+            <div className="h-10 w-10 rounded-full bg-black/60 backdrop-blur-sm border border-white/10 flex items-center justify-center hover:bg-black/80 hover:border-[#E50914]/30 transition-all">
               <ChevronRight className="h-5 w-5 text-white/80" />
             </div>
           </button>
@@ -136,7 +136,7 @@ export function FilmRow({ title, films, href }: FilmRowProps) {
               className="group/card flex-shrink-0 w-[150px] sm:w-[175px] md:w-[210px] lg:w-[230px] relative transition-all duration-300 hover:scale-[1.06] hover:z-20"
             >
               {/* Poster image */}
-              <div className="relative aspect-[2/3] bg-[#141414] rounded-xl overflow-hidden ring-1 ring-white/5 group-hover/card:ring-[#D4AF37]/30 transition-all duration-300 group-hover/card:shadow-[0_8px_40px_rgba(0,0,0,0.6)]">
+              <div className="relative aspect-[2/3] bg-[#141414] rounded-xl overflow-hidden ring-1 ring-white/5 group-hover/card:ring-[#E50914]/30 transition-all duration-300 group-hover/card:shadow-[0_8px_40px_rgba(0,0,0,0.6)]">
                 <Image
                   src={film.coverImageUrl || FALLBACK_IMAGES[idx % FALLBACK_IMAGES.length]}
                   alt={film.title}
@@ -152,7 +152,7 @@ export function FilmRow({ title, films, href }: FilmRowProps) {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/50 to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
                   {/* Play button */}
                   <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover/card:opacity-100 transition-all duration-300 group-hover/card:scale-100 scale-75">
-                    <div className="h-13 w-13 rounded-full flex items-center justify-center shadow-[0_0_35px_rgba(212,175,55,0.5)]" style={{ background: 'linear-gradient(135deg, #D4AF37, #F0D060)' }}>
+                    <div className="h-13 w-13 rounded-full flex items-center justify-center shadow-[0_0_35px_rgba(229,9,20,0.5)]" style={{ background: 'linear-gradient(135deg, #E50914, #FF2D2D)' }}>
                       <Play className="h-5 w-5 text-black fill-black ml-0.5" />
                     </div>
                   </div>
@@ -172,7 +172,7 @@ export function FilmRow({ title, films, href }: FilmRowProps) {
                         className="h-full rounded-full"
                         style={{
                           width: `${film.progressPct}%`,
-                          background: 'linear-gradient(90deg, #D4AF37, #F0D060)',
+                          background: 'linear-gradient(90deg, #E50914, #FF2D2D)',
                         }}
                       />
                     </div>

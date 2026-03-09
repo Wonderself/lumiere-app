@@ -74,9 +74,9 @@ export default function InvestPage() {
       {/* ═══ HERO ═══ */}
       <section className="relative py-28 sm:py-36 px-4 overflow-hidden">
         <div className="absolute inset-0 gradient-radial-gold opacity-60" />
-        <div className="absolute top-20 right-1/4 w-[500px] h-[500px] rounded-full bg-[#D4AF37]/[0.02] blur-[200px]" />
+        <div className="absolute top-20 right-1/4 w-[500px] h-[500px] rounded-full bg-[#E50914]/[0.02] blur-[200px]" />
         <div className="container mx-auto max-w-5xl relative text-center">
-          <div className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full border border-[#D4AF37]/15 bg-[#D4AF37]/[0.06] text-[#D4AF37] text-xs sm:text-sm font-medium mb-8 backdrop-blur-sm">
+          <div className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full border border-[#E50914]/15 bg-[#E50914]/[0.06] text-[#E50914] text-xs sm:text-sm font-medium mb-8 backdrop-blur-sm">
             <TrendingUp className="h-3.5 w-3.5" />
             Investisseurs & Partenaires
           </div>
@@ -98,8 +98,8 @@ export default function InvestPage() {
                 key={h.label}
                 className="p-5 rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm text-center"
               >
-                <h.icon className="h-5 w-5 text-[#D4AF37] mx-auto mb-2" />
-                <div className="text-2xl font-bold text-[#D4AF37]">{h.value}</div>
+                <h.icon className="h-5 w-5 text-[#E50914] mx-auto mb-2" />
+                <div className="text-2xl font-bold text-[#E50914]">{h.value}</div>
                 <div className="text-xs text-white/35 mt-1">{h.label}</div>
               </div>
             ))}
@@ -107,13 +107,13 @@ export default function InvestPage() {
         </div>
       </section>
 
-      <div className="h-px bg-gradient-to-r from-transparent via-[#D4AF37]/10 to-transparent" />
+      <div className="h-px bg-gradient-to-r from-transparent via-[#E50914]/10 to-transparent" />
 
       {/* ═══ POURQUOI INVESTIR ═══ */}
       <section className="py-20 sm:py-28 px-4">
         <div className="container mx-auto max-w-6xl">
           <div className="text-center mb-16">
-            <p className="text-[#D4AF37] text-xs sm:text-sm font-medium uppercase tracking-widest mb-3">
+            <p className="text-[#E50914] text-xs sm:text-sm font-medium uppercase tracking-widest mb-3">
               Pourquoi Investir
             </p>
             <h2
@@ -130,10 +130,10 @@ export default function InvestPage() {
             {advantages.map((adv) => (
               <div
                 key={adv.title}
-                className="group p-7 rounded-2xl sm:rounded-3xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm hover:border-[#D4AF37]/15 transition-all duration-500"
+                className="group p-7 rounded-2xl sm:rounded-3xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm hover:border-[#E50914]/15 transition-all duration-500"
               >
-                <div className="h-12 w-12 rounded-2xl bg-[#D4AF37]/10 border border-[#D4AF37]/20 flex items-center justify-center mb-5 transition-transform duration-500 group-hover:scale-105">
-                  <adv.icon className="h-5 w-5 text-[#D4AF37]" />
+                <div className="h-12 w-12 rounded-2xl bg-[#E50914]/10 border border-[#E50914]/20 flex items-center justify-center mb-5 transition-transform duration-500 group-hover:scale-105">
+                  <adv.icon className="h-5 w-5 text-[#E50914]" />
                 </div>
                 <h3 className="text-lg font-semibold mb-2">{adv.title}</h3>
                 <p className="text-sm text-white/40 leading-relaxed">{adv.desc}</p>
@@ -150,7 +150,7 @@ export default function InvestPage() {
         <div className="absolute inset-0 bg-white/[0.01]" />
         <div className="container mx-auto max-w-4xl relative">
           <div className="text-center mb-14">
-            <p className="text-[#D4AF37] text-xs sm:text-sm font-medium uppercase tracking-widest mb-3">
+            <p className="text-[#E50914] text-xs sm:text-sm font-medium uppercase tracking-widest mb-3">
               Comparaison
             </p>
             <h2
@@ -167,7 +167,7 @@ export default function InvestPage() {
                   <th className="text-left p-4 text-white/40 font-medium" />
                   <th className="p-4 text-white/40 font-medium text-center">Hollywood</th>
                   <th className="p-4 text-white/40 font-medium text-center">Netflix</th>
-                  <th className="p-4 text-center font-bold text-[#D4AF37] bg-[#D4AF37]/[0.05]">Lumiere</th>
+                  <th className="p-4 text-center font-bold text-[#E50914] bg-[#E50914]/[0.05]">Lumiere</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-white/[0.04]">
@@ -183,7 +183,7 @@ export default function InvestPage() {
                     <td className="p-4 text-white/60 font-medium">{label}</td>
                     <td className="p-4 text-white/30 text-center">{hollywood}</td>
                     <td className="p-4 text-white/30 text-center">{netflix}</td>
-                    <td className="p-4 text-[#D4AF37] text-center font-semibold bg-[#D4AF37]/[0.03]">
+                    <td className="p-4 text-[#E50914] text-center font-semibold bg-[#E50914]/[0.03]">
                       {lumiere}
                     </td>
                   </tr>
@@ -194,13 +194,13 @@ export default function InvestPage() {
         </div>
       </section>
 
-      <div className="h-px bg-gradient-to-r from-transparent via-[#D4AF37]/10 to-transparent" />
+      <div className="h-px bg-gradient-to-r from-transparent via-[#E50914]/10 to-transparent" />
 
       {/* ═══ TIMELINE ═══ */}
       <section className="py-20 sm:py-28 px-4">
         <div className="container mx-auto max-w-4xl">
           <div className="text-center mb-14">
-            <p className="text-[#D4AF37] text-xs sm:text-sm font-medium uppercase tracking-widest mb-3">
+            <p className="text-[#E50914] text-xs sm:text-sm font-medium uppercase tracking-widest mb-3">
               Feuille de Route
             </p>
             <h2
@@ -218,7 +218,7 @@ export default function InvestPage() {
                   step.status === 'done'
                     ? 'border-green-500/20 bg-green-500/[0.03]'
                     : step.status === 'current'
-                      ? 'border-[#D4AF37]/20 bg-[#D4AF37]/[0.05]'
+                      ? 'border-[#E50914]/20 bg-[#E50914]/[0.05]'
                       : 'border-white/[0.06] bg-white/[0.02]'
                 }`}
               >
@@ -228,7 +228,7 @@ export default function InvestPage() {
                       step.status === 'done'
                         ? 'bg-green-500/20 text-green-400'
                         : step.status === 'current'
-                          ? 'bg-[#D4AF37]/20 text-[#D4AF37]'
+                          ? 'bg-[#E50914]/20 text-[#E50914]'
                           : 'bg-white/5 text-white/30'
                     }`}
                   >
@@ -248,7 +248,7 @@ export default function InvestPage() {
                       {step.phase}
                     </span>
                     {step.status === 'current' && (
-                      <span className="px-2 py-0.5 rounded-full bg-[#D4AF37]/20 text-[#D4AF37] text-[10px] font-bold">
+                      <span className="px-2 py-0.5 rounded-full bg-[#E50914]/20 text-[#E50914] text-[10px] font-bold">
                         EN COURS
                       </span>
                     )}
@@ -267,7 +267,7 @@ export default function InvestPage() {
       {/* ═══ CTA ═══ */}
       <section className="py-24 sm:py-32 px-4 relative">
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] rounded-full bg-[#D4AF37]/[0.03] blur-[200px]" />
+          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] rounded-full bg-[#E50914]/[0.03] blur-[200px]" />
         </div>
         <div className="container mx-auto max-w-3xl relative text-center">
           <h2
@@ -283,7 +283,7 @@ export default function InvestPage() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
               href="mailto:invest@lumiere.film"
-              className="inline-flex items-center gap-2.5 px-8 py-4 rounded-2xl bg-[#D4AF37] hover:bg-[#C5A028] text-black font-semibold transition-all duration-500 shadow-lg shadow-[#D4AF37]/20 hover:shadow-[#D4AF37]/30 hover:scale-[1.02]"
+              className="inline-flex items-center gap-2.5 px-8 py-4 rounded-2xl bg-[#E50914] hover:bg-[#FF2D2D] text-white font-semibold transition-all duration-500 shadow-lg shadow-[#E50914]/20 hover:shadow-[#E50914]/30 hover:scale-[1.02]"
             >
               Nous Contacter
               <ArrowRight className="h-5 w-5" />

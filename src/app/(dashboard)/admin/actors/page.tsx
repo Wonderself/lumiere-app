@@ -18,7 +18,7 @@ const STYLE_COLORS: Record<string, string> = {
   DRAMATIC: 'border-purple-500/30 bg-purple-500/10 text-purple-400',
   COMEDY: 'border-yellow-500/30 bg-yellow-500/10 text-yellow-400',
   ACTION: 'border-red-500/30 bg-red-500/10 text-red-400',
-  VERSATILE: 'border-[#D4AF37]/30 bg-[#D4AF37]/10 text-[#D4AF37]',
+  VERSATILE: 'border-[#E50914]/30 bg-[#E50914]/10 text-[#E50914]',
   HORROR: 'border-emerald-500/30 bg-emerald-500/10 text-emerald-400',
   ROMANCE: 'border-pink-500/30 bg-pink-500/10 text-pink-400',
   EXPERIMENTAL: 'border-cyan-500/30 bg-cyan-500/10 text-cyan-400',
@@ -59,7 +59,7 @@ export default async function AdminActorsPage() {
       {/* Stats */}
       <div className="grid grid-cols-3 gap-4">
         {[
-          { label: 'Total acteurs', value: actors.length, icon: Users, color: 'text-[#D4AF37]' },
+          { label: 'Total acteurs', value: actors.length, icon: Users, color: 'text-[#E50914]' },
           { label: 'Actifs', value: activeCount, icon: UserCheck, color: 'text-green-400' },
           { label: 'Roles attribues', value: totalCastRoles, icon: Film, color: 'text-blue-400' },
         ].map((stat) => (
@@ -93,7 +93,7 @@ export default async function AdminActorsPage() {
               className="flex items-center gap-4 p-4 rounded-xl border border-white/5 bg-white/[0.02] hover:border-white/10 transition-all"
             >
               {/* Avatar */}
-              <div className="h-14 w-14 rounded-full border-2 border-[#D4AF37]/20 bg-gradient-to-br from-[#D4AF37]/10 to-purple-900/20 shrink-0 overflow-hidden">
+              <div className="h-14 w-14 rounded-full border-2 border-[#E50914]/20 bg-gradient-to-br from-[#E50914]/10 to-purple-900/20 shrink-0 overflow-hidden">
                 {actor.avatarUrl ? (
                   <img
                     src={actor.avatarUrl}
@@ -101,7 +101,7 @@ export default async function AdminActorsPage() {
                     className="w-full h-full object-cover"
                   />
                 ) : (
-                  <div className="w-full h-full flex items-center justify-center text-[#D4AF37]/40 text-lg font-bold font-playfair">
+                  <div className="w-full h-full flex items-center justify-center text-[#E50914]/40 text-lg font-bold font-playfair">
                     {actor.name.charAt(0)}
                   </div>
                 )}

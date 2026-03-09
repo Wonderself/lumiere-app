@@ -111,8 +111,8 @@ export function AccountSettings() {
           disabled={exporting}
           className="
             inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium
-            bg-[#D4AF37]/10 text-[#D4AF37] border border-[#D4AF37]/20
-            hover:bg-[#D4AF37]/20 hover:border-[#D4AF37]/30
+            bg-[#E50914]/10 text-[#E50914] border border-[#E50914]/20
+            hover:bg-[#E50914]/20 hover:border-[#E50914]/30
             disabled:opacity-50 disabled:cursor-not-allowed
             transition-all duration-200 cursor-pointer
           "

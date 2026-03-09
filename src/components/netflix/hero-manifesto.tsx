@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowRight, ChevronDown } from 'lucide-react'
+import { ArrowRight, ChevronDown, Play } from 'lucide-react'
 import { motion } from 'framer-motion'
 
 // Particle canvas for cinematic background
@@ -50,7 +50,7 @@ function ParticleCanvas() {
 
         ctx.beginPath()
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2)
-        ctx.fillStyle = `rgba(212, 175, 55, ${p.opacity})`
+        ctx.fillStyle = `rgba(229, 9, 20, ${p.opacity})`
         ctx.fill()
       }
       animId = requestAnimationFrame(draw)
@@ -99,7 +99,7 @@ function AnimatedCounter({ end, suffix = '', prefix = '' }: { end: number; suffi
 
   return (
     <div ref={ref} className="text-center">
-      <p className="text-2xl sm:text-3xl md:text-4xl font-black text-[#D4AF37] tabular-nums font-playfair">
+      <p className="text-2xl sm:text-3xl md:text-4xl font-black text-[#E50914] tabular-nums font-playfair">
         {prefix}{count.toLocaleString('fr-FR')}{suffix}
       </p>
     </div>
@@ -115,7 +115,7 @@ export function HeroManifesto({ filmCount }: { filmCount: number }) {
 
       {/* Subtle radial glow */}
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full opacity-[0.07]"
-        style={{ background: 'radial-gradient(circle, #D4AF37 0%, transparent 70%)' }}
+        style={{ background: 'radial-gradient(circle, #E50914 0%, transparent 70%)' }}
       />
 
       {/* Film grain */}
@@ -123,72 +123,95 @@ export function HeroManifesto({ filmCount }: { filmCount: number }) {
         style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 256 256\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noise\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.9\' numOctaves=\'4\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noise)\' opacity=\'0.5\'/%3E%3C/svg%3E")' }}
       />
 
-      {/* Main content — centered */}
-      <div className="relative z-10 flex-1 flex flex-col items-center justify-center px-6 md:px-12 text-center pt-20">
-        {/* Logo */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-        >
-          <Image
-            src="/images/lumiere-brothers-logo-cinema-dark.webp"
-            alt="Lumiere Brothers Pictures"
-            width={280}
-            height={70}
-            className="h-12 sm:h-14 md:h-16 w-auto object-contain mx-auto mb-14 opacity-90"
-            priority
-          />
-        </motion.div>
+      {/* Main content — CINEGEN split layout */}
+      <div className="relative z-10 flex-1 flex flex-col lg:flex-row items-center lg:items-center justify-center lg:justify-between px-6 md:px-12 lg:px-20 text-center lg:text-left pt-24 lg:pt-20 gap-10 lg:gap-16">
 
-        {/* Main headline */}
-        <motion.h1
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black text-white leading-[1.05] tracking-tight max-w-5xl mb-10"
-        >
-          Le premier studio de cinema{' '}
-          <br className="hidden sm:block" />
-          ou <span className="text-[#D4AF37]">l&apos;IA</span> produit et{' '}
-          <span className="text-[#D4AF37]">la communaute</span> decide.
-        </motion.h1>
-
-        {/* Sub-headline */}
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.7 }}
-          className="text-lg sm:text-xl md:text-2xl text-white/40 font-light max-w-2xl mb-14 leading-relaxed"
-        >
-          {filmCount > 0 ? filmCount : 20} films. 1 an. 25 000&euro; par film.
-          <br />
-          <span className="text-white/25">Ethique. Communautaire. Revolutionnaire.</span>
-        </motion.p>
-
-        {/* CTAs */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 1.0 }}
-          className="flex flex-col sm:flex-row items-center gap-6"
-        >
-          <Link
-            href="/register"
-            className="group inline-flex items-center gap-2.5 px-7 sm:px-10 py-3.5 sm:py-4 rounded-xl text-sm sm:text-[15px] font-bold text-black transition-all duration-300 hover:shadow-[0_0_60px_rgba(212,175,55,0.4)] hover:scale-[1.03] active:scale-[0.97]"
-            style={{ background: 'linear-gradient(135deg, #D4AF37 0%, #F0D060 50%, #D4AF37 100%)' }}
+        {/* Left column — Text content */}
+        <div className="max-w-2xl lg:max-w-[55%]">
+          {/* Logo */}
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
           >
-            Rejoindre la revolution
-            <ArrowRight className="h-4.5 w-4.5 group-hover:translate-x-1 transition-transform" />
-          </Link>
-          <button
-            onClick={() => {
-              document.getElementById('manifesto')?.scrollIntoView({ behavior: 'smooth' })
-            }}
-            className="inline-flex items-center gap-2 px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl text-sm sm:text-[15px] font-medium text-white/60 border border-white/10 hover:border-white/25 hover:text-white/80 backdrop-blur-sm transition-all duration-300"
+            <Image
+              src="/images/lumiere-brothers-logo-cinema-dark.webp"
+              alt="Lumiere Brothers Pictures"
+              width={280}
+              height={70}
+              className="h-12 sm:h-14 md:h-16 w-auto object-contain mx-auto lg:mx-0 mb-10 opacity-90"
+              priority
+            />
+          </motion.div>
+
+          {/* Main headline — CINEGEN style */}
+          <motion.h1
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black text-white leading-[1.05] tracking-tight mb-6"
           >
-            Decouvrir comment
-          </button>
+            Creez. <span className="text-[#E50914]">Financez.</span>{' '}
+            <br className="hidden sm:block" />
+            Regardez vos Films.
+          </motion.h1>
+
+          {/* Sub-headline */}
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.7 }}
+            className="text-base sm:text-lg md:text-xl text-white/40 font-light max-w-xl mx-auto lg:mx-0 mb-10 leading-relaxed"
+          >
+            De l&apos;idee a l&apos;ecran — {filmCount > 0 ? filmCount : 20} films en production,
+            25 000&euro; par film, propulses par l&apos;IA et la communaute.
+          </motion.p>
+
+          {/* CTAs */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 1.0 }}
+            className="flex flex-col sm:flex-row items-center lg:items-start gap-5"
+          >
+            <Link
+              href="/register"
+              className="group inline-flex items-center gap-2.5 px-7 sm:px-10 py-3.5 sm:py-4 rounded-xl text-sm sm:text-[15px] font-bold text-white transition-all duration-300 hover:shadow-[0_0_60px_rgba(229,9,20,0.4)] hover:scale-[1.03] active:scale-[0.97]"
+              style={{ background: 'linear-gradient(135deg, #E50914 0%, #FF2D2D 50%, #E50914 100%)' }}
+            >
+              Lancer un Projet
+              <ArrowRight className="h-4.5 w-4.5 group-hover:translate-x-1 transition-transform" />
+            </Link>
+            <Link
+              href="/films"
+              className="group inline-flex items-center gap-2 px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl text-sm sm:text-[15px] font-medium text-white/60 border border-white/10 hover:border-white/25 hover:text-white/80 backdrop-blur-sm transition-all duration-300"
+            >
+              Explorer les Films
+              <Play className="h-4 w-4" />
+            </Link>
+          </motion.div>
+        </div>
+
+        {/* Right column — Cinematic image (hidden on mobile) */}
+        <motion.div
+          initial={{ opacity: 0, x: 40 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 1, delay: 0.6 }}
+          className="hidden lg:block lg:w-[42%] relative"
+        >
+          <div className="relative rounded-2xl overflow-hidden ring-1 ring-[#E50914]/20 shadow-[0_0_80px_rgba(229,9,20,0.15)]">
+            <Image
+              src="/images/cinema-clapperboard-clouds-hero.webp"
+              alt="Cinema studio"
+              width={700}
+              height={500}
+              className="w-full h-auto object-cover rounded-2xl"
+              priority
+            />
+            {/* Red glow overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent rounded-2xl" />
+            <div className="absolute inset-0 bg-gradient-to-l from-transparent via-transparent to-black/30 rounded-2xl" />
+          </div>
         </motion.div>
       </div>
 

@@ -58,7 +58,7 @@ const TX_TYPE_CONFIG: Record<string, { label: string; icon: typeof TrendingUp; c
   SUBSCRIPTION_GRANT: { label: 'Crédit abonnement', icon: Sparkles, color: 'text-blue-600' },
   AI_USAGE: { label: 'Utilisation IA', icon: Zap, color: 'text-orange-600' },
   REFUND: { label: 'Remboursement', icon: TrendingUp, color: 'text-green-600' },
-  CONTEST_PRIZE: { label: 'Prix concours', icon: Crown, color: 'text-[#D4AF37]' },
+  CONTEST_PRIZE: { label: 'Prix concours', icon: Crown, color: 'text-[#E50914]' },
   REFERRAL_BONUS: { label: 'Bonus parrainage', icon: TrendingUp, color: 'text-emerald-600' },
   PROMO_CODE: { label: 'Code promo', icon: Sparkles, color: 'text-pink-600' },
 }
@@ -100,14 +100,14 @@ export default async function CreditsPage() {
 
       {/* Balance Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
-        <div className="rounded-2xl border border-[#D4AF37]/20 bg-gradient-to-br from-[#D4AF37]/5 to-transparent p-6">
+        <div className="rounded-2xl border border-[#E50914]/20 bg-gradient-to-br from-[#E50914]/5 to-transparent p-6">
           <div className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded-xl bg-[#D4AF37]/10 flex items-center justify-center">
-              <Coins className="h-5 w-5 text-[#D4AF37]" />
+            <div className="h-10 w-10 rounded-xl bg-[#E50914]/10 flex items-center justify-center">
+              <Coins className="h-5 w-5 text-[#E50914]" />
             </div>
             <div>
               <p className="text-xs text-gray-500 font-medium">Solde actuel</p>
-              <p className="text-2xl font-bold text-[#D4AF37]">{balance.toLocaleString()}</p>
+              <p className="text-2xl font-bold text-[#E50914]">{balance.toLocaleString()}</p>
             </div>
           </div>
         </div>
@@ -157,13 +157,13 @@ export default async function CreditsPage() {
               key={pack.name}
               className={`relative rounded-2xl border p-6 transition-all hover:shadow-md ${
                 pack.popular
-                  ? 'border-[#D4AF37] bg-gradient-to-b from-[#D4AF37]/5 to-transparent shadow-sm'
-                  : 'border-gray-200 bg-white hover:border-[#D4AF37]/30'
+                  ? 'border-[#E50914] bg-gradient-to-b from-[#E50914]/5 to-transparent shadow-sm'
+                  : 'border-gray-200 bg-white hover:border-[#E50914]/30'
               }`}
             >
               {pack.popular && (
                 <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                  <Badge className="bg-[#D4AF37] text-black text-[10px] font-semibold px-3">
+                  <Badge className="bg-[#E50914] text-white text-[10px] font-semibold px-3">
                     POPULAIRE
                   </Badge>
                 </div>
@@ -173,7 +173,7 @@ export default async function CreditsPage() {
                 <div className="mt-2">
                   <span className="text-3xl font-bold text-[#1A1A2E]">{pack.price}€</span>
                 </div>
-                <p className="text-sm text-[#D4AF37] font-semibold mt-1">
+                <p className="text-sm text-[#E50914] font-semibold mt-1">
                   {pack.credits.toLocaleString()} crédits
                   {pack.bonus > 0 && <span className="text-green-600"> +{pack.bonus} bonus</span>}
                 </p>
@@ -184,7 +184,7 @@ export default async function CreditsPage() {
               <ul className="space-y-2.5 mb-5">
                 {pack.features.map((feature) => (
                   <li key={feature} className="flex items-center gap-2 text-xs text-gray-600">
-                    <CheckCircle2 className="h-3.5 w-3.5 text-[#D4AF37] shrink-0" />
+                    <CheckCircle2 className="h-3.5 w-3.5 text-[#E50914] shrink-0" />
                     {feature}
                   </li>
                 ))}
@@ -192,7 +192,7 @@ export default async function CreditsPage() {
               <Button
                 className={`w-full ${
                   pack.popular
-                    ? 'bg-[#D4AF37] hover:bg-[#F0D060] text-black font-semibold'
+                    ? 'bg-[#E50914] hover:bg-[#FF2D2D] text-white font-semibold'
                     : 'bg-gray-100 hover:bg-gray-200 text-gray-800'
                 }`}
                 disabled

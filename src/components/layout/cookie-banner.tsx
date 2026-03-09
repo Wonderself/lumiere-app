@@ -48,7 +48,7 @@ export function CookieBanner() {
             Consultez notre{' '}
             <Link
               href="/legal/cookies"
-              className="text-[#D4AF37] underline underline-offset-4 hover:text-[#F0D060] transition-colors"
+              className="text-[#E50914] underline underline-offset-4 hover:text-[#FF2D2D] transition-colors"
             >
               politique cookies
             </Link>{' '}
@@ -73,8 +73,8 @@ export function CookieBanner() {
               onClick={handleAccept}
               className="
                 px-5 py-2 rounded-lg text-sm font-medium
-                bg-[#D4AF37] text-black
-                hover:bg-[#F0D060]
+                bg-[#E50914] text-white
+                hover:bg-[#FF2D2D]
                 transition-all duration-200
                 cursor-pointer
               "

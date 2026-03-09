@@ -75,7 +75,7 @@ export default async function StreamingFilmPage(props: { params: Promise<{ slug:
               className="w-full h-full object-contain"
             />
             {/* Trailer badge overlay */}
-            <div className="absolute top-4 left-4 px-3 py-1.5 rounded-lg bg-[#D4AF37]/90 text-black text-xs font-semibold backdrop-blur-sm pointer-events-none">
+            <div className="absolute top-4 left-4 px-3 py-1.5 rounded-lg bg-[#E50914]/90 text-white text-xs font-semibold backdrop-blur-sm pointer-events-none">
               Bande-annonce
             </div>
           </>
@@ -95,9 +95,9 @@ export default async function StreamingFilmPage(props: { params: Promise<{ slug:
             {/* Glass card overlay */}
             <div className="relative z-10 text-center px-6 py-10 rounded-2xl bg-white/[0.04] backdrop-blur-xl border border-white/[0.08] max-w-sm mx-4">
               <div className="relative mx-auto mb-5 h-16 w-16">
-                <Film className="h-16 w-16 text-[#D4AF37]/40" />
+                <Film className="h-16 w-16 text-[#E50914]/40" />
                 {/* Subtle pulse animation */}
-                <div className="absolute inset-0 rounded-full bg-[#D4AF37]/10 animate-ping" style={{ animationDuration: '3s' }} />
+                <div className="absolute inset-0 rounded-full bg-[#E50914]/10 animate-ping" style={{ animationDuration: '3s' }} />
               </div>
               <p className="text-white/70 text-lg font-semibold mb-2 font-playfair">
                 En cours de production
@@ -106,7 +106,7 @@ export default async function StreamingFilmPage(props: { params: Promise<{ slug:
                 Ce film est actuellement en production.
               </p>
               {film.contract && (
-                <p className="text-[#D4AF37]/60 text-xs mt-3">
+                <p className="text-[#E50914]/60 text-xs mt-3">
                   Statut du contrat : {film.contract.status === 'SIGNED' ? 'Signe' : film.contract.status === 'PENDING' ? 'En attente' : film.contract.status.toLowerCase()}
                 </p>
               )}
@@ -126,7 +126,7 @@ export default async function StreamingFilmPage(props: { params: Promise<{ slug:
           <div className="lg:col-span-2 space-y-6">
             <div>
               <div className="flex items-center gap-3 mb-3">
-                {film.genre && <Badge className="bg-[#D4AF37]/20 text-[#D4AF37] border-[#D4AF37]/30">{film.genre}</Badge>}
+                {film.genre && <Badge className="bg-[#E50914]/20 text-[#E50914] border-[#E50914]/30">{film.genre}</Badge>}
                 {film.year && <span className="text-white/30 text-sm">{film.year}</span>}
                 {film.language && <span className="text-white/30 text-sm uppercase">{film.language}</span>}
               </div>
@@ -188,8 +188,8 @@ export default async function StreamingFilmPage(props: { params: Promise<{ slug:
               <CardContent className="p-5">
                 <h3 className="text-sm font-semibold text-white/40 uppercase tracking-wider mb-4">Réalisateur</h3>
                 <div className="flex items-center gap-3 mb-3">
-                  <div className="h-12 w-12 rounded-full bg-[#D4AF37]/20 flex items-center justify-center">
-                    <User className="h-6 w-6 text-[#D4AF37]" />
+                  <div className="h-12 w-12 rounded-full bg-[#E50914]/20 flex items-center justify-center">
+                    <User className="h-6 w-6 text-[#E50914]" />
                   </div>
                   <div>
                     <p className="text-white font-medium">{film.submittedBy.displayName || 'Anonyme'}</p>
@@ -231,7 +231,7 @@ export default async function StreamingFilmPage(props: { params: Promise<{ slug:
                       <Play className="h-10 w-10 text-white opacity-0 group-hover:opacity-100 transition-opacity" />
                     </div>
                   </div>
-                  <p className="text-sm text-white/70 truncate group-hover:text-[#D4AF37] transition-colors">{f.title}</p>
+                  <p className="text-sm text-white/70 truncate group-hover:text-[#E50914] transition-colors">{f.title}</p>
                 </Link>
               ))}
             </div>

@@ -67,7 +67,7 @@ export default async function AdminReviewsPage() {
                   </div>
                 </div>
                 <div className="text-right">
-                  <div className="text-lg font-bold text-[#D4AF37]">{formatPrice(sub.task.priceEuros)}</div>
+                  <div className="text-lg font-bold text-[#E50914]">{formatPrice(sub.task.priceEuros)}</div>
                   <div className="text-xs text-white/40">par {sub.user.displayName}</div>
                 </div>
               </div>
@@ -78,7 +78,7 @@ export default async function AdminReviewsPage() {
                   <div className="flex items-center gap-4">
                     <div>
                       <span className="text-xs text-white/40 uppercase tracking-wider">Score IA</span>
-                      <div className="text-3xl font-bold text-[#D4AF37]">{sub.aiScore}<span className="text-sm text-white/40">/100</span></div>
+                      <div className="text-3xl font-bold text-[#E50914]">{sub.aiScore}<span className="text-sm text-white/40">/100</span></div>
                     </div>
                     <div className="flex-1">
                       <div className="h-2 bg-white/10 rounded-full overflow-hidden mb-2">
@@ -105,7 +105,7 @@ export default async function AdminReviewsPage() {
                 )}
                 {sub.fileUrl && (
                   <a href={sub.fileUrl} target="_blank" rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-sm text-[#D4AF37] hover:text-[#F0D060] transition-colors duration-300">
+                    className="inline-flex items-center gap-2 text-sm text-[#E50914] hover:text-[#FF2D2D] transition-colors duration-300">
                     Voir le fichier soumis →
                   </a>
                 )}

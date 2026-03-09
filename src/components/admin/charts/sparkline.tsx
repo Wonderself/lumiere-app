@@ -1,6 +1,6 @@
 'use client'
 
-export function Sparkline({ data, color = '#D4AF37', width = 80, height = 24 }: {
+export function Sparkline({ data, color = '#E50914', width = 80, height = 24 }: {
   data: number[]
   color?: string
   width?: number

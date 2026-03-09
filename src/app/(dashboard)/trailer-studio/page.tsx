@@ -26,7 +26,7 @@ const STATUS_CONFIG: Record<string, { label: string; color: string; icon: typeof
   ASSEMBLING: { label: 'Assemblage', color: 'bg-indigo-100 text-indigo-600', icon: Loader2 },
   REVIEW: { label: 'Vérification', color: 'bg-orange-100 text-orange-600', icon: Clock },
   COMPLETED: { label: 'Terminé', color: 'bg-green-100 text-green-600', icon: CheckCircle2 },
-  SUBMITTED: { label: 'Soumis au concours', color: 'bg-[#D4AF37]/10 text-[#D4AF37]', icon: Trophy },
+  SUBMITTED: { label: 'Soumis au concours', color: 'bg-[#E50914]/10 text-[#E50914]', icon: Trophy },
   CANCELLED: { label: 'Annulé', color: 'bg-red-100 text-red-600', icon: Clock },
 }
 
@@ -66,13 +66,13 @@ export default async function TrailerStudioPage() {
         </div>
         <div className="flex items-center gap-3">
           <Link href="/credits">
-            <Badge variant="outline" className="text-sm px-3 py-1.5 border-[#D4AF37]/20 text-[#D4AF37] cursor-pointer hover:bg-[#D4AF37]/5 transition-colors">
+            <Badge variant="outline" className="text-sm px-3 py-1.5 border-[#E50914]/20 text-[#E50914] cursor-pointer hover:bg-[#E50914]/5 transition-colors">
               <Coins className="h-3.5 w-3.5 mr-1.5" />
               {creditBalance} crédits
             </Badge>
           </Link>
           <Link href="/trailer-studio/new">
-            <Button className="bg-[#D4AF37] hover:bg-[#F0D060] text-black font-semibold shadow-sm">
+            <Button className="bg-[#E50914] hover:bg-[#FF2D2D] text-white font-semibold shadow-sm">
               <Plus className="h-4 w-4 mr-2" />
               Nouvelle Bande-Annonce
             </Button>
@@ -82,10 +82,10 @@ export default async function TrailerStudioPage() {
 
       {/* Open Contests Banner */}
       {openContests.length > 0 && (
-        <div className="rounded-2xl border border-[#D4AF37]/20 bg-gradient-to-r from-[#D4AF37]/5 to-transparent p-6">
+        <div className="rounded-2xl border border-[#E50914]/20 bg-gradient-to-r from-[#E50914]/5 to-transparent p-6">
           <div className="flex items-start gap-4">
-            <div className="h-10 w-10 rounded-xl bg-[#D4AF37]/10 flex items-center justify-center shrink-0">
-              <Trophy className="h-5 w-5 text-[#D4AF37]" />
+            <div className="h-10 w-10 rounded-xl bg-[#E50914]/10 flex items-center justify-center shrink-0">
+              <Trophy className="h-5 w-5 text-[#E50914]" />
             </div>
             <div className="flex-1 min-w-0">
               <h3 className="text-sm font-semibold text-[#1A1A2E]">
@@ -97,9 +97,9 @@ export default async function TrailerStudioPage() {
               <div className="flex flex-wrap gap-2 mt-3">
                 {openContests.map((contest) => (
                   <Link key={contest.id} href={`/community/contests/${contest.id}`}>
-                    <Badge variant="outline" className="text-xs cursor-pointer hover:bg-[#D4AF37]/10 transition-colors border-[#D4AF37]/30">
+                    <Badge variant="outline" className="text-xs cursor-pointer hover:bg-[#E50914]/10 transition-colors border-[#E50914]/30">
                       {contest.title}
-                      {contest.prizePoolEur > 0 && <span className="ml-1 text-[#D4AF37]">{contest.prizePoolEur}€</span>}
+                      {contest.prizePoolEur > 0 && <span className="ml-1 text-[#E50914]">{contest.prizePoolEur}€</span>}
                     </Badge>
                   </Link>
                 ))}
@@ -113,8 +113,8 @@ export default async function TrailerStudioPage() {
       {projects.length === 0 && (
         <div className="rounded-2xl border border-gray-200 bg-white p-8">
           <div className="text-center mb-8">
-            <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-[#D4AF37]/10 mb-4">
-              <Wand2 className="h-8 w-8 text-[#D4AF37]" />
+            <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-[#E50914]/10 mb-4">
+              <Wand2 className="h-8 w-8 text-[#E50914]" />
             </div>
             <h2 className="text-xl font-bold text-[#1A1A2E] font-[family-name:var(--font-playfair)]">
               Comment ça marche ?
@@ -131,7 +131,7 @@ export default async function TrailerStudioPage() {
               { step: '4', title: 'Soumettez au concours', desc: 'Participez et gagnez la production de votre film !' },
             ].map((item) => (
               <div key={item.step} className="relative rounded-xl border border-gray-100 bg-gray-50 p-6">
-                <div className="absolute -top-3 -left-1 w-7 h-7 rounded-full bg-[#D4AF37] text-black text-xs font-bold flex items-center justify-center shadow-sm">
+                <div className="absolute -top-3 -left-1 w-7 h-7 rounded-full bg-[#E50914] text-white text-xs font-bold flex items-center justify-center shadow-sm">
                   {item.step}
                 </div>
                 <h3 className="text-sm font-semibold text-[#1A1A2E] mt-1">{item.title}</h3>
@@ -141,7 +141,7 @@ export default async function TrailerStudioPage() {
           </div>
           <div className="text-center mt-8">
             <Link href="/trailer-studio/new">
-              <Button size="lg" className="bg-[#D4AF37] hover:bg-[#F0D060] text-black font-semibold shadow-md">
+              <Button size="lg" className="bg-[#E50914] hover:bg-[#FF2D2D] text-white font-semibold shadow-md">
                 <Sparkles className="h-4 w-4 mr-2" />
                 Créer ma première bande-annonce
               </Button>
@@ -162,15 +162,15 @@ export default async function TrailerStudioPage() {
                 <Link
                   key={project.id}
                   href={`/trailer-studio/${project.id}`}
-                  className="group rounded-xl border border-gray-200 bg-white hover:border-[#D4AF37]/30 hover:shadow-sm transition-all p-6"
+                  className="group rounded-xl border border-gray-200 bg-white hover:border-[#E50914]/30 hover:shadow-sm transition-all p-6"
                 >
                   <div className="flex items-center gap-4">
-                    <div className="h-12 w-12 rounded-xl bg-[#D4AF37]/10 flex items-center justify-center shrink-0 group-hover:bg-[#D4AF37]/15 transition-colors">
-                      <Film className="h-6 w-6 text-[#D4AF37]" />
+                    <div className="h-12 w-12 rounded-xl bg-[#E50914]/10 flex items-center justify-center shrink-0 group-hover:bg-[#E50914]/15 transition-colors">
+                      <Film className="h-6 w-6 text-[#E50914]" />
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2">
-                        <h3 className="text-sm font-semibold text-[#1A1A2E] truncate group-hover:text-[#D4AF37] transition-colors">
+                        <h3 className="text-sm font-semibold text-[#1A1A2E] truncate group-hover:text-[#E50914] transition-colors">
                           {project.title}
                         </h3>
                         <Badge className={`text-[10px] px-2 py-0.5 ${statusInfo.color} border-0`}>
@@ -183,20 +183,20 @@ export default async function TrailerStudioPage() {
                         {project.style && <span>{project.style}</span>}
                         <span>{project.completedTasks}/{project.totalTasks} tâches</span>
                         {project.creditsUsed > 0 && (
-                          <span className="text-[#D4AF37]">{project.creditsUsed} crédits</span>
+                          <span className="text-[#E50914]">{project.creditsUsed} crédits</span>
                         )}
                       </div>
                       {/* Progress bar */}
                       {project.totalTasks > 0 && (
                         <div className="mt-2 h-1.5 rounded-full bg-gray-100 overflow-hidden">
                           <div
-                            className="h-full rounded-full bg-gradient-to-r from-[#D4AF37] to-[#F0D060] transition-all duration-500"
+                            className="h-full rounded-full bg-gradient-to-r from-[#E50914] to-[#FF2D2D] transition-all duration-500"
                             style={{ width: `${project.progressPct}%` }}
                           />
                         </div>
                       )}
                     </div>
-                    <ChevronRight className="h-5 w-5 text-gray-300 group-hover:text-[#D4AF37] transition-colors shrink-0" />
+                    <ChevronRight className="h-5 w-5 text-gray-300 group-hover:text-[#E50914] transition-colors shrink-0" />
                   </div>
                 </Link>
               )
@@ -207,34 +207,34 @@ export default async function TrailerStudioPage() {
 
       {/* Quick actions */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <Link href="/credits" className="group rounded-xl border border-gray-200 bg-white hover:border-[#D4AF37]/30 p-5 transition-all">
+        <Link href="/credits" className="group rounded-xl border border-gray-200 bg-white hover:border-[#E50914]/30 p-5 transition-all">
           <div className="flex items-center gap-3">
-            <Coins className="h-5 w-5 text-[#D4AF37]" />
+            <Coins className="h-5 w-5 text-[#E50914]" />
             <div>
-              <p className="text-sm font-medium text-[#1A1A2E] group-hover:text-[#D4AF37] transition-colors">Acheter des crédits</p>
+              <p className="text-sm font-medium text-[#1A1A2E] group-hover:text-[#E50914] transition-colors">Acheter des crédits</p>
               <p className="text-xs text-gray-500">Packs à partir de 4.99€</p>
             </div>
-            <ArrowRight className="h-4 w-4 text-gray-300 ml-auto group-hover:text-[#D4AF37] transition-colors" />
+            <ArrowRight className="h-4 w-4 text-gray-300 ml-auto group-hover:text-[#E50914] transition-colors" />
           </div>
         </Link>
-        <Link href="/community/contests" className="group rounded-xl border border-gray-200 bg-white hover:border-[#D4AF37]/30 p-5 transition-all">
+        <Link href="/community/contests" className="group rounded-xl border border-gray-200 bg-white hover:border-[#E50914]/30 p-5 transition-all">
           <div className="flex items-center gap-3">
-            <Trophy className="h-5 w-5 text-[#D4AF37]" />
+            <Trophy className="h-5 w-5 text-[#E50914]" />
             <div>
-              <p className="text-sm font-medium text-[#1A1A2E] group-hover:text-[#D4AF37] transition-colors">Concours ouverts</p>
+              <p className="text-sm font-medium text-[#1A1A2E] group-hover:text-[#E50914] transition-colors">Concours ouverts</p>
               <p className="text-xs text-gray-500">Gagnez la prod de votre film</p>
             </div>
-            <ArrowRight className="h-4 w-4 text-gray-300 ml-auto group-hover:text-[#D4AF37] transition-colors" />
+            <ArrowRight className="h-4 w-4 text-gray-300 ml-auto group-hover:text-[#E50914] transition-colors" />
           </div>
         </Link>
-        <Link href="/films" className="group rounded-xl border border-gray-200 bg-white hover:border-[#D4AF37]/30 p-5 transition-all">
+        <Link href="/films" className="group rounded-xl border border-gray-200 bg-white hover:border-[#E50914]/30 p-5 transition-all">
           <div className="flex items-center gap-3">
-            <Film className="h-5 w-5 text-[#D4AF37]" />
+            <Film className="h-5 w-5 text-[#E50914]" />
             <div>
-              <p className="text-sm font-medium text-[#1A1A2E] group-hover:text-[#D4AF37] transition-colors">Nos films</p>
+              <p className="text-sm font-medium text-[#1A1A2E] group-hover:text-[#E50914] transition-colors">Nos films</p>
               <p className="text-xs text-gray-500">Inspirez-vous du catalogue</p>
             </div>
-            <ArrowRight className="h-4 w-4 text-gray-300 ml-auto group-hover:text-[#D4AF37] transition-colors" />
+            <ArrowRight className="h-4 w-4 text-gray-300 ml-auto group-hover:text-[#E50914] transition-colors" />
           </div>
         </Link>
       </div>

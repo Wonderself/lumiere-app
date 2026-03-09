@@ -69,8 +69,8 @@ export function NewTrailerForm() {
       {/* Title */}
       <div className="rounded-2xl border border-gray-200 bg-white p-6 space-y-5">
         <div className="flex items-center gap-3 mb-2">
-          <div className="h-8 w-8 rounded-lg bg-[#D4AF37]/10 flex items-center justify-center">
-            <Film className="h-4 w-4 text-[#D4AF37]" />
+          <div className="h-8 w-8 rounded-lg bg-[#E50914]/10 flex items-center justify-center">
+            <Film className="h-4 w-4 text-[#E50914]" />
           </div>
           <h2 className="text-base font-semibold text-[#1A1A2E]">Identité du projet</h2>
         </div>
@@ -94,7 +94,7 @@ export function NewTrailerForm() {
             name="concept"
             rows={2}
             placeholder="En une phrase, de quoi parle votre film ?"
-            className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm focus:border-[#D4AF37]/40 focus:ring-[#D4AF37]/20 focus:outline-none resize-none"
+            className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm focus:border-[#E50914]/40 focus:ring-[#E50914]/20 focus:outline-none resize-none"
           />
         </div>
 
@@ -105,7 +105,7 @@ export function NewTrailerForm() {
             name="synopsis"
             rows={4}
             placeholder="Décrivez l'histoire, les personnages principaux, les enjeux..."
-            className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm focus:border-[#D4AF37]/40 focus:ring-[#D4AF37]/20 focus:outline-none resize-none"
+            className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm focus:border-[#E50914]/40 focus:ring-[#E50914]/20 focus:outline-none resize-none"
           />
         </div>
       </div>
@@ -165,7 +165,7 @@ export function NewTrailerForm() {
                 onClick={() => setMood(m)}
                 className={`px-3.5 py-2 rounded-xl text-xs font-medium border transition-all duration-200 ${
                   mood === m
-                    ? 'bg-[#D4AF37]/10 border-[#D4AF37]/30 text-[#D4AF37] scale-[1.02]'
+                    ? 'bg-[#E50914]/10 border-[#E50914]/30 text-[#E50914] scale-[1.02]'
                     : 'bg-gray-50 border-gray-200 text-gray-500 hover:border-gray-300 hover:text-gray-700'
                 }`}
               >
@@ -207,11 +207,11 @@ export function NewTrailerForm() {
               onClick={() => setDuration(d.value)}
               className={`rounded-xl border p-3 text-left transition-all duration-200 ${
                 duration === d.value
-                  ? 'border-[#D4AF37] bg-[#D4AF37]/5 shadow-sm'
+                  ? 'border-[#E50914] bg-[#E50914]/5 shadow-sm'
                   : 'border-gray-200 hover:border-gray-300'
               }`}
             >
-              <p className={`text-sm font-semibold ${duration === d.value ? 'text-[#D4AF37]' : 'text-[#1A1A2E]'}`}>
+              <p className={`text-sm font-semibold ${duration === d.value ? 'text-[#E50914]' : 'text-[#1A1A2E]'}`}>
                 {d.label}
               </p>
               <p className="text-[10px] text-gray-500 mt-0.5">{d.desc}</p>
@@ -238,7 +238,7 @@ export function NewTrailerForm() {
             type="button"
             onClick={() => setCommunityVote(!communityVote)}
             className={`relative w-12 h-7 rounded-full transition-colors duration-200 ${
-              communityVote ? 'bg-[#D4AF37]' : 'bg-gray-200'
+              communityVote ? 'bg-[#E50914]' : 'bg-gray-200'
             }`}
           >
             <span className={`absolute top-0.5 left-0.5 w-6 h-6 rounded-full bg-white shadow-sm transition-transform duration-200 ${
@@ -256,7 +256,7 @@ export function NewTrailerForm() {
         <Button
           type="submit"
           size="lg"
-          className="bg-[#D4AF37] hover:bg-[#F0D060] text-black font-semibold shadow-md px-8"
+          className="bg-[#E50914] hover:bg-[#FF2D2D] text-white font-semibold shadow-md px-8"
           loading={isPending}
         >
           {isPending ? 'Création...' : (

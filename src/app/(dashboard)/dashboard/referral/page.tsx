@@ -53,7 +53,7 @@ export default function ReferralPage() {
       {/* How it works */}
       <div className="p-6 rounded-2xl bg-gradient-to-r from-amber-50 to-yellow-50 border border-amber-200/50">
         <h2 className="text-sm font-bold text-gray-800 mb-4 flex items-center gap-2">
-          <Gift className="h-4 w-4 text-[#D4AF37]" />
+          <Gift className="h-4 w-4 text-[#E50914]" />
           Comment ca marche
         </h2>
         <div className="grid sm:grid-cols-3 gap-4">
@@ -63,7 +63,7 @@ export default function ReferralPage() {
             { step: '3', title: 'Bonus pour tous', desc: '+30 Lumens pour vous, +10 pour eux', icon: TrendingUp },
           ].map((item) => (
             <div key={item.step} className="flex items-start gap-3">
-              <div className="h-8 w-8 rounded-full bg-[#D4AF37]/15 flex items-center justify-center text-sm font-bold text-[#D4AF37] shrink-0">
+              <div className="h-8 w-8 rounded-full bg-[#E50914]/15 flex items-center justify-center text-sm font-bold text-[#E50914] shrink-0">
                 {item.step}
               </div>
               <div>
@@ -78,7 +78,7 @@ export default function ReferralPage() {
       {/* Referral Code & Link */}
       <div className="p-6 rounded-2xl bg-white border border-gray-100 shadow-sm">
         <h2 className="text-sm font-bold text-gray-800 mb-4 flex items-center gap-2">
-          <Link2 className="h-4 w-4 text-[#D4AF37]" />
+          <Link2 className="h-4 w-4 text-[#E50914]" />
           Votre lien de parrainage
         </h2>
 
@@ -110,7 +110,7 @@ export default function ReferralPage() {
                 </div>
                 <button
                   onClick={() => handleCopy(referralLink)}
-                  className="px-4 py-3 rounded-xl bg-[#D4AF37] hover:bg-[#C5A028] transition-colors text-black font-semibold text-sm whitespace-nowrap"
+                  className="px-4 py-3 rounded-xl bg-[#E50914] hover:bg-[#FF2D2D] transition-colors text-white font-semibold text-sm whitespace-nowrap"
                 >
                   <Share2 className="h-4 w-4" />
                 </button>
@@ -127,7 +127,7 @@ export default function ReferralPage() {
             {[
               { label: 'Filleuls', value: data.total, icon: Users, color: 'text-blue-500', bg: 'bg-blue-50' },
               { label: 'Actives', value: data.completed, icon: CheckCircle, color: 'text-green-500', bg: 'bg-green-50' },
-              { label: 'Lumens Gagnes', value: data.totalEarned, icon: TrendingUp, color: 'text-[#D4AF37]', bg: 'bg-amber-50' },
+              { label: 'Lumens Gagnes', value: data.totalEarned, icon: TrendingUp, color: 'text-[#E50914]', bg: 'bg-amber-50' },
             ].map((stat) => (
               <div key={stat.label} className="p-5 rounded-2xl bg-white border border-gray-100 shadow-sm text-center">
                 <div className={`inline-flex items-center justify-center h-10 w-10 rounded-xl ${stat.bg} mb-3`}>

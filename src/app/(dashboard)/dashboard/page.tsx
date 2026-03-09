@@ -90,12 +90,12 @@ export default async function DashboardPage() {
           <p className="text-gray-400 mt-2 text-sm">Votre hub central</p>
         </div>
         <div className="flex items-center gap-3">
-          <Badge className="border-[#D4AF37]/30 bg-[#D4AF37]/10 text-[#D4AF37]">
+          <Badge className="border-[#E50914]/30 bg-[#E50914]/10 text-[#E50914]">
             <Crown className="h-3 w-3 mr-1" />
             {user.level}
           </Badge>
           <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gray-50 border border-gray-200">
-            <Coins className="h-4 w-4 text-[#D4AF37]" />
+            <Coins className="h-4 w-4 text-[#E50914]" />
             <span className="text-gray-900 text-sm font-semibold">{user.lumenBalance}</span>
             <span className="text-gray-400 text-xs">Lumens</span>
           </div>
@@ -107,7 +107,7 @@ export default async function DashboardPage() {
         {[
           { label: 'Taches completees', value: user.tasksCompleted, icon: CheckCircle2, color: 'text-green-500', bg: 'bg-green-50' },
           { label: 'Points', value: user.points, icon: TrendingUp, color: 'text-purple-500', bg: 'bg-purple-50' },
-          { label: 'Reputation', value: `${user.reputationScore}/100`, icon: Star, color: 'text-[#D4AF37]', bg: 'bg-amber-50' },
+          { label: 'Reputation', value: `${user.reputationScore}/100`, icon: Star, color: 'text-[#E50914]', bg: 'bg-amber-50' },
           { label: 'Tokens Film', value: totalTokensHeld, icon: Coins, color: 'text-amber-500', bg: 'bg-amber-50' },
         ].map((kpi) => (
           <div key={kpi.label} className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 sm:p-7">
@@ -152,12 +152,12 @@ export default async function DashboardPage() {
       <div>
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-3">
-            <Sparkles className="h-5 w-5 text-[#D4AF37]" />
+            <Sparkles className="h-5 w-5 text-[#E50914]" />
             <h2 className="text-gray-900 font-bold text-lg font-playfair">
               Recommande pour vous
             </h2>
           </div>
-          <Link href="/tasks" className="text-sm text-[#D4AF37] hover:underline">
+          <Link href="/tasks" className="text-sm text-[#E50914] hover:underline">
             Voir toutes →
           </Link>
         </div>
@@ -165,9 +165,9 @@ export default async function DashboardPage() {
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {recommendations.map((rec) => (
               <Link key={rec.id} href={`/tasks/${rec.id}`}>
-                <div className="relative bg-white rounded-xl shadow-sm border border-gray-100 p-6 hover:border-[#D4AF37]/30 hover:shadow-md transition-all group">
+                <div className="relative bg-white rounded-xl shadow-sm border border-gray-100 p-6 hover:border-[#E50914]/30 hover:shadow-md transition-all group">
                   {rec.isSkillMatch && (
-                    <span className="absolute top-4 right-4 px-2.5 py-0.5 rounded-full bg-[#D4AF37]/10 text-[#D4AF37] text-[10px] font-bold">
+                    <span className="absolute top-4 right-4 px-2.5 py-0.5 rounded-full bg-[#E50914]/10 text-[#E50914] text-[10px] font-bold">
                       MATCH
                     </span>
                   )}
@@ -179,7 +179,7 @@ export default async function DashboardPage() {
                     <span className="text-xs text-gray-400">
                       {(DIFFICULTY_LABELS as Record<string, string>)[rec.difficulty] || rec.difficulty}
                     </span>
-                    <span className="text-sm font-bold text-[#D4AF37]">{rec.priceEuros}€</span>
+                    <span className="text-sm font-bold text-[#E50914]">{rec.priceEuros}€</span>
                   </div>
                 </div>
               </Link>
@@ -188,11 +188,11 @@ export default async function DashboardPage() {
         ) : (
           <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 text-center">
             <div className="mx-auto w-14 h-14 rounded-2xl bg-amber-50 flex items-center justify-center mb-4">
-              <Zap className="h-6 w-6 text-[#D4AF37]/60" />
+              <Zap className="h-6 w-6 text-[#E50914]/60" />
             </div>
             <p className="text-gray-600 font-semibold mb-1">Pas encore de recommandations</p>
             <p className="text-gray-400 text-sm max-w-sm mx-auto mb-5">Completez votre profil et realisez vos premieres taches pour recevoir des recommandations personnalisees.</p>
-            <Link href="/tasks" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#D4AF37] text-white text-sm font-medium hover:bg-[#C5A028] transition-colors">
+            <Link href="/tasks" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#E50914] text-white text-sm font-medium hover:bg-[#FF2D2D] transition-colors">
               Explorer les taches disponibles
               <ArrowRight className="h-4 w-4" />
             </Link>
@@ -204,12 +204,12 @@ export default async function DashboardPage() {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         {/* Module 1 -- Studio Films */}
         <Link href="/tasks">
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 hover:border-[#D4AF37]/40 hover:shadow-md transition-all h-full group p-6 sm:p-8 space-y-5">
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 hover:border-[#E50914]/40 hover:shadow-md transition-all h-full group p-6 sm:p-8 space-y-5">
             <div className="flex items-center justify-between">
               <div className="h-11 w-11 rounded-xl bg-amber-50 flex items-center justify-center">
-                <Film className="h-5 w-5 text-[#D4AF37]" />
+                <Film className="h-5 w-5 text-[#E50914]" />
               </div>
-              <ChevronRight className="h-4 w-4 text-gray-200 group-hover:text-[#D4AF37] transition-colors" />
+              <ChevronRight className="h-4 w-4 text-gray-200 group-hover:text-[#E50914] transition-colors" />
             </div>
             <h3 className="text-gray-900 font-semibold text-base">Studio Films</h3>
             <p className="text-gray-400 text-sm leading-relaxed">Micro-taches cinema, VFX, doublage, montage.</p>
@@ -283,15 +283,15 @@ export default async function DashboardPage() {
         <Link href="/dashboard/screenwriter" className="block p-6 rounded-2xl bg-gradient-to-r from-amber-50 to-yellow-50 border border-amber-200/50 hover:shadow-md transition-all group">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="h-10 w-10 rounded-xl bg-[#D4AF37]/15 flex items-center justify-center">
-                <Scale className="h-5 w-5 text-[#D4AF37]" />
+              <div className="h-10 w-10 rounded-xl bg-[#E50914]/15 flex items-center justify-center">
+                <Scale className="h-5 w-5 text-[#E50914]" />
               </div>
               <div>
                 <h3 className="font-semibold text-gray-800 text-sm">Espace Scenariste</h3>
                 <p className="text-xs text-gray-500">Gerez vos scenarios, suivez les votes et scores IA</p>
               </div>
             </div>
-            <ChevronRight className="h-5 w-5 text-gray-300 group-hover:text-[#D4AF37] transition-colors" />
+            <ChevronRight className="h-5 w-5 text-gray-300 group-hover:text-[#E50914] transition-colors" />
           </div>
         </Link>
       )}
@@ -331,7 +331,7 @@ export default async function DashboardPage() {
       {/* Quick Actions */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-5">
         {[
-          { label: 'Trouver une tache', href: '/tasks', icon: Search, color: 'text-[#D4AF37]', bg: 'bg-amber-50' },
+          { label: 'Trouver une tache', href: '/tasks', icon: Search, color: 'text-[#E50914]', bg: 'bg-amber-50' },
           { label: 'Decouvrir les films', href: '/films', icon: Clapperboard, color: 'text-blue-500', bg: 'bg-blue-50' },
           { label: 'Voir le streaming', href: '/streaming', icon: PlayCircle, color: 'text-red-500', bg: 'bg-red-50' },
           { label: 'Investir', href: '/tokenization', icon: PiggyBank, color: 'text-green-500', bg: 'bg-green-50' },
@@ -353,7 +353,7 @@ export default async function DashboardPage() {
           <div className="p-7 pb-5">
             <div className="flex items-center gap-3">
               <div className="h-10 w-10 rounded-xl bg-amber-50 flex items-center justify-center">
-                <AlertCircle className="h-5 w-5 text-[#D4AF37]" />
+                <AlertCircle className="h-5 w-5 text-[#E50914]" />
               </div>
               <div>
                 <h2 className="text-gray-900 text-lg font-bold font-[family-name:var(--font-playfair)]">
@@ -422,8 +422,8 @@ export default async function DashboardPage() {
                   key={item.title}
                   className="flex flex-wrap sm:flex-nowrap items-center gap-2 sm:gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200 group"
                 >
-                  <Square className={`h-4 w-4 shrink-0 ${item.needsAttention ? 'text-[#D4AF37]/60' : 'text-gray-200'}`} />
-                  <item.icon className={`h-4 w-4 shrink-0 ${item.needsAttention ? 'text-[#D4AF37]' : 'text-gray-300'}`} />
+                  <Square className={`h-4 w-4 shrink-0 ${item.needsAttention ? 'text-[#E50914]/60' : 'text-gray-200'}`} />
+                  <item.icon className={`h-4 w-4 shrink-0 ${item.needsAttention ? 'text-[#E50914]' : 'text-gray-300'}`} />
                   <span className={`text-sm flex-1 min-w-0 ${item.needsAttention ? 'text-gray-700' : 'text-gray-400'}`}>
                     {item.title}
                   </span>
@@ -444,7 +444,7 @@ export default async function DashboardPage() {
                       href={item.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-[#D4AF37]/50 hover:text-[#D4AF37] transition-colors sm:opacity-0 sm:group-hover:opacity-100 shrink-0"
+                      className="text-[#E50914]/50 hover:text-[#E50914] transition-colors sm:opacity-0 sm:group-hover:opacity-100 shrink-0"
                     >
                       <ExternalLink className="h-3.5 w-3.5" />
                     </a>

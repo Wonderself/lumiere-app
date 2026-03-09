@@ -86,8 +86,8 @@ export default async function FilmDetailPage({ params }: Props) {
         {film.coverImageUrl ? (
           <Image src={film.coverImageUrl} alt={film.title} fill className="object-cover" sizes="100vw" priority />
         ) : (
-          <div className="w-full h-full bg-gradient-to-br from-[#D4AF37]/10 via-purple-900/20 to-black flex items-center justify-center">
-            <Film className="h-24 w-24 text-[#D4AF37]/20" />
+          <div className="w-full h-full bg-gradient-to-br from-[#E50914]/10 via-purple-900/20 to-black flex items-center justify-center">
+            <Film className="h-24 w-24 text-[#E50914]/20" />
           </div>
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/50 to-transparent" />
@@ -123,7 +123,7 @@ export default async function FilmDetailPage({ params }: Props) {
           <div className="md:col-span-2 space-y-4">
             {film.synopsis && (
               <div>
-                <h2 className="text-lg font-semibold mb-3 text-[#D4AF37]">Synopsis</h2>
+                <h2 className="text-lg font-semibold mb-3 text-[#E50914]">Synopsis</h2>
                 <p className="text-white/60 leading-relaxed">{film.synopsis}</p>
               </div>
             )}
@@ -136,12 +136,12 @@ export default async function FilmDetailPage({ params }: Props) {
             {/* Progress card */}
             <div className="rounded-xl border border-white/5 bg-white/[0.02] p-8">
               <h3 className="text-sm font-medium text-white/50 mb-4 uppercase tracking-wider">Progression globale</h3>
-              <div className="text-5xl font-bold text-[#D4AF37] mb-3 font-playfair">
+              <div className="text-5xl font-bold text-[#E50914] mb-3 font-playfair">
                 {Math.round(film.progressPct)}%
               </div>
               <div className="h-2 bg-white/10 rounded-full overflow-hidden mb-4">
                 <div
-                  className="h-full bg-gradient-to-r from-[#D4AF37] to-[#F0D060] rounded-full transition-all duration-1000"
+                  className="h-full bg-gradient-to-r from-[#E50914] to-[#FF2D2D] rounded-full transition-all duration-1000"
                   style={{ width: `${film.progressPct}%` }}
                 />
               </div>
@@ -185,14 +185,14 @@ export default async function FilmDetailPage({ params }: Props) {
         <FilmTimeline phases={film.phases as never} />
 
         {/* Co-Producer Section */}
-        <div className="rounded-2xl border border-[#D4AF37]/20 bg-gradient-to-br from-[#D4AF37]/[0.06] to-transparent p-8 md:p-10 relative overflow-hidden">
+        <div className="rounded-2xl border border-[#E50914]/20 bg-gradient-to-br from-[#E50914]/[0.06] to-transparent p-8 md:p-10 relative overflow-hidden">
           {/* Background glow */}
-          <div className="absolute top-0 right-0 w-64 h-64 bg-[#D4AF37]/[0.05] rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
+          <div className="absolute top-0 right-0 w-64 h-64 bg-[#E50914]/[0.05] rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
 
           <div className="relative">
             <div className="flex items-center gap-2 mb-4">
-              <div className="h-10 w-10 rounded-xl bg-[#D4AF37]/15 border border-[#D4AF37]/25 flex items-center justify-center">
-                <Crown className="h-5 w-5 text-[#D4AF37]" />
+              <div className="h-10 w-10 rounded-xl bg-[#E50914]/15 border border-[#E50914]/25 flex items-center justify-center">
+                <Crown className="h-5 w-5 text-[#E50914]" />
               </div>
               <h2 className="text-2xl md:text-3xl font-bold font-playfair">
                 Devenez Co-Producteur
@@ -208,19 +208,19 @@ export default async function FilmDetailPage({ params }: Props) {
               <div className="space-y-6">
                 {/* Offering stats */}
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
-                  <div className="rounded-xl border border-[#D4AF37]/10 bg-white/[0.03] p-4 text-center">
-                    <div className="text-2xl font-bold text-[#D4AF37] font-playfair">
+                  <div className="rounded-xl border border-[#E50914]/10 bg-white/[0.03] p-4 text-center">
+                    <div className="text-2xl font-bold text-[#E50914] font-playfair">
                       {film.tokenOffering.tokenPrice}&#8364;
                     </div>
                     <div className="text-xs text-white/30 mt-1">Prix / token</div>
                   </div>
-                  <div className="rounded-xl border border-[#D4AF37]/10 bg-white/[0.03] p-4 text-center">
+                  <div className="rounded-xl border border-[#E50914]/10 bg-white/[0.03] p-4 text-center">
                     <div className="text-2xl font-bold text-white font-playfair">
                       {Math.round(film.tokenOffering.raised).toLocaleString('fr-FR')}&#8364;
                     </div>
                     <div className="text-xs text-white/30 mt-1">Leves</div>
                   </div>
-                  <div className="rounded-xl border border-[#D4AF37]/10 bg-white/[0.03] p-4 text-center">
+                  <div className="rounded-xl border border-[#E50914]/10 bg-white/[0.03] p-4 text-center">
                     <div className="text-2xl font-bold text-white font-playfair">
                       {film.tokenOffering.tokensSold}
                     </div>
@@ -240,13 +240,13 @@ export default async function FilmDetailPage({ params }: Props) {
                 <div>
                   <div className="flex items-center justify-between mb-2 text-sm">
                     <span className="text-white/50">Progression de la levee</span>
-                    <span className="text-[#D4AF37] font-semibold">
+                    <span className="text-[#E50914] font-semibold">
                       {film.tokenOffering.hardCap > 0 ? Math.round((film.tokenOffering.raised / film.tokenOffering.hardCap) * 100) : 0}%
                     </span>
                   </div>
                   <div className="h-2.5 bg-white/[0.06] rounded-full overflow-hidden">
                     <div
-                      className="h-full bg-gradient-to-r from-[#D4AF37] to-[#F0D060] rounded-full transition-all duration-1000"
+                      className="h-full bg-gradient-to-r from-[#E50914] to-[#FF2D2D] rounded-full transition-all duration-1000"
                       style={{ width: `${film.tokenOffering.hardCap > 0 ? Math.min(100, (film.tokenOffering.raised / film.tokenOffering.hardCap) * 100) : 0}%` }}
                     />
                   </div>
@@ -264,7 +264,7 @@ export default async function FilmDetailPage({ params }: Props) {
                     { icon: Crown, label: 'Nom au generique' },
                   ].map((b) => (
                     <div key={b.label} className="flex items-center gap-2 text-xs text-white/40">
-                      <b.icon className="h-3.5 w-3.5 text-[#D4AF37]" />
+                      <b.icon className="h-3.5 w-3.5 text-[#E50914]" />
                       {b.label}
                     </div>
                   ))}
@@ -289,7 +289,7 @@ export default async function FilmDetailPage({ params }: Props) {
                     { icon: Crown, title: 'Au Generique', desc: 'Votre nom credite comme co-producteur' },
                   ].map((b) => (
                     <div key={b.title} className="rounded-xl border border-white/5 bg-white/[0.02] p-4 text-center">
-                      <b.icon className="h-6 w-6 text-[#D4AF37]/60 mx-auto mb-2" />
+                      <b.icon className="h-6 w-6 text-[#E50914]/60 mx-auto mb-2" />
                       <h4 className="text-sm font-semibold text-white mb-1">{b.title}</h4>
                       <p className="text-xs text-white/30">{b.desc}</p>
                     </div>

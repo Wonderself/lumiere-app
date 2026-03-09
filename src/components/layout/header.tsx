@@ -80,12 +80,12 @@ export function Header() {
                 href={link.href}
                 className={cn(
                   'relative flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200',
-                  isActive ? 'text-[#D4AF37]' : 'text-white/50 hover:text-white/80'
+                  isActive ? 'text-[#E50914]' : 'text-white/50 hover:text-white/80'
                 )}
               >
                 <link.icon className="h-3.5 w-3.5" />
                 {link.label}
-                {isActive && <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4 h-0.5 bg-[#D4AF37] rounded-full" />}
+                {isActive && <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4 h-0.5 bg-[#E50914] rounded-full" />}
               </Link>
             )
           })}
@@ -94,12 +94,12 @@ export function Header() {
               href="/admin"
               className={cn(
                 'relative flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200',
-                pathname.startsWith('/admin') ? 'text-[#D4AF37]' : 'text-white/50 hover:text-white/80'
+                pathname.startsWith('/admin') ? 'text-[#E50914]' : 'text-white/50 hover:text-white/80'
               )}
             >
               <Settings className="h-3.5 w-3.5" />
               Admin
-              {pathname.startsWith('/admin') && <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4 h-0.5 bg-[#D4AF37] rounded-full" />}
+              {pathname.startsWith('/admin') && <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4 h-0.5 bg-[#E50914] rounded-full" />}
             </Link>
           )}
         </nav>
@@ -109,8 +109,8 @@ export function Header() {
           {session?.user ? (
             <div className="flex items-center gap-2">
               <NotificationBell />
-              <Link href="/lumens" className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm text-white/50 hover:text-[#D4AF37] hover:bg-[#D4AF37]/5 transition-all">
-                <Sun className="h-4 w-4 text-[#D4AF37]" />
+              <Link href="/lumens" className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm text-white/50 hover:text-[#E50914] hover:bg-[#E50914]/5 transition-all">
+                <Sun className="h-4 w-4 text-[#E50914]" />
                 <span className="font-medium">0</span>
               </Link>
               <DropdownMenu>
@@ -216,7 +216,7 @@ export function Header() {
                     onClick={() => setMobileOpen(false)}
                     className={cn(
                       'flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all',
-                      pathname.startsWith(link.href) ? 'text-[#D4AF37] bg-[#D4AF37]/10' : 'text-white/50 hover:text-white hover:bg-white/5'
+                      pathname.startsWith(link.href) ? 'text-[#E50914] bg-[#E50914]/10' : 'text-white/50 hover:text-white hover:bg-white/5'
                     )}
                   >
                     <link.icon className="h-4 w-4" />

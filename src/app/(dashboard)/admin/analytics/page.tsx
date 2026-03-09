@@ -42,13 +42,13 @@ export default async function AdminAnalyticsPage() {
     SCRIPT_EDIT: 'Script', COLOR_GRADE: 'Etalonnage', MUSIC_COMPOSE: 'Musique', SOUND_DESIGN: 'Sound Design',
   }
   const difficultyColors: Record<string, string> = {
-    EASY: '#22c55e', MEDIUM: '#D4AF37', HARD: '#f97316', EXPERT: '#ef4444',
+    EASY: '#22c55e', MEDIUM: '#E50914', HARD: '#f97316', EXPERT: '#ef4444',
   }
   const levelColors: Record<string, string> = {
-    ROOKIE: '#9ca3af', PRO: '#3b82f6', EXPERT: '#D4AF37', VIP: '#a855f7',
+    ROOKIE: '#9ca3af', PRO: '#3b82f6', EXPERT: '#E50914', VIP: '#a855f7',
   }
   const roleColors: Record<string, string> = {
-    ADMIN: '#ef4444', USER: '#9ca3af', CONTRIBUTOR: '#22c55e', CREATOR: '#D4AF37', INVESTOR: '#a855f7',
+    ADMIN: '#ef4444', USER: '#9ca3af', CONTRIBUTOR: '#22c55e', CREATOR: '#E50914', INVESTOR: '#a855f7',
   }
 
   const successRateData = totalByDifficulty.map(t => {
@@ -56,7 +56,7 @@ export default async function AdminAnalyticsPage() {
     return {
       label: t.difficulty,
       value: t._count > 0 ? Math.round((validated / t._count) * 100) : 0,
-      color: difficultyColors[t.difficulty] || '#D4AF37',
+      color: difficultyColors[t.difficulty] || '#E50914',
     }
   })
 
@@ -77,7 +77,7 @@ export default async function AdminAnalyticsPage() {
       sub: `${data.films.inProduction} en production`,
       trend: data.films.inProduction > 0 ? 'up' : 'neutral',
       icon: Film,
-      color: '#D4AF37',
+      color: '#E50914',
       sparkData: [],
     },
     {
@@ -129,7 +129,7 @@ export default async function AdminAnalyticsPage() {
         <p className="text-white/50">Vue complete des donnees et tendances de la plateforme</p>
       </div>
 
-      <div className="h-px bg-gradient-to-r from-transparent via-[#D4AF37]/20 to-transparent" />
+      <div className="h-px bg-gradient-to-r from-transparent via-[#E50914]/20 to-transparent" />
 
       {/* KPI Grid */}
       {data && (
@@ -256,7 +256,7 @@ export default async function AdminAnalyticsPage() {
               <DonutChart data={tasksByDifficulty.map(t => ({
                 label: t.difficulty,
                 value: t._count,
-                color: difficultyColors[t.difficulty] || '#D4AF37',
+                color: difficultyColors[t.difficulty] || '#E50914',
               }))} />
             </CardContent>
           </Card>
@@ -292,7 +292,7 @@ export default async function AdminAnalyticsPage() {
         <Card className="sm:rounded-2xl border-white/5 bg-white/[0.02]">
           <CardHeader>
             <CardTitle className="text-sm flex items-center gap-2">
-              <Trophy className="h-4 w-4 text-[#D4AF37]" />
+              <Trophy className="h-4 w-4 text-[#E50914]" />
               Top 10 Contributeurs
             </CardTitle>
           </CardHeader>
@@ -304,7 +304,7 @@ export default async function AdminAnalyticsPage() {
                   className="flex items-center gap-4 p-4 rounded-xl bg-white/[0.02] border border-white/[0.04] hover:border-white/[0.08] transition-all"
                 >
                   <div className={`w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold shrink-0 ${
-                    i === 0 ? 'bg-[#D4AF37]/20 text-[#D4AF37]' :
+                    i === 0 ? 'bg-[#E50914]/20 text-[#E50914]' :
                     i === 1 ? 'bg-gray-400/20 text-gray-300' :
                     i === 2 ? 'bg-amber-700/20 text-amber-600' :
                     'bg-white/5 text-white/30'
@@ -316,7 +316,7 @@ export default async function AdminAnalyticsPage() {
                     <div className="text-[11px] text-white/30">{user.role}</div>
                   </div>
                   <div className="text-right shrink-0">
-                    <div className="text-sm font-semibold text-[#D4AF37]">{user.lumens} LUM</div>
+                    <div className="text-sm font-semibold text-[#E50914]">{user.lumens} LUM</div>
                     <div className="text-[11px] text-white/30">{user.tasksCompleted} taches</div>
                   </div>
                 </div>
@@ -339,7 +339,7 @@ export default async function AdminAnalyticsPage() {
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
               {[
                 { label: 'Disponibles', value: data.tasks.available, color: '#3b82f6' },
-                { label: 'En cours', value: data.tasks.inProgress, color: '#D4AF37' },
+                { label: 'En cours', value: data.tasks.inProgress, color: '#E50914' },
                 { label: 'Completees', value: data.tasks.completed, color: '#22c55e' },
                 { label: 'Total', value: data.tasks.total, color: '#9ca3af' },
               ].map((item) => (
@@ -355,11 +355,11 @@ export default async function AdminAnalyticsPage() {
             <div className="mt-4">
               <div className="flex items-center justify-between text-xs text-white/40 mb-2">
                 <span>Taux de completion</span>
-                <span className="font-medium text-[#D4AF37]">{data.tasks.completionRate}%</span>
+                <span className="font-medium text-[#E50914]">{data.tasks.completionRate}%</span>
               </div>
               <div className="h-2 bg-white/[0.04] rounded-full overflow-hidden">
                 <div
-                  className="h-full bg-gradient-to-r from-[#D4AF37] to-[#F0D060] rounded-full transition-all"
+                  className="h-full bg-gradient-to-r from-[#E50914] to-[#FF2D2D] rounded-full transition-all"
                   style={{ width: `${data.tasks.completionRate}%` }}
                 />
               </div>

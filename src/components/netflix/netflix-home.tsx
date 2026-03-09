@@ -88,7 +88,7 @@ export function NetflixHome({ data }: { data: HomeData }) {
       {/* ── SECTION 4: Our Productions ── */}
       <div className="relative z-10">
         <div className="px-4 sm:px-8 md:px-16 lg:px-20 mb-6">
-          <p className="text-[11px] font-bold tracking-[0.2em] uppercase text-[#D4AF37]/50">Nos productions</p>
+          <p className="text-[11px] font-bold tracking-[0.2em] uppercase text-[#E50914]/50">Nos productions</p>
         </div>
         <FilmRow
           title="Nos Prochaines Productions"

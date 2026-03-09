@@ -71,7 +71,7 @@ const mainNavSections: NavSection[] = [
   {
     title: 'Home',
     icon: Home,
-    dotColor: 'bg-[#D4AF37]',
+    dotColor: 'bg-[#E50914]',
     links: [
       { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard, exact: true },
       { href: '/streaming', label: 'Streaming', icon: Play },
@@ -132,7 +132,7 @@ const adminNavSections: NavSection[] = [
   {
     title: 'Contenu',
     icon: Film,
-    dotColor: 'bg-[#D4AF37]',
+    dotColor: 'bg-[#E50914]',
     links: [
       { href: '/admin/films', label: 'Films Studio', icon: Film },
       { href: '/admin/tasks', label: 'Tâches', icon: Star },
@@ -231,13 +231,13 @@ export function Sidebar() {
                     className={cn(
                       'flex items-center gap-3 px-3 py-2 rounded-lg text-[13px] font-medium transition-all duration-200 group',
                       isActive
-                        ? 'bg-[#D4AF37]/10 text-[#D4AF37] font-medium'
-                        : 'text-gray-600 hover:text-[#D4AF37] hover:bg-[#D4AF37]/[0.04]'
+                        ? 'bg-[#E50914]/10 text-[#E50914] font-medium'
+                        : 'text-gray-600 hover:text-[#E50914] hover:bg-[#E50914]/[0.04]'
                     )}
                   >
                     <link.icon className={cn(
                       'h-4 w-4 shrink-0 transition-colors',
-                      isActive ? 'text-[#D4AF37]' : 'text-gray-400 group-hover:text-[#D4AF37]'
+                      isActive ? 'text-[#E50914]' : 'text-gray-400 group-hover:text-[#E50914]'
                     )} />
                     <span className="flex-1">{link.label}</span>
                     {link.badge && (
@@ -264,7 +264,7 @@ export function Sidebar() {
           </div>
           <Link
             href="/dashboard"
-            className="flex items-center gap-3 px-3 py-2 rounded-lg text-[13px] text-gray-400 hover:text-[#D4AF37] hover:bg-[#D4AF37]/[0.04] transition-all"
+            className="flex items-center gap-3 px-3 py-2 rounded-lg text-[13px] text-gray-400 hover:text-[#E50914] hover:bg-[#E50914]/[0.04] transition-all"
           >
             <LayoutDashboard className="h-4 w-4" />
             Dashboard
@@ -279,16 +279,16 @@ export function Sidebar() {
             className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-gray-50 transition-all group"
           >
             <Avatar className="h-9 w-9">
-              <AvatarFallback className="text-xs bg-[#D4AF37]/10 text-[#D4AF37]">
+              <AvatarFallback className="text-xs bg-[#E50914]/10 text-[#E50914]">
                 {getInitials(session.user.name || session.user.email || '')}
               </AvatarFallback>
             </Avatar>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-[#1A1A2E] truncate group-hover:text-[#D4AF37] transition-colors">
+              <p className="text-sm font-medium text-[#1A1A2E] truncate group-hover:text-[#E50914] transition-colors">
                 {session.user.name || 'Utilisateur'}
               </p>
               <div className="flex items-center gap-1.5">
-                <Badge variant="outline" className="text-[10px] px-1.5 py-0 h-4 border-[#D4AF37]/20 text-[#D4AF37]/70">
+                <Badge variant="outline" className="text-[10px] px-1.5 py-0 h-4 border-[#E50914]/20 text-[#E50914]/70">
                   {LEVEL_LABELS_MAP[userLevel || 'ROOKIE'] || 'Rookie'}
                 </Badge>
               </div>

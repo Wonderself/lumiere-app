@@ -43,7 +43,7 @@ export function BadgeShowcase({ badges, compact = false }: BadgeShowcaseProps) {
             onMouseEnter={() => setHoveredBadge(badge.type)}
             onMouseLeave={() => setHoveredBadge(null)}
           >
-            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-[#D4AF37]/10 text-[#D4AF37] border border-[#D4AF37]/20 cursor-default">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-[#E50914]/10 text-[#E50914] border border-[#E50914]/20 cursor-default">
               <span>{badge.icon}</span>
               {badge.name}
             </span>
@@ -91,7 +91,7 @@ export function BadgeShowcase({ badges, compact = false }: BadgeShowcaseProps) {
                 className={cn(
                   'relative p-4 rounded-xl border text-center transition-all duration-300',
                   badge.earned
-                    ? 'border-[#D4AF37]/20 bg-[#D4AF37]/[0.04] hover:border-[#D4AF37]/40'
+                    ? 'border-[#E50914]/20 bg-[#E50914]/[0.04] hover:border-[#E50914]/40'
                     : 'border-white/[0.04] bg-white/[0.01] opacity-40'
                 )}
               >
@@ -111,7 +111,7 @@ export function BadgeShowcase({ badges, compact = false }: BadgeShowcaseProps) {
                   {badge.description}
                 </p>
                 {badge.earned && badge.earnedAt && (
-                  <p className="text-[9px] text-[#D4AF37]/50 mt-2">
+                  <p className="text-[9px] text-[#E50914]/50 mt-2">
                     {new Intl.DateTimeFormat('fr-FR').format(new Date(badge.earnedAt))}
                   </p>
                 )}

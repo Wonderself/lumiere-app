@@ -304,7 +304,7 @@ export default async function AdminAIAutomationPage() {
     { label: 'Humain uniquement', value: humanOnly.length.toString(), sub: 'non automatisable', color: 'text-red-400', icon: XCircle },
     { label: 'Modules activés', value: `${activatedCount}/${totalActivatable}`, sub: 'en production', color: 'text-blue-400', icon: Zap },
     { label: 'Coût Claude API', value: `${claudeApiCost} EUR/mois`, sub: 'budget API actuel', color: 'text-purple-400', icon: Brain },
-    { label: 'Économies actives', value: `${new Intl.NumberFormat('fr-FR').format(activeSavings)} EUR`, sub: '/mois estimé', color: 'text-[#D4AF37]', icon: DollarSign },
+    { label: 'Économies actives', value: `${new Intl.NumberFormat('fr-FR').format(activeSavings)} EUR`, sub: '/mois estimé', color: 'text-[#E50914]', icon: DollarSign },
   ]
 
   function renderItem(item: AutomationItem, type: 'auto' | 'assisted' | 'human') {
@@ -342,7 +342,7 @@ export default async function AdminAIAutomationPage() {
 
               {/* Expandable detail */}
               <details className="group">
-                <summary className="text-[10px] text-[#D4AF37] cursor-pointer hover:underline list-none">
+                <summary className="text-[10px] text-[#E50914] cursor-pointer hover:underline list-none">
                   Voir le détail...
                 </summary>
                 <p className="text-xs text-white/40 mt-2 leading-relaxed">
@@ -352,8 +352,8 @@ export default async function AdminAIAutomationPage() {
 
               {item.costSaving > 0 && (
                 <div className="flex items-center gap-1 mt-2">
-                  <DollarSign className="h-3 w-3 text-[#D4AF37]" />
-                  <span className="text-[10px] text-[#D4AF37]">
+                  <DollarSign className="h-3 w-3 text-[#E50914]" />
+                  <span className="text-[10px] text-[#E50914]">
                     Économie estimée : {new Intl.NumberFormat('fr-FR').format(item.costSaving)} EUR/mois
                   </span>
                 </div>
@@ -385,7 +385,7 @@ export default async function AdminAIAutomationPage() {
       {/* Header */}
       <div>
         <h1 className="text-2xl sm:text-3xl font-bold font-[family-name:var(--font-playfair)]">
-          <Bot className="inline h-7 w-7 text-[#D4AF37] mr-2 -mt-1" />
+          <Bot className="inline h-7 w-7 text-[#E50914] mr-2 -mt-1" />
           Automatisation Claude IA
         </h1>
         <p className="text-white/50 mt-1">
@@ -398,8 +398,8 @@ export default async function AdminAIAutomationPage() {
         <CardContent className="p-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="text-center">
-              <Brain className="h-8 w-8 text-[#D4AF37] mx-auto mb-2" />
-              <p className="text-3xl font-bold text-[#D4AF37]">{claudeApiCost} EUR</p>
+              <Brain className="h-8 w-8 text-[#E50914] mx-auto mb-2" />
+              <p className="text-3xl font-bold text-[#E50914]">{claudeApiCost} EUR</p>
               <p className="text-xs text-white/40 mt-1">Coût mensuel API Claude</p>
             </div>
             <div className="text-center">
@@ -419,10 +419,10 @@ export default async function AdminAIAutomationPage() {
           </div>
           <div className="mt-4 p-3 rounded-lg bg-white/[0.03] border border-white/5">
             <p className="text-xs text-white/50 text-center">
-              Avec Claude API à <span className="text-[#D4AF37] font-bold">{claudeApiCost} EUR/mois</span>,
+              Avec Claude API à <span className="text-[#E50914] font-bold">{claudeApiCost} EUR/mois</span>,
               vous remplacez environ <span className="text-green-400 font-bold">{new Intl.NumberFormat('fr-FR').format(totalMonthlySavings)} EUR/mois</span> en
               main-d&apos;oeuvre. Économie actuellement active :
-              <span className="text-[#D4AF37] font-bold"> {new Intl.NumberFormat('fr-FR').format(activeSavings)} EUR/mois</span>.
+              <span className="text-[#E50914] font-bold"> {new Intl.NumberFormat('fr-FR').format(activeSavings)} EUR/mois</span>.
             </p>
           </div>
         </CardContent>
@@ -446,7 +446,7 @@ export default async function AdminAIAutomationPage() {
       <div className="p-4 rounded-xl border border-white/10 bg-white/[0.02]">
         <div className="flex items-center justify-between mb-3">
           <span className="text-sm font-medium">Niveau d&apos;automatisation</span>
-          <span className="text-sm font-bold text-[#D4AF37]">
+          <span className="text-sm font-bold text-[#E50914]">
             {fullyAutomated.length + assisted.length}/{totalItems} tâches automatisables
           </span>
         </div>
@@ -544,7 +544,7 @@ export default async function AdminAIAutomationPage() {
       <Card>
         <CardHeader>
           <CardTitle className="text-base flex items-center gap-2">
-            <Calculator className="h-4 w-4 text-[#D4AF37]" />
+            <Calculator className="h-4 w-4 text-[#E50914]" />
             Estimation des Coûts Mensuels
           </CardTitle>
         </CardHeader>
@@ -572,7 +572,7 @@ export default async function AdminAIAutomationPage() {
                     <td className="text-right py-2.5 px-2 text-green-400">
                       ~{Math.round(item.costSaving * 0.01)} EUR
                     </td>
-                    <td className="text-right py-2.5 px-2 text-[#D4AF37] font-medium">
+                    <td className="text-right py-2.5 px-2 text-[#E50914] font-medium">
                       -{new Intl.NumberFormat('fr-FR').format(Math.round(item.costSaving * 0.99))} EUR
                     </td>
                   </tr>
@@ -589,7 +589,7 @@ export default async function AdminAIAutomationPage() {
                     <td className="text-right py-2.5 px-2 text-yellow-400">
                       ~{Math.round(item.costSaving * 0.3)} EUR
                     </td>
-                    <td className="text-right py-2.5 px-2 text-[#D4AF37] font-medium">
+                    <td className="text-right py-2.5 px-2 text-[#E50914] font-medium">
                       -{new Intl.NumberFormat('fr-FR').format(Math.round(item.costSaving * 0.7))} EUR
                     </td>
                   </tr>
@@ -602,7 +602,7 @@ export default async function AdminAIAutomationPage() {
                   <td className="text-right py-3 px-2 text-green-400">
                     {claudeApiCost} EUR
                   </td>
-                  <td className="text-right py-3 px-2 text-[#D4AF37]">
+                  <td className="text-right py-3 px-2 text-[#E50914]">
                     -{new Intl.NumberFormat('fr-FR').format(totalMonthlySavings - claudeApiCost)} EUR
                   </td>
                 </tr>
@@ -615,7 +615,7 @@ export default async function AdminAIAutomationPage() {
       {/* Activation CTA */}
       <Card variant="glass">
         <CardContent className="p-6 text-center">
-          <Cpu className="h-8 w-8 text-[#D4AF37] mx-auto mb-3" />
+          <Cpu className="h-8 w-8 text-[#E50914] mx-auto mb-3" />
           <h3 className="font-semibold text-lg mb-1 font-[family-name:var(--font-playfair)]">
             Activer tous les modules
           </h3>

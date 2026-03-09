@@ -118,7 +118,7 @@ export default async function AdminReputationPage(
 
   const badgeDistribution = [
     { label: 'Diamond', value: badgeCounts[0], color: '#06b6d4' },
-    { label: 'Gold', value: badgeCounts[1], color: '#D4AF37' },
+    { label: 'Gold', value: badgeCounts[1], color: '#E50914' },
     { label: 'Silver', value: badgeCounts[2], color: '#94a3b8' },
     { label: 'Bronze', value: badgeCounts[3], color: '#cd7f32' },
   ].filter(b => b.value > 0)
@@ -141,7 +141,7 @@ export default async function AdminReputationPage(
         },
       }),
       color: range.min >= 80 ? '#22c55e'
-        : range.min >= 60 ? '#D4AF37'
+        : range.min >= 60 ? '#E50914'
         : range.min >= 40 ? '#f59e0b'
         : range.min >= 20 ? '#ef4444'
         : '#991b1b',
@@ -171,7 +171,7 @@ export default async function AdminReputationPage(
 
   const badgeColors: Record<string, string> = {
     diamond: 'border-cyan-500/30 bg-cyan-500/10 text-cyan-400',
-    gold: 'border-[#D4AF37]/30 bg-[#D4AF37]/10 text-[#D4AF37]',
+    gold: 'border-[#E50914]/30 bg-[#E50914]/10 text-[#E50914]',
     silver: 'border-gray-400/30 bg-gray-400/10 text-gray-400',
     bronze: 'border-orange-600/30 bg-orange-600/10 text-orange-400',
   }
@@ -198,7 +198,7 @@ export default async function AdminReputationPage(
         {/* Badge Distribution */}
         <div className="rounded-xl border border-white/10 bg-white/[0.02] p-6">
           <h2 className="text-sm font-semibold text-white/80 mb-4 flex items-center gap-2">
-            <Award className="h-4 w-4 text-[#D4AF37]" />
+            <Award className="h-4 w-4 text-[#E50914]" />
             Distribution des Badges
           </h2>
           {badgeDistribution.length > 0 ? (
@@ -211,7 +211,7 @@ export default async function AdminReputationPage(
         {/* Score Distribution */}
         <div className="rounded-xl border border-white/10 bg-white/[0.02] p-6">
           <h2 className="text-sm font-semibold text-white/80 mb-4 flex items-center gap-2">
-            <TrendingUp className="h-4 w-4 text-[#D4AF37]" />
+            <TrendingUp className="h-4 w-4 text-[#E50914]" />
             Distribution des Scores
           </h2>
           <BarChart data={scoreDistribution} height={200} />
@@ -226,7 +226,7 @@ export default async function AdminReputationPage(
           name="search"
           defaultValue={searchQuery}
           placeholder="Rechercher un utilisateur..."
-          className="w-full h-9 pl-9 pr-4 rounded-lg border border-white/10 bg-white/5 text-sm text-white placeholder:text-white/30 focus:outline-none focus:ring-1 focus:ring-[#D4AF37]/50"
+          className="w-full h-9 pl-9 pr-4 rounded-lg border border-white/10 bg-white/5 text-sm text-white placeholder:text-white/30 focus:outline-none focus:ring-1 focus:ring-[#E50914]/50"
         />
       </form>
 
@@ -263,7 +263,7 @@ export default async function AdminReputationPage(
                       <tr
                         key={user.id}
                         className={`border-b border-white/5 hover:bg-white/[0.02] transition-colors ${
-                          isSelected ? 'bg-[#D4AF37]/5 border-l-2 border-l-[#D4AF37]' : ''
+                          isSelected ? 'bg-[#E50914]/5 border-l-2 border-l-[#E50914]' : ''
                         }`}
                       >
                         <td className="p-4">
@@ -289,7 +289,7 @@ export default async function AdminReputationPage(
                                 style={{
                                   width: `${user.reputationScore}%`,
                                   background: user.reputationScore >= 80 ? '#22c55e'
-                                    : user.reputationScore >= 60 ? '#D4AF37'
+                                    : user.reputationScore >= 60 ? '#E50914'
                                     : user.reputationScore >= 40 ? '#f59e0b'
                                     : '#ef4444',
                                 }}
@@ -297,7 +297,7 @@ export default async function AdminReputationPage(
                             </div>
                             <span className={`text-sm font-bold ${
                               user.reputationScore >= 80 ? 'text-green-400'
-                              : user.reputationScore >= 60 ? 'text-[#D4AF37]'
+                              : user.reputationScore >= 60 ? 'text-[#E50914]'
                               : user.reputationScore >= 40 ? 'text-yellow-400'
                               : 'text-red-400'
                             }`}>
@@ -318,7 +318,7 @@ export default async function AdminReputationPage(
                             href={`/admin/reputation?user=${user.id}${searchQuery ? `&search=${searchQuery}` : ''}`}
                             className={`text-xs px-3 py-1.5 rounded-lg transition-colors inline-flex items-center gap-1 ${
                               isSelected
-                                ? 'bg-[#D4AF37]/20 text-[#D4AF37] border border-[#D4AF37]/30'
+                                ? 'bg-[#E50914]/20 text-[#E50914] border border-[#E50914]/30'
                                 : 'border border-white/10 text-white/40 hover:text-white/60 hover:border-white/20'
                             }`}
                           >
@@ -338,12 +338,12 @@ export default async function AdminReputationPage(
         {selectedUserId && selectedUser && (
           <div className="lg:col-span-2 space-y-4">
             {/* User Summary */}
-            <div className="rounded-xl border border-[#D4AF37]/20 bg-[#D4AF37]/5 p-6">
+            <div className="rounded-xl border border-[#E50914]/20 bg-[#E50914]/5 p-6">
               <div className="flex items-center gap-3 mb-4">
                 {selectedUser.avatarUrl ? (
                   <img src={selectedUser.avatarUrl} alt="" className="w-12 h-12 rounded-full object-cover" />
                 ) : (
-                  <div className="w-12 h-12 rounded-full bg-[#D4AF37]/10 flex items-center justify-center text-lg font-bold text-[#D4AF37]">
+                  <div className="w-12 h-12 rounded-full bg-[#E50914]/10 flex items-center justify-center text-lg font-bold text-[#E50914]">
                     {(selectedUser.displayName || selectedUser.email)?.[0]?.toUpperCase() || '?'}
                   </div>
                 )}
@@ -359,7 +359,7 @@ export default async function AdminReputationPage(
                 <div className="ml-auto text-right">
                   <div className={`text-3xl font-bold ${
                     selectedUser.reputationScore >= 80 ? 'text-green-400'
-                    : selectedUser.reputationScore >= 60 ? 'text-[#D4AF37]'
+                    : selectedUser.reputationScore >= 60 ? 'text-[#E50914]'
                     : selectedUser.reputationScore >= 40 ? 'text-yellow-400'
                     : 'text-red-400'
                   }`}>
@@ -388,7 +388,7 @@ export default async function AdminReputationPage(
             {/* Manual Adjustment Form */}
             <div className="rounded-xl border border-white/10 bg-white/[0.02] p-5">
               <h3 className="text-sm font-semibold text-white/80 mb-3 flex items-center gap-2">
-                <Shield className="h-4 w-4 text-[#D4AF37]" />
+                <Shield className="h-4 w-4 text-[#E50914]" />
                 Ajustement Manuel
               </h3>
               <form action={adjustReputationAction} className="space-y-3">
@@ -401,7 +401,7 @@ export default async function AdminReputationPage(
                     step="0.1"
                     placeholder="ex: +5 ou -10"
                     required
-                    className="w-full h-9 rounded-lg border border-white/10 bg-white/5 px-3 text-sm text-white placeholder:text-white/30 focus:outline-none focus:ring-1 focus:ring-[#D4AF37]/50"
+                    className="w-full h-9 rounded-lg border border-white/10 bg-white/5 px-3 text-sm text-white placeholder:text-white/30 focus:outline-none focus:ring-1 focus:ring-[#E50914]/50"
                   />
                 </div>
                 <div>
@@ -411,12 +411,12 @@ export default async function AdminReputationPage(
                     name="reason"
                     placeholder="Raison de l'ajustement..."
                     required
-                    className="w-full h-9 rounded-lg border border-white/10 bg-white/5 px-3 text-sm text-white placeholder:text-white/30 focus:outline-none focus:ring-1 focus:ring-[#D4AF37]/50"
+                    className="w-full h-9 rounded-lg border border-white/10 bg-white/5 px-3 text-sm text-white placeholder:text-white/30 focus:outline-none focus:ring-1 focus:ring-[#E50914]/50"
                   />
                 </div>
                 <button
                   type="submit"
-                  className="w-full h-9 rounded-lg bg-[#D4AF37] text-black font-semibold text-sm hover:bg-[#F0D060] transition-colors"
+                  className="w-full h-9 rounded-lg bg-[#E50914] text-white font-semibold text-sm hover:bg-[#FF2D2D] transition-colors"
                 >
                   Appliquer l&apos;ajustement
                 </button>

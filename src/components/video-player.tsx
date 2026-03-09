@@ -221,7 +221,7 @@ export function VideoPlayer({
           className="absolute inset-0 flex items-center justify-center bg-black/30 cursor-pointer"
           onClick={togglePlay}
         >
-          <div className="w-16 h-16 rounded-full bg-[#D4AF37] flex items-center justify-center shadow-lg shadow-[#D4AF37]/30 hover:scale-110 transition-transform">
+          <div className="w-16 h-16 rounded-full bg-[#E50914] flex items-center justify-center shadow-lg shadow-[#E50914]/30 hover:scale-110 transition-transform">
             <Play className="h-7 w-7 text-black ml-1" />
           </div>
         </div>
@@ -247,14 +247,14 @@ export function VideoPlayer({
           onClick={seek}
         >
           <div className="absolute h-full bg-white/10 rounded-full" style={{ width: `${buffered}%` }} />
-          <div className="relative h-full bg-[#D4AF37] rounded-full" style={{ width: `${progress}%` }}>
-            <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-[#D4AF37] opacity-0 group-hover/bar:opacity-100 transition-opacity shadow-sm" />
+          <div className="relative h-full bg-[#E50914] rounded-full" style={{ width: `${progress}%` }}>
+            <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-[#E50914] opacity-0 group-hover/bar:opacity-100 transition-opacity shadow-sm" />
           </div>
         </div>
 
         {/* Buttons */}
         <div className="flex items-center gap-3 px-4 pb-3">
-          <button onClick={togglePlay} className="text-white hover:text-[#D4AF37] transition-colors">
+          <button onClick={togglePlay} className="text-white hover:text-[#E50914] transition-colors">
             {playing ? <Pause className="h-5 w-5" /> : <Play className="h-5 w-5" />}
           </button>
           <button onClick={() => skip(-10)} className="text-white/60 hover:text-white transition-colors">
@@ -283,7 +283,7 @@ export function VideoPlayer({
               step={0.05}
               value={muted ? 0 : volume}
               onChange={handleVolume}
-              className="w-16 h-1 accent-[#D4AF37] cursor-pointer"
+              className="w-16 h-1 accent-[#E50914] cursor-pointer"
             />
           </div>
 

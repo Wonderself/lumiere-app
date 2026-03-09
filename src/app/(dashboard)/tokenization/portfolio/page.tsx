@@ -38,7 +38,7 @@ function TokenizationNav({ active }: { active: string }) {
           href={tab.href}
           className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 min-h-[44px] ${
             active === tab.key
-              ? 'bg-[#D4AF37]/15 text-[#D4AF37] border border-[#D4AF37]/20 shadow-[0_0_12px_rgba(212,175,55,0.1)]'
+              ? 'bg-[#E50914]/15 text-[#E50914] border border-[#E50914]/20 shadow-[0_0_12px_rgba(229,9,20,0.1)]'
               : 'text-white/50 hover:text-white/70'
           }`}
         >
@@ -196,7 +196,7 @@ export default async function PortfolioPage() {
             label: 'Total investi',
             value: formatEur(totalInvested),
             icon: CircleDollarSign,
-            color: 'text-[#D4AF37]',
+            color: 'text-[#E50914]',
           },
           {
             label: 'Valeur actuelle',
@@ -224,7 +224,7 @@ export default async function PortfolioPage() {
                 <kpi.icon className={`h-4 w-4 ${kpi.color}`} />
                 <span className="text-white/30 text-xs">{kpi.label}</span>
               </div>
-              <p className={`text-xl font-bold ${kpi.color === 'text-[#D4AF37]' ? 'text-white' : kpi.color}`}>{kpi.value}</p>
+              <p className={`text-xl font-bold ${kpi.color === 'text-[#E50914]' ? 'text-white' : kpi.color}`}>{kpi.value}</p>
               {kpi.subValue && (
                 <p className={`text-xs mt-0.5 ${kpi.color}`}>{kpi.subValue}</p>
               )}
@@ -237,7 +237,7 @@ export default async function PortfolioPage() {
       <Card className="bg-white/[0.03] border-white/10">
         <CardHeader>
           <CardTitle className="text-white flex items-center gap-2">
-            <BarChart3 className="h-5 w-5 text-[#D4AF37]" />
+            <BarChart3 className="h-5 w-5 text-[#E50914]" />
             Mes Participations
           </CardTitle>
         </CardHeader>
@@ -271,7 +271,7 @@ export default async function PortfolioPage() {
                   {holdings.map((holding) => (
                     <tr key={holding.offering.id} className="border-b border-white/5 hover:bg-white/[0.02]">
                       <td className="py-3 px-2">
-                        <Link href={`/tokenization/${holding.offering.filmId}`} className="flex items-center gap-2 hover:text-[#D4AF37] transition-colors">
+                        <Link href={`/tokenization/${holding.offering.filmId}`} className="flex items-center gap-2 hover:text-[#E50914] transition-colors">
                           <div className="h-8 w-8 rounded bg-white/5 flex items-center justify-center shrink-0">
                             <Film className="h-4 w-4 text-white/20" />
                           </div>
@@ -393,7 +393,7 @@ export default async function PortfolioPage() {
                         {listing.tokenCount} token(s) a {formatEur(listing.pricePerToken)}/token
                       </p>
                     </div>
-                    <span className="text-[#D4AF37] font-semibold">{formatEur(listing.totalAmount)}</span>
+                    <span className="text-[#E50914] font-semibold">{formatEur(listing.totalAmount)}</span>
                   </div>
                 ))}
               </div>
@@ -424,14 +424,14 @@ export default async function PortfolioPage() {
                   <div key={tx.id} className="flex items-center justify-between py-2.5 border-b border-white/5 last:border-0">
                     <div className="flex items-center gap-3">
                       <div className={`h-8 w-8 rounded-lg flex items-center justify-center ${
-                        isDividend ? 'bg-green-500/10' : isSale ? 'bg-blue-500/10' : 'bg-[#D4AF37]/10'
+                        isDividend ? 'bg-green-500/10' : isSale ? 'bg-blue-500/10' : 'bg-[#E50914]/10'
                       }`}>
                         {isDividend ? (
                           <PiggyBank className="h-4 w-4 text-green-400" />
                         ) : isSale ? (
                           <ArrowUpRight className="h-4 w-4 text-blue-400" />
                         ) : (
-                          <Coins className="h-4 w-4 text-[#D4AF37]" />
+                          <Coins className="h-4 w-4 text-[#E50914]" />
                         )}
                       </div>
                       <div>

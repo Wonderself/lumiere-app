@@ -79,18 +79,18 @@ export default async function FilmsPage({
       <section className="relative pt-28 pb-20 px-6 sm:px-10 md:px-16 lg:px-20 overflow-hidden bg-gradient-to-b from-white/[0.02] to-transparent">
         {/* Ambient blur circles */}
         <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-          <div className="absolute top-20 left-1/4 w-96 h-96 bg-[#D4AF37]/[0.04] rounded-full blur-[120px]" />
-          <div className="absolute top-10 right-1/4 w-80 h-80 bg-[#D4AF37]/[0.04] rounded-full blur-[100px]" />
+          <div className="absolute top-20 left-1/4 w-96 h-96 bg-[#E50914]/[0.04] rounded-full blur-[120px]" />
+          <div className="absolute top-10 right-1/4 w-80 h-80 bg-[#E50914]/[0.04] rounded-full blur-[100px]" />
           {/* Gold particles */}
-          <div className="absolute top-[15%] left-[20%] w-1 h-1 rounded-full bg-[#D4AF37]/40 animate-pulse" />
-          <div className="absolute top-[25%] right-[25%] w-1.5 h-1.5 rounded-full bg-[#D4AF37]/30 animate-pulse [animation-delay:0.5s]" />
-          <div className="absolute top-[60%] left-[15%] w-1 h-1 rounded-full bg-[#D4AF37]/25 animate-pulse [animation-delay:1s]" />
-          <div className="absolute top-[40%] right-[20%] w-1 h-1 rounded-full bg-[#D4AF37]/30 animate-pulse [animation-delay:1.5s]" />
+          <div className="absolute top-[15%] left-[20%] w-1 h-1 rounded-full bg-[#E50914]/40 animate-pulse" />
+          <div className="absolute top-[25%] right-[25%] w-1.5 h-1.5 rounded-full bg-[#E50914]/30 animate-pulse [animation-delay:0.5s]" />
+          <div className="absolute top-[60%] left-[15%] w-1 h-1 rounded-full bg-[#E50914]/25 animate-pulse [animation-delay:1s]" />
+          <div className="absolute top-[40%] right-[20%] w-1 h-1 rounded-full bg-[#E50914]/30 animate-pulse [animation-delay:1.5s]" />
         </div>
 
         <div className="relative container mx-auto max-w-7xl text-center">
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#D4AF37]/10 border border-[#D4AF37]/20 text-[#D4AF37] text-sm mb-8">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#E50914]/10 border border-[#E50914]/20 text-[#E50914] text-sm mb-8">
             <Clapperboard className="h-4 w-4" />
             <span className="font-medium">Nos Productions</span>
           </div>
@@ -102,7 +102,7 @@ export default async function FilmsPage({
             Films &{' '}
             <span
               style={{
-                background: 'linear-gradient(135deg, #D4AF37 0%, #F0D060 40%, #D4AF37 70%, #B8960C 100%)',
+                background: 'linear-gradient(135deg, #E50914 0%, #FF2D2D 40%, #E50914 70%, #B8960C 100%)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 backgroundClip: 'text',
@@ -128,11 +128,11 @@ export default async function FilmsPage({
                 key={stat.label}
                 className="rounded-2xl sm:rounded-3xl border border-white/[0.06] bg-white/[0.03] p-5 sm:p-6 text-center transition-all duration-500"
               >
-                <div className="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-[#D4AF37]/10 border border-[#D4AF37]/20 mx-auto mb-2">
-                  <stat.icon className="h-4 w-4 text-[#D4AF37]" />
+                <div className="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-[#E50914]/10 border border-[#E50914]/20 mx-auto mb-2">
+                  <stat.icon className="h-4 w-4 text-[#E50914]" />
                 </div>
                 <div
-                  className="text-2xl sm:text-3xl font-bold text-[#D4AF37]"
+                  className="text-2xl sm:text-3xl font-bold text-[#E50914]"
                 >
                   {stat.value > 0 ? stat.value.toLocaleString('fr-FR') : '--'}
                 </div>
@@ -164,7 +164,7 @@ export default async function FilmsPage({
                   href={s === 'Tous' ? '/films' : `/films?status=${s}`}
                   className={`px-4 py-2 rounded-full text-sm border transition-all duration-500 ${
                     isActive
-                      ? 'bg-[#D4AF37] border-[#D4AF37] text-white'
+                      ? 'bg-[#E50914] border-[#E50914] text-white'
                       : 'bg-white/[0.06] border-white/10 text-white/60 hover:bg-white/10'
                   }`}
                 >
@@ -185,9 +185,9 @@ export default async function FilmsPage({
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 sm:gap-8">
               {films.map((film) => (
                 <Link key={film.id} href={`/films/${film.slug}`}>
-                  <div className="group rounded-2xl sm:rounded-3xl border border-white/[0.06] bg-white/[0.03] overflow-hidden hover:border-[#D4AF37]/30 transition-all duration-500 h-full flex flex-col hover-lift">
+                  <div className="group rounded-2xl sm:rounded-3xl border border-white/[0.06] bg-white/[0.03] overflow-hidden hover:border-[#E50914]/30 transition-all duration-500 h-full flex flex-col hover-lift">
                     {/* Cover */}
-                    <div className="relative h-44 sm:h-52 bg-gradient-to-br from-[#D4AF37]/[0.06] to-white/[0.03] shrink-0">
+                    <div className="relative h-44 sm:h-52 bg-gradient-to-br from-[#E50914]/[0.06] to-white/[0.03] shrink-0">
                       {film.coverImageUrl ? (
                         <Image
                           src={film.coverImageUrl}
@@ -198,7 +198,7 @@ export default async function FilmsPage({
                         />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center">
-                          <Film className="h-16 w-16 text-[#D4AF37]/20" />
+                          <Film className="h-16 w-16 text-[#E50914]/20" />
                         </div>
                       )}
                       <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-transparent to-transparent" />
@@ -218,7 +218,7 @@ export default async function FilmsPage({
 
                     {/* Content */}
                     <div className="p-6 sm:p-7 flex flex-col flex-1">
-                      <h3 className="font-semibold text-base mb-2 text-white group-hover:text-[#D4AF37] transition-colors line-clamp-2">
+                      <h3 className="font-semibold text-base mb-2 text-white group-hover:text-[#E50914] transition-colors line-clamp-2">
                         {film.title}
                       </h3>
 
@@ -234,11 +234,11 @@ export default async function FilmsPage({
                       <div className="space-y-2.5 mt-auto">
                         <div className="flex justify-between text-xs">
                           <span className="text-white/40">Progression</span>
-                          <span className="text-[#D4AF37] font-medium">{Math.round(film.progressPct)}%</span>
+                          <span className="text-[#E50914] font-medium">{Math.round(film.progressPct)}%</span>
                         </div>
                         <div className="h-1 bg-white/[0.06] rounded-full overflow-hidden">
                           <div
-                            className="h-full bg-gradient-to-r from-[#D4AF37] to-[#F0D060] rounded-full"
+                            className="h-full bg-gradient-to-r from-[#E50914] to-[#FF2D2D] rounded-full"
                             style={{ width: `${film.progressPct}%` }}
                           />
                         </div>
@@ -253,7 +253,7 @@ export default async function FilmsPage({
                             </span>
                           )}
                         </div>
-                        <ChevronRight className="h-4 w-4 text-[#D4AF37]/50 group-hover:text-[#D4AF37] transition-colors" />
+                        <ChevronRight className="h-4 w-4 text-[#E50914]/50 group-hover:text-[#E50914] transition-colors" />
                       </div>
                     </div>
                   </div>

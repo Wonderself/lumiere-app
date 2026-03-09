@@ -36,7 +36,7 @@ export function LocaleSwitcher() {
             disabled={isPending || l === locale}
             className={`w-full flex items-center gap-2.5 px-3 py-2 text-sm transition-all ${
               l === locale
-                ? 'text-[#D4AF37] bg-[#D4AF37]/5'
+                ? 'text-[#E50914] bg-[#E50914]/5'
                 : 'text-white/60 hover:text-white hover:bg-white/5'
             }`}
           >

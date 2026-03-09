@@ -90,7 +90,7 @@ export default async function AdminScreenplaysPage() {
                       <div className="mt-3 flex items-center gap-3">
                         <div className={`text-sm font-bold ${
                           (s.aiScore || 0) >= 80 ? 'text-green-400' :
-                          (s.aiScore || 0) >= 50 ? 'text-[#D4AF37]' :
+                          (s.aiScore || 0) >= 50 ? 'text-[#E50914]' :
                           'text-red-400'
                         }`}>
                           Score IA: {s.aiScore}/100

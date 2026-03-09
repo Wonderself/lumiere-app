@@ -49,8 +49,8 @@ export function LoginForm() {
     <div className="space-y-12">
       {/* Header */}
       <div className="text-center space-y-6">
-        <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-[#D4AF37]/10 border border-[#D4AF37]/20 mb-4">
-          <Sparkles className="h-8 w-8 text-[#D4AF37]" />
+        <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-[#E50914]/10 border border-[#E50914]/20 mb-4">
+          <Sparkles className="h-8 w-8 text-[#E50914]" />
         </div>
         <h1 className="text-3xl sm:text-4xl font-bold text-white font-playfair">
           <span className="text-shimmer">Bienvenue</span>
@@ -61,7 +61,7 @@ export function LoginForm() {
       {/* Form Card */}
       <div className="relative group">
         {/* Gold glow behind card */}
-        <div className="absolute -inset-1 bg-gradient-to-b from-[#D4AF37]/10 via-transparent to-[#D4AF37]/5 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+        <div className="absolute -inset-1 bg-gradient-to-b from-[#E50914]/10 via-transparent to-[#E50914]/5 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
 
         <div className="relative sm:rounded-3xl rounded-2xl border border-white/[0.08] bg-white/[0.03] backdrop-blur-sm p-10 sm:p-12 shadow-2xl shadow-black/20">
           <form ref={formRef} action={action} className="space-y-8">
@@ -86,7 +86,7 @@ export function LoginForm() {
                   placeholder="vous@exemple.com"
                   required
                   autoComplete="email"
-                  className="pl-11 h-12 rounded-xl bg-white/[0.04] border-white/[0.08] text-white placeholder:text-white/25 focus:border-[#D4AF37]/40 focus:ring-[#D4AF37]/20 transition-all duration-300"
+                  className="pl-11 h-12 rounded-xl bg-white/[0.04] border-white/[0.08] text-white placeholder:text-white/25 focus:border-[#E50914]/40 focus:ring-[#E50914]/20 transition-all duration-300"
                 />
               </div>
             </div>
@@ -94,7 +94,7 @@ export function LoginForm() {
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <Label htmlFor="password" className="text-white/70 text-sm font-medium">Mot de passe</Label>
-                <Link href="/forgot-password" className="text-xs text-white/30 hover:text-[#D4AF37] transition-colors duration-300">
+                <Link href="/forgot-password" className="text-xs text-white/30 hover:text-[#E50914] transition-colors duration-300">
                   Mot de passe oublié ?
                 </Link>
               </div>
@@ -109,7 +109,7 @@ export function LoginForm() {
                   placeholder="••••••••"
                   required
                   autoComplete="current-password"
-                  className="pl-11 pr-11 h-12 rounded-xl bg-white/[0.04] border-white/[0.08] text-white placeholder:text-white/25 focus:border-[#D4AF37]/40 focus:ring-[#D4AF37]/20 transition-all duration-300"
+                  className="pl-11 pr-11 h-12 rounded-xl bg-white/[0.04] border-white/[0.08] text-white placeholder:text-white/25 focus:border-[#E50914]/40 focus:ring-[#E50914]/20 transition-all duration-300"
                 />
                 <button
                   type="button"
@@ -125,7 +125,7 @@ export function LoginForm() {
             <div className="pt-3">
               <Button
                 type="submit"
-                className="w-full h-12 rounded-xl bg-[#D4AF37] hover:bg-[#F0D060] text-black font-semibold shadow-lg shadow-[#D4AF37]/20 hover:shadow-[#D4AF37]/30 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300"
+                className="w-full h-12 rounded-xl bg-[#E50914] hover:bg-[#FF2D2D] text-white font-semibold shadow-lg shadow-[#E50914]/20 hover:shadow-[#E50914]/30 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300"
                 size="lg"
                 loading={isPending}
               >
@@ -147,14 +147,14 @@ export function LoginForm() {
                   type="button"
                   disabled={isPending}
                   onClick={() => loginAsDemo('admin@lumiere.film', 'Admin1234!')}
-                  className="w-full rounded-xl bg-[#D4AF37]/[0.06] border border-[#D4AF37]/15 hover:border-[#D4AF37]/30 hover:bg-[#D4AF37]/10 p-3.5 text-left transition-all duration-300 group cursor-pointer disabled:opacity-50"
+                  className="w-full rounded-xl bg-[#E50914]/[0.06] border border-[#E50914]/15 hover:border-[#E50914]/30 hover:bg-[#E50914]/10 p-3.5 text-left transition-all duration-300 group cursor-pointer disabled:opacity-50"
                 >
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-xs font-semibold text-[#D4AF37]/80 group-hover:text-[#D4AF37]">Admin</p>
+                      <p className="text-xs font-semibold text-[#E50914]/80 group-hover:text-[#E50914]">Admin</p>
                       <p className="text-[11px] text-white/35 mt-0.5">admin@lumiere.film</p>
                     </div>
-                    <span className="text-[10px] text-[#D4AF37]/40 group-hover:text-[#D4AF37]/70 uppercase tracking-wider font-medium">
+                    <span className="text-[10px] text-[#E50914]/40 group-hover:text-[#E50914]/70 uppercase tracking-wider font-medium">
                       {isPending ? 'Connexion...' : 'Connexion rapide'}
                     </span>
                   </div>
@@ -183,7 +183,7 @@ export function LoginForm() {
 
       <p className="text-center text-sm text-white/40">
         Pas encore de compte ?{' '}
-        <Link href="/register" className="text-[#D4AF37] hover:text-[#F0D060] transition-colors duration-300 font-medium">
+        <Link href="/register" className="text-[#E50914] hover:text-[#FF2D2D] transition-colors duration-300 font-medium">
           Créer un compte
         </Link>
       </p>

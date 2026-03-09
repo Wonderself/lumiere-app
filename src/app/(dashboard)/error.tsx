@@ -25,7 +25,7 @@ export default function DashboardError({ error, reset }: { error: Error & { dige
         <div className="flex items-center justify-center gap-3">
           <button
             onClick={reset}
-            className="inline-flex items-center justify-center h-10 px-5 rounded-xl bg-[#D4AF37] text-white font-medium text-sm hover:bg-[#C5A028] transition-colors"
+            className="inline-flex items-center justify-center h-10 px-5 rounded-xl bg-[#E50914] text-white font-medium text-sm hover:bg-[#FF2D2D] transition-colors"
           >
             Réessayer
           </button>

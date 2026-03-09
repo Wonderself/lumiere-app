@@ -38,7 +38,7 @@ function layout(title: string, body: string): string {
   <div style="max-width:600px;margin:0 auto;padding:40px 20px;">
     <!-- Logo -->
     <div style="text-align:center;margin-bottom:32px;">
-      <span style="font-size:28px;font-weight:700;color:#D4AF37;letter-spacing:1px;">LUMIÈRE</span>
+      <span style="font-size:28px;font-weight:700;color:#E50914;letter-spacing:1px;">LUMIÈRE</span>
       <span style="font-size:12px;display:block;color:#ffffff60;margin-top:2px;">CINEMA</span>
     </div>
     <!-- Content -->
@@ -48,7 +48,7 @@ function layout(title: string, body: string): string {
     <!-- Footer -->
     <div style="text-align:center;color:#ffffff30;font-size:12px;line-height:1.5;">
       <p>Lumière Brothers SAS — Paris, France</p>
-      <p><a href="https://cinema.lumiere.film" style="color:#D4AF37;text-decoration:none;">cinema.lumiere.film</a></p>
+      <p><a href="https://cinema.lumiere.film" style="color:#E50914;text-decoration:none;">cinema.lumiere.film</a></p>
     </div>
   </div>
 </body>
@@ -56,7 +56,7 @@ function layout(title: string, body: string): string {
 }
 
 function goldButton(text: string, href: string): string {
-  return `<a href="${href}" style="display:inline-block;padding:14px 32px;background:#D4AF37;color:#000000;font-weight:700;font-size:14px;text-decoration:none;border-radius:12px;margin:16px 0;">${text}</a>`
+  return `<a href="${href}" style="display:inline-block;padding:14px 32px;background:#E50914;color:#000000;font-weight:700;font-size:14px;text-decoration:none;border-radius:12px;margin:16px 0;">${text}</a>`
 }
 
 // ─── Email Templates ─────────────────────────────────────────
@@ -75,7 +75,7 @@ export async function sendWelcomeEmail(to: string, displayName: string, verifica
     : ''
 
   const html = layout('Bienvenue sur Lumière', `
-    <h1 style="font-size:24px;margin:0 0 16px;color:#D4AF37;">Bienvenue, ${displayName} !</h1>
+    <h1 style="font-size:24px;margin:0 0 16px;color:#E50914;">Bienvenue, ${displayName} !</h1>
     <p style="color:#ffffffcc;line-height:1.6;margin:0 0 16px;">
       Vous faites maintenant partie de la communauté Lumière Cinema — le premier studio de cinéma collaboratif propulsé par l'IA.
     </p>
@@ -100,7 +100,7 @@ export async function sendPasswordResetEmail(to: string, token: string): Promise
   const baseUrl = process.env.NEXTAUTH_URL || 'https://cinema.lumiere.film'
   const resetUrl = `${baseUrl}/reset-password?token=${token}`
   const html = layout('Réinitialisation du mot de passe', `
-    <h1 style="font-size:24px;margin:0 0 16px;color:#D4AF37;">Mot de passe oublié ?</h1>
+    <h1 style="font-size:24px;margin:0 0 16px;color:#E50914;">Mot de passe oublié ?</h1>
     <p style="color:#ffffffcc;line-height:1.6;margin:0 0 16px;">
       Vous avez demandé la réinitialisation de votre mot de passe. Cliquez sur le bouton ci-dessous pour en choisir un nouveau.
     </p>
@@ -123,17 +123,17 @@ export async function sendTaskValidatedEmail(
   amountEur: number
 ): Promise<boolean> {
   const html = layout('Tâche validée', `
-    <h1 style="font-size:24px;margin:0 0 16px;color:#D4AF37;">Bravo, ${displayName} ! 🎬</h1>
+    <h1 style="font-size:24px;margin:0 0 16px;color:#E50914;">Bravo, ${displayName} ! 🎬</h1>
     <p style="color:#ffffffcc;line-height:1.6;margin:0 0 16px;">
       Votre contribution a été validée avec succès.
     </p>
-    <div style="background:#0A0A0A;border:1px solid #D4AF37/20;border-radius:12px;padding:20px;margin:16px 0;">
+    <div style="background:#0A0A0A;border:1px solid #E50914/20;border-radius:12px;padding:20px;margin:16px 0;">
       <p style="margin:0 0 8px;color:#ffffff80;font-size:13px;">Tâche</p>
       <p style="margin:0 0 12px;color:#fff;font-weight:600;">${taskTitle}</p>
       <p style="margin:0 0 8px;color:#ffffff80;font-size:13px;">Film</p>
       <p style="margin:0 0 12px;color:#fff;font-weight:600;">${filmTitle}</p>
       <p style="margin:0 0 8px;color:#ffffff80;font-size:13px;">Rémunération</p>
-      <p style="margin:0;color:#D4AF37;font-weight:700;font-size:20px;">${amountEur.toFixed(2)} €</p>
+      <p style="margin:0;color:#E50914;font-weight:700;font-size:20px;">${amountEur.toFixed(2)} €</p>
     </div>
     <div style="text-align:center;">
       ${goldButton('Voir mes revenus', 'https://cinema.lumiere.film/dashboard/earnings')}
@@ -150,13 +150,13 @@ export async function sendPaymentEmail(
   method: string
 ): Promise<boolean> {
   const html = layout('Paiement effectué', `
-    <h1 style="font-size:24px;margin:0 0 16px;color:#D4AF37;">Paiement envoyé 💰</h1>
+    <h1 style="font-size:24px;margin:0 0 16px;color:#E50914;">Paiement envoyé 💰</h1>
     <p style="color:#ffffffcc;line-height:1.6;margin:0 0 16px;">
       ${displayName}, votre paiement a été traité avec succès.
     </p>
     <div style="background:#0A0A0A;border-radius:12px;padding:20px;margin:16px 0;text-align:center;">
       <p style="margin:0 0 4px;color:#ffffff80;font-size:13px;">Montant</p>
-      <p style="margin:0 0 12px;color:#D4AF37;font-weight:700;font-size:28px;">${amountEur.toFixed(2)} €</p>
+      <p style="margin:0 0 12px;color:#E50914;font-weight:700;font-size:28px;">${amountEur.toFixed(2)} €</p>
       <p style="margin:0;color:#ffffff60;font-size:13px;">via ${method}</p>
     </div>
     <div style="text-align:center;">
@@ -174,13 +174,13 @@ export async function sendScreenplayAcceptedEmail(
   revenueSharePct: number
 ): Promise<boolean> {
   const html = layout('Scénario accepté', `
-    <h1 style="font-size:24px;margin:0 0 16px;color:#D4AF37;">Félicitations, ${displayName} ! 📝</h1>
+    <h1 style="font-size:24px;margin:0 0 16px;color:#E50914;">Félicitations, ${displayName} ! 📝</h1>
     <p style="color:#ffffffcc;line-height:1.6;margin:0 0 16px;">
       Votre scénario <strong>"${screenplayTitle}"</strong> a été sélectionné pour la production.
     </p>
     <div style="background:#0A0A0A;border-radius:12px;padding:20px;margin:16px 0;">
       <p style="margin:0 0 8px;color:#ffffff80;font-size:13px;">Votre part des revenus</p>
-      <p style="margin:0 0 12px;color:#D4AF37;font-weight:700;font-size:24px;">${revenueSharePct}%</p>
+      <p style="margin:0 0 12px;color:#E50914;font-weight:700;font-size:24px;">${revenueSharePct}%</p>
       <p style="color:#ffffff60;font-size:13px;margin:0;">
         Vous recevrez ${revenueSharePct}% de tous les revenus générés par le film (streaming, VOD, licences).
         Un contrat détaillé vous sera proposé.
@@ -200,21 +200,21 @@ export async function sendWeeklyDigest(
   stats: { tasksCompleted: number; lumensEarned: number; newFilms: number }
 ): Promise<boolean> {
   const html = layout('Résumé de la semaine', `
-    <h1 style="font-size:24px;margin:0 0 16px;color:#D4AF37;">Cette semaine sur Lumière</h1>
+    <h1 style="font-size:24px;margin:0 0 16px;color:#E50914;">Cette semaine sur Lumière</h1>
     <p style="color:#ffffffcc;line-height:1.6;margin:0 0 24px;">
       Bonjour ${displayName}, voici votre résumé d'activité.
     </p>
     <div style="display:flex;gap:12px;margin:16px 0;">
       <div style="flex:1;background:#0A0A0A;border-radius:12px;padding:16px;text-align:center;">
-        <p style="margin:0;color:#D4AF37;font-weight:700;font-size:24px;">${stats.tasksCompleted}</p>
+        <p style="margin:0;color:#E50914;font-weight:700;font-size:24px;">${stats.tasksCompleted}</p>
         <p style="margin:4px 0 0;color:#ffffff60;font-size:12px;">Tâches</p>
       </div>
       <div style="flex:1;background:#0A0A0A;border-radius:12px;padding:16px;text-align:center;">
-        <p style="margin:0;color:#D4AF37;font-weight:700;font-size:24px;">${stats.lumensEarned}</p>
+        <p style="margin:0;color:#E50914;font-weight:700;font-size:24px;">${stats.lumensEarned}</p>
         <p style="margin:4px 0 0;color:#ffffff60;font-size:12px;">Lumens</p>
       </div>
       <div style="flex:1;background:#0A0A0A;border-radius:12px;padding:16px;text-align:center;">
-        <p style="margin:0;color:#D4AF37;font-weight:700;font-size:24px;">${stats.newFilms}</p>
+        <p style="margin:0;color:#E50914;font-weight:700;font-size:24px;">${stats.newFilms}</p>
         <p style="margin:4px 0 0;color:#ffffff60;font-size:12px;">Nouveaux films</p>
       </div>
     </div>

@@ -22,7 +22,7 @@ export function BarChart({ data, height = 200, title }: {
                 className="h-full rounded-full transition-all duration-700"
                 style={{
                   width: `${(d.value / max) * 100}%`,
-                  background: d.color || 'linear-gradient(90deg, #D4AF37, #F0D060)',
+                  background: d.color || 'linear-gradient(90deg, #E50914, #FF2D2D)',
                 }}
               />
             </div>

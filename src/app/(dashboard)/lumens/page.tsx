@@ -67,18 +67,18 @@ export default async function LumensPage() {
       </div>
 
       {/* Balance Card */}
-      <div className="relative overflow-hidden bg-white sm:rounded-3xl rounded-2xl shadow-sm border border-[#D4AF37]/20">
+      <div className="relative overflow-hidden bg-white sm:rounded-3xl rounded-2xl shadow-sm border border-[#E50914]/20">
         <div className="absolute inset-0 bg-gradient-to-br from-amber-50 via-transparent to-amber-50/30 pointer-events-none" />
         <div className="p-8 md:p-12 flex flex-col items-center text-center relative">
-          <div className="w-16 h-16 rounded-full bg-amber-50 border border-[#D4AF37]/20 flex items-center justify-center mb-6">
-            <Sun className="h-8 w-8 text-[#D4AF37]" />
+          <div className="w-16 h-16 rounded-full bg-amber-50 border border-[#E50914]/20 flex items-center justify-center mb-6">
+            <Sun className="h-8 w-8 text-[#E50914]" />
           </div>
           <h2
             className="text-lg font-semibold text-gray-600 mb-2"
           >
             Mes Lumens
           </h2>
-          <div className="text-6xl md:text-7xl font-bold text-[#D4AF37] mb-3 tracking-tight">
+          <div className="text-6xl md:text-7xl font-bold text-[#E50914] mb-3 tracking-tight">
             {user.lumenBalance.toLocaleString('fr-FR')}
           </div>
           <p className="text-gray-400 text-sm">
@@ -98,7 +98,7 @@ export default async function LumensPage() {
             {[
               { label: 'Total gagne', value: `+${totalEarned}`, icon: TrendingUp, color: 'text-green-500', bg: 'bg-green-50 border-green-100' },
               { label: 'Total depense', value: `-${totalSpent}`, icon: TrendingDown, color: 'text-red-500', bg: 'bg-red-50 border-red-100' },
-              { label: 'Rewards taches', value: `+${taskRewards}`, icon: Sparkles, color: 'text-[#D4AF37]', bg: 'bg-amber-50 border-amber-100' },
+              { label: 'Rewards taches', value: `+${taskRewards}`, icon: Sparkles, color: 'text-[#E50914]', bg: 'bg-amber-50 border-amber-100' },
               { label: 'Bonus', value: `+${bonuses}`, icon: Coins, color: 'text-purple-500', bg: 'bg-purple-50 border-purple-100' },
             ].map((stat) => (
               <div key={stat.label} className={`p-4 rounded-xl border ${stat.bg}`}>
@@ -119,7 +119,7 @@ export default async function LumensPage() {
         <div className="p-6 pb-4">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-amber-50 border border-amber-100 flex items-center justify-center">
-              <ShoppingCart className="h-5 w-5 text-[#D4AF37]" />
+              <ShoppingCart className="h-5 w-5 text-[#E50914]" />
             </div>
             <div>
               <h2
