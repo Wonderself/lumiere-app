@@ -14,7 +14,7 @@ function createPrismaClient() {
       'ensure all pages using prisma have `export const dynamic = "force-dynamic"`.'
     )
   }
-  const pool = new Pool({ connectionString })
+  const pool = new Pool({ connectionString, connectionTimeoutMillis: 5000 })
   const adapter = new PrismaPg(pool)
   return new PrismaClient({
     adapter,
