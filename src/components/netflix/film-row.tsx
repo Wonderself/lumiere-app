@@ -457,43 +457,13 @@ function getStatusBadge(status: string): { label: string; color: string; icon: t
   }
 }
 
-/* Pool of distinct fonts — each film picks one based on its title hash */
-const FONT_POOL = [
-  "'Impact', 'Arial Black', sans-serif",
-  "'Georgia', 'Playfair Display', serif",
-  "'Courier New', 'SF Mono', monospace",
-  "'Trebuchet MS', 'Verdana', sans-serif",
-  "'Palatino', 'Book Antiqua', serif",
-  "'Helvetica Neue', 'Arial', sans-serif",
-  "'Garamond', 'Times New Roman', serif",
-  "'Lucida Console', 'Consolas', monospace",
-  "'Segoe UI', 'Tahoma', sans-serif",
-  "'Cambria', 'Georgia', serif",
-  "'Verdana', 'Geneva', sans-serif",
-  "'Century Gothic', 'Futura', sans-serif",
-  "'Rockwell', 'Courier New', serif",
-  "'Franklin Gothic Medium', 'Arial Narrow', sans-serif",
-  "'Copperplate', 'Papyrus', fantasy",
-]
-
-/* Title placement presets — each film picks one deterministically */
-const TITLE_POSITIONS: { align: string; justify: string; textAlign: string; pad: string }[] = [
-  { align: 'items-end', justify: 'justify-end', textAlign: 'text-left', pad: 'pb-3 pl-2.5 pr-2.5' },
-  { align: 'items-start', justify: 'justify-end', textAlign: 'text-right', pad: 'pb-3 pl-2.5 pr-2.5' },
-  { align: 'items-start', justify: 'justify-start', textAlign: 'text-left', pad: 'pt-10 pl-2.5 pr-2.5' },
-  { align: 'items-end', justify: 'justify-start', textAlign: 'text-right', pad: 'pt-10 pl-2.5 pr-2.5' },
-  { align: 'items-center', justify: 'justify-center', textAlign: 'text-center', pad: 'px-2.5' },
-  { align: 'items-start', justify: 'justify-center', textAlign: 'text-center', pad: 'px-2.5' },
-  { align: 'items-end', justify: 'justify-center', textAlign: 'text-center', pad: 'px-3' },
-  { align: 'items-center', justify: 'justify-end', textAlign: 'text-left', pad: 'pb-6 pl-2.5 pr-2.5' },
-]
-
-function titleFontForFilm(title: string): string {
-  return FONT_POOL[hashStr(title) % FONT_POOL.length]
-}
-
-function titlePositionForFilm(title: string) {
-  return TITLE_POSITIONS[hashStr(title + '_pos') % TITLE_POSITIONS.length]
+/* Status badge labels */
+const STATUS_SHORT: Record<string, string> = {
+  DRAFT: 'Dev',
+  PRE_PRODUCTION: 'Pre-prod',
+  IN_PRODUCTION: 'Prod',
+  POST_PRODUCTION: 'Post-prod',
+  RELEASED: 'Released',
 }
 
 export function FilmRow({ title, films, href, variant = 'default' }: FilmRowProps) {
@@ -522,7 +492,7 @@ export function FilmRow({ title, films, href, variant = 'default' }: FilmRowProp
   return (
     <section className="relative group/row mb-8 md:mb-10">
       {/* Row title */}
-      <div className="flex items-center justify-between px-8 sm:px-12 md:px-16 lg:px-20 mb-3.5">
+      <div className="flex items-center justify-between px-4 sm:px-8 md:px-16 lg:px-20 mb-3.5">
         <h2 className="text-base md:text-lg lg:text-xl font-bold text-white/90 tracking-tight section-title-flash">
           {title}
         </h2>
@@ -565,8 +535,8 @@ export function FilmRow({ title, films, href, variant = 'default' }: FilmRowProp
         <div
           ref={scrollRef}
           onScroll={updateArrows}
-          className="flex items-start gap-4 md:gap-5 overflow-x-auto scrollbar-hide px-8 sm:px-12 md:px-16 lg:px-20 scroll-smooth"
-          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+          className="flex items-start gap-3 md:gap-4 overflow-x-auto scrollbar-hide px-4 sm:px-8 md:px-16 lg:px-20 scroll-smooth snap-x snap-mandatory"
+          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch' }}
         >
           {films.map((film) => {
             const fundingPct = film.fundingPct ?? ((hashStr(film.id) % 60) + 20)
@@ -578,7 +548,7 @@ export function FilmRow({ title, films, href, variant = 'default' }: FilmRowProp
               <Link
                 key={film.id}
                 href={film.type === 'catalog' ? `/streaming/${film.slug}` : `/films/${film.slug}`}
-                className="group/card flex-shrink-0 w-[140px] sm:w-[160px] md:w-[190px] lg:w-[210px] relative transition-all duration-300 hover:scale-[1.05] hover:z-20"
+                className="group/card flex-shrink-0 snap-start w-[140px] sm:w-[160px] md:w-[190px] lg:w-[210px] relative transition-all duration-300 hover:scale-[1.05] hover:z-20"
               >
                 {/* Poster */}
                 <div className="relative aspect-[2/3] bg-[#141414] rounded-xl overflow-hidden ring-1 ring-white/5 group-hover/card:ring-[#E50914]/30 transition-all duration-300 group-hover/card:shadow-[0_8px_40px_rgba(0,0,0,0.6)]">
@@ -598,49 +568,32 @@ export function FilmRow({ title, films, href, variant = 'default' }: FilmRowProp
                   {/* Cinematic vignette */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-black/30" />
 
-                  {/* Poster overlay: CINEGEN logo (top center) + title (varied position & font) */}
-                  {(() => {
-                    const pos = titlePositionForFilm(film.title)
-                    return (
-                      <div className="absolute inset-0 pointer-events-none">
-                        {/* Logo — always top center */}
-                        <div className="absolute top-2 left-0 right-0 flex justify-center">
-                          <span className="text-[7px] font-black tracking-[0.2em] text-white/50 drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)]">
-                            CINE<span style={{ color: genreColor[0] }}>GEN</span>
-                          </span>
-                        </div>
+                  {/* Poster overlay: discreet logo + genre + status */}
+                  <div className="absolute inset-0 pointer-events-none">
+                    {/* Logo — top center, very discreet */}
+                    <div className="absolute top-1.5 left-0 right-0 flex justify-center">
+                      <span className="text-[6px] font-black tracking-[0.2em] text-white/30 drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)]">
+                        CINE<span style={{ color: `${genreColor[0]}80` }}>GEN</span>
+                      </span>
+                    </div>
 
-                        {/* Genre badge — top right */}
-                        {film.genre && (
-                          <div className="absolute top-1.5 right-1.5">
-                            <span
-                              className="text-[6px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded backdrop-blur-sm"
-                              style={{ background: `${genreColor[0]}90`, color: '#fff' }}
-                            >
-                              {film.genre}
-                            </span>
-                          </div>
-                        )}
+                    {/* Genre badge — top right, small */}
+                    {film.genre && (
+                      <span
+                        className="absolute top-1.5 right-1.5 text-[5px] font-bold uppercase tracking-wider px-1 py-0.5 rounded backdrop-blur-sm"
+                        style={{ background: `${genreColor[0]}60`, color: 'rgba(255,255,255,0.8)' }}
+                      >
+                        {film.genre}
+                      </span>
+                    )}
 
-                        {/* Title — deterministic position & font per film */}
-                        <div className={`absolute inset-0 flex flex-col ${pos.align} ${pos.justify} ${pos.pad}`}>
-                          <div className={pos.textAlign}>
-                            <p
-                              className="text-[13px] sm:text-[14px] font-black text-white leading-[1.15] drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)] mb-0.5"
-                              style={{ fontFamily: titleFontForFilm(film.title), textShadow: `0 0 20px ${genreColor[0]}40` }}
-                            >
-                              {film.title}
-                            </p>
-                            <div className="flex items-center gap-1.5" style={{ justifyContent: pos.textAlign === 'text-center' ? 'center' : pos.textAlign === 'text-right' ? 'flex-end' : 'flex-start' }}>
-                              <span className="text-[7px] text-white/40 font-medium tracking-wider drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">2025</span>
-                              <span className="w-[2px] h-[2px] rounded-full bg-white/20" />
-                              <span className="text-[7px] font-medium tracking-wider drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]" style={{ color: `${genreColor[0]}90` }}>CINEGEN STUDIO</span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    )
-                  })()}
+                    {/* Status — bottom left, discreet */}
+                    <span
+                      className="absolute bottom-1.5 left-1.5 text-[5px] font-semibold uppercase tracking-wider px-1 py-0.5 rounded bg-black/50 backdrop-blur-sm text-white/50"
+                    >
+                      {STATUS_SHORT[film.status] || film.status}
+                    </span>
+                  </div>
 
                   {/* Hover overlay — play button + expanded info */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-3.5">

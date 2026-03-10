@@ -208,7 +208,7 @@ export function NetflixHome({ data }: { data: HomeData }) {
         {/* ── Category Pills — Cinematic genre buttons with Unsplash backgrounds ── */}
         <section className="relative pt-1 pb-4 md:pt-2 md:pb-5">
           {/* Live activity bar */}
-          <div className="flex items-center gap-4 px-8 sm:px-12 md:px-16 lg:px-20 mb-4">
+          <div className="flex items-center gap-4 px-4 sm:px-8 md:px-16 lg:px-20 mb-4">
             <div className="flex items-center gap-1.5">
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#E50914] opacity-75" />
@@ -223,98 +223,68 @@ export function NetflixHome({ data }: { data: HomeData }) {
           </div>
 
           <div
-            className="flex items-stretch gap-3 md:gap-4 overflow-x-auto px-8 sm:px-12 md:px-16 lg:px-20 scroll-smooth py-3"
-            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+            className="flex items-stretch gap-2.5 md:gap-3 overflow-x-auto px-4 sm:px-8 md:px-16 lg:px-20 scroll-smooth snap-x snap-mandatory py-3"
+            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch' }}
           >
             {GENRE_ORDER.map((genre, gi) => {
               const cfg = GENRE_CONFIG[genre] || { icon: Star, color: '#888', colorLight: '#aaa', pattern: 'none', image: '' }
               const Icon = cfg.icon
               const filmCount = FALLBACK_GENRE_FILMS[genre]?.length || 10
-              // Get first film poster from this genre for the mini preview
-              const previewFilm = FALLBACK_GENRE_FILMS[genre]?.[0]
-              const previewPoster = previewFilm?.coverImageUrl
               return (
                 <Link
                   key={genre}
                   href={`#genre-${genre.toLowerCase().replace(/[^a-z]/g, '')}`}
-                  className="group/pill flex-shrink-0 relative w-[180px] md:w-[200px] rounded-2xl transition-all duration-500 hover:-translate-y-2 hover:scale-[1.04] overflow-hidden"
+                  className="group/pill flex-shrink-0 snap-start relative w-[130px] md:w-[160px] h-[80px] md:h-[100px] rounded-xl transition-all duration-500 hover:-translate-y-1 hover:scale-[1.04] overflow-hidden"
                   style={{
-                    boxShadow: `
-                      0 4px 12px rgba(0,0,0,0.5),
-                      0 16px 40px rgba(0,0,0,0.3),
-                      inset 0 1px 0 rgba(255,255,255,0.1),
-                      inset 0 -1px 0 rgba(0,0,0,0.5)
-                    `,
-                    border: `1px solid ${cfg.color}20`,
+                    boxShadow: `0 4px 12px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.08)`,
+                    border: `1px solid ${cfg.color}25`,
                   }}
                 >
-                  {/* Top: Genre atmosphere image */}
-                  <div className="relative h-[80px] md:h-[90px] overflow-hidden">
+                  {/* Full background image */}
+                  <div
+                    className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover/pill:scale-110"
+                    style={{ backgroundImage: `url(${cfg.image})` }}
+                  />
+                  <div className="absolute inset-0 bg-black/50 group-hover/pill:bg-black/35 transition-all duration-500" />
+                  <div
+                    className="absolute inset-0 opacity-30 group-hover/pill:opacity-50 transition-opacity duration-500"
+                    style={{ background: `linear-gradient(135deg, ${cfg.color}40, transparent 70%)` }}
+                  />
+
+                  {/* Flash sweep */}
+                  <div className="absolute inset-0 overflow-hidden pointer-events-none">
                     <div
-                      className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover/pill:scale-115"
-                      style={{ backgroundImage: `url(${cfg.image})` }}
+                      className="absolute top-0 h-full w-[50%] opacity-15 group-hover/pill:opacity-40"
+                      style={{
+                        background: `linear-gradient(90deg, transparent, ${cfg.color}30, rgba(255,255,255,0.12), ${cfg.color}30, transparent)`,
+                        animation: `glintSweep ${2.5 + gi * 0.15}s ease-in-out infinite`,
+                        animationDelay: `${gi * 0.3}s`,
+                      }}
                     />
-                    <div className="absolute inset-0 bg-black/40 group-hover/pill:bg-black/25 transition-all duration-500" />
-                    <div
-                      className="absolute inset-0 opacity-40 group-hover/pill:opacity-60 transition-opacity duration-500"
-                      style={{ background: `linear-gradient(135deg, ${cfg.color}50, transparent 70%)` }}
-                    />
-
-                    {/* Flash sweep */}
-                    <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                      <div
-                        className="absolute top-0 h-full w-[50%] opacity-20 group-hover/pill:opacity-50"
-                        style={{
-                          background: `linear-gradient(90deg, transparent, ${cfg.color}35, rgba(255,255,255,0.15), ${cfg.color}35, transparent)`,
-                          animation: `glintSweep ${2.5 + gi * 0.15}s ease-in-out infinite`,
-                          animationDelay: `${gi * 0.3}s`,
-                        }}
-                      />
-                    </div>
-
-                    {/* Icon centered */}
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div
-                        className="w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-500 group-hover/pill:scale-115 group-hover/pill:rotate-6"
-                        style={{
-                          background: `linear-gradient(135deg, ${cfg.color}70, ${cfg.color}35)`,
-                          boxShadow: `0 4px 20px ${cfg.color}50, inset 0 1px 0 rgba(255,255,255,0.25)`,
-                          backdropFilter: 'blur(8px)',
-                        }}
-                      >
-                        <Icon className="h-5 w-5 text-white" style={{ filter: `drop-shadow(0 0 6px ${cfg.color})` }} />
-                      </div>
-                    </div>
-
-                    {/* Film count badge — top right */}
-                    <div
-                      className="absolute top-2 right-2 text-[8px] font-black px-1.5 py-0.5 rounded-md backdrop-blur-sm"
-                      style={{ background: `${cfg.color}CC`, color: '#fff' }}
-                    >
-                      {filmCount}
-                    </div>
                   </div>
 
-                  {/* Bottom: Genre name + mini poster preview */}
-                  <div className="relative bg-[#0d0d0d] px-3 py-2.5 flex items-center gap-2.5">
-                    {/* Mini poster thumbnail */}
-                    {previewPoster && (
-                      <div
-                        className="w-[28px] h-[40px] rounded-md bg-cover bg-center shrink-0 ring-1 ring-white/10 transition-transform duration-500 group-hover/pill:scale-105"
-                        style={{ backgroundImage: `url(${previewPoster})` }}
-                      />
-                    )}
-                    <div className="flex flex-col min-w-0 flex-1">
-                      <span className="text-[13px] font-bold text-white whitespace-nowrap tracking-wide">{genre}</span>
-                      <span className="text-[9px] text-white/35 group-hover/pill:text-white/60 transition-colors duration-300 font-medium truncate">
-                        {previewFilm?.title || `${filmCount} films`}
-                      </span>
+                  {/* Content overlay */}
+                  <div className="absolute inset-0 flex flex-col items-center justify-center gap-1.5 p-2">
+                    <div
+                      className="w-8 h-8 md:w-9 md:h-9 rounded-lg flex items-center justify-center transition-all duration-500 group-hover/pill:scale-110 group-hover/pill:rotate-3"
+                      style={{
+                        background: `linear-gradient(135deg, ${cfg.color}60, ${cfg.color}30)`,
+                        boxShadow: `0 2px 12px ${cfg.color}40`,
+                        backdropFilter: 'blur(6px)',
+                      }}
+                    >
+                      <Icon className="h-4 w-4 text-white" style={{ filter: `drop-shadow(0 0 4px ${cfg.color})` }} />
                     </div>
-                    {/* Animated arrow */}
-                    <ChevronRight
-                      className="h-3.5 w-3.5 text-white/20 group-hover/pill:text-white/60 transition-all duration-300 group-hover/pill:translate-x-0.5 shrink-0"
-                      style={{ color: cfg.color }}
-                    />
+                    <span className="text-[11px] md:text-[12px] font-bold text-white tracking-wide drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)]">{genre}</span>
+                    <span className="text-[8px] text-white/40 font-medium">{filmCount} films</span>
+                  </div>
+
+                  {/* Film count badge — top right */}
+                  <div
+                    className="absolute top-1.5 right-1.5 text-[7px] font-black px-1 py-0.5 rounded backdrop-blur-sm"
+                    style={{ background: `${cfg.color}BB`, color: '#fff' }}
+                  >
+                    {filmCount}
                   </div>
 
                   {/* Bottom accent line */}
@@ -324,12 +294,6 @@ export function NetflixHome({ data }: { data: HomeData }) {
                       style={{ background: `linear-gradient(90deg, transparent, ${cfg.color}, ${cfg.colorLight}, ${cfg.color}, transparent)` }}
                     />
                   </div>
-
-                  {/* Hover border glow */}
-                  <div
-                    className="absolute inset-0 rounded-2xl opacity-0 group-hover/pill:opacity-100 transition-opacity duration-500 pointer-events-none"
-                    style={{ boxShadow: `0 0 30px ${cfg.color}15, inset 0 0 1px ${cfg.color}30` }}
-                  />
                 </Link>
               )
             })}
@@ -352,7 +316,7 @@ export function NetflixHome({ data }: { data: HomeData }) {
         />
 
         {/* ── Pillar Blocks (2nd position) ── */}
-        <section className="relative mb-10 md:mb-12 px-8 sm:px-12 md:px-16 lg:px-20">
+        <section className="relative mb-10 md:mb-12 px-4 sm:px-8 md:px-16 lg:px-20">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-base md:text-lg lg:text-xl font-bold text-white/90 tracking-tight section-title-flash">
               Get Involved
@@ -403,7 +367,7 @@ export function NetflixHome({ data }: { data: HomeData }) {
         ))}
 
         {/* ── Vote CTA Block ── */}
-        <section className="relative my-10 md:my-14 mx-8 sm:mx-12 md:mx-16 lg:mx-20 rounded-3xl overflow-hidden">
+        <section className="relative my-10 md:my-14 mx-4 sm:mx-8 md:mx-16 lg:mx-20 rounded-3xl overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-[#E50914]/10 via-[#0F0808] to-[#E50914]/5" />
           <div className="absolute inset-0 bg-[url('/images/cinema-clapperboard-clouds-hero.webp')] bg-cover bg-center opacity-[0.06]" />
           <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-[#E50914]/[0.08] rounded-full blur-[100px]" />
@@ -469,7 +433,7 @@ export function NetflixHome({ data }: { data: HomeData }) {
       </div>
 
       {/* ── Start Creating — Deep 3D cards ── */}
-      <section className="relative py-10 md:py-14 px-8 sm:px-12 md:px-16 lg:px-20">
+      <section className="relative py-10 md:py-14 px-4 sm:px-8 md:px-16 lg:px-20">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[400px] h-[1px] bg-gradient-to-r from-transparent via-[#E50914]/15 to-transparent" />
 
         <div className="max-w-7xl mx-auto">
@@ -589,7 +553,7 @@ export function NetflixHome({ data }: { data: HomeData }) {
       </section>
 
       {/* ── Final CTA — Compact 3D banner ── */}
-      <section className="relative mx-8 sm:mx-12 md:mx-16 lg:mx-20 mb-10 rounded-2xl overflow-hidden">
+      <section className="relative mx-4 sm:mx-8 md:mx-16 lg:mx-20 mb-10 rounded-2xl overflow-hidden">
         {/* 3D depth container */}
         <div
           className="relative"

@@ -1,5 +1,7 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import type { Metadata } from 'next'
+import { FILMS_BY_GENRE } from '@/data/films'
 import {
   TrendingUp,
   Film,
@@ -102,6 +104,59 @@ export default function InvestPage() {
                 <div className="text-2xl font-bold text-[#E50914]">{h.value}</div>
                 <div className="text-xs text-white/35 mt-1">{h.label}</div>
               </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ COMMENT CA MARCHE ═══ */}
+      <section className="py-20 sm:py-28 px-4">
+        <div className="container mx-auto max-w-5xl">
+          <h2 className="text-2xl md:text-3xl font-bold text-white mb-8 font-playfair text-center">Comment investir</h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+            {[
+              { step: '1', title: 'Choisissez', desc: 'Parcourez notre catalogue et selectionnez un film qui vous inspire.' },
+              { step: '2', title: 'Investissez', desc: 'A partir de 10€. Achetez des tokens de co-production.' },
+              { step: '3', title: 'Suivez', desc: 'Accedez aux coulisses et votez sur les decisions creatives.' },
+              { step: '4', title: 'Recevez', desc: 'Touchez votre part des revenus du film.' },
+            ].map((s) => (
+              <div key={s.step} className="relative text-center p-5 rounded-xl border border-white/[0.06] bg-white/[0.02]">
+                <div className="w-10 h-10 rounded-full bg-[#E50914]/15 border border-[#E50914]/25 flex items-center justify-center mx-auto mb-3 text-[#E50914] font-bold text-lg">{s.step}</div>
+                <h3 className="text-sm font-bold text-white mb-1.5">{s.title}</h3>
+                <p className="text-xs text-white/40 leading-relaxed">{s.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <div className="h-px bg-gradient-to-r from-transparent via-white/[0.04] to-transparent" />
+
+      {/* ═══ FILMS OUVERTS ═══ */}
+      <section className="py-20 sm:py-28 px-4">
+        <div className="container mx-auto max-w-6xl">
+          <h2 className="text-2xl md:text-3xl font-bold text-white mb-3 font-playfair">Films ouverts a l&apos;investissement</h2>
+          <p className="text-sm text-white/40 mb-8">Selectionnez un film et devenez co-producteur.</p>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {Object.values(FILMS_BY_GENRE).flat().filter(f => f.fundingPct < 100).slice(0, 6).map((film) => (
+              <Link key={film.slug} href={`/films/${film.slug}`} className="group rounded-xl border border-white/[0.06] bg-white/[0.02] overflow-hidden hover:border-[#E50914]/20 transition-all duration-300">
+                <div className="relative h-32 bg-[#141414]">
+                  {film.coverImageUrl && <Image src={film.coverImageUrl} alt={film.title} fill className="object-cover group-hover:scale-105 transition-transform duration-500" sizes="(max-width: 640px) 100vw, 33vw" />}
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] to-transparent" />
+                  <div className="absolute bottom-2 left-3 right-3">
+                    <span className="text-xs font-bold text-white">{film.title}</span>
+                  </div>
+                </div>
+                <div className="p-4">
+                  <div className="flex items-center justify-between text-xs text-white/40 mb-2">
+                    <span>{film.genre}</span>
+                    <span className="text-emerald-400 font-bold">{film.fundingPct}% finance</span>
+                  </div>
+                  <div className="h-1.5 bg-white/[0.06] rounded-full overflow-hidden">
+                    <div className="h-full rounded-full bg-gradient-to-r from-emerald-500 to-emerald-400" style={{ width: `${Math.min(film.fundingPct, 100)}%` }} />
+                  </div>
+                </div>
+              </Link>
             ))}
           </div>
         </div>
@@ -257,6 +312,33 @@ export default function InvestPage() {
                   <p className="text-sm text-white/40">{step.desc}</p>
                 </div>
               </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <div className="h-px bg-gradient-to-r from-transparent via-white/[0.04] to-transparent" />
+
+      {/* ═══ FAQ ═══ */}
+      <section className="py-20 sm:py-28 px-4">
+        <div className="container mx-auto max-w-5xl">
+          <h2 className="text-2xl md:text-3xl font-bold text-white mb-8 font-playfair text-center">Questions frequentes</h2>
+          <div className="max-w-3xl mx-auto space-y-4">
+            {[
+              { q: 'Quel est le montant minimum pour investir ?', a: 'Vous pouvez investir a partir de 10\u20AC en achetant des tokens de co-production. Chaque token represente une part du film.' },
+              { q: 'Comment sont distribues les revenus ?', a: 'Les revenus sont partages proportionnellement au nombre de tokens detenus. Les distributions sont effectuees apres chaque exploitation (streaming, ventes, festivals).' },
+              { q: 'Quel est le cadre juridique ?', a: 'CINEGEN est une SAS francaise. Les investissements sont encadres par le droit francais et beneficient du credit d\'impot cinema. La tracabilite est assuree par blockchain.' },
+              { q: 'Quand vais-je recevoir des retours ?', a: 'Les premiers retours arrivent generalement 12 a 18 mois apres la fin de production, lors de la phase d\'exploitation commerciale.' },
+              { q: 'Puis-je revendre mes tokens ?', a: 'Oui, les tokens seront echangeables sur notre marketplace des l\'ouverture de la phase de tokenisation (voir roadmap).' },
+              { q: 'Mon investissement est-il garanti ?', a: 'Comme tout investissement dans la creation, il comporte des risques. Cependant, notre modele de production IA reduit les couts de 95% par rapport a Hollywood, limitant significativement le risque.' },
+            ].map((faq, i) => (
+              <details key={i} className="group rounded-xl border border-white/[0.06] bg-white/[0.02] overflow-hidden">
+                <summary className="flex items-center justify-between p-5 cursor-pointer text-sm font-semibold text-white hover:text-[#E50914] transition-colors">
+                  {faq.q}
+                  <span className="text-white/30 group-open:rotate-45 transition-transform duration-200 text-lg">+</span>
+                </summary>
+                <div className="px-5 pb-5 text-sm text-white/50 leading-relaxed">{faq.a}</div>
+              </details>
             ))}
           </div>
         </div>

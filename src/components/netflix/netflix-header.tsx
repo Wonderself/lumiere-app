@@ -55,9 +55,9 @@ export function NetflixHeader() {
 
   const mobileLinks = [
     { href: '/', label: 'Home' },
-    { href: '/films', label: 'Produce' },
-    { href: '/invest', label: 'Fund' },
-    { href: '/streaming', label: 'Watch' },
+    { href: '/films', label: 'Films' },
+    { href: '/invest', label: 'Invest' },
+    { href: '/community', label: 'Community' },
   ]
 
   const secondaryLinks = [
@@ -107,11 +107,11 @@ export function NetflixHeader() {
         <div className="flex items-center gap-2.5 sm:gap-3">
           {/* Discrete pillar links */}
           <div className="hidden md:flex items-center gap-0.5">
-            <Link href="/films" className="text-[11px] text-white/30 hover:text-white/70 px-2 py-1 rounded transition-colors duration-300">Produce</Link>
+            <Link href="/films" className="text-[11px] text-white/30 hover:text-white/70 px-2 py-1 rounded transition-colors duration-300">Films</Link>
             <span className="text-white/10 text-[8px]">/</span>
-            <Link href="/invest" className="text-[11px] text-white/30 hover:text-white/70 px-2 py-1 rounded transition-colors duration-300">Fund</Link>
+            <Link href="/invest" className="text-[11px] text-white/30 hover:text-white/70 px-2 py-1 rounded transition-colors duration-300">Invest</Link>
             <span className="text-white/10 text-[8px]">/</span>
-            <Link href="/tasks" className="text-[11px] text-white/30 hover:text-white/70 px-2 py-1 rounded transition-colors duration-300">Create</Link>
+            <Link href="/community" className="text-[11px] text-white/30 hover:text-white/70 px-2 py-1 rounded transition-colors duration-300">Community</Link>
           </div>
 
           <div className="hidden md:block w-px h-4 bg-white/[0.06]" />

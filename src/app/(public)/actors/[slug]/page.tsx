@@ -39,21 +39,21 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 const STYLE_COLORS: Record<string, string> = {
-  DRAMATIC: 'border-purple-200 bg-purple-50 text-purple-600',
-  COMEDY: 'border-yellow-200 bg-yellow-50 text-yellow-700',
-  ACTION: 'border-red-200 bg-red-50 text-red-600',
+  DRAMATIC: 'border-purple-500/20 bg-purple-500/10 text-purple-600',
+  COMEDY: 'border-yellow-500/20 bg-yellow-500/10 text-yellow-700',
+  ACTION: 'border-red-500/20 bg-red-500/10 text-red-600',
   VERSATILE: 'border-[#E50914]/20 bg-[#E50914]/10 text-[#E50914]',
-  HORROR: 'border-emerald-200 bg-emerald-50 text-emerald-600',
-  ROMANCE: 'border-pink-200 bg-pink-50 text-pink-600',
-  EXPERIMENTAL: 'border-cyan-200 bg-cyan-50 text-cyan-600',
+  HORROR: 'border-emerald-500/20 bg-emerald-500/10 text-emerald-600',
+  ROMANCE: 'border-pink-500/20 bg-pink-500/10 text-pink-600',
+  EXPERIMENTAL: 'border-cyan-500/20 bg-cyan-500/10 text-cyan-600',
 }
 
 const ROLE_COLORS: Record<string, string> = {
   LEAD: 'border-[#E50914]/20 bg-[#E50914]/10 text-[#E50914]',
-  SUPPORTING: 'border-blue-200 bg-blue-50 text-blue-600',
-  CAMEO: 'border-purple-200 bg-purple-50 text-purple-600',
-  VOICE: 'border-cyan-200 bg-cyan-50 text-cyan-600',
-  NARRATOR: 'border-emerald-200 bg-emerald-50 text-emerald-600',
+  SUPPORTING: 'border-blue-500/20 bg-blue-500/10 text-blue-600',
+  CAMEO: 'border-purple-500/20 bg-purple-500/10 text-purple-600',
+  VOICE: 'border-cyan-500/20 bg-cyan-500/10 text-cyan-600',
+  NARRATOR: 'border-emerald-500/20 bg-emerald-500/10 text-emerald-600',
 }
 
 export default async function ActorProfilePage({ params }: Props) {
@@ -110,7 +110,7 @@ export default async function ActorProfilePage({ params }: Props) {
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-[#0A0A0A]">
       {/* Cover */}
       <div className="relative h-64 md:h-80 lg:h-96">
         {actor.coverUrl ? (
@@ -120,16 +120,16 @@ export default async function ActorProfilePage({ params }: Props) {
             className="w-full h-full object-cover"
           />
         ) : (
-          <div className="w-full h-full bg-gradient-to-br from-[#E50914]/10 via-gray-100 to-gray-50">
+          <div className="w-full h-full bg-gradient-to-br from-[#E50914]/10 via-[#141414] to-white/[0.02]">
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(229,9,20,0.08)_0%,_transparent_70%)]" />
           </div>
         )}
-        <div className="absolute inset-0 bg-gradient-to-t from-white via-white/40 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/40 to-transparent" />
 
         {/* Back link */}
         <div className="absolute top-6 left-4 md:left-8">
           <Link href="/actors">
-            <Button variant="ghost" size="sm" className="bg-white/80 backdrop-blur-sm border border-gray-200 hover:bg-white text-gray-700 shadow-sm">
+            <Button variant="ghost" size="sm" className="bg-black/60 backdrop-blur-sm border border-white/[0.08] hover:bg-white/10 text-white/70">
               <ArrowLeft className="h-4 w-4 mr-2" />
               Tous les acteurs
             </Button>
@@ -142,7 +142,7 @@ export default async function ActorProfilePage({ params }: Props) {
         <div className="flex flex-col md:flex-row items-start gap-5 sm:gap-6 mb-8 sm:mb-10">
           {/* Avatar */}
           <div className="relative shrink-0">
-            <div className="w-28 h-28 sm:w-36 sm:h-36 md:w-44 md:h-44 rounded-full border-4 border-white bg-gradient-to-br from-[#E50914]/10 to-gray-100 overflow-hidden shadow-lg">
+            <div className="w-28 h-28 sm:w-36 sm:h-36 md:w-44 md:h-44 rounded-full border-4 border-[#0A0A0A] bg-gradient-to-br from-[#E50914]/10 to-[#141414] overflow-hidden shadow-lg">
               {actor.avatarUrl ? (
                 <img
                   src={actor.avatarUrl}
@@ -161,7 +161,7 @@ export default async function ActorProfilePage({ params }: Props) {
           <div className="flex-1 pt-4 md:pt-10">
             <div className="flex flex-wrap items-center gap-3 mb-2">
               <h1
-                className="text-2xl sm:text-4xl md:text-5xl font-bold text-gray-900"
+                className="text-2xl sm:text-4xl md:text-5xl font-bold text-white"
               >
                 {actor.name}
               </h1>
@@ -169,7 +169,7 @@ export default async function ActorProfilePage({ params }: Props) {
 
             <div className="flex flex-wrap items-center gap-3 mb-4">
               {actor.nationality && (
-                <span className="text-gray-500 flex items-center gap-1.5">
+                <span className="text-white/50 flex items-center gap-1.5">
                   <span className="text-lg">{getNationalityFlag(actor.nationality)}</span>
                   {actor.nationality}
                 </span>
@@ -178,7 +178,7 @@ export default async function ActorProfilePage({ params }: Props) {
                 {ACTOR_STYLE_LABELS[actor.style as keyof typeof ACTOR_STYLE_LABELS] || actor.style}
               </Badge>
               {actor.debutYear && (
-                <span className="text-gray-400 text-sm">Depuis {actor.debutYear}</span>
+                <span className="text-white/40 text-sm">Depuis {actor.debutYear}</span>
               )}
             </div>
 
@@ -201,8 +201,8 @@ export default async function ActorProfilePage({ params }: Props) {
               ].map((stat) => (
                 <div key={stat.label} className="flex items-center gap-2">
                   <stat.icon className="h-4 w-4 text-[#E50914]/60" />
-                  <span className="text-xl font-bold text-gray-900">{stat.value}</span>
-                  <span className="text-sm text-gray-400">{stat.label}</span>
+                  <span className="text-xl font-bold text-white">{stat.value}</span>
+                  <span className="text-sm text-white/40">{stat.label}</span>
                 </div>
               ))}
             </div>
@@ -215,19 +215,19 @@ export default async function ActorProfilePage({ params }: Props) {
           <div className="lg:col-span-2 space-y-8">
             {/* Bio */}
             {actor.bio && (
-              <section className="rounded-2xl border border-gray-100 bg-white shadow-sm p-6 md:p-8">
-                <h2 className="text-xl font-bold mb-4 flex items-center gap-2 text-gray-900 font-playfair">
+              <section className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-6 md:p-8">
+                <h2 className="text-xl font-bold mb-4 flex items-center gap-2 text-white font-playfair">
                   <Sparkles className="h-5 w-5 text-[#E50914]" />
                   Biographie
                 </h2>
-                <p className="text-gray-600 leading-relaxed whitespace-pre-line">{actor.bio}</p>
+                <p className="text-white/60 leading-relaxed whitespace-pre-line">{actor.bio}</p>
               </section>
             )}
 
             {/* Filmography */}
             {actor.castRoles.length > 0 && (
-              <section className="rounded-2xl border border-gray-100 bg-white shadow-sm p-6 md:p-8">
-                <h2 className="text-xl font-bold mb-6 flex items-center gap-2 text-gray-900 font-playfair">
+              <section className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-6 md:p-8">
+                <h2 className="text-xl font-bold mb-6 flex items-center gap-2 text-white font-playfair">
                   <Film className="h-5 w-5 text-[#E50914]" />
                   Filmographie
                 </h2>
@@ -242,9 +242,9 @@ export default async function ActorProfilePage({ params }: Props) {
 
                     return (
                       <Link key={role.id} href={filmHref}>
-                        <div className="group rounded-xl border border-gray-100 bg-white overflow-hidden hover:border-[#E50914]/30 hover:shadow-md transition-all duration-300 shadow-sm">
+                        <div className="group rounded-xl border border-white/[0.06] bg-white/[0.02] overflow-hidden hover:border-[#E50914]/30 hover:shadow-md transition-all duration-300">
                           {/* Film Cover */}
-                          <div className="relative h-32 bg-gradient-to-br from-[#E50914]/[0.04] to-gray-100">
+                          <div className="relative h-32 bg-gradient-to-br from-[#E50914]/[0.04] to-[#141414]">
                             {coverImg ? (
                               <img
                                 src={coverImg}
@@ -256,7 +256,7 @@ export default async function ActorProfilePage({ params }: Props) {
                                 <Film className="h-8 w-8 text-[#E50914]/20" />
                               </div>
                             )}
-                            <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent" />
+                            <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-transparent to-transparent" />
                             <div className="absolute bottom-2 left-3">
                               <Badge className={`text-[10px] ${ROLE_COLORS[role.role] || ROLE_COLORS.SUPPORTING}`}>
                                 {CAST_ROLE_LABELS[role.role as keyof typeof CAST_ROLE_LABELS] || role.role}
@@ -265,14 +265,14 @@ export default async function ActorProfilePage({ params }: Props) {
                           </div>
 
                           <div className="p-4">
-                            <h4 className="font-semibold text-sm text-gray-900 group-hover:text-[#E50914] transition-colors truncate">
+                            <h4 className="font-semibold text-sm text-white group-hover:text-[#E50914] transition-colors truncate">
                               {filmData.title}
                             </h4>
-                            <p className="text-xs text-gray-500 mt-1">
+                            <p className="text-xs text-white/50 mt-1">
                               {role.characterName}
                             </p>
                             {role.description && (
-                              <p className="text-xs text-gray-400 mt-1 line-clamp-2">{role.description}</p>
+                              <p className="text-xs text-white/40 mt-1 line-clamp-2">{role.description}</p>
                             )}
                           </div>
                         </div>
@@ -285,8 +285,8 @@ export default async function ActorProfilePage({ params }: Props) {
 
             {/* Bonus Content */}
             {actor.bonusContent.length > 0 && (
-              <section className="rounded-2xl border border-gray-100 bg-white shadow-sm p-6 md:p-8">
-                <h2 className="text-xl font-bold mb-6 flex items-center gap-2 text-gray-900 font-playfair">
+              <section className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-6 md:p-8">
+                <h2 className="text-xl font-bold mb-6 flex items-center gap-2 text-white font-playfair">
                   <Play className="h-5 w-5 text-[#E50914]" />
                   Contenu Bonus
                 </h2>
@@ -294,11 +294,11 @@ export default async function ActorProfilePage({ params }: Props) {
                   {actor.bonusContent.map((bonus) => (
                     <div
                       key={bonus.id}
-                      className="rounded-xl border border-gray-100 bg-white p-4 hover:border-gray-200 hover:shadow-sm transition-all"
+                      className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 hover:border-white/[0.08] transition-all"
                     >
                       <div className="flex items-start gap-3">
                         {bonus.thumbnailUrl ? (
-                          <div className="w-16 h-16 rounded-lg overflow-hidden shrink-0 bg-gray-50">
+                          <div className="w-16 h-16 rounded-lg overflow-hidden shrink-0 bg-white/[0.02]">
                             <img
                               src={bonus.thumbnailUrl}
                               alt={bonus.title}
@@ -306,17 +306,17 @@ export default async function ActorProfilePage({ params }: Props) {
                             />
                           </div>
                         ) : (
-                          <div className="w-16 h-16 rounded-lg bg-gradient-to-br from-[#E50914]/10 to-gray-100 flex items-center justify-center shrink-0">
+                          <div className="w-16 h-16 rounded-lg bg-gradient-to-br from-[#E50914]/10 to-[#141414] flex items-center justify-center shrink-0">
                             <Play className="h-6 w-6 text-[#E50914]/30" />
                           </div>
                         )}
                         <div className="flex-1 min-w-0">
-                          <h4 className="font-medium text-sm text-gray-900 truncate">{bonus.title}</h4>
-                          <Badge variant="secondary" className="text-[10px] mt-1 bg-gray-100 text-gray-500 border-gray-200">
+                          <h4 className="font-medium text-sm text-white truncate">{bonus.title}</h4>
+                          <Badge variant="secondary" className="text-[10px] mt-1 bg-white/[0.04] text-white/50 border-white/[0.08]">
                             {BONUS_TYPE_LABELS[bonus.type as keyof typeof BONUS_TYPE_LABELS] || bonus.type}
                           </Badge>
                           {bonus.description && (
-                            <p className="text-xs text-gray-400 mt-1.5 line-clamp-2">{bonus.description}</p>
+                            <p className="text-xs text-white/40 mt-1.5 line-clamp-2">{bonus.description}</p>
                           )}
                         </div>
                       </div>
@@ -337,8 +337,8 @@ export default async function ActorProfilePage({ params }: Props) {
           <div className="space-y-6">
             {/* Personality Traits */}
             {actor.personalityTraits.length > 0 && (
-              <section className="rounded-2xl border border-gray-100 bg-white shadow-sm p-6">
-                <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4">
+              <section className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-6">
+                <h3 className="text-sm font-semibold text-white/50 uppercase tracking-wider mb-4">
                   Traits de personnalite
                 </h3>
                 <div className="flex flex-wrap gap-2">
@@ -356,8 +356,8 @@ export default async function ActorProfilePage({ params }: Props) {
 
             {/* Fun Facts */}
             {actor.funFacts.length > 0 && (
-              <section className="rounded-2xl border border-gray-100 bg-white shadow-sm p-6">
-                <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4">
+              <section className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-6">
+                <h3 className="text-sm font-semibold text-white/50 uppercase tracking-wider mb-4">
                   Le saviez-vous ?
                 </h3>
                 <div className="space-y-3">
@@ -366,7 +366,7 @@ export default async function ActorProfilePage({ params }: Props) {
                       <div className="w-6 h-6 rounded-full bg-[#E50914]/10 flex items-center justify-center shrink-0 mt-0.5">
                         <Star className="h-3 w-3 text-[#E50914]" />
                       </div>
-                      <p className="text-sm text-gray-500 leading-relaxed">{fact}</p>
+                      <p className="text-sm text-white/50 leading-relaxed">{fact}</p>
                     </div>
                   ))}
                 </div>
@@ -374,60 +374,60 @@ export default async function ActorProfilePage({ params }: Props) {
             )}
 
             {/* Details Card */}
-            <section className="rounded-2xl border border-gray-100 bg-white shadow-sm p-6">
-              <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4">
+            <section className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-6">
+              <h3 className="text-sm font-semibold text-white/50 uppercase tracking-wider mb-4">
                 Fiche technique
               </h3>
               <div className="space-y-3">
                 {actor.nationality && (
                   <div className="flex justify-between text-sm">
-                    <span className="text-gray-400">Nationalite</span>
-                    <span className="text-gray-700">
+                    <span className="text-white/40">Nationalite</span>
+                    <span className="text-white/70">
                       {getNationalityFlag(actor.nationality)} {actor.nationality}
                     </span>
                   </div>
                 )}
                 {actor.birthYear && (
                   <div className="flex justify-between text-sm">
-                    <span className="text-gray-400">Naissance</span>
-                    <span className="text-gray-700">{actor.birthYear}</span>
+                    <span className="text-white/40">Naissance</span>
+                    <span className="text-white/70">{actor.birthYear}</span>
                   </div>
                 )}
                 {actor.debutYear && (
                   <div className="flex justify-between text-sm">
-                    <span className="text-gray-400">Debut</span>
-                    <span className="text-gray-700">{actor.debutYear}</span>
+                    <span className="text-white/40">Debut</span>
+                    <span className="text-white/70">{actor.debutYear}</span>
                   </div>
                 )}
                 <div className="flex justify-between text-sm">
-                  <span className="text-gray-400">Style</span>
-                  <span className="text-gray-700">
+                  <span className="text-white/40">Style</span>
+                  <span className="text-white/70">
                     {ACTOR_STYLE_LABELS[actor.style as keyof typeof ACTOR_STYLE_LABELS]}
                   </span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-gray-400">Films</span>
-                  <span className="text-gray-700">{actor.filmCount}</span>
+                  <span className="text-white/40">Films</span>
+                  <span className="text-white/70">{actor.filmCount}</span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-gray-400">Prix</span>
-                  <span className="text-gray-700">{actor.awardsCount}</span>
+                  <span className="text-white/40">Prix</span>
+                  <span className="text-white/70">{actor.awardsCount}</span>
                 </div>
               </div>
             </section>
 
             {/* Similar Actors */}
             {similarActors.length > 0 && (
-              <section className="rounded-2xl border border-gray-100 bg-white shadow-sm p-6">
-                <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4 flex items-center gap-2">
+              <section className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-6">
+                <h3 className="text-sm font-semibold text-white/50 uppercase tracking-wider mb-4 flex items-center gap-2">
                   <Users className="h-4 w-4" />
                   Acteurs similaires
                 </h3>
                 <div className="space-y-3">
                   {similarActors.map((sa) => (
                     <Link key={sa.id} href={`/actors/${sa.slug}`}>
-                      <div className="flex items-center gap-3 p-2 -mx-2 rounded-lg hover:bg-gray-50 transition-colors group">
-                        <div className="w-10 h-10 rounded-full border border-gray-200 bg-gradient-to-br from-[#E50914]/10 to-gray-100 overflow-hidden shrink-0">
+                      <div className="flex items-center gap-3 p-2 -mx-2 rounded-lg hover:bg-white/[0.04] transition-colors group">
+                        <div className="w-10 h-10 rounded-full border border-white/[0.08] bg-gradient-to-br from-[#E50914]/10 to-[#141414] overflow-hidden shrink-0">
                           {sa.avatarUrl ? (
                             <img
                               src={sa.avatarUrl}
@@ -441,14 +441,14 @@ export default async function ActorProfilePage({ params }: Props) {
                           )}
                         </div>
                         <div className="flex-1 min-w-0">
-                          <p className="text-sm font-medium text-gray-900 truncate group-hover:text-[#E50914] transition-colors">
+                          <p className="text-sm font-medium text-white truncate group-hover:text-[#E50914] transition-colors">
                             {sa.name}
                           </p>
-                          <p className="text-xs text-gray-400">
+                          <p className="text-xs text-white/40">
                             {sa.filmCount} film{sa.filmCount !== 1 ? 's' : ''}
                           </p>
                         </div>
-                        <ChevronRight className="h-4 w-4 text-gray-300 group-hover:text-[#E50914] transition-colors" />
+                        <ChevronRight className="h-4 w-4 text-white/30 group-hover:text-[#E50914] transition-colors" />
                       </div>
                     </Link>
                   ))}

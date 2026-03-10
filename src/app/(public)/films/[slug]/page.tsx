@@ -11,7 +11,7 @@ import { FILM_STATUS_LABELS } from '@/lib/constants'
 import { FilmTimeline } from '@/components/film-timeline'
 import { SocialShare } from '@/components/social-share'
 import { FilmReviews } from '@/components/film-reviews'
-import { FILMS_BY_SLUG } from '@/data/films'
+import { FILMS_BY_SLUG, FILMS_BY_GENRE } from '@/data/films'
 import type { Metadata } from 'next'
 
 type Props = { params: Promise<{ slug: string }> }
@@ -244,6 +244,7 @@ const GENRE_COLORS: Record<string, string> = {
 function CatalogFilmPage({ film }: { film: FilmData }) {
   const accentColor = GENRE_COLORS[film.genre] || '#E50914'
   const statusLabel = FILM_STATUS_LABELS[film.status as keyof typeof FILM_STATUS_LABELS] || film.status
+  const similarFilms = Object.values(FILMS_BY_GENRE[film.genre] || []).filter(f => f.slug !== film.slug).slice(0, 5)
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -342,6 +343,74 @@ function CatalogFilmPage({ film }: { film: FilmData }) {
                     {tag}
                   </span>
                 ))}
+              </div>
+            )}
+
+            {/* Status-specific section */}
+            {film.status === 'DRAFT' && (
+              <div className="rounded-xl border border-amber-500/20 bg-amber-500/[0.04] p-6">
+                <h3 className="text-base font-bold text-amber-400 mb-2 flex items-center gap-2">
+                  <Vote className="h-4 w-4" /> En phase de developpement
+                </h3>
+                <p className="text-white/50 text-sm mb-4">Ce film est en cours de developpement. La communaute peut voter pour qu&apos;il passe en production.</p>
+                <Link href="/community/scenarios" className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/20 text-amber-400 text-sm font-medium hover:bg-amber-500/30 transition-colors">
+                  <Vote className="h-3.5 w-3.5" /> Voter pour ce film
+                </Link>
+              </div>
+            )}
+
+            {film.status === 'PRE_PRODUCTION' && (
+              <div className="rounded-xl border border-blue-500/20 bg-blue-500/[0.04] p-6">
+                <h3 className="text-base font-bold text-blue-400 mb-3 flex items-center gap-2">
+                  <Clock className="h-4 w-4" /> Pre-production
+                </h3>
+                <p className="text-white/50 text-sm mb-4">Ce film entre en phase de pre-production. L&apos;equipe prepare le storyboard, le casting et la planification.</p>
+                <div className="flex flex-wrap gap-2">
+                  {['Script', 'Storyboard', 'Casting', 'Previz', 'Design'].map((phase, i) => (
+                    <span key={phase} className={`text-xs px-3 py-1.5 rounded-full border ${i < 2 ? 'border-blue-500/30 bg-blue-500/10 text-blue-400' : 'border-white/[0.06] bg-white/[0.02] text-white/30'}`}>
+                      {i < 2 ? '✓ ' : ''}{phase}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {film.status === 'IN_PRODUCTION' && (
+              <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/[0.04] p-6">
+                <h3 className="text-base font-bold text-emerald-400 mb-3 flex items-center gap-2">
+                  <Film className="h-4 w-4" /> En production
+                </h3>
+                <p className="text-white/50 text-sm mb-4">Ce film est en cours de production ! Rejoignez l&apos;equipe en contribuant aux micro-taches.</p>
+                <Link href="/tasks" className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500/20 text-emerald-400 text-sm font-medium hover:bg-emerald-500/30 transition-colors">
+                  <ArrowRight className="h-3.5 w-3.5" /> Contribuer aux taches
+                </Link>
+              </div>
+            )}
+
+            {film.status === 'POST_PRODUCTION' && (
+              <div className="rounded-xl border border-purple-500/20 bg-purple-500/[0.04] p-6">
+                <h3 className="text-base font-bold text-purple-400 mb-3 flex items-center gap-2">
+                  <Film className="h-4 w-4" /> Post-production
+                </h3>
+                <p className="text-white/50 text-sm mb-4">La bande-annonce est en preparation. Le montage final et les effets visuels sont en cours.</p>
+                <div className="aspect-video rounded-lg bg-white/[0.03] border border-white/[0.06] flex items-center justify-center">
+                  <div className="text-center">
+                    <Film className="h-8 w-8 text-purple-400/40 mx-auto mb-2" />
+                    <p className="text-xs text-white/30">Bande-annonce a venir</p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {film.status === 'RELEASED' && (
+              <div className="rounded-xl border border-[#E50914]/20 bg-[#E50914]/[0.04] p-6">
+                <h3 className="text-base font-bold text-[#E50914] mb-3 flex items-center gap-2">
+                  <Star className="h-4 w-4" /> Film sorti
+                </h3>
+                <p className="text-white/50 text-sm mb-4">Ce film est disponible au visionnage. Laissez votre avis !</p>
+                <Link href="/streaming" className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#E50914]/20 text-[#E50914] text-sm font-medium hover:bg-[#E50914]/30 transition-colors">
+                  <ArrowRight className="h-3.5 w-3.5" /> Regarder
+                </Link>
               </div>
             )}
           </div>
@@ -444,6 +513,29 @@ function CatalogFilmPage({ film }: { film: FilmData }) {
             </div>
           </div>
         </div>
+
+        {/* Similar Films */}
+        {similarFilms.length > 0 && (
+          <section>
+            <h2 className="text-lg font-semibold mb-4" style={{ color: accentColor }}>Films similaires</h2>
+            <div className="flex gap-4 overflow-x-auto pb-2" style={{ scrollbarWidth: 'none' }}>
+              {similarFilms.map((sf) => (
+                <Link key={sf.slug} href={`/films/${sf.slug}`} className="flex-shrink-0 w-[120px] group">
+                  <div className="relative aspect-[2/3] rounded-lg overflow-hidden bg-[#141414] ring-1 ring-white/5 mb-2">
+                    {sf.coverImageUrl ? (
+                      <Image src={sf.coverImageUrl} alt={sf.title} fill className="object-cover group-hover:scale-105 transition-transform duration-500" sizes="120px" />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center">
+                        <Film className="h-6 w-6 text-white/10" />
+                      </div>
+                    )}
+                  </div>
+                  <p className="text-xs text-white/60 truncate group-hover:text-white transition-colors">{sf.title}</p>
+                </Link>
+              ))}
+            </div>
+          </section>
+        )}
       </div>
     </div>
   )

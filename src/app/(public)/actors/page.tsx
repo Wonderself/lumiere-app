@@ -19,13 +19,13 @@ export const metadata: Metadata = {
 }
 
 const STYLE_COLORS: Record<string, string> = {
-  DRAMATIC: 'border-purple-200 bg-purple-50 text-purple-600',
-  COMEDY: 'border-yellow-200 bg-yellow-50 text-yellow-700',
-  ACTION: 'border-red-200 bg-red-50 text-red-600',
+  DRAMATIC: 'border-purple-500/20 bg-purple-500/10 text-purple-600',
+  COMEDY: 'border-yellow-500/20 bg-yellow-500/10 text-yellow-700',
+  ACTION: 'border-red-500/20 bg-red-500/10 text-red-600',
   VERSATILE: 'border-[#E50914]/20 bg-[#E50914]/10 text-[#E50914]',
-  HORROR: 'border-emerald-200 bg-emerald-50 text-emerald-600',
-  ROMANCE: 'border-pink-200 bg-pink-50 text-pink-600',
-  EXPERIMENTAL: 'border-cyan-200 bg-cyan-50 text-cyan-600',
+  HORROR: 'border-emerald-500/20 bg-emerald-500/10 text-emerald-600',
+  ROMANCE: 'border-pink-500/20 bg-pink-500/10 text-pink-600',
+  EXPERIMENTAL: 'border-cyan-500/20 bg-cyan-500/10 text-cyan-600',
 }
 
 async function getActors(search?: string, style?: string) {
@@ -79,12 +79,12 @@ export default async function ActorsPage({
   const styles = ['ALL', ...Object.keys(ACTOR_STYLE_LABELS)] as const
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-[#0A0A0A]">
       {/* Hero Section */}
-      <div className="relative overflow-hidden bg-gradient-to-b from-gray-50 to-white">
+      <div className="relative overflow-hidden bg-gradient-to-b from-[#0A0A0A] to-[#0A0A0A]">
         <div className="absolute inset-0 bg-gradient-to-b from-[#E50914]/[0.03] via-transparent to-transparent" />
         <div className="absolute top-20 left-1/4 w-96 h-96 bg-[#E50914]/[0.04] rounded-full blur-[120px]" />
-        <div className="absolute top-40 right-1/4 w-64 h-64 bg-purple-100/40 rounded-full blur-[100px]" />
+        <div className="absolute top-40 right-1/4 w-64 h-64 bg-purple-500/10 rounded-full blur-[100px]" />
 
         <div className="relative container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-16 sm:pt-20 lg:pt-24 pb-12 sm:pb-16">
           <div className="text-center mb-8 sm:mb-12">
@@ -93,7 +93,7 @@ export default async function ActorsPage({
               <span>Intelligence Artificielle Cinematographique</span>
             </div>
             <h1
-              className="text-3xl sm:text-5xl md:text-7xl font-bold mb-4 sm:mb-6 text-gray-900"
+              className="text-3xl sm:text-5xl md:text-7xl font-bold mb-4 sm:mb-6 text-white"
             >
               Nos{' '}
               <span
@@ -107,7 +107,7 @@ export default async function ActorsPage({
                 Acteurs IA
               </span>
             </h1>
-            <p className="text-gray-500 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
+            <p className="text-white/50 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
               Decouvrez les talents virtuels qui donnent vie au cinema de demain.
               Chaque acteur est unique, avec sa personnalite, son style et son histoire.
             </p>
@@ -123,11 +123,11 @@ export default async function ActorsPage({
               <div key={stat.label} className="text-center">
                 <div className="flex items-center justify-center gap-2 mb-1">
                   <stat.icon className="h-4 w-4 sm:h-5 sm:w-5 text-[#E50914]/60" />
-                  <span className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 font-playfair">
+                  <span className="text-2xl sm:text-3xl md:text-4xl font-bold text-white font-playfair">
                     {stat.value}
                   </span>
                 </div>
-                <span className="text-xs text-gray-400 uppercase tracking-wider">{stat.label}</span>
+                <span className="text-xs text-white/40 uppercase tracking-wider">{stat.label}</span>
               </div>
             ))}
           </div>
@@ -135,13 +135,13 @@ export default async function ActorsPage({
           {/* Search */}
           <div className="max-w-lg mx-auto mb-6 sm:mb-8">
             <form className="relative">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-300" />
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-white/30" />
               <input
                 name="q"
                 type="text"
                 placeholder="Rechercher un acteur..."
                 defaultValue={params.q || ''}
-                className="w-full h-12 pl-12 pr-4 rounded-full border border-gray-200 bg-gray-50 text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#E50914]/50 focus:border-[#E50914]/50 transition-all"
+                className="w-full h-12 pl-12 pr-4 rounded-full border border-white/[0.08] bg-white/[0.02] text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-[#E50914]/50 focus:border-[#E50914]/50 transition-all"
               />
               {params.style && <input type="hidden" name="style" value={params.style} />}
             </form>
@@ -165,8 +165,8 @@ export default async function ActorsPage({
                   href={href}
                   className={`px-4 py-2 sm:px-5 rounded-full text-xs sm:text-sm border transition-all duration-300 min-h-[36px] ${
                     isActive
-                      ? 'bg-[#E50914] border-[#E50914] text-white shadow-sm'
-                      : 'bg-gray-100 border-gray-200 text-gray-600 hover:bg-gray-200'
+                      ? 'bg-[#E50914] border-[#E50914] text-white'
+                      : 'bg-white/[0.04] border-white/[0.08] text-white/60 hover:bg-white/[0.08]'
                   }`}
                 >
                   {s === 'ALL' ? 'Tous' : ACTOR_STYLE_LABELS[s as keyof typeof ACTOR_STYLE_LABELS]}
@@ -180,9 +180,9 @@ export default async function ActorsPage({
       {/* Actors Grid */}
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-16 sm:pb-24">
         {actors.length === 0 ? (
-          <div className="text-center py-24 text-gray-400">
+          <div className="text-center py-24 text-white/40">
             <Users className="h-16 w-16 mx-auto mb-4 opacity-30" />
-            <p className="text-xl text-gray-500">Aucun acteur trouve</p>
+            <p className="text-xl text-white/50">Aucun acteur trouve</p>
             <p className="text-sm mt-2">
               {params.q || params.style
                 ? 'Essayez de modifier vos filtres.'
@@ -193,7 +193,7 @@ export default async function ActorsPage({
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-7">
             {actors.map((actor) => (
               <Link key={actor.id} href={`/actors/${actor.slug}`}>
-                <div className="group relative rounded-2xl border border-gray-100 bg-white overflow-hidden hover:border-[#E50914]/30 transition-all duration-500 hover:shadow-md shadow-sm">
+                <div className="group relative rounded-2xl border border-white/[0.06] bg-white/[0.02] overflow-hidden hover:border-[#E50914]/30 transition-all duration-500 hover:shadow-md">
                   {/* Top gradient accent */}
                   <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#E50914]/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
@@ -202,7 +202,7 @@ export default async function ActorsPage({
                     <div className="flex items-start gap-4 mb-5">
                       {/* Avatar */}
                       <div className="relative shrink-0">
-                        <div className="w-20 h-20 rounded-full border-2 border-[#E50914]/20 bg-gradient-to-br from-[#E50914]/10 to-gray-100 overflow-hidden group-hover:border-[#E50914]/40 transition-colors duration-500">
+                        <div className="w-20 h-20 rounded-full border-2 border-[#E50914]/20 bg-gradient-to-br from-[#E50914]/10 to-white/[0.04] overflow-hidden group-hover:border-[#E50914]/40 transition-colors duration-500">
                           {actor.avatarUrl ? (
                             <img
                               src={actor.avatarUrl}
@@ -216,18 +216,18 @@ export default async function ActorsPage({
                           )}
                         </div>
                         {/* Active indicator */}
-                        <div className="absolute -bottom-0.5 -right-0.5 w-5 h-5 rounded-full bg-green-100 border-2 border-white flex items-center justify-center">
+                        <div className="absolute -bottom-0.5 -right-0.5 w-5 h-5 rounded-full bg-green-900 border-2 border-[#0A0A0A] flex items-center justify-center">
                           <div className="w-2 h-2 rounded-full bg-green-500" />
                         </div>
                       </div>
 
                       {/* Name + Nationality */}
                       <div className="flex-1 min-w-0">
-                        <h3 className="text-lg font-semibold text-gray-900 group-hover:text-[#E50914] transition-colors duration-300 truncate">
+                        <h3 className="text-lg font-semibold text-white group-hover:text-[#E50914] transition-colors duration-300 truncate">
                           {actor.name}
                         </h3>
                         {actor.nationality && (
-                          <p className="text-sm text-gray-500 flex items-center gap-1.5 mt-0.5">
+                          <p className="text-sm text-white/50 flex items-center gap-1.5 mt-0.5">
                             <span>{getNationalityFlag(actor.nationality)}</span>
                             <span>{actor.nationality}</span>
                           </p>
@@ -246,19 +246,19 @@ export default async function ActorsPage({
 
                     {/* Quote */}
                     {actor.quote && (
-                      <p className="text-sm text-gray-400 italic line-clamp-2 mb-4 pl-4 border-l-2 border-[#E50914]/20">
+                      <p className="text-sm text-white/40 italic line-clamp-2 mb-4 pl-4 border-l-2 border-[#E50914]/20">
                         &laquo; {actor.quote} &raquo;
                       </p>
                     )}
 
                     {/* Stats Row */}
-                    <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+                    <div className="flex items-center justify-between pt-4 border-t border-white/[0.06]">
                       <div className="flex items-center gap-4">
-                        <div className="flex items-center gap-1.5 text-xs text-gray-400">
+                        <div className="flex items-center gap-1.5 text-xs text-white/40">
                           <Film className="h-3.5 w-3.5" />
                           <span>{actor.filmCount} film{actor.filmCount !== 1 ? 's' : ''}</span>
                         </div>
-                        <div className="flex items-center gap-1.5 text-xs text-gray-400">
+                        <div className="flex items-center gap-1.5 text-xs text-white/40">
                           <Heart className="h-3.5 w-3.5" />
                           <span>{formatFollowers(actor.socialFollowers)}</span>
                         </div>
