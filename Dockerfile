@@ -47,53 +47,19 @@ COPY --from=builder /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
-# Copy Prisma files for migrations at startup
+# Copy ALL node_modules from builder (prisma CLI + @prisma/dev have deep dep trees)
+# This is simpler and more robust than cherry-picking individual packages
+COPY --from=builder /app/node_modules ./node_modules
+
+# Copy Prisma schema + config for db push at startup
 COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/prisma.config.ts ./prisma.config.ts
-COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
-COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
-COPY --from=builder /app/node_modules/prisma ./node_modules/prisma
-
-# Copy pg driver + dependencies (serverExternalPackages = NOT bundled by Next.js)
-COPY --from=builder /app/node_modules/pg ./node_modules/pg
-COPY --from=builder /app/node_modules/pg-pool ./node_modules/pg-pool
-COPY --from=builder /app/node_modules/pg-protocol ./node_modules/pg-protocol
-COPY --from=builder /app/node_modules/pg-types ./node_modules/pg-types
-COPY --from=builder /app/node_modules/pg-connection-string ./node_modules/pg-connection-string
-COPY --from=builder /app/node_modules/pg-int8 ./node_modules/pg-int8
-COPY --from=builder /app/node_modules/pg-cloudflare ./node_modules/pg-cloudflare
-COPY --from=builder /app/node_modules/pgpass ./node_modules/pgpass
-COPY --from=builder /app/node_modules/postgres-array ./node_modules/postgres-array
-COPY --from=builder /app/node_modules/postgres-bytea ./node_modules/postgres-bytea
-COPY --from=builder /app/node_modules/postgres-date ./node_modules/postgres-date
-COPY --from=builder /app/node_modules/postgres-interval ./node_modules/postgres-interval
-COPY --from=builder /app/node_modules/split2 ./node_modules/split2
+COPY --from=builder /app/tsconfig.json ./tsconfig.json
+COPY --from=builder /app/package.json ./package.json
 
 # Copy startup script
 COPY start.sh ./start.sh
 RUN chmod +x ./start.sh
-
-# Prisma CLI runtime deps (prisma db push needs valibot + pathe via @prisma/dev)
-COPY --from=builder /app/node_modules/valibot ./node_modules/valibot
-COPY --from=builder /app/node_modules/pathe ./node_modules/pathe
-
-# Copy seed files (for initial deploy)
-COPY --from=builder /app/prisma/seed.ts ./prisma/seed.ts
-COPY --from=builder /app/node_modules/ts-node ./node_modules/ts-node
-COPY --from=builder /app/node_modules/@cspotcode ./node_modules/@cspotcode
-COPY --from=builder /app/node_modules/yn ./node_modules/yn
-COPY --from=builder /app/node_modules/arg ./node_modules/arg
-COPY --from=builder /app/node_modules/make-error ./node_modules/make-error
-COPY --from=builder /app/node_modules/v8-compile-cache-lib ./node_modules/v8-compile-cache-lib
-COPY --from=builder /app/node_modules/create-require ./node_modules/create-require
-COPY --from=builder /app/node_modules/acorn ./node_modules/acorn
-COPY --from=builder /app/node_modules/acorn-walk ./node_modules/acorn-walk
-COPY --from=builder /app/node_modules/typescript ./node_modules/typescript
-COPY --from=builder /app/node_modules/dotenv ./node_modules/dotenv
-COPY --from=builder /app/node_modules/bcryptjs ./node_modules/bcryptjs
-COPY --from=builder /app/node_modules/@types ./node_modules/@types
-COPY --from=builder /app/tsconfig.json ./tsconfig.json
-COPY --from=builder /app/package.json ./package.json
 
 USER nextjs
 
