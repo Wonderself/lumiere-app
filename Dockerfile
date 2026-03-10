@@ -73,12 +73,14 @@ COPY --from=builder /app/node_modules/split2 ./node_modules/split2
 COPY start.sh ./start.sh
 RUN chmod +x ./start.sh
 
-# Prisma CLI runtime deps (prisma db push needs valibot via @prisma/dev)
+# Prisma CLI runtime deps (prisma db push needs valibot + pathe via @prisma/dev)
 COPY --from=builder /app/node_modules/valibot ./node_modules/valibot
+COPY --from=builder /app/node_modules/pathe ./node_modules/pathe
 
 # Copy seed files (for initial deploy)
 COPY --from=builder /app/prisma/seed.ts ./prisma/seed.ts
 COPY --from=builder /app/node_modules/ts-node ./node_modules/ts-node
+COPY --from=builder /app/node_modules/@cspotcode ./node_modules/@cspotcode
 COPY --from=builder /app/node_modules/yn ./node_modules/yn
 COPY --from=builder /app/node_modules/arg ./node_modules/arg
 COPY --from=builder /app/node_modules/make-error ./node_modules/make-error
