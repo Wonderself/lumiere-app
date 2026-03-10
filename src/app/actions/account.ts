@@ -255,7 +255,7 @@ export async function requestAccountDeletionAction(confirmEmail: string) {
     prisma.user.update({
       where: { id: userId },
       data: {
-        email: `deleted-${anonymizedHash}@anonymized.lumiere.film`,
+        email: `deleted-${anonymizedHash}@anonymized.cinegen.studio`,
         displayName: 'Utilisateur supprimé',
         passwordHash: 'DELETED',
         avatarUrl: null,

@@ -7,8 +7,8 @@ import type { Metadata } from 'next'
 export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
-  title: 'Classement — Lumiere',
-  description: 'Les meilleurs contributeurs de la plateforme Lumiere.',
+  title: 'Classement — CINEGEN',
+  description: 'Les meilleurs contributeurs de la plateforme CINEGEN.',
 }
 
 async function getLeaderboard() {

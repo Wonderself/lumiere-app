@@ -2,7 +2,7 @@
  * Invoice generation for contributor payments.
  *
  * Legal notes:
- * - As Lumière Brothers SAS (France), we issue invoices for contractor payments
+ * - As CINEGEN Studio SAS (France), we issue invoices for contractor payments
  * - Contributors are considered as independent contractors (auto-entrepreneurs or freelancers)
  * - Under €5000/year per contributor: simplified invoice (note d'honoraires)
  * - VAT: Platform is intermediary, reverse charge may apply for EU contributors
@@ -75,7 +75,7 @@ TVA Intracommunautaire : ${data.platformVat}
 
 **${data.contributorName}**
 Email : ${data.contributorEmail}
-ID Lumière : ${data.contributorId}
+ID CINEGEN : ${data.contributorId}
 
 ---
 
@@ -106,8 +106,8 @@ ID Lumière : ${data.contributorId}
 ---
 
 *Facture générée automatiquement par ${data.platformName}.*
-*En cas de litige : contact@lumiere.film*
-*Conditions générales disponibles sur cinema.lumiere.film/legal*
+*En cas de litige : contact@cinegen.studio*
+*Conditions générales disponibles sur cinegen.studio/legal*
 `
 }
 
@@ -115,7 +115,7 @@ ID Lumière : ${data.contributorId}
  * Platform constants for invoice generation
  */
 export const PLATFORM_INFO = {
-  name: 'Lumière Brothers SAS',
+  name: 'CINEGEN Studio SAS',
   address: 'Paris, France',
   siret: '000 000 000 00000', // À remplir avec le vrai SIRET
   vat: 'FR00000000000', // À remplir avec le vrai numéro TVA

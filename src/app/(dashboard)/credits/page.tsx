@@ -13,7 +13,7 @@ import type { Metadata } from 'next'
 export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
-  title: 'Crédits IA — Lumière',
+  title: 'Crédits IA — CINEGEN',
   description: 'Gérez vos crédits pour la génération IA',
 }
 

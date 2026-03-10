@@ -32,7 +32,7 @@ export function ScreenwriterCTA() {
     <section className="relative mx-4 sm:mx-8 md:mx-16 lg:mx-20 mb-20 overflow-hidden rounded-2xl">
       {/* Background — cinematic dark with gold accents */}
       <div className="absolute inset-0 bg-gradient-to-br from-[#0F0F0F] via-[#1A0808] to-[#0F0F0F]" />
-      <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1455390582262-044cdead277a?w=1200&q=30')] bg-cover bg-center opacity-[0.06]" />
+      <div className="absolute inset-0 bg-[url('/posters/the-rebbe.jpg')] bg-cover bg-center opacity-[0.06]" />
 
       {/* Gold accent lines */}
       <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#E50914]/40 to-transparent" />

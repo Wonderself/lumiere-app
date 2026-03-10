@@ -323,7 +323,7 @@ export function Sidebar() {
         )}
       >
         <div className="p-3 flex items-center justify-between border-b border-gray-200">
-          <span className="text-sm font-bold text-[#1A1A2E] font-[family-name:var(--font-playfair)]">Lumière</span>
+          <span className="text-sm font-bold text-[#1A1A2E] font-[family-name:var(--font-playfair)]">CINEGEN</span>
           <button onClick={() => setMobileOpen(false)} className="h-8 w-8 rounded-lg hover:bg-gray-100 flex items-center justify-center text-gray-400">
             <X className="h-4 w-4" />
           </button>

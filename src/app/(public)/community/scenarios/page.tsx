@@ -15,8 +15,8 @@ import type { Metadata } from 'next'
 export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
-  title: 'Propositions de Scenarios — Communaute Lumiere',
-  description: 'Proposez et votez pour les meilleurs scenarios de la communaute Lumiere.',
+  title: 'Propositions de Scenarios — Communaute CINEGEN',
+  description: 'Proposez et votez pour les meilleurs scenarios de la communaute CINEGEN.',
 }
 
 async function getScenarios() {
@@ -95,7 +95,7 @@ export default async function ScenariosPage() {
             </h1>
           </div>
           <p className="text-gray-500 text-lg max-w-xl mx-auto">
-            Proposez vos idees de films, votez pour les meilleurs scenarios. Les gagnants deviennent des productions Lumiere.
+            Proposez vos idees de films, votez pour les meilleurs scenarios. Les gagnants deviennent des productions CINEGEN.
           </p>
           <Link
             href="/community"

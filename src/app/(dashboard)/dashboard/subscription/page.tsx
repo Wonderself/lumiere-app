@@ -20,7 +20,7 @@ import type { Metadata } from 'next'
 
 export const dynamic = 'force-dynamic'
 
-export const metadata: Metadata = { title: 'Mon Abonnement — Lumière' }
+export const metadata: Metadata = { title: 'Mon Abonnement — CINEGEN' }
 
 function CancelButton() {
   return (

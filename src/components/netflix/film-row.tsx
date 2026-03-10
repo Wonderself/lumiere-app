@@ -3,7 +3,7 @@
 import { useRef, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ChevronLeft, ChevronRight, Play } from 'lucide-react'
+import { ChevronLeft, ChevronRight, Play, Eye, Film, Vote } from 'lucide-react'
 
 interface FilmCard {
   id: string
@@ -13,6 +13,7 @@ interface FilmCard {
   coverImageUrl: string | null
   status: string
   progressPct: number
+  fundingPct?: number
   type: 'film' | 'catalog'
 }
 
@@ -20,40 +21,482 @@ interface FilmRowProps {
   title: string
   films: FilmCard[]
   href?: string
+  variant?: 'default' | 'trending'
 }
 
-const FALLBACK_IMAGES = [
-  'https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=800&h=1200&fit=crop',
-  'https://images.unsplash.com/photo-1485846234645-a62644f84728?w=800&h=1200&fit=crop',
-  'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=800&h=1200&fit=crop',
-  'https://images.unsplash.com/photo-1574375927938-d5a98e8d7e28?w=800&h=1200&fit=crop',
-  'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=800&h=1200&fit=crop',
-]
+/* ── Genre color map for gradient posters ── */
+const GENRE_COLORS: Record<string, [string, string]> = {
+  'Action':      ['#E50914', '#FF4444'],
+  'Comedy':      ['#F59E0B', '#FCD34D'],
+  'Drama':       ['#8B5CF6', '#C4B5FD'],
+  'Sci-Fi':      ['#3B82F6', '#93C5FD'],
+  'Documentary': ['#10B981', '#6EE7B7'],
+  'Thriller':    ['#6366F1', '#A5B4FC'],
+  'Animation':   ['#EC4899', '#F9A8D4'],
+  'Historical':  ['#D97706', '#FCD34D'],
+  'Romance':     ['#F43F5E', '#FDA4AF'],
+  'Fantasy':     ['#A855F7', '#D8B4FE'],
+}
 
-function getStatusLabel(status: string) {
-  switch (status) {
-    case 'DRAFT': return 'En Dev'
-    case 'PRE_PRODUCTION': return 'Pre-Prod'
-    case 'IN_PRODUCTION': return 'Production'
-    case 'POST_PRODUCTION': return 'Post-Prod'
-    case 'RELEASED': return 'Disponible'
-    case 'LIVE': return 'Streaming'
-    default: return status
+/* Deterministic hash for unique gradient angles/patterns */
+function hashStr(s: string): number {
+  let h = 0
+  for (let i = 0; i < s.length; i++) {
+    h = ((h << 5) - h + s.charCodeAt(i)) | 0
   }
+  return Math.abs(h)
 }
 
-function getStatusColor(status: string) {
+/* ── SVG Poster Component ── */
+function SvgPoster({ title, genre }: { title: string; genre: string | null }) {
+  const [c1, c2] = GENRE_COLORS[genre || ''] || ['#333', '#555']
+  const h = hashStr(title)
+  const angle = h % 360
+  const offset1 = (h % 30) - 15
+  const offset2 = ((h >> 4) % 20) - 10
+  const offset3 = ((h >> 8) % 25) - 12
+  const scale = 0.85 + ((h % 30) / 100)
+  const uid = `p${h % 99999}`
+  const g = genre || ''
+
+  // Word-wrap title into lines of ~14 chars max
+  const words = title.split(' ')
+  const lines: string[] = []
+  let cur = ''
+  for (const w of words) {
+    if (cur && (cur.length + w.length + 1) > 14) {
+      lines.push(cur)
+      cur = w
+    } else {
+      cur = cur ? cur + ' ' + w : w
+    }
+  }
+  if (cur) lines.push(cur)
+  const titleLines = lines.slice(0, 4)
+
+  const genreElements = (): React.ReactNode => {
+    switch (g) {
+      case 'Action':
+        return (
+          <>
+            {/* Diagonal slash */}
+            <line x1={-10 + offset1} y1={-10} x2={210 + offset1} y2={310} stroke={c1} strokeWidth="40" opacity="0.15" />
+            <line x1={30 + offset2} y1={-10} x2={250 + offset2} y2={310} stroke={c2} strokeWidth="2" opacity="0.4" />
+            <line x1={20 + offset2} y1={-10} x2={240 + offset2} y2={310} stroke={c1} strokeWidth="1" opacity="0.3" />
+            {/* Angular shapes */}
+            <polygon points={`${40 + offset1},${60 + offset2} ${80 + offset1},${30 + offset2} ${120 + offset1},${60 + offset2} ${80 + offset1},${90 + offset2}`} fill="none" stroke={c2} strokeWidth="1" opacity="0.25" />
+            <polygon points={`${130 + offset2},${100 + offset1} ${160 + offset2},${80 + offset1} ${190 + offset2},${100 + offset1} ${160 + offset2},${120 + offset1}`} fill="none" stroke={c1} strokeWidth="0.8" opacity="0.2" />
+            {/* Crosshair at center */}
+            <circle cx={100 + offset1 * 0.3} cy={140 + offset2 * 0.3} r="25" fill="none" stroke={c2} strokeWidth="1.5" opacity="0.3" />
+            <circle cx={100 + offset1 * 0.3} cy={140 + offset2 * 0.3} r="12" fill="none" stroke={c1} strokeWidth="1" opacity="0.4" />
+            <circle cx={100 + offset1 * 0.3} cy={140 + offset2 * 0.3} r="3" fill={c1} opacity="0.5" />
+            <line x1={100 + offset1 * 0.3} y1={110 + offset2 * 0.3} x2={100 + offset1 * 0.3} y2={130 + offset2 * 0.3} stroke={c2} strokeWidth="1" opacity="0.35" />
+            <line x1={100 + offset1 * 0.3} y1={150 + offset2 * 0.3} x2={100 + offset1 * 0.3} y2={170 + offset2 * 0.3} stroke={c2} strokeWidth="1" opacity="0.35" />
+            <line x1={70 + offset1 * 0.3} y1={140 + offset2 * 0.3} x2={90 + offset1 * 0.3} y2={140 + offset2 * 0.3} stroke={c2} strokeWidth="1" opacity="0.35" />
+            <line x1={110 + offset1 * 0.3} y1={140 + offset2 * 0.3} x2={130 + offset1 * 0.3} y2={140 + offset2 * 0.3} stroke={c2} strokeWidth="1" opacity="0.35" />
+            {/* Harsh angular bars */}
+            <rect x="0" y={185 + offset3} width="200" height="2" fill={c1} opacity="0.2" />
+            <rect x="0" y={195 + offset3} width="200" height="1" fill={c2} opacity="0.15" />
+          </>
+        )
+
+      case 'Comedy':
+        return (
+          <>
+            {/* Spotlight from top */}
+            <ellipse cx={100 + offset1} cy={-20} rx="80" ry="30" fill={`url(#${uid}_spot)`} opacity="0.3" />
+            <defs>
+              <radialGradient id={`${uid}_spot`} cx="50%" cy="0%" r="100%">
+                <stop offset="0%" stopColor={c2} stopOpacity="0.6" />
+                <stop offset="100%" stopColor={c2} stopOpacity="0" />
+              </radialGradient>
+            </defs>
+            {/* Spotlight cone */}
+            <polygon points={`${100 + offset1},-10 ${40 + offset1},200 ${160 + offset1},200`} fill={c2} opacity="0.04" />
+            <polygon points={`${100 + offset1},-10 ${60 + offset1},160 ${140 + offset1},160`} fill={c2} opacity="0.06" />
+            {/* Confetti dots */}
+            {Array.from({ length: 18 }, (_, i) => {
+              const cx = ((h + i * 37) % 180) + 10
+              const cy = ((h + i * 53) % 220) + 20
+              const r = 1.5 + ((h + i * 7) % 3)
+              const rot = (h + i * 41) % 360
+              const colors = [c1, c2, '#FFFFFF', c1, c2]
+              return (
+                <g key={i} transform={`rotate(${rot} ${cx} ${cy})`}>
+                  <rect x={cx - r} y={cy - r * 0.4} width={r * 2} height={r * 0.8} rx="0.5" fill={colors[i % colors.length]} opacity={0.15 + (i % 4) * 0.08} />
+                </g>
+              )
+            })}
+            {/* Warm circles */}
+            <circle cx={50 + offset2} cy={80 + offset1} r="20" fill="none" stroke={c2} strokeWidth="0.5" opacity="0.2" />
+            <circle cx={150 + offset1} cy={120 + offset2} r="15" fill="none" stroke={c1} strokeWidth="0.5" opacity="0.15" />
+          </>
+        )
+
+      case 'Drama':
+        return (
+          <>
+            {/* Theater curtain drapes */}
+            <path d={`M0,0 Q${50 + offset1},${80 + offset2} 0,${160 + offset3}`} fill="none" stroke={c1} strokeWidth="2" opacity="0.2" />
+            <path d={`M0,0 Q${60 + offset1},${90 + offset2} 0,${180 + offset3}`} fill="none" stroke={c2} strokeWidth="1" opacity="0.15" />
+            <path d={`M200,0 Q${150 + offset1},${80 + offset2} 200,${160 + offset3}`} fill="none" stroke={c1} strokeWidth="2" opacity="0.2" />
+            <path d={`M200,0 Q${140 + offset1},${90 + offset2} 200,${180 + offset3}`} fill="none" stroke={c2} strokeWidth="1" opacity="0.15" />
+            {/* Curtain fill */}
+            <path d={`M0,0 Q${55 + offset1},${85 + offset2} 0,${170 + offset3} L0,0Z`} fill={c1} opacity="0.06" />
+            <path d={`M200,0 Q${145 + offset1},${85 + offset2} 200,${170 + offset3} L200,0Z`} fill={c1} opacity="0.06" />
+            {/* Elegant horizontal lines */}
+            <line x1="30" y1={100 + offset2} x2="170" y2={100 + offset2} stroke={c2} strokeWidth="0.5" opacity="0.15" />
+            <line x1="50" y1={110 + offset2} x2="150" y2={110 + offset2} stroke={c2} strokeWidth="0.3" opacity="0.1" />
+            {/* Decorative diamond */}
+            <polygon points={`100,${70 + offset2} ${112 + offset1 * 0.2},${85 + offset2} 100,${100 + offset2} ${88 + offset1 * 0.2},${85 + offset2}`} fill="none" stroke={c2} strokeWidth="0.8" opacity="0.2" />
+            {/* Subtle drape swags at top */}
+            <path d={`M0,${8 + offset3 * 0.2} Q50,${25 + offset3 * 0.3} 100,${8 + offset3 * 0.2} Q150,${25 + offset3 * 0.3} 200,${8 + offset3 * 0.2}`} fill="none" stroke={c1} strokeWidth="1.5" opacity="0.15" />
+          </>
+        )
+
+      case 'Sci-Fi':
+        return (
+          <>
+            {/* Circuit grid lines */}
+            {Array.from({ length: 6 }, (_, i) => {
+              const y = 30 + i * 45 + (offset1 * 0.3)
+              return <line key={`h${i}`} x1="0" y1={y} x2="200" y2={y} stroke={c2} strokeWidth="0.3" opacity="0.12" />
+            })}
+            {Array.from({ length: 5 }, (_, i) => {
+              const x = 25 + i * 40 + (offset2 * 0.3)
+              return <line key={`v${i}`} x1={x} y1="0" x2={x} y2="300" stroke={c2} strokeWidth="0.3" opacity="0.12" />
+            })}
+            {/* Glowing node dots at intersections */}
+            {Array.from({ length: 8 }, (_, i) => {
+              const nx = ((h + i * 43) % 160) + 20
+              const ny = ((h + i * 67) % 240) + 20
+              return (
+                <g key={`n${i}`}>
+                  <circle cx={nx} cy={ny} r="4" fill={c2} opacity="0.08" />
+                  <circle cx={nx} cy={ny} r="1.5" fill={c2} opacity="0.35" />
+                </g>
+              )
+            })}
+            {/* Hexagonal shape */}
+            <polygon points={`${100 + offset1 * 0.5},${100 + offset2 * 0.5} ${120 + offset1 * 0.5},${112 + offset2 * 0.5} ${120 + offset1 * 0.5},${135 + offset2 * 0.5} ${100 + offset1 * 0.5},${147 + offset2 * 0.5} ${80 + offset1 * 0.5},${135 + offset2 * 0.5} ${80 + offset1 * 0.5},${112 + offset2 * 0.5}`} fill="none" stroke={c1} strokeWidth="1" opacity="0.25" />
+            <polygon points={`${100 + offset1 * 0.5},${107 + offset2 * 0.5} ${114 + offset1 * 0.5},${116 + offset2 * 0.5} ${114 + offset1 * 0.5},${131 + offset2 * 0.5} ${100 + offset1 * 0.5},${140 + offset2 * 0.5} ${86 + offset1 * 0.5},${131 + offset2 * 0.5} ${86 + offset1 * 0.5},${116 + offset2 * 0.5}`} fill="none" stroke={c2} strokeWidth="0.5" opacity="0.18" />
+            {/* Neon scan line */}
+            <rect x="0" y={150 + offset3} width="200" height="1" fill={c2} opacity="0.2" />
+            <rect x="0" y={150 + offset3} width="200" height="4" fill={c2} opacity="0.04" />
+          </>
+        )
+
+      case 'Documentary':
+        return (
+          <>
+            {/* Camera lens aperture circles */}
+            <circle cx={100 + offset1 * 0.4} cy={130 + offset2 * 0.4} r="50" fill="none" stroke={c1} strokeWidth="1.5" opacity="0.15" />
+            <circle cx={100 + offset1 * 0.4} cy={130 + offset2 * 0.4} r="35" fill="none" stroke={c2} strokeWidth="1" opacity="0.2" />
+            <circle cx={100 + offset1 * 0.4} cy={130 + offset2 * 0.4} r="20" fill="none" stroke={c1} strokeWidth="0.8" opacity="0.25" />
+            <circle cx={100 + offset1 * 0.4} cy={130 + offset2 * 0.4} r="8" fill={c1} opacity="0.1" />
+            {/* Aperture blades */}
+            {Array.from({ length: 6 }, (_, i) => {
+              const a = (i * 60 + angle * 0.5) * Math.PI / 180
+              const cx0 = 100 + offset1 * 0.4
+              const cy0 = 130 + offset2 * 0.4
+              const x1 = cx0 + Math.cos(a) * 22
+              const y1 = cy0 + Math.sin(a) * 22
+              const x2 = cx0 + Math.cos(a) * 48
+              const y2 = cy0 + Math.sin(a) * 48
+              return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke={c2} strokeWidth="0.8" opacity="0.18" />
+            })}
+            {/* Clean geometric lines */}
+            <line x1="20" y1={60 + offset3} x2="180" y2={60 + offset3} stroke={c2} strokeWidth="0.4" opacity="0.15" />
+            <line x1="20" y1={200 + offset3} x2="180" y2={200 + offset3} stroke={c2} strokeWidth="0.4" opacity="0.15" />
+            {/* Earth tone overlay rect */}
+            <rect x="10" y={55 + offset3} width="180" height={150} rx="2" fill="none" stroke={c1} strokeWidth="0.5" opacity="0.12" />
+          </>
+        )
+
+      case 'Thriller':
+        return (
+          <>
+            {/* Shattered glass cracks from center */}
+            {Array.from({ length: 10 }, (_, i) => {
+              const a = ((h + i * 36) % 360) * Math.PI / 180
+              const cx0 = 100 + offset1 * 0.3
+              const cy0 = 140 + offset2 * 0.3
+              const len = 40 + ((h + i * 23) % 60)
+              const midX = cx0 + Math.cos(a) * len * 0.5 + ((h + i * 11) % 10 - 5)
+              const midY = cy0 + Math.sin(a) * len * 0.5 + ((h + i * 13) % 10 - 5)
+              const endX = cx0 + Math.cos(a) * len
+              const endY = cy0 + Math.sin(a) * len
+              return (
+                <g key={i}>
+                  <path d={`M${cx0},${cy0} L${midX},${midY} L${endX},${endY}`} fill="none" stroke={c2} strokeWidth={0.5 + (i % 3) * 0.3} opacity={0.15 + (i % 4) * 0.05} />
+                  {i % 3 === 0 && (
+                    <path d={`M${midX},${midY} L${midX + ((h + i) % 15) - 7},${midY + ((h + i * 3) % 15) - 7}`} fill="none" stroke={c1} strokeWidth="0.4" opacity="0.12" />
+                  )}
+                </g>
+              )
+            })}
+            {/* Central dark point */}
+            <circle cx={100 + offset1 * 0.3} cy={140 + offset2 * 0.3} r="5" fill={c1} opacity="0.15" />
+            <circle cx={100 + offset1 * 0.3} cy={140 + offset2 * 0.3} r="2" fill={c2} opacity="0.3" />
+            {/* Dark mysterious fog */}
+            <ellipse cx="100" cy="280" rx="120" ry="40" fill={c1} opacity="0.06" />
+          </>
+        )
+
+      case 'Animation':
+        return (
+          <>
+            {/* Scattered stars */}
+            {Array.from({ length: 12 }, (_, i) => {
+              const sx = ((h + i * 41) % 180) + 10
+              const sy = ((h + i * 59) % 240) + 15
+              const sr = 2 + ((h + i * 7) % 3)
+              const colors = [c1, c2, '#FFFFFF', c2, c1]
+              return (
+                <g key={i} opacity={0.15 + (i % 5) * 0.07}>
+                  {/* 4-point star */}
+                  <path d={`M${sx},${sy - sr} L${sx + sr * 0.3},${sy - sr * 0.3} L${sx + sr},${sy} L${sx + sr * 0.3},${sy + sr * 0.3} L${sx},${sy + sr} L${sx - sr * 0.3},${sy + sr * 0.3} L${sx - sr},${sy} L${sx - sr * 0.3},${sy - sr * 0.3}Z`} fill={colors[i % colors.length]} />
+                </g>
+              )
+            })}
+            {/* Sparkle bursts */}
+            {Array.from({ length: 4 }, (_, i) => {
+              const bx = ((h + i * 73) % 140) + 30
+              const by = ((h + i * 47) % 180) + 30
+              return (
+                <g key={`b${i}`} opacity="0.2">
+                  <line x1={bx} y1={by - 6} x2={bx} y2={by + 6} stroke={c2} strokeWidth="0.8" />
+                  <line x1={bx - 6} y1={by} x2={bx + 6} y2={by} stroke={c2} strokeWidth="0.8" />
+                  <line x1={bx - 4} y1={by - 4} x2={bx + 4} y2={by + 4} stroke={c2} strokeWidth="0.5" />
+                  <line x1={bx + 4} y1={by - 4} x2={bx - 4} y2={by + 4} stroke={c2} strokeWidth="0.5" />
+                </g>
+              )
+            })}
+            {/* Magical wand trail */}
+            <path d={`M${30 + offset1},${50 + offset2} Q${80 + offset2},${30 + offset1} ${130 + offset1},${60 + offset2} Q${160 + offset2},${80 + offset1} ${180 + offset1},${50 + offset2}`} fill="none" stroke={c2} strokeWidth="1" opacity="0.15" strokeDasharray="4 3" />
+          </>
+        )
+
+      case 'Historical':
+        return (
+          <>
+            {/* Ornate border frame */}
+            <rect x="12" y="12" width="176" height="276" rx="3" fill="none" stroke={c1} strokeWidth="1.2" opacity="0.2" />
+            <rect x="18" y="18" width="164" height="264" rx="2" fill="none" stroke={c2} strokeWidth="0.5" opacity="0.15" />
+            {/* Corner ornaments */}
+            {[{ x: 12, y: 12 }, { x: 188, y: 12 }, { x: 12, y: 288 }, { x: 188, y: 288 }].map((corner, i) => (
+              <g key={i}>
+                <circle cx={corner.x} cy={corner.y} r="6" fill="none" stroke={c1} strokeWidth="0.8" opacity="0.25" />
+                <circle cx={corner.x} cy={corner.y} r="2.5" fill={c1} opacity="0.15" />
+              </g>
+            ))}
+            {/* Compass rose */}
+            <g transform={`translate(${100 + offset1 * 0.3},${120 + offset2 * 0.3}) rotate(${angle * 0.2})`} opacity="0.2">
+              <polygon points="0,-20 4,-4 0,-8 -4,-4" fill={c2} />
+              <polygon points="0,20 4,4 0,8 -4,4" fill={c1} />
+              <polygon points="-20,0 -4,-4 -8,0 -4,4" fill={c2} />
+              <polygon points="20,0 4,-4 8,0 4,4" fill={c1} />
+              <circle cx="0" cy="0" r="3" fill="none" stroke={c2} strokeWidth="0.8" />
+            </g>
+            {/* Aged parchment lines */}
+            <line x1="30" y1={190 + offset3 * 0.3} x2="170" y2={190 + offset3 * 0.3} stroke={c2} strokeWidth="0.3" opacity="0.12" />
+            <line x1="40" y1={200 + offset3 * 0.3} x2="160" y2={200 + offset3 * 0.3} stroke={c2} strokeWidth="0.3" opacity="0.08" />
+          </>
+        )
+
+      case 'Romance':
+        return (
+          <>
+            {/* Flowing heart curves */}
+            <path d={`M${100 + offset1 * 0.3},${100 + offset2 * 0.5} C${100 + offset1 * 0.3},${85 + offset2 * 0.5} ${75 + offset1 * 0.3},${70 + offset2 * 0.5} ${70 + offset1 * 0.3},${85 + offset2 * 0.5} C${65 + offset1 * 0.3},${110 + offset2 * 0.5} ${100 + offset1 * 0.3},${130 + offset2 * 0.5} ${100 + offset1 * 0.3},${130 + offset2 * 0.5} C${100 + offset1 * 0.3},${130 + offset2 * 0.5} ${135 + offset1 * 0.3},${110 + offset2 * 0.5} ${130 + offset1 * 0.3},${85 + offset2 * 0.5} C${125 + offset1 * 0.3},${70 + offset2 * 0.5} ${100 + offset1 * 0.3},${85 + offset2 * 0.5} ${100 + offset1 * 0.3},${100 + offset2 * 0.5}Z`} fill={c1} opacity="0.08" stroke={c2} strokeWidth="0.8" />
+            {/* Smaller floating hearts */}
+            {Array.from({ length: 5 }, (_, i) => {
+              const hx = ((h + i * 47) % 150) + 25
+              const hy = ((h + i * 61) % 200) + 25
+              const hs = 4 + (i % 3) * 2
+              return (
+                <path key={i} d={`M${hx},${hy} C${hx},${hy - hs * 0.4} ${hx - hs},${hy - hs * 0.6} ${hx - hs},${hy} C${hx - hs},${hy + hs * 0.6} ${hx},${hy + hs} ${hx},${hy + hs} C${hx},${hy + hs} ${hx + hs},${hy + hs * 0.6} ${hx + hs},${hy} C${hx + hs},${hy - hs * 0.6} ${hx},${hy - hs * 0.4} ${hx},${hy}Z`} fill={c1} opacity={0.06 + i * 0.02} />
+              )
+            })}
+            {/* Intertwined ribbons */}
+            <path d={`M${20 + offset1},${160 + offset2 * 0.3} Q${60 + offset2},${140 + offset1 * 0.3} ${100 + offset1},${160 + offset2 * 0.3} Q${140 + offset2},${180 + offset1 * 0.3} ${180 + offset1},${160 + offset2 * 0.3}`} fill="none" stroke={c2} strokeWidth="1" opacity="0.15" />
+            <path d={`M${20 + offset1},${168 + offset2 * 0.3} Q${60 + offset2},${188 + offset1 * 0.3} ${100 + offset1},${168 + offset2 * 0.3} Q${140 + offset2},${148 + offset1 * 0.3} ${180 + offset1},${168 + offset2 * 0.3}`} fill="none" stroke={c1} strokeWidth="1" opacity="0.15" />
+            {/* Soft gradient circle */}
+            <circle cx={100 + offset1 * 0.2} cy={100 + offset2 * 0.3} r="60" fill={`url(#${uid}_rose)`} opacity="0.06" />
+            <defs>
+              <radialGradient id={`${uid}_rose`}>
+                <stop offset="0%" stopColor={c1} />
+                <stop offset="100%" stopColor={c1} stopOpacity="0" />
+              </radialGradient>
+            </defs>
+          </>
+        )
+
+      case 'Fantasy':
+        return (
+          <>
+            {/* Crystal formation */}
+            <polygon points={`${100 + offset1 * 0.3},${70 + offset2 * 0.3} ${115 + offset1 * 0.3},${120 + offset2 * 0.3} ${100 + offset1 * 0.3},${160 + offset2 * 0.3} ${85 + offset1 * 0.3},${120 + offset2 * 0.3}`} fill={c1} opacity="0.06" stroke={c2} strokeWidth="0.8" strokeOpacity="0.25" />
+            <polygon points={`${100 + offset1 * 0.3},${80 + offset2 * 0.3} ${110 + offset1 * 0.3},${118 + offset2 * 0.3} ${100 + offset1 * 0.3},${150 + offset2 * 0.3} ${90 + offset1 * 0.3},${118 + offset2 * 0.3}`} fill="none" stroke={c1} strokeWidth="0.5" opacity="0.2" />
+            {/* Side crystals */}
+            <polygon points={`${60 + offset2 * 0.3},${100 + offset1 * 0.2} ${68 + offset2 * 0.3},${130 + offset1 * 0.2} ${55 + offset2 * 0.3},${140 + offset1 * 0.2} ${52 + offset2 * 0.3},${115 + offset1 * 0.2}`} fill={c2} opacity="0.05" stroke={c2} strokeWidth="0.5" strokeOpacity="0.15" />
+            <polygon points={`${140 + offset2 * 0.3},${95 + offset1 * 0.2} ${150 + offset2 * 0.3},${125 + offset1 * 0.2} ${145 + offset2 * 0.3},${145 + offset1 * 0.2} ${135 + offset2 * 0.3},${110 + offset1 * 0.2}`} fill={c2} opacity="0.05" stroke={c1} strokeWidth="0.5" strokeOpacity="0.15" />
+            {/* Scattered stars */}
+            {Array.from({ length: 10 }, (_, i) => {
+              const sx = ((h + i * 37) % 180) + 10
+              const sy = ((h + i * 53) % 200) + 20
+              const sr = 1 + ((h + i) % 2)
+              return <circle key={i} cx={sx} cy={sy} r={sr} fill={c2} opacity={0.1 + (i % 4) * 0.06} />
+            })}
+            {/* Mystical fog/mist layers */}
+            <ellipse cx="100" cy={220 + offset3 * 0.3} rx="90" ry="20" fill={c1} opacity="0.05" />
+            <ellipse cx={80 + offset1 * 0.2} cy={240 + offset3 * 0.3} rx="70" ry="15" fill={c2} opacity="0.04" />
+            <ellipse cx={120 + offset2 * 0.2} cy={255 + offset3 * 0.3} rx="80" ry="12" fill={c1} opacity="0.03" />
+          </>
+        )
+
+      default:
+        return (
+          <>
+            {/* Default: subtle geometric */}
+            <circle cx={100 + offset1} cy={130 + offset2} r="40" fill="none" stroke={c1} strokeWidth="0.8" opacity="0.15" />
+            <circle cx={100 + offset1} cy={130 + offset2} r="60" fill="none" stroke={c2} strokeWidth="0.4" opacity="0.1" />
+            <line x1="20" y1={180 + offset3} x2="180" y2={180 + offset3} stroke={c2} strokeWidth="0.3" opacity="0.12" />
+          </>
+        )
+    }
+  }
+
+  return (
+    <div className="absolute inset-0 transition-transform duration-700 group-hover/card:scale-[1.06]">
+      <svg viewBox="0 0 200 300" className="w-full h-full" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          {/* Background gradient */}
+          <linearGradient id={`${uid}_bg`} x1="0%" y1="0%" x2={`${50 + (angle % 50)}%`} y2="100%">
+            <stop offset="0%" stopColor="#0A0A0A" />
+            <stop offset={`${30 + (h % 30)}%`} stopColor={c1} stopOpacity="0.2" />
+            <stop offset="100%" stopColor="#0A0A0A" />
+          </linearGradient>
+          {/* Film grain filter */}
+          <filter id={`${uid}_grain`}>
+            <feTurbulence type="fractalNoise" baseFrequency="0.75" numOctaves="4" stitchTiles="stitch" result="noise" />
+            <feColorMatrix type="saturate" values="0" in="noise" result="mono" />
+            <feBlend in="SourceGraphic" in2="mono" mode="multiply" />
+          </filter>
+          {/* Bottom fade for title area */}
+          <linearGradient id={`${uid}_btm`} x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="60%" stopColor="transparent" />
+            <stop offset="85%" stopColor="#0A0A0A" stopOpacity="0.85" />
+            <stop offset="100%" stopColor="#0A0A0A" />
+          </linearGradient>
+        </defs>
+
+        {/* Base background */}
+        <rect width="200" height="300" fill={`url(#${uid}_bg)`} />
+
+        {/* Genre-specific decorative elements */}
+        <g transform={`scale(${scale}) translate(${(1 - scale) * 100},${(1 - scale) * 150})`}>
+          {genreElements()}
+        </g>
+
+        {/* Film grain texture overlay */}
+        <rect width="200" height="300" opacity="0.12" filter={`url(#${uid}_grain)`} fill="transparent" />
+
+        {/* Bottom gradient for title readability */}
+        <rect width="200" height="300" fill={`url(#${uid}_btm)`} />
+
+        {/* Genre label at top */}
+        {genre && (
+          <text x="100" y="22" textAnchor="middle" fontFamily="system-ui, sans-serif" fontSize="7" fontWeight="500" letterSpacing="0.15em" fill="white" opacity="0.3" textDecoration="none">
+            {genre.toUpperCase()}
+          </text>
+        )}
+
+        {/* Thin genre-colored line under label */}
+        <line x1="70" y1="28" x2="130" y2="28" stroke={c1} strokeWidth="0.5" opacity="0.25" />
+
+        {/* Film title at bottom */}
+        {titleLines.map((line, i) => (
+          <text
+            key={i}
+            x="100"
+            y={262 + i * 14 - (titleLines.length - 1) * 7}
+            textAnchor="middle"
+            fontFamily="system-ui, sans-serif"
+            fontSize="13"
+            fontWeight="800"
+            fill="white"
+            opacity="0.85"
+            letterSpacing="0.02em"
+          >
+            {line}
+          </text>
+        ))}
+
+        {/* Subtle bottom line accent */}
+        <line x1="60" y1={280} x2="140" y2={280} stroke={c1} strokeWidth="0.8" opacity="0.3" />
+      </svg>
+    </div>
+  )
+}
+
+/* ── Status helpers ── */
+function getStatusBadge(status: string): { label: string; color: string; icon: typeof Eye } | null {
   switch (status) {
     case 'RELEASED':
-    case 'LIVE': return '#10B981'
-    case 'IN_PRODUCTION': return '#E50914'
-    case 'PRE_PRODUCTION': return '#60A5FA'
-    case 'POST_PRODUCTION': return '#A78BFA'
-    default: return '#6B7280'
+    case 'LIVE':
+      return { label: 'Watch Now', color: '#10B981', icon: Eye }
+    case 'POST_PRODUCTION':
+    case 'IN_PRODUCTION':
+      return { label: 'Trailer', color: '#E50914', icon: Film }
+    case 'PRE_PRODUCTION':
+    case 'DRAFT':
+      return { label: 'Vote', color: '#F59E0B', icon: Vote }
+    default:
+      return null
   }
 }
 
-export function FilmRow({ title, films, href }: FilmRowProps) {
+/* Pool of distinct fonts — each film picks one based on its title hash */
+const FONT_POOL = [
+  "'Impact', 'Arial Black', sans-serif",
+  "'Georgia', 'Playfair Display', serif",
+  "'Courier New', 'SF Mono', monospace",
+  "'Trebuchet MS', 'Verdana', sans-serif",
+  "'Palatino', 'Book Antiqua', serif",
+  "'Helvetica Neue', 'Arial', sans-serif",
+  "'Garamond', 'Times New Roman', serif",
+  "'Lucida Console', 'Consolas', monospace",
+  "'Segoe UI', 'Tahoma', sans-serif",
+  "'Cambria', 'Georgia', serif",
+  "'Verdana', 'Geneva', sans-serif",
+  "'Century Gothic', 'Futura', sans-serif",
+  "'Rockwell', 'Courier New', serif",
+  "'Franklin Gothic Medium', 'Arial Narrow', sans-serif",
+  "'Copperplate', 'Papyrus', fantasy",
+]
+
+/* Title placement presets — each film picks one deterministically */
+const TITLE_POSITIONS: { align: string; justify: string; textAlign: string; pad: string }[] = [
+  { align: 'items-end', justify: 'justify-end', textAlign: 'text-left', pad: 'pb-3 pl-2.5 pr-2.5' },
+  { align: 'items-start', justify: 'justify-end', textAlign: 'text-right', pad: 'pb-3 pl-2.5 pr-2.5' },
+  { align: 'items-start', justify: 'justify-start', textAlign: 'text-left', pad: 'pt-10 pl-2.5 pr-2.5' },
+  { align: 'items-end', justify: 'justify-start', textAlign: 'text-right', pad: 'pt-10 pl-2.5 pr-2.5' },
+  { align: 'items-center', justify: 'justify-center', textAlign: 'text-center', pad: 'px-2.5' },
+  { align: 'items-start', justify: 'justify-center', textAlign: 'text-center', pad: 'px-2.5' },
+  { align: 'items-end', justify: 'justify-center', textAlign: 'text-center', pad: 'px-3' },
+  { align: 'items-center', justify: 'justify-end', textAlign: 'text-left', pad: 'pb-6 pl-2.5 pr-2.5' },
+]
+
+function titleFontForFilm(title: string): string {
+  return FONT_POOL[hashStr(title) % FONT_POOL.length]
+}
+
+function titlePositionForFilm(title: string) {
+  return TITLE_POSITIONS[hashStr(title + '_pos') % TITLE_POSITIONS.length]
+}
+
+export function FilmRow({ title, films, href, variant = 'default' }: FilmRowProps) {
   const scrollRef = useRef<HTMLDivElement>(null)
   const [showLeft, setShowLeft] = useState(false)
   const [showRight, setShowRight] = useState(true)
@@ -77,20 +520,18 @@ export function FilmRow({ title, films, href }: FilmRowProps) {
   if (films.length === 0) return null
 
   return (
-    <section className="relative group/row mb-28 md:mb-32">
+    <section className="relative group/row mb-8 md:mb-10">
       {/* Row title */}
-      <div className="flex items-center justify-between px-6 sm:px-10 md:px-16 lg:px-20 mb-12">
-        <h2
-          className="text-lg md:text-xl lg:text-2xl font-bold text-white/90 tracking-tight"
-        >
+      <div className="flex items-center justify-between px-8 sm:px-12 md:px-16 lg:px-20 mb-3.5">
+        <h2 className="text-base md:text-lg lg:text-xl font-bold text-white/90 tracking-tight section-title-flash">
           {title}
         </h2>
         {href && (
           <Link
             href={href}
-            className="text-xs md:text-sm text-[#E50914]/60 hover:text-[#E50914] transition-colors font-medium tracking-wide group/link flex items-center gap-1"
+            className="text-xs text-[#E50914]/70 hover:text-[#E50914] transition-colors font-medium tracking-wide group/link flex items-center gap-1"
           >
-            Tout voir
+            View All
             <ChevronRight className="h-3.5 w-3.5 group-hover/link:translate-x-0.5 transition-transform" />
           </Link>
         )}
@@ -98,26 +539,24 @@ export function FilmRow({ title, films, href }: FilmRowProps) {
 
       {/* Scroll container */}
       <div className="relative">
-        {/* Left arrow */}
         {showLeft && (
           <button
             onClick={() => scroll('left')}
-            className="absolute left-0 top-0 bottom-0 z-20 w-16 md:w-20 bg-gradient-to-r from-[#0A0A0A] via-[#0A0A0A]/80 to-transparent flex items-center justify-start pl-3 opacity-0 group-hover/row:opacity-100 transition-opacity duration-300"
+            className="absolute left-0 top-0 bottom-0 z-20 w-14 md:w-16 bg-gradient-to-r from-[#0A0A0A] via-[#0A0A0A]/80 to-transparent flex items-center justify-start pl-2 opacity-0 group-hover/row:opacity-100 transition-opacity duration-300"
           >
-            <div className="h-10 w-10 rounded-full bg-black/60 backdrop-blur-sm border border-white/10 flex items-center justify-center hover:bg-black/80 hover:border-[#E50914]/30 transition-all">
-              <ChevronLeft className="h-5 w-5 text-white/80" />
+            <div className="h-9 w-9 rounded-full bg-black/60 backdrop-blur-sm border border-white/10 flex items-center justify-center hover:bg-black/80 hover:border-[#E50914]/30 transition-all">
+              <ChevronLeft className="h-4 w-4 text-white/80" />
             </div>
           </button>
         )}
 
-        {/* Right arrow */}
         {showRight && (
           <button
             onClick={() => scroll('right')}
-            className="absolute right-0 top-0 bottom-0 z-20 w-16 md:w-20 bg-gradient-to-l from-[#0A0A0A] via-[#0A0A0A]/80 to-transparent flex items-center justify-end pr-3 opacity-0 group-hover/row:opacity-100 transition-opacity duration-300"
+            className="absolute right-0 top-0 bottom-0 z-20 w-14 md:w-16 bg-gradient-to-l from-[#0A0A0A] via-[#0A0A0A]/80 to-transparent flex items-center justify-end pr-2 opacity-0 group-hover/row:opacity-100 transition-opacity duration-300"
           >
-            <div className="h-10 w-10 rounded-full bg-black/60 backdrop-blur-sm border border-white/10 flex items-center justify-center hover:bg-black/80 hover:border-[#E50914]/30 transition-all">
-              <ChevronRight className="h-5 w-5 text-white/80" />
+            <div className="h-9 w-9 rounded-full bg-black/60 backdrop-blur-sm border border-white/10 flex items-center justify-center hover:bg-black/80 hover:border-[#E50914]/30 transition-all">
+              <ChevronRight className="h-4 w-4 text-white/80" />
             </div>
           </button>
         )}
@@ -126,83 +565,152 @@ export function FilmRow({ title, films, href }: FilmRowProps) {
         <div
           ref={scrollRef}
           onScroll={updateArrows}
-          className="flex gap-6 md:gap-7 overflow-x-auto scrollbar-hide px-6 sm:px-10 md:px-16 lg:px-20 scroll-smooth"
+          className="flex items-start gap-4 md:gap-5 overflow-x-auto scrollbar-hide px-8 sm:px-12 md:px-16 lg:px-20 scroll-smooth"
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
-          {films.map((film, idx) => (
-            <Link
-              key={film.id}
-              href={film.type === 'catalog' ? `/streaming/${film.slug}` : `/films/${film.slug}`}
-              className="group/card flex-shrink-0 w-[150px] sm:w-[175px] md:w-[210px] lg:w-[230px] relative transition-all duration-300 hover:scale-[1.06] hover:z-20"
-            >
-              {/* Poster image */}
-              <div className="relative aspect-[2/3] bg-[#141414] rounded-xl overflow-hidden ring-1 ring-white/5 group-hover/card:ring-[#E50914]/30 transition-all duration-300 group-hover/card:shadow-[0_8px_40px_rgba(0,0,0,0.6)]">
-                <Image
-                  src={film.coverImageUrl || FALLBACK_IMAGES[idx % FALLBACK_IMAGES.length]}
-                  alt={film.title}
-                  fill
-                  className="object-cover transition-transform duration-700 group-hover/card:scale-[1.08]"
-                  sizes="(max-width: 640px) 150px, (max-width: 768px) 175px, (max-width: 1024px) 210px, 230px"
-                />
+          {films.map((film) => {
+            const fundingPct = film.fundingPct ?? ((hashStr(film.id) % 60) + 20)
+            const badge = getStatusBadge(film.status)
+            const hasImage = !!film.coverImageUrl
+            const genreColor = GENRE_COLORS[film.genre || ''] || ['#E50914', '#FF4444']
 
-                {/* Always-on subtle vignette */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+            return (
+              <Link
+                key={film.id}
+                href={film.type === 'catalog' ? `/streaming/${film.slug}` : `/films/${film.slug}`}
+                className="group/card flex-shrink-0 w-[140px] sm:w-[160px] md:w-[190px] lg:w-[210px] relative transition-all duration-300 hover:scale-[1.05] hover:z-20"
+              >
+                {/* Poster */}
+                <div className="relative aspect-[2/3] bg-[#141414] rounded-xl overflow-hidden ring-1 ring-white/5 group-hover/card:ring-[#E50914]/30 transition-all duration-300 group-hover/card:shadow-[0_8px_40px_rgba(0,0,0,0.6)]">
+                  {hasImage ? (
+                    <Image
+                      src={film.coverImageUrl!}
+                      alt={film.title}
+                      fill
+                      loading="lazy"
+                      className="object-cover transition-transform duration-700 group-hover/card:scale-[1.06]"
+                      sizes="(max-width: 640px) 140px, (max-width: 768px) 160px, (max-width: 1024px) 190px, 210px"
+                    />
+                  ) : (
+                    <SvgPoster title={film.title} genre={film.genre} />
+                  )}
 
-                {/* Hover overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/50 to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
-                  {/* Play button */}
-                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover/card:opacity-100 transition-all duration-300 group-hover/card:scale-100 scale-75">
-                    <div className="h-13 w-13 rounded-full flex items-center justify-center shadow-[0_0_35px_rgba(229,9,20,0.5)]" style={{ background: 'linear-gradient(135deg, #E50914, #FF2D2D)' }}>
-                      <Play className="h-5 w-5 text-black fill-black ml-0.5" />
+                  {/* Cinematic vignette */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-black/30" />
+
+                  {/* Poster overlay: CINEGEN logo (top center) + title (varied position & font) */}
+                  {(() => {
+                    const pos = titlePositionForFilm(film.title)
+                    return (
+                      <div className="absolute inset-0 pointer-events-none">
+                        {/* Logo — always top center */}
+                        <div className="absolute top-2 left-0 right-0 flex justify-center">
+                          <span className="text-[7px] font-black tracking-[0.2em] text-white/50 drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)]">
+                            CINE<span style={{ color: genreColor[0] }}>GEN</span>
+                          </span>
+                        </div>
+
+                        {/* Genre badge — top right */}
+                        {film.genre && (
+                          <div className="absolute top-1.5 right-1.5">
+                            <span
+                              className="text-[6px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded backdrop-blur-sm"
+                              style={{ background: `${genreColor[0]}90`, color: '#fff' }}
+                            >
+                              {film.genre}
+                            </span>
+                          </div>
+                        )}
+
+                        {/* Title — deterministic position & font per film */}
+                        <div className={`absolute inset-0 flex flex-col ${pos.align} ${pos.justify} ${pos.pad}`}>
+                          <div className={pos.textAlign}>
+                            <p
+                              className="text-[13px] sm:text-[14px] font-black text-white leading-[1.15] drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)] mb-0.5"
+                              style={{ fontFamily: titleFontForFilm(film.title), textShadow: `0 0 20px ${genreColor[0]}40` }}
+                            >
+                              {film.title}
+                            </p>
+                            <div className="flex items-center gap-1.5" style={{ justifyContent: pos.textAlign === 'text-center' ? 'center' : pos.textAlign === 'text-right' ? 'flex-end' : 'flex-start' }}>
+                              <span className="text-[7px] text-white/40 font-medium tracking-wider drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">2025</span>
+                              <span className="w-[2px] h-[2px] rounded-full bg-white/20" />
+                              <span className="text-[7px] font-medium tracking-wider drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]" style={{ color: `${genreColor[0]}90` }}>CINEGEN STUDIO</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )
+                  })()}
+
+                  {/* Hover overlay — play button + expanded info */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-3.5">
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover/card:opacity-100 transition-all duration-300 group-hover/card:scale-100 scale-75">
+                      <div className="h-12 w-12 rounded-full flex items-center justify-center shadow-[0_0_30px_rgba(229,9,20,0.5)]" style={{ background: 'linear-gradient(135deg, #E50914, #FF2D2D)' }}>
+                        <Play className="h-5 w-5 text-white fill-white ml-0.5" />
+                      </div>
                     </div>
+                    <p className="text-[12px] font-bold text-white leading-tight">{film.title}</p>
+                    <p className="text-[10px] text-white/50 mt-0.5">{film.genre}</p>
                   </div>
 
-                  <p className="text-[13px] font-bold text-white leading-tight">{film.title}</p>
-                  <div className="flex items-center gap-2 mt-1.5">
-                    {film.genre && (
-                      <span className="text-[11px] text-white/50">{film.genre}</span>
-                    )}
-                    <span className="text-[10px] font-bold uppercase tracking-wider" style={{ color: getStatusColor(film.status) }}>
-                      {getStatusLabel(film.status)}
-                    </span>
-                  </div>
-                  {film.progressPct > 0 && (
-                    <div className="mt-2.5 h-[3px] bg-white/10 rounded-full overflow-hidden">
-                      <div
-                        className="h-full rounded-full"
-                        style={{
-                          width: `${film.progressPct}%`,
-                          background: 'linear-gradient(90deg, #E50914, #FF2D2D)',
-                        }}
-                      />
+                  {/* Status badge (top-left) */}
+                  {badge && (
+                    <div className="absolute top-2.5 left-2.5 z-10">
+                      <span
+                        className="flex items-center gap-1 text-[8px] font-black px-2 py-0.5 rounded text-white uppercase tracking-wider backdrop-blur-sm"
+                        style={{ background: `${badge.color}CC` }}
+                      >
+                        <badge.icon className="h-2.5 w-2.5" />
+                        {badge.label}
+                      </span>
                     </div>
                   )}
                 </div>
 
-                {/* Status badge (always visible) */}
-                <div className="absolute top-3.5 left-3.5">
-                  <span
-                    className="text-[9px] font-bold px-2.5 py-1 rounded-lg uppercase tracking-wider backdrop-blur-xl"
-                    style={{
-                      background: `${getStatusColor(film.status)}18`,
-                      color: getStatusColor(film.status),
-                      border: `1px solid ${getStatusColor(film.status)}25`,
-                    }}
-                  >
-                    {getStatusLabel(film.status)}
-                  </span>
-                </div>
-              </div>
+                {/* Info below poster — fixed height for uniform cards */}
+                <div className="pt-2.5 px-0.5 h-[76px]">
+                  <p className="text-[11px] sm:text-[12px] font-semibold text-white/80 truncate group-hover/card:text-white transition-colors">{film.title}</p>
 
-              {/* Title below poster */}
-              <div className="pt-4 pb-3 px-2">
-                <p className="text-[12px] sm:text-[13px] font-semibold text-white/80 truncate group-hover/card:text-white transition-colors">{film.title}</p>
-                {film.genre && (
-                  <p className="text-[10px] sm:text-[11px] text-white/30 mt-0.5">{film.genre}</p>
-                )}
-              </div>
-            </Link>
-          ))}
+                  {/* Dual progress bars */}
+                  <div className="mt-1.5 space-y-1">
+                    {/* Funding bar (green) */}
+                    <div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-[8px] text-white/25 uppercase tracking-wider">Funded</span>
+                        <span className="text-[8px] font-bold text-emerald-400">{fundingPct}%</span>
+                      </div>
+                      <div className="h-[2px] bg-white/[0.06] rounded-full overflow-hidden mt-px">
+                        <div
+                          className="h-full rounded-full"
+                          style={{
+                            width: `${Math.min(fundingPct, 100)}%`,
+                            background: 'linear-gradient(90deg, #059669, #10B981)',
+                          }}
+                        />
+                      </div>
+                    </div>
+
+                    {/* Production bar (red) */}
+                    <div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-[8px] text-white/25 uppercase tracking-wider">Progress</span>
+                        <span className="text-[8px] font-bold text-[#E50914]">{film.progressPct}%</span>
+                      </div>
+                      <div className="h-[2px] bg-white/[0.06] rounded-full overflow-hidden mt-px">
+                        <div
+                          className="h-full rounded-full"
+                          style={{
+                            width: `${film.progressPct}%`,
+                            background: 'linear-gradient(90deg, #B20710, #E50914)',
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </Link>
+            )
+          })}
         </div>
       </div>
     </section>

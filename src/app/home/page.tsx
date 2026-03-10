@@ -39,11 +39,11 @@ import {
 } from 'lucide-react'
 
 export const metadata: Metadata = {
-  title: 'Lumiere Brothers — Le Studio de Cinema du Futur',
+  title: 'CINEGEN — Le Studio de Cinema du Futur',
   description:
     "Devenez co-producteur de films IA. Investissez des 10\u20AC, recevez des revenus, votre nom au generique. La premiere plateforme de cinema collaboratif propulsee par l'intelligence artificielle.",
   openGraph: {
-    title: 'Lumiere Brothers — Le Studio de Cinema du Futur',
+    title: 'CINEGEN — Le Studio de Cinema du Futur',
     description:
       'Devenez co-producteur de films IA des 10\u20AC. Revenus partages, votre nom au generique.',
     type: 'website',
@@ -287,8 +287,8 @@ export default async function HomePage() {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
-    name: 'Lumiere',
-    url: 'https://lumiere.film',
+    name: 'CINEGEN',
+    url: 'https://cinegen.studio',
     description: "Plateforme de cinema collaboratif propulsee par l'IA",
     foundingDate: '2025',
     sameAs: ['https://github.com/Wonderself/lumiere-app'],
@@ -981,7 +981,7 @@ export default async function HomePage() {
                   <span className="text-[#E50914]">Gagnez des Tokens</span>
                 </h2>
                 <p className="text-gray-500 leading-relaxed mb-8">
-                  Pour chaque ami qui rejoint Lumiere, vous recevez{' '}
+                  Pour chaque ami qui rejoint CINEGEN, vous recevez{' '}
                   <span className="text-[#E50914] font-semibold">30 Lumens</span> et votre ami aussi.
                   Doublez vos tokens, construisez votre equipe de createurs.
                 </p>

@@ -55,7 +55,7 @@ export function LoginForm() {
         <h1 className="text-3xl sm:text-4xl font-bold text-white font-playfair">
           <span className="text-shimmer">Bienvenue</span>
         </h1>
-        <p className="text-white/50 text-sm sm:text-base">Connectez-vous à votre compte Lumière.</p>
+        <p className="text-white/50 text-sm sm:text-base">Connectez-vous à votre compte CINEGEN.</p>
       </div>
 
       {/* Form Card */}
@@ -146,13 +146,13 @@ export function LoginForm() {
                 <button
                   type="button"
                   disabled={isPending}
-                  onClick={() => loginAsDemo('admin@lumiere.film', 'Admin1234!')}
+                  onClick={() => loginAsDemo('admin@cinegen.studio', 'Admin1234!')}
                   className="w-full rounded-xl bg-[#E50914]/[0.06] border border-[#E50914]/15 hover:border-[#E50914]/30 hover:bg-[#E50914]/10 p-3.5 text-left transition-all duration-300 group cursor-pointer disabled:opacity-50"
                 >
                   <div className="flex items-center justify-between">
                     <div>
                       <p className="text-xs font-semibold text-[#E50914]/80 group-hover:text-[#E50914]">Admin</p>
-                      <p className="text-[11px] text-white/35 mt-0.5">admin@lumiere.film</p>
+                      <p className="text-[11px] text-white/35 mt-0.5">admin@cinegen.studio</p>
                     </div>
                     <span className="text-[10px] text-[#E50914]/40 group-hover:text-[#E50914]/70 uppercase tracking-wider font-medium">
                       {isPending ? 'Connexion...' : 'Connexion rapide'}
@@ -162,13 +162,13 @@ export function LoginForm() {
                 <button
                   type="button"
                   disabled={isPending}
-                  onClick={() => loginAsDemo('contributeur@lumiere.film', 'Test1234!')}
+                  onClick={() => loginAsDemo('contributeur@cinegen.studio', 'Test1234!')}
                   className="w-full rounded-xl bg-white/[0.02] border border-white/[0.06] hover:border-white/[0.12] hover:bg-white/[0.04] p-3.5 text-left transition-all duration-300 group cursor-pointer disabled:opacity-50"
                 >
                   <div className="flex items-center justify-between">
                     <div>
                       <p className="text-xs font-semibold text-white/50 group-hover:text-white/70">Contributeur</p>
-                      <p className="text-[11px] text-white/25 mt-0.5">contributeur@lumiere.film</p>
+                      <p className="text-[11px] text-white/25 mt-0.5">contributeur@cinegen.studio</p>
                     </div>
                     <span className="text-[10px] text-white/20 group-hover:text-white/40 uppercase tracking-wider font-medium">
                       {isPending ? 'Connexion...' : 'Connexion rapide'}

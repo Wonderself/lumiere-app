@@ -14,7 +14,7 @@ const creatorActions = [
     glow: 'rgba(229, 9, 20, 0.12)',
     iconBg: 'from-[#E50914] to-[#9B0000]',
     accent: '#E50914',
-    bgImage: 'https://images.unsplash.com/photo-1455390582262-044cdead277a?w=600&q=60',
+    bgImage: '/posters/the-rebbe.jpg',
   },
   {
     icon: Vote,
@@ -25,7 +25,7 @@ const creatorActions = [
     glow: 'rgba(59, 130, 246, 0.12)',
     iconBg: 'from-blue-500 to-indigo-600',
     accent: '#3B82F6',
-    bgImage: 'https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=600&q=60',
+    bgImage: '/posters/esther-code.jpg',
   },
   {
     icon: Trophy,
@@ -36,7 +36,7 @@ const creatorActions = [
     glow: 'rgba(139, 92, 246, 0.12)',
     iconBg: 'from-purple-500 to-violet-600',
     accent: '#8B5CF6',
-    bgImage: 'https://images.unsplash.com/photo-1485846234645-a62644f84728?w=600&q=60',
+    bgImage: '/posters/keter.jpg',
   },
   {
     icon: Clapperboard,
@@ -47,7 +47,7 @@ const creatorActions = [
     glow: 'rgba(16, 185, 129, 0.12)',
     iconBg: 'from-emerald-500 to-green-600',
     accent: '#10B981',
-    bgImage: 'https://images.unsplash.com/photo-1574267432553-4b4628081c31?w=600&q=60',
+    bgImage: '/posters/miracle-protocol.jpg',
   },
 ]
 

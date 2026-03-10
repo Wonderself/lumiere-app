@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'Politique de Confidentialité',
-  description: 'Politique de confidentialité et protection des données personnelles de la plateforme Lumière — conforme au RGPD.',
+  description: 'Politique de confidentialité et protection des données personnelles de la plateforme CINEGEN — conforme au RGPD.',
 }
 
 export default function PrivacyPage() {
@@ -31,9 +31,9 @@ export default function PrivacyPage() {
           <section>
             <p className="text-white/70 leading-relaxed">
               La présente Politique de Confidentialité décrit comment la société
-              Lumière Brothers Pictures (ci-après « Lumière », « nous », « notre ») collecte,
+              CINEGEN Studio (ci-après « CINEGEN », « nous », « notre ») collecte,
               utilise, stocke et protège vos données personnelles dans le cadre de
-              l&apos;utilisation de la plateforme <strong className="text-[#E50914]">Lumière</strong>{' '}
+              l&apos;utilisation de la plateforme <strong className="text-[#E50914]">CINEGEN</strong>{' '}
               (ci-après « la Plateforme »), conformément au Règlement (UE) 2016/679 du
               27 avril 2016 relatif à la protection des données (RGPD) et à la loi n° 78-17
               du 6 janvier 1978 modifiée (loi Informatique et Libertés).
@@ -52,11 +52,11 @@ export default function PrivacyPage() {
             </p>
             <div className="mt-3 p-4 rounded-xl border border-white/10 bg-white/[0.02]">
               <p className="text-white/70 leading-relaxed">
-                <strong className="text-white/90">Lumière Brothers Pictures</strong><br />
+                <strong className="text-white/90">CINEGEN Studio</strong><br />
                 SAS au capital de 10 000 &euro;<br />
                 RCS Paris : [à compléter]<br />
                 Siège social : [adresse à compléter], 75000 Paris, France<br />
-                Email : <span className="text-[#E50914]">dpo@lumiere.film</span><br />
+                Email : <span className="text-[#E50914]">dpo@cinegen.studio</span><br />
                 Téléphone : [à compléter]
               </p>
             </div>
@@ -219,7 +219,7 @@ export default function PrivacyPage() {
             </p>
             <ul className="list-disc list-inside text-white/70 leading-relaxed mt-2 space-y-2 ml-4">
               <li>
-                <strong className="text-white/90">Personnel habilité</strong> de Lumière Brothers
+                <strong className="text-white/90">Personnel habilité</strong> de CINEGEN Studio
                 Pictures (équipe technique, modération, support client) ;
               </li>
               <li>
@@ -351,7 +351,7 @@ export default function PrivacyPage() {
               <p className="text-white/80 leading-relaxed">
                 <strong className="text-[#E50914]">Comment exercer vos droits ?</strong><br />
                 Envoyez votre demande accompagnée d&apos;un justificatif d&apos;identité à :<br />
-                <span className="text-[#E50914]">dpo@lumiere.film</span><br />
+                <span className="text-[#E50914]">dpo@cinegen.studio</span><br />
                 Nous nous engageons à répondre dans un délai de 30 jours.
               </p>
             </div>
@@ -372,16 +372,16 @@ export default function PrivacyPage() {
               8. Délégué à la Protection des Données (DPO)
             </h2>
             <p className="text-white/70 leading-relaxed">
-              Lumière Brothers Pictures a désigné un Délégué à la Protection des Données que
+              CINEGEN Studio a désigné un Délégué à la Protection des Données que
               vous pouvez contacter pour toute question relative à la protection de vos données
               personnelles :
             </p>
             <div className="mt-3 p-4 rounded-xl border border-white/10 bg-white/[0.02]">
               <p className="text-white/70 leading-relaxed">
                 <strong className="text-white/90">Délégué à la Protection des Données</strong><br />
-                Lumière Brothers Pictures<br />
-                Email : <span className="text-[#E50914]">dpo@lumiere.film</span><br />
-                Courrier : DPO — Lumière Brothers Pictures, [adresse à compléter], 75000 Paris
+                CINEGEN Studio<br />
+                Email : <span className="text-[#E50914]">dpo@cinegen.studio</span><br />
+                Courrier : DPO — CINEGEN Studio, [adresse à compléter], 75000 Paris
               </p>
             </div>
           </section>
@@ -435,7 +435,7 @@ export default function PrivacyPage() {
             </ul>
             <p className="text-white/70 leading-relaxed mt-4">
               Vous pouvez obtenir une copie des garanties mises en place en contactant notre
-              DPO à l&apos;adresse <span className="text-[#E50914]">dpo@lumiere.film</span>.
+              DPO à l&apos;adresse <span className="text-[#E50914]">dpo@cinegen.studio</span>.
             </p>
           </section>
 

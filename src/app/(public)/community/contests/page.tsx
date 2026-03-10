@@ -12,8 +12,8 @@ import type { Metadata } from 'next'
 export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
-  title: 'Concours — Communaute Lumiere',
-  description: 'Participez aux concours de trailers de la communaute Lumiere.',
+  title: 'Concours — Communaute CINEGEN',
+  description: 'Participez aux concours de trailers de la communaute CINEGEN.',
 }
 
 async function getContests() {

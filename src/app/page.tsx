@@ -4,9 +4,9 @@ import { NetflixHome } from '@/components/netflix/netflix-home'
 export const dynamic = 'force-dynamic'
 
 export const metadata = {
-  title: 'Lumiere Cinema — Creez. Votez. Regardez.',
+  title: 'CINEGEN — Create. Fund. Stream Your Films.',
   description:
-    'La premiere plateforme de cinema collaboratif propulsee par l\'IA. Micro-taches, streaming, production de films IA. Paris, Tel Aviv, Hollywood.',
+    'The collaborative cinema platform powered by AI. Micro-tasks, streaming, independent film production. Paris, Jerusalem, Hollywood.',
 }
 
 async function getHomeData() {
@@ -23,13 +23,24 @@ async function getHomeData() {
     })
 
     // All public films grouped by genre
-    const allFilms = await prisma.film.findMany({
+    const allFilmsRaw = await prisma.film.findMany({
       where: { isPublic: true },
       orderBy: { updatedAt: 'desc' },
       select: {
         id: true, title: true, slug: true, genre: true,
         coverImageUrl: true, status: true, progressPct: true,
+        estimatedBudget: true,
       },
+    })
+
+    // Compute a deterministic fundingPct from estimatedBudget + progressPct
+    const allFilms = allFilmsRaw.map(f => {
+      // Seed a deterministic funding % based on slug hash + progress
+      const hash = f.slug.split('').reduce((a, c) => a + c.charCodeAt(0), 0)
+      const baseFunding = (hash % 60) + 15 // 15-74%
+      const bonus = Math.min(f.progressPct * 0.5, 25) // more progress = more funded
+      const fundingPct = Math.min(Math.round(baseFunding + bonus), 100)
+      return { ...f, fundingPct }
     })
 
     // Catalog films (streaming)
@@ -45,7 +56,7 @@ async function getHomeData() {
     // Group films by genre
     const genres = new Map<string, typeof allFilms>()
     for (const film of allFilms) {
-      const genre = film.genre || 'Autre'
+      const genre = film.genre || 'Other'
       if (!genres.has(genre)) genres.set(genre, [])
       genres.get(genre)!.push(film)
     }

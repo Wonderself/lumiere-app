@@ -22,24 +22,24 @@ const playfair = Playfair_Display({
 })
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://cinema.lumiere.film'),
+  metadataBase: new URL('https://cinegen.studio'),
   title: {
-    template: '%s | Lumière Cinema',
-    default: 'Lumière Cinema — Le Studio IA du Futur',
+    template: '%s | CINEGEN',
+    default: 'CINEGEN — The AI Cinema Studio',
   },
   description:
-    "Lumière Cinema : production collaborative de films IA, micro-tâches créatives, streaming, bandes-annonces, votre visage dans le film. Paris · Tel Aviv · Hollywood.",
+    "CINEGEN: collaborative AI film production, creative micro-tasks, streaming, trailers, community governance. Create. Fund. Stream Your Films.",
   keywords: [
-    'cinéma IA',
-    'film intelligence artificielle',
-    'production collaborative',
-    'micro-tâches cinéma',
-    'streaming IA',
-    'bandes-annonces IA',
-    'Lumière Brothers Pictures',
-    'studio cinéma IA',
+    'AI cinema',
+    'AI film production',
+    'collaborative filmmaking',
+    'micro-tasks cinema',
+    'AI streaming',
+    'AI trailers',
+    'CINEGEN Studio',
+    'AI cinema studio',
   ],
-  authors: [{ name: 'Lumière Brothers Pictures' }],
+  authors: [{ name: 'CINEGEN Studio' }],
   manifest: '/manifest.json',
   icons: {
     icon: '/favicon.svg',
@@ -48,20 +48,20 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     statusBarStyle: 'black-translucent',
-    title: 'Lumiere',
+    title: 'CINEGEN',
   },
   openGraph: {
     type: 'website',
-    locale: 'fr_FR',
-    siteName: 'Lumière Cinema',
-    title: 'Lumière Cinema — Le Studio IA du Futur',
-    description: "Production collaborative de films IA, micro-tâches créatives, streaming mondial.",
-    url: 'https://cinema.lumiere.film',
+    locale: 'en_US',
+    siteName: 'CINEGEN',
+    title: 'CINEGEN — The AI Cinema Studio',
+    description: "Collaborative AI film production, creative micro-tasks, worldwide streaming.",
+    url: 'https://cinegen.studio',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Lumière Cinema — Le Studio IA du Futur',
-    description: "Production collaborative de films IA, micro-tâches créatives, streaming mondial.",
+    title: 'CINEGEN — The AI Cinema Studio',
+    description: "Collaborative AI film production, creative micro-tasks, worldwide streaming.",
   },
 }
 

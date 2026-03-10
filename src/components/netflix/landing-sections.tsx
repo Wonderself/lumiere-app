@@ -179,7 +179,7 @@ export function PipelineVisual() {
           De l&apos;idee au <span className="text-[#E50914]">grand ecran</span>
         </h2>
         <p className="text-sm md:text-base text-white/30 max-w-lg mx-auto">
-          Le parcours d&apos;un film Lumiere, du premier mot a la premiere projection
+          Le parcours d&apos;un film CINEGEN, du premier mot a la premiere projection
         </p>
       </motion.div>
 
@@ -246,17 +246,17 @@ interface CompRow {
   label: string
   hollywood: string | null
   netflix: string | null
-  lumiere: string | null
-  lumiereHighlight?: boolean
+  cinegen: string | null
+  cinegenHighlight?: boolean
 }
 
 const compRows: CompRow[] = [
-  { label: 'Cout par film', hollywood: '5-200M\u20AC', netflix: '5-50M\u20AC', lumiere: '25K\u20AC', lumiereHighlight: true },
-  { label: 'Delai', hollywood: '2-5 ans', netflix: '6-18 mois', lumiere: '3 mois', lumiereHighlight: true },
-  { label: 'Qui decide', hollywood: 'Studios / Banques', netflix: 'Algorithmes', lumiere: 'La communaute', lumiereHighlight: true },
-  { label: 'Participation', hollywood: 'Ferme aux elites', netflix: 'Abonnes passifs', lumiere: 'Tout le monde cree', lumiereHighlight: true },
-  { label: 'Intelligence Artificielle', hollywood: 'Opposition', netflix: 'Usage interne', lumiere: 'Outil transparent', lumiereHighlight: true },
-  { label: 'Blockchain / Web3', hollywood: null, netflix: null, lumiere: 'Full integration', lumiereHighlight: true },
+  { label: 'Cout par film', hollywood: '5-200M\u20AC', netflix: '5-50M\u20AC', cinegen: '25K\u20AC', cinegenHighlight: true },
+  { label: 'Delai', hollywood: '2-5 ans', netflix: '6-18 mois', cinegen: '3 mois', cinegenHighlight: true },
+  { label: 'Qui decide', hollywood: 'Studios / Banques', netflix: 'Algorithmes', cinegen: 'La communaute', cinegenHighlight: true },
+  { label: 'Participation', hollywood: 'Ferme aux elites', netflix: 'Abonnes passifs', cinegen: 'Tout le monde cree', cinegenHighlight: true },
+  { label: 'Intelligence Artificielle', hollywood: 'Opposition', netflix: 'Usage interne', cinegen: 'Outil transparent', cinegenHighlight: true },
+  { label: 'Blockchain / Web3', hollywood: null, netflix: null, cinegen: 'Full integration', cinegenHighlight: true },
 ]
 
 function CellIcon({ value }: { value: string | null }) {
@@ -276,7 +276,7 @@ export function ComparisonTable() {
         <h2
           className="text-3xl md:text-4xl lg:text-5xl font-black text-white mb-6"
         >
-          Pourquoi <span className="text-[#E50914]">Lumiere</span>
+          Pourquoi <span className="text-[#E50914]">CINEGEN</span>
         </h2>
         <p className="text-sm md:text-base text-white/30 max-w-lg mx-auto">
           La comparaison parle d&apos;elle-meme
@@ -299,7 +299,7 @@ export function ComparisonTable() {
             <p className="text-[11px] font-bold text-white/25 uppercase tracking-wider">Netflix</p>
           </div>
           <div className="p-6 md:p-7 text-center border-l border-[#E50914]/10 bg-[#E50914]/[0.03]">
-            <p className="text-[11px] font-black text-[#E50914] uppercase tracking-wider">Lumiere</p>
+            <p className="text-[11px] font-black text-[#E50914] uppercase tracking-wider">CINEGEN</p>
           </div>
         </div>
 
@@ -324,12 +324,12 @@ export function ComparisonTable() {
               )}
             </div>
             <div className="p-6 md:p-7 flex items-center justify-center border-l border-[#E50914]/10 bg-[#E50914]/[0.03]">
-              {row.lumiere ? (
-                <p className={`text-[11px] md:text-[12px] text-center font-bold ${row.lumiereHighlight ? 'text-[#E50914]' : 'text-white/60'}`}>
-                  {row.lumiere}
+              {row.cinegen ? (
+                <p className={`text-[11px] md:text-[12px] text-center font-bold ${row.cinegenHighlight ? 'text-[#E50914]' : 'text-white/60'}`}>
+                  {row.cinegen}
                 </p>
               ) : (
-                <CellIcon value={row.lumiere} />
+                <CellIcon value={row.cinegen} />
               )}
             </div>
           </div>

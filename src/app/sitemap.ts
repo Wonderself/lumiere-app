@@ -3,7 +3,7 @@ import type { MetadataRoute } from 'next'
 export const dynamic = 'force-dynamic'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = process.env.NEXT_PUBLIC_URL || 'https://cinema.lumiere.film'
+  const baseUrl = process.env.NEXT_PUBLIC_URL || 'https://cinegen.studio'
 
   // Static pages
   const staticPages: MetadataRoute.Sitemap = [

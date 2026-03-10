@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   description:
     "Découvrez et regardez des films créés par l'intelligence artificielle. Catalogue de courts et longs métrages IA, bandes-annonces exclusives.",
   openGraph: {
-    title: 'Streaming — Films IA en continu | Lumière',
+    title: 'Streaming — Films IA en continu | CINEGEN',
     description: "Découvrez et regardez des films créés par l'intelligence artificielle.",
   },
 }

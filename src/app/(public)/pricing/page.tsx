@@ -3,7 +3,7 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Abonnements — Lumiere Cinema',
+  title: 'Abonnements — CINEGEN',
   description: 'Choisissez votre plan pour acceder au cinema IA. Gratuit, Basic ou Premium.',
 }
 

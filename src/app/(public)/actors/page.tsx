@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   description:
     'Decouvrez les acteurs generes par IA qui donnent vie au cinema de demain. Profils, filmographies, bonus exclusifs.',
   openGraph: {
-    title: 'Acteurs IA — Les Talents Virtuels du Cinema | Lumiere',
+    title: 'Acteurs IA — Les Talents Virtuels du Cinema | CINEGEN',
     description: 'Decouvrez les acteurs generes par IA qui donnent vie au cinema de demain.',
   },
 }

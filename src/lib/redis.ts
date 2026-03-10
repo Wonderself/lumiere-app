@@ -30,7 +30,7 @@ export async function getCached<T>(
   try {
     const client = await getRedisClient()
     if (client) {
-      const cached = await client.get(`lumiere:${key}`)
+      const cached = await client.get(`cinegen:${key}`)
       if (cached) return JSON.parse(cached) as T
     }
 
@@ -39,7 +39,7 @@ export async function getCached<T>(
     try {
       const client = await getRedisClient()
       if (client) {
-        await client.set(`lumiere:${key}`, JSON.stringify(data), 'EX', ttlSeconds)
+        await client.set(`cinegen:${key}`, JSON.stringify(data), 'EX', ttlSeconds)
       }
     } catch {
       // Cache write failed — continue without caching
@@ -56,7 +56,7 @@ export async function invalidateCache(pattern: string) {
   try {
     const client = await getRedisClient()
     if (!client) return
-    const keys = await client.keys(`lumiere:${pattern}`)
+    const keys = await client.keys(`cinegen:${pattern}`)
     if (keys.length > 0) await client.del(...keys)
   } catch {
     // Ignore cache invalidation errors

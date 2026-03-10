@@ -9,12 +9,12 @@ import type { Metadata } from 'next'
 export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
-  title: 'Films en Production — Catalogue Cinema IA',
+  title: 'Films in Production — CINEGEN',
   description:
-    'Decouvrez tous les films en production sur la plateforme Lumiere. Rejoignez l\'equipe, contribuez aux micro-taches et soyez credite au generique.',
+    'Discover all films in production on CINEGEN. Join the team, contribute to micro-tasks and get credited.',
   openGraph: {
-    title: 'Films en Production — Catalogue Cinema IA | Lumiere',
-    description: 'Decouvrez tous les films en production sur la plateforme Lumiere.',
+    title: 'Films in Production — CINEGEN',
+    description: 'Discover all films in production on CINEGEN.',
   },
 }
 

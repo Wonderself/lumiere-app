@@ -1,7 +1,7 @@
 /**
  * Blockchain Service Layer
  *
- * Abstracts on-chain operations for the Lumière platform.
+ * Abstracts on-chain operations for the CINEGEN platform.
  * Currently uses a hash-based proof system (storing SHA-256 hashes as proof-of-record).
  * Ready to integrate with Polygon/Base smart contracts when deployed.
  *

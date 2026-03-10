@@ -79,7 +79,7 @@ export function SubmitEntryForm({ contestId }: SubmitEntryFormProps) {
                 <Input
                   name="title"
                   required
-                  placeholder="Ex: Lumiere Awakens — Teaser"
+                  placeholder="Ex: CINEGEN Awakens — Teaser"
                   className="bg-white border-gray-200 focus:border-[#E50914]/40"
                 />
               </div>

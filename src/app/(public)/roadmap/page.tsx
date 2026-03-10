@@ -3,8 +3,8 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Roadmap — Lumière Cinema',
-  description: 'Plan de développement de Lumière Cinema — du studio IA au streaming mondial. Chaque étape nous rapproche du futur du cinéma.',
+  title: 'Roadmap — CINEGEN',
+  description: 'Plan de développement de CINEGEN — du studio IA au streaming mondial. Chaque étape nous rapproche du futur du cinéma.',
 }
 
 type RoadmapItem = {
@@ -105,7 +105,7 @@ const roadmap: Phase[] = [
     emoji: '🏆',
     items: [
       { id: 'v5-1', title: 'Points & niveaux automatiques', description: 'ROOKIE → PRO → EXPERT → VIP, barre de progression visuelle', status: 'done', difficulty: 'easy', note: 'LevelProgress component + profil + dashboard' },
-      { id: 'v5-2', title: 'Badges & achievements', description: '13 badges : Première Lumière, Marathonien, Perfectionniste...', status: 'done', difficulty: 'easy', note: 'achievements.ts + BadgeShowcase + auto-award' },
+      { id: 'v5-2', title: 'Badges & achievements', description: '13 badges : Première CINEGEN, Marathonien, Perfectionniste...', status: 'done', difficulty: 'easy', note: 'achievements.ts + BadgeShowcase + auto-award' },
       { id: 'v5-3', title: 'Profils publics', description: 'Page publique createur avec stats, badges, niveau, contributions', status: 'done', difficulty: 'easy', note: '/users/[id] avec badges + level progress' },
       { id: 'v5-4', title: 'Concours mensuels', description: 'Thèmes, votes communautaires, récompenses automatiques', status: 'done', difficulty: 'medium', note: '12 themes mensuels + createMonthlyContestAction' },
       { id: 'v5-5', title: 'Parrainage', description: 'Liens uniques, bonus 30+10 Lumens, page dashboard', status: 'done', difficulty: 'easy', note: 'referral.ts + /dashboard/referral' },
@@ -142,7 +142,7 @@ const roadmap: Phase[] = [
       { id: 'v7-4', title: 'Cache & performance', description: 'Redis ISR, images optimisées, Lighthouse 90+', status: 'done', difficulty: 'easy', note: 'Redis getCached sur films, leaderboard, community (2-5 min TTL)' },
       { id: 'v7-5', title: 'Monitoring Sentry', description: 'Error tracking, alertes, dashboard performance', status: 'done', difficulty: 'trivial', note: 'instrumentation.ts + global-error.tsx + dynamic import conditionnel' },
       { id: 'v7-6', title: 'Pages légales RGPD', description: 'CGU, confidentialité, cookies — conformes RGPD/CNIL', status: 'done', difficulty: 'trivial', note: '3 pages légales complètes' },
-      { id: 'v7-7', title: 'DNS & domaine custom', description: 'lumiere.film configuré avec Vercel/Cloudflare', status: 'todo', difficulty: 'easy', note: 'Guide fourni' },
+      { id: 'v7-7', title: 'DNS & domaine custom', description: 'cinegen.studio configuré avec Vercel/Cloudflare', status: 'todo', difficulty: 'easy', note: 'Guide fourni' },
       { id: 'v7-8', title: 'Notifications temps réel (SSE)', description: 'EventSource push, hook useNotifications, toast live', status: 'done', difficulty: 'easy', note: '/api/notifications/stream + useNotifications hook + auto-reconnect' },
       { id: 'v7-9', title: 'Smart contracts (interfaces)', description: 'Types TypeScript pour Polygon/Base ERC-20/ERC-721/Governance', status: 'done', difficulty: 'medium', note: 'smart-contracts.ts: 4 contrats, 4 ABIs, config multi-chain' },
       { id: 'v7-10', title: 'Documentation technique', description: 'SECURITY.md, DEPLOYMENT.md, CONTRIBUTING.md', status: 'done', difficulty: 'trivial', note: '3 guides complets pour sécurité, déploiement et contribution' },
@@ -292,7 +292,7 @@ export default function RoadmapPage() {
           >
             Roadmap{' '}
             <span className="text-shimmer">
-              Lumiere Cinema
+              CINEGEN
             </span>
           </h1>
           <p className="text-white/40 text-base sm:text-lg mb-12 max-w-2xl mx-auto leading-relaxed">

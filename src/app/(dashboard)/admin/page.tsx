@@ -80,7 +80,7 @@ export default async function AdminPage() {
           <h1 className="text-3xl font-bold mb-3 font-playfair">
             Command Center
           </h1>
-          <p className="text-white/50">Vue globale de la plateforme Lumière</p>
+          <p className="text-white/50">Vue globale de la plateforme CINEGEN</p>
         </div>
         <div className="flex gap-3">
           <Link href="/admin/films/new"><Button size="sm"><Plus className="h-4 w-4 mr-1" /> Film</Button></Link>

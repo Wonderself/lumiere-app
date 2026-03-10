@@ -11,7 +11,7 @@ function getResend(): Resend | null {
   return _resend
 }
 
-const FROM = process.env.RESEND_FROM_EMAIL || 'Lumière Cinema <noreply@lumiere.film>'
+const FROM = process.env.RESEND_FROM_EMAIL || 'CINEGEN <noreply@cinegen.studio>'
 
 // ─── Generic send (logs in dev, sends in prod) ──────────────
 async function send(to: string, subject: string, html: string): Promise<boolean> {
@@ -38,8 +38,8 @@ function layout(title: string, body: string): string {
   <div style="max-width:600px;margin:0 auto;padding:40px 20px;">
     <!-- Logo -->
     <div style="text-align:center;margin-bottom:32px;">
-      <span style="font-size:28px;font-weight:700;color:#E50914;letter-spacing:1px;">LUMIÈRE</span>
-      <span style="font-size:12px;display:block;color:#ffffff60;margin-top:2px;">CINEMA</span>
+      <span style="font-size:28px;font-weight:700;color:#E50914;letter-spacing:1px;">CINEGEN</span>
+      <span style="font-size:12px;display:block;color:#ffffff60;margin-top:2px;">STUDIO</span>
     </div>
     <!-- Content -->
     <div style="background:#111111;border:1px solid #ffffff10;border-radius:16px;padding:32px;margin-bottom:24px;">
@@ -47,8 +47,8 @@ function layout(title: string, body: string): string {
     </div>
     <!-- Footer -->
     <div style="text-align:center;color:#ffffff30;font-size:12px;line-height:1.5;">
-      <p>Lumière Brothers SAS — Paris, France</p>
-      <p><a href="https://cinema.lumiere.film" style="color:#E50914;text-decoration:none;">cinema.lumiere.film</a></p>
+      <p>CINEGEN Studio SAS — Paris, France</p>
+      <p><a href="https://cinegen.studio" style="color:#E50914;text-decoration:none;">cinegen.studio</a></p>
     </div>
   </div>
 </body>
@@ -63,7 +63,7 @@ function goldButton(text: string, href: string): string {
 
 /** Welcome email sent after registration (with optional verification link) */
 export async function sendWelcomeEmail(to: string, displayName: string, verificationToken?: string): Promise<boolean> {
-  const baseUrl = process.env.NEXTAUTH_URL || 'https://cinema.lumiere.film'
+  const baseUrl = process.env.NEXTAUTH_URL || 'https://cinegen.studio'
   const verifySection = verificationToken
     ? `
     <div style="text-align:center;margin-bottom:24px;">
@@ -74,10 +74,10 @@ export async function sendWelcomeEmail(to: string, displayName: string, verifica
     </p>`
     : ''
 
-  const html = layout('Bienvenue sur Lumière', `
+  const html = layout('Bienvenue sur CINEGEN', `
     <h1 style="font-size:24px;margin:0 0 16px;color:#E50914;">Bienvenue, ${displayName} !</h1>
     <p style="color:#ffffffcc;line-height:1.6;margin:0 0 16px;">
-      Vous faites maintenant partie de la communauté Lumière Cinema — le premier studio de cinéma collaboratif propulsé par l'IA.
+      Vous faites maintenant partie de la communauté CINEGEN — le premier studio de cinéma collaboratif propulsé par l'IA.
     </p>
     ${verifySection}
     <p style="color:#ffffffcc;line-height:1.6;margin:0 0 24px;">
@@ -92,12 +92,12 @@ export async function sendWelcomeEmail(to: string, displayName: string, verifica
       </p>
     </div>
   `)
-  return send(to, 'Bienvenue sur Lumière Cinema', html)
+  return send(to, 'Bienvenue sur CINEGEN', html)
 }
 
 /** Password reset email */
 export async function sendPasswordResetEmail(to: string, token: string): Promise<boolean> {
-  const baseUrl = process.env.NEXTAUTH_URL || 'https://cinema.lumiere.film'
+  const baseUrl = process.env.NEXTAUTH_URL || 'https://cinegen.studio'
   const resetUrl = `${baseUrl}/reset-password?token=${token}`
   const html = layout('Réinitialisation du mot de passe', `
     <h1 style="font-size:24px;margin:0 0 16px;color:#E50914;">Mot de passe oublié ?</h1>
@@ -111,7 +111,7 @@ export async function sendPasswordResetEmail(to: string, token: string): Promise
       Ce lien expire dans <strong>1 heure</strong>. Si vous n'avez pas fait cette demande, ignorez cet email.
     </p>
   `)
-  return send(to, 'Réinitialiser votre mot de passe — Lumière', html)
+  return send(to, 'Réinitialiser votre mot de passe — CINEGEN', html)
 }
 
 /** Task validated — payment coming */
@@ -136,7 +136,7 @@ export async function sendTaskValidatedEmail(
       <p style="margin:0;color:#E50914;font-weight:700;font-size:20px;">${amountEur.toFixed(2)} €</p>
     </div>
     <div style="text-align:center;">
-      ${goldButton('Voir mes revenus', 'https://cinema.lumiere.film/dashboard/earnings')}
+      ${goldButton('Voir mes revenus', 'https://cinegen.studio/dashboard/earnings')}
     </div>
   `)
   return send(to, `Tâche validée — ${amountEur.toFixed(2)}€ crédités`, html)
@@ -160,7 +160,7 @@ export async function sendPaymentEmail(
       <p style="margin:0;color:#ffffff60;font-size:13px;">via ${method}</p>
     </div>
     <div style="text-align:center;">
-      ${goldButton('Voir l\'historique', 'https://cinema.lumiere.film/dashboard/earnings')}
+      ${goldButton('Voir l\'historique', 'https://cinegen.studio/dashboard/earnings')}
     </div>
   `)
   return send(to, `Paiement de ${amountEur.toFixed(2)}€ envoyé`, html)
@@ -187,7 +187,7 @@ export async function sendScreenplayAcceptedEmail(
       </p>
     </div>
     <div style="text-align:center;">
-      ${goldButton('Voir mon scénario', 'https://cinema.lumiere.film/screenplays')}
+      ${goldButton('Voir mon scénario', 'https://cinegen.studio/screenplays')}
     </div>
   `)
   return send(to, `Scénario "${screenplayTitle}" accepté — Deal proposé`, html)
@@ -200,7 +200,7 @@ export async function sendWeeklyDigest(
   stats: { tasksCompleted: number; lumensEarned: number; newFilms: number }
 ): Promise<boolean> {
   const html = layout('Résumé de la semaine', `
-    <h1 style="font-size:24px;margin:0 0 16px;color:#E50914;">Cette semaine sur Lumière</h1>
+    <h1 style="font-size:24px;margin:0 0 16px;color:#E50914;">Cette semaine sur CINEGEN</h1>
     <p style="color:#ffffffcc;line-height:1.6;margin:0 0 24px;">
       Bonjour ${displayName}, voici votre résumé d'activité.
     </p>
@@ -219,8 +219,8 @@ export async function sendWeeklyDigest(
       </div>
     </div>
     <div style="text-align:center;margin-top:24px;">
-      ${goldButton('Voir le Dashboard', 'https://cinema.lumiere.film/dashboard')}
+      ${goldButton('Voir le Dashboard', 'https://cinegen.studio/dashboard')}
     </div>
   `)
-  return send(to, `Votre semaine Lumière — ${stats.tasksCompleted} tâches, ${stats.lumensEarned} Lumens`, html)
+  return send(to, `Votre semaine CINEGEN — ${stats.tasksCompleted} tâches, ${stats.lumensEarned} Lumens`, html)
 }

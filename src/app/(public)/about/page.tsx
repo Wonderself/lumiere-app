@@ -23,9 +23,9 @@ import {
 } from 'lucide-react'
 
 export const metadata: Metadata = {
-  title: 'À Propos — Lumière Brothers Pictures',
+  title: 'À Propos — CINEGEN Studio',
   description:
-    'Découvrez Lumière Brothers Pictures : le studio de cinéma IA fondé par Emmanuel Smadja (TF1, Lagardère) et Eric Haldezos (réalisateur primé). Paris · Tel Aviv · Hollywood.',
+    'Découvrez CINEGEN Studio : le studio de cinéma IA fondé par Emmanuel Smadja (TF1, Lagardère) et Eric Haldezos (réalisateur primé). Paris · Tel Aviv · Hollywood.',
 }
 
 const pipeline = [
@@ -68,7 +68,7 @@ export default function AboutPage() {
             <div className="relative aspect-[4/3] rounded-2xl sm:rounded-3xl overflow-hidden group ring-1 ring-white/[0.06]">
               <Image
                 src="/images/lumiere-team-startup-office.webp"
-                alt="L'equipe fondatrice de Lumiere Brothers Pictures"
+                alt="L'equipe fondatrice de CINEGEN Studio"
                 fill
                 className="object-cover transition-transform duration-700 group-hover:scale-105"
                 sizes="(max-width: 1024px) 100vw, 50vw"
@@ -429,7 +429,7 @@ export default function AboutPage() {
             <div className="relative aspect-video rounded-2xl sm:rounded-3xl overflow-hidden group ring-1 ring-white/[0.06]">
               <Image
                 src="/images/lumiere-office-contact-touch.webp"
-                alt="Contactez Lumiere Brothers Pictures"
+                alt="Contactez CINEGEN Studio"
                 fill
                 className="object-cover transition-transform duration-700 group-hover:scale-105"
                 sizes="(max-width: 1024px) 100vw, 50vw"
@@ -457,7 +457,7 @@ export default function AboutPage() {
                 href="/register"
                 className="inline-flex items-center gap-2.5 px-8 py-4 rounded-2xl bg-[#E50914] hover:bg-[#FF2D2D] text-white font-semibold transition-all duration-500 shadow-lg shadow-[#E50914]/20 hover:shadow-[#E50914]/30 hover:scale-[1.02]"
               >
-                Rejoindre Lumiere
+                Rejoindre CINEGEN
                 <ArrowRight className="h-5 w-5" />
               </Link>
             </div>

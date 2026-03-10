@@ -61,7 +61,7 @@ export function Header() {
         <Link href="/" className="flex items-center gap-2.5 group shrink-0">
           <Image
             src="/images/lumiere-brothers-logo-cinema-dark.webp"
-            alt="Lumière Brothers Pictures"
+            alt="CINEGEN Studio"
             width={140}
             height={40}
             className="h-8 w-auto object-contain group-hover:brightness-110 transition-all duration-300"

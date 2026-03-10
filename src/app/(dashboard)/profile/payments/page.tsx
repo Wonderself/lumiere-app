@@ -8,7 +8,7 @@ export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
   title: 'Mes Paiements',
-  description: 'Historique de vos paiements et gains sur Lumière.',
+  description: 'Historique de vos paiements et gains sur CINEGEN.',
 }
 
 const STATUS_CONFIG: Record<string, { label: string; color: string; bg: string }> = {

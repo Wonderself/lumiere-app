@@ -20,8 +20,8 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
             <Clapperboard className="h-7 w-7 text-[#E50914] transition-transform duration-500 group-hover:scale-110" />
             <div className="absolute inset-0 bg-[#E50914]/20 blur-lg rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
           </div>
-          <span className="text-lg font-bold text-white/90 tracking-wider font-playfair">
-            LUMIÈRE
+          <span className="text-lg font-black text-white/90 tracking-[0.15em]">
+            CINE<span className="text-[#E50914]">GEN</span>
           </span>
         </Link>
       </div>
@@ -37,7 +37,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
       <div className="relative z-10 px-4 sm:px-8 pb-14">
         <div className="h-px bg-gradient-to-r from-transparent via-[#E50914]/20 to-transparent" />
         <p className="text-center text-xs text-white/20 mt-6">
-          &copy; {new Date().getFullYear()} Lumière Brothers Pictures
+          &copy; {new Date().getFullYear()} CINEGEN Studio
         </p>
       </div>
     </div>

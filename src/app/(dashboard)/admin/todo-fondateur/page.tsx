@@ -175,7 +175,7 @@ const sections: TodoSection[] = [
         difficulty: 'easy',
       },
       {
-        label: 'INPI — Depot marque "Lumiere"',
+        label: 'INPI — Depot marque "CINEGEN"',
         done: false,
         note: 'inpi.fr → Depot en ligne ~210 EUR. Classes 9, 35, 41. Claude prepare la description. Delai: 5 mois.',
         icon: Shield,
@@ -290,7 +290,7 @@ const sections: TodoSection[] = [
         difficulty: 'trivial',
       },
       {
-        label: 'Domaine lumiere.film + DNS',
+        label: 'Domaine cinegen.studio + DNS',
         done: false,
         note: 'Acheter sur Namecheap/Cloudflare. Pointer vers Coolify. Claude configure.',
         icon: Globe,
@@ -401,7 +401,7 @@ export default async function AdminTodoFondateurPage() {
           <ListTodo className="h-7 w-7 text-[#E50914]" /> TODO Fondateur
         </h1>
         <p className="text-white/50 mt-1">
-          Check-list complete pour le lancement de Lumiere. Chaque etape est faisable et guidee.
+          Check-list complete pour le lancement de CINEGEN. Chaque etape est faisable et guidee.
         </p>
       </div>
 

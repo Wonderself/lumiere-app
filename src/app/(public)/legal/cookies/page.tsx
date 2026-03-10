@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'Politique Cookies',
-  description: 'Politique d\'utilisation des cookies de la plateforme Lumière — gestion de vos préférences et informations sur les traceurs utilisés.',
+  description: 'Politique d\'utilisation des cookies de la plateforme CINEGEN — gestion de vos préférences et informations sur les traceurs utilisés.',
 }
 
 export default function CookiesPage() {
@@ -31,8 +31,8 @@ export default function CookiesPage() {
           <section>
             <p className="text-white/70 leading-relaxed">
               La présente Politique Cookies explique comment la plateforme{' '}
-              <strong className="text-[#E50914]">Lumière</strong>, éditée par Lumière Brothers
-              Pictures, utilise des cookies et technologies similaires lorsque vous naviguez
+              <strong className="text-[#E50914]">CINEGEN</strong>, éditée par CINEGEN
+              Studio, utilise des cookies et technologies similaires lorsque vous naviguez
               sur notre site. Elle complète notre{' '}
               <Link href="/legal/privacy" className="text-[#E50914] underline underline-offset-4 hover:text-[#FF2D2D] transition-colors">
                 Politique de Confidentialité
@@ -283,7 +283,7 @@ export default function CookiesPage() {
             <p className="text-white/70 leading-relaxed">
               Pour toute question relative à notre utilisation des cookies, vous pouvez
               contacter notre Délégué à la Protection des Données à l&apos;adresse{' '}
-              <span className="text-[#E50914]">dpo@lumiere.film</span>.
+              <span className="text-[#E50914]">dpo@cinegen.studio</span>.
             </p>
             <p className="text-white/70 leading-relaxed mt-3">
               Pour en savoir plus sur la protection de vos données personnelles, consultez

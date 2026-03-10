@@ -20,8 +20,8 @@ export async function generateMetadata(
   })
   if (!film) return { title: 'Film introuvable' }
   return {
-    title: `${film.title} — Lumière Streaming`,
-    description: film.synopsis || `Regardez ${film.title} sur Lumière`,
+    title: `${film.title} — CINEGEN Streaming`,
+    description: film.synopsis || `Regardez ${film.title} on CINEGEN`,
     openGraph: {
       title: film.title,
       description: film.synopsis || undefined,

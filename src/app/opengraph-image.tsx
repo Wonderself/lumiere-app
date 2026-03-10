@@ -1,7 +1,7 @@
 import { ImageResponse } from 'next/og'
 
 export const runtime = 'nodejs'
-export const alt = 'Lumiere Brothers - Le Studio de Cinema du Futur'
+export const alt = 'CINEGEN Studio - Le Studio de Cinema du Futur'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
@@ -20,7 +20,7 @@ export default async function OGImage() {
           position: 'relative',
         }}
       >
-        {/* Subtle gold radial glow */}
+        {/* Subtle red radial glow */}
         <div
           style={{
             position: 'absolute',
@@ -34,7 +34,7 @@ export default async function OGImage() {
           }}
         />
 
-        {/* Top gold accent line */}
+        {/* Top accent line */}
         <div
           style={{
             position: 'absolute',
@@ -46,7 +46,7 @@ export default async function OGImage() {
           }}
         />
 
-        {/* Bottom gold accent line */}
+        {/* Bottom accent line */}
         <div
           style={{
             position: 'absolute',
@@ -97,10 +97,10 @@ export default async function OGImage() {
             textAlign: 'center',
           }}
         >
-          LUMIERE
+          CINEGEN
         </div>
 
-        {/* Gold accent divider */}
+        {/* Accent divider */}
         <div
           style={{
             width: '120px',
@@ -146,7 +146,7 @@ export default async function OGImage() {
             letterSpacing: '3px',
           }}
         >
-          lumiere.film
+          cinegen.studio
         </div>
       </div>
     ),

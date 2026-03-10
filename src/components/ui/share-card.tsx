@@ -94,7 +94,7 @@ export function ShareCard({ title, description, url, compact = false }: ShareCar
             <div className="h-8 w-8 rounded-full bg-[#E50914]/30 flex items-center justify-center">
               <Share2 className="h-4 w-4 text-[#E50914]" />
             </div>
-            <span className="text-[#E50914] text-xs font-semibold uppercase tracking-wider">Lumiere Brothers</span>
+            <span className="text-[#E50914] text-xs font-semibold uppercase tracking-wider">CINEGEN Studio</span>
           </div>
           <h3 className="text-white font-bold text-lg mb-1">{title}</h3>
           <p className="text-white/50 text-sm">{description}</p>

@@ -68,7 +68,7 @@ export function SearchOverlay() {
         className="hidden md:flex items-center gap-2 h-8 px-3 rounded-lg bg-white/5 border border-white/10 hover:border-white/20 transition-all text-white/40 hover:text-white/60 text-xs"
       >
         <Search className="h-3.5 w-3.5" />
-        <span className="hidden lg:inline">Rechercher...</span>
+        <span className="hidden lg:inline">Search...</span>
         <kbd className="hidden lg:inline ml-2 px-1.5 py-0.5 rounded bg-white/5 border border-white/10 text-[10px] text-white/30">
           Ctrl+K
         </kbd>
@@ -97,7 +97,7 @@ export function SearchOverlay() {
             <input
               ref={inputRef}
               type="text"
-              placeholder="Rechercher un film, une tache, un createur..."
+              placeholder="Search for a film, task, or creator..."
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               className="flex-1 bg-transparent text-white text-sm placeholder:text-white/30 focus:outline-none"
@@ -112,7 +112,7 @@ export function SearchOverlay() {
             <div className="max-h-[60vh] overflow-y-auto">
               {!hasResults && !isPending && (
                 <div className="p-8 text-center text-white/30 text-sm">
-                  Aucun resultat pour &ldquo;{query}&rdquo;
+                  No results for &ldquo;{query}&rdquo;
                 </div>
               )}
 
@@ -141,7 +141,7 @@ export function SearchOverlay() {
               {/* Tasks */}
               {results.tasks.length > 0 && (
                 <div className="p-3 border-t border-white/5">
-                  <p className="text-xs text-white/30 uppercase tracking-wider px-2 mb-2">Taches Disponibles</p>
+                  <p className="text-xs text-white/30 uppercase tracking-wider px-2 mb-2">Available Tasks</p>
                   {results.tasks.map((task) => (
                     <button
                       key={task.id}
@@ -163,7 +163,7 @@ export function SearchOverlay() {
               {/* Users */}
               {results.users.length > 0 && (
                 <div className="p-3 border-t border-white/5">
-                  <p className="text-xs text-white/30 uppercase tracking-wider px-2 mb-2">Createurs</p>
+                  <p className="text-xs text-white/30 uppercase tracking-wider px-2 mb-2">Creators</p>
                   {results.users.map((user) => (
                     <button
                       key={user.id}
@@ -174,7 +174,7 @@ export function SearchOverlay() {
                         <User className="h-4 w-4 text-blue-400" />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <p className="text-sm text-white/80 truncate">{user.displayName || 'Utilisateur'}</p>
+                        <p className="text-sm text-white/80 truncate">{user.displayName || 'User'}</p>
                         <p className="text-xs text-white/30">{user.role} · {user.level}</p>
                       </div>
                     </button>
@@ -186,8 +186,8 @@ export function SearchOverlay() {
 
           {/* Footer hint */}
           <div className="px-4 py-2.5 border-t border-white/5 flex items-center justify-between text-[10px] text-white/20">
-            <span>Tapez au moins 2 caracteres</span>
-            <span>Echap pour fermer</span>
+            <span>Type at least 2 characters</span>
+            <span>Esc to close</span>
           </div>
         </div>
       </div>

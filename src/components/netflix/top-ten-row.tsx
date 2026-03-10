@@ -17,10 +17,14 @@ interface FilmCard {
 }
 
 const FALLBACK_IMAGES = [
-  'https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=800&h=1200&fit=crop',
-  'https://images.unsplash.com/photo-1485846234645-a62644f84728?w=800&h=1200&fit=crop',
-  'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=800&h=1200&fit=crop',
-  'https://images.unsplash.com/photo-1574375927938-d5a98e8d7e28?w=800&h=1200&fit=crop',
+  '/posters/keter.jpg',
+  '/posters/miracle-protocol.jpg',
+  '/posters/esther-code.jpg',
+  '/posters/last-train.jpg',
+  '/posters/ortists.jpg',
+  '/posters/the-rebbe.jpg',
+  '/posters/secret-menorah.jpg',
+  '/posters/meam-loez.jpg',
 ]
 
 export function TopTenRow({ films }: { films: FilmCard[] }) {
@@ -57,9 +61,9 @@ export function TopTenRow({ films }: { films: FilmCard[] }) {
           <h2
             className="text-lg md:text-xl lg:text-2xl font-bold text-white/90 tracking-tight"
           >
-            Top 10 des Projets
+            Top 10 Projects
           </h2>
-          <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#E50914]/50 ml-1">Lumiere</span>
+          <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#E50914]/50 ml-1">CINEGEN</span>
         </div>
       </div>
 

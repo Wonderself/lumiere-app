@@ -253,7 +253,7 @@ async function main() {
       catalog: 'BIBLE',
       status: 'IN_PRODUCTION',
       isPublic: true,
-      coverImageUrl: 'https://images.unsplash.com/photo-1539650116574-8efeb43e2750?w=800&h=1200&fit=crop',
+      coverImageUrl: '/posters/secret-menorah.jpg',
       estimatedBudget: 50000,
       totalTasks: 0,
       completedTasks: 0,
@@ -369,7 +369,7 @@ async function main() {
       catalog: 'LUMIERE',
       status: 'PRE_PRODUCTION',
       isPublic: true,
-      coverImageUrl: 'https://images.unsplash.com/photo-1514905552197-0610a4d8fd73?w=800&h=1200&fit=crop',
+      coverImageUrl: '/posters/keter.jpg',
       estimatedBudget: 80000,
       totalTasks: 0,
       completedTasks: 0,
@@ -452,7 +452,7 @@ async function main() {
       catalog: 'LUMIERE',
       status: 'DRAFT',
       isPublic: true,
-      coverImageUrl: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&h=1200&fit=crop',
+      coverImageUrl: '/posters/ortists.jpg',
       estimatedBudget: 35000,
       totalTasks: 0,
       completedTasks: 0,
@@ -522,7 +522,7 @@ async function main() {
       catalog: 'LUMIERE',
       status: 'IN_PRODUCTION',
       isPublic: true,
-      coverImageUrl: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800&h=1200&fit=crop',
+      coverImageUrl: '/posters/miracle-protocol.jpg',
       estimatedBudget: 120000,
     },
   })
@@ -552,7 +552,7 @@ async function main() {
       catalog: 'LUMIERE',
       status: 'PRE_PRODUCTION',
       isPublic: true,
-      coverImageUrl: 'https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=800&h=1200&fit=crop',
+      coverImageUrl: '/posters/keter.jpg',
       estimatedBudget: 200000,
     },
   })
@@ -582,7 +582,7 @@ async function main() {
       catalog: 'BIBLE',
       status: 'PRE_PRODUCTION',
       isPublic: true,
-      coverImageUrl: 'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=800&h=1200&fit=crop',
+      coverImageUrl: '/posters/esther-code.jpg',
       estimatedBudget: 90000,
     },
   })
@@ -612,7 +612,7 @@ async function main() {
       catalog: 'LUMIERE',
       status: 'DRAFT',
       isPublic: true,
-      coverImageUrl: 'https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?w=800&h=1200&fit=crop',
+      coverImageUrl: '/posters/keter.jpg',
       estimatedBudget: 80000,
     },
   })
@@ -642,7 +642,7 @@ async function main() {
       catalog: 'LUMIERE',
       status: 'DRAFT',
       isPublic: true,
-      coverImageUrl: 'https://images.unsplash.com/photo-1502982720700-bfff97f2ecac?w=800&h=1200&fit=crop',
+      coverImageUrl: '/posters/last-train.jpg',
       estimatedBudget: 150000,
     },
   })
@@ -672,7 +672,7 @@ async function main() {
       catalog: 'LUMIERE',
       status: 'PRE_PRODUCTION',
       isPublic: true,
-      coverImageUrl: 'https://images.unsplash.com/photo-1533709752211-118fcaf03312?w=800&h=1200&fit=crop',
+      coverImageUrl: '/posters/esther-code.jpg',
       estimatedBudget: 25000,
     },
   })
@@ -702,7 +702,7 @@ async function main() {
       catalog: 'LUMIERE',
       status: 'DRAFT',
       isPublic: true,
-      coverImageUrl: 'https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=800&h=1200&fit=crop',
+      coverImageUrl: '/posters/the-rebbe.jpg',
       estimatedBudget: 75000,
     },
   })
@@ -732,7 +732,7 @@ async function main() {
       catalog: 'LUMIERE',
       status: 'DRAFT',
       isPublic: true,
-      coverImageUrl: 'https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=800&h=1200&fit=crop',
+      coverImageUrl: '/posters/ortists.jpg',
       estimatedBudget: 60000,
     },
   })
@@ -762,7 +762,7 @@ async function main() {
       catalog: 'LUMIERE',
       status: 'DRAFT',
       isPublic: true,
-      coverImageUrl: 'https://images.unsplash.com/photo-1612036782180-6f0b6cd846fe?w=800&h=1200&fit=crop',
+      coverImageUrl: '/posters/miracle-protocol.jpg',
       estimatedBudget: 180000,
     },
   })
@@ -792,7 +792,7 @@ async function main() {
       catalog: 'LUMIERE',
       status: 'DRAFT',
       isPublic: true,
-      coverImageUrl: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=800&h=1200&fit=crop',
+      coverImageUrl: '/posters/the-rebbe.jpg',
       estimatedBudget: 100000,
     },
   })
@@ -822,7 +822,7 @@ async function main() {
       catalog: 'LUMIERE',
       status: 'DRAFT',
       isPublic: true,
-      coverImageUrl: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800&h=1200&fit=crop',
+      coverImageUrl: '/posters/secret-menorah.jpg',
       estimatedBudget: 40000,
     },
   })
@@ -852,7 +852,7 @@ async function main() {
       catalog: 'LUMIERE',
       status: 'DRAFT',
       isPublic: true,
-      coverImageUrl: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=800&h=1200&fit=crop',
+      coverImageUrl: '/posters/last-train.jpg',
       estimatedBudget: 30000,
     },
   })
@@ -882,7 +882,7 @@ async function main() {
       catalog: 'LUMIERE',
       status: 'DRAFT',
       isPublic: true,
-      coverImageUrl: 'https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=800&h=1200&fit=crop',
+      coverImageUrl: '/posters/ortists.jpg',
       estimatedBudget: 50000,
     },
   })
@@ -912,7 +912,7 @@ async function main() {
       catalog: 'LUMIERE',
       status: 'DRAFT',
       isPublic: true,
-      coverImageUrl: 'https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=800&h=1200&fit=crop',
+      coverImageUrl: '/posters/meam-loez.jpg',
       estimatedBudget: 35000,
     },
   })
@@ -942,7 +942,7 @@ async function main() {
       catalog: 'LUMIERE',
       status: 'DRAFT',
       isPublic: true,
-      coverImageUrl: 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=800&h=1200&fit=crop',
+      coverImageUrl: '/posters/keter.jpg',
       estimatedBudget: 45000,
     },
   })
@@ -973,7 +973,7 @@ async function main() {
       catalog: 'COMMUNITY',
       status: 'IN_PRODUCTION',
       isPublic: true,
-      coverImageUrl: 'https://images.unsplash.com/photo-1485846234645-a62644f84728?w=800&h=1200&fit=crop',
+      coverImageUrl: '/posters/meam-loez.jpg',
       estimatedBudget: 45000,
     },
   })
@@ -1002,7 +1002,7 @@ async function main() {
       catalog: 'LUMIERE',
       status: 'PRE_PRODUCTION',
       isPublic: true,
-      coverImageUrl: 'https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=800&h=1200&fit=crop',
+      coverImageUrl: '/posters/esther-code.jpg',
       estimatedBudget: 95000,
     },
   })
@@ -1031,7 +1031,7 @@ async function main() {
       catalog: 'LUMIERE',
       status: 'DRAFT',
       isPublic: true,
-      coverImageUrl: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800&h=1200&fit=crop',
+      coverImageUrl: '/posters/miracle-protocol.jpg',
       estimatedBudget: 70000,
     },
   })
@@ -1060,7 +1060,7 @@ async function main() {
       catalog: 'LUMIERE',
       status: 'DRAFT',
       isPublic: true,
-      coverImageUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=1200&fit=crop',
+      coverImageUrl: '/posters/secret-menorah.jpg',
       estimatedBudget: 110000,
     },
   })
@@ -1089,7 +1089,7 @@ async function main() {
       catalog: 'LUMIERE',
       status: 'DRAFT',
       isPublic: true,
-      coverImageUrl: 'https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=800&h=1200&fit=crop',
+      coverImageUrl: '/posters/last-train.jpg',
       estimatedBudget: 65000,
     },
   })
@@ -1555,7 +1555,7 @@ async function main() {
       synopsis: "Un photographe français perdu dans les ruelles de Shinjuku découvre un monde parallèle à travers son objectif.",
       genre: 'Thriller',
       videoUrl: 'https://example.com/videos/ombres-de-tokyo.mp4',
-      thumbnailUrl: 'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=800&h=450&fit=crop',
+      thumbnailUrl: '/posters/the-rebbe.jpg',
       duration: 720,
       status: 'LIVE',
       submittedById: artist.id,
@@ -1579,7 +1579,7 @@ async function main() {
       synopsis: "Dans un futur proche, une IA compositrice crée la symphonie parfaite — mais à quel prix ?",
       genre: 'Science-Fiction',
       videoUrl: 'https://example.com/videos/reve-electrique.mp4',
-      thumbnailUrl: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=800&h=450&fit=crop',
+      thumbnailUrl: '/posters/keter.jpg',
       duration: 540,
       status: 'LIVE',
       submittedById: vip1.id,
@@ -1602,7 +1602,7 @@ async function main() {
       slug: 'memoires-deau',
       synopsis: "Un documentaire poétique sur les rivières disparues de France, entièrement généré par IA.",
       genre: 'Documentaire',
-      thumbnailUrl: 'https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?w=800&h=450&fit=crop',
+      thumbnailUrl: '/posters/meam-loez.jpg',
       duration: 960,
       status: 'PENDING',
       submittedById: contributor.id,

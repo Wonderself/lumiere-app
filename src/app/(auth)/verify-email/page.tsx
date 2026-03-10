@@ -5,7 +5,7 @@ import type { Metadata } from 'next'
 
 export const dynamic = 'force-dynamic'
 
-export const metadata: Metadata = { title: 'Verification Email — Lumiere' }
+export const metadata: Metadata = { title: 'Verification Email — CINEGEN' }
 
 export default async function VerifyEmailPage({
   searchParams,
@@ -49,7 +49,7 @@ export default async function VerifyEmailPage({
           Email verifie !
         </h2>
         <p className="text-white/50 leading-relaxed">
-          Votre adresse email a ete verifiee avec succes. Vous pouvez maintenant acceder a toutes les fonctionnalites de Lumiere.
+          Votre adresse email a ete verifiee avec succes. Vous pouvez maintenant acceder a toutes les fonctionnalites de CINEGEN.
         </p>
         <Link
           href="/login"

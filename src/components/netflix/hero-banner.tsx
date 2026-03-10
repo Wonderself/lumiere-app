@@ -79,7 +79,7 @@ export function HeroBanner({ films }: { films: HeroFilm[] }) {
           className="absolute inset-0"
         >
           <Image
-            src={film.coverImageUrl || 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=1920&h=1080&fit=crop'}
+            src={film.coverImageUrl || '/posters/keter.jpg'}
             alt={film.title}
             fill
             className="object-cover"
@@ -137,7 +137,7 @@ export function HeroBanner({ films }: { films: HeroFilm[] }) {
             {/* Synopsis with frosted glass background */}
             <div className="mb-10 md:mb-12">
               <p className="text-sm md:text-[15px] lg:text-base text-white/55 line-clamp-3 leading-[1.7] max-w-lg">
-                {film.synopsis || 'Decouvrez ce projet sur Lumiere Cinema.'}
+                {film.synopsis || 'Decouvrez ce projet sur CINEGEN.'}
               </p>
             </div>
 
