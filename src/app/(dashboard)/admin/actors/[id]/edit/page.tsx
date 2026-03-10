@@ -248,7 +248,7 @@ export default async function EditActorPage({ params }: Props) {
         {/* Current Cast Roles */}
         {actor.castRoles.length > 0 ? (
           <div className="space-y-2">
-            {actor.castRoles.map((role) => {
+            {actor.castRoles.map((role: any) => {
               const filmTitle = role.film?.title || role.catalogFilm?.title || 'Film inconnu'
               const filmType = role.film ? 'Production' : 'Catalogue'
               return (
