@@ -4,6 +4,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Film, ChevronRight, Star, Users, CheckCircle, Clapperboard } from 'lucide-react'
 import { FILM_STATUS_LABELS, CATALOG_LABELS } from '@/lib/constants'
+import FilmCategories from '@/components/films/film-categories'
 import type { Metadata } from 'next'
 
 export const dynamic = 'force-dynamic'
@@ -263,6 +264,11 @@ export default async function FilmsPage({
           )}
         </div>
       </div>
+
+      {/* ================================================================ */}
+      {/* CATALOG FILMS (client-side data)                                 */}
+      {/* ================================================================ */}
+      <FilmCategories />
     </div>
   )
 }

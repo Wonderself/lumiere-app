@@ -144,7 +144,7 @@ const roadmap: Phase[] = [
       { id: 'v7-6', title: 'Pages légales RGPD', description: 'CGU, confidentialité, cookies — conformes RGPD/CNIL', status: 'done', difficulty: 'trivial', note: '3 pages légales complètes' },
       { id: 'v7-7', title: 'DNS & domaine custom', description: 'cinegen.studio configuré avec Vercel/Cloudflare', status: 'todo', difficulty: 'easy', note: 'Guide fourni' },
       { id: 'v7-8', title: 'Notifications temps réel (SSE)', description: 'EventSource push, hook useNotifications, toast live', status: 'done', difficulty: 'easy', note: '/api/notifications/stream + useNotifications hook + auto-reconnect' },
-      { id: 'v7-9', title: 'Smart contracts (interfaces)', description: 'Types TypeScript pour Polygon/Base ERC-20/ERC-721/Governance', status: 'done', difficulty: 'medium', note: 'smart-contracts.ts: 4 contrats, 4 ABIs, config multi-chain' },
+      { id: 'v7-9', title: 'Smart contracts (interfaces)', description: 'Types TypeScript pour Ethereum ERC-20/ERC-721/Governance', status: 'done', difficulty: 'medium', note: 'smart-contracts.ts: 4 contrats, 4 ABIs, config multi-chain' },
       { id: 'v7-10', title: 'Documentation technique', description: 'SECURITY.md, DEPLOYMENT.md, CONTRIBUTING.md', status: 'done', difficulty: 'trivial', note: '3 guides complets pour sécurité, déploiement et contribution' },
       { id: 'v7-11', title: 'Audit visuel complet', description: 'Responsive mobile, padding, bordures, typography, boutons cohérents', status: 'done', difficulty: 'medium', note: '60+ corrections sur 12 fichiers' },
       { id: 'v7-12', title: 'Tests unitaires (Vitest)', description: '85 tests couvrant utils, reputation, invoices, film-decomposer, rate-limiter', status: 'done', difficulty: 'medium', note: 'Vitest + 5 suites de tests, 85/85 passing' },
@@ -184,7 +184,7 @@ const roadmap: Phase[] = [
     status: 'todo',
     emoji: '⛓️',
     items: [
-      { id: 'v9-1', title: 'Deploy smart contracts', description: 'ERC-20 FilmToken + ERC-721 ContributionNFT sur Polygon/Base', status: 'todo', difficulty: 'guided' },
+      { id: 'v9-1', title: 'Deploy smart contracts', description: 'ERC-20 FilmToken + ERC-721 ContributionNFT sur Ethereum + Arbitrum L2', status: 'todo', difficulty: 'guided' },
       { id: 'v9-2', title: 'Wallet Connect', description: 'Connexion MetaMask/WalletConnect pour acheter tokens et voter', status: 'todo', difficulty: 'medium' },
       { id: 'v9-3', title: 'NFT contributeur', description: 'Mint automatique d\'un NFT preuve-de-contribution à chaque tâche validée', status: 'todo', difficulty: 'medium' },
       { id: 'v9-4', title: 'Gouvernance on-chain', description: 'Votes token-weighted pour décisions de production (casting, script, budget)', status: 'todo', difficulty: 'guided' },

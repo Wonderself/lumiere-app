@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { Film, Tv, Users, Award, Pen, BarChart3, MapPin, Code2, Tag } from 'lucide-react'
+import { Film, Tv, Users, Award, Pen, BarChart3, MapPin, Code2, Tag, Star, Clapperboard, Briefcase, Coins, Radio, Play } from 'lucide-react'
 
 export function Footer() {
   return (
@@ -38,6 +38,13 @@ export function Footer() {
               <li><Link href="/roadmap" className="group flex items-center gap-2 text-[13px] text-white/25 hover:text-[#E50914] transition-colors"><MapPin className="h-3.5 w-3.5 opacity-40 group-hover:opacity-100 transition-opacity" />Roadmap</Link></li>
               <li><Link href="/pricing" className="group flex items-center gap-2 text-[13px] text-white/25 hover:text-[#E50914] transition-colors"><Tag className="h-3.5 w-3.5 opacity-40 group-hover:opacity-100 transition-opacity" />Pricing</Link></li>
               <li><Link href="/developers" className="group flex items-center gap-2 text-[13px] text-white/25 hover:text-[#E50914] transition-colors"><Code2 className="h-3.5 w-3.5 opacity-40 group-hover:opacity-100 transition-opacity" />Developer API</Link></li>
+              <li><Link href="/tv" className="group flex items-center gap-2 text-[13px] text-white/25 hover:text-[#2563EB] transition-colors"><Tv className="h-3.5 w-3.5 opacity-40 group-hover:opacity-100 transition-opacity" />TV Home</Link></li>
+              <li><Link href="/tv/live" className="group flex items-center gap-2 text-[13px] text-white/25 hover:text-[#2563EB] transition-colors"><Radio className="h-3.5 w-3.5 opacity-40 group-hover:opacity-100 transition-opacity" />Live TV</Link></li>
+              <li><Link href="/tv/replay" className="group flex items-center gap-2 text-[13px] text-white/25 hover:text-[#2563EB] transition-colors"><Tv className="h-3.5 w-3.5 opacity-40 group-hover:opacity-100 transition-opacity" />Replay</Link></li>
+              <li><Link href="/tv/shows" className="group flex items-center gap-2 text-[13px] text-white/25 hover:text-[#2563EB] transition-colors"><Film className="h-3.5 w-3.5 opacity-40 group-hover:opacity-100 transition-opacity" />TV Shows</Link></li>
+              <li><Link href="/watch" className="group flex items-center gap-2 text-[13px] text-white/25 hover:text-[#2563EB] transition-colors"><Play className="h-3.5 w-3.5 opacity-40 group-hover:opacity-100 transition-opacity" />Watch All</Link></li>
+              <li><Link href="/tv/hosts" className="group flex items-center gap-2 text-[13px] text-white/25 hover:text-[#2563EB] transition-colors"><Users className="h-3.5 w-3.5 opacity-40 group-hover:opacity-100 transition-opacity" />TV Hosts</Link></li>
+              <li><Link href="/tv/community" className="group flex items-center gap-2 text-[13px] text-white/25 hover:text-[#2563EB] transition-colors"><Users className="h-3.5 w-3.5 opacity-40 group-hover:opacity-100 transition-opacity" />TV Community</Link></li>
             </ul>
           </div>
 
@@ -49,6 +56,10 @@ export function Footer() {
               <li><Link href="/register?role=SCREENWRITER" className="group flex items-center gap-2 text-[13px] text-white/25 hover:text-[#E50914] transition-colors"><Pen className="h-3.5 w-3.5 opacity-40 group-hover:opacity-100 transition-opacity" />Submit a Screenplay</Link></li>
               <li><Link href="/tasks" className="group flex items-center gap-2 text-[13px] text-white/25 hover:text-[#E50914] transition-colors"><Award className="h-3.5 w-3.5 opacity-40 group-hover:opacity-100 transition-opacity" />Available Tasks</Link></li>
               <li><Link href="/actors" className="group flex items-center gap-2 text-[13px] text-white/25 hover:text-[#E50914] transition-colors"><Users className="h-3.5 w-3.5 opacity-40 group-hover:opacity-100 transition-opacity" />Actors</Link></li>
+              <li><Link href="/act" className="group flex items-center gap-2 text-[13px] text-white/25 hover:text-[#E50914] transition-colors"><Star className="h-3.5 w-3.5 opacity-40 group-hover:opacity-100 transition-opacity" />Act</Link></li>
+              <li><Link href="/produce" className="group flex items-center gap-2 text-[13px] text-white/25 hover:text-[#E50914] transition-colors"><Clapperboard className="h-3.5 w-3.5 opacity-40 group-hover:opacity-100 transition-opacity" />Produce</Link></li>
+              <li><Link href="/work" className="group flex items-center gap-2 text-[13px] text-white/25 hover:text-[#E50914] transition-colors"><Briefcase className="h-3.5 w-3.5 opacity-40 group-hover:opacity-100 transition-opacity" />Work</Link></li>
+              <li><Link href="/points" className="group flex items-center gap-2 text-[13px] text-white/25 hover:text-amber-400 transition-colors"><Coins className="h-3.5 w-3.5 opacity-40 group-hover:opacity-100 transition-opacity" />Points & Rewards</Link></li>
             </ul>
           </div>
 

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useMemo } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import {
@@ -21,8 +21,15 @@ import {
   UserCircle,
   Film,
   ArrowRight,
+  Search,
+  Link2,
+  DollarSign,
+  Lock,
+  FileVideo,
+  Image as ImageIcon,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { FILMS_BY_GENRE, GENRE_ORDER, type FilmData, NAMED_POSTERS } from '@/data/films'
 
 /* ── Types ── */
 
@@ -32,6 +39,8 @@ type AnalysisStep = {
   label: string
   done: boolean
 }
+
+type ExportFormat = 'mp4-1080' | 'mp4-4k' | 'gif' | 'share'
 
 /* ── Data ── */
 
@@ -57,6 +66,13 @@ const PORTFOLIO_PLACEHOLDERS = [
 
 const SAMPLE_TEXT =
   'In a world where dreams become reality, one person dared to imagine beyond the stars...'
+
+const EXPORT_OPTIONS: { id: ExportFormat; label: string; detail: string; icon: React.ElementType }[] = [
+  { id: 'mp4-1080', label: 'MP4 (1080p)', detail: 'Standard HD export', icon: FileVideo },
+  { id: 'mp4-4k', label: 'MP4 (4K)', detail: 'Ultra HD cinema quality', icon: FileVideo },
+  { id: 'gif', label: 'GIF', detail: 'Animated preview clip', icon: ImageIcon },
+  { id: 'share', label: 'Share Link', detail: 'Shareable public URL', icon: Link2 },
+]
 
 /* ── Component ── */
 
@@ -84,6 +100,23 @@ export default function ActPage() {
 
   const fileInputRef = useRef<HTMLInputElement>(null)
 
+  /* Film selection state */
+  const [filmSearch, setFilmSearch] = useState('')
+  const [selectedGenre, setSelectedGenre] = useState<string>('All')
+  const [selectedFilm, setSelectedFilm] = useState<FilmData | null>(null)
+
+  /* Export state */
+  const [selectedExport, setSelectedExport] = useState<ExportFormat>('mp4-1080')
+
+  /* Animated ring rotation */
+  const [ringRotation, setRingRotation] = useState(0)
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setRingRotation((r) => (r + 2) % 360)
+    }, 30)
+    return () => clearInterval(interval)
+  }, [])
+
   /* Waveform bars */
   const BARS = 40
   const [barHeights, setBarHeights] = useState<number[]>(Array(BARS).fill(4))
@@ -95,6 +128,29 @@ export default function ActPage() {
     }, 120)
     return () => clearInterval(interval)
   }, [isRecording])
+
+  /* Filtered films */
+  const filteredFilms = useMemo(() => {
+    let films: FilmData[] = []
+    if (selectedGenre === 'All') {
+      for (const genre of GENRE_ORDER) {
+        const genreFilms = FILMS_BY_GENRE[genre]
+        if (genreFilms) films = films.concat(genreFilms)
+      }
+    } else {
+      films = FILMS_BY_GENRE[selectedGenre] || []
+    }
+    if (filmSearch.trim()) {
+      const q = filmSearch.toLowerCase()
+      films = films.filter(
+        (f) =>
+          f.title.toLowerCase().includes(q) ||
+          f.genre.toLowerCase().includes(q) ||
+          f.director.toLowerCase().includes(q)
+      )
+    }
+    return films.slice(0, 24) // Show max 24 films
+  }, [selectedGenre, filmSearch])
 
   /* Handlers */
 
@@ -168,6 +224,10 @@ export default function ActPage() {
     return `${m}:${sec.toString().padStart(2, '0')}`
   }
 
+  function getFilmPoster(film: FilmData): string {
+    return NAMED_POSTERS[film.title] || film.coverImageUrl || '/posters/placeholder.jpg'
+  }
+
   /* Scroll helpers */
   function scrollTo(id: string) {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
@@ -233,7 +293,7 @@ export default function ActPage() {
         </div>
       </section>
 
-      {/* ────────────────────── HOW IT WORKS ────────────────────── */}
+      {/* ────────────────────── 3-STEP PROCESS ────────────────────── */}
       <section className="py-20 sm:py-28">
         <div className="container mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
@@ -250,20 +310,23 @@ export default function ActPage() {
                 title: 'Upload Your Photo',
                 desc: 'Upload a clear headshot. Our AI maps your facial features for realistic rendering.',
                 step: '01',
-              },
-              {
-                icon: Star,
-                title: 'Choose Your Role',
-                desc: 'Select the type of role: Lead, Supporting, Cameo, Voice Actor, Narrator.',
-                step: '02',
+                color: 'from-[#E50914] to-red-600',
               },
               {
                 icon: Film,
-                title: 'See Yourself on Screen',
+                title: 'Choose Your Film',
+                desc: 'Browse our catalog and select the film you want to star in.',
+                step: '02',
+                color: 'from-purple-500 to-purple-700',
+              },
+              {
+                icon: Star,
+                title: 'Play as the Lead',
                 desc: 'AI generates scenes with you as the character in your chosen film.',
                 step: '03',
+                color: 'from-amber-500 to-orange-600',
               },
-            ].map((card) => (
+            ].map((card, idx) => (
               <div
                 key={card.step}
                 className="group relative rounded-2xl border border-white/[0.06] bg-white/[0.02] p-8 transition-all duration-300 hover:border-white/[0.12] hover:bg-white/[0.04]"
@@ -271,16 +334,390 @@ export default function ActPage() {
                 <span className="absolute top-6 right-6 text-5xl font-black text-white/[0.04] group-hover:text-[#E50914]/10 transition-colors">
                   {card.step}
                 </span>
-                <div className="mb-5 inline-flex items-center justify-center h-12 w-12 rounded-xl bg-[#E50914]/10 text-[#E50914]">
-                  <card.icon className="h-6 w-6" />
+                <div className={cn(
+                  'mb-5 inline-flex items-center justify-center h-14 w-14 rounded-2xl bg-gradient-to-br',
+                  card.color,
+                  'shadow-lg'
+                )}>
+                  <card.icon className="h-7 w-7 text-white" />
                 </div>
                 <h3 className="text-lg font-semibold mb-2">{card.title}</h3>
                 <p className="text-white/50 text-sm leading-relaxed">{card.desc}</p>
+
+                {/* Arrow connector */}
+                {idx < 2 && (
+                  <div className="hidden md:flex absolute -right-3 top-1/2 -translate-y-1/2 z-10">
+                    <ArrowRight className="h-6 w-6 text-white/10" />
+                  </div>
+                )}
               </div>
             ))}
           </div>
         </div>
       </section>
+
+      {/* ────────────────────── UPLOAD & EXPORT PANELS ────────────────────── */}
+      <section className="py-20 sm:py-28 border-t border-white/[0.04]">
+        <div className="container mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+            {/* ── LEFT: Upload Your Photo ── */}
+            <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-8 sm:p-10 flex flex-col items-center">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#E50914]/20 bg-[#E50914]/10 text-[#E50914] text-xs sm:text-sm mb-6">
+                <Upload className="h-3.5 w-3.5" />
+                <span>Upload Your Photo</span>
+              </div>
+
+              {/* Animated ring + upload icon */}
+              <div className="relative w-40 h-40 mb-6 flex items-center justify-center">
+                {/* Spinning ring */}
+                <svg
+                  className="absolute inset-0 w-full h-full"
+                  viewBox="0 0 160 160"
+                  style={{ transform: `rotate(${ringRotation}deg)` }}
+                >
+                  <defs>
+                    <linearGradient id="ring-grad-red" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#E50914" stopOpacity="1" />
+                      <stop offset="50%" stopColor="#E50914" stopOpacity="0.3" />
+                      <stop offset="100%" stopColor="#E50914" stopOpacity="0" />
+                    </linearGradient>
+                  </defs>
+                  <circle
+                    cx="80"
+                    cy="80"
+                    r="74"
+                    fill="none"
+                    stroke="url(#ring-grad-red)"
+                    strokeWidth="3"
+                    strokeLinecap="round"
+                    strokeDasharray="200 265"
+                  />
+                </svg>
+                {/* Static inner ring */}
+                <div className="absolute inset-4 rounded-full border border-white/[0.06]" />
+                {/* Center icon / thumbnail */}
+                {uploadedPhoto ? (
+                  <div className="relative w-24 h-24 rounded-full overflow-hidden border-2 border-[#E50914]/40">
+                    <Image src={uploadedPhoto} alt="Your photo" fill className="object-cover" />
+                  </div>
+                ) : (
+                  <div className="flex flex-col items-center justify-center">
+                    <Upload className="h-10 w-10 text-[#E50914]/60" />
+                  </div>
+                )}
+              </div>
+
+              <p className="text-white/40 text-sm mb-4">JPG, PNG or HEIC &mdash; Max 20MB</p>
+
+              <button
+                onClick={() => fileInputRef.current?.click()}
+                className="px-8 py-3 rounded-xl bg-[#E50914] hover:bg-[#F6121D] text-white font-semibold transition-all duration-300 hover:shadow-[0_0_30px_rgba(229,9,20,0.25)]"
+              >
+                Browse Files
+              </button>
+
+              {/* Also support drag & drop */}
+              <div
+                onDragOver={(e) => { e.preventDefault(); setIsDragging(true) }}
+                onDragLeave={() => setIsDragging(false)}
+                onDrop={handleDrop}
+                className={cn(
+                  'mt-6 w-full rounded-xl border-2 border-dashed p-6 text-center transition-all cursor-pointer',
+                  isDragging
+                    ? 'border-[#E50914] bg-[#E50914]/[0.06]'
+                    : 'border-white/[0.08] bg-white/[0.01] hover:border-white/[0.15]'
+                )}
+                onClick={() => fileInputRef.current?.click()}
+              >
+                <p className="text-white/30 text-sm">or drag & drop your headshot here</p>
+              </div>
+
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/*,.heic"
+                className="hidden"
+                onChange={handleFileChange}
+              />
+            </div>
+
+            {/* ── RIGHT: Export / Publish ── */}
+            <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-8 sm:p-10 flex flex-col items-center">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-blue-500/20 bg-blue-500/10 text-blue-400 text-xs sm:text-sm mb-6">
+                <Download className="h-3.5 w-3.5" />
+                <span>Publish Your Movie</span>
+              </div>
+
+              {/* Animated ring + download icon */}
+              <div className="relative w-40 h-40 mb-6 flex items-center justify-center">
+                <svg
+                  className="absolute inset-0 w-full h-full"
+                  viewBox="0 0 160 160"
+                  style={{ transform: `rotate(${-ringRotation * 0.7}deg)` }}
+                >
+                  <defs>
+                    <linearGradient id="ring-grad-blue" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#3B82F6" stopOpacity="1" />
+                      <stop offset="50%" stopColor="#3B82F6" stopOpacity="0.3" />
+                      <stop offset="100%" stopColor="#3B82F6" stopOpacity="0" />
+                    </linearGradient>
+                  </defs>
+                  <circle
+                    cx="80"
+                    cy="80"
+                    r="74"
+                    fill="none"
+                    stroke="url(#ring-grad-blue)"
+                    strokeWidth="3"
+                    strokeLinecap="round"
+                    strokeDasharray="200 265"
+                  />
+                </svg>
+                <div className="absolute inset-4 rounded-full border border-white/[0.06]" />
+                <Download className="h-10 w-10 text-blue-400/60" />
+              </div>
+
+              {/* Export format options */}
+              <div className="w-full space-y-3 mb-6">
+                {EXPORT_OPTIONS.map((opt) => {
+                  const isActive = selectedExport === opt.id
+                  return (
+                    <button
+                      key={opt.id}
+                      onClick={() => setSelectedExport(opt.id)}
+                      className={cn(
+                        'w-full flex items-center gap-3 px-4 py-3 rounded-xl border transition-all text-left',
+                        isActive
+                          ? 'border-blue-500/30 bg-blue-500/[0.08]'
+                          : 'border-white/[0.06] bg-white/[0.02] hover:border-white/[0.12]'
+                      )}
+                    >
+                      <div className={cn(
+                        'h-4 w-4 rounded-full border-2 flex items-center justify-center flex-shrink-0',
+                        isActive ? 'border-blue-500 bg-blue-500' : 'border-white/20'
+                      )}>
+                        {isActive && <div className="h-1.5 w-1.5 rounded-full bg-white" />}
+                      </div>
+                      <opt.icon className={cn('h-4 w-4 flex-shrink-0', isActive ? 'text-blue-400' : 'text-white/30')} />
+                      <div>
+                        <p className={cn('text-sm font-medium', isActive ? 'text-white' : 'text-white/60')}>{opt.label}</p>
+                        <p className="text-xs text-white/30">{opt.detail}</p>
+                      </div>
+                    </button>
+                  )
+                })}
+              </div>
+
+              <button
+                disabled={!generated}
+                className={cn(
+                  'w-full py-3.5 rounded-xl font-semibold transition-all duration-300 flex items-center justify-center gap-2',
+                  generated
+                    ? 'bg-blue-600 hover:bg-blue-500 text-white hover:shadow-[0_0_30px_rgba(59,130,246,0.25)] cursor-pointer'
+                    : 'bg-white/[0.04] text-white/20 cursor-not-allowed'
+                )}
+              >
+                <Download className="h-5 w-5" />
+                Export Movie
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ────────────────────── FILM SELECTION GRID ────────────────────── */}
+      <section id="film-selection" className="py-20 sm:py-28 border-t border-white/[0.04]">
+        <div className="container mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-10">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-purple-500/20 bg-purple-500/10 text-purple-400 text-xs sm:text-sm mb-4">
+              <Film className="h-3.5 w-3.5" />
+              <span>Film Catalog</span>
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-bold mb-4">Choose Your Film</h2>
+            <p className="text-white/50 max-w-xl mx-auto">
+              Browse our catalog and select the film you want to appear in.
+            </p>
+          </div>
+
+          {/* Search bar */}
+          <div className="relative max-w-lg mx-auto mb-8">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-white/30" />
+            <input
+              type="text"
+              value={filmSearch}
+              onChange={(e) => setFilmSearch(e.target.value)}
+              placeholder="Search films by title, genre, or director..."
+              className="w-full pl-12 pr-4 py-3 rounded-xl border border-white/[0.08] bg-white/[0.03] text-white placeholder:text-white/30 focus:outline-none focus:border-[#E50914]/40 focus:bg-white/[0.05] transition-all"
+            />
+          </div>
+
+          {/* Genre tabs */}
+          <div className="flex flex-wrap gap-2 justify-center mb-10">
+            <button
+              onClick={() => setSelectedGenre('All')}
+              className={cn(
+                'px-4 py-1.5 rounded-full text-sm font-medium transition-all',
+                selectedGenre === 'All'
+                  ? 'bg-[#E50914] text-white'
+                  : 'bg-white/[0.04] text-white/50 hover:bg-white/[0.08] hover:text-white/70 border border-white/[0.06]'
+              )}
+            >
+              All
+            </button>
+            {GENRE_ORDER.map((genre) => (
+              <button
+                key={genre}
+                onClick={() => setSelectedGenre(genre)}
+                className={cn(
+                  'px-4 py-1.5 rounded-full text-sm font-medium transition-all',
+                  selectedGenre === genre
+                    ? 'bg-[#E50914] text-white'
+                    : 'bg-white/[0.04] text-white/50 hover:bg-white/[0.08] hover:text-white/70 border border-white/[0.06]'
+                )}
+              >
+                {genre}
+              </button>
+            ))}
+          </div>
+
+          {/* Film grid */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+            {filteredFilms.map((film) => {
+              const isSelected = selectedFilm?.id === film.id
+              const poster = getFilmPoster(film)
+              return (
+                <button
+                  key={film.id}
+                  onClick={() => setSelectedFilm(isSelected ? null : film)}
+                  className={cn(
+                    'group relative rounded-xl overflow-hidden border-2 transition-all duration-300 text-left',
+                    isSelected
+                      ? 'border-[#E50914] shadow-[0_0_20px_rgba(229,9,20,0.35)] scale-[1.03]'
+                      : 'border-transparent hover:border-white/[0.15] hover:scale-[1.02]'
+                  )}
+                >
+                  <div className="relative aspect-[2/3] bg-gradient-to-br from-white/[0.04] to-white/[0.01]">
+                    {poster && (
+                      <Image
+                        src={poster}
+                        alt={film.title}
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 16vw"
+                      />
+                    )}
+                    {/* Overlay */}
+                    <div className={cn(
+                      'absolute inset-0 transition-all duration-300',
+                      isSelected
+                        ? 'bg-gradient-to-t from-[#E50914]/40 via-transparent to-[#E50914]/10'
+                        : 'bg-gradient-to-t from-black/70 via-transparent to-transparent'
+                    )} />
+
+                    {/* Selected check */}
+                    {isSelected && (
+                      <div className="absolute top-2 right-2 h-6 w-6 rounded-full bg-[#E50914] flex items-center justify-center">
+                        <Check className="h-3.5 w-3.5 text-white" />
+                      </div>
+                    )}
+
+                    {/* Genre badge */}
+                    <div className="absolute top-2 left-2">
+                      <span className="px-2 py-0.5 rounded text-[10px] font-medium bg-black/60 text-white/80 backdrop-blur-sm">
+                        {film.genre}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Title */}
+                  <div className="p-2.5 bg-white/[0.02]">
+                    <p className="text-xs font-semibold text-white/80 truncate group-hover:text-white transition-colors">
+                      {film.title}
+                    </p>
+                    <p className="text-[10px] text-white/30 mt-0.5">{film.year} &middot; {film.duration}</p>
+                  </div>
+                </button>
+              )
+            })}
+          </div>
+
+          {filteredFilms.length === 0 && (
+            <div className="text-center py-16">
+              <Film className="h-12 w-12 text-white/10 mx-auto mb-3" />
+              <p className="text-white/30">No films found matching your search.</p>
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* ────────────────────── PREVIEW SECTION ────────────────────── */}
+      {(selectedFilm || uploadedPhoto) && (
+        <section className="py-20 sm:py-28 border-t border-white/[0.04]">
+          <div className="container mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-10">
+              <h2 className="text-3xl sm:text-4xl font-bold mb-4">Preview</h2>
+              <p className="text-white/50 max-w-xl mx-auto">
+                {selectedFilm && uploadedPhoto
+                  ? `You in "${selectedFilm.title}" — a simulated preview of your appearance.`
+                  : selectedFilm
+                    ? 'Upload your photo to see a preview of yourself in this film.'
+                    : 'Select a film to see your preview.'}
+              </p>
+            </div>
+
+            <div className="relative rounded-2xl overflow-hidden border border-white/[0.08] bg-white/[0.02] aspect-video">
+              {/* Film poster as background */}
+              {selectedFilm && (
+                <Image
+                  src={getFilmPoster(selectedFilm)}
+                  alt={selectedFilm.title}
+                  fill
+                  className="object-cover"
+                />
+              )}
+              {/* Gradient overlay */}
+              <div className="absolute inset-0 bg-gradient-to-r from-[#0A0A0A]/80 via-[#0A0A0A]/40 to-[#0A0A0A]/80" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-transparent to-[#0A0A0A]/60" />
+
+              {/* User photo overlay */}
+              {uploadedPhoto && selectedFilm && (
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="relative">
+                    {/* Glow behind photo */}
+                    <div className="absolute -inset-4 bg-[#E50914]/20 rounded-full blur-2xl" />
+                    <div className="relative w-32 h-32 sm:w-40 sm:h-40 rounded-full overflow-hidden border-4 border-[#E50914]/50 shadow-[0_0_40px_rgba(229,9,20,0.3)]">
+                      <Image src={uploadedPhoto} alt="You" fill className="object-cover" />
+                    </div>
+                    <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-[#E50914] text-xs font-bold whitespace-nowrap">
+                      YOU
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Film info overlay */}
+              {selectedFilm && (
+                <div className="absolute bottom-0 inset-x-0 p-6 sm:p-8">
+                  <p className="text-[#E50914] text-xs font-semibold uppercase tracking-wider mb-1">{selectedFilm.genre}</p>
+                  <h3 className="text-xl sm:text-2xl font-bold mb-2">{selectedFilm.title}</h3>
+                  <p className="text-white/50 text-sm line-clamp-2 max-w-lg">{selectedFilm.synopsis}</p>
+                </div>
+              )}
+
+              {/* Empty state */}
+              {!selectedFilm && !uploadedPhoto && (
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="text-center">
+                    <Film className="h-12 w-12 text-white/10 mx-auto mb-3" />
+                    <p className="text-white/30 text-sm">Select a film and upload your photo</p>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* ────────────────────── FACE SCAN ────────────────────── */}
       <section id="face-scan" className="py-20 sm:py-28 border-t border-white/[0.04]">
@@ -342,13 +779,6 @@ export default function ActPage() {
                     <p className="text-white/30 text-sm">or click to browse</p>
                   </>
                 )}
-                <input
-                  ref={fileInputRef}
-                  type="file"
-                  accept="image/*"
-                  className="hidden"
-                  onChange={handleFileChange}
-                />
               </div>
 
               {/* Analysis steps */}
@@ -453,6 +883,84 @@ export default function ActPage() {
                   <p className="text-white/20 text-xs">Upload a photo and click generate</p>
                 </div>
               )}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ────────────────────── PRICING ────────────────────── */}
+      <section className="py-20 sm:py-28 border-t border-white/[0.04]">
+        <div className="container mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-14">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-amber-500/20 bg-amber-500/10 text-amber-400 text-xs sm:text-sm mb-4">
+              <DollarSign className="h-3.5 w-3.5" />
+              <span>Pricing</span>
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-bold mb-4">Simple, Transparent Pricing</h2>
+            <p className="text-white/50 max-w-xl mx-auto">
+              Choose the level of integration that fits your vision.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Basic */}
+            <div className="rounded-2xl border border-white/[0.08] bg-white/[0.02] p-8 relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-[#E50914]/[0.03] rounded-full blur-[60px]" />
+              <p className="text-xs text-white/30 uppercase tracking-wider font-semibold mb-2">Basic Insertion</p>
+              <div className="flex items-baseline gap-1 mb-4">
+                <span className="text-4xl font-bold text-white">$9</span>
+                <span className="text-white/40 text-sm">per scene</span>
+              </div>
+              <p className="text-white/50 text-sm mb-6 leading-relaxed">
+                Standard AI face swap into any film scene. Included free with an active subscription.
+              </p>
+              <ul className="space-y-3 mb-8">
+                {['Basic face insertion', 'Standard lighting match', '1080p export', 'Included with subscription'].map((item) => (
+                  <li key={item} className="flex items-center gap-2.5 text-sm text-white/60">
+                    <Check className="h-4 w-4 text-emerald-500 flex-shrink-0" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+              <button className="w-full py-3 rounded-xl border border-white/[0.1] bg-white/[0.04] hover:bg-white/[0.08] text-white font-semibold transition-all">
+                Get Started
+              </button>
+            </div>
+
+            {/* Premium */}
+            <div className="rounded-2xl border border-[#E50914]/30 bg-gradient-to-b from-[#E50914]/[0.06] to-white/[0.02] p-8 relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-40 h-40 bg-[#E50914]/[0.06] rounded-full blur-[80px]" />
+              <div className="absolute top-4 right-4">
+                <span className="px-3 py-1 rounded-full text-[10px] font-bold bg-[#E50914] text-white uppercase tracking-wider">
+                  Popular
+                </span>
+              </div>
+              <p className="text-xs text-[#E50914] uppercase tracking-wider font-semibold mb-2">Premium Quality</p>
+              <div className="flex items-baseline gap-1 mb-4">
+                <span className="text-4xl font-bold text-white">$29</span>
+                <span className="text-white/40 text-sm">per scene</span>
+              </div>
+              <p className="text-white/50 text-sm mb-6 leading-relaxed">
+                Full scene integration with advanced AI. Your character blends seamlessly into every frame.
+              </p>
+              <ul className="space-y-3 mb-8">
+                {[
+                  'Full scene integration',
+                  'Advanced lighting & shadows',
+                  '4K cinema export',
+                  'Expression matching',
+                  'Multi-angle compositing',
+                  'Priority rendering',
+                ].map((item) => (
+                  <li key={item} className="flex items-center gap-2.5 text-sm text-white/60">
+                    <Check className="h-4 w-4 text-[#E50914] flex-shrink-0" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+              <button className="w-full py-3 rounded-xl bg-[#E50914] hover:bg-[#F6121D] text-white font-semibold transition-all hover:shadow-[0_0_30px_rgba(229,9,20,0.25)]">
+                Go Premium
+              </button>
             </div>
           </div>
         </div>
@@ -664,6 +1172,26 @@ export default function ActPage() {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ────────────────────── SMART CONTRACT NOTE ────────────────────── */}
+      <section className="py-16 border-t border-white/[0.04]">
+        <div className="container mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+          <div className="rounded-2xl border border-emerald-500/10 bg-emerald-500/[0.03] p-6 sm:p-8 flex items-start gap-4">
+            <div className="h-10 w-10 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-400 flex-shrink-0 mt-0.5">
+              <Lock className="h-5 w-5" />
+            </div>
+            <div>
+              <h3 className="font-semibold text-emerald-300 mb-1">On-Chain Likeness Record</h3>
+              <p className="text-white/50 text-sm leading-relaxed">
+                Your appearance in this film is recorded on-chain. You retain full rights to your
+                likeness. Every AI-generated scene that includes your face is cryptographically
+                signed and traceable, ensuring you always have provable ownership and control over
+                how your image is used across the CINEGEN ecosystem.
+              </p>
+            </div>
           </div>
         </div>
       </section>

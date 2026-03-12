@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect, useRef } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import {
@@ -13,10 +13,19 @@ import {
   Check,
   Lock,
   ChevronRight,
+  ChevronDown,
   AlertCircle,
   Lightbulb,
   BookOpen,
   Wand2,
+  Bold,
+  Italic,
+  Type,
+  Film,
+  User,
+  MessageSquare,
+  ChevronsRight,
+  Minus,
 } from 'lucide-react'
 import { CreateLayout } from '@/components/create/create-layout'
 import { useCreateProgress } from '@/components/create/use-create-progress'
@@ -26,6 +35,19 @@ import { cn } from '@/lib/utils'
 /* ── Constants ── */
 const UNSPLASH_BG =
   'https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=1400&h=600&q=80'
+
+const GENRES = [
+  'Drama',
+  'Comedy',
+  'Action',
+  'Thriller',
+  'Horror',
+  'Sci-Fi',
+  'Romance',
+  'Documentary',
+  'Animation',
+  'Fantasy',
+]
 
 const HOW_IT_WORKS = [
   {
@@ -48,11 +70,63 @@ const HOW_IT_WORKS = [
   },
 ]
 
-const ANALYSIS_CATEGORIES = [
-  { label: 'Story Structure', description: 'Three-act structure, plot points, and narrative arc' },
-  { label: 'Character Development', description: 'Character depth, motivation, and growth arcs' },
-  { label: 'Pacing', description: 'Scene rhythm, tension buildup, and momentum' },
-  { label: 'Dialogue Quality', description: 'Authenticity, subtext, and character voice' },
+const ANALYSIS_RESULTS = [
+  {
+    label: 'Story Structure',
+    description: 'Three-act structure, plot points, and narrative arc',
+    score: 72,
+    grade: 'B',
+    feedback:
+      'Consider strengthening the midpoint reversal. Your inciting incident is well-placed but the second act could use more tension.',
+    suggestions: [
+      'Add a stronger midpoint reversal around page 55-60',
+      'Increase stakes progressively through Act 2',
+      'Ensure your climax directly addresses the central dramatic question',
+      'Consider adding a "dark night of the soul" moment before Act 3',
+    ],
+  },
+  {
+    label: 'Character Development',
+    description: 'Character depth, motivation, and growth arcs',
+    score: 85,
+    grade: 'A',
+    feedback:
+      'Strong character arcs detected. The protagonist\'s motivation is clear. Consider adding more depth to supporting characters.',
+    suggestions: [
+      'Give the antagonist a more sympathetic backstory',
+      'Ensure each supporting character has their own mini-arc',
+      'Add moments of vulnerability for the protagonist in Act 2',
+      'Consider a scene where the mentor figure shows weakness',
+    ],
+  },
+  {
+    label: 'Pacing',
+    description: 'Scene rhythm, tension buildup, and momentum',
+    score: 68,
+    grade: 'C',
+    feedback:
+      'The opening moves quickly but scenes 3-5 may feel slow. Consider trimming exposition in the second act.',
+    suggestions: [
+      'Cut or combine scenes 3 and 4 to maintain momentum',
+      'Add a ticking clock element to increase urgency',
+      'Balance action sequences with quieter character moments',
+      'Trim dialogue-heavy scenes by 15-20% in Act 2',
+    ],
+  },
+  {
+    label: 'Dialogue Quality',
+    description: 'Authenticity, subtext, and character voice',
+    score: 78,
+    grade: 'B',
+    feedback:
+      'Natural-sounding dialogue with good subtext. Some exchanges in Act 2 feel too expository.',
+    suggestions: [
+      'Replace expository dialogue with visual storytelling where possible',
+      'Give each character a unique speech pattern or verbal tic',
+      'Add more subtext — let characters talk around what they really mean',
+      'Read dialogue aloud to check for natural rhythm',
+    ],
+  },
 ]
 
 const WRITING_TIPS = [
@@ -63,6 +137,34 @@ const WRITING_TIPS = [
   { tip: 'Conflict drives every scene', detail: 'Every scene needs tension or conflict. If nothing is at stake, the scene likely doesn\'t belong.' },
   { tip: 'Read it aloud', detail: 'Dialogue that looks good on paper can sound unnatural spoken. Always do a read-through.' },
 ]
+
+const FORMATTING_BUTTONS = [
+  { label: 'Bold', icon: Bold, insert: '**text**' },
+  { label: 'Italic', icon: Italic, insert: '_text_' },
+  { label: 'UPPER', icon: Type, insert: 'UPPERCASE' },
+  { label: 'Scene', icon: Film, insert: '\nINT./EXT. LOCATION - DAY/NIGHT\n\n' },
+  { label: 'Character', icon: User, insert: '\n                    CHARACTER NAME\n' },
+  { label: 'Paren', icon: Minus, insert: '          (parenthetical)\n' },
+  { label: 'Dialogue', icon: MessageSquare, insert: '     Dialogue goes here.\n' },
+  { label: 'Transition', icon: ChevronsRight, insert: '\n                                                      CUT TO:\n\n' },
+]
+
+const AUTOSAVE_KEY = 'cinegen-script-draft'
+
+/* ── Helper: letter grade color ── */
+function gradeColor(grade: string) {
+  if (grade === 'A') return 'text-emerald-400'
+  if (grade === 'B') return 'text-blue-400'
+  if (grade === 'C') return 'text-amber-400'
+  return 'text-red-400'
+}
+
+function scoreBarColor(score: number) {
+  if (score >= 80) return 'from-emerald-500 to-emerald-400'
+  if (score >= 70) return 'from-blue-500 to-blue-400'
+  if (score >= 60) return 'from-amber-500 to-amber-400'
+  return 'from-red-500 to-red-400'
+}
 
 /* ── Locked overlay component ── */
 function LockedOverlay() {
@@ -76,6 +178,35 @@ function LockedOverlay() {
   )
 }
 
+/* ── Animated score bar ── */
+function AnimatedScore({ score, grade, delay }: { score: number; grade: string; delay: number }) {
+  const [animatedScore, setAnimatedScore] = useState(0)
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      let current = 0
+      const interval = setInterval(() => {
+        current += 1
+        if (current >= score) {
+          setAnimatedScore(score)
+          clearInterval(interval)
+        } else {
+          setAnimatedScore(current)
+        }
+      }, 15)
+      return () => clearInterval(interval)
+    }, delay)
+    return () => clearTimeout(timeout)
+  }, [score, delay])
+
+  return (
+    <div className="flex items-center gap-3">
+      <span className={cn('text-lg font-black', gradeColor(grade))}>{grade}</span>
+      <span className="text-sm font-bold text-white/80">{animatedScore}%</span>
+    </div>
+  )
+}
+
 /* ── Main page ── */
 export default function ScriptPage() {
   const { completedSteps, markComplete, isStepUnlocked, loaded } = useCreateProgress()
@@ -83,26 +214,169 @@ export default function ScriptPage() {
   const [activeTab, setActiveTab] = useState<'write' | 'upload'>('write')
   const [scriptText, setScriptText] = useState('')
   const [scriptTitle, setScriptTitle] = useState('')
+  const [logline, setLogline] = useState('')
+  const [selectedGenres, setSelectedGenres] = useState<string[]>([])
   const [isAnalyzing, setIsAnalyzing] = useState(false)
   const [analysisComplete, setAnalysisComplete] = useState(false)
+  const [analysisProgress, setAnalysisProgress] = useState(0)
+  const [expandedSuggestions, setExpandedSuggestions] = useState<Record<string, boolean>>({})
   const [dragOver, setDragOver] = useState(false)
+  const [autoSaveStatus, setAutoSaveStatus] = useState<'idle' | 'saving' | 'saved'>('idle')
+  const [uploadedFile, setUploadedFile] = useState<{ name: string; size: number } | null>(null)
+  const [uploadToast, setUploadToast] = useState('')
+
+  const textareaRef = useRef<HTMLTextAreaElement>(null)
+  const fileInputRef = useRef<HTMLInputElement>(null)
+  const autoSaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   const stepUnlocked = isStepUnlocked('script', CREATE_STEPS)
+
+  /* ── Load draft from localStorage on mount ── */
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem(AUTOSAVE_KEY)
+      if (saved) {
+        const draft = JSON.parse(saved)
+        if (draft.scriptText) setScriptText(draft.scriptText)
+        if (draft.scriptTitle) setScriptTitle(draft.scriptTitle)
+        if (draft.logline) setLogline(draft.logline)
+        if (draft.selectedGenres) setSelectedGenres(draft.selectedGenres)
+        setAutoSaveStatus('saved')
+      }
+    } catch {
+      // ignore parse errors
+    }
+  }, [])
+
+  /* ── Auto-save with 1.5s debounce ── */
+  useEffect(() => {
+    if (!loaded) return
+    if (autoSaveTimer.current) clearTimeout(autoSaveTimer.current)
+
+    setAutoSaveStatus('saving')
+    autoSaveTimer.current = setTimeout(() => {
+      try {
+        localStorage.setItem(
+          AUTOSAVE_KEY,
+          JSON.stringify({ scriptText, scriptTitle, logline, selectedGenres })
+        )
+        setAutoSaveStatus('saved')
+      } catch {
+        setAutoSaveStatus('idle')
+      }
+    }, 1500)
+
+    return () => {
+      if (autoSaveTimer.current) clearTimeout(autoSaveTimer.current)
+    }
+  }, [scriptText, scriptTitle, logline, selectedGenres, loaded])
+
+  /* ── Computed stats ── */
+  const wordCount = scriptText.split(/\s+/).filter(Boolean).length
+  const pageEstimate = Math.max(1, Math.round(wordCount / 250))
+  const screenTimeMin = pageEstimate
 
   const sceneCount = useCallback(() => {
     const matches = scriptText.match(/^(INT\.|EXT\.|INT\/EXT\.)/gim)
     return matches ? matches.length : 0
   }, [scriptText])
 
+  /* ── Genre toggle ── */
+  const toggleGenre = useCallback((genre: string) => {
+    setSelectedGenres((prev) => {
+      if (prev.includes(genre)) return prev.filter((g) => g !== genre)
+      if (prev.length >= 3) return prev
+      return [...prev, genre]
+    })
+  }, [])
+
+  /* ── Formatting toolbar insert ── */
+  const insertFormatting = useCallback((text: string) => {
+    const textarea = textareaRef.current
+    if (!textarea) return
+    const start = textarea.selectionStart
+    const end = textarea.selectionEnd
+    const before = scriptText.slice(0, start)
+    const after = scriptText.slice(end)
+    const newText = before + text + after
+    setScriptText(newText)
+    // Focus and set cursor after inserted text
+    setTimeout(() => {
+      textarea.focus()
+      const cursorPos = start + text.length
+      textarea.setSelectionRange(cursorPos, cursorPos)
+    }, 0)
+  }, [scriptText])
+
+  /* ── File upload handler ── */
+  const handleFileSelect = useCallback((file: File) => {
+    setUploadedFile({ name: file.name, size: file.size })
+    const ext = file.name.split('.').pop()?.toLowerCase()
+
+    if (ext === 'txt') {
+      const reader = new FileReader()
+      reader.onload = (e) => {
+        const content = e.target?.result as string
+        setScriptText(content)
+        setActiveTab('write')
+      }
+      reader.readAsText(file)
+    } else if (ext === 'pdf' || ext === 'docx' || ext === 'fdx') {
+      setUploadToast(`${ext.toUpperCase()} parsing will use AI — coming soon`)
+      setTimeout(() => setUploadToast(''), 4000)
+    }
+  }, [])
+
+  const handleFileDrop = useCallback((e: React.DragEvent) => {
+    e.preventDefault()
+    setDragOver(false)
+    const file = e.dataTransfer.files?.[0]
+    if (file) handleFileSelect(file)
+  }, [handleFileSelect])
+
+  const handleFileInput = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (file) handleFileSelect(file)
+  }, [handleFileSelect])
+
+  /* ── AI Analysis with animated progress ── */
   const handleAnalyze = useCallback(() => {
     if (!stepUnlocked) return
     setIsAnalyzing(true)
-    // Simulated analysis
+    setAnalysisComplete(false)
+    setAnalysisProgress(0)
+
+    // Animate progress bar over ~3.5 seconds
+    const steps = [
+      { progress: 15, delay: 300 },
+      { progress: 35, delay: 800 },
+      { progress: 55, delay: 1400 },
+      { progress: 72, delay: 2000 },
+      { progress: 88, delay: 2600 },
+      { progress: 95, delay: 3000 },
+      { progress: 100, delay: 3400 },
+    ]
+
+    steps.forEach(({ progress, delay }) => {
+      setTimeout(() => setAnalysisProgress(progress), delay)
+    })
+
     setTimeout(() => {
       setIsAnalyzing(false)
       setAnalysisComplete(true)
-    }, 2000)
+    }, 3600)
   }, [stepUnlocked])
+
+  /* ── Toggle suggestion panel ── */
+  const toggleSuggestion = useCallback((label: string) => {
+    setExpandedSuggestions((prev) => ({ ...prev, [label]: !prev[label] }))
+  }, [])
+
+  /* ── Overall score ── */
+  const overallScore = Math.round(
+    ANALYSIS_RESULTS.reduce((sum, r) => sum + r.score, 0) / ANALYSIS_RESULTS.length
+  )
+  const overallGrade = overallScore >= 80 ? 'A' : overallScore >= 70 ? 'B' : overallScore >= 60 ? 'C' : 'D'
 
   if (!loaded) return null
 
@@ -226,33 +500,125 @@ export default function ScriptPage() {
                 />
               </div>
 
-              {/* Textarea */}
+              {/* Logline input */}
+              <div className="mb-4">
+                <label className="block text-xs font-medium text-white/40 mb-2 uppercase tracking-wider">
+                  Logline
+                </label>
+                <div className="relative">
+                  <input
+                    type="text"
+                    value={logline}
+                    onChange={(e) => {
+                      if (e.target.value.length <= 200) setLogline(e.target.value)
+                    }}
+                    placeholder="A one-sentence summary of your story..."
+                    className="w-full bg-white/[0.03] border border-white/[0.08] rounded-lg px-4 py-3 pr-16 text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-[#E50914]/40 focus:ring-1 focus:ring-[#E50914]/20 transition-all"
+                  />
+                  <span
+                    className={cn(
+                      'absolute right-3 top-1/2 -translate-y-1/2 text-xs font-mono',
+                      logline.length >= 200 ? 'text-[#E50914]' : 'text-white/25'
+                    )}
+                  >
+                    {logline.length}/200
+                  </span>
+                </div>
+              </div>
+
+              {/* Genre selector */}
+              <div className="mb-5">
+                <label className="block text-xs font-medium text-white/40 mb-2 uppercase tracking-wider">
+                  Genre <span className="text-white/20 normal-case">(select up to 3)</span>
+                </label>
+                <div className="flex flex-wrap gap-2">
+                  {GENRES.map((genre) => {
+                    const isSelected = selectedGenres.includes(genre)
+                    return (
+                      <button
+                        key={genre}
+                        onClick={() => toggleGenre(genre)}
+                        className={cn(
+                          'px-3.5 py-1.5 rounded-full text-xs font-medium border transition-all duration-200',
+                          isSelected
+                            ? 'bg-[#E50914] border-[#E50914] text-white'
+                            : 'bg-white/[0.03] border-white/[0.08] text-white/50 hover:border-white/[0.15] hover:text-white/70'
+                        )}
+                      >
+                        {genre}
+                      </button>
+                    )
+                  })}
+                </div>
+              </div>
+
+              {/* Formatting toolbar */}
               <div className="mb-3">
                 <label className="block text-xs font-medium text-white/40 mb-2 uppercase tracking-wider">
                   Screenplay
                 </label>
+                <div className="flex flex-wrap items-center gap-1 bg-white/[0.03] border border-white/[0.08] border-b-0 rounded-t-lg px-2 py-1.5">
+                  {FORMATTING_BUTTONS.map((btn) => (
+                    <button
+                      key={btn.label}
+                      onClick={() => insertFormatting(btn.insert)}
+                      title={btn.label}
+                      className="inline-flex items-center gap-1 px-2 py-1 rounded text-[11px] font-medium text-white/40 hover:text-white/80 hover:bg-white/[0.06] transition-all duration-150"
+                    >
+                      <btn.icon className="h-3 w-3" />
+                      <span className="hidden sm:inline">{btn.label}</span>
+                    </button>
+                  ))}
+                </div>
                 <textarea
+                  ref={textareaRef}
                   value={scriptText}
                   onChange={(e) => setScriptText(e.target.value)}
                   placeholder={`FADE IN:\n\nEXT. CITY STREET - NIGHT\n\nRain hammers the asphalt. A lone figure emerges from the shadows...\n\n                    CHARACTER\n          (whispering)\n     This is where it all begins.`}
                   rows={18}
-                  className="w-full bg-white/[0.03] border border-white/[0.08] rounded-lg px-5 py-4 text-sm text-white/90 font-mono leading-relaxed placeholder:text-white/15 focus:outline-none focus:border-[#E50914]/40 focus:ring-1 focus:ring-[#E50914]/20 transition-all resize-y min-h-[300px]"
+                  className="w-full bg-white/[0.03] border border-white/[0.08] rounded-b-lg px-5 py-4 text-sm text-white/90 font-mono leading-relaxed placeholder:text-white/15 focus:outline-none focus:border-[#E50914]/40 focus:ring-1 focus:ring-[#E50914]/20 transition-all resize-y min-h-[300px]"
                 />
               </div>
 
               {/* Stats bar */}
-              <div className="flex items-center gap-6 text-xs text-white/30">
+              <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-xs text-white/30">
                 <span>
                   {scriptText.length.toLocaleString()} characters
                 </span>
                 <span className="w-px h-3 bg-white/10" />
                 <span>
-                  {scriptText.split(/\s+/).filter(Boolean).length.toLocaleString()} words
+                  {wordCount.toLocaleString()} words
                 </span>
                 <span className="w-px h-3 bg-white/10" />
                 <span className="flex items-center gap-1">
                   {sceneCount()} scenes detected
                   {sceneCount() > 0 && <Check className="h-3 w-3 text-emerald-400" />}
+                </span>
+                <span className="w-px h-3 bg-white/10" />
+                <span>
+                  ~{pageEstimate} {pageEstimate === 1 ? 'page' : 'pages'} (est. {screenTimeMin} min screen time)
+                </span>
+                <span className="w-px h-3 bg-white/10" />
+                {/* Auto-save indicator */}
+                <span className="flex items-center gap-1.5">
+                  {autoSaveStatus === 'saving' && (
+                    <>
+                      <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
+                      <span className="text-amber-400/70">Saving...</span>
+                    </>
+                  )}
+                  {autoSaveStatus === 'saved' && (
+                    <>
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                      <span className="text-emerald-400/70">Saved</span>
+                    </>
+                  )}
+                  {autoSaveStatus === 'idle' && (
+                    <>
+                      <span className="w-1.5 h-1.5 rounded-full bg-white/20" />
+                      <span>Draft</span>
+                    </>
+                  )}
                 </span>
               </div>
             </div>
@@ -261,10 +627,20 @@ export default function ScriptPage() {
           {/* Upload tab */}
           {activeTab === 'upload' && (
             <div className="p-6">
+              {/* Hidden file input */}
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept=".txt,.pdf,.docx,.fdx"
+                onChange={handleFileInput}
+                className="hidden"
+              />
+
               <div
                 onDragOver={(e) => { e.preventDefault(); setDragOver(true) }}
                 onDragLeave={() => setDragOver(false)}
-                onDrop={(e) => { e.preventDefault(); setDragOver(false) }}
+                onDrop={handleFileDrop}
+                onClick={() => fileInputRef.current?.click()}
                 className={cn(
                   'border-2 border-dashed rounded-xl p-12 text-center transition-all duration-300 cursor-pointer',
                   dragOver
@@ -281,11 +657,34 @@ export default function ScriptPage() {
                 <p className="text-sm text-white/35 mb-5">
                   Supports PDF, DOCX, FDX, and plain text files (max 10 MB)
                 </p>
-                <button className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium bg-white/[0.06] border border-white/[0.1] text-white/60 hover:text-white hover:bg-white/[0.1] transition-all duration-200">
+                <button
+                  onClick={(e) => { e.stopPropagation(); fileInputRef.current?.click() }}
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium bg-white/[0.06] border border-white/[0.1] text-white/60 hover:text-white hover:bg-white/[0.1] transition-all duration-200"
+                >
                   <Upload className="h-4 w-4" />
                   Browse Files
                 </button>
               </div>
+
+              {/* Uploaded file info */}
+              {uploadedFile && (
+                <div className="mt-4 flex items-center gap-3 p-3 rounded-lg bg-white/[0.03] border border-white/[0.08]">
+                  <FileText className="h-5 w-5 text-[#E50914]" />
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm text-white/80 truncate">{uploadedFile.name}</p>
+                    <p className="text-xs text-white/30">{(uploadedFile.size / 1024).toFixed(1)} KB</p>
+                  </div>
+                  <Check className="h-4 w-4 text-emerald-400 shrink-0" />
+                </div>
+              )}
+
+              {/* Upload toast */}
+              {uploadToast && (
+                <div className="mt-4 flex items-center gap-2 p-3 rounded-lg bg-amber-500/10 border border-amber-500/20 text-xs text-amber-400">
+                  <AlertCircle className="h-4 w-4 shrink-0" />
+                  {uploadToast}
+                </div>
+              )}
             </div>
           )}
         </div>
@@ -348,36 +747,116 @@ export default function ScriptPage() {
                 <AlertCircle className="h-3.5 w-3.5" />
                 <span><strong className="text-white/50">Included</strong> with subscription</span>
               </div>
+
+              {/* Animated progress bar during analysis */}
+              {isAnalyzing && (
+                <div className="mt-4">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-xs text-white/40">Analyzing screenplay...</span>
+                    <span className="text-xs text-white/40 font-mono">{analysisProgress}%</span>
+                  </div>
+                  <div className="h-2 rounded-full bg-white/[0.06] overflow-hidden">
+                    <div
+                      className="h-full rounded-full bg-gradient-to-r from-[#E50914] to-[#FF6B6B] transition-all duration-500 ease-out"
+                      style={{ width: `${analysisProgress}%` }}
+                    />
+                  </div>
+                  <div className="flex items-center gap-4 mt-2 text-[11px] text-white/25">
+                    <span className={analysisProgress >= 15 ? 'text-white/50' : ''}>Parsing structure</span>
+                    <span className={analysisProgress >= 40 ? 'text-white/50' : ''}>Evaluating characters</span>
+                    <span className={analysisProgress >= 65 ? 'text-white/50' : ''}>Checking pacing</span>
+                    <span className={analysisProgress >= 90 ? 'text-white/50' : ''}>Scoring dialogue</span>
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Analysis results area */}
             <div className="p-6">
               {analysisComplete ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {ANALYSIS_CATEGORIES.map((cat) => (
-                    <div
-                      key={cat.label}
-                      className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-5 hover:border-white/[0.1] transition-colors"
-                    >
-                      <div className="flex items-center justify-between mb-3">
-                        <h4 className="text-sm font-semibold text-white/80">{cat.label}</h4>
-                        <div className="flex items-center gap-1.5">
-                          <div className="w-2 h-2 rounded-full bg-emerald-400" />
-                          <span className="text-xs font-medium text-emerald-400">Good</span>
-                        </div>
+                <div>
+                  {/* Overall score summary */}
+                  <div className="mb-6 p-5 rounded-xl bg-white/[0.03] border border-white/[0.06]">
+                    <div className="flex items-center gap-4">
+                      <div className="w-16 h-16 rounded-xl bg-white/[0.04] border border-white/[0.08] flex flex-col items-center justify-center">
+                        <span className={cn('text-2xl font-black', gradeColor(overallGrade))}>{overallGrade}</span>
+                        <span className="text-[10px] font-bold text-white/30">GRADE</span>
                       </div>
-                      <p className="text-xs text-white/35 leading-relaxed">{cat.description}</p>
-                      {/* Placeholder progress bar */}
-                      <div className="mt-3 h-1.5 rounded-full bg-white/[0.06] overflow-hidden">
-                        <div
-                          className="h-full rounded-full bg-gradient-to-r from-emerald-500 to-emerald-400 transition-all duration-1000"
-                          style={{ width: `${65 + Math.floor(Math.random() * 25)}%` }}
-                        />
+                      <div className="flex-1">
+                        <div className="flex items-center gap-3 mb-1">
+                          <h4 className="text-sm font-bold text-white/90">Overall Script Score</h4>
+                          <span className="text-lg font-black text-white/80">{overallScore}%</span>
+                        </div>
+                        <p className="text-xs text-white/40">
+                          Your script shows promise with strong character work. Focus on tightening pacing
+                          and reinforcing story structure to elevate it further.
+                        </p>
                       </div>
                     </div>
-                  ))}
+                  </div>
+
+                  {/* Category cards */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {ANALYSIS_RESULTS.map((cat, idx) => (
+                      <div
+                        key={cat.label}
+                        className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-5 hover:border-white/[0.1] transition-colors"
+                      >
+                        <div className="flex items-center justify-between mb-2">
+                          <h4 className="text-sm font-semibold text-white/80">{cat.label}</h4>
+                          <AnimatedScore score={cat.score} grade={cat.grade} delay={idx * 200} />
+                        </div>
+
+                        <p className="text-xs text-white/35 leading-relaxed mb-1">{cat.description}</p>
+
+                        {/* Score bar */}
+                        <div className="mt-3 h-1.5 rounded-full bg-white/[0.06] overflow-hidden mb-3">
+                          <div
+                            className={cn(
+                              'h-full rounded-full bg-gradient-to-r transition-all duration-1000 ease-out',
+                              scoreBarColor(cat.score)
+                            )}
+                            style={{
+                              width: `${cat.score}%`,
+                              transitionDelay: `${idx * 200}ms`,
+                            }}
+                          />
+                        </div>
+
+                        {/* Feedback text */}
+                        <p className="text-xs text-white/50 leading-relaxed mb-3">{cat.feedback}</p>
+
+                        {/* Expandable suggestions */}
+                        <button
+                          onClick={() => toggleSuggestion(cat.label)}
+                          className="flex items-center gap-1 text-[11px] font-medium text-[#E50914]/80 hover:text-[#E50914] transition-colors"
+                        >
+                          <ChevronDown
+                            className={cn(
+                              'h-3 w-3 transition-transform duration-200',
+                              expandedSuggestions[cat.label] ? 'rotate-180' : ''
+                            )}
+                          />
+                          Suggestions ({cat.suggestions.length})
+                        </button>
+                        {expandedSuggestions[cat.label] && (
+                          <div className="mt-2 space-y-1.5 pl-1">
+                            {cat.suggestions.map((s, i) => (
+                              <div
+                                key={i}
+                                className="flex items-start gap-2 text-[11px] text-white/40 leading-relaxed"
+                              >
+                                <span className="text-[#E50914] mt-0.5 shrink-0">&#8226;</span>
+                                {s}
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              ) : (
+              ) : !isAnalyzing ? (
                 <div className="text-center py-10">
                   <div className="w-14 h-14 rounded-2xl bg-white/[0.03] border border-white/[0.06] flex items-center justify-center mx-auto mb-4">
                     <Wand2 className="h-6 w-6 text-white/15" />
@@ -388,7 +867,7 @@ export default function ScriptPage() {
                     detailed feedback on story structure, character development, pacing, and dialogue quality.
                   </p>
                 </div>
-              )}
+              ) : null}
             </div>
           </div>
         </div>

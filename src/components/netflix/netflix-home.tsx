@@ -1,19 +1,19 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { HeroManifesto } from './hero-manifesto'
 import { FilmRow } from './film-row'
 import { NetflixHeader } from './netflix-header'
 import { SplashScreen } from './splash-screen'
 import { Footer } from '@/components/layout/footer'
-import { GENRE_ORDER, FILMS_BY_GENRE } from '@/data/films'
+import { GENRE_ORDER, FILMS_BY_GENRE, ALL_FILMS } from '@/data/films'
 import Link from 'next/link'
 import Image from 'next/image'
 import {
-  ArrowRight, ChevronRight, Pen, Palette, Music, Camera, Sparkles,
+  ArrowRight, ChevronLeft, ChevronRight, Pen, Palette, Music, Camera, Sparkles,
   Clapperboard, DollarSign, PlayCircle, Vote, Star, Users, MessageSquare,
   Flame, Laugh, Drama, Microscope, BookOpen, Swords, Ghost, Heart, Wand2, Clock,
-  Activity,
+  Activity, Briefcase, Film, Play, TrendingUp, Tv, Radio, Monitor,
 } from 'lucide-react'
 
 /* ────────────────────────────────────────────────
@@ -192,6 +192,27 @@ export function NetflixHome({ data }: { data: HomeData }) {
   const otherGenreRows = allGenreRows.filter(([g]) => g !== 'Documentary')
   const firstHalfGenres = otherGenreRows.slice(0, 5)
   const secondHalfGenres = otherGenreRows.slice(5)
+
+  // Trailers: films in DRAFT or PRE_PRODUCTION
+  const trailerFilms = ALL_FILMS
+    .filter((f) => f.status === 'DRAFT' || f.status === 'PRE_PRODUCTION')
+    .slice(0, 12)
+    .map((f, i) => ({ ...f, id: `trailer-${i}` }))
+
+  // Community vote: films with low funding
+  const voteFilms = ALL_FILMS
+    .filter((f) => f.fundingPct < 30)
+    .slice(0, 10)
+    .map((f, i) => ({ ...f, id: `cvote-${i}` }))
+
+  const trailerScrollRef = useRef<HTMLDivElement>(null)
+  const voteScrollRef = useRef<HTMLDivElement>(null)
+
+  const scroll = (ref: React.RefObject<HTMLDivElement | null>, dir: 'left' | 'right') => {
+    if (!ref.current) return
+    const amount = dir === 'left' ? -400 : 400
+    ref.current.scrollBy({ left: amount, behavior: 'smooth' })
+  }
 
   const voteCount = useLiveCounter(2847)
   const contributorCount = useLiveCounter(1203)
@@ -430,7 +451,327 @@ export function NetflixHome({ data }: { data: HomeData }) {
           variant="trending"
         />
 
+        {/* ── Bandes-Annonces — En Développement ── */}
+        <section className="relative py-8 md:py-10">
+          <div className="h-px bg-gradient-to-r from-transparent via-white/[0.04] to-transparent" />
+          <div className="px-4 sm:px-8 md:px-16 lg:px-20 mt-6">
+            <div className="flex items-center gap-2 mb-1">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-[#E50914]/20 bg-[#E50914]/10 text-[10px] font-bold text-[#E50914] uppercase tracking-wider">
+                <Film className="h-3 w-3" />
+                Bandes-Annonces
+              </span>
+            </div>
+            <p className="text-[11px] text-white/30 mt-1 mb-4">Films in development — watch trailers, vote, invest, or volunteer to work</p>
+          </div>
+
+          <div className="relative group/trailers">
+            {/* Left chevron */}
+            <button
+              onClick={() => scroll(trailerScrollRef, 'left')}
+              className="absolute left-1 sm:left-3 top-1/2 -translate-y-1/2 z-20 w-8 h-8 rounded-full bg-black/70 border border-white/10 flex items-center justify-center opacity-0 group-hover/trailers:opacity-100 transition-opacity duration-300 hover:bg-black/90"
+            >
+              <ChevronLeft className="h-4 w-4 text-white/70" />
+            </button>
+            {/* Right chevron */}
+            <button
+              onClick={() => scroll(trailerScrollRef, 'right')}
+              className="absolute right-1 sm:right-3 top-1/2 -translate-y-1/2 z-20 w-8 h-8 rounded-full bg-black/70 border border-white/10 flex items-center justify-center opacity-0 group-hover/trailers:opacity-100 transition-opacity duration-300 hover:bg-black/90"
+            >
+              <ChevronRight className="h-4 w-4 text-white/70" />
+            </button>
+
+            <div
+              ref={trailerScrollRef}
+              className="flex gap-3 md:gap-4 overflow-x-auto px-4 sm:px-8 md:px-16 lg:px-20 scroll-smooth snap-x snap-mandatory pb-2"
+              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch' }}
+            >
+              {trailerFilms.map((film) => {
+                const raised = Math.round(((film.fundingPct / 100) * 250000))
+                const goal = 250000
+                return (
+                  <div
+                    key={film.id}
+                    className="flex-shrink-0 snap-start w-[280px] md:w-[360px] rounded-xl overflow-hidden border border-white/[0.06] bg-white/[0.02] transition-all duration-300 hover:border-white/10"
+                  >
+                    {/* 16:9 poster area */}
+                    <div className="relative" style={{ aspectRatio: '16 / 9' }}>
+                      {film.coverImageUrl ? (
+                        <Image
+                          src={film.coverImageUrl}
+                          alt={film.title}
+                          fill
+                          unoptimized
+                          className="object-cover"
+                          sizes="360px"
+                        />
+                      ) : (
+                        <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-900" />
+                      )}
+                      <div className="absolute inset-0 bg-black/50" />
+                      {/* Play button */}
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="w-12 h-12 rounded-full bg-[#E50914] flex items-center justify-center shadow-lg shadow-[#E50914]/30">
+                          <Play className="h-5 w-5 text-white ml-0.5" fill="white" />
+                        </div>
+                      </div>
+                      {/* Bottom overlay */}
+                      <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/80 to-transparent">
+                        <p className="text-[13px] font-bold text-white truncate">{film.title}</p>
+                        <span className="inline-block mt-0.5 px-2 py-0.5 rounded text-[9px] font-semibold bg-white/10 text-white/60">{film.genre}</span>
+                      </div>
+                    </div>
+                    {/* Card body */}
+                    <div className="p-3 space-y-2">
+                      <div className="flex items-center gap-1.5">
+                        <button className="px-2 py-0.5 rounded text-[9px] font-bold bg-emerald-500/15 text-emerald-400 border border-emerald-500/20 hover:bg-emerald-500/25 transition-colors">Vote</button>
+                        <button className="px-2 py-0.5 rounded text-[9px] font-bold bg-amber-500/15 text-amber-400 border border-amber-500/20 hover:bg-amber-500/25 transition-colors">Invest</button>
+                        <button className="px-2 py-0.5 rounded text-[9px] font-bold bg-blue-500/15 text-blue-400 border border-blue-500/20 hover:bg-blue-500/25 transition-colors">Work</button>
+                      </div>
+                      {/* Funding bar */}
+                      <div className="h-1 rounded-full bg-white/[0.06] overflow-hidden">
+                        <div className="h-full rounded-full bg-[#E50914]" style={{ width: `${film.fundingPct}%` }} />
+                      </div>
+                      <p className="text-[10px] text-white/25">${raised.toLocaleString()} raised of ${goal.toLocaleString()}</p>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+        </section>
+
+        {/* ── Soumis au Vote — Community Vote ── */}
+        <section className="relative py-6 md:py-8">
+          <div className="h-px bg-gradient-to-r from-transparent via-white/[0.04] to-transparent" />
+          <div className="px-4 sm:px-8 md:px-16 lg:px-20 mt-5">
+            <div className="flex items-center gap-2 mb-1">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-amber-500/20 bg-amber-500/10 text-[10px] font-bold text-amber-400 uppercase tracking-wider">
+                <Users className="h-3 w-3" />
+                Community Vote
+              </span>
+            </div>
+            <p className="text-[11px] text-white/25 mt-1 mb-4">These films need your vote to enter the platform. Stake points to have your say.</p>
+          </div>
+
+          <div className="relative group/cvote">
+            {/* Left chevron */}
+            <button
+              onClick={() => scroll(voteScrollRef, 'left')}
+              className="absolute left-1 sm:left-3 top-1/2 -translate-y-1/2 z-20 w-8 h-8 rounded-full bg-black/70 border border-white/10 flex items-center justify-center opacity-0 group-hover/cvote:opacity-100 transition-opacity duration-300 hover:bg-black/90"
+            >
+              <ChevronLeft className="h-4 w-4 text-white/70" />
+            </button>
+            {/* Right chevron */}
+            <button
+              onClick={() => scroll(voteScrollRef, 'right')}
+              className="absolute right-1 sm:right-3 top-1/2 -translate-y-1/2 z-20 w-8 h-8 rounded-full bg-black/70 border border-white/10 flex items-center justify-center opacity-0 group-hover/cvote:opacity-100 transition-opacity duration-300 hover:bg-black/90"
+            >
+              <ChevronRight className="h-4 w-4 text-white/70" />
+            </button>
+
+            <div
+              ref={voteScrollRef}
+              className="flex gap-3 overflow-x-auto px-4 sm:px-8 md:px-16 lg:px-20 scroll-smooth snap-x snap-mandatory pb-2"
+              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch' }}
+            >
+              {voteFilms.map((film) => {
+                const approvePct = (film.fundingPct * 2) % 100
+                const rejectPct = 100 - approvePct
+                return (
+                  <div
+                    key={film.id}
+                    className="flex-shrink-0 snap-start w-[160px] rounded-xl overflow-hidden border border-white/[0.06] bg-white/[0.02] transition-all duration-300 hover:border-white/10"
+                  >
+                    {/* 2:3 poster */}
+                    <div className="relative" style={{ aspectRatio: '2 / 3' }}>
+                      {film.coverImageUrl ? (
+                        <Image
+                          src={film.coverImageUrl}
+                          alt={film.title}
+                          fill
+                          unoptimized
+                          className="object-cover"
+                          sizes="160px"
+                        />
+                      ) : (
+                        <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-900" />
+                      )}
+                    </div>
+                    {/* Card body */}
+                    <div className="p-2.5 space-y-1.5">
+                      <p className="text-[11px] font-bold text-white/80 truncate">{film.title}</p>
+                      {/* Vote bar */}
+                      <div className="flex h-1.5 rounded-full overflow-hidden bg-white/[0.06]">
+                        <div className="h-full bg-emerald-500/70 rounded-l-full" style={{ width: `${approvePct}%` }} />
+                        <div className="h-full bg-red-500/50 rounded-r-full" style={{ width: `${rejectPct}%` }} />
+                      </div>
+                      <div className="flex items-center justify-between text-[8px] text-white/25">
+                        <span className="text-emerald-400/60">{approvePct}% yes</span>
+                        <span className="text-red-400/50">{rejectPct}% no</span>
+                      </div>
+                      <button className="w-full mt-1 px-2 py-1 rounded-md text-[9px] font-bold golden-border-btn border border-amber-500/30 bg-amber-500/10 text-amber-300 hover:bg-amber-500/20 transition-colors">
+                        Vote
+                      </button>
+                      <p className="text-[8px] text-white/20 text-center">5 pts to stake</p>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+        </section>
+
+        <div className="h-px bg-gradient-to-r from-transparent via-white/[0.04] to-transparent" />
+
       </div>
+
+      {/* ── Rentrez dans le Cinéma — 3 hero cards ── */}
+      <section className="relative py-12 md:py-16 px-4 sm:px-8 md:px-16 lg:px-20">
+        {/* Ambient glow */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[1px] bg-gradient-to-r from-transparent via-[#E50914]/20 to-transparent" />
+        <div className="absolute top-[10%] left-[10%] w-[300px] h-[300px] bg-[#E50914]/[0.04] rounded-full blur-[120px] pointer-events-none" />
+        <div className="absolute bottom-[10%] right-[10%] w-[250px] h-[250px] bg-amber-500/[0.03] rounded-full blur-[100px] pointer-events-none" />
+
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-8 md:mb-10">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#E50914]/20 bg-[#E50914]/10 mb-4">
+              <Clapperboard className="h-3.5 w-3.5 text-[#E50914]" />
+              <span className="text-[11px] font-bold text-[#E50914] uppercase tracking-wider">Rentrez dans le Cinéma</span>
+            </div>
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-black text-white tracking-tight leading-[1.1] section-title-flash">
+              Your Role Awaits.
+            </h2>
+            <p className="text-sm md:text-base text-white/35 max-w-lg mx-auto mt-3 leading-relaxed">
+              Act, produce, or work on films. Choose your path in the world of cinema.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-5">
+            {[
+              {
+                icon: Star,
+                title: 'ACT',
+                description: 'Become the star of iconic films. Upload your photo and see yourself on screen.',
+                href: '/act',
+                accent: '#E50914',
+                accentLight: '#FF4444',
+                image: 'https://images.unsplash.com/photo-1598899134739-24c46f58b8c0?auto=format&fit=crop&w=800&h=600&q=80',
+              },
+              {
+                icon: Clapperboard,
+                title: 'PRODUCE',
+                description: 'Turn your vision into reality. Start and crowdfund your film project.',
+                href: '/produce',
+                accent: '#F59E0B',
+                accentLight: '#FCD34D',
+                image: 'https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=800&h=600&q=80',
+              },
+              {
+                icon: Briefcase,
+                title: 'WORK',
+                description: 'Complete film tasks, get paid in cash or production shares.',
+                href: '/work',
+                accent: '#D97706',
+                accentLight: '#FCD34D',
+                image: 'https://images.unsplash.com/photo-1524712245354-2c4e5e7121c0?auto=format&fit=crop&w=800&h=600&q=80',
+              },
+            ].map((card, ci) => (
+              <Link
+                key={card.title}
+                href={card.href}
+                className="group/cinema relative block rounded-2xl overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:scale-[1.03] golden-border-btn"
+                style={{
+                  aspectRatio: '4 / 5',
+                  boxShadow: `
+                    0 4px 8px rgba(0,0,0,0.3),
+                    0 12px 32px rgba(0,0,0,0.35),
+                    0 24px 64px rgba(0,0,0,0.15),
+                    inset 0 1px 0 rgba(255,255,255,0.1),
+                    inset 0 -1px 0 rgba(0,0,0,0.4)
+                  `,
+                  border: '1px solid rgba(255,255,255,0.08)',
+                }}
+              >
+                {/* Full background image */}
+                <div
+                  className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover/cinema:scale-110"
+                  style={{ backgroundImage: `url(${card.image})` }}
+                />
+                {/* Dark overlay */}
+                <div className="absolute inset-0 bg-black/55 group-hover/cinema:bg-black/40 transition-all duration-500" />
+                {/* Color gradient overlay */}
+                <div
+                  className="absolute inset-0 opacity-40 group-hover/cinema:opacity-60 transition-opacity duration-500"
+                  style={{ background: `linear-gradient(to top, ${card.accent}60, transparent 60%)` }}
+                />
+
+                {/* Flash sweep */}
+                <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                  <div
+                    className="absolute top-0 h-full w-[50%] opacity-15 group-hover/cinema:opacity-40"
+                    style={{
+                      background: `linear-gradient(90deg, transparent, ${card.accent}30, rgba(255,255,255,0.12), ${card.accent}30, transparent)`,
+                      animation: `glintSweep ${2.5 + ci * 0.2}s ease-in-out infinite`,
+                      animationDelay: `${ci * 0.4}s`,
+                    }}
+                  />
+                </div>
+
+                {/* Hover glow */}
+                <div
+                  className="absolute inset-0 rounded-2xl opacity-0 group-hover/cinema:opacity-100 transition-all duration-500 pointer-events-none"
+                  style={{ boxShadow: `0 12px 48px ${card.accent}30, 0 0 80px ${card.accent}10` }}
+                />
+
+                {/* Top edge highlight */}
+                <div
+                  className="absolute top-0 left-6 right-6 h-[1px] opacity-25 group-hover/cinema:opacity-60 transition-opacity duration-500"
+                  style={{ background: `linear-gradient(90deg, transparent, ${card.accentLight}50, transparent)` }}
+                />
+
+                {/* Bottom accent line */}
+                <div className="absolute bottom-0 left-0 right-0 h-[2px] overflow-hidden">
+                  <div
+                    className="h-full w-0 group-hover/cinema:w-full transition-all duration-700 ease-out"
+                    style={{ background: `linear-gradient(90deg, transparent, ${card.accent}, ${card.accentLight}, ${card.accent}, transparent)` }}
+                  />
+                </div>
+
+                {/* Content — positioned at bottom */}
+                <div className="absolute inset-0 flex flex-col justify-end p-6 md:p-8">
+                  {/* Icon */}
+                  <div
+                    className="w-14 h-14 rounded-xl flex items-center justify-center mb-4 transition-all duration-500 group-hover/cinema:scale-110 group-hover/cinema:rotate-3"
+                    style={{
+                      background: `linear-gradient(135deg, ${card.accent}70, ${card.accent}30)`,
+                      boxShadow: `0 4px 20px ${card.accent}50, inset 0 1px 0 rgba(255,255,255,0.2)`,
+                      backdropFilter: 'blur(8px)',
+                    }}
+                  >
+                    <card.icon className="h-7 w-7 text-white" style={{ filter: `drop-shadow(0 0 6px ${card.accent})` }} />
+                  </div>
+
+                  {/* Title */}
+                  <h3 className="text-2xl md:text-3xl font-black text-white tracking-wider mb-2 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+                    {card.title}
+                  </h3>
+
+                  {/* Description */}
+                  <p className="text-[13px] md:text-[14px] text-white/50 leading-relaxed group-hover/cinema:text-white/75 transition-colors max-w-xs">
+                    {card.description}
+                  </p>
+
+                  {/* Arrow link */}
+                  <div className="flex items-center gap-2 mt-4 opacity-0 group-hover/cinema:opacity-100 transition-all duration-300 translate-y-2 group-hover/cinema:translate-y-0">
+                    <span className="text-[12px] font-bold" style={{ color: card.accentLight }}>Enter</span>
+                    <ArrowRight className="h-4 w-4 group-hover/cinema:translate-x-1 transition-transform" style={{ color: card.accentLight }} />
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* ── Start Creating — Deep 3D cards ── */}
       <section className="relative py-10 md:py-14 px-4 sm:px-8 md:px-16 lg:px-20">
@@ -552,6 +893,46 @@ export function NetflixHome({ data }: { data: HomeData }) {
         </div>
       </section>
 
+      {/* ── CINEGEN TV Discovery Banner ── */}
+      <section className="relative mx-4 sm:mx-8 md:mx-16 lg:mx-20 mb-8 rounded-2xl overflow-hidden">
+        <div
+          className="relative"
+          style={{
+            background: 'linear-gradient(135deg, rgba(37,99,235,0.12) 0%, rgba(5,10,21,0.95) 50%, rgba(37,99,235,0.06) 100%)',
+            border: '1px solid rgba(37,99,235,0.15)',
+          }}
+        >
+          <div className="absolute top-0 right-[20%] w-[200px] h-[100px] bg-[#2563EB]/[0.08] rounded-full blur-[80px]" />
+          <div className="relative z-10 px-6 sm:px-8 md:px-12 py-6 md:py-8">
+            <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+              <div className="flex-1">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#2563EB]/20 bg-[#2563EB]/10 mb-3">
+                  <Tv className="h-3 w-3 text-[#2563EB]" />
+                  <span className="text-[10px] font-bold text-[#2563EB] uppercase tracking-wider">New</span>
+                </div>
+                <h2 className="text-lg md:text-xl font-black text-white mb-1.5 tracking-tight">
+                  Discover <span className="text-[#2563EB]">CINEGEN TV</span>
+                </h2>
+                <p className="text-xs text-white/35 max-w-md leading-relaxed">
+                  AI-generated TV shows, live broadcasts, and original series. Create, produce, or invest in the future of television.
+                </p>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                <Link href="/tv" className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#2563EB] hover:bg-[#3B82F6] text-white text-xs font-bold transition-colors">
+                  <Monitor className="h-3.5 w-3.5" /> Explore TV
+                </Link>
+                <Link href="/tv/live" className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-[#2563EB]/30 hover:bg-[#2563EB]/10 text-white/70 hover:text-white text-xs font-medium transition-all">
+                  <Radio className="h-3.5 w-3.5 text-red-500" /> Live Now
+                </Link>
+                <Link href="/watch" className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-white/10 hover:bg-white/5 text-white/50 hover:text-white text-xs font-medium transition-all">
+                  <Play className="h-3.5 w-3.5" /> Watch All
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ── Final CTA — Compact 3D banner ── */}
       <section className="relative mx-4 sm:mx-8 md:mx-16 lg:mx-20 mb-10 rounded-2xl overflow-hidden">
         {/* 3D depth container */}
@@ -583,7 +964,7 @@ export function NetflixHome({ data }: { data: HomeData }) {
             </div>
             <Link
               href="/register"
-              className="group relative shrink-0 inline-flex items-center gap-2.5 px-8 py-3.5 rounded-xl text-[14px] font-bold text-white transition-all duration-500 hover:-translate-y-0.5 overflow-hidden"
+              className="golden-border-btn golden-border-always group relative shrink-0 inline-flex items-center gap-2.5 px-8 py-3.5 rounded-xl text-[14px] font-bold text-white transition-all duration-500 hover:-translate-y-0.5 overflow-hidden"
               style={{
                 background: 'linear-gradient(135deg, #E50914 0%, #B20710 100%)',
                 boxShadow: '0 6px 24px rgba(229,9,20,0.3), inset 0 1px 0 rgba(255,255,255,0.15), inset 0 -2px 0 rgba(0,0,0,0.2)',

@@ -422,6 +422,47 @@
   animation: fadeInUp 0.5s ease-out forwards;
 }
 
+/* ── Golden Animated Border for CTAs ── */
+@keyframes goldenBorderRotate {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.golden-border-btn {
+  position: relative;
+  isolation: isolate;
+}
+
+.golden-border-btn::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background: linear-gradient(
+    90deg,
+    #C4A030, #FFD700, #DAA520, #F5DEB3, #FFD700, #C4A030
+  );
+  background-size: 300% 100%;
+  animation: goldenBorderRotate 3s ease-in-out infinite;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.golden-border-btn:hover::before {
+  opacity: 1;
+}
+
+/* Always-on variant for primary CTAs */
+.golden-border-always::before {
+  opacity: 0.7;
+}
+
+.golden-border-always:hover::before {
+  opacity: 1;
+}
+
 @keyframes pulse-gold {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.5; }
@@ -716,4 +757,125 @@
   background: white;
   animation: sparkDot 3s ease-in-out infinite;
   pointer-events: none;
+}
+
+/* ========================================
+   FILM DETAIL — STATUS SECTION ANIMATIONS
+   ======================================== */
+
+/* Film strip scrolling animation (post-production trailer placeholder) */
+@keyframes filmstrip {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-20px); }
+}
+
+/* Golden border rotation for co-producer section */
+@keyframes goldenBorderRotate {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Shimmer sweep for progress bars */
+@keyframes shimmerSweep {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(200%); }
+}
+
+/* Golden border animated glow for co-producer CTA */
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes borderRotate {
+  0% { --angle: 0deg; }
+  100% { --angle: 360deg; }
+}
+
+/* ── TV Universe Blue Theme ── */
+.tv-theme {
+  --tv-primary: #2563EB;
+  --tv-secondary: #1D4ED8;
+  --tv-bg: #050A15;
+  --tv-glow: rgba(37, 99, 235, 0.15);
+}
+
+.tv-theme .text-shimmer {
+  background: linear-gradient(
+    120deg,
+    #2563EB 0%,
+    #60A5FA 25%,
+    #fff 50%,
+    #60A5FA 75%,
+    #2563EB 100%
+  );
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 4s ease-in-out infinite;
+}
+
+.tv-theme .golden-border-btn::before {
+  background: linear-gradient(
+    var(--angle, 0deg),
+    #2563EB,
+    #60A5FA,
+    #93C5FD,
+    #60A5FA,
+    #2563EB
+  );
+}
+
+.tv-theme .section-title-flash::after {
+  background: linear-gradient(90deg, transparent, #2563EB, transparent);
+}
+
+/* TV Live pulse indicator */
+@keyframes livePulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.5); }
+}
+
+.live-dot {
+  width: 8px;
+  height: 8px;
+  background: #EF4444;
+  border-radius: 50%;
+  animation: livePulse 1.5s ease-in-out infinite;
+}
+
+.live-dot-lg {
+  width: 12px;
+  height: 12px;
+  background: #EF4444;
+  border-radius: 50%;
+  animation: livePulse 1.5s ease-in-out infinite;
+  box-shadow: 0 0 8px rgba(239, 68, 68, 0.5);
+}
+
+/* TV gradient backgrounds */
+.gradient-radial-blue {
+  background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(37, 99, 235, 0.08) 0%, transparent 70%);
+}
+
+/* TV card hover glow */
+.tv-card-glow:hover {
+  box-shadow: 0 0 20px rgba(37, 99, 235, 0.15), 0 0 40px rgba(37, 99, 235, 0.05);
+}
+
+/* Schedule grid alternating rows */
+.schedule-row:nth-child(even) {
+  background: rgba(255, 255, 255, 0.01);
+}
+.schedule-row:nth-child(odd) {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+/* Blue gradient text for TV */
+.text-blue-gradient {
+  background: linear-gradient(135deg, #2563EB, #60A5FA);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }

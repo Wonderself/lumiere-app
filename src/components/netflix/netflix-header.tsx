@@ -38,6 +38,10 @@ import {
   Trophy,
   UserCircle,
   Star,
+  Briefcase,
+  Tv,
+  Play,
+  Radio,
 } from 'lucide-react'
 import { cn, getInitials } from '@/lib/utils'
 import { AnimatePresence, MotionDiv } from '@/components/ui/motion'
@@ -139,22 +143,27 @@ export function NetflixHeader() {
   ]
 
   const mobileLinks = [
-    { href: '/create', label: 'Create Your Movie', icon: Clapperboard },
-    { href: '/act', label: 'Act In Your Movie', icon: Star },
-    { href: '/films', label: 'Films', icon: Film },
-    { href: '/actors', label: 'Actors', icon: UserCircle },
-    { href: '/trailer-studio', label: 'Trailer Studio', icon: Sparkles },
+    { href: '/', label: 'Home', icon: Film },
+    { href: '/films', label: 'Films', icon: Clapperboard },
+    { href: '/act', label: 'Act', icon: Star },
+    { href: '/produce', label: 'Produce', icon: Clapperboard },
+    { href: '/work', label: 'Work', icon: Users },
     { href: '/invest', label: 'Invest', icon: DollarSign },
     { href: '/community', label: 'Community', icon: MessageSquare },
-    { href: '/leaderboard', label: 'Leaderboard', icon: Trophy },
-    { href: '/about', label: 'About', icon: Info },
-    { href: '/pricing', label: 'Pricing', icon: Tag },
-    { href: '/roadmap', label: 'Roadmap', icon: MapPin },
-    { href: '/developers', label: 'Developers', icon: Code2 },
+    { href: '/tv', label: 'TV', icon: Tv },
+    { href: '/watch', label: 'Watch', icon: Play },
+    { href: '/tv/live', label: 'Live TV', icon: Radio },
+  ]
+
+  const moreItems = [
+    { href: '/act', label: 'Act', icon: Star },
+    { href: '/produce', label: 'Produce', icon: Clapperboard },
+    { href: '/work', label: 'Work', icon: Briefcase },
   ]
 
   const isCreateActive = pathname.startsWith('/create') || pathname.startsWith('/act')
   const isExploreActive = pathname.startsWith('/films') || pathname.startsWith('/actors') || pathname.startsWith('/trailer-studio') || pathname.startsWith('/leaderboard')
+  const isMoreActive = pathname.startsWith('/act') || pathname.startsWith('/produce') || pathname.startsWith('/work')
 
   return (
     <header
@@ -188,8 +197,15 @@ export function NetflixHeader() {
 
         {/* Center: Desktop nav with dropdowns */}
         <nav className="hidden lg:flex items-center gap-1">
-          <NavDropdown label="Create Your Movie" items={createItems} isActive={isCreateActive} />
-          <NavDropdown label="Explore" items={exploreItems} isActive={isExploreActive} />
+          <Link
+            href="/films"
+            className={cn(
+              'text-[11px] px-2.5 py-1.5 rounded transition-all duration-300',
+              pathname.startsWith('/films') ? 'text-white/90' : 'text-white/40 hover:text-white/80'
+            )}
+          >
+            Films
+          </Link>
           <Link
             href="/invest"
             className={cn(
@@ -208,6 +224,34 @@ export function NetflixHeader() {
           >
             Community
           </Link>
+          <Link
+            href="/tv"
+            className={cn(
+              'text-[11px] px-2.5 py-1.5 rounded transition-all duration-300',
+              pathname.startsWith('/tv') ? 'text-white/90' : 'text-white/40 hover:text-white/80'
+            )}
+          >
+            TV
+          </Link>
+          <Link
+            href="/watch"
+            className={cn(
+              'text-[11px] px-2.5 py-1.5 rounded transition-all duration-300',
+              pathname.startsWith('/watch') ? 'text-white/90' : 'text-white/40 hover:text-white/80'
+            )}
+          >
+            Watch
+          </Link>
+          <Link
+            href="/tv/live"
+            className={cn(
+              'text-[11px] px-2.5 py-1.5 rounded transition-all duration-300',
+              pathname === '/tv/live' ? 'text-white/90' : 'text-white/40 hover:text-white/80'
+            )}
+          >
+            Live TV
+          </Link>
+          <NavDropdown label="More" items={moreItems} isActive={isMoreActive} />
         </nav>
 
         {/* Right: Search + Lang + Profile + Hamburger */}

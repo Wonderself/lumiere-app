@@ -3,7 +3,7 @@
  *
  * Abstracts on-chain operations for the CINEGEN platform.
  * Currently uses a hash-based proof system (storing SHA-256 hashes as proof-of-record).
- * Ready to integrate with Polygon/Base smart contracts when deployed.
+ * Ready to integrate with Ethereum smart contracts when deployed.
  *
  * Architecture:
  * 1. Every vote, prize distribution, and contest closing generates a deterministic hash
@@ -17,7 +17,7 @@ import crypto from 'crypto'
 
 // ─── Configuration ───────────────────────────────────────────────
 
-const CHAIN = process.env.BLOCKCHAIN_NETWORK || 'polygon'
+const CHAIN = process.env.BLOCKCHAIN_NETWORK || 'ethereum'
 const CONTRACT_ADDRESS = process.env.VOTE_CONTRACT_ADDRESS || ''
 const IS_LIVE = !!CONTRACT_ADDRESS // true when smart contract is deployed
 

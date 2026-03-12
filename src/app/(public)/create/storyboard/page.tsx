@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef, useCallback, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import {
@@ -19,6 +19,9 @@ import {
   ArrowRight,
   Lightbulb,
   Grid3x3,
+  Camera,
+  Pencil,
+  Loader2,
 } from 'lucide-react'
 import { CreateLayout } from '@/components/create/create-layout'
 import { useCreateProgress } from '@/components/create/use-create-progress'
@@ -34,6 +37,8 @@ interface StoryboardFrame {
   notes: string
   cameraAngle: string
   lighting: string
+  shotType: string
+  description: string
 }
 
 const STYLE_OPTIONS = [
@@ -43,6 +48,40 @@ const STYLE_OPTIONS = [
   { value: 'watercolor', label: 'Watercolor' },
   { value: 'sketch', label: 'Sketch' },
 ]
+
+const SHOT_TYPES = [
+  'Wide Shot',
+  'Medium Shot',
+  'Close-Up',
+  'Extreme Close-Up',
+  'Over-the-Shoulder',
+  "Bird's Eye",
+  'Low Angle',
+  'Dutch Angle',
+  'POV',
+  'Tracking Shot',
+]
+
+const ASPECT_RATIOS = [
+  { value: '16:9', label: '16:9 Widescreen', cls: 'aspect-video' },
+  { value: '2.39:1', label: '2.39:1 Cinematic', cls: 'aspect-[2.39/1]' },
+  { value: '4:3', label: '4:3 Classic', cls: 'aspect-[4/3]' },
+  { value: '1:1', label: '1:1 Square', cls: 'aspect-square' },
+  { value: '9:16', label: '9:16 Vertical', cls: 'aspect-[9/16]' },
+]
+
+const UNSPLASH_STORYBOARD = [
+  'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=640&h=360&q=80',
+  'https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&w=640&h=360&q=80',
+  'https://images.unsplash.com/photo-1478720568477-152d9b164e26?auto=format&fit=crop&w=640&h=360&q=80',
+  'https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=640&h=360&q=80',
+  'https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=640&h=360&q=80',
+  'https://images.unsplash.com/photo-1440404653325-ab127d49abc1?auto=format&fit=crop&w=640&h=360&q=80',
+  'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=640&h=360&q=80',
+  'https://images.unsplash.com/photo-1518676590747-1e3dcf5a06be?auto=format&fit=crop&w=640&h=360&q=80',
+]
+
+const GENERATION_STEPS = ['Composing scene...', 'Applying style...', 'Rendering...']
 
 const TIPS = [
   {
@@ -103,6 +142,8 @@ function createEmptyFrames(): StoryboardFrame[] {
     notes: '',
     cameraAngle: '',
     lighting: '',
+    shotType: '',
+    description: '',
   }))
 }
 
@@ -119,8 +160,26 @@ export default function StoryboardPage() {
   /* AI generation panel state */
   const [aiPrompt, setAiPrompt] = useState('')
   const [aiStyle, setAiStyle] = useState('cinematic')
+  const [aspectRatio, setAspectRatio] = useState('16:9')
   const [generatingFrameId, setGeneratingFrameId] = useState<number | null>(null)
+  const [generationStep, setGenerationStep] = useState(0)
   const [lastGenerated, setLastGenerated] = useState<string | null>(null)
+
+  /* Batch generation state */
+  const [batchGenerating, setBatchGenerating] = useState(false)
+  const [batchProgress, setBatchProgress] = useState({ current: 0, total: 0 })
+
+  /* Drag and drop state */
+  const [dragIndex, setDragIndex] = useState<number | null>(null)
+  const [dropIndex, setDropIndex] = useState<number | null>(null)
+
+  /* Editable label state */
+  const [editingLabelId, setEditingLabelId] = useState<number | null>(null)
+  const [editingLabelValue, setEditingLabelValue] = useState('')
+  const labelInputRef = useRef<HTMLInputElement>(null)
+
+  /* Image index counter for cycling through Unsplash images */
+  const imageIndexRef = useRef(0)
 
   /* Locked state */
   const isUnlocked = loaded
@@ -133,14 +192,35 @@ export default function StoryboardPage() {
       })()
     : false
 
+  /* Focus label input on edit */
+  useEffect(() => {
+    if (editingLabelId !== null && labelInputRef.current) {
+      labelInputRef.current.focus()
+      labelInputRef.current.select()
+    }
+  }, [editingLabelId])
+
   if (!loaded) return null
 
-  /* Handlers */
+  /* ── Helpers ── */
+
+  function getNextImage(): string {
+    const url = UNSPLASH_STORYBOARD[imageIndexRef.current % UNSPLASH_STORYBOARD.length]
+    imageIndexRef.current++
+    return url
+  }
+
+  function getAspectClass(): string {
+    return ASPECT_RATIOS.find((ar) => ar.value === aspectRatio)?.cls ?? 'aspect-video'
+  }
+
+  /* ── Handlers ── */
+
   function addScene() {
     const nextId = frames.length > 0 ? Math.max(...frames.map((f) => f.id)) + 1 : 1
     setFrames((prev) => [
       ...prev,
-      { id: nextId, label: `Scene ${nextId}`, imageUrl: null, notes: '', cameraAngle: '', lighting: '' },
+      { id: nextId, label: `Scene ${nextId}`, imageUrl: null, notes: '', cameraAngle: '', lighting: '', shotType: '', description: '' },
     ])
   }
 
@@ -148,21 +228,145 @@ export default function StoryboardPage() {
     setFrames((prev) => prev.filter((f) => f.id !== id))
   }
 
-  function handleGenerateFrame(frameId: number) {
-    setGeneratingFrameId(frameId)
-    // Simulate AI generation
-    setTimeout(() => {
-      const placeholderUrl = `https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=640&h=360&q=80`
-      setFrames((prev) =>
-        prev.map((f) => (f.id === frameId ? { ...f, imageUrl: placeholderUrl } : f))
-      )
-      setLastGenerated(placeholderUrl)
-      setGeneratingFrameId(null)
-    }, 2000)
+  function simulateGeneration(resolve: (url: string) => void) {
+    let step = 0
+    setGenerationStep(0)
+    const interval = setInterval(() => {
+      step++
+      if (step < GENERATION_STEPS.length) {
+        setGenerationStep(step)
+      } else {
+        clearInterval(interval)
+        const url = getNextImage()
+        resolve(url)
+      }
+    }, 800)
   }
 
-  function updateFrameNotes(id: number, field: 'notes' | 'cameraAngle' | 'lighting', value: string) {
+  function handleGenerateFrame(frameId: number) {
+    setGeneratingFrameId(frameId)
+    setGenerationStep(0)
+    new Promise<string>((resolve) => simulateGeneration(resolve)).then((url) => {
+      setFrames((prev) =>
+        prev.map((f) => (f.id === frameId ? { ...f, imageUrl: url } : f))
+      )
+      setLastGenerated(url)
+      setGeneratingFrameId(null)
+    })
+  }
+
+  function handleGenerateFromPrompt() {
+    if (!aiPrompt.trim()) return
+    const nextId = frames.length > 0 ? Math.max(...frames.map((f) => f.id)) + 1 : 1
+    const newFrame: StoryboardFrame = {
+      id: nextId,
+      label: `Scene ${nextId}`,
+      imageUrl: null,
+      notes: '',
+      cameraAngle: '',
+      lighting: '',
+      shotType: '',
+      description: aiPrompt.trim(),
+    }
+    setFrames((prev) => [...prev, newFrame])
+    setGeneratingFrameId(nextId)
+    setGenerationStep(0)
+    new Promise<string>((resolve) => simulateGeneration(resolve)).then((url) => {
+      setFrames((prev) =>
+        prev.map((f) => (f.id === nextId ? { ...f, imageUrl: url } : f))
+      )
+      setLastGenerated(url)
+      setGeneratingFrameId(null)
+    })
+    setAiPrompt('')
+  }
+
+  async function handleBatchGenerate() {
+    const emptyFrames = frames.filter((f) => !f.imageUrl)
+    if (emptyFrames.length === 0) return
+    setBatchGenerating(true)
+    setBatchProgress({ current: 0, total: emptyFrames.length })
+
+    for (let i = 0; i < emptyFrames.length; i++) {
+      const frame = emptyFrames[i]
+      setBatchProgress({ current: i + 1, total: emptyFrames.length })
+      setGeneratingFrameId(frame.id)
+      setGenerationStep(0)
+      const url = await new Promise<string>((resolve) => simulateGeneration(resolve))
+      setFrames((prev) =>
+        prev.map((f) => (f.id === frame.id ? { ...f, imageUrl: url } : f))
+      )
+      setLastGenerated(url)
+    }
+
+    setGeneratingFrameId(null)
+    setBatchGenerating(false)
+    setBatchProgress({ current: 0, total: 0 })
+  }
+
+  function updateFrameField(id: number, field: keyof StoryboardFrame, value: string) {
     setFrames((prev) => prev.map((f) => (f.id === id ? { ...f, [field]: value } : f)))
+  }
+
+  function setShotType(id: number, shotType: string) {
+    setFrames((prev) =>
+      prev.map((f) =>
+        f.id === id ? { ...f, shotType, cameraAngle: shotType } : f
+      )
+    )
+  }
+
+  /* ── Label editing ── */
+
+  function startEditingLabel(frame: StoryboardFrame) {
+    setEditingLabelId(frame.id)
+    setEditingLabelValue(frame.label)
+  }
+
+  function commitLabel() {
+    if (editingLabelId !== null && editingLabelValue.trim()) {
+      updateFrameField(editingLabelId, 'label', editingLabelValue.trim())
+    }
+    setEditingLabelId(null)
+    setEditingLabelValue('')
+  }
+
+  /* ── Drag & Drop ── */
+
+  function handleDragStart(index: number) {
+    setDragIndex(index)
+  }
+
+  function handleDragOver(e: React.DragEvent, index: number) {
+    e.preventDefault()
+    e.dataTransfer.dropEffect = 'move'
+    setDropIndex(index)
+  }
+
+  function handleDragLeave() {
+    setDropIndex(null)
+  }
+
+  function handleDrop(e: React.DragEvent, index: number) {
+    e.preventDefault()
+    if (dragIndex === null || dragIndex === index) {
+      setDragIndex(null)
+      setDropIndex(null)
+      return
+    }
+    setFrames((prev) => {
+      const updated = [...prev]
+      const [moved] = updated.splice(dragIndex, 1)
+      updated.splice(index, 0, moved)
+      return updated
+    })
+    setDragIndex(null)
+    setDropIndex(null)
+  }
+
+  function handleDragEnd() {
+    setDragIndex(null)
+    setDropIndex(null)
   }
 
   return (
@@ -296,13 +500,31 @@ export default function StoryboardPage() {
               : 'flex flex-col'
           )}
         >
-          {frames.map((frame) => (
+          {frames.map((frame, index) => (
             <div
               key={frame.id}
-              className="group relative rounded-xl bg-white/[0.02] border border-white/[0.06] hover:border-white/[0.12] transition-all duration-300 overflow-hidden"
+              draggable={isUnlocked}
+              onDragStart={() => handleDragStart(index)}
+              onDragOver={(e) => handleDragOver(e, index)}
+              onDragLeave={handleDragLeave}
+              onDrop={(e) => handleDrop(e, index)}
+              onDragEnd={handleDragEnd}
+              className={cn(
+                'group relative rounded-xl bg-white/[0.02] border transition-all duration-300 overflow-hidden',
+                dragIndex === index
+                  ? 'opacity-40 border-[#E50914]/40'
+                  : dropIndex === index
+                    ? 'border-[#E50914]/60 ring-2 ring-[#E50914]/20'
+                    : 'border-white/[0.06] hover:border-white/[0.12]'
+              )}
             >
-              {/* 16:9 frame area */}
-              <div className="relative aspect-video bg-black/30">
+              {/* Drop indicator line */}
+              {dropIndex === index && dragIndex !== null && dragIndex !== index && (
+                <div className="absolute top-0 left-0 right-0 h-0.5 bg-[#E50914] z-20 shadow-[0_0_8px_rgba(229,9,20,0.5)]" />
+              )}
+
+              {/* Frame area with dynamic aspect ratio */}
+              <div className={cn('relative bg-black/30', getAspectClass())}>
                 {frame.imageUrl ? (
                   <>
                     <Image
@@ -312,9 +534,16 @@ export default function StoryboardPage() {
                       className="object-cover"
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     />
+                    {/* Shot type badge */}
+                    {frame.shotType && (
+                      <div className="absolute top-2 left-2 z-10 px-2 py-0.5 rounded-md bg-black/70 border border-[#E50914]/30 text-[10px] font-semibold text-[#E50914] backdrop-blur-sm">
+                        <Camera className="inline h-2.5 w-2.5 mr-1" />
+                        {frame.shotType}
+                      </div>
+                    )}
                     {/* Frame actions overlay */}
                     <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100">
-                      <button className="w-8 h-8 rounded-lg bg-black/60 border border-white/10 flex items-center justify-center text-white/70 hover:text-white hover:bg-black/80 transition-colors">
+                      <button className="w-8 h-8 rounded-lg bg-black/60 border border-white/10 flex items-center justify-center text-white/70 hover:text-white hover:bg-black/80 transition-colors cursor-grab active:cursor-grabbing">
                         <Move className="h-3.5 w-3.5" />
                       </button>
                       <button className="w-8 h-8 rounded-lg bg-black/60 border border-white/10 flex items-center justify-center text-white/70 hover:text-white hover:bg-black/80 transition-colors">
@@ -333,10 +562,19 @@ export default function StoryboardPage() {
                     {generatingFrameId === frame.id ? (
                       <div className="flex flex-col items-center gap-3">
                         <div className="w-8 h-8 border-2 border-[#E50914]/30 border-t-[#E50914] rounded-full animate-spin" />
-                        <span className="text-xs text-white/40">Generating...</span>
+                        <span className="text-xs text-white/40">
+                          {GENERATION_STEPS[generationStep] ?? 'Generating...'}
+                        </span>
                       </div>
                     ) : (
                       <>
+                        {/* Shot type badge even when empty */}
+                        {frame.shotType && (
+                          <div className="absolute top-2 left-2 z-10 px-2 py-0.5 rounded-md bg-black/70 border border-[#E50914]/30 text-[10px] font-semibold text-[#E50914]">
+                            <Camera className="inline h-2.5 w-2.5 mr-1" />
+                            {frame.shotType}
+                          </div>
+                        )}
                         <div className="w-10 h-10 rounded-full bg-white/[0.04] flex items-center justify-center mb-3">
                           <Plus className="h-5 w-5 text-white/20" />
                         </div>
@@ -362,9 +600,34 @@ export default function StoryboardPage() {
 
               {/* Frame label and actions */}
               <div className="flex items-center justify-between px-4 py-3">
-                <span className="text-xs font-medium text-white/60">{frame.label}</span>
+                {editingLabelId === frame.id ? (
+                  <input
+                    ref={labelInputRef}
+                    type="text"
+                    value={editingLabelValue}
+                    onChange={(e) => setEditingLabelValue(e.target.value)}
+                    onBlur={commitLabel}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') commitLabel()
+                      if (e.key === 'Escape') {
+                        setEditingLabelId(null)
+                        setEditingLabelValue('')
+                      }
+                    }}
+                    className="text-xs font-medium text-white/90 bg-black/40 border border-[#E50914]/40 rounded px-2 py-0.5 outline-none w-28"
+                  />
+                ) : (
+                  <button
+                    onClick={() => startEditingLabel(frame)}
+                    className="flex items-center gap-1.5 text-xs font-medium text-white/60 hover:text-white/90 transition-colors"
+                    title="Click to rename"
+                  >
+                    {frame.label}
+                    <Pencil className="h-2.5 w-2.5 opacity-0 group-hover:opacity-60 transition-opacity" />
+                  </button>
+                )}
                 <div className="flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <button className="p-1 rounded text-white/30 hover:text-white/60 transition-colors">
+                  <button className="p-1 rounded text-white/30 hover:text-white/60 transition-colors cursor-grab active:cursor-grabbing">
                     <Move className="h-3 w-3" />
                   </button>
                   <button className="p-1 rounded text-white/30 hover:text-white/60 transition-colors">
@@ -376,6 +639,44 @@ export default function StoryboardPage() {
                   >
                     <Trash2 className="h-3 w-3" />
                   </button>
+                </div>
+              </div>
+
+              {/* Shot type selector */}
+              <div className="px-4 pb-2">
+                <select
+                  value={frame.shotType}
+                  onChange={(e) => setShotType(frame.id, e.target.value)}
+                  disabled={!isUnlocked}
+                  className="w-full px-2.5 py-1.5 rounded-lg bg-black/30 border border-white/[0.06] text-[11px] text-white/60 focus:outline-none focus:border-[#E50914]/30 transition-colors appearance-none cursor-pointer"
+                >
+                  <option value="" className="bg-[#111] text-white/40">Shot type...</option>
+                  {SHOT_TYPES.map((st) => (
+                    <option key={st} value={st} className="bg-[#111] text-white">
+                      {st}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Scene description */}
+              <div className="px-4 pb-3">
+                <div className="relative">
+                  <textarea
+                    value={frame.description}
+                    onChange={(e) => {
+                      if (e.target.value.length <= 200) {
+                        updateFrameField(frame.id, 'description', e.target.value)
+                      }
+                    }}
+                    placeholder="What happens in this scene?"
+                    rows={2}
+                    disabled={!isUnlocked}
+                    className="w-full px-2.5 py-1.5 rounded-lg bg-black/30 border border-white/[0.06] text-[11px] text-white/70 placeholder:text-white/15 resize-none focus:outline-none focus:border-[#E50914]/30 transition-colors"
+                  />
+                  <span className="absolute bottom-2 right-2 text-[9px] text-white/20">
+                    {frame.description.length}/200
+                  </span>
                 </div>
               </div>
             </div>
@@ -408,9 +709,9 @@ export default function StoryboardPage() {
               )}
             />
 
-            {/* Style selector */}
+            {/* Style + Aspect Ratio selectors */}
             <div className="mt-4 flex flex-wrap items-end gap-4">
-              <div className="flex-1 min-w-[180px]">
+              <div className="flex-1 min-w-[140px]">
                 <label className="block text-xs font-medium text-white/50 mb-2">Visual Style</label>
                 <select
                   value={aiStyle}
@@ -431,18 +732,73 @@ export default function StoryboardPage() {
                 </select>
               </div>
 
+              <div className="flex-1 min-w-[140px]">
+                <label className="block text-xs font-medium text-white/50 mb-2">Aspect Ratio</label>
+                <select
+                  value={aspectRatio}
+                  onChange={(e) => setAspectRatio(e.target.value)}
+                  disabled={!isUnlocked}
+                  className={cn(
+                    'w-full px-4 py-2.5 rounded-lg bg-black/30 border text-sm text-white/80 focus:outline-none transition-colors appearance-none cursor-pointer',
+                    isUnlocked
+                      ? 'border-white/[0.08] focus:border-[#E50914]/40'
+                      : 'border-white/[0.04] text-white/20 cursor-not-allowed'
+                  )}
+                >
+                  {ASPECT_RATIOS.map((ar) => (
+                    <option key={ar.value} value={ar.value} className="bg-[#111] text-white">
+                      {ar.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={handleGenerateFromPrompt}
+                  disabled={!isUnlocked || !aiPrompt.trim() || batchGenerating}
+                  className={cn(
+                    'flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200',
+                    isUnlocked && aiPrompt.trim() && !batchGenerating
+                      ? 'bg-[#E50914] text-white hover:bg-[#B20710] active:scale-[0.97]'
+                      : 'bg-white/[0.04] text-white/20 cursor-not-allowed'
+                  )}
+                >
+                  <Sparkles className="h-4 w-4" />
+                  Generate Frame
+                  <span className="text-[10px] opacity-60 ml-1">Included</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Batch generate */}
+            <div className="mt-4 pt-4 border-t border-white/[0.06]">
               <button
-                disabled={!isUnlocked || !aiPrompt.trim()}
+                onClick={handleBatchGenerate}
+                disabled={!isUnlocked || batchGenerating || frames.filter((f) => !f.imageUrl).length === 0}
                 className={cn(
-                  'flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200',
-                  isUnlocked && aiPrompt.trim()
-                    ? 'bg-[#E50914] text-white hover:bg-[#B20710] active:scale-[0.97]'
-                    : 'bg-white/[0.04] text-white/20 cursor-not-allowed'
+                  'flex items-center gap-2 px-4 py-2.5 rounded-lg text-xs font-semibold transition-all duration-200 w-full justify-center',
+                  isUnlocked && !batchGenerating && frames.filter((f) => !f.imageUrl).length > 0
+                    ? 'bg-white/[0.04] border border-white/[0.08] text-white/70 hover:bg-white/[0.08] hover:text-white'
+                    : 'bg-white/[0.02] border border-white/[0.04] text-white/15 cursor-not-allowed'
                 )}
               >
-                <Sparkles className="h-4 w-4" />
-                Generate Frame
-                <span className="text-[10px] opacity-60 ml-1">Included</span>
+                {batchGenerating ? (
+                  <>
+                    <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                    Generating {batchProgress.current} of {batchProgress.total}...
+                  </>
+                ) : (
+                  <>
+                    <Wand2 className="h-3.5 w-3.5" />
+                    Generate All Empty Frames
+                    {frames.filter((f) => !f.imageUrl).length > 0 && (
+                      <span className="text-[10px] opacity-50 ml-1">
+                        ({frames.filter((f) => !f.imageUrl).length} frame{frames.filter((f) => !f.imageUrl).length !== 1 ? 's' : ''})
+                      </span>
+                    )}
+                  </>
+                )}
               </button>
             </div>
           </div>
@@ -452,7 +808,7 @@ export default function StoryboardPage() {
             <div className="px-4 py-3 border-b border-white/[0.06]">
               <span className="text-xs font-medium text-white/40">Preview</span>
             </div>
-            <div className="relative aspect-video bg-black/20">
+            <div className={cn('relative bg-black/20', getAspectClass())}>
               {lastGenerated ? (
                 <Image
                   src={lastGenerated}
@@ -497,6 +853,11 @@ export default function StoryboardPage() {
                       {frame.id}
                     </div>
                     <span className="text-sm font-medium text-white/70">{frame.label}</span>
+                    {frame.shotType && (
+                      <span className="px-1.5 py-0.5 rounded bg-[#E50914]/10 text-[10px] font-medium text-[#E50914]/80">
+                        {frame.shotType}
+                      </span>
+                    )}
                     {(frame.notes || frame.cameraAngle || frame.lighting) && (
                       <div className="w-1.5 h-1.5 rounded-full bg-emerald-400/60" />
                     )}
@@ -519,7 +880,7 @@ export default function StoryboardPage() {
                         </label>
                         <textarea
                           value={frame.notes}
-                          onChange={(e) => updateFrameNotes(frame.id, 'notes', e.target.value)}
+                          onChange={(e) => updateFrameField(frame.id, 'notes', e.target.value)}
                           placeholder="Action, emotion, pacing..."
                           rows={3}
                           disabled={!isUnlocked}
@@ -532,7 +893,7 @@ export default function StoryboardPage() {
                         </label>
                         <textarea
                           value={frame.cameraAngle}
-                          onChange={(e) => updateFrameNotes(frame.id, 'cameraAngle', e.target.value)}
+                          onChange={(e) => updateFrameField(frame.id, 'cameraAngle', e.target.value)}
                           placeholder="Wide shot, close-up, over-the-shoulder..."
                           rows={3}
                           disabled={!isUnlocked}
@@ -545,7 +906,7 @@ export default function StoryboardPage() {
                         </label>
                         <textarea
                           value={frame.lighting}
-                          onChange={(e) => updateFrameNotes(frame.id, 'lighting', e.target.value)}
+                          onChange={(e) => updateFrameField(frame.id, 'lighting', e.target.value)}
                           placeholder="Natural, low-key, neon, golden hour..."
                           rows={3}
                           disabled={!isUnlocked}

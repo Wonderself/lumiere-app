@@ -44,7 +44,7 @@ const advantages = [
   {
     icon: Shield,
     title: 'Blockchain & Tracabilite',
-    desc: "Chaque contribution hashee SHA-256 et horodatee. Pret pour la tokenisation sur Polygon : co-production, gouvernance, revenus partages.",
+    desc: "Chaque contribution hashee SHA-256 et horodatee. Pret pour la tokenisation sur Ethereum : co-production, gouvernance, revenus partages.",
   },
   {
     icon: BookOpen,
@@ -59,14 +59,14 @@ const advantages = [
   {
     icon: Landmark,
     title: 'Cadre legal structure',
-    desc: "SAS francaise. Credits d'impot cinema (CNC). Advisory Board FinTech. Cadre israelien pour la tokenisation (IL_EXEMPT / IL_SANDBOX).",
+    desc: "Israeli Ltd (holding). Delaware C-Corp planned for US acquisition. Ethereum-based tokenization. Advisory Board FinTech & Legal.",
   },
 ]
 
 const timeline = [
   { phase: 'Phase 1', title: 'Plateforme & Pipeline', desc: '20 films en pre-production, communaute active, IA operationnelle', status: 'done' },
   { phase: 'Phase 2', title: 'Premiers Films', desc: 'Sortie des 3 premiers films, streaming en ligne, premieres revenues', status: 'current' },
-  { phase: 'Phase 3', title: 'Tokenisation', desc: 'Lancement des tokens film sur Polygon, co-production decentralisee', status: 'next' },
+  { phase: 'Phase 3', title: 'Tokenisation', desc: 'Lancement des tokens film sur Ethereum, co-production decentralisee', status: 'next' },
   { phase: 'Phase 4', title: 'Scale International', desc: 'Distribution mondiale, partenariats Hollywood, 50+ films par an', status: 'next' },
 ]
 
@@ -327,7 +327,7 @@ export default function InvestPage() {
             {[
               { q: 'Quel est le montant minimum pour investir ?', a: 'Vous pouvez investir a partir de 10\u20AC en achetant des tokens de co-production. Chaque token represente une part du film.' },
               { q: 'Comment sont distribues les revenus ?', a: 'Les revenus sont partages proportionnellement au nombre de tokens detenus. Les distributions sont effectuees apres chaque exploitation (streaming, ventes, festivals).' },
-              { q: 'Quel est le cadre juridique ?', a: 'CINEGEN est une SAS francaise. Les investissements sont encadres par le droit francais et beneficient du credit d\'impot cinema. La tracabilite est assuree par blockchain.' },
+              { q: 'Quel est le cadre juridique ?', a: 'CINEGEN is an Israeli Ltd with a planned Delaware C-Corp for US market. Investments are governed by Israeli securities law with blockchain traceability on Ethereum.' },
               { q: 'Quand vais-je recevoir des retours ?', a: 'Les premiers retours arrivent generalement 12 a 18 mois apres la fin de production, lors de la phase d\'exploitation commerciale.' },
               { q: 'Puis-je revendre mes tokens ?', a: 'Oui, les tokens seront echangeables sur notre marketplace des l\'ouverture de la phase de tokenisation (voir roadmap).' },
               { q: 'Mon investissement est-il garanti ?', a: 'Comme tout investissement dans la creation, il comporte des risques. Cependant, notre modele de production IA reduit les couts de 95% par rapport a Hollywood, limitant significativement le risque.' },
@@ -345,6 +345,70 @@ export default function InvestPage() {
       </section>
 
       <div className="h-px bg-gradient-to-r from-transparent via-white/[0.04] to-transparent" />
+
+      {/* ═══ SECURITE & CADRE JURIDIQUE ═══ */}
+      <section className="py-20 sm:py-28 px-4">
+        <div className="container mx-auto max-w-5xl">
+          <div className="text-center mb-14">
+            <p className="text-[#E50914] text-xs sm:text-sm font-medium uppercase tracking-widest mb-3">
+              Securite
+            </p>
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">
+              Cadre <span className="text-gold-gradient">Juridique & Technique</span>
+            </h2>
+          </div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {[
+              { icon: Landmark, title: 'Israeli Ltd', desc: 'Holding company registered in Israel. Delaware C-Corp planned for US market and acquisition.' },
+              { icon: Shield, title: 'Utility Tokens', desc: 'Non-transferable utility tokens on Ethereum. No resale — platform buyback only. Self-executing smart contracts.' },
+              { icon: Cpu, title: 'Blockchain', desc: 'Every transaction and contribution tracked on Ethereum. Immutable and verifiable.' },
+              { icon: BookOpen, title: 'Israeli Securities', desc: 'Investment process compliant with ISA (Israel Securities Authority) guidelines. Delaware Corp planned for US investors.' },
+            ].map((item) => (
+              <div key={item.title} className="p-5 rounded-xl border border-white/[0.06] bg-white/[0.02] text-center">
+                <div className="h-10 w-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mx-auto mb-3">
+                  <item.icon className="h-5 w-5 text-emerald-400" />
+                </div>
+                <h3 className="text-sm font-bold text-white mb-1.5">{item.title}</h3>
+                <p className="text-xs text-white/40 leading-relaxed">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-8 p-6 rounded-2xl border border-emerald-500/10 bg-emerald-500/[0.02] text-center">
+            <p className="text-sm text-white/50">
+              <span className="text-emerald-400 font-semibold">100% tracable</span> — Chaque euro investi est suivi sur la blockchain.
+              Rapports trimestriels, dashboard investisseur en temps reel, et audit externe annuel.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <div className="h-px bg-gradient-to-r from-transparent via-white/[0.04] to-transparent" />
+
+      {/* ═══ CHIFFRES CLES ═══ */}
+      <section className="py-20 sm:py-28 px-4 relative">
+        <div className="absolute inset-0 bg-white/[0.01]" />
+        <div className="container mx-auto max-w-5xl relative">
+          <h2 className="text-2xl md:text-3xl font-bold text-white mb-10 font-playfair text-center">Le Cinema en Chiffres</h2>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            {[
+              { value: '$100B+', label: 'Marche mondial du cinema', sub: 'En croissance de 8% par an' },
+              { value: '95%', label: 'Reduction des couts IA', sub: 'vs production traditionnelle' },
+              { value: '6 mois', label: 'Cycle de production', sub: 'vs 2-5 ans en moyenne' },
+              { value: '∞', label: 'Scalabilite', sub: 'Pas de limite physique' },
+            ].map((stat) => (
+              <div key={stat.label} className="p-5 rounded-xl border border-white/[0.06] bg-white/[0.02] text-center">
+                <div className="text-3xl font-bold text-[#E50914] mb-1">{stat.value}</div>
+                <div className="text-sm text-white/70 font-medium">{stat.label}</div>
+                <div className="text-[10px] text-white/30 mt-1">{stat.sub}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <div className="h-px bg-gradient-to-r from-transparent via-[#E50914]/10 to-transparent" />
 
       {/* ═══ CTA ═══ */}
       <section className="py-24 sm:py-32 px-4 relative">
@@ -365,7 +429,7 @@ export default function InvestPage() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
               href="mailto:invest@cinegen.studio"
-              className="inline-flex items-center gap-2.5 px-8 py-4 rounded-2xl bg-[#E50914] hover:bg-[#FF2D2D] text-white font-semibold transition-all duration-500 shadow-lg shadow-[#E50914]/20 hover:shadow-[#E50914]/30 hover:scale-[1.02]"
+              className="golden-border-btn golden-border-always inline-flex items-center gap-2.5 px-8 py-4 rounded-2xl bg-[#E50914] hover:bg-[#FF2D2D] text-white font-semibold transition-all duration-500 shadow-lg shadow-[#E50914]/20 hover:shadow-[#E50914]/30 hover:scale-[1.02]"
             >
               Nous Contacter
               <ArrowRight className="h-5 w-5" />

@@ -59,21 +59,6 @@ function SvgPoster({ title, genre }: { title: string; genre: string | null }) {
   const uid = `p${h % 99999}`
   const g = genre || ''
 
-  // Word-wrap title into lines of ~14 chars max
-  const words = title.split(' ')
-  const lines: string[] = []
-  let cur = ''
-  for (const w of words) {
-    if (cur && (cur.length + w.length + 1) > 14) {
-      lines.push(cur)
-      cur = w
-    } else {
-      cur = cur ? cur + ' ' + w : w
-    }
-  }
-  if (cur) lines.push(cur)
-  const titleLines = lines.slice(0, 4)
-
   const genreElements = (): React.ReactNode => {
     switch (g) {
       case 'Action':
@@ -383,12 +368,6 @@ function SvgPoster({ title, genre }: { title: string; genre: string | null }) {
             <feColorMatrix type="saturate" values="0" in="noise" result="mono" />
             <feBlend in="SourceGraphic" in2="mono" mode="multiply" />
           </filter>
-          {/* Bottom fade for title area */}
-          <linearGradient id={`${uid}_btm`} x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="60%" stopColor="transparent" />
-            <stop offset="85%" stopColor="#0A0A0A" stopOpacity="0.85" />
-            <stop offset="100%" stopColor="#0A0A0A" />
-          </linearGradient>
         </defs>
 
         {/* Base background */}
@@ -402,39 +381,6 @@ function SvgPoster({ title, genre }: { title: string; genre: string | null }) {
         {/* Film grain texture overlay */}
         <rect width="200" height="300" opacity="0.12" filter={`url(#${uid}_grain)`} fill="transparent" />
 
-        {/* Bottom gradient for title readability */}
-        <rect width="200" height="300" fill={`url(#${uid}_btm)`} />
-
-        {/* Genre label at top */}
-        {genre && (
-          <text x="100" y="22" textAnchor="middle" fontFamily="system-ui, sans-serif" fontSize="7" fontWeight="500" letterSpacing="0.15em" fill="white" opacity="0.3" textDecoration="none">
-            {genre.toUpperCase()}
-          </text>
-        )}
-
-        {/* Thin genre-colored line under label */}
-        <line x1="70" y1="28" x2="130" y2="28" stroke={c1} strokeWidth="0.5" opacity="0.25" />
-
-        {/* Film title at bottom */}
-        {titleLines.map((line, i) => (
-          <text
-            key={i}
-            x="100"
-            y={262 + i * 14 - (titleLines.length - 1) * 7}
-            textAnchor="middle"
-            fontFamily="system-ui, sans-serif"
-            fontSize="13"
-            fontWeight="800"
-            fill="white"
-            opacity="0.85"
-            letterSpacing="0.02em"
-          >
-            {line}
-          </text>
-        ))}
-
-        {/* Subtle bottom line accent */}
-        <line x1="60" y1={280} x2="140" y2={280} stroke={c1} strokeWidth="0.8" opacity="0.3" />
       </svg>
     </div>
   )
