@@ -37,9 +37,9 @@ fi
 
 # Run Prisma schema push (use node directly — npx not available in slim image)
 echo "Syncing database schema..."
-node ./node_modules/prisma/build/index.js db push --skip-generate 2>&1 || {
+node ./node_modules/prisma/build/index.js db push 2>&1 || {
   echo "Warning: db push failed. Trying with --accept-data-loss for first deploy..."
-  node ./node_modules/prisma/build/index.js db push --skip-generate --accept-data-loss 2>&1 || echo "Warning: db push retry also failed"
+  node ./node_modules/prisma/build/index.js db push --accept-data-loss 2>&1 || echo "Warning: db push retry also failed"
 }
 
 # Seed database if SEED_DB=true (only on first deploy)
