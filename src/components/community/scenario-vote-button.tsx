@@ -63,7 +63,7 @@ export function ScenarioVoteButton({
           </div>
         </div>
         <a
-          href="/subscription"
+          href="/dashboard/subscription"
           className="text-[10px] text-[#E50914]/60 hover:text-[#E50914] transition-colors"
         >
           Passer Premium

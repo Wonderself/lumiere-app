@@ -309,7 +309,7 @@ export default async function ScenarioDetailPage({
                     Passez a Premium pour voter et influencer les futures productions.
                   </p>
                   <Link
-                    href="/subscription"
+                    href="/dashboard/subscription"
                     className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#E50914] text-white text-xs font-semibold hover:bg-[#FF2D2D] transition-colors duration-300"
                   >
                     <Sparkles className="h-3.5 w-3.5" />

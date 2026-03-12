@@ -130,7 +130,7 @@ export default async function ScenariosPage() {
                     <p className="text-xs text-white/40 mt-0.5">Passez a un abonnement superieur pour influencer les productions.</p>
                   </div>
                   <Link
-                    href="/subscription"
+                    href="/dashboard/subscription"
                     className="shrink-0 px-4 py-2 rounded-full bg-[#E50914] text-white text-xs font-semibold hover:bg-[#C4A030] transition-colors duration-300"
                   >
                     Devenir Premium

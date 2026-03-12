@@ -1105,7 +1105,7 @@ export default async function HomePage() {
                   ))}
                 </div>
                 {/* CTA */}
-                <Link href="/subscription" className="w-full">
+                <Link href="/dashboard/subscription" className="w-full">
                   <Button
                     className={`w-full rounded-full ${plan.featured ? 'bg-[#E50914] text-white hover:bg-[#C4A030]' : 'bg-gray-100 text-gray-700 hover:bg-gray-200 border border-gray-200'}`}
                     size="lg"
