@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useSession, signOut } from 'next-auth/react'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 import {
   DropdownMenu,
@@ -31,12 +31,82 @@ import {
   Code2,
   TrendingUp,
   Users,
+  Film,
+  Clapperboard,
+  DollarSign,
+  MessageSquare,
+  Trophy,
+  UserCircle,
 } from 'lucide-react'
 import { cn, getInitials } from '@/lib/utils'
 import { AnimatePresence, MotionDiv } from '@/components/ui/motion'
 import { NotificationBell } from '@/components/layout/notification-bell'
 import { SearchOverlay } from '@/components/search-overlay'
 import { LocaleSwitcher } from '@/components/layout/locale-switcher'
+
+/* ── Dropdown item component ── */
+function NavDropdown({
+  label,
+  items,
+  isActive,
+}: {
+  label: string
+  items: { href: string; label: string; icon: React.ElementType }[]
+  isActive: boolean
+}) {
+  const [open, setOpen] = useState(false)
+  const ref = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    function handleClick(e: MouseEvent) {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false)
+    }
+    document.addEventListener('mousedown', handleClick)
+    return () => document.removeEventListener('mousedown', handleClick)
+  }, [])
+
+  return (
+    <div ref={ref} className="relative">
+      <button
+        onClick={() => setOpen(!open)}
+        onMouseEnter={() => setOpen(true)}
+        className={cn(
+          'flex items-center gap-1 text-[11px] px-2.5 py-1.5 rounded transition-all duration-300',
+          isActive
+            ? 'text-white/90'
+            : 'text-white/40 hover:text-white/80'
+        )}
+      >
+        {label}
+        <ChevronDown className={cn('h-3 w-3 transition-transform duration-200', open && 'rotate-180')} />
+      </button>
+      <AnimatePresence>
+        {open && (
+          <MotionDiv
+            initial={{ opacity: 0, y: -4 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -4 }}
+            transition={{ duration: 0.15 }}
+            onMouseLeave={() => setOpen(false)}
+            className="absolute top-full left-0 mt-1 min-w-[200px] bg-[#111]/98 backdrop-blur-xl border border-white/10 rounded-lg shadow-2xl overflow-hidden z-50"
+          >
+            {items.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={() => setOpen(false)}
+                className="flex items-center gap-2.5 px-4 py-2.5 text-[12px] text-white/60 hover:text-white hover:bg-white/5 transition-all"
+              >
+                <item.icon className="h-3.5 w-3.5 text-white/30" />
+                {item.label}
+              </Link>
+            ))}
+          </MotionDiv>
+        )}
+      </AnimatePresence>
+    </div>
+  )
+}
 
 export function NetflixHeader() {
   const pathname = usePathname()
@@ -53,23 +123,35 @@ export function NetflixHeader() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  const mobileLinks = [
-    { href: '/', label: 'Home' },
-    { href: '/films', label: 'Films' },
-    { href: '/invest', label: 'Invest' },
-    { href: '/community', label: 'Community' },
+  /* ── Menu structure ── */
+  const createItems = [
+    { href: '/create', label: 'Start a Film', icon: Clapperboard },
+    { href: '/community/scenarios/new', label: 'Submit a Scenario', icon: FileText },
   ]
 
-  const secondaryLinks = [
-    { href: '/tasks', label: 'Create', icon: Sparkles },
-    { href: '/community', label: 'Community', icon: Users },
-    { href: '/actors', label: 'Actors', icon: Users },
+  const exploreItems = [
+    { href: '/films', label: 'Films', icon: Film },
+    { href: '/actors', label: 'Actors', icon: UserCircle },
+    { href: '/trailer-studio', label: 'Trailer Studio', icon: Sparkles },
+    { href: '/leaderboard', label: 'Leaderboard', icon: Trophy },
+  ]
+
+  const mobileLinks = [
+    { href: '/create', label: 'Create Your Movie', icon: Clapperboard },
+    { href: '/films', label: 'Films', icon: Film },
+    { href: '/actors', label: 'Actors', icon: UserCircle },
+    { href: '/trailer-studio', label: 'Trailer Studio', icon: Sparkles },
+    { href: '/invest', label: 'Invest', icon: DollarSign },
+    { href: '/community', label: 'Community', icon: MessageSquare },
+    { href: '/leaderboard', label: 'Leaderboard', icon: Trophy },
     { href: '/about', label: 'About', icon: Info },
     { href: '/pricing', label: 'Pricing', icon: Tag },
-    { href: '/leaderboard', label: 'Leaderboard', icon: TrendingUp },
     { href: '/roadmap', label: 'Roadmap', icon: MapPin },
     { href: '/developers', label: 'Developers', icon: Code2 },
   ]
+
+  const isCreateActive = pathname.startsWith('/create')
+  const isExploreActive = pathname.startsWith('/films') || pathname.startsWith('/actors') || pathname.startsWith('/trailer-studio') || pathname.startsWith('/leaderboard')
 
   return (
     <header
@@ -81,9 +163,8 @@ export function NetflixHeader() {
       )}
     >
       <div className="flex h-14 md:h-[56px] items-center justify-between px-5 md:px-10 lg:px-16 mt-1">
-        {/* Left: Logo only */}
+        {/* Left: Logo */}
         <Link href="/" className="flex items-center shrink-0 group relative">
-          {/* Ambient glow behind logo */}
           <div
             className="absolute -inset-3 rounded-xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-700"
             style={{ background: 'radial-gradient(ellipse, rgba(229,9,20,0.08) 0%, transparent 70%)' }}
@@ -94,7 +175,6 @@ export function NetflixHeader() {
               style={{ animation: 'logoGlowPulse 4s ease-in-out infinite' }}
             >GEN</span>
           </span>
-          {/* Underline accent */}
           <div className="absolute -bottom-1 left-0 right-0 h-[1.5px] overflow-hidden">
             <div
               className="h-full w-0 group-hover:w-full transition-all duration-700 ease-out"
@@ -103,24 +183,37 @@ export function NetflixHeader() {
           </div>
         </Link>
 
-        {/* Right: Discrete pillars + Search + Lang + Profile */}
+        {/* Center: Desktop nav with dropdowns */}
+        <nav className="hidden lg:flex items-center gap-1">
+          <NavDropdown label="Create Your Movie" items={createItems} isActive={isCreateActive} />
+          <NavDropdown label="Explore" items={exploreItems} isActive={isExploreActive} />
+          <Link
+            href="/invest"
+            className={cn(
+              'text-[11px] px-2.5 py-1.5 rounded transition-all duration-300',
+              pathname.startsWith('/invest') ? 'text-white/90' : 'text-white/40 hover:text-white/80'
+            )}
+          >
+            Invest
+          </Link>
+          <Link
+            href="/community"
+            className={cn(
+              'text-[11px] px-2.5 py-1.5 rounded transition-all duration-300',
+              pathname.startsWith('/community') ? 'text-white/90' : 'text-white/40 hover:text-white/80'
+            )}
+          >
+            Community
+          </Link>
+        </nav>
+
+        {/* Right: Search + Lang + Profile + Hamburger */}
         <div className="flex items-center gap-2.5 sm:gap-3">
-          {/* Discrete pillar links */}
-          <div className="hidden md:flex items-center gap-0.5">
-            <Link href="/films" className="text-[11px] text-white/30 hover:text-white/70 px-2 py-1 rounded transition-colors duration-300">Films</Link>
-            <span className="text-white/10 text-[8px]">/</span>
-            <Link href="/invest" className="text-[11px] text-white/30 hover:text-white/70 px-2 py-1 rounded transition-colors duration-300">Invest</Link>
-            <span className="text-white/10 text-[8px]">/</span>
-            <Link href="/community" className="text-[11px] text-white/30 hover:text-white/70 px-2 py-1 rounded transition-colors duration-300">Community</Link>
-          </div>
-
-          <div className="hidden md:block w-px h-4 bg-white/[0.06]" />
-
           <SearchOverlay />
           <LocaleSwitcher />
 
           {session?.user ? (
-            <div className="hidden md:flex items-center gap-1.5">
+            <div className="hidden lg:flex items-center gap-1.5">
               <NotificationBell />
               <Link href="/lumens" className="flex items-center gap-1.5 px-2 py-1 rounded text-sm text-white/50 hover:text-[#E50914] transition-all" aria-label="My Lumens">
                 <Sun className="h-3.5 w-3.5 text-[#E50914]" />
@@ -191,7 +284,7 @@ export function NetflixHeader() {
               </DropdownMenu>
             </div>
           ) : (
-            <div className="hidden md:flex items-center gap-2">
+            <div className="hidden lg:flex items-center gap-2">
               <Link
                 href="/login"
                 className="text-[12px] font-medium text-white/60 hover:text-white px-4 py-2 rounded-lg border border-white/10 hover:border-white/25 hover:bg-white/5 transition-all duration-300"
@@ -209,9 +302,9 @@ export function NetflixHeader() {
             </div>
           )}
 
-          {/* Mobile menu toggle */}
+          {/* Hamburger — visible on mobile + tablet (below lg) */}
           <button
-            className="md:hidden text-white/60 hover:text-white p-1.5 rounded transition-all"
+            className="lg:hidden text-white/60 hover:text-white p-1.5 rounded transition-all"
             onClick={() => setMobileOpen(!mobileOpen)}
           >
             {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -219,7 +312,7 @@ export function NetflixHeader() {
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile/Tablet Menu */}
       <AnimatePresence>
         {mobileOpen && (
           <MotionDiv
@@ -227,9 +320,9 @@ export function NetflixHeader() {
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.2 }}
-            className="md:hidden bg-[#0A0A0A]/98 backdrop-blur-xl overflow-hidden border-t border-white/5"
+            className="lg:hidden bg-[#0A0A0A]/98 backdrop-blur-xl overflow-hidden border-t border-white/5"
           >
-            <div className="px-5 py-4 space-y-1.5 max-h-[80vh] overflow-y-auto">
+            <div className="px-5 py-4 space-y-1 max-h-[80vh] overflow-y-auto">
               {mobileLinks.map((link) => (
                 <Link
                   key={link.href}
@@ -242,29 +335,12 @@ export function NetflixHeader() {
                       : 'text-white/60 hover:text-white hover:bg-white/5'
                   )}
                 >
+                  <link.icon className="h-4 w-4" />
                   {link.label}
                 </Link>
               ))}
 
-              <div className="h-px bg-white/5 my-1.5" />
-              <p className="px-3 text-[10px] uppercase tracking-widest text-white/20 font-medium">More</p>
-              {secondaryLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setMobileOpen(false)}
-                  className={cn(
-                    'flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-all',
-                    (pathname === link.href || pathname.startsWith(link.href + '/'))
-                      ? 'text-[#E50914] bg-[#E50914]/10'
-                      : 'text-white/50 hover:text-white hover:bg-white/5'
-                  )}
-                >
-                  <link.icon className="h-4 w-4" /> {link.label}
-                </Link>
-              ))}
-
-              <div className="h-px bg-white/5 my-1.5" />
+              <div className="h-px bg-white/5 my-2" />
               {session?.user ? (
                 <>
                   <Link href="/dashboard" onClick={() => setMobileOpen(false)} className="flex items-center gap-3 px-3 py-2.5 text-sm text-white/50 hover:text-white hover:bg-white/5 rounded-lg transition-all">

@@ -32,6 +32,18 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
         const { email, password } = parsed.data
 
+        /* ── Dev/demo bypass: hardcoded admin account ── */
+        if (email.toLowerCase() === 'admin@admin.com' && password === 'adminadmin') {
+          return {
+            id: 'admin-bypass-001',
+            email: 'admin@admin.com',
+            name: 'Admin',
+            role: 'ADMIN',
+            level: 'VIP',
+            isVerified: true,
+          }
+        }
+
         let user
         try {
           user = await prisma.user.findUnique({
