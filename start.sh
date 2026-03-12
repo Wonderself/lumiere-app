@@ -17,7 +17,7 @@ MAX_RETRIES=30
 RETRY=0
 until node -e "
   const { Pool } = require('pg');
-  const pool = new Pool({ connectionString: process.env.DATABASE_URL });
+  const pool = new Pool({ connectionString: process.env.DATABASE_URL, connectionTimeoutMillis: 10000 });
   pool.query('SELECT 1').then(() => { pool.end(); process.exit(0); }).catch((e) => { console.error('  DB error:', e.message); pool.end(); process.exit(1); });
 " 2>/dev/null; do
   RETRY=$((RETRY + 1))
@@ -35,17 +35,17 @@ if [ "$RETRY" -lt "$MAX_RETRIES" ]; then
   echo "Database is ready!"
 fi
 
-# Run Prisma schema push (use node directly — npx not available in slim image)
+# Run Prisma schema push
 echo "Syncing database schema..."
-node ./node_modules/prisma/build/index.js db push 2>&1 || {
+npx prisma db push 2>&1 || {
   echo "Warning: db push failed. Trying with --accept-data-loss for first deploy..."
-  node ./node_modules/prisma/build/index.js db push --accept-data-loss 2>&1 || echo "Warning: db push retry also failed"
+  npx prisma db push --accept-data-loss 2>&1 || echo "Warning: db push retry also failed"
 }
 
 # Seed database if SEED_DB=true (only on first deploy)
 if [ "$SEED_DB" = "true" ]; then
   echo "Seeding database..."
-  node ./node_modules/ts-node/dist/bin.js --compiler-options '{"module":"CommonJS"}' prisma/seed.ts 2>&1 || echo "Warning: seed failed (data may already exist)"
+  npx prisma db seed 2>&1 || echo "Warning: seed failed (data may already exist)"
 fi
 
 echo "Starting Next.js server..."
