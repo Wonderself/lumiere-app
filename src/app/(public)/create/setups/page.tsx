@@ -254,7 +254,7 @@ export default function SetupsPage() {
             <button className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-gradient-to-r from-[#E50914] to-[#B20710] text-white text-sm font-semibold hover:opacity-90 transition-opacity">
               <Sparkles className="h-4 w-4" />
               Generate Environment
-              <span className="ml-1 px-2 py-0.5 rounded-full bg-white/10 text-[10px]">40 tokens</span>
+              <span className="ml-1 px-2 py-0.5 rounded-full bg-white/10 text-[10px]">Included</span>
             </button>
           </div>
         </div>

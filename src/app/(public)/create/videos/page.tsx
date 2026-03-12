@@ -161,7 +161,7 @@ export default function VideosPage() {
             <button className="flex items-center gap-2 px-6 py-3 rounded-xl bg-[#E50914] text-white text-sm font-semibold hover:bg-[#B20710] transition-colors">
               <Sparkles className="h-4 w-4" />
               Generate Video Clip
-              <span className="ml-1 px-2 py-0.5 rounded-full bg-white/10 text-[10px]">200 tokens</span>
+              <span className="ml-1 px-2 py-0.5 rounded-full bg-white/10 text-[10px]">Included</span>
             </button>
 
             {/* Progress indicator */}

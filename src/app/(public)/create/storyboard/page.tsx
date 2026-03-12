@@ -82,7 +82,7 @@ const WORKFLOW_STEPS = [
   {
     number: 2,
     title: 'Generate Frames',
-    description: 'Use AI to generate storyboard images for each scene. Each generation costs tokens from your balance.',
+    description: 'Use AI to generate storyboard images for each scene. Included with your subscription.',
     icon: Wand2,
   },
   {
@@ -353,7 +353,7 @@ export default function StoryboardPage() {
                           <Wand2 className="h-3 w-3" />
                           Generate with AI
                         </button>
-                        <span className="text-[10px] text-white/20 mt-1.5">Costs 25 tokens</span>
+                        <span className="text-[10px] text-white/20 mt-1.5">Included with subscription</span>
                       </>
                     )}
                   </div>
@@ -442,7 +442,7 @@ export default function StoryboardPage() {
               >
                 <Sparkles className="h-4 w-4" />
                 Generate Frame
-                <span className="text-[10px] opacity-60 ml-1">25 tokens</span>
+                <span className="text-[10px] opacity-60 ml-1">Included</span>
               </button>
             </div>
           </div>

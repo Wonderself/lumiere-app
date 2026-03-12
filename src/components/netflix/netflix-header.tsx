@@ -37,6 +37,7 @@ import {
   MessageSquare,
   Trophy,
   UserCircle,
+  Star,
 } from 'lucide-react'
 import { cn, getInitials } from '@/lib/utils'
 import { AnimatePresence, MotionDiv } from '@/components/ui/motion'
@@ -126,6 +127,7 @@ export function NetflixHeader() {
   /* ── Menu structure ── */
   const createItems = [
     { href: '/create', label: 'Start a Film', icon: Clapperboard },
+    { href: '/act', label: 'Act In Your Movie', icon: Star },
     { href: '/community/scenarios/new', label: 'Submit a Scenario', icon: FileText },
   ]
 
@@ -138,6 +140,7 @@ export function NetflixHeader() {
 
   const mobileLinks = [
     { href: '/create', label: 'Create Your Movie', icon: Clapperboard },
+    { href: '/act', label: 'Act In Your Movie', icon: Star },
     { href: '/films', label: 'Films', icon: Film },
     { href: '/actors', label: 'Actors', icon: UserCircle },
     { href: '/trailer-studio', label: 'Trailer Studio', icon: Sparkles },
@@ -150,7 +153,7 @@ export function NetflixHeader() {
     { href: '/developers', label: 'Developers', icon: Code2 },
   ]
 
-  const isCreateActive = pathname.startsWith('/create')
+  const isCreateActive = pathname.startsWith('/create') || pathname.startsWith('/act')
   const isExploreActive = pathname.startsWith('/films') || pathname.startsWith('/actors') || pathname.startsWith('/trailer-studio') || pathname.startsWith('/leaderboard')
 
   return (

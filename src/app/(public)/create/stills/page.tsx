@@ -116,12 +116,12 @@ export default function StillsPage() {
               <button className="flex items-center gap-2 px-6 py-3 rounded-xl bg-[#E50914] text-white text-sm font-semibold hover:bg-[#B20710] transition-colors">
                 <Sparkles className="h-4 w-4" />
                 Generate
-                <span className="ml-1 px-2 py-0.5 rounded-full bg-white/10 text-[10px]">30 tokens</span>
+                <span className="ml-1 px-2 py-0.5 rounded-full bg-white/10 text-[10px]">Included</span>
               </button>
               <button className="flex items-center gap-2 px-6 py-3 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white/60 text-sm font-medium hover:bg-white/[0.08] hover:text-white/80 transition-all">
                 <Layers className="h-4 w-4" />
                 Generate 4 Variations
-                <span className="ml-1 px-2 py-0.5 rounded-full bg-white/10 text-[10px]">100 tokens</span>
+                <span className="ml-1 px-2 py-0.5 rounded-full bg-white/10 text-[10px]">Included</span>
               </button>
             </div>
           </div>

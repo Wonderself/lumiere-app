@@ -38,7 +38,7 @@ const HOW_IT_WORKS = [
     icon: Brain,
     title: 'AI Analysis',
     description:
-      'Our AI reviews your script and suggests improvements for structure, pacing, and dialogue. Optional and costs tokens.',
+      'Our AI reviews your script and suggests improvements for structure, pacing, and dialogue. Included with your subscription.',
   },
   {
     icon: Vote,
@@ -346,7 +346,7 @@ export default function ScriptPage() {
               {/* Token cost notice */}
               <div className="mt-4 flex items-center gap-2 text-xs text-white/30">
                 <AlertCircle className="h-3.5 w-3.5" />
-                <span>Costs <strong className="text-white/50">50 tokens</strong> per analysis</span>
+                <span><strong className="text-white/50">Included</strong> with subscription</span>
               </div>
             </div>
 
@@ -421,7 +421,7 @@ export default function ScriptPage() {
             <div className="flex items-center justify-between">
               <span className="text-xs text-white/25 flex items-center gap-1">
                 <AlertCircle className="h-3 w-3" />
-                Costs <strong className="text-white/40">100 tokens</strong>
+                Submission fee: <strong className="text-white/40">$9</strong>
               </span>
               <button className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-semibold bg-[#E50914]/15 text-[#E50914] hover:bg-[#E50914]/25 transition-all duration-200 group-hover:translate-x-0.5">
                 Submit for Vote
@@ -443,13 +443,13 @@ export default function ScriptPage() {
             </div>
             <p className="text-xs text-white/40 leading-relaxed mb-5">
               Skip the community vote and proceed directly to storyboarding. You retain
-              full creative control and use your own tokens to fund all production steps.
+              full creative control with all AI tools included in your subscription.
               Perfect for personal projects.
             </p>
             <div className="flex items-center justify-between">
               <span className="text-xs text-white/25 flex items-center gap-1">
                 <Sparkles className="h-3 w-3" />
-                Uses your own tokens
+                Included with subscription
               </span>
               <Link
                 href="/create/storyboard"

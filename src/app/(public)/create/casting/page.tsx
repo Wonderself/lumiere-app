@@ -437,7 +437,7 @@ export default function CastingPage() {
               <button className="w-full py-3 rounded-xl text-sm font-semibold text-white bg-[#E50914] hover:bg-[#FF2D2D] transition-all duration-200 flex items-center justify-center gap-2 hover:shadow-[0_0_24px_rgba(229,9,20,0.3)]">
                 <Sparkles className="h-4 w-4" />
                 Generate Character
-                <span className="text-[10px] ml-1 px-2 py-0.5 rounded-full bg-white/10">75 tokens</span>
+                <span className="text-[10px] ml-1 px-2 py-0.5 rounded-full bg-white/10">Included</span>
               </button>
             </div>
 

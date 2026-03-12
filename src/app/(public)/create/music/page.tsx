@@ -175,7 +175,7 @@ export default function MusicPage() {
           <button className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-[#E50914] to-[#B20710] text-white text-sm font-semibold hover:opacity-90 transition-opacity">
             <Sparkles className="h-4 w-4" />
             Generate Custom Track
-            <span className="ml-1 px-2 py-0.5 rounded-full bg-white/10 text-[10px]">150 tokens</span>
+            <span className="ml-1 px-2 py-0.5 rounded-full bg-white/10 text-[10px]">Included</span>
           </button>
         </div>
 
