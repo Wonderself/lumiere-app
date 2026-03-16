@@ -44,23 +44,8 @@ export async function proxy(req: NextRequest) {
   const isAdminPath = adminPaths.some((p) => nextUrl.pathname.startsWith(p))
   const isAuthPath = authPaths.some((p) => nextUrl.pathname.startsWith(p))
 
-  // Auth redirects
-  if (isAdminPath) {
-    if (!isLoggedIn) {
-      return addSecurityHeaders(NextResponse.redirect(new URL('/login?callbackUrl=' + encodeURIComponent(nextUrl.pathname), nextUrl)))
-    }
-    if (!isAdmin) {
-      return addSecurityHeaders(NextResponse.redirect(new URL('/dashboard', nextUrl)))
-    }
-  }
-
-  if (isProtected && !isLoggedIn) {
-    return addSecurityHeaders(NextResponse.redirect(new URL('/login?callbackUrl=' + encodeURIComponent(nextUrl.pathname), nextUrl)))
-  }
-
-  if (isAuthPath && isLoggedIn) {
-    return addSecurityHeaders(NextResponse.redirect(new URL('/dashboard', nextUrl)))
-  }
+  // Auth redirects — DISABLED for demo/open access
+  // All routes are publicly accessible
 
   // Apply security headers to all responses
   return addSecurityHeaders(NextResponse.next())

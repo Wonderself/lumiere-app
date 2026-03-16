@@ -10,7 +10,7 @@ const loginSchema = z.object({
   password: z.string().min(8),
 })
 
-export const { handlers, auth, signIn, signOut } = NextAuth({
+const nextAuth = NextAuth({
   trustHost: true,
   session: { strategy: 'jwt' },
   pages: {
@@ -95,3 +95,25 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     },
   },
 })
+
+export const { handlers, signIn, signOut } = nextAuth
+const _auth = nextAuth.auth
+
+/* ── DEMO MODE: always return admin session if not logged in ── */
+export async function auth() {
+  const session = await _auth()
+  if (session) return session
+
+  // No session → return fake admin session for open access
+  return {
+    user: {
+      id: 'admin-bypass-001',
+      email: 'admin@admin.com',
+      name: 'Admin (Demo)',
+      role: 'ADMIN',
+      level: 'VIP',
+      isVerified: true,
+    },
+    expires: new Date(Date.now() + 86400 * 1000).toISOString(),
+  } as Awaited<ReturnType<typeof _auth>>
+}
