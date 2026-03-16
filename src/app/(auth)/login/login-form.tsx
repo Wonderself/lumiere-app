@@ -33,20 +33,38 @@ export function LoginForm() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
+  const [demoLoading, setDemoLoading] = useState(false)
 
-  // Fallback redirect: if signIn's redirect() didn't propagate through the framework,
-  // redirect via client-side router. This is a safety net for Next.js 16 compatibility.
+  // Fallback redirect
   useEffect(() => {
     if (state.redirectTo) {
-      router.push(state.redirectTo)
-      router.refresh()
+      window.location.href = state.redirectTo
     }
-  }, [state.redirectTo, router])
+  }, [state.redirectTo])
 
-  const loginAsDemo = (demoEmail: string, demoPassword: string) => {
-    setEmail(demoEmail)
-    setPassword(demoPassword)
-    setTimeout(() => formRef.current?.requestSubmit(), 0)
+  // Demo login via client-side signIn (bypasses server action redirect issues)
+  const loginAsDemo = async (demoEmail: string, demoPassword: string) => {
+    setDemoLoading(true)
+    try {
+      const result = await nextAuthSignIn('credentials', {
+        email: demoEmail,
+        password: demoPassword,
+        redirect: false,
+      })
+      if (result?.ok) {
+        window.location.href = callbackUrl
+      } else {
+        setDemoLoading(false)
+        setEmail(demoEmail)
+        setPassword(demoPassword)
+        setTimeout(() => formRef.current?.requestSubmit(), 0)
+      }
+    } catch {
+      setDemoLoading(false)
+      setEmail(demoEmail)
+      setPassword(demoPassword)
+      setTimeout(() => formRef.current?.requestSubmit(), 0)
+    }
   }
 
   return (
@@ -149,7 +167,7 @@ export function LoginForm() {
               <div className="mt-5 space-y-3.5">
                 <button
                   type="button"
-                  disabled={isPending}
+                  disabled={isPending || demoLoading}
                   onClick={() => loginAsDemo('admin@admin.com', 'adminadmin')}
                   className="w-full rounded-xl bg-[#E50914]/[0.06] border border-[#E50914]/15 hover:border-[#E50914]/30 hover:bg-[#E50914]/10 p-3.5 text-left transition-all duration-300 group cursor-pointer disabled:opacity-50"
                 >
@@ -165,7 +183,7 @@ export function LoginForm() {
                 </button>
                 <button
                   type="button"
-                  disabled={isPending}
+                  disabled={isPending || demoLoading}
                   onClick={() => loginAsDemo('admin@admin.com', 'adminadmin')}
                   className="w-full rounded-xl bg-white/[0.02] border border-white/[0.06] hover:border-white/[0.12] hover:bg-white/[0.04] p-3.5 text-left transition-all duration-300 group cursor-pointer disabled:opacity-50"
                 >

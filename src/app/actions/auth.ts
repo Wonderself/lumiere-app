@@ -194,8 +194,8 @@ export async function loginAction(
     console.error('[loginAction] signIn error (session may still be valid):', error)
   }
 
-  // Step 3: Redirect to callback URL
-  redirect(safeCallbackUrl)
+  // Step 3: Return redirect URL — client will handle the navigation
+  return { redirectTo: safeCallbackUrl }
 }
 
 // ─── Forgot Password ──────────────────────────────────────────
