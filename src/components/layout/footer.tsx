@@ -1,9 +1,11 @@
+'use client'
+
 import Link from 'next/link'
 import { Film, Tv, Users, Award, Pen, BarChart3, MapPin, Code2, Tag, Star, Clapperboard, Briefcase, Coins, Radio, Play } from 'lucide-react'
-import { getTranslations } from 'next-intl/server'
+import { useTranslations } from 'next-intl'
 
-export async function Footer() {
-  const t = await getTranslations('footer')
+export function Footer() {
+  const t = useTranslations('footer')
 
   return (
     <footer className="relative border-t border-white/[0.04] bg-[#060606] pt-20 md:pt-24 pb-12 md:pb-16 mt-16">
