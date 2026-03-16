@@ -1,5 +1,3 @@
-'use server'
-
 /**
  * Video Transcoding Service — FFmpeg pipeline
  *

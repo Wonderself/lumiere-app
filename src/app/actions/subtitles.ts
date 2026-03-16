@@ -26,7 +26,7 @@ const SUPPORTED_LANGUAGES = [
 
 export type SupportedLanguage = typeof SUPPORTED_LANGUAGES[number]
 
-export function getSupportedLanguages() {
+export async function getSupportedLanguages() {
   return SUPPORTED_LANGUAGES
 }
 
@@ -142,7 +142,7 @@ export async function addSubtitleAction(
  * Extract subtitle tracks from a film's tags.
  * Returns array of { lang, label, src } for the video player.
  */
-export function extractSubtitleTracks(tags: string[]): { srclang: string; label: string; src: string }[] {
+export async function extractSubtitleTracks(tags: string[]): Promise<{ srclang: string; label: string; src: string }[]> {
   return tags
     .filter(t => t.startsWith('subtitle:'))
     .map(t => {

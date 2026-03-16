@@ -3,7 +3,7 @@
 import { auth } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
 
-export const dynamic = 'force-dynamic'
+// Server actions file — only async functions can be exported
 
 /**
  * Watch History Server Actions
