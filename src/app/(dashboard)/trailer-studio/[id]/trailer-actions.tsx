@@ -171,15 +171,15 @@ export function TrailerActions({
       {/* Pending Choices */}
       {pendingChoices.length > 0 && (
         <div className="space-y-3">
-          <h3 className="text-sm font-semibold text-[#1A1A2E]">Choix en attente</h3>
+          <h3 className="text-sm font-semibold text-white">Choix en attente</h3>
           {pendingChoices.map((choice) => (
             <div
               key={choice.id}
               className="rounded-2xl border border-amber-200 bg-amber-50/50 p-5"
             >
-              <p className="text-sm font-medium text-[#1A1A2E] mb-3">{choice.question}</p>
+              <p className="text-sm font-medium text-white mb-3">{choice.question}</p>
               {choice.category && (
-                <p className="text-[10px] text-gray-500 uppercase tracking-wider mb-2">
+                <p className="text-[10px] text-white/50 uppercase tracking-wider mb-2">
                   {choice.category}
                 </p>
               )}
@@ -189,11 +189,11 @@ export function TrailerActions({
                     key={option.id}
                     onClick={() => handleChoice(choice.id, option.id)}
                     disabled={isPending || votingChoiceId === choice.id}
-                    className="text-left rounded-xl border border-gray-200 bg-white p-3 hover:border-[#E50914] hover:bg-[#E50914]/5 transition-all disabled:opacity-50 cursor-pointer"
+                    className="text-left rounded-xl border border-white/10 bg-white/5 p-3 hover:border-[#E50914] hover:bg-[#E50914]/5 transition-all disabled:opacity-50 cursor-pointer"
                   >
-                    <p className="text-xs font-medium text-[#1A1A2E]">{option.label}</p>
+                    <p className="text-xs font-medium text-white">{option.label}</p>
                     {option.description && (
-                      <p className="text-[10px] text-gray-500 mt-0.5">{option.description}</p>
+                      <p className="text-[10px] text-white/50 mt-0.5">{option.description}</p>
                     )}
                   </button>
                 ))}

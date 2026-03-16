@@ -50,15 +50,15 @@ export default function NotificationsConfigPage() {
     critical: { color: 'text-red-600', bg: 'bg-red-50' },
     high: { color: 'text-orange-600', bg: 'bg-orange-50' },
     medium: { color: 'text-yellow-600', bg: 'bg-yellow-50' },
-    low: { color: 'text-gray-500', bg: 'bg-gray-50' },
+    low: { color: 'text-white/50', bg: 'bg-white/[0.03]' },
   }
 
   return (
     <div className="space-y-8">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-[#1A1A2E] font-[family-name:var(--font-playfair)]">Notifications Push</h1>
-          <p className="text-sm text-gray-500 mt-1">{events.length} types d&apos;événements · 3 canaux · Configurable</p>
+          <h1 className="text-2xl font-bold text-white font-[family-name:var(--font-playfair)]">Notifications Push</h1>
+          <p className="text-sm text-white/50 mt-1">{events.length} types d&apos;événements · 3 canaux · Configurable</p>
         </div>
         <button onClick={saveConfig} disabled={saving} className="flex items-center gap-1.5 px-4 py-2 bg-[#E50914] text-white text-xs font-medium rounded-lg disabled:opacity-50">
           {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
@@ -67,9 +67,9 @@ export default function NotificationsConfigPage() {
       </div>
 
       {/* Agent */}
-      <div className="flex items-center gap-2 px-3 py-2 rounded-xl border border-gray-100 bg-white w-fit">
+      <div className="flex items-center gap-2 px-3 py-2 rounded-xl border border-white/10 bg-white/5 w-fit">
         <Bot className="h-3.5 w-3.5" style={{ color: BRIEFING_AGENTS[3].color }} />
-        <div><p className="text-[10px] font-medium text-[#1A1A2E]">{BRIEFING_AGENTS[3].name}</p><p className="text-[9px] text-gray-500">{BRIEFING_AGENTS[3].role}</p></div>
+        <div><p className="text-[10px] font-medium text-white">{BRIEFING_AGENTS[3].name}</p><p className="text-[9px] text-white/50">{BRIEFING_AGENTS[3].role}</p></div>
       </div>
 
       {/* Channel Legend */}
@@ -77,7 +77,7 @@ export default function NotificationsConfigPage() {
         {CHANNEL_CONFIG.map(ch => {
           const ChIcon = ch.icon
           return (
-            <div key={ch.id} className="flex items-center gap-1.5 text-xs text-gray-500">
+            <div key={ch.id} className="flex items-center gap-1.5 text-xs text-white/50">
               <ChIcon className="h-3.5 w-3.5" style={{ color: ch.color }} />
               {ch.label}
             </div>
@@ -86,8 +86,8 @@ export default function NotificationsConfigPage() {
       </div>
 
       {/* Events List */}
-      <div className="rounded-2xl border border-gray-200 bg-white overflow-hidden">
-        <div className="divide-y divide-gray-100">
+      <div className="rounded-2xl border border-white/10 bg-white/5 overflow-hidden">
+        <div className="divide-y divide-white/10">
           {events.map(event => {
             const EIcon = EVENT_ICONS[event.icon] || Bell
             const prio = PRIORITY_CONFIG[event.priority]
@@ -95,17 +95,17 @@ export default function NotificationsConfigPage() {
               <div key={event.id} className={`flex items-center gap-4 px-5 py-4 ${!event.enabled ? 'opacity-50' : ''}`}>
                 {/* Toggle */}
                 <button onClick={() => toggleEvent(event.id)} className={`relative h-6 w-11 rounded-full transition-colors shrink-0 ${event.enabled ? 'bg-[#E50914]' : 'bg-gray-300'}`}>
-                  <span className={`inline-block h-4 w-4 rounded-full bg-white transition-transform ${event.enabled ? 'translate-x-6' : 'translate-x-1'}`} />
+                  <span className={`inline-block h-4 w-4 rounded-full bg-white/5 transition-transform ${event.enabled ? 'translate-x-6' : 'translate-x-1'}`} />
                 </button>
 
                 {/* Event Info */}
                 <EIcon className="h-4 w-4 shrink-0" style={{ color: event.color }} />
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2">
-                    <p className="text-sm font-medium text-[#1A1A2E]">{event.label}</p>
+                    <p className="text-sm font-medium text-white">{event.label}</p>
                     <span className={`text-[9px] px-1.5 py-0.5 rounded-full ${prio.bg} ${prio.color}`}>{event.priority}</span>
                   </div>
-                  <p className="text-[10px] text-gray-500">{event.description}</p>
+                  <p className="text-[10px] text-white/50">{event.description}</p>
                 </div>
 
                 {/* Channel Toggles */}
@@ -118,7 +118,7 @@ export default function NotificationsConfigPage() {
                         key={ch.id}
                         onClick={() => toggleChannel(event.id, ch.id)}
                         disabled={!event.enabled}
-                        className={`h-8 w-8 rounded-lg flex items-center justify-center transition-colors ${isActive ? 'bg-gray-100' : 'bg-transparent'}`}
+                        className={`h-8 w-8 rounded-lg flex items-center justify-center transition-colors ${isActive ? 'bg-white/[0.05]' : 'bg-transparent'}`}
                         title={`${ch.label}: ${isActive ? 'ON' : 'OFF'}`}
                       >
                         <ChIcon className="h-3.5 w-3.5" style={{ color: isActive ? ch.color : '#D1D5DB' }} />

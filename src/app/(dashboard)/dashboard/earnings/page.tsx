@@ -81,11 +81,11 @@ export default async function EarningsPage() {
       {/* Header */}
       <div>
         <h1
-          className="text-3xl sm:text-4xl font-bold text-gray-900"
+          className="text-3xl sm:text-4xl font-bold text-white"
         >
           Mes Revenus
         </h1>
-        <p className="text-gray-500 mt-1">
+        <p className="text-white/50 mt-1">
           Historique de vos gains, previsions et demandes de retrait.
         </p>
       </div>
@@ -93,60 +93,60 @@ export default async function EarningsPage() {
       {/* Stats Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
         {[
-          { label: 'Total gagne', value: formatPrice(totalEarned), icon: TrendingUp, color: 'text-green-500', bg: 'bg-green-50 border-green-100' },
-          { label: 'En attente', value: formatPrice(totalPending), icon: Clock, color: 'text-yellow-500', bg: 'bg-yellow-50 border-yellow-100' },
-          { label: 'Paiements recus', value: String(completedCount), icon: CheckCircle, color: 'text-blue-500', bg: 'bg-blue-50 border-blue-100' },
-          { label: 'Lumens', value: String(user?.lumenBalance || 0), icon: Wallet, color: 'text-[#E50914]', bg: 'bg-amber-50 border-amber-100' },
+          { label: 'Total gagne', value: formatPrice(totalEarned), icon: TrendingUp, color: 'text-green-500', bg: 'bg-green-500/10 border-green-500/20' },
+          { label: 'En attente', value: formatPrice(totalPending), icon: Clock, color: 'text-yellow-500', bg: 'bg-yellow-500/10 border-yellow-500/20' },
+          { label: 'Paiements recus', value: String(completedCount), icon: CheckCircle, color: 'text-blue-500', bg: 'bg-blue-500/10 border-blue-500/20' },
+          { label: 'Lumens', value: String(user?.lumenBalance || 0), icon: Wallet, color: 'text-[#E50914]', bg: 'bg-[#E50914]/10 border-[#E50914]/20' },
         ].map((stat) => (
-          <div key={stat.label} className={`p-4 rounded-xl shadow-sm border ${stat.bg}`}>
+          <div key={stat.label} className={`p-4 rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.3)] border ${stat.bg}`}>
             <stat.icon className={`h-4 w-4 mb-2 ${stat.color}`} />
             <div className={`text-xl font-bold ${stat.color}`}>{stat.value}</div>
-            <div className="text-xs text-gray-500 mt-0.5">{stat.label}</div>
+            <div className="text-xs text-white/50 mt-0.5">{stat.label}</div>
           </div>
         ))}
       </div>
 
       {/* Monthly Chart (simple bar chart) */}
-      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+      <div className="bg-white/5 rounded-2xl border border-white/10 shadow-[0_2px_8px_rgba(0,0,0,0.3)] p-6">
         <div className="flex items-center gap-3 mb-6">
-          <div className="w-10 h-10 rounded-xl bg-amber-50 border border-amber-100 flex items-center justify-center">
+          <div className="w-10 h-10 rounded-xl bg-[#E50914]/10 border border-[#E50914]/20 flex items-center justify-center">
             <CalendarDays className="h-5 w-5 text-[#E50914]" />
           </div>
           <div>
-            <h2 className="text-lg font-bold text-gray-900 font-playfair">
+            <h2 className="text-lg font-bold text-white font-playfair">
               Revenus mensuels
             </h2>
-            <p className="text-gray-500 text-sm">6 derniers mois</p>
+            <p className="text-white/50 text-sm">6 derniers mois</p>
           </div>
         </div>
         <div className="flex items-end gap-3 h-32">
           {monthlyData.map((m) => (
             <div key={m.month} className="flex-1 flex flex-col items-center gap-1">
-              <span className="text-xs text-gray-500 font-medium">
+              <span className="text-xs text-white/50 font-medium">
                 {m.amount > 0 ? formatPrice(m.amount) : ''}
               </span>
               <div
                 className="w-full rounded-t-lg bg-gradient-to-t from-[#E50914] to-[#FF2D2D] transition-all duration-500"
                 style={{ height: `${Math.max((m.amount / maxMonthly) * 100, 4)}%` }}
               />
-              <span className="text-xs text-gray-500">{m.month}</span>
+              <span className="text-xs text-white/50">{m.month}</span>
             </div>
           ))}
         </div>
       </div>
 
       {/* Separator */}
-      <div className="h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
+      <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
 
       {/* Payment History */}
-      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm">
+      <div className="bg-white/5 rounded-2xl border border-white/10 shadow-[0_2px_8px_rgba(0,0,0,0.3)]">
         <div className="p-6 pb-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gray-50 border border-gray-200 flex items-center justify-center">
-              <Banknote className="h-5 w-5 text-gray-500" />
+            <div className="w-10 h-10 rounded-xl bg-white/[0.03] border border-white/10 flex items-center justify-center">
+              <Banknote className="h-5 w-5 text-white/50" />
             </div>
             <h2
-              className="text-lg font-bold text-gray-900"
+              className="text-lg font-bold text-white"
             >
               Historique des paiements
             </h2>
@@ -156,9 +156,9 @@ export default async function EarningsPage() {
         <div className="px-6 pb-6">
           {payments.length === 0 ? (
             <div className="text-center py-12">
-              <CreditCard className="h-10 w-10 text-gray-200 mx-auto mb-3" />
-              <p className="text-gray-500">Aucun paiement pour le moment.</p>
-              <p className="text-gray-500 text-sm mt-1">
+              <CreditCard className="h-10 w-10 text-white/20 mx-auto mb-3" />
+              <p className="text-white/50">Aucun paiement pour le moment.</p>
+              <p className="text-white/50 text-sm mt-1">
                 Completez des taches pour recevoir vos premiers paiements.
               </p>
               <Link
@@ -173,18 +173,18 @@ export default async function EarningsPage() {
               {payments.map((p) => (
                 <div
                   key={p.id}
-                  className="flex items-center gap-4 p-3 rounded-xl border border-gray-50 hover:bg-gray-50/50 transition-all duration-300"
+                  className="flex items-center gap-4 p-3 rounded-xl border border-white/[0.08] hover:bg-white/[0.03] transition-all duration-300"
                 >
-                  <div className="w-10 h-10 rounded-lg bg-gray-50 border border-gray-100 flex items-center justify-center shrink-0">
-                    <CreditCard className="h-4 w-4 text-gray-500" />
+                  <div className="w-10 h-10 rounded-lg bg-white/[0.03] border border-white/10 flex items-center justify-center shrink-0">
+                    <CreditCard className="h-4 w-4 text-white/50" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-gray-900 truncate">{p.task.title}</p>
-                    <p className="text-xs text-gray-500 truncate">{p.task.film.title}</p>
+                    <p className="text-sm font-medium text-white truncate">{p.task.title}</p>
+                    <p className="text-xs text-white/50 truncate">{p.task.film.title}</p>
                   </div>
                   <div className="text-right shrink-0">
-                    <div className="text-sm font-bold text-green-600">+{formatPrice(p.amountEur)}</div>
-                    <div className="text-xs text-gray-500 mt-0.5">{formatDate(p.createdAt)}</div>
+                    <div className="text-sm font-bold text-green-500">+{formatPrice(p.amountEur)}</div>
+                    <div className="text-xs text-white/50 mt-0.5">{formatDate(p.createdAt)}</div>
                   </div>
                   <Badge variant="outline" className={`text-xs shrink-0 ${statusColors[p.status] || ''}`}>
                     {statusLabels[p.status] || p.status}
@@ -193,10 +193,10 @@ export default async function EarningsPage() {
                     <Link
                       href={`/api/invoices?paymentId=${p.id}`}
                       target="_blank"
-                      className="p-1.5 rounded-lg hover:bg-gray-100 transition-colors shrink-0"
+                      className="p-1.5 rounded-lg hover:bg-white/[0.05] transition-colors shrink-0"
                       title="Telecharger la facture"
                     >
-                      <FileText className="h-3.5 w-3.5 text-gray-500" />
+                      <FileText className="h-3.5 w-3.5 text-white/50" />
                     </Link>
                   )}
                 </div>

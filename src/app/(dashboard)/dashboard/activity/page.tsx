@@ -60,28 +60,28 @@ export default async function ActivityPage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-2xl font-bold text-[#1A1A2E] font-[family-name:var(--font-playfair)]">Activity Log</h1>
-        <p className="text-sm text-gray-500 mt-1">Journal complet de votre activité sur la plateforme</p>
+        <h1 className="text-2xl font-bold text-white font-[family-name:var(--font-playfair)]">Activity Log</h1>
+        <p className="text-sm text-white/50 mt-1">Journal complet de votre activité sur la plateforme</p>
       </div>
 
-      <div className="rounded-2xl border border-gray-200 bg-white overflow-hidden">
+      <div className="rounded-2xl border border-white/10 bg-white/5 overflow-hidden">
         {timeline.length === 0 ? (
-          <div className="p-12 text-center text-sm text-gray-500">Aucune activité enregistrée</div>
+          <div className="p-12 text-center text-sm text-white/50">Aucune activité enregistrée</div>
         ) : (
-          <div className="divide-y divide-gray-100">
+          <div className="divide-y divide-white/10">
             {timeline.map((item, i) => {
               const Icon = ICON_MAP[item.icon] || Activity
               return (
-                <div key={i} className="flex items-center gap-4 px-5 py-4 hover:bg-gray-50 transition-colors">
+                <div key={i} className="flex items-center gap-4 px-5 py-4 hover:bg-white/[0.03] transition-colors">
                   <div className="h-9 w-9 rounded-lg flex items-center justify-center shrink-0" style={{ backgroundColor: `${item.color}15` }}>
                     <Icon className="h-4 w-4" style={{ color: item.color }} />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-[#1A1A2E]">{item.title}</p>
-                    <p className="text-xs text-gray-500 truncate">{item.detail}</p>
+                    <p className="text-sm font-medium text-white">{item.title}</p>
+                    <p className="text-xs text-white/50 truncate">{item.detail}</p>
                   </div>
                   <div className="text-right shrink-0">
-                    <p className="text-[10px] text-gray-500 flex items-center gap-1">
+                    <p className="text-[10px] text-white/50 flex items-center gap-1">
                       <Clock className="h-3 w-3" />
                       {item.date.toLocaleString('fr-FR', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' })}
                     </p>

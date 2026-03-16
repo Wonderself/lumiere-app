@@ -98,11 +98,11 @@ export function GlobalSearch() {
     return (
       <button
         onClick={() => setOpen(true)}
-        className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-gray-200 bg-white hover:bg-gray-50 text-xs text-gray-500 transition-colors"
+        className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-white/10 bg-white/5 hover:bg-white/[0.03] text-xs text-white/50 transition-colors"
       >
         <Search className="h-3.5 w-3.5" />
         Rechercher...
-        <kbd className="hidden sm:inline-flex items-center px-1.5 py-0.5 rounded bg-gray-100 text-[10px] text-gray-500 font-mono">⌘K</kbd>
+        <kbd className="hidden sm:inline-flex items-center px-1.5 py-0.5 rounded bg-white/[0.05] text-[10px] text-white/50 font-mono">⌘K</kbd>
       </button>
     )
   }
@@ -111,10 +111,10 @@ export function GlobalSearch() {
     <div className="fixed inset-0 z-[100]">
       <div className="fixed inset-0 bg-black/40 backdrop-blur-sm" onClick={() => setOpen(false)} />
       <div className="fixed top-[15%] left-1/2 -translate-x-1/2 w-full max-w-lg">
-        <div className="bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden">
+        <div className="bg-white/5 rounded-2xl shadow-2xl border border-white/10 overflow-hidden">
           {/* Search Input */}
-          <div className="flex items-center gap-3 px-5 py-4 border-b border-gray-100">
-            <Search className="h-5 w-5 text-gray-500 shrink-0" />
+          <div className="flex items-center gap-3 px-5 py-4 border-b border-white/10">
+            <Search className="h-5 w-5 text-white/50 shrink-0" />
             <input
               ref={inputRef}
               value={query}
@@ -123,7 +123,7 @@ export function GlobalSearch() {
               placeholder="Rechercher dans l'admin..."
               className="flex-1 text-sm text-[#1A1A2E] placeholder-gray-400 bg-transparent focus:outline-none"
             />
-            <button onClick={() => setOpen(false)} className="text-gray-500 hover:text-gray-600">
+            <button onClick={() => setOpen(false)} className="text-white/50 hover:text-white/60">
               <X className="h-4 w-4" />
             </button>
           </div>
@@ -131,7 +131,7 @@ export function GlobalSearch() {
           {/* Results */}
           <div className="max-h-80 overflow-y-auto py-2">
             {filtered.length === 0 ? (
-              <div className="px-5 py-8 text-center text-sm text-gray-500">
+              <div className="px-5 py-8 text-center text-sm text-white/50">
                 Aucun résultat pour &quot;{query}&quot;
               </div>
             ) : (
@@ -142,13 +142,13 @@ export function GlobalSearch() {
                     key={result.href}
                     onClick={() => navigate(result.href)}
                     className={`w-full flex items-center gap-3 px-5 py-3 text-left transition-colors ${
-                      i === selectedIndex ? 'bg-[#E50914]/5' : 'hover:bg-gray-50'
+                      i === selectedIndex ? 'bg-[#E50914]/5' : 'hover:bg-white/[0.03]'
                     }`}
                   >
-                    <RIcon className={`h-4 w-4 shrink-0 ${i === selectedIndex ? 'text-[#E50914]' : 'text-gray-500'}`} />
+                    <RIcon className={`h-4 w-4 shrink-0 ${i === selectedIndex ? 'text-[#E50914]' : 'text-white/50'}`} />
                     <div className="flex-1 min-w-0">
                       <p className={`text-sm font-medium ${i === selectedIndex ? 'text-[#E50914]' : 'text-[#1A1A2E]'}`}>{result.title}</p>
-                      <p className="text-[10px] text-gray-500 truncate">{result.description}</p>
+                      <p className="text-[10px] text-white/50 truncate">{result.description}</p>
                     </div>
                     <span className="text-[10px] text-gray-300 shrink-0">{result.category}</span>
                     {i === selectedIndex && <ArrowRight className="h-3.5 w-3.5 text-[#E50914] shrink-0" />}
@@ -159,7 +159,7 @@ export function GlobalSearch() {
           </div>
 
           {/* Footer */}
-          <div className="px-5 py-2.5 border-t border-gray-100 flex items-center gap-4 text-[10px] text-gray-500">
+          <div className="px-5 py-2.5 border-t border-white/10 flex items-center gap-4 text-[10px] text-white/50">
             <span>↑↓ naviguer</span>
             <span>↵ ouvrir</span>
             <span>esc fermer</span>

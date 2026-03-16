@@ -94,8 +94,8 @@ export default function MyStudioPage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-2xl font-bold text-[#1A1A2E] font-[family-name:var(--font-playfair)]">My Studio</h1>
-        <p className="text-sm text-gray-500 mt-1">Génération photos & vidéos IA · Galerie personnelle</p>
+        <h1 className="text-2xl font-bold text-white font-[family-name:var(--font-playfair)]">My Studio</h1>
+        <p className="text-sm text-white/50 mt-1">Génération photos & vidéos IA · Galerie personnelle</p>
       </div>
 
       {/* Tabs */}
@@ -107,7 +107,7 @@ export default function MyStudioPage() {
         ].map(t => {
           const TIcon = t.icon
           return (
-            <button key={t.key} onClick={() => setTab(t.key)} className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium ${tab === t.key ? 'bg-[#E50914] text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}>
+            <button key={t.key} onClick={() => setTab(t.key)} className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium ${tab === t.key ? 'bg-[#E50914] text-white' : 'bg-white/[0.05] text-white/60 hover:bg-white/[0.08]'}`}>
               <TIcon className="h-4 w-4" /> {t.label}
             </button>
           )
@@ -117,19 +117,19 @@ export default function MyStudioPage() {
       {tab === 'photo' && (
         <div className="space-y-6">
           {/* Prompt */}
-          <div className="rounded-2xl border border-gray-200 bg-white p-6">
-            <label className="text-xs text-gray-500 mb-1.5 block">Prompt</label>
-            <textarea value={prompt} onChange={e => setPrompt(e.target.value)} placeholder="Décrivez l'image que vous souhaitez générer..." rows={3} className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:border-[#E50914] focus:outline-none resize-none" />
+          <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
+            <label className="text-xs text-white/50 mb-1.5 block">Prompt</label>
+            <textarea value={prompt} onChange={e => setPrompt(e.target.value)} placeholder="Décrivez l'image que vous souhaitez générer..." rows={3} className="w-full rounded-xl border border-white/10 px-4 py-3 text-sm focus:border-[#E50914] focus:outline-none resize-none" />
           </div>
 
           {/* Style */}
           <div>
-            <label className="text-xs text-gray-500 mb-2 block">Style ({PHOTO_STYLES.length})</label>
+            <label className="text-xs text-white/50 mb-2 block">Style ({PHOTO_STYLES.length})</label>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
               {PHOTO_STYLES.map(s => (
-                <button key={s.id} onClick={() => setStyle(s.id)} className={`rounded-xl border p-3 text-left transition-colors ${style === s.id ? 'border-[#E50914] bg-red-50' : 'border-gray-200 hover:border-gray-300'}`}>
-                  <p className="text-xs font-medium text-[#1A1A2E]">{s.label}</p>
-                  <p className="text-[10px] text-gray-400">{s.desc}</p>
+                <button key={s.id} onClick={() => setStyle(s.id)} className={`rounded-xl border p-3 text-left transition-colors ${style === s.id ? 'border-[#E50914] bg-[#E50914]/10' : 'border-white/10 hover:border-white/15'}`}>
+                  <p className="text-xs font-medium text-white">{s.label}</p>
+                  <p className="text-[10px] text-white/40">{s.desc}</p>
                 </button>
               ))}
             </div>
@@ -138,18 +138,18 @@ export default function MyStudioPage() {
           {/* Ratio + HD */}
           <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
             <div className="flex-1">
-              <label className="text-xs text-gray-500 mb-2 block">Ratio</label>
+              <label className="text-xs text-white/50 mb-2 block">Ratio</label>
               <div className="flex gap-2">
                 {RATIOS.map(r => (
-                  <button key={r.id} onClick={() => setRatio(r.id)} className={`px-4 py-2 rounded-lg text-xs font-medium ${ratio === r.id ? 'bg-[#E50914] text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}>
+                  <button key={r.id} onClick={() => setRatio(r.id)} className={`px-4 py-2 rounded-lg text-xs font-medium ${ratio === r.id ? 'bg-[#E50914] text-white' : 'bg-white/[0.05] text-white/60 hover:bg-white/[0.08]'}`}>
                     {r.label}
                   </button>
                 ))}
               </div>
             </div>
             <div>
-              <label className="text-xs text-gray-500 mb-2 block">Qualité</label>
-              <button onClick={() => setHdMode(!hdMode)} className={`px-4 py-2 rounded-lg text-xs font-medium ${hdMode ? 'bg-purple-600 text-white' : 'bg-gray-100 text-gray-600'}`}>
+              <label className="text-xs text-white/50 mb-2 block">Qualité</label>
+              <button onClick={() => setHdMode(!hdMode)} className={`px-4 py-2 rounded-lg text-xs font-medium ${hdMode ? 'bg-purple-600 text-white' : 'bg-white/[0.05] text-white/60'}`}>
                 {hdMode ? 'HD ✓' : 'Standard'}
               </button>
             </div>
@@ -164,16 +164,16 @@ export default function MyStudioPage() {
 
       {tab === 'video' && (
         <div className="space-y-6">
-          <div className="rounded-2xl border border-gray-200 bg-white p-6">
-            <label className="text-xs text-gray-500 mb-1.5 block">Prompt vidéo</label>
-            <textarea value={prompt} onChange={e => setPrompt(e.target.value)} placeholder="Décrivez la séquence vidéo..." rows={3} className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:border-[#E50914] focus:outline-none resize-none" />
+          <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
+            <label className="text-xs text-white/50 mb-1.5 block">Prompt vidéo</label>
+            <textarea value={prompt} onChange={e => setPrompt(e.target.value)} placeholder="Décrivez la séquence vidéo..." rows={3} className="w-full rounded-xl border border-white/10 px-4 py-3 text-sm focus:border-[#E50914] focus:outline-none resize-none" />
           </div>
 
           <div>
-            <label className="text-xs text-gray-500 mb-2 block">Durée</label>
+            <label className="text-xs text-white/50 mb-2 block">Durée</label>
             <div className="flex gap-2">
               {VIDEO_DURATIONS.map(d => (
-                <button key={d.id} onClick={() => setDuration(d.id)} className={`px-4 py-2 rounded-lg text-xs font-medium ${duration === d.id ? 'bg-[#E50914] text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}>
+                <button key={d.id} onClick={() => setDuration(d.id)} className={`px-4 py-2 rounded-lg text-xs font-medium ${duration === d.id ? 'bg-[#E50914] text-white' : 'bg-white/[0.05] text-white/60 hover:bg-white/[0.08]'}`}>
                   {d.label}
                 </button>
               ))}
@@ -189,21 +189,21 @@ export default function MyStudioPage() {
       {tab === 'gallery' && (
         <div>
           {gallery.length === 0 ? (
-            <div className="rounded-2xl border border-gray-200 bg-white p-12 text-center">
-              <Image className="h-10 w-10 text-gray-400 mx-auto mb-3" />
-              <p className="text-sm text-gray-500">Galerie vide</p>
-              <p className="text-xs text-gray-400 mt-1">Générez des photos ou vidéos pour les voir ici</p>
+            <div className="rounded-2xl border border-white/10 bg-white/5 p-12 text-center">
+              <Image className="h-10 w-10 text-white/40 mx-auto mb-3" />
+              <p className="text-sm text-white/50">Galerie vide</p>
+              <p className="text-xs text-white/40 mt-1">Générez des photos ou vidéos pour les voir ici</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
               {gallery.map(item => (
-                <div key={item.id} className="rounded-xl border border-gray-200 bg-white overflow-hidden group">
-                  <div className="aspect-video bg-gray-100 relative">
+                <div key={item.id} className="rounded-xl border border-white/10 bg-white/5 overflow-hidden group">
+                  <div className="aspect-video bg-white/[0.05] relative">
                     {item.type === 'photo' ? (
                       <img src={item.url} alt={item.prompt} className="w-full h-full object-cover" />
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center bg-gray-900">
-                        <Video className="h-8 w-8 text-gray-400" />
+                      <div className="w-full h-full flex items-center justify-center bg-white/[0.05]">
+                        <Video className="h-8 w-8 text-white/40" />
                       </div>
                     )}
                     <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
@@ -215,8 +215,8 @@ export default function MyStudioPage() {
                     </span>
                   </div>
                   <div className="p-3">
-                    <p className="text-xs text-[#1A1A2E] truncate">{item.prompt}</p>
-                    <p className="text-[10px] text-gray-400">{item.ratio} · {item.createdAt.toLocaleTimeString('fr-FR')}</p>
+                    <p className="text-xs text-white truncate">{item.prompt}</p>
+                    <p className="text-[10px] text-white/40">{item.ratio} · {item.createdAt.toLocaleTimeString('fr-FR')}</p>
                   </div>
                 </div>
               ))}

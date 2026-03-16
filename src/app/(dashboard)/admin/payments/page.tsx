@@ -104,7 +104,7 @@ export default async function AdminPaymentsPage() {
           </div>
 
           {payments.map((p) => (
-            <div key={p.id} className="grid grid-cols-12 gap-4 items-center px-4 py-4 sm:rounded-2xl rounded-xl border border-white/5 bg-white/[0.02] hover:border-white/10 hover:bg-gray-50/50 hover:shadow-md hover:-translate-y-[1px] transition-all duration-500">
+            <div key={p.id} className="grid grid-cols-12 gap-4 items-center px-4 py-4 sm:rounded-2xl rounded-xl border border-white/5 bg-white/[0.02] hover:border-white/10 hover:bg-white/[0.03]/50 hover:shadow-md hover:-translate-y-[1px] transition-all duration-500">
               <div className="col-span-3 min-w-0">
                 <p className="text-sm font-medium truncate">{p.user.displayName}</p>
                 <p className="text-xs text-white/30 truncate">{p.user.email}</p>

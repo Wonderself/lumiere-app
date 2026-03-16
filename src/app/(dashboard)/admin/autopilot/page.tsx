@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 }
 
 const STATUS_CONFIG: Record<string, { label: string; color: string; icon: typeof CheckCircle2 }> = {
-  DRAFT: { label: 'Brouillon', color: 'text-gray-500', icon: FileText },
+  DRAFT: { label: 'Brouillon', color: 'text-white/50', icon: FileText },
   PENDING_REVIEW: { label: 'En attente', color: 'text-yellow-600', icon: Clock },
   APPROVED: { label: 'Approuvé', color: 'text-blue-600', icon: CheckCircle2 },
   DENIED: { label: 'Refusé', color: 'text-red-400', icon: XCircle },
@@ -66,10 +66,10 @@ export default async function AutopilotPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-[#1A1A2E] font-[family-name:var(--font-playfair)]">
+          <h1 className="text-2xl font-bold text-white font-[family-name:var(--font-playfair)]">
             Autopilot & Gouvernance
           </h1>
-          <p className="text-sm text-gray-500 mt-2">
+          <p className="text-sm text-white/50 mt-2">
             Propositions autonomes · Validation Telegram · Rollback possible
           </p>
         </div>
@@ -81,12 +81,12 @@ export default async function AutopilotPage() {
         {kpis.map(kpi => {
           const Icon = kpi.icon
           return (
-            <div key={kpi.label} className={`bg-white rounded-xl shadow-sm border ${kpi.border} p-4 sm:p-5`}>
+            <div key={kpi.label} className={`bg-white/5 rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.3)] border ${kpi.border} p-4 sm:p-5`}>
               <div className="flex items-center gap-2 mb-2">
                 <Icon className={`h-4 w-4 ${kpi.color}`} />
-                <span className="text-[10px] text-gray-500 uppercase tracking-wider">{kpi.label}</span>
+                <span className="text-[10px] text-white/50 uppercase tracking-wider">{kpi.label}</span>
               </div>
-              <p className="text-2xl font-bold text-[#1A1A2E]">{kpi.value}</p>
+              <p className="text-2xl font-bold text-white">{kpi.value}</p>
             </div>
           )
         })}
@@ -94,31 +94,31 @@ export default async function AutopilotPage() {
 
       {/* Pending Queue */}
       <div>
-        <h2 className="text-lg font-semibold text-[#1A1A2E] mb-4 flex items-center gap-2">
+        <h2 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
           <Clock className="h-5 w-5 text-yellow-500" />
           File d&apos;attente ({stats.pending})
         </h2>
-        <div className="rounded-xl shadow-sm border border-gray-100 bg-white overflow-hidden">
+        <div className="rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.3)] border border-white/10 bg-white/5 overflow-hidden">
           {pending.length === 0 ? (
-            <div className="p-8 text-center text-sm text-gray-500">
+            <div className="p-8 text-center text-sm text-white/50">
               Aucune proposition en attente
             </div>
           ) : (
-            <div className="divide-y divide-gray-100">
+            <div className="divide-y divide-white/10">
               {pending.map(p => {
                 const sev = SEVERITY_CONFIG[p.severity] || SEVERITY_CONFIG.INFO
                 return (
-                  <div key={p.id} className="flex items-center gap-4 p-4 hover:bg-gray-50 transition-colors">
+                  <div key={p.id} className="flex items-center gap-4 p-4 hover:bg-white/[0.03] transition-colors">
                     {p.isUrgent && <span className="text-red-500 text-lg">🚨</span>}
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2">
-                        <p className="text-sm font-medium text-[#1A1A2E] truncate">{p.title}</p>
+                        <p className="text-sm font-medium text-white truncate">{p.title}</p>
                         <span className={`text-[10px] px-2 py-0.5 rounded-full ${sev.bg} ${sev.color} font-medium`}>
                           {sev.label}
                         </span>
                       </div>
-                      <p className="text-xs text-gray-500 truncate mt-0.5">{p.description.substring(0, 100)}</p>
-                      <div className="flex items-center gap-3 mt-1 text-[10px] text-gray-500">
+                      <p className="text-xs text-white/50 truncate mt-0.5">{p.description.substring(0, 100)}</p>
+                      <div className="flex items-center gap-3 mt-1 text-[10px] text-white/50">
                         <span>{p.actionType.replace(/_/g, ' ')}</span>
                         <span>Risk: {p.riskScore}/100</span>
                         {p.agentSlug && <span>Agent: {p.agentSlug}</span>}
@@ -126,12 +126,12 @@ export default async function AutopilotPage() {
                     </div>
                     <div className="flex gap-2 shrink-0">
                       <form action={`/api/autopilot/proposals/${p.id}/approve`} method="POST">
-                        <button className="px-3 py-1.5 text-xs bg-green-50 text-green-700 rounded-lg hover:bg-green-100 transition-colors font-medium">
+                        <button className="px-3 py-1.5 text-xs bg-green-500/10 text-green-500 rounded-lg hover:bg-green-500/20 transition-colors font-medium">
                           Approuver
                         </button>
                       </form>
                       <form action={`/api/autopilot/proposals/${p.id}/deny`} method="POST">
-                        <button className="px-3 py-1.5 text-xs bg-red-50 text-red-700 rounded-lg hover:bg-red-100 transition-colors font-medium">
+                        <button className="px-3 py-1.5 text-xs bg-red-500/10 text-red-400 rounded-lg hover:bg-red-500/20 transition-colors font-medium">
                           Refuser
                         </button>
                       </form>
@@ -146,7 +146,7 @@ export default async function AutopilotPage() {
 
       {/* Audit Reports */}
       <div>
-        <h2 className="text-lg font-semibold text-[#1A1A2E] mb-4 flex items-center gap-2">
+        <h2 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
           <ShieldCheck className="h-5 w-5 text-emerald-500" />
           Derniers audits
         </h2>
@@ -154,10 +154,10 @@ export default async function AutopilotPage() {
           {auditCards.map(audit => {
             const Icon = audit.icon
             return (
-              <div key={audit.type} className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 sm:p-6">
+              <div key={audit.type} className="bg-white/5 rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.3)] border border-white/10 p-4 sm:p-6">
                 <div className="flex items-center gap-2 mb-3">
                   <Icon className={`h-5 w-5 ${audit.color}`} />
-                  <h3 className="text-sm font-semibold text-[#1A1A2E]">{audit.type}</h3>
+                  <h3 className="text-sm font-semibold text-white">{audit.type}</h3>
                   {audit.data && (
                     <span className={`ml-auto text-lg font-bold ${
                       (audit.data.score ?? 0) >= 80 ? 'text-green-500' :
@@ -169,18 +169,18 @@ export default async function AutopilotPage() {
                 </div>
                 {audit.data ? (
                   <>
-                    <p className="text-xs text-gray-500 mb-2">{audit.data.summary}</p>
-                    <div className="flex gap-3 text-[10px] text-gray-500">
+                    <p className="text-xs text-white/50 mb-2">{audit.data.summary}</p>
+                    <div className="flex gap-3 text-[10px] text-white/50">
                       <span>{audit.data.checksRun} checks</span>
                       <span>{audit.data.issuesFound} issues</span>
                       <span>{audit.data.durationMs}ms</span>
                     </div>
-                    <p className="text-[10px] text-gray-500 mt-1">
+                    <p className="text-[10px] text-white/50 mt-1">
                       {audit.data.completedAt ? new Date(audit.data.completedAt).toLocaleString('fr-FR') : '—'}
                     </p>
                   </>
                 ) : (
-                  <p className="text-xs text-gray-500">Aucun audit lancé</p>
+                  <p className="text-xs text-white/50">Aucun audit lancé</p>
                 )}
               </div>
             )
@@ -190,40 +190,40 @@ export default async function AutopilotPage() {
 
       {/* Execution Journal */}
       <div>
-        <h2 className="text-lg font-semibold text-[#1A1A2E] mb-4 flex items-center gap-2">
+        <h2 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
           <Activity className="h-5 w-5 text-blue-500" />
           Journal d&apos;exécution
         </h2>
-        <div className="rounded-xl shadow-sm border border-gray-100 bg-white overflow-hidden">
+        <div className="rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.3)] border border-white/10 bg-white/5 overflow-hidden">
           {recent.length === 0 ? (
-            <div className="p-8 text-center text-sm text-gray-500">
+            <div className="p-8 text-center text-sm text-white/50">
               Aucune proposition enregistrée
             </div>
           ) : (
-            <div className="divide-y divide-gray-100">
+            <div className="divide-y divide-white/10">
               {recent.map(p => {
                 const st = STATUS_CONFIG[p.status] || STATUS_CONFIG.DRAFT
                 const StIcon = st.icon
                 const sev = SEVERITY_CONFIG[p.severity] || SEVERITY_CONFIG.INFO
                 return (
-                  <div key={p.id} className="flex items-center gap-4 p-4 hover:bg-gray-50 transition-colors">
-                    <div className={`h-8 w-8 rounded-lg flex items-center justify-center ${p.status === 'COMPLETED' ? 'bg-green-50' : p.status === 'FAILED' ? 'bg-red-50' : 'bg-gray-50'}`}>
+                  <div key={p.id} className="flex items-center gap-4 p-4 hover:bg-white/[0.03] transition-colors">
+                    <div className={`h-8 w-8 rounded-lg flex items-center justify-center ${p.status === 'COMPLETED' ? 'bg-green-500/10' : p.status === 'FAILED' ? 'bg-red-500/10' : 'bg-white/[0.03]'}`}>
                       <StIcon className={`h-4 w-4 ${st.color}`} />
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2">
-                        <p className="text-sm font-medium text-[#1A1A2E] truncate">{p.title}</p>
-                        <span className={`text-[10px] px-1.5 py-0.5 rounded ${st.color} bg-gray-50`}>{st.label}</span>
+                        <p className="text-sm font-medium text-white truncate">{p.title}</p>
+                        <span className={`text-[10px] px-1.5 py-0.5 rounded ${st.color} bg-white/[0.03]`}>{st.label}</span>
                         <span className={`text-[10px] px-1.5 py-0.5 rounded ${sev.color} ${sev.bg}`}>{sev.label}</span>
                       </div>
-                      <div className="flex items-center gap-3 mt-0.5 text-[10px] text-gray-500">
+                      <div className="flex items-center gap-3 mt-0.5 text-[10px] text-white/50">
                         <span>{p.actionType.replace(/_/g, ' ')}</span>
                         {p.reviewedBy && <span>par {p.reviewedBy.displayName}</span>}
                         <span>{new Date(p.createdAt).toLocaleDateString('fr-FR')}</span>
                       </div>
                     </div>
                     <div className="text-right shrink-0">
-                      <p className="text-xs text-gray-500">Risk {p.riskScore}/100</p>
+                      <p className="text-xs text-white/50">Risk {p.riskScore}/100</p>
                     </div>
                   </div>
                 )

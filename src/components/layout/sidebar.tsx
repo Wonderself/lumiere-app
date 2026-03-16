@@ -214,7 +214,7 @@ export function Sidebar() {
           <div key={section.title}>
             <div className="flex items-center gap-2 px-3 pt-1 pb-2">
               <span className={cn('w-1.5 h-1.5 rounded-full', section.dotColor)} />
-              <p className="text-[10px] font-semibold uppercase tracking-[0.15em] text-gray-500">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.15em] text-white/50">
                 {section.title}
               </p>
             </div>
@@ -232,16 +232,16 @@ export function Sidebar() {
                       'flex items-center gap-3 px-3 py-2 rounded-lg text-[13px] font-medium transition-all duration-200 group',
                       isActive
                         ? 'bg-[#E50914]/10 text-[#E50914] font-medium'
-                        : 'text-gray-600 hover:text-[#E50914] hover:bg-[#E50914]/[0.04]'
+                        : 'text-white/60 hover:text-[#E50914] hover:bg-white/[0.05]'
                     )}
                   >
                     <link.icon className={cn(
                       'h-4 w-4 shrink-0 transition-colors',
-                      isActive ? 'text-[#E50914]' : 'text-gray-500 group-hover:text-[#E50914]'
+                      isActive ? 'text-[#E50914]' : 'text-white/50 group-hover:text-[#E50914]'
                     )} />
                     <span className="flex-1">{link.label}</span>
                     {link.badge && (
-                      <Badge className="text-[9px] px-1.5 py-0 h-4 bg-red-50 text-red-500 border-red-200">
+                      <Badge className="text-[9px] px-1.5 py-0 h-4 bg-[#E50914]/15 text-[#E50914] border-[#E50914]/20">
                         {link.badge}
                       </Badge>
                     )}
@@ -255,16 +255,16 @@ export function Sidebar() {
 
       {isAdminPage && isAdmin && (
         <div className="px-3 pb-3">
-          <Separator className="mb-3 bg-gray-200" />
+          <Separator className="mb-3 bg-white/10" />
           <div className="flex items-center gap-2 px-3 pb-2">
             <span className="w-1.5 h-1.5 rounded-full bg-gray-400" />
-            <p className="text-[10px] font-semibold text-gray-500 uppercase tracking-[0.15em]">
+            <p className="text-[10px] font-semibold text-white/50 uppercase tracking-[0.15em]">
               Utilisateur
             </p>
           </div>
           <Link
             href="/dashboard"
-            className="flex items-center gap-3 px-3 py-2 rounded-lg text-[13px] text-gray-500 hover:text-[#E50914] hover:bg-[#E50914]/[0.04] transition-all"
+            className="flex items-center gap-3 px-3 py-2 rounded-lg text-[13px] text-white/50 hover:text-[#E50914] hover:bg-white/[0.05] transition-all"
           >
             <LayoutDashboard className="h-4 w-4" />
             Dashboard
@@ -273,10 +273,10 @@ export function Sidebar() {
       )}
 
       {session?.user && (
-        <div className="p-3 border-t border-gray-200">
+        <div className="p-3 border-t border-white/10">
           <Link
             href="/profile"
-            className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-gray-50 transition-all group"
+            className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-white/[0.03] transition-all group"
           >
             <Avatar className="h-9 w-9">
               <AvatarFallback className="text-xs bg-[#E50914]/10 text-[#E50914]">
@@ -284,7 +284,7 @@ export function Sidebar() {
               </AvatarFallback>
             </Avatar>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-[#1A1A2E] truncate group-hover:text-[#E50914] transition-colors">
+              <p className="text-sm font-medium text-white truncate group-hover:text-[#E50914] transition-colors">
                 {session.user.name || 'Utilisateur'}
               </p>
               <div className="flex items-center gap-1.5">
@@ -303,7 +303,7 @@ export function Sidebar() {
     <>
       <button
         onClick={() => setMobileOpen(true)}
-        className="lg:hidden fixed top-[72px] left-3 z-40 h-10 w-10 rounded-lg bg-white/90 border border-gray-200 flex items-center justify-center text-gray-500 hover:text-[#1A1A2E] transition-colors backdrop-blur-sm shadow-sm"
+        className="lg:hidden fixed top-[72px] left-3 z-40 h-10 w-10 rounded-lg bg-[#111]/90 border border-white/10 flex items-center justify-center text-white/50 hover:text-white transition-colors backdrop-blur-sm shadow-sm"
         aria-label="Ouvrir le menu latéral"
       >
         <Menu className="h-5 w-5" />
@@ -311,27 +311,27 @@ export function Sidebar() {
 
       {mobileOpen && (
         <div
-          className="lg:hidden fixed inset-0 bg-black/20 backdrop-blur-sm z-40"
+          className="lg:hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-40"
           onClick={() => setMobileOpen(false)}
         />
       )}
 
       <aside
         className={cn(
-          'lg:hidden fixed top-0 left-0 z-50 w-72 h-full bg-white border-r border-gray-200 flex flex-col transition-transform duration-300 shadow-xl',
+          'lg:hidden fixed top-0 left-0 z-50 w-72 h-full bg-[#0A0A0A] border-r border-white/10 flex flex-col transition-transform duration-300 shadow-xl',
           mobileOpen ? 'translate-x-0' : '-translate-x-full'
         )}
       >
-        <div className="p-3 flex items-center justify-between border-b border-gray-200">
-          <span className="text-sm font-bold text-[#1A1A2E] font-[family-name:var(--font-playfair)]">CINEGEN</span>
-          <button onClick={() => setMobileOpen(false)} className="h-8 w-8 rounded-lg hover:bg-gray-100 flex items-center justify-center text-gray-500">
+        <div className="p-3 flex items-center justify-between border-b border-white/10">
+          <span className="text-sm font-bold text-white font-[family-name:var(--font-playfair)]">CINEGEN</span>
+          <button onClick={() => setMobileOpen(false)} className="h-8 w-8 rounded-lg hover:bg-white/[0.05] flex items-center justify-center text-white/50">
             <X className="h-4 w-4" />
           </button>
         </div>
         {sidebarContent}
       </aside>
 
-      <aside className="hidden lg:flex w-60 shrink-0 border-r border-gray-200 bg-white min-h-[calc(100vh-64px)] flex-col">
+      <aside className="hidden lg:flex w-60 shrink-0 border-r border-white/10 bg-[#0A0A0A] min-h-[calc(100vh-64px)] flex-col">
         {sidebarContent}
       </aside>
     </>

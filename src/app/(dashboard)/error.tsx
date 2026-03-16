@@ -16,10 +16,10 @@ export default function DashboardError({ error, reset }: { error: Error & { dige
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
           </svg>
         </div>
-        <h1 className="text-xl font-bold text-gray-900 mb-2 font-playfair">
+        <h1 className="text-xl font-bold text-white mb-2 font-playfair">
           Erreur inattendue
         </h1>
-        <p className="text-gray-500 text-sm mb-6">
+        <p className="text-white/50 text-sm mb-6">
           Un problème est survenu. Veuillez réessayer ou retourner au tableau de bord.
         </p>
         <div className="flex items-center justify-center gap-3">
@@ -31,7 +31,7 @@ export default function DashboardError({ error, reset }: { error: Error & { dige
           </button>
           <Link
             href="/dashboard"
-            className="inline-flex items-center justify-center h-10 px-5 rounded-xl border border-gray-200 text-gray-600 font-medium text-sm hover:bg-gray-50 transition-colors"
+            className="inline-flex items-center justify-center h-10 px-5 rounded-xl border border-white/10 text-white/60 font-medium text-sm hover:bg-white/[0.03] transition-colors"
           >
             Tableau de bord
           </Link>

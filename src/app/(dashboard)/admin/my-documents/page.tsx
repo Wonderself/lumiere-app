@@ -116,12 +116,12 @@ export default function MyDocumentsPage() {
     <div className="space-y-8">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-[#1A1A2E] font-[family-name:var(--font-playfair)]">My Documents</h1>
-          <p className="text-sm text-gray-500 mt-1">25 templates · Génération IA · Bibliothèque personnelle</p>
+          <h1 className="text-2xl font-bold text-white font-[family-name:var(--font-playfair)]">My Documents</h1>
+          <p className="text-sm text-white/50 mt-1">25 templates · Génération IA · Bibliothèque personnelle</p>
         </div>
         <div className="flex gap-2">
-          <button onClick={() => setView('templates')} className={`px-3 py-1.5 rounded-lg text-xs font-medium ${view === 'templates' ? 'bg-[#E50914] text-white' : 'bg-gray-100 text-gray-600'}`}>Templates</button>
-          <button onClick={() => setView('library')} className={`px-3 py-1.5 rounded-lg text-xs font-medium ${view === 'library' ? 'bg-[#E50914] text-white' : 'bg-gray-100 text-gray-600'}`}>
+          <button onClick={() => setView('templates')} className={`px-3 py-1.5 rounded-lg text-xs font-medium ${view === 'templates' ? 'bg-[#E50914] text-white' : 'bg-white/[0.05] text-white/60'}`}>Templates</button>
+          <button onClick={() => setView('library')} className={`px-3 py-1.5 rounded-lg text-xs font-medium ${view === 'library' ? 'bg-[#E50914] text-white' : 'bg-white/[0.05] text-white/60'}`}>
             Bibliothèque ({savedDocs.length})
           </button>
         </div>
@@ -132,13 +132,13 @@ export default function MyDocumentsPage() {
           {/* Filters */}
           <div className="flex gap-3">
             <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500" />
-              <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Rechercher un template..." className="w-full pl-10 pr-4 py-2 rounded-xl border border-gray-200 text-sm focus:border-[#E50914] focus:outline-none" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/50" />
+              <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Rechercher un template..." className="w-full pl-10 pr-4 py-2 rounded-xl border border-white/10 text-sm focus:border-[#E50914] focus:outline-none" />
             </div>
             <div className="flex gap-1 overflow-x-auto">
-              <button onClick={() => setSelectedCategory('all')} className={`px-3 py-2 rounded-lg text-xs font-medium whitespace-nowrap ${selectedCategory === 'all' ? 'bg-[#E50914] text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}>Tous</button>
+              <button onClick={() => setSelectedCategory('all')} className={`px-3 py-2 rounded-lg text-xs font-medium whitespace-nowrap ${selectedCategory === 'all' ? 'bg-[#E50914] text-white' : 'bg-white/[0.05] text-white/60 hover:bg-white/[0.08]'}`}>Tous</button>
               {CATEGORIES.map(cat => (
-                <button key={cat} onClick={() => setSelectedCategory(cat)} className={`px-3 py-2 rounded-lg text-xs font-medium whitespace-nowrap ${selectedCategory === cat ? 'bg-[#E50914] text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}>{cat}</button>
+                <button key={cat} onClick={() => setSelectedCategory(cat)} className={`px-3 py-2 rounded-lg text-xs font-medium whitespace-nowrap ${selectedCategory === cat ? 'bg-[#E50914] text-white' : 'bg-white/[0.05] text-white/60 hover:bg-white/[0.08]'}`}>{cat}</button>
               ))}
             </div>
           </div>
@@ -153,26 +153,26 @@ export default function MyDocumentsPage() {
                   key={template.id}
                   onClick={() => generateDoc(template)}
                   disabled={!!generating}
-                  className="text-left rounded-xl border border-gray-200 bg-white p-5 hover:bg-gray-50 hover:border-gray-300 transition-colors disabled:opacity-50"
+                  className="text-left rounded-xl border border-white/10 bg-white/5 p-5 hover:bg-white/[0.03] hover:border-white/15 transition-colors disabled:opacity-50"
                 >
                   <div className="flex items-center gap-3 mb-2">
                     <TIcon className="h-5 w-5 text-[#E50914]" />
-                    <span className="text-sm font-medium text-[#1A1A2E]">{template.name}</span>
+                    <span className="text-sm font-medium text-white">{template.name}</span>
                     {isGenerating && <Loader2 className="h-4 w-4 animate-spin text-[#E50914] ml-auto" />}
                   </div>
-                  <p className="text-[10px] text-gray-500">{template.category}</p>
+                  <p className="text-[10px] text-white/50">{template.category}</p>
                 </button>
               )
             })}
           </div>
 
           {/* Custom Prompt */}
-          <div className="rounded-2xl border border-gray-200 bg-white p-6">
-            <h3 className="text-sm font-semibold text-[#1A1A2E] mb-3 flex items-center gap-2">
+          <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
+            <h3 className="text-sm font-semibold text-white mb-3 flex items-center gap-2">
               <PenTool className="h-4 w-4 text-purple-500" /> Document personnalisé
             </h3>
             <div className="flex gap-3">
-              <input value={customPrompt} onChange={e => setCustomPrompt(e.target.value)} placeholder="Décrivez le document à générer..." className="flex-1 rounded-lg border border-gray-200 px-3 py-2 text-sm focus:border-[#E50914] focus:outline-none" />
+              <input value={customPrompt} onChange={e => setCustomPrompt(e.target.value)} placeholder="Décrivez le document à générer..." className="flex-1 rounded-lg border border-white/10 px-3 py-2 text-sm focus:border-[#E50914] focus:outline-none" />
               <button
                 onClick={() => { if (customPrompt) generateDoc({ id: 'custom', name: 'Document personnalisé', category: 'Custom', icon: FileText, prompt: customPrompt }) }}
                 disabled={!customPrompt || !!generating}
@@ -185,11 +185,11 @@ export default function MyDocumentsPage() {
 
           {/* Generated Content */}
           {generatedContent && (
-            <div className="rounded-2xl border border-gray-200 bg-white p-6">
+            <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-sm font-semibold text-[#1A1A2E]">{activeTemplate?.name}</h3>
+                <h3 className="text-sm font-semibold text-white">{activeTemplate?.name}</h3>
                 <div className="flex gap-2">
-                  <button onClick={copyContent} className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs bg-gray-100 hover:bg-gray-200 transition-colors">
+                  <button onClick={copyContent} className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs bg-white/[0.05] hover:bg-white/[0.08] transition-colors">
                     {copied ? <Check className="h-3.5 w-3.5 text-green-500" /> : <Copy className="h-3.5 w-3.5" />}
                     {copied ? 'Copié' : 'Copier'}
                   </button>
@@ -199,7 +199,7 @@ export default function MyDocumentsPage() {
                 </div>
               </div>
               <div className="prose prose-sm max-w-none">
-                <pre className="whitespace-pre-wrap text-sm text-gray-700 leading-relaxed bg-gray-50 rounded-xl p-4">{generatedContent}</pre>
+                <pre className="whitespace-pre-wrap text-sm text-white/80 leading-relaxed bg-white/[0.03] rounded-xl p-4">{generatedContent}</pre>
               </div>
             </div>
           )}
@@ -208,18 +208,18 @@ export default function MyDocumentsPage() {
         /* Library */
         <div className="space-y-3">
           {savedDocs.length === 0 ? (
-            <div className="rounded-2xl border border-gray-200 bg-white p-12 text-center">
-              <FileText className="h-10 w-10 text-gray-500 mx-auto mb-3" />
-              <p className="text-sm text-gray-500">Aucun document sauvegardé</p>
-              <p className="text-xs text-gray-500 mt-1">Générez un document puis cliquez sur Sauver</p>
+            <div className="rounded-2xl border border-white/10 bg-white/5 p-12 text-center">
+              <FileText className="h-10 w-10 text-white/50 mx-auto mb-3" />
+              <p className="text-sm text-white/50">Aucun document sauvegardé</p>
+              <p className="text-xs text-white/50 mt-1">Générez un document puis cliquez sur Sauver</p>
             </div>
           ) : savedDocs.map(doc => (
-            <div key={doc.id} className="rounded-xl border border-gray-200 bg-white p-5">
+            <div key={doc.id} className="rounded-xl border border-white/10 bg-white/5 p-5">
               <div className="flex items-center gap-3">
                 <FileText className="h-5 w-5 text-[#E50914]" />
                 <div className="flex-1">
-                  <p className="text-sm font-medium text-[#1A1A2E]">{doc.title}</p>
-                  <p className="text-[10px] text-gray-500">{doc.createdAt.toLocaleString('fr-FR')}</p>
+                  <p className="text-sm font-medium text-white">{doc.title}</p>
+                  <p className="text-[10px] text-white/50">{doc.createdAt.toLocaleString('fr-FR')}</p>
                 </div>
                 <button onClick={() => { setGeneratedContent(doc.content); setActiveTemplate({ id: doc.templateId, name: doc.title, category: '', icon: FileText, prompt: '' }); setView('templates') }} className="text-xs text-blue-500 hover:underline">
                   <Eye className="h-4 w-4" />

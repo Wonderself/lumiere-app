@@ -149,7 +149,7 @@ async function addRevenueAction(formData: FormData) {
 // ============================================
 
 const statusColors: Record<string, string> = {
-  DRAFT: 'bg-gray-500/10 text-gray-500 border-gray-500/20',
+  DRAFT: 'bg-white/[0.03]0/10 text-white/50 border-gray-500/20',
   PENDING_LEGAL: 'bg-purple-500/10 text-purple-600 border-purple-500/20',
   OPEN: 'bg-green-500/10 text-green-600 border-green-500/20',
   FUNDED: 'bg-blue-500/10 text-blue-600 border-blue-500/20',

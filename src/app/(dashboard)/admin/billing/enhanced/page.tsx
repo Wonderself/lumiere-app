@@ -39,7 +39,7 @@ export default function EnhancedBillingPage() {
   if (loading || !data) {
     return (
       <div className="flex items-center justify-center py-20">
-        <Loader2 className="h-8 w-8 animate-spin text-gray-500" />
+        <Loader2 className="h-8 w-8 animate-spin text-white/50" />
       </div>
     )
   }
@@ -74,10 +74,10 @@ export default function EnhancedBillingPage() {
   return (
     <div className="space-y-10">
       <div>
-        <h1 className="text-2xl font-bold text-[#1A1A2E] font-[family-name:var(--font-playfair)]">
+        <h1 className="text-2xl font-bold text-white font-[family-name:var(--font-playfair)]">
           Billing & Analytics
         </h1>
-        <p className="text-sm text-gray-500 mt-1">Revenus, coûts et marge avec graphiques détaillés</p>
+        <p className="text-sm text-white/50 mt-1">Revenus, coûts et marge avec graphiques détaillés</p>
       </div>
 
       {/* KPIs */}
@@ -85,10 +85,10 @@ export default function EnhancedBillingPage() {
         {kpis.map(kpi => {
           const Icon = kpi.icon
           return (
-            <div key={kpi.label} className={`rounded-2xl border border-gray-200 ${kpi.bg} p-5`}>
+            <div key={kpi.label} className={`rounded-2xl border border-white/10 ${kpi.bg} p-5`}>
               <Icon className={`h-5 w-5 ${kpi.color} mb-2`} />
-              <p className="text-2xl font-bold text-[#1A1A2E]">{kpi.value}</p>
-              <p className="text-[10px] text-gray-500 mt-1">{kpi.label}</p>
+              <p className="text-2xl font-bold text-white">{kpi.value}</p>
+              <p className="text-[10px] text-white/50 mt-1">{kpi.label}</p>
             </div>
           )
         })}
@@ -96,8 +96,8 @@ export default function EnhancedBillingPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Revenue Area Chart */}
-        <div className="rounded-2xl border border-gray-200 bg-white p-6">
-          <h2 className="text-sm font-semibold text-[#1A1A2E] mb-4 flex items-center gap-2">
+        <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
+          <h2 className="text-sm font-semibold text-white mb-4 flex items-center gap-2">
             <TrendingUp className="h-4 w-4 text-green-500" /> Revenue vs Coûts (7j)
           </h2>
           <ResponsiveContainer width="100%" height={250}>
@@ -113,12 +113,12 @@ export default function EnhancedBillingPage() {
         </div>
 
         {/* Action Distribution Pie */}
-        <div className="rounded-2xl border border-gray-200 bg-white p-6">
-          <h2 className="text-sm font-semibold text-[#1A1A2E] mb-4 flex items-center gap-2">
+        <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
+          <h2 className="text-sm font-semibold text-white mb-4 flex items-center gap-2">
             <PieChart className="h-4 w-4 text-purple-500" /> Distribution par action
           </h2>
           {pieData.length === 0 ? (
-            <div className="flex items-center justify-center h-[250px] text-sm text-gray-500">Pas encore de données</div>
+            <div className="flex items-center justify-center h-[250px] text-sm text-white/50">Pas encore de données</div>
           ) : (
             <ResponsiveContainer width="100%" height={250}>
               <RPieChart>
@@ -136,12 +136,12 @@ export default function EnhancedBillingPage() {
       </div>
 
       {/* Bar Chart — Credits by Action */}
-      <div className="rounded-2xl border border-gray-200 bg-white p-6">
-        <h2 className="text-sm font-semibold text-[#1A1A2E] mb-4 flex items-center gap-2">
+      <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
+        <h2 className="text-sm font-semibold text-white mb-4 flex items-center gap-2">
           <BarChart3 className="h-4 w-4 text-blue-500" /> Crédits consommés par action
         </h2>
         {actionChartData.length === 0 ? (
-          <div className="flex items-center justify-center h-[200px] text-sm text-gray-500">Pas encore de données</div>
+          <div className="flex items-center justify-center h-[200px] text-sm text-white/50">Pas encore de données</div>
         ) : (
           <ResponsiveContainer width="100%" height={200}>
             <BarChart data={actionChartData}>
@@ -156,23 +156,23 @@ export default function EnhancedBillingPage() {
       </div>
 
       {/* Top Users Table */}
-      <div className="rounded-2xl border border-gray-200 bg-white overflow-hidden">
-        <div className="px-6 py-4 border-b border-gray-100">
-          <h2 className="text-sm font-semibold text-[#1A1A2E]">Top consommateurs</h2>
+      <div className="rounded-2xl border border-white/10 bg-white/5 overflow-hidden">
+        <div className="px-6 py-4 border-b border-white/10">
+          <h2 className="text-sm font-semibold text-white">Top consommateurs</h2>
         </div>
         <div className="divide-y divide-gray-50">
           {data.topUsers.map((user, i) => (
-            <div key={user.userId} className="flex items-center gap-4 px-6 py-3 hover:bg-gray-50">
-              <span className="text-xs font-bold text-gray-500 w-6">#{i + 1}</span>
+            <div key={user.userId} className="flex items-center gap-4 px-6 py-3 hover:bg-white/[0.03]">
+              <span className="text-xs font-bold text-white/50 w-6">#{i + 1}</span>
               <div className="flex-1">
-                <p className="text-sm font-medium text-[#1A1A2E]">{user.displayName || 'Anonymous'}</p>
-                <p className="text-[10px] text-gray-500">{user.requestCount} requests</p>
+                <p className="text-sm font-medium text-white">{user.displayName || 'Anonymous'}</p>
+                <p className="text-[10px] text-white/50">{user.requestCount} requests</p>
               </div>
               <p className="text-sm font-semibold text-[#E50914]">{microToCredits(user.totalSpent).toFixed(2)} cr</p>
             </div>
           ))}
           {data.topUsers.length === 0 && (
-            <div className="p-6 text-center text-sm text-gray-500">Pas encore de données</div>
+            <div className="p-6 text-center text-sm text-white/50">Pas encore de données</div>
           )}
         </div>
       </div>

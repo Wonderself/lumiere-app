@@ -65,7 +65,7 @@ export function AgentPreferences({ initialValues }: AgentPreferencesProps) {
         </h3>
         <button
           onClick={handleReset}
-          className="flex items-center gap-1 text-xs text-gray-500 hover:text-white transition-colors"
+          className="flex items-center gap-1 text-xs text-white/50 hover:text-white transition-colors"
         >
           <RotateCcw className="h-3.5 w-3.5" />
           Réinitialiser
@@ -80,10 +80,10 @@ export function AgentPreferences({ initialValues }: AgentPreferencesProps) {
                 <span>{slider.icon}</span>
                 {slider.label}
               </label>
-              <span className="text-xs text-gray-500 tabular-nums">{values[slider.key]}</span>
+              <span className="text-xs text-white/50 tabular-nums">{values[slider.key]}</span>
             </div>
             <div className="flex items-center gap-3">
-              <span className="text-[10px] text-gray-600 w-20 text-right shrink-0">{slider.labelLeft}</span>
+              <span className="text-[10px] text-white/60 w-20 text-right shrink-0">{slider.labelLeft}</span>
               <input
                 type="range"
                 min={0}
@@ -93,7 +93,7 @@ export function AgentPreferences({ initialValues }: AgentPreferencesProps) {
                 onChange={(e) => handleChange(slider.key, parseInt(e.target.value))}
                 className="flex-1 h-2 rounded-full appearance-none bg-gray-700 accent-[#E50914] cursor-pointer"
               />
-              <span className="text-[10px] text-gray-600 w-20 shrink-0">{slider.labelRight}</span>
+              <span className="text-[10px] text-white/60 w-20 shrink-0">{slider.labelRight}</span>
             </div>
           </div>
         ))}

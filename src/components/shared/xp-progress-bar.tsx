@@ -16,14 +16,14 @@ export function XPProgressBar({ xp, streak = 0, compact }: XPProgressBarProps) {
 
   if (compact) {
     return (
-      <Link href="/rewards" className="flex items-center gap-3 px-3 py-2 rounded-xl border border-gray-200 bg-white hover:bg-gray-50 transition-colors">
+      <Link href="/rewards" className="flex items-center gap-3 px-3 py-2 rounded-xl border border-white/10 bg-white/5 hover:bg-white/[0.03] transition-colors">
         <span className="text-lg">{level.icon}</span>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-1.5 mb-0.5">
             <span className="text-xs font-semibold text-[#1A1A2E]">{level.title}</span>
             <span className="text-[10px] text-gray-400">Niv.{level.level}</span>
           </div>
-          <div className="w-full h-1.5 bg-gray-100 rounded-full overflow-hidden">
+          <div className="w-full h-1.5 bg-white/[0.05] rounded-full overflow-hidden">
             <div className="h-full rounded-full" style={{ width: `${progress}%`, backgroundColor: level.color }} />
           </div>
         </div>
@@ -59,7 +59,7 @@ export function XPProgressBar({ xp, streak = 0, compact }: XPProgressBarProps) {
       <div className="w-full h-3 bg-gray-800 rounded-full overflow-hidden mb-1">
         <div className="h-full rounded-full transition-all duration-500" style={{ width: `${progress}%`, backgroundColor: level.color }} />
       </div>
-      <div className="flex justify-between text-[10px] text-gray-500">
+      <div className="flex justify-between text-[10px] text-white/50">
         <span>{level.title}</span>
         {nextLevel && <span>{remaining} XP → {nextLevel.title} {nextLevel.icon}</span>}
       </div>

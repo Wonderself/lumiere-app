@@ -35,12 +35,12 @@ export default async function AdminUsersPage() {
         </p>
       </div>
 
-      <div className="h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
+      <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
 
       {/* Pending first */}
       {users.some((u) => !u.isVerified) && (
         <div>
-          <h2 className="text-lg font-semibold mb-4 text-yellow-600 flex items-center gap-2">
+          <h2 className="text-lg font-semibold mb-4 text-yellow-400 flex items-center gap-2">
             <Clock className="h-5 w-5" /> En attente de validation
           </h2>
           <div className="space-y-2">
@@ -69,7 +69,7 @@ export default async function AdminUsersPage() {
         </div>
       )}
 
-      <div className="h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
+      <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
 
       {/* All users */}
       <div>

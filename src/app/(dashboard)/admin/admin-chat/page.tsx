@@ -50,13 +50,13 @@ export default function AdminChatPage() {
   return (
     <div className="flex h-[calc(100vh-100px)]">
       {/* Sidebar */}
-      <div className="w-56 border-r border-gray-200 bg-gray-50 overflow-y-auto">
+      <div className="w-56 border-r border-white/10 bg-white/[0.03] overflow-y-auto">
         <div className="p-3">
-          <p className="text-[10px] text-gray-500 uppercase tracking-wider mb-2">Agents</p>
+          <p className="text-[10px] text-white/50 uppercase tracking-wider mb-2">Agents</p>
           {CORE_AGENTS.map(a => {
             const AIc = ICON_MAP[a.icon] || Bot
             return (
-              <button key={a.slug} onClick={() => setAgent(a)} className={`w-full flex items-center gap-2 px-3 py-2 rounded-lg text-left text-xs transition-colors mb-0.5 ${agent.slug === a.slug ? 'bg-white border border-gray-200 text-[#1A1A2E] font-medium' : 'text-gray-500 hover:bg-white'}`}>
+              <button key={a.slug} onClick={() => setAgent(a)} className={`w-full flex items-center gap-2 px-3 py-2 rounded-lg text-left text-xs transition-colors mb-0.5 ${agent.slug === a.slug ? 'bg-white/5 border border-white/10 text-white font-medium' : 'text-white/50 hover:bg-white'}`}>
                 <AIc className="h-3.5 w-3.5 shrink-0" style={{ color: a.color }} />
                 <span className="truncate">{a.name}</span>
               </button>
@@ -67,11 +67,11 @@ export default function AdminChatPage() {
 
       {/* Chat */}
       <div className="flex-1 flex flex-col">
-        <div className="flex items-center gap-3 px-5 py-3 border-b border-gray-200">
+        <div className="flex items-center gap-3 px-5 py-3 border-b border-white/10">
           <AIcon className="h-5 w-5" style={{ color: agent.color }} />
           <div>
-            <p className="text-sm font-semibold text-[#1A1A2E]">{agent.name}</p>
-            <p className="text-[10px] text-gray-500">{TIER_CONFIG[agent.tier].label} · Admin Chat</p>
+            <p className="text-sm font-semibold text-white">{agent.name}</p>
+            <p className="text-[10px] text-white/50">{TIER_CONFIG[agent.tier].label} · Admin Chat</p>
           </div>
         </div>
 
@@ -79,12 +79,12 @@ export default function AdminChatPage() {
           {messages.length === 0 && (
             <div className="text-center py-12">
               <AIcon className="h-12 w-12 mx-auto mb-4 opacity-20" style={{ color: agent.color }} />
-              <p className="text-sm text-gray-500">Chat admin avec {agent.name}</p>
+              <p className="text-sm text-white/50">Chat admin avec {agent.name}</p>
             </div>
           )}
           {messages.map((m, i) => (
             <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-              <div className={`max-w-[70%] rounded-2xl px-4 py-2.5 text-sm ${m.role === 'user' ? 'bg-[#E50914] text-white' : 'bg-gray-100 text-gray-800'}`}>
+              <div className={`max-w-[70%] rounded-2xl px-4 py-2.5 text-sm ${m.role === 'user' ? 'bg-[#E50914] text-white' : 'bg-white/[0.05] text-white/90'}`}>
                 <p className="whitespace-pre-wrap">{m.content}</p>
               </div>
             </div>
@@ -94,7 +94,7 @@ export default function AdminChatPage() {
         </div>
 
         <div className="px-5 pb-4 flex gap-2">
-          <input value={input} onChange={e => setInput(e.target.value)} onKeyDown={e => { if (e.key === 'Enter') send() }} placeholder={`Message ${agent.name}...`} className="flex-1 rounded-xl border border-gray-200 px-4 py-2.5 text-sm focus:border-[#E50914] focus:outline-none" />
+          <input value={input} onChange={e => setInput(e.target.value)} onKeyDown={e => { if (e.key === 'Enter') send() }} placeholder={`Message ${agent.name}...`} className="flex-1 rounded-xl border border-white/10 px-4 py-2.5 text-sm focus:border-[#E50914] focus:outline-none" />
           <button onClick={send} disabled={!input.trim() || streaming} className="h-10 w-10 rounded-xl bg-[#E50914] text-white disabled:opacity-30 flex items-center justify-center shrink-0"><Send className="h-4 w-4" /></button>
         </div>
       </div>

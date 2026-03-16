@@ -69,19 +69,19 @@ export default async function TimelinePage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-2xl font-bold text-[#1A1A2E] font-[family-name:var(--font-playfair)]">Timeline</h1>
-        <p className="text-sm text-gray-500 mt-1">Frise chronologique de vos contributions</p>
+        <h1 className="text-2xl font-bold text-white font-[family-name:var(--font-playfair)]">Timeline</h1>
+        <p className="text-sm text-white/50 mt-1">Frise chronologique de vos contributions</p>
       </div>
 
       <div className="space-y-10">
         {Array.from(grouped.entries()).map(([month, items]) => (
           <div key={month}>
-            <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4 flex items-center gap-2">
+            <h2 className="text-sm font-semibold text-white/50 uppercase tracking-wider mb-4 flex items-center gap-2">
               <Calendar className="h-4 w-4" /> {month}
             </h2>
             <div className="relative pl-8 space-y-4">
               {/* Vertical line */}
-              <div className="absolute left-3 top-0 bottom-0 w-0.5 bg-gray-200" />
+              <div className="absolute left-3 top-0 bottom-0 w-0.5 bg-white/[0.08]" />
 
               {items.map((item, i) => {
                 const Icon = item.icon
@@ -93,13 +93,13 @@ export default async function TimelinePage() {
                     </div>
 
                     {/* Content */}
-                    <div className="flex-1 rounded-xl border border-gray-200 bg-white p-4 hover:shadow-sm transition-shadow">
+                    <div className="flex-1 rounded-xl border border-white/10 bg-white/5 p-4 hover:shadow-[0_2px_8px_rgba(0,0,0,0.3)] transition-shadow">
                       <div className="flex items-center gap-2 mb-1">
                         <Icon className="h-4 w-4" style={{ color: item.color }} />
-                        <p className="text-sm font-medium text-[#1A1A2E]">{item.title}</p>
+                        <p className="text-sm font-medium text-white">{item.title}</p>
                       </div>
-                      <p className="text-xs text-gray-500">{item.detail}</p>
-                      <p className="text-[10px] text-gray-500 mt-1 flex items-center gap-1">
+                      <p className="text-xs text-white/50">{item.detail}</p>
+                      <p className="text-[10px] text-white/50 mt-1 flex items-center gap-1">
                         <Clock className="h-3 w-3" />
                         {item.date.toLocaleString('fr-FR', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' })}
                       </p>
@@ -112,10 +112,10 @@ export default async function TimelinePage() {
         ))}
 
         {entries.length === 0 && (
-          <div className="rounded-2xl border border-gray-200 bg-white p-12 text-center">
-            <Calendar className="h-10 w-10 text-gray-500 mx-auto mb-3" />
-            <p className="text-sm text-gray-500">Votre timeline est vide</p>
-            <p className="text-xs text-gray-500 mt-1">Commencez à utiliser la plateforme pour voir votre frise</p>
+          <div className="rounded-2xl border border-white/10 bg-white/5 p-12 text-center">
+            <Calendar className="h-10 w-10 text-white/50 mx-auto mb-3" />
+            <p className="text-sm text-white/50">Votre timeline est vide</p>
+            <p className="text-xs text-white/50 mt-1">Commencez à utiliser la plateforme pour voir votre frise</p>
           </div>
         )}
       </div>

@@ -81,34 +81,34 @@ export default function AdminSocialPage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-2xl font-bold text-[#1A1A2E] font-[family-name:var(--font-playfair)]">Admin Social</h1>
-        <p className="text-sm text-gray-500 mt-1">Générateur de posts · Calendrier éditorial</p>
+        <h1 className="text-2xl font-bold text-white font-[family-name:var(--font-playfair)]">Admin Social</h1>
+        <p className="text-sm text-white/50 mt-1">Générateur de posts · Calendrier éditorial</p>
       </div>
 
       <div className="flex gap-2">
-        <button onClick={() => setTab('generator')} className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium ${tab === 'generator' ? 'bg-[#E50914] text-white' : 'bg-gray-100 text-gray-600'}`}>
+        <button onClick={() => setTab('generator')} className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium ${tab === 'generator' ? 'bg-[#E50914] text-white' : 'bg-white/[0.05] text-white/60'}`}>
           <Megaphone className="h-4 w-4" /> Générateur
         </button>
-        <button onClick={() => setTab('calendar')} className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium ${tab === 'calendar' ? 'bg-[#E50914] text-white' : 'bg-gray-100 text-gray-600'}`}>
+        <button onClick={() => setTab('calendar')} className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium ${tab === 'calendar' ? 'bg-[#E50914] text-white' : 'bg-white/[0.05] text-white/60'}`}>
           <Calendar className="h-4 w-4" /> Calendrier ({calendar.length})
         </button>
       </div>
 
       {tab === 'generator' && (
         <div className="space-y-6">
-          <div className="rounded-2xl border border-gray-200 bg-white p-6 space-y-4">
+          <div className="rounded-2xl border border-white/10 bg-white/5 p-6 space-y-4">
             <div>
-              <label className="text-xs text-gray-500 mb-1.5 block">Sujet du post</label>
-              <input value={topic} onChange={e => setTopic(e.target.value)} placeholder="Ex: Lancement de la fonctionnalité Chat IA..." className="w-full rounded-xl border border-gray-200 px-4 py-2.5 text-sm focus:border-[#E50914] focus:outline-none" />
+              <label className="text-xs text-white/50 mb-1.5 block">Sujet du post</label>
+              <input value={topic} onChange={e => setTopic(e.target.value)} placeholder="Ex: Lancement de la fonctionnalité Chat IA..." className="w-full rounded-xl border border-white/10 px-4 py-2.5 text-sm focus:border-[#E50914] focus:outline-none" />
             </div>
             <div className="flex gap-4">
               <div className="flex-1">
-                <label className="text-xs text-gray-500 mb-1.5 block">Plateforme</label>
+                <label className="text-xs text-white/50 mb-1.5 block">Plateforme</label>
                 <div className="flex gap-2">
                   {PLATFORMS.map(p => {
                     const PIcon = p.icon
                     return (
-                      <button key={p.id} onClick={() => setPlatform(p.id)} className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-medium ${platform === p.id ? 'text-white' : 'bg-gray-100 text-gray-600'}`} style={platform === p.id ? { backgroundColor: p.color } : {}}>
+                      <button key={p.id} onClick={() => setPlatform(p.id)} className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-medium ${platform === p.id ? 'text-white' : 'bg-white/[0.05] text-white/60'}`} style={platform === p.id ? { backgroundColor: p.color } : {}}>
                         <PIcon className="h-3.5 w-3.5" /> {p.label}
                       </button>
                     )
@@ -116,8 +116,8 @@ export default function AdminSocialPage() {
                 </div>
               </div>
               <div>
-                <label className="text-xs text-gray-500 mb-1.5 block">Ton</label>
-                <select value={tone} onChange={e => setTone(e.target.value)} className="rounded-lg border border-gray-200 px-3 py-2 text-sm">
+                <label className="text-xs text-white/50 mb-1.5 block">Ton</label>
+                <select value={tone} onChange={e => setTone(e.target.value)} className="rounded-lg border border-white/10 px-3 py-2 text-sm">
                   <option value="professional">Professionnel</option>
                   <option value="casual">Décontracté</option>
                   <option value="enthusiastic">Enthousiaste</option>
@@ -128,10 +128,10 @@ export default function AdminSocialPage() {
 
             {/* Quick Templates */}
             <div>
-              <label className="text-xs text-gray-500 mb-1.5 block">Templates rapides</label>
+              <label className="text-xs text-white/50 mb-1.5 block">Templates rapides</label>
               <div className="flex flex-wrap gap-1.5">
                 {POST_TEMPLATES.map(t => (
-                  <button key={t} onClick={() => setTopic(t)} className="text-[10px] px-2 py-1 rounded-full border border-gray-200 text-gray-500 hover:bg-gray-50">{t}</button>
+                  <button key={t} onClick={() => setTopic(t)} className="text-[10px] px-2 py-1 rounded-full border border-white/10 text-white/50 hover:bg-white/[0.03]">{t}</button>
                 ))}
               </div>
             </div>
@@ -148,12 +148,12 @@ export default function AdminSocialPage() {
                 const pConfig = PLATFORMS.find(p => p.id === post.platform)
                 const PIcon = pConfig?.icon || Globe
                 return (
-                  <div key={i} className="rounded-xl border border-gray-200 bg-white p-5">
+                  <div key={i} className="rounded-xl border border-white/10 bg-white/5 p-5">
                     <div className="flex items-center gap-2 mb-3">
                       <PIcon className="h-4 w-4" style={{ color: pConfig?.color }} />
-                      <span className="text-sm font-medium text-[#1A1A2E]">{pConfig?.label}</span>
+                      <span className="text-sm font-medium text-white">{pConfig?.label}</span>
                       <div className="flex gap-1.5 ml-auto">
-                        <button onClick={() => copyPost(post.content, `gen-${i}`)} className="text-xs px-2 py-1 rounded bg-gray-100 hover:bg-gray-200 flex items-center gap-1">
+                        <button onClick={() => copyPost(post.content, `gen-${i}`)} className="text-xs px-2 py-1 rounded bg-white/[0.05] hover:bg-white/[0.08] flex items-center gap-1">
                           {copied === `gen-${i}` ? <Check className="h-3 w-3 text-green-500" /> : <Copy className="h-3 w-3" />}
                           {copied === `gen-${i}` ? 'Copié' : 'Copier'}
                         </button>
@@ -162,8 +162,8 @@ export default function AdminSocialPage() {
                         </button>
                       </div>
                     </div>
-                    <p className="text-sm text-gray-700 whitespace-pre-wrap leading-relaxed">{post.content}</p>
-                    <p className="text-[10px] text-gray-500 mt-2">{post.content.length} / {pConfig?.maxLength || 280} caractères</p>
+                    <p className="text-sm text-white/80 whitespace-pre-wrap leading-relaxed">{post.content}</p>
+                    <p className="text-[10px] text-white/50 mt-2">{post.content.length} / {pConfig?.maxLength || 280} caractères</p>
                   </div>
                 )
               })}
@@ -175,29 +175,29 @@ export default function AdminSocialPage() {
       {tab === 'calendar' && (
         <div className="space-y-3">
           {calendar.length === 0 ? (
-            <div className="rounded-2xl border border-gray-200 bg-white p-12 text-center">
-              <Calendar className="h-10 w-10 text-gray-500 mx-auto mb-3" />
-              <p className="text-sm text-gray-500">Calendrier éditorial vide</p>
-              <p className="text-xs text-gray-500 mt-1">Générez des posts et ajoutez-les au calendrier</p>
+            <div className="rounded-2xl border border-white/10 bg-white/5 p-12 text-center">
+              <Calendar className="h-10 w-10 text-white/50 mx-auto mb-3" />
+              <p className="text-sm text-white/50">Calendrier éditorial vide</p>
+              <p className="text-xs text-white/50 mt-1">Générez des posts et ajoutez-les au calendrier</p>
             </div>
           ) : calendar.map(post => {
             const pConfig = PLATFORMS.find(p => p.id === post.platform)
             const PIcon = pConfig?.icon || Globe
             return (
-              <div key={post.id} className="rounded-xl border border-gray-200 bg-white p-5">
+              <div key={post.id} className="rounded-xl border border-white/10 bg-white/5 p-5">
                 <div className="flex items-center gap-3">
                   <PIcon className="h-4 w-4 shrink-0" style={{ color: pConfig?.color }} />
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm text-[#1A1A2E] truncate">{post.content.substring(0, 80)}...</p>
-                    <div className="flex items-center gap-2 text-[10px] text-gray-500 mt-0.5">
+                    <p className="text-sm text-white truncate">{post.content.substring(0, 80)}...</p>
+                    <div className="flex items-center gap-2 text-[10px] text-white/50 mt-0.5">
                       <Clock className="h-3 w-3" />
                       <span>{post.scheduledAt}</span>
-                      <span className={`px-1.5 py-0.5 rounded-full ${post.status === 'published' ? 'bg-green-50 text-green-600' : post.status === 'scheduled' ? 'bg-blue-50 text-blue-600' : 'bg-gray-50 text-gray-500'}`}>
+                      <span className={`px-1.5 py-0.5 rounded-full ${post.status === 'published' ? 'bg-green-50 text-green-600' : post.status === 'scheduled' ? 'bg-blue-50 text-blue-600' : 'bg-white/[0.03] text-white/50'}`}>
                         {post.status}
                       </span>
                     </div>
                   </div>
-                  <button onClick={() => setCalendar(prev => prev.filter(p => p.id !== post.id))} className="text-gray-500 hover:text-red-400"><Trash2 className="h-4 w-4" /></button>
+                  <button onClick={() => setCalendar(prev => prev.filter(p => p.id !== post.id))} className="text-white/50 hover:text-red-400"><Trash2 className="h-4 w-4" /></button>
                 </div>
               </div>
             )

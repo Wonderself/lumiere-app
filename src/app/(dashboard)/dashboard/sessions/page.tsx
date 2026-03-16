@@ -38,8 +38,8 @@ export default function SessionsPage() {
   return (
     <div className="space-y-8 max-w-2xl">
       <div>
-        <h1 className="text-2xl font-bold text-[#1A1A2E] font-[family-name:var(--font-playfair)]">Sessions Actives</h1>
-        <p className="text-sm text-gray-500 mt-1">Gérez vos sessions de connexion</p>
+        <h1 className="text-2xl font-bold text-white font-[family-name:var(--font-playfair)]">Sessions Actives</h1>
+        <p className="text-sm text-white/50 mt-1">Gérez vos sessions de connexion</p>
       </div>
 
       {/* JWT Info */}
@@ -54,21 +54,21 @@ export default function SessionsPage() {
       </div>
 
       {/* Sessions List */}
-      <div className="rounded-2xl border border-gray-200 bg-white overflow-hidden">
-        <div className="divide-y divide-gray-100">
+      <div className="rounded-2xl border border-white/10 bg-white/5 overflow-hidden">
+        <div className="divide-y divide-white/10">
           {sessions.map(sess => {
             const SIcon = sess.icon
             return (
               <div key={sess.id} className="flex items-center gap-4 px-5 py-4">
-                <SIcon className="h-5 w-5 text-gray-500 shrink-0" />
+                <SIcon className="h-5 w-5 text-white/50 shrink-0" />
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2">
-                    <p className="text-sm font-medium text-[#1A1A2E]">{sess.device} — {sess.browser}</p>
+                    <p className="text-sm font-medium text-white">{sess.device} — {sess.browser}</p>
                     {sess.current && (
                       <span className="text-[10px] px-2 py-0.5 rounded-full bg-green-50 text-green-600 font-medium">Session actuelle</span>
                     )}
                   </div>
-                  <div className="flex items-center gap-3 text-[10px] text-gray-500 mt-0.5">
+                  <div className="flex items-center gap-3 text-[10px] text-white/50 mt-0.5">
                     <span className="flex items-center gap-0.5"><Globe className="h-3 w-3" />{sess.ip}</span>
                     <span className="flex items-center gap-0.5"><MapPin className="h-3 w-3" />{sess.location}</span>
                     <span className="flex items-center gap-0.5"><Clock className="h-3 w-3" />{sess.lastActive.toLocaleString('fr-FR')}</span>
@@ -92,9 +92,9 @@ export default function SessionsPage() {
       )}
 
       {/* Security Tips */}
-      <div className="rounded-2xl border border-gray-200 bg-white p-6">
-        <h3 className="text-sm font-semibold text-[#1A1A2E] mb-3 flex items-center gap-2"><Shield className="h-4 w-4 text-green-500" /> Conseils sécurité</h3>
-        <ul className="space-y-2 text-xs text-gray-500">
+      <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
+        <h3 className="text-sm font-semibold text-white mb-3 flex items-center gap-2"><Shield className="h-4 w-4 text-green-500" /> Conseils sécurité</h3>
+        <ul className="space-y-2 text-xs text-white/50">
           <li className="flex items-center gap-2"><CheckCircle2 className="h-3.5 w-3.5 text-green-500 shrink-0" />Révoquez les sessions que vous ne reconnaissez pas</li>
           <li className="flex items-center gap-2"><CheckCircle2 className="h-3.5 w-3.5 text-green-500 shrink-0" />Activez le 2FA pour une sécurité renforcée</li>
           <li className="flex items-center gap-2"><CheckCircle2 className="h-3.5 w-3.5 text-green-500 shrink-0" />Utilisez un mot de passe unique et fort</li>

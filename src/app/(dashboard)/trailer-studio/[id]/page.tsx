@@ -27,8 +27,8 @@ const PHASE_CONFIG: Record<string, { label: string; icon: typeof Film; color: st
 }
 
 const TASK_STATUS_CONFIG: Record<string, { label: string; color: string }> = {
-  PENDING: { label: 'En attente', color: 'bg-gray-100 text-gray-500' },
-  BLOCKED: { label: 'Bloqué', color: 'bg-gray-100 text-gray-500' },
+  PENDING: { label: 'En attente', color: 'bg-white/[0.05] text-white/50' },
+  BLOCKED: { label: 'Bloqué', color: 'bg-white/[0.05] text-white/50' },
   READY: { label: 'Prêt', color: 'bg-blue-100 text-blue-600' },
   GENERATING: { label: 'Génération...', color: 'bg-purple-100 text-purple-600' },
   AWAITING_CHOICE: { label: 'Choix requis', color: 'bg-amber-100 text-amber-600' },
@@ -36,7 +36,7 @@ const TASK_STATUS_CONFIG: Record<string, { label: string; color: string }> = {
   APPROVED: { label: 'Approuvé', color: 'bg-emerald-100 text-emerald-600' },
   REJECTED: { label: 'Rejeté', color: 'bg-red-100 text-red-600' },
   COMPLETED: { label: 'Terminé', color: 'bg-green-100 text-green-600' },
-  SKIPPED: { label: 'Ignoré', color: 'bg-gray-100 text-gray-500' },
+  SKIPPED: { label: 'Ignoré', color: 'bg-white/[0.05] text-white/50' },
 }
 
 export default async function TrailerProjectPage({ params }: { params: Promise<{ id: string }> }) {
@@ -73,11 +73,11 @@ export default async function TrailerProjectPage({ params }: { params: Promise<{
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
         <div>
-          <Link href="/trailer-studio" className="inline-flex items-center gap-1.5 text-xs text-gray-500 hover:text-[#E50914] transition-colors mb-3">
+          <Link href="/trailer-studio" className="inline-flex items-center gap-1.5 text-xs text-white/50 hover:text-[#E50914] transition-colors mb-3">
             <ArrowLeft className="h-3.5 w-3.5" />
             Retour au studio
           </Link>
-          <h1 className="text-2xl font-bold text-[#1A1A2E] font-[family-name:var(--font-playfair)]">
+          <h1 className="text-2xl font-bold text-white font-[family-name:var(--font-playfair)]">
             {project.title}
           </h1>
           <div className="flex items-center gap-3 mt-2 flex-wrap">
@@ -100,18 +100,18 @@ export default async function TrailerProjectPage({ params }: { params: Promise<{
       </div>
 
       {/* Progress Overview */}
-      <div className="rounded-2xl border border-gray-200 bg-white p-7">
+      <div className="rounded-2xl border border-white/10 bg-white/5 p-7">
         <div className="flex items-center justify-between mb-5">
-          <h2 className="text-sm font-semibold text-[#1A1A2E]">Progression globale</h2>
+          <h2 className="text-sm font-semibold text-white">Progression globale</h2>
           <span className="text-sm font-bold text-[#E50914]">{Math.round(project.progressPct)}%</span>
         </div>
-        <div className="h-3 rounded-full bg-gray-100 overflow-hidden">
+        <div className="h-3 rounded-full bg-white/[0.05] overflow-hidden">
           <div
             className="h-full rounded-full bg-gradient-to-r from-[#E50914] to-[#FF2D2D] transition-all duration-500"
             style={{ width: `${project.progressPct}%` }}
           />
         </div>
-        <div className="flex items-center justify-between mt-2 text-xs text-gray-500">
+        <div className="flex items-center justify-between mt-2 text-xs text-white/50">
           <span>{project.completedTasks}/{project.totalTasks} tâches terminées</span>
           <span>Phase: {PHASE_CONFIG[project.currentPhase]?.label || project.currentPhase}</span>
         </div>
@@ -119,17 +119,17 @@ export default async function TrailerProjectPage({ params }: { params: Promise<{
 
       {/* Concept & Synopsis */}
       {(project.concept || project.synopsis) && (
-        <div className="rounded-2xl border border-gray-200 bg-white p-7 space-y-4">
+        <div className="rounded-2xl border border-white/10 bg-white/5 p-7 space-y-4">
           {project.concept && (
             <div>
-              <p className="text-xs font-medium text-gray-500 uppercase tracking-wider">Concept</p>
-              <p className="text-sm text-[#1A1A2E] mt-1">{project.concept}</p>
+              <p className="text-xs font-medium text-white/50 uppercase tracking-wider">Concept</p>
+              <p className="text-sm text-white mt-1">{project.concept}</p>
             </div>
           )}
           {project.synopsis && (
             <div>
-              <p className="text-xs font-medium text-gray-500 uppercase tracking-wider">Synopsis</p>
-              <p className="text-sm text-gray-600 mt-1 whitespace-pre-wrap">{project.synopsis}</p>
+              <p className="text-xs font-medium text-white/50 uppercase tracking-wider">Synopsis</p>
+              <p className="text-sm text-white/60 mt-1 whitespace-pre-wrap">{project.synopsis}</p>
             </div>
           )}
         </div>
@@ -151,13 +151,13 @@ export default async function TrailerProjectPage({ params }: { params: Promise<{
 
       {/* Tasks by Phase */}
       <div className="space-y-5">
-        <h2 className="text-lg font-semibold text-[#1A1A2E]">Micro-tâches par phase</h2>
+        <h2 className="text-lg font-semibold text-white">Micro-tâches par phase</h2>
 
         {project.tasks.length === 0 ? (
-          <div className="rounded-2xl border border-gray-200 bg-white p-8 text-center">
-            <Wand2 className="h-10 w-10 text-gray-500 mx-auto mb-3" />
-            <p className="text-sm text-gray-500">Le projet n&apos;a pas encore été décomposé en micro-tâches</p>
-            <p className="text-xs text-gray-500 mt-1">Utilisez le bouton ci-dessus pour décomposer le projet</p>
+          <div className="rounded-2xl border border-white/10 bg-white/5 p-8 text-center">
+            <Wand2 className="h-10 w-10 text-white/50 mx-auto mb-3" />
+            <p className="text-sm text-white/50">Le projet n&apos;a pas encore été décomposé en micro-tâches</p>
+            <p className="text-xs text-white/50 mt-1">Utilisez le bouton ci-dessus pour décomposer le projet</p>
           </div>
         ) : (
           <div className="space-y-4">
@@ -170,18 +170,18 @@ export default async function TrailerProjectPage({ params }: { params: Promise<{
               const phaseProgress = (completedInPhase / phaseTasks.length) * 100
 
               return (
-                <div key={phase} className="rounded-2xl border border-gray-200 bg-white overflow-hidden">
+                <div key={phase} className="rounded-2xl border border-white/10 bg-white/5 overflow-hidden">
                   {/* Phase header */}
-                  <div className="flex items-center gap-3 p-5 border-b border-gray-100">
+                  <div className="flex items-center gap-3 p-5 border-b border-white/10">
                     <div className={`h-8 w-8 rounded-lg flex items-center justify-center ${phaseConfig.color}`}>
                       <PhaseIcon className="h-4 w-4" />
                     </div>
                     <div className="flex-1">
                       <div className="flex items-center justify-between">
-                        <h3 className="text-sm font-semibold text-[#1A1A2E]">{phaseConfig.label}</h3>
-                        <span className="text-xs text-gray-500">{completedInPhase}/{phaseTasks.length}</span>
+                        <h3 className="text-sm font-semibold text-white">{phaseConfig.label}</h3>
+                        <span className="text-xs text-white/50">{completedInPhase}/{phaseTasks.length}</span>
                       </div>
-                      <div className="h-1.5 rounded-full bg-gray-100 mt-1.5 overflow-hidden">
+                      <div className="h-1.5 rounded-full bg-white/[0.05] mt-1.5 overflow-hidden">
                         <div
                           className="h-full rounded-full bg-gradient-to-r from-[#E50914] to-[#FF2D2D] transition-all duration-500"
                           style={{ width: `${phaseProgress}%` }}
@@ -195,31 +195,31 @@ export default async function TrailerProjectPage({ params }: { params: Promise<{
                     {phaseTasks.map((task) => {
                       const statusConfig = TASK_STATUS_CONFIG[task.status] || TASK_STATUS_CONFIG.PENDING
                       return (
-                        <div key={task.id} className="flex items-center gap-3 p-4 px-5 hover:bg-gray-50/50 transition-colors">
+                        <div key={task.id} className="flex items-center gap-3 p-4 px-5 hover:bg-white/[0.03]/50 transition-colors">
                           {task.status === 'COMPLETED' || task.status === 'APPROVED' ? (
                             <CheckCircle2 className="h-4 w-4 text-green-500 shrink-0" />
                           ) : task.status === 'GENERATING' ? (
                             <Loader2 className="h-4 w-4 text-purple-500 animate-spin shrink-0" />
                           ) : task.status === 'BLOCKED' ? (
-                            <Lock className="h-4 w-4 text-gray-500 shrink-0" />
+                            <Lock className="h-4 w-4 text-white/50 shrink-0" />
                           ) : (
-                            <Clock className="h-4 w-4 text-gray-500 shrink-0" />
+                            <Clock className="h-4 w-4 text-white/50 shrink-0" />
                           )}
                           <div className="flex-1 min-w-0">
                             <p className={`text-xs font-medium ${
-                              task.status === 'BLOCKED' ? 'text-gray-500' : 'text-[#1A1A2E]'
+                              task.status === 'BLOCKED' ? 'text-white/50' : 'text-white'
                             }`}>
                               {task.title}
                             </p>
                             {task.description && (
-                              <p className="text-[10px] text-gray-500 truncate mt-0.5">{task.description}</p>
+                              <p className="text-[10px] text-white/50 truncate mt-0.5">{task.description}</p>
                             )}
                           </div>
                           <Badge className={`text-[10px] px-1.5 py-0.5 border-0 ${statusConfig.color}`}>
                             {statusConfig.label}
                           </Badge>
                           {task.estimatedCredits > 0 && (
-                            <span className="text-[10px] text-gray-500 shrink-0">{task.estimatedCredits}cr</span>
+                            <span className="text-[10px] text-white/50 shrink-0">{task.estimatedCredits}cr</span>
                           )}
                         </div>
                       )

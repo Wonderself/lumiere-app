@@ -48,7 +48,7 @@ export function VideoGenerator({ filmProjectId, onGenerated }: VideoGeneratorPro
   }
 
   return (
-    <div className="rounded-2xl border border-gray-200 bg-white p-6 space-y-5">
+    <div className="rounded-2xl border border-white/10 bg-white/5 p-6 space-y-5">
       <div className="flex items-center gap-2">
         <Video className="h-5 w-5 text-[#E50914]" />
         <h3 className="text-sm font-semibold text-[#1A1A2E]">Génération Vidéo IA</h3>
@@ -56,7 +56,7 @@ export function VideoGenerator({ filmProjectId, onGenerated }: VideoGeneratorPro
 
       {/* Provider Selection */}
       <div>
-        <label className="text-xs text-gray-500 mb-2 block">Provider vidéo ({configs.length} disponibles)</label>
+        <label className="text-xs text-white/50 mb-2 block">Provider vidéo ({configs.length} disponibles)</label>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
           {configs.map(config => {
             const m = getModelById(config.modelId)
@@ -65,7 +65,7 @@ export function VideoGenerator({ filmProjectId, onGenerated }: VideoGeneratorPro
               <button
                 key={config.modelId}
                 onClick={() => setSelectedProvider(config.modelId)}
-                className={`text-left rounded-xl border p-3 transition-colors ${isSelected ? 'border-[#E50914] bg-red-50' : 'border-gray-200 hover:border-gray-300'}`}
+                className={`text-left rounded-xl border p-3 transition-colors ${isSelected ? 'border-[#E50914] bg-red-50' : 'border-white/10 hover:border-gray-300'}`}
               >
                 <div className="flex items-center gap-1.5 mb-1">
                   <span className="text-sm">{m?.icon || '🎬'}</span>
@@ -87,19 +87,19 @@ export function VideoGenerator({ filmProjectId, onGenerated }: VideoGeneratorPro
 
       {/* Input Type */}
       <div className="flex gap-2">
-        <button onClick={() => setInputType('text')} className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs ${inputType === 'text' ? 'bg-[#E50914] text-white' : 'bg-gray-100 text-gray-600'}`}>
+        <button onClick={() => setInputType('text')} className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs ${inputType === 'text' ? 'bg-[#E50914] text-white' : 'bg-white/[0.05] text-white/60'}`}>
           <FileText className="h-3.5 w-3.5" /> Texte → Vidéo
         </button>
-        <button onClick={() => setInputType('image')} className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs ${inputType === 'image' ? 'bg-[#E50914] text-white' : 'bg-gray-100 text-gray-600'}`}>
+        <button onClick={() => setInputType('image')} className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs ${inputType === 'image' ? 'bg-[#E50914] text-white' : 'bg-white/[0.05] text-white/60'}`}>
           <Image className="h-3.5 w-3.5" /> Image → Vidéo
         </button>
       </div>
 
       {/* Prompt */}
-      <textarea value={prompt} onChange={e => setPrompt(e.target.value)} placeholder="Décrivez la scène vidéo en détail (mouvement caméra, action, ambiance)..." rows={3} className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:border-[#E50914] focus:outline-none resize-none" />
+      <textarea value={prompt} onChange={e => setPrompt(e.target.value)} placeholder="Décrivez la scène vidéo en détail (mouvement caméra, action, ambiance)..." rows={3} className="w-full rounded-xl border border-white/10 px-4 py-3 text-sm focus:border-[#E50914] focus:outline-none resize-none" />
 
       {inputType === 'image' && (
-        <input value={imageUrl} onChange={e => setImageUrl(e.target.value)} placeholder="URL de l'image source..." className="w-full rounded-xl border border-gray-200 px-4 py-2.5 text-sm focus:border-[#E50914] focus:outline-none" />
+        <input value={imageUrl} onChange={e => setImageUrl(e.target.value)} placeholder="URL de l'image source..." className="w-full rounded-xl border border-white/10 px-4 py-2.5 text-sm focus:border-[#E50914] focus:outline-none" />
       )}
 
       {/* Info */}
@@ -126,7 +126,7 @@ export function VideoGenerator({ filmProjectId, onGenerated }: VideoGeneratorPro
 
       {/* Progress Bar */}
       {generating && (
-        <div className="w-full h-2 bg-gray-100 rounded-full overflow-hidden">
+        <div className="w-full h-2 bg-white/[0.05] rounded-full overflow-hidden">
           <div className="h-full bg-[#E50914] rounded-full transition-all duration-300" style={{ width: `${progress}%` }} />
         </div>
       )}

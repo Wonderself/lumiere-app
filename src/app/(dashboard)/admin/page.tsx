@@ -57,19 +57,19 @@ export default async function AdminPage() {
   const revenueSparkline = [0, 50, 100, 80, 150, 200, revenue > 0 ? revenue / 10 : 0]
 
   const kpis = [
-    { icon: Users, label: 'Utilisateurs', value: usersCount, sub: `${pendingUsers} non vérifiés`, href: '/admin/users', color: 'text-blue-600', sparkline: userSparkline, trend: pendingUsers > 0 ? 'up' : 'stable' },
-    { icon: Film, label: 'Films', value: filmsCount, sub: 'projets actifs', href: '/admin/films', color: 'text-purple-600', sparkline: [1, 1, 2, 2, 3, 3, filmsCount], trend: 'up' },
+    { icon: Users, label: 'Utilisateurs', value: usersCount, sub: `${pendingUsers} non vérifiés`, href: '/admin/users', color: 'text-blue-400', sparkline: userSparkline, trend: pendingUsers > 0 ? 'up' : 'stable' },
+    { icon: Film, label: 'Films', value: filmsCount, sub: 'projets actifs', href: '/admin/films', color: 'text-purple-400', sparkline: [1, 1, 2, 2, 3, 3, filmsCount], trend: 'up' },
     { icon: Star, label: 'Tâches', value: tasksCount, sub: `${availableTasks} disponibles`, href: '/admin/tasks', color: 'text-[#E50914]', sparkline: taskSparkline, trend: 'up' },
-    { icon: CreditCard, label: 'Revenus', value: formatPrice(revenue), sub: 'total distribué', href: '/admin/payments', color: 'text-green-600', sparkline: revenueSparkline, trend: revenue > 0 ? 'up' : 'stable' },
-    { icon: ClipboardCheck, label: 'Soumissions', value: submissionsTotal, sub: `${pendingReviews} à reviewer`, href: '/admin/reviews', color: 'text-orange-600', sparkline: [0, 1, 2, 3, 2, 4, submissionsTotal], trend: pendingReviews > 0 ? 'alert' : 'stable' },
-    { icon: Target, label: 'Taux Complétion', value: `${completionRate}%`, sub: `${validatedTasks}/${tasksCount}`, href: '/admin/analytics', color: 'text-cyan-600', sparkline: [10, 20, 30, 40, 50, 60, completionRate], trend: 'up' },
+    { icon: CreditCard, label: 'Revenus', value: formatPrice(revenue), sub: 'total distribué', href: '/admin/payments', color: 'text-green-400', sparkline: revenueSparkline, trend: revenue > 0 ? 'up' : 'stable' },
+    { icon: ClipboardCheck, label: 'Soumissions', value: submissionsTotal, sub: `${pendingReviews} à reviewer`, href: '/admin/reviews', color: 'text-orange-400', sparkline: [0, 1, 2, 3, 2, 4, submissionsTotal], trend: pendingReviews > 0 ? 'alert' : 'stable' },
+    { icon: Target, label: 'Taux Complétion', value: `${completionRate}%`, sub: `${validatedTasks}/${tasksCount}`, href: '/admin/analytics', color: 'text-cyan-400', sparkline: [10, 20, 30, 40, 50, 60, completionRate], trend: 'up' },
   ]
 
   const priorityColors: Record<string, string> = {
     URGENT: 'text-red-400 bg-red-500/10 border-red-500/20',
-    HIGH: 'text-orange-600 bg-orange-500/10 border-orange-500/20',
-    MEDIUM: 'text-yellow-600 bg-yellow-500/10 border-yellow-500/20',
-    LOW: 'text-blue-600 bg-blue-500/10 border-blue-500/20',
+    HIGH: 'text-orange-400 bg-orange-500/10 border-orange-500/20',
+    MEDIUM: 'text-yellow-400 bg-yellow-500/10 border-yellow-500/20',
+    LOW: 'text-blue-400 bg-blue-500/10 border-blue-500/20',
   }
 
   return (
@@ -92,9 +92,9 @@ export default async function AdminPage() {
       {pendingReviews > 0 && (
         <Link href="/admin/reviews">
           <div className="flex items-center gap-3 p-5 rounded-xl border border-yellow-500/30 bg-yellow-500/10 hover:bg-yellow-500/15 transition-colors">
-            <AlertCircle className="h-5 w-5 text-yellow-600 shrink-0" />
-            <p className="font-medium text-yellow-600 flex-1">{pendingReviews} soumission{pendingReviews > 1 ? 's' : ''} en attente de review humaine</p>
-            <ChevronRight className="h-5 w-5 text-yellow-600" />
+            <AlertCircle className="h-5 w-5 text-yellow-400 shrink-0" />
+            <p className="font-medium text-yellow-400 flex-1">{pendingReviews} soumission{pendingReviews > 1 ? 's' : ''} en attente de review humaine</p>
+            <ChevronRight className="h-5 w-5 text-yellow-400" />
           </div>
         </Link>
       )}
@@ -114,8 +114,8 @@ export default async function AdminPage() {
                     <div className={`text-2xl font-bold ${kpi.color}`}>{kpi.value}</div>
                     <div className="text-xs text-white/40 mt-1">{kpi.sub}</div>
                   </div>
-                  {kpi.trend === 'up' && <ArrowUpRight className="h-4 w-4 text-green-600" />}
-                  {kpi.trend === 'alert' && <AlertCircle className="h-4 w-4 text-yellow-600" />}
+                  {kpi.trend === 'up' && <ArrowUpRight className="h-4 w-4 text-green-400" />}
+                  {kpi.trend === 'alert' && <AlertCircle className="h-4 w-4 text-yellow-400" />}
                 </div>
               </CardContent>
             </Card>
@@ -139,7 +139,7 @@ export default async function AdminPage() {
               todos.map((todo) => (
                 <div key={todo.id} className={`flex items-center gap-3.5 p-4 rounded-lg border ${todo.completed ? 'border-white/5 opacity-50' : 'border-white/10'}`}>
                   {todo.completed ? (
-                    <CheckCircle className="h-4 w-4 text-green-600 shrink-0" />
+                    <CheckCircle className="h-4 w-4 text-green-400 shrink-0" />
                   ) : (
                     <Clock className="h-4 w-4 text-white/30 shrink-0" />
                   )}

@@ -44,11 +44,11 @@ export function AutoTopupForm({ enabled, threshold, amount }: AutoTopupFormProps
           {isEnabled ? (
             <Bell className="h-5 w-5 text-blue-400" />
           ) : (
-            <BellOff className="h-5 w-5 text-gray-500" />
+            <BellOff className="h-5 w-5 text-white/50" />
           )}
           <div>
             <p className="text-sm font-medium text-white">Alertes de solde bas</p>
-            <p className="text-xs text-gray-500">
+            <p className="text-xs text-white/50">
               Recevez une alerte quand votre solde est trop bas
             </p>
           </div>
@@ -60,7 +60,7 @@ export function AutoTopupForm({ enabled, threshold, amount }: AutoTopupFormProps
           }`}
         >
           <span
-            className={`inline-block h-4 w-4 rounded-full bg-white transition-transform ${
+            className={`inline-block h-4 w-4 rounded-full bg-white/5 transition-transform ${
               isEnabled ? 'translate-x-6' : 'translate-x-1'
             }`}
           />
@@ -82,7 +82,7 @@ export function AutoTopupForm({ enabled, threshold, amount }: AutoTopupFormProps
               className="w-full rounded-lg border border-gray-600 bg-gray-900 px-3 py-2 text-sm text-white placeholder-gray-500 focus:border-[#E50914] focus:outline-none"
               placeholder="Ex: 10"
             />
-            <p className="text-[10px] text-gray-600 mt-1">
+            <p className="text-[10px] text-white/60 mt-1">
               Vous serez alerté quand votre solde passe en dessous de ce montant
             </p>
           </div>
@@ -99,7 +99,7 @@ export function AutoTopupForm({ enabled, threshold, amount }: AutoTopupFormProps
               className="w-full rounded-lg border border-gray-600 bg-gray-900 px-3 py-2 text-sm text-white placeholder-gray-500 focus:border-[#E50914] focus:outline-none"
               placeholder="Ex: 100"
             />
-            <p className="text-[10px] text-gray-600 mt-1">
+            <p className="text-[10px] text-white/60 mt-1">
               L&apos;admin sera notifié du montant à recharger
             </p>
           </div>

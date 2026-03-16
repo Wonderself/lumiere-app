@@ -17,13 +17,13 @@ export const dynamic = 'force-dynamic'
 export const metadata: Metadata = { title: 'Admin — Aides Publiques' }
 
 const statusColors: Record<string, string> = {
-  NOT_STARTED: 'bg-gray-500/10 text-gray-500 border-gray-500/20',
+  NOT_STARTED: 'bg-white/[0.03]0/10 text-white/50 border-gray-500/20',
   ELIGIBLE: 'bg-blue-500/10 text-blue-600 border-blue-500/20',
   IN_PROGRESS: 'bg-yellow-500/10 text-yellow-600 border-yellow-500/20',
   SUBMITTED: 'bg-purple-500/10 text-purple-600 border-purple-500/20',
   ACCEPTED: 'bg-green-500/10 text-green-600 border-green-500/20',
   REJECTED: 'bg-red-500/10 text-red-400 border-red-500/20',
-  EXPIRED: 'bg-gray-500/10 text-gray-500 border-gray-500/20',
+  EXPIRED: 'bg-white/[0.03]0/10 text-white/50 border-gray-500/20',
 }
 
 const statusLabels: Record<string, string> = {

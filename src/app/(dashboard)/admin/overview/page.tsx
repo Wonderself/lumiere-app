@@ -59,12 +59,12 @@ export default async function AdminOverviewPage() {
   const providers = fallbackManager.getAllProviders()
 
   const kpis = [
-    { label: 'Users', value: totalUsers, sub: `+${newUsersToday} today`, icon: Users, color: 'text-blue-600', bg: 'bg-blue-50', border: 'border-blue-100' },
-    { label: 'Films', value: totalFilms, sub: 'Total catalog', icon: Film, color: 'text-purple-600', bg: 'bg-purple-50', border: 'border-purple-100' },
-    { label: 'Conversations', value: totalConversations, sub: `+${conversationsToday} today`, icon: MessageSquare, color: 'text-emerald-600', bg: 'bg-emerald-50', border: 'border-emerald-100' },
-    { label: 'AI Requests', value: totalAIRequests, sub: `+${aiRequestsToday} today`, icon: Zap, color: 'text-orange-600', bg: 'bg-orange-50', border: 'border-orange-100' },
-    { label: 'Revenue', value: `${microToCredits(revenue._sum.billedCredits ?? 0).toFixed(0)} cr`, sub: 'Total earned', icon: CreditCard, color: 'text-green-600', bg: 'bg-green-50', border: 'border-green-100' },
-    { label: 'Wallets actifs', value: activeAccounts, sub: 'With balance > 0', icon: TrendingUp, color: 'text-indigo-600', bg: 'bg-indigo-50', border: 'border-indigo-100' },
+    { label: 'Users', value: totalUsers, sub: `+${newUsersToday} today`, icon: Users, color: 'text-blue-400', bg: 'bg-blue-500/10', border: 'border-blue-500/20' },
+    { label: 'Films', value: totalFilms, sub: 'Total catalog', icon: Film, color: 'text-purple-400', bg: 'bg-purple-500/10', border: 'border-purple-500/20' },
+    { label: 'Conversations', value: totalConversations, sub: `+${conversationsToday} today`, icon: MessageSquare, color: 'text-emerald-400', bg: 'bg-emerald-500/10', border: 'border-emerald-500/20' },
+    { label: 'AI Requests', value: totalAIRequests, sub: `+${aiRequestsToday} today`, icon: Zap, color: 'text-orange-400', bg: 'bg-orange-500/10', border: 'border-orange-500/20' },
+    { label: 'Revenue', value: `${microToCredits(revenue._sum.billedCredits ?? 0).toFixed(0)} cr`, sub: 'Total earned', icon: CreditCard, color: 'text-green-400', bg: 'bg-green-500/10', border: 'border-green-500/20' },
+    { label: 'Wallets actifs', value: activeAccounts, sub: 'With balance > 0', icon: TrendingUp, color: 'text-indigo-400', bg: 'bg-indigo-500/10', border: 'border-indigo-500/20' },
   ]
 
   const agentTiers = [
@@ -94,20 +94,20 @@ export default async function AdminOverviewPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-bold text-[#1A1A2E] font-[family-name:var(--font-playfair)]">
+          <h1 className="text-2xl font-bold text-white font-[family-name:var(--font-playfair)]">
             Admin Overview
           </h1>
-          <p className="text-sm text-gray-500 mt-1">Tableau de bord temps réel de la plateforme CineGen</p>
+          <p className="text-sm text-white/50 mt-1">Tableau de bord temps réel de la plateforme CineGen</p>
         </div>
         <div className="flex gap-2 flex-wrap">
           {pendingProposals > 0 && (
-            <Link href="/admin/autopilot" className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-yellow-50 text-yellow-700 border border-yellow-200">
+            <Link href="/admin/autopilot" className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-yellow-500/15 text-yellow-400 border border-yellow-500/20">
               <Clock className="h-3.5 w-3.5" />
               {pendingProposals} pending
             </Link>
           )}
           {failedExecutions > 0 && (
-            <Link href="/admin/guardrails" className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-red-50 text-red-700 border border-red-200">
+            <Link href="/admin/guardrails" className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-red-500/15 text-red-400 border border-red-500/20">
               <AlertTriangle className="h-3.5 w-3.5" />
               {failedExecutions} errors today
             </Link>
@@ -123,10 +123,10 @@ export default async function AdminOverviewPage() {
             <div key={kpi.label} className={`rounded-2xl border ${kpi.border} ${kpi.bg} p-5`}>
               <div className="flex items-center gap-2 mb-2">
                 <Icon className={`h-4 w-4 ${kpi.color}`} />
-                <span className="text-[10px] text-gray-500 uppercase tracking-wider font-medium">{kpi.label}</span>
+                <span className="text-[10px] text-white/50 uppercase tracking-wider font-medium">{kpi.label}</span>
               </div>
-              <p className="text-2xl font-bold text-[#1A1A2E]">{typeof kpi.value === 'number' ? kpi.value.toLocaleString() : kpi.value}</p>
-              <p className="text-[10px] text-gray-500 mt-1 flex items-center gap-0.5">
+              <p className="text-2xl font-bold text-white">{typeof kpi.value === 'number' ? kpi.value.toLocaleString() : kpi.value}</p>
+              <p className="text-[10px] text-white/50 mt-1 flex items-center gap-0.5">
                 <ArrowUpRight className="h-3 w-3" />
                 {kpi.sub}
               </p>
@@ -138,7 +138,7 @@ export default async function AdminOverviewPage() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Agents by Level */}
         <div className="lg:col-span-2">
-          <h2 className="text-lg font-semibold text-[#1A1A2E] mb-4 flex items-center gap-2">
+          <h2 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
             <Bot className="h-5 w-5 text-[#E50914]" />
             Agents par niveau
           </h2>
@@ -146,20 +146,20 @@ export default async function AdminOverviewPage() {
             {agentTiers.map(tier => {
               const TIcon = tier.icon
               return (
-                <div key={tier.label} className="rounded-2xl border border-gray-200 bg-white p-5">
+                <div key={tier.label} className="rounded-2xl border border-white/10 bg-white/5 p-5">
                   <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center gap-2">
                       <TIcon className="h-4 w-4" style={{ color: tier.color }} />
-                      <span className="text-sm font-semibold text-[#1A1A2E]">{tier.label}</span>
-                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-gray-100 text-gray-500">{tier.model}</span>
+                      <span className="text-sm font-semibold text-white">{tier.label}</span>
+                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-white/[0.05] text-white/50">{tier.model}</span>
                     </div>
-                    <span className="text-xs text-gray-500">{tier.agents.length} agents</span>
+                    <span className="text-xs text-white/50">{tier.agents.length} agents</span>
                   </div>
                   <div className="flex flex-wrap gap-2">
                     {tier.agents.map(agent => (
                       <div
                         key={agent.slug}
-                        className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg border border-gray-100 bg-gray-50 text-xs text-gray-600"
+                        className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg border border-white/10 bg-white/[0.03] text-xs text-white/60"
                       >
                         <div className="h-2 w-2 rounded-full bg-green-400" />
                         {agent.name}
@@ -176,17 +176,17 @@ export default async function AdminOverviewPage() {
         <div className="space-y-6">
           {/* Infra Health */}
           <div>
-            <h2 className="text-lg font-semibold text-[#1A1A2E] mb-4 flex items-center gap-2">
+            <h2 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
               <Server className="h-5 w-5 text-emerald-500" />
               Infrastructure
             </h2>
-            <div className="rounded-2xl border border-gray-200 bg-white divide-y divide-gray-100">
+            <div className="rounded-2xl border border-white/10 bg-white/5 divide-y divide-white/10">
               {infraHealth.map(infra => {
                 const IIcon = infra.icon
                 return (
                   <div key={infra.name} className="flex items-center gap-3 px-5 py-3">
-                    <IIcon className="h-4 w-4 text-gray-500" />
-                    <span className="text-sm text-[#1A1A2E] flex-1">{infra.name}</span>
+                    <IIcon className="h-4 w-4 text-white/50" />
+                    <span className="text-sm text-white flex-1">{infra.name}</span>
                     <div className={`h-2.5 w-2.5 rounded-full ${
                       infra.status === 'healthy' ? 'bg-green-500' :
                       infra.status === 'degraded' ? 'bg-yellow-500' : 'bg-red-500'
@@ -199,11 +199,11 @@ export default async function AdminOverviewPage() {
 
           {/* Security Badges */}
           <div>
-            <h2 className="text-lg font-semibold text-[#1A1A2E] mb-4 flex items-center gap-2">
+            <h2 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
               <Shield className="h-5 w-5 text-red-500" />
               Sécurité
             </h2>
-            <div className="rounded-2xl border border-gray-200 bg-white divide-y divide-gray-100">
+            <div className="rounded-2xl border border-white/10 bg-white/5 divide-y divide-white/10">
               {securityBadges.map(badge => (
                 <div key={badge.label} className="flex items-center gap-3 px-5 py-3">
                   {badge.status === 'ok' ? (
@@ -213,8 +213,8 @@ export default async function AdminOverviewPage() {
                   ) : (
                     <XCircle className="h-4 w-4 text-red-500" />
                   )}
-                  <span className="text-sm text-[#1A1A2E] flex-1">{badge.label}</span>
-                  <span className="text-[10px] text-gray-500">{badge.detail}</span>
+                  <span className="text-sm text-white flex-1">{badge.label}</span>
+                  <span className="text-[10px] text-white/50">{badge.detail}</span>
                 </div>
               ))}
             </div>
@@ -222,7 +222,7 @@ export default async function AdminOverviewPage() {
 
           {/* Quick Links */}
           <div>
-            <h2 className="text-lg font-semibold text-[#1A1A2E] mb-4">Accès rapide</h2>
+            <h2 className="text-lg font-semibold text-white mb-4">Accès rapide</h2>
             <div className="space-y-2">
               {[
                 { href: '/admin/users', label: 'Gestion utilisateurs', icon: Users },
@@ -236,11 +236,11 @@ export default async function AdminOverviewPage() {
                   <Link
                     key={link.href}
                     href={link.href}
-                    className="flex items-center gap-3 px-4 py-3 rounded-xl border border-gray-100 bg-white hover:bg-gray-50 hover:border-gray-200 transition-colors"
+                    className="flex items-center gap-3 px-4 py-3 rounded-xl border border-white/10 bg-white/5 hover:bg-white/[0.03] hover:border-white/10 transition-colors"
                   >
-                    <LIcon className="h-4 w-4 text-gray-500" />
-                    <span className="text-sm text-[#1A1A2E] flex-1">{link.label}</span>
-                    <ChevronRight className="h-4 w-4 text-gray-500" />
+                    <LIcon className="h-4 w-4 text-white/50" />
+                    <span className="text-sm text-white flex-1">{link.label}</span>
+                    <ChevronRight className="h-4 w-4 text-white/50" />
                   </Link>
                 )
               })}

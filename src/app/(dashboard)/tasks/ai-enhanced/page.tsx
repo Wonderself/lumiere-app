@@ -30,10 +30,10 @@ export default function AIEnhancedTasksPage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-2xl font-bold text-[#1A1A2E] font-[family-name:var(--font-playfair)]">
+        <h1 className="text-2xl font-bold text-white font-[family-name:var(--font-playfair)]">
           AI-Enhanced Tasks
         </h1>
-        <p className="text-sm text-gray-500 mt-1">
+        <p className="text-sm text-white/50 mt-1">
           Créez avec l&apos;IA — choisissez votre modèle ou laissez le système garantir la cohérence
         </p>
       </div>
@@ -57,7 +57,7 @@ export default function AIEnhancedTasksPage() {
               key={cat.id}
               onClick={() => setActiveCategory(cat)}
               className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium whitespace-nowrap transition-colors ${
-                isActive ? 'text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                isActive ? 'text-white' : 'bg-white/[0.05] text-white/60 hover:bg-white/[0.08]'
               }`}
               style={isActive ? { backgroundColor: cat.color } : {}}
             >
@@ -72,34 +72,34 @@ export default function AIEnhancedTasksPage() {
         {/* Main Work Area */}
         <div className="lg:col-span-2 space-y-6">
           {/* Agent Info */}
-          <div className="rounded-xl border border-gray-200 bg-white p-5">
+          <div className="rounded-xl border border-white/10 bg-white/5 p-5">
             <div className="flex items-center gap-3 mb-3">
               <Bot className="h-5 w-5" style={{ color: activeCategory.color }} />
               <div>
-                <p className="text-sm font-semibold text-[#1A1A2E]">Agent dédié : {agent?.name || 'IA'}</p>
-                <p className="text-[10px] text-gray-500">{agent?.capabilities.join(' · ')}</p>
+                <p className="text-sm font-semibold text-white">Agent dédié : {agent?.name || 'IA'}</p>
+                <p className="text-[10px] text-white/50">{agent?.capabilities.join(' · ')}</p>
               </div>
             </div>
-            <p className="text-xs text-gray-500">
+            <p className="text-xs text-white/50">
               Cet agent vous accompagne tout au long de la tâche : suggestions créatives, review de cohérence, et chat direct.
             </p>
           </div>
 
           {/* Content Area */}
-          <div className="rounded-xl border border-gray-200 bg-white p-5">
-            <label className="text-xs text-gray-500 mb-2 block">Votre contribution</label>
+          <div className="rounded-xl border border-white/10 bg-white/5 p-5">
+            <label className="text-xs text-white/50 mb-2 block">Votre contribution</label>
             <textarea
               value={content}
               onChange={e => setContent(e.target.value)}
               placeholder={`Travaillez sur votre ${activeCategory.label}...`}
               rows={10}
-              className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:border-[#E50914] focus:outline-none resize-none"
+              className="w-full rounded-xl border border-white/10 px-4 py-3 text-sm focus:border-[#E50914] focus:outline-none resize-none"
             />
-            <p className="text-[10px] text-gray-500 mt-1">{content.length} caractères</p>
+            <p className="text-[10px] text-white/50 mt-1">{content.length} caractères</p>
           </div>
 
           {/* Model Selector */}
-          <div className="rounded-xl border border-gray-200 bg-white p-5">
+          <div className="rounded-xl border border-white/10 bg-white/5 p-5">
             <ModelSelector
               taskType={activeCategory.taskType}
               category={activeCategory.modelCategory}

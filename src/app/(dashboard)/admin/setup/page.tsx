@@ -85,19 +85,19 @@ export default async function SetupPage() {
   return (
     <div className="space-y-10">
       <div>
-        <h1 className="text-2xl font-bold text-[#1A1A2E] font-[family-name:var(--font-playfair)]">
+        <h1 className="text-2xl font-bold text-white font-[family-name:var(--font-playfair)]">
           Setup Checklist
         </h1>
-        <p className="text-sm text-gray-500 mt-1">Configuration initiale de la plateforme CineGen</p>
+        <p className="text-sm text-white/50 mt-1">Configuration initiale de la plateforme CineGen</p>
       </div>
 
       {/* Progress */}
-      <div className="rounded-2xl border border-gray-200 bg-white p-6">
+      <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
         <div className="flex items-center justify-between mb-3">
-          <span className="text-sm font-semibold text-[#1A1A2E]">{doneCount}/{totalCount} étapes complétées</span>
+          <span className="text-sm font-semibold text-white">{doneCount}/{totalCount} étapes complétées</span>
           <span className="text-sm font-bold text-[#E50914]">{progressPct}%</span>
         </div>
-        <div className="w-full h-3 bg-gray-100 rounded-full overflow-hidden">
+        <div className="w-full h-3 bg-white/[0.05] rounded-full overflow-hidden">
           <div
             className="h-full bg-gradient-to-r from-[#E50914] to-[#FF6B35] rounded-full transition-all duration-500"
             style={{ width: `${progressPct}%` }}
@@ -110,37 +110,37 @@ export default async function SetupPage() {
         {checks.map(check => {
           const CIcon = check.icon
           const content = (
-            <div className={`rounded-xl border bg-white p-5 transition-colors ${
-              check.href ? 'hover:bg-gray-50 cursor-pointer' : ''
+            <div className={`rounded-xl border bg-white/5 p-5 transition-colors ${
+              check.href ? 'hover:bg-white/[0.03] cursor-pointer' : ''
             } ${
               check.status === 'warning' ? 'border-yellow-200' :
-              check.status === 'done' ? 'border-green-100' : 'border-gray-200'
+              check.status === 'done' ? 'border-green-100' : 'border-white/10'
             }`}>
               <div className="flex items-center gap-4">
                 <div className={`h-10 w-10 rounded-xl flex items-center justify-center ${
                   check.status === 'done' ? 'bg-green-50' :
-                  check.status === 'warning' ? 'bg-yellow-50' : 'bg-gray-50'
+                  check.status === 'warning' ? 'bg-yellow-50' : 'bg-white/[0.03]'
                 }`}>
                   <CIcon className={`h-5 w-5 ${
                     check.status === 'done' ? 'text-green-500' :
-                    check.status === 'warning' ? 'text-yellow-500' : 'text-gray-500'
+                    check.status === 'warning' ? 'text-yellow-500' : 'text-white/50'
                   }`} />
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2">
-                    <p className="text-sm font-medium text-[#1A1A2E]">{check.label}</p>
+                    <p className="text-sm font-medium text-white">{check.label}</p>
                     {check.status === 'done' ? (
                       <CheckCircle2 className="h-4 w-4 text-green-500" />
                     ) : check.status === 'warning' ? (
                       <AlertTriangle className="h-4 w-4 text-yellow-500" />
                     ) : (
-                      <Circle className="h-4 w-4 text-gray-500" />
+                      <Circle className="h-4 w-4 text-white/50" />
                     )}
                   </div>
-                  <p className="text-xs text-gray-500">{check.description}</p>
-                  <p className="text-[10px] text-gray-500 mt-1">{check.detail}</p>
+                  <p className="text-xs text-white/50">{check.description}</p>
+                  <p className="text-[10px] text-white/50 mt-1">{check.detail}</p>
                 </div>
-                {check.href && <ArrowRight className="h-4 w-4 text-gray-500 shrink-0" />}
+                {check.href && <ArrowRight className="h-4 w-4 text-white/50 shrink-0" />}
               </div>
             </div>
           )

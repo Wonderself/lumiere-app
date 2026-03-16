@@ -40,7 +40,7 @@ export default async function AdminBillingPage() {
       label: 'Revenus totaux',
       value: `${microToCredits(stats.totalRevenue).toFixed(2)} cr`,
       icon: DollarSign,
-      color: 'text-green-600',
+      color: 'text-green-400',
       bg: 'bg-green-500/10',
       border: 'border-green-500/20',
     },
@@ -49,7 +49,7 @@ export default async function AdminBillingPage() {
       value: `${microToCredits(stats.totalMargin).toFixed(2)} cr`,
       subtitle: `Taux: ${TOKEN_MARGIN_PERCENT}%`,
       icon: TrendingUp,
-      color: 'text-emerald-600',
+      color: 'text-emerald-400',
       bg: 'bg-emerald-500/10',
       border: 'border-emerald-500/20',
     },
@@ -57,7 +57,7 @@ export default async function AdminBillingPage() {
       label: 'Requêtes IA',
       value: stats.totalRequests.toLocaleString(),
       icon: Activity,
-      color: 'text-blue-600',
+      color: 'text-blue-400',
       bg: 'bg-blue-500/10',
       border: 'border-blue-500/20',
     },
@@ -65,7 +65,7 @@ export default async function AdminBillingPage() {
       label: 'Wallets actifs',
       value: stats.activeWallets.toLocaleString(),
       icon: Users,
-      color: 'text-purple-600',
+      color: 'text-purple-400',
       bg: 'bg-purple-500/10',
       border: 'border-purple-500/20',
     },
@@ -73,7 +73,7 @@ export default async function AdminBillingPage() {
       label: 'Solde total (tous users)',
       value: `${microToCredits(stats.totalBalance).toFixed(2)} cr`,
       icon: Wallet,
-      color: 'text-orange-600',
+      color: 'text-orange-400',
       bg: 'bg-orange-500/10',
       border: 'border-orange-500/20',
     },
@@ -92,14 +92,14 @@ export default async function AdminBillingPage() {
       </div>
 
       {/* Margin Info */}
-      <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-5">
+      <div className="rounded-2xl border border-emerald-500/20 bg-emerald-500/10 p-5">
         <div className="flex items-center gap-3">
-          <Shield className="h-5 w-5 text-emerald-600" />
+          <Shield className="h-5 w-5 text-emerald-400" />
           <div>
-            <p className="text-sm font-semibold text-emerald-800">
+            <p className="text-sm font-semibold text-emerald-300">
               Marge actuelle : {TOKEN_MARGIN_PERCENT}%
             </p>
-            <p className="text-xs text-emerald-600">
+            <p className="text-xs text-emerald-400/70">
               Configurable via la variable d&apos;environnement TOKEN_MARGIN_PERCENT
             </p>
           </div>
@@ -113,17 +113,17 @@ export default async function AdminBillingPage() {
           return (
             <div
               key={card.label}
-              className={`rounded-2xl border ${card.border} bg-white p-6`}
+              className={`rounded-2xl border ${card.border} bg-white/5 p-6`}
             >
               <div className="flex items-center gap-3">
                 <div className={`h-10 w-10 rounded-xl ${card.bg} flex items-center justify-center`}>
                   <Icon className={`h-5 w-5 ${card.color}`} />
                 </div>
                 <div>
-                  <p className="text-[10px] text-gray-500 font-medium uppercase tracking-wider">{card.label}</p>
-                  <p className="text-xl font-bold text-[#1A1A2E]">{card.value}</p>
+                  <p className="text-[10px] text-white/50 font-medium uppercase tracking-wider">{card.label}</p>
+                  <p className="text-xl font-bold text-white">{card.value}</p>
                   {card.subtitle && (
-                    <p className="text-[10px] text-gray-500">{card.subtitle}</p>
+                    <p className="text-[10px] text-white/50">{card.subtitle}</p>
                   )}
                 </div>
               </div>
@@ -136,27 +136,27 @@ export default async function AdminBillingPage() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Top Users */}
         <div>
-          <h2 className="text-lg font-semibold text-[#1A1A2E] mb-4 flex items-center gap-2">
+          <h2 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
             <Users className="h-5 w-5 text-purple-500" />
             Top utilisateurs
           </h2>
-          <div className="rounded-2xl border border-gray-200 bg-white overflow-x-auto">
+          <div className="rounded-2xl border border-white/10 bg-white/5 overflow-x-auto">
             {stats.topUsers.length === 0 ? (
-              <div className="p-8 text-center text-sm text-gray-500">
+              <div className="p-8 text-center text-sm text-white/50">
                 Aucune donnée de consommation pour le moment
               </div>
             ) : (
-              <div className="divide-y divide-gray-100 min-w-[320px]">
+              <div className="divide-y divide-white/10 min-w-[320px]">
                 {stats.topUsers.map((user, i) => (
-                  <div key={user.userId} className="flex items-center gap-4 p-4 hover:bg-gray-50 transition-colors">
-                    <div className="h-8 w-8 rounded-full bg-gray-100 flex items-center justify-center text-xs font-bold text-gray-500">
+                  <div key={user.userId} className="flex items-center gap-4 p-4 hover:bg-white/[0.03] transition-colors">
+                    <div className="h-8 w-8 rounded-full bg-white/[0.05] flex items-center justify-center text-xs font-bold text-white/50">
                       #{i + 1}
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-[#1A1A2E] truncate">
+                      <p className="text-sm font-medium text-white truncate">
                         {user.displayName || 'Utilisateur anonyme'}
                       </p>
-                      <p className="text-xs text-gray-500">
+                      <p className="text-xs text-white/50">
                         {user.requestCount} requêtes
                       </p>
                     </div>
@@ -164,7 +164,7 @@ export default async function AdminBillingPage() {
                       <p className="text-sm font-semibold text-[#E50914]">
                         {microToCredits(user.totalSpent).toFixed(2)} cr
                       </p>
-                      <p className="text-[10px] text-gray-500 flex items-center gap-0.5 justify-end">
+                      <p className="text-[10px] text-white/50 flex items-center gap-0.5 justify-end">
                         <ArrowUpRight className="h-3 w-3" />
                         dépensés
                       </p>
@@ -178,29 +178,29 @@ export default async function AdminBillingPage() {
 
         {/* By Action */}
         <div>
-          <h2 className="text-lg font-semibold text-[#1A1A2E] mb-4 flex items-center gap-2">
+          <h2 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
             <BarChart3 className="h-5 w-5 text-blue-500" />
             Ventilation par action
           </h2>
-          <div className="rounded-2xl border border-gray-200 bg-white overflow-x-auto">
+          <div className="rounded-2xl border border-white/10 bg-white/5 overflow-x-auto">
             {stats.byAction.length === 0 ? (
-              <div className="p-8 text-center text-sm text-gray-500">
+              <div className="p-8 text-center text-sm text-white/50">
                 Aucune donnée de consommation pour le moment
               </div>
             ) : (
-              <div className="divide-y divide-gray-100 min-w-[320px]">
+              <div className="divide-y divide-white/10 min-w-[320px]">
                 {stats.byAction.map((action) => (
-                  <div key={action.action} className="flex items-center gap-4 p-4 hover:bg-gray-50 transition-colors">
+                  <div key={action.action} className="flex items-center gap-4 p-4 hover:bg-white/[0.03] transition-colors">
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-[#1A1A2E]">
+                      <p className="text-sm font-medium text-white">
                         {action.action.replace(/_/g, ' ')}
                       </p>
-                      <p className="text-xs text-gray-500">
+                      <p className="text-xs text-white/50">
                         {action.count} exécutions
                       </p>
                     </div>
                     <div className="text-right">
-                      <p className="text-sm font-semibold text-[#1A1A2E]">
+                      <p className="text-sm font-semibold text-white">
                         {microToCredits(action.totalBilled).toFixed(2)} cr
                       </p>
                     </div>

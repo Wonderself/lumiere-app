@@ -81,56 +81,56 @@ export default function NotificationsCenterPage() {
     <div className="space-y-8">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-[#1A1A2E] font-[family-name:var(--font-playfair)]">Notifications</h1>
-          <p className="text-sm text-gray-500 mt-1">{unreadCount} non lue{unreadCount > 1 ? 's' : ''}</p>
+          <h1 className="text-2xl font-bold text-white font-[family-name:var(--font-playfair)]">Notifications</h1>
+          <p className="text-sm text-white/50 mt-1">{unreadCount} non lue{unreadCount > 1 ? 's' : ''}</p>
         </div>
         <div className="flex gap-2">
-          <button onClick={() => setFilter(filter === 'all' ? 'unread' : 'all')} className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium ${filter === 'unread' ? 'bg-[#E50914] text-white' : 'bg-gray-100 text-gray-600'}`}>
+          <button onClick={() => setFilter(filter === 'all' ? 'unread' : 'all')} className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium ${filter === 'unread' ? 'bg-[#E50914] text-white' : 'bg-white/[0.05] text-white/60'}`}>
             <Filter className="h-3.5 w-3.5" /> {filter === 'unread' ? 'Non lues' : 'Toutes'}
           </button>
           {unreadCount > 0 && (
-            <button onClick={markAllRead} className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs bg-gray-100 text-gray-600 hover:bg-gray-200">
+            <button onClick={markAllRead} className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs bg-white/[0.05] text-white/60 hover:bg-white/[0.08]">
               <CheckCheck className="h-3.5 w-3.5" /> Tout lire
             </button>
           )}
         </div>
       </div>
 
-      <div className="rounded-2xl border border-gray-200 bg-white overflow-hidden">
+      <div className="rounded-2xl border border-white/10 bg-white/5 overflow-hidden">
         {filtered.length === 0 ? (
           <div className="p-12 text-center">
-            <BellOff className="h-10 w-10 text-gray-500 mx-auto mb-3" />
-            <p className="text-sm text-gray-500">{filter === 'unread' ? 'Aucune notification non lue' : 'Aucune notification'}</p>
+            <BellOff className="h-10 w-10 text-white/50 mx-auto mb-3" />
+            <p className="text-sm text-white/50">{filter === 'unread' ? 'Aucune notification non lue' : 'Aucune notification'}</p>
           </div>
         ) : (
-          <div className="divide-y divide-gray-100">
+          <div className="divide-y divide-white/10">
             {filtered.map(notif => {
               const config = TYPE_CONFIG[notif.type] || TYPE_CONFIG.SYSTEM
               const NIcon = config.icon
               return (
-                <div key={notif.id} className={`flex items-start gap-4 px-5 py-4 transition-colors ${!notif.read ? 'bg-blue-50/30' : 'hover:bg-gray-50'}`}>
-                  <div className={`h-9 w-9 rounded-lg flex items-center justify-center shrink-0 mt-0.5 ${!notif.read ? 'bg-white border border-gray-100' : 'bg-gray-50'}`}>
+                <div key={notif.id} className={`flex items-start gap-4 px-5 py-4 transition-colors ${!notif.read ? 'bg-blue-50/30' : 'hover:bg-white/[0.03]'}`}>
+                  <div className={`h-9 w-9 rounded-lg flex items-center justify-center shrink-0 mt-0.5 ${!notif.read ? 'bg-white/5 border border-white/10' : 'bg-white/[0.03]'}`}>
                     <NIcon className={`h-4 w-4 ${config.color}`} />
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2">
-                      <p className={`text-sm ${!notif.read ? 'font-semibold text-[#1A1A2E]' : 'font-medium text-gray-600'}`}>{notif.title}</p>
+                      <p className={`text-sm ${!notif.read ? 'font-semibold text-white' : 'font-medium text-white/60'}`}>{notif.title}</p>
                       <span className={`text-[10px] px-1.5 py-0.5 rounded ${config.color} bg-opacity-10`}>{config.label}</span>
                     </div>
-                    {notif.body && <p className="text-xs text-gray-500 mt-0.5 line-clamp-2">{notif.body}</p>}
-                    <p className="text-[10px] text-gray-500 mt-1 flex items-center gap-1">
+                    {notif.body && <p className="text-xs text-white/50 mt-0.5 line-clamp-2">{notif.body}</p>}
+                    <p className="text-[10px] text-white/50 mt-1 flex items-center gap-1">
                       <Clock className="h-3 w-3" />
                       {new Date(notif.createdAt).toLocaleString('fr-FR')}
                     </p>
                   </div>
                   <div className="flex gap-1 shrink-0">
                     {!notif.read && (
-                      <button onClick={() => markAsRead(notif.id)} className="p-1.5 rounded-lg hover:bg-gray-100" title="Marquer comme lu">
+                      <button onClick={() => markAsRead(notif.id)} className="p-1.5 rounded-lg hover:bg-white/[0.05]" title="Marquer comme lu">
                         <Check className="h-3.5 w-3.5 text-green-500" />
                       </button>
                     )}
-                    <button onClick={() => deleteNotif(notif.id)} className="p-1.5 rounded-lg hover:bg-gray-100" title="Supprimer">
-                      <Trash2 className="h-3.5 w-3.5 text-gray-500 hover:text-red-400" />
+                    <button onClick={() => deleteNotif(notif.id)} className="p-1.5 rounded-lg hover:bg-white/[0.05]" title="Supprimer">
+                      <Trash2 className="h-3.5 w-3.5 text-white/50 hover:text-red-400" />
                     </button>
                   </div>
                 </div>

@@ -135,7 +135,7 @@ export default async function AdminAnalyticsPage() {
       {data && (
         <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4 sm:gap-5">
           {kpis.map((kpi) => (
-            <Card key={kpi.label} className="rounded-xl shadow-sm border border-white/10 bg-white/[0.02] hover:border-white/15 hover:shadow-md hover:-translate-y-[1px] transition-all duration-300">
+            <Card key={kpi.label} className="rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.3)] border border-white/10 bg-white/[0.02] hover:border-white/15 hover:shadow-md hover:-translate-y-[1px] transition-all duration-300">
               <CardContent className="p-4 sm:p-5">
                 <div className="flex items-center justify-between mb-3">
                   <div className="p-2 rounded-xl" style={{ background: `${kpi.color}15` }}>
@@ -173,7 +173,7 @@ export default async function AdminAnalyticsPage() {
       {/* Charts Row 1: Growth + Revenue */}
       {data && (
         <div className="grid lg:grid-cols-2 gap-6">
-          <Card className="rounded-xl shadow-sm border border-white/10 bg-white/[0.02] hover:shadow-md hover:-translate-y-[1px] transition-all">
+          <Card className="rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.3)] border border-white/10 bg-white/[0.02] hover:shadow-md hover:-translate-y-[1px] transition-all">
             <CardHeader>
               <CardTitle className="text-sm flex items-center gap-2">
                 <TrendingUp className="h-4 w-4 text-blue-600" />
@@ -195,7 +195,7 @@ export default async function AdminAnalyticsPage() {
             </CardContent>
           </Card>
 
-          <Card className="rounded-xl shadow-sm border border-white/10 bg-white/[0.02] hover:shadow-md hover:-translate-y-[1px] transition-all">
+          <Card className="rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.3)] border border-white/10 bg-white/[0.02] hover:shadow-md hover:-translate-y-[1px] transition-all">
             <CardHeader>
               <CardTitle className="text-sm flex items-center gap-2">
                 <CreditCard className="h-4 w-4 text-purple-600" />
@@ -222,7 +222,7 @@ export default async function AdminAnalyticsPage() {
       {/* Charts Row 2: Distribution */}
       {data && (
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-          <Card className="rounded-xl shadow-sm border border-white/10 bg-white/[0.02] hover:shadow-md hover:-translate-y-[1px] transition-all">
+          <Card className="rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.3)] border border-white/10 bg-white/[0.02] hover:shadow-md hover:-translate-y-[1px] transition-all">
             <CardHeader>
               <CardTitle className="text-sm">Distribution des roles</CardTitle>
             </CardHeader>
@@ -235,7 +235,7 @@ export default async function AdminAnalyticsPage() {
             </CardContent>
           </Card>
 
-          <Card className="rounded-xl shadow-sm border border-white/10 bg-white/[0.02] hover:shadow-md hover:-translate-y-[1px] transition-all">
+          <Card className="rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.3)] border border-white/10 bg-white/[0.02] hover:shadow-md hover:-translate-y-[1px] transition-all">
             <CardHeader>
               <CardTitle className="text-sm">Distribution des niveaux</CardTitle>
             </CardHeader>
@@ -248,7 +248,7 @@ export default async function AdminAnalyticsPage() {
             </CardContent>
           </Card>
 
-          <Card className="rounded-xl shadow-sm border border-white/10 bg-white/[0.02] hover:shadow-md hover:-translate-y-[1px] transition-all">
+          <Card className="rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.3)] border border-white/10 bg-white/[0.02] hover:shadow-md hover:-translate-y-[1px] transition-all">
             <CardHeader>
               <CardTitle className="text-sm">Taches par difficulte</CardTitle>
             </CardHeader>
@@ -265,7 +265,7 @@ export default async function AdminAnalyticsPage() {
 
       {/* Charts Row 3: Tasks + Success Rate */}
       <div className="grid lg:grid-cols-2 gap-6">
-        <Card className="rounded-xl shadow-sm border border-white/10 bg-white/[0.02] hover:shadow-md hover:-translate-y-[1px] transition-all">
+        <Card className="rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.3)] border border-white/10 bg-white/[0.02] hover:shadow-md hover:-translate-y-[1px] transition-all">
           <CardHeader>
             <CardTitle className="text-sm">Taches par type</CardTitle>
           </CardHeader>
@@ -277,7 +277,7 @@ export default async function AdminAnalyticsPage() {
           </CardContent>
         </Card>
 
-        <Card className="rounded-xl shadow-sm border border-white/10 bg-white/[0.02] hover:shadow-md hover:-translate-y-[1px] transition-all">
+        <Card className="rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.3)] border border-white/10 bg-white/[0.02] hover:shadow-md hover:-translate-y-[1px] transition-all">
           <CardHeader>
             <CardTitle className="text-sm">Taux de succes par difficulte</CardTitle>
           </CardHeader>
@@ -289,7 +289,7 @@ export default async function AdminAnalyticsPage() {
 
       {/* Top Contributors */}
       {data && data.engagement.topContributors.length > 0 && (
-        <Card className="rounded-xl shadow-sm border border-white/10 bg-white/[0.02]">
+        <Card className="rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.3)] border border-white/10 bg-white/[0.02]">
           <CardHeader>
             <CardTitle className="text-sm flex items-center gap-2">
               <Trophy className="h-4 w-4 text-[#E50914]" />
@@ -305,7 +305,7 @@ export default async function AdminAnalyticsPage() {
                 >
                   <div className={`w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold shrink-0 ${
                     i === 0 ? 'bg-[#E50914]/20 text-[#E50914]' :
-                    i === 1 ? 'bg-gray-400/20 text-gray-500' :
+                    i === 1 ? 'bg-white/10 text-white/50' :
                     i === 2 ? 'bg-amber-700/20 text-amber-600' :
                     'bg-white/5 text-white/50'
                   }`}>
@@ -328,7 +328,7 @@ export default async function AdminAnalyticsPage() {
 
       {/* Task Pipeline Summary */}
       {data && (
-        <Card className="rounded-xl shadow-sm border border-white/10 bg-white/[0.02]">
+        <Card className="rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.3)] border border-white/10 bg-white/[0.02]">
           <CardHeader>
             <CardTitle className="text-sm flex items-center gap-2">
               <ListChecks className="h-4 w-4 text-green-600" />

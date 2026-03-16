@@ -83,21 +83,21 @@ export default async function DashboardPage() {
       {/* Welcome */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <p className="text-gray-600 text-sm capitalize mb-2">{frenchDate}</p>
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 font-[family-name:var(--font-playfair)]">
+          <p className="text-white/60 text-sm capitalize mb-2">{frenchDate}</p>
+          <h1 className="text-2xl sm:text-3xl font-bold text-white font-[family-name:var(--font-playfair)]">
             Bonjour, {user.displayName || 'Contributeur'}
           </h1>
-          <p className="text-gray-600 mt-2 text-sm">Votre hub central</p>
+          <p className="text-white/60 mt-2 text-sm">Votre hub central</p>
         </div>
         <div className="flex items-center gap-3">
           <Badge className="border-[#E50914]/30 bg-[#E50914]/10 text-[#E50914]">
             <Crown className="h-3 w-3 mr-1" />
             {user.level}
           </Badge>
-          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gray-50 border border-gray-200">
+          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/[0.03] border border-white/10">
             <Coins className="h-4 w-4 text-[#E50914]" />
-            <span className="text-gray-900 text-sm font-semibold">{user.lumenBalance}</span>
-            <span className="text-gray-600 text-xs">Lumens</span>
+            <span className="text-white text-sm font-semibold">{user.lumenBalance}</span>
+            <span className="text-white/60 text-xs">Lumens</span>
           </div>
         </div>
       </div>
@@ -105,19 +105,19 @@ export default async function DashboardPage() {
       {/* KPI Row */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
         {[
-          { label: 'Taches completees', value: user.tasksCompleted, icon: CheckCircle2, color: 'text-green-500', bg: 'bg-green-50' },
-          { label: 'Points', value: user.points, icon: TrendingUp, color: 'text-purple-500', bg: 'bg-purple-50' },
-          { label: 'Reputation', value: `${user.reputationScore}/100`, icon: Star, color: 'text-[#E50914]', bg: 'bg-amber-50' },
-          { label: 'Tokens Film', value: totalTokensHeld, icon: Coins, color: 'text-amber-500', bg: 'bg-amber-50' },
+          { label: 'Taches completees', value: user.tasksCompleted, icon: CheckCircle2, color: 'text-green-500', bg: 'bg-green-500/10' },
+          { label: 'Points', value: user.points, icon: TrendingUp, color: 'text-purple-500', bg: 'bg-purple-500/10' },
+          { label: 'Reputation', value: `${user.reputationScore}/100`, icon: Star, color: 'text-[#E50914]', bg: 'bg-[#E50914]/10' },
+          { label: 'Tokens Film', value: totalTokensHeld, icon: Coins, color: 'text-amber-500', bg: 'bg-[#E50914]/100/10' },
         ].map((kpi) => (
-          <div key={kpi.label} className="bg-white rounded-2xl shadow-sm ring-1 ring-gray-100 border border-gray-200/60 p-4 sm:p-6">
+          <div key={kpi.label} className="bg-white/5 rounded-2xl shadow-[0_2px_8px_rgba(0,0,0,0.3)] ring-1 ring-white/10 border border-white/10/60 p-4 sm:p-6">
             <div className="flex items-center gap-3 sm:gap-4 min-h-[52px]">
               <div className={`h-10 w-10 sm:h-11 sm:w-11 rounded-xl ${kpi.bg} flex items-center justify-center shrink-0`}>
                 <kpi.icon className={`h-5 w-5 ${kpi.color}`} />
               </div>
               <div className="min-w-0">
-                <p className="text-gray-900 text-lg sm:text-xl font-bold leading-tight truncate">{kpi.value}</p>
-                <p className="text-gray-600 text-xs mt-1 truncate">{kpi.label}</p>
+                <p className="text-white text-lg sm:text-xl font-bold leading-tight truncate">{kpi.value}</p>
+                <p className="text-white/60 text-xs mt-1 truncate">{kpi.label}</p>
               </div>
             </div>
           </div>
@@ -129,19 +129,19 @@ export default async function DashboardPage() {
         <div className="flex flex-col sm:flex-row flex-wrap gap-3">
           {pendingDividends > 0 && (
             <Link href="/tokenization/portfolio" className="flex-1 min-w-0 sm:min-w-[240px]">
-              <div className="bg-amber-50 border border-amber-200 rounded-2xl hover:border-amber-300 transition-all p-4 flex items-center gap-3">
+              <div className="bg-[#E50914]/100/10 border border-amber-500/20 rounded-2xl hover:border-amber-500/30 transition-all p-4 flex items-center gap-3">
                 <CircleDollarSign className="h-5 w-5 text-amber-500" />
-                <span className="text-gray-700 text-sm">{pendingDividends} dividende(s) a reclamer</span>
-                <ArrowRight className="h-4 w-4 text-gray-500 ml-auto" />
+                <span className="text-white/80 text-sm">{pendingDividends} dividende(s) a reclamer</span>
+                <ArrowRight className="h-4 w-4 text-white/50 ml-auto" />
               </div>
             </Link>
           )}
           {unvotedProposals > 0 && (
             <Link href="/tokenization/governance" className="flex-1 min-w-0 sm:min-w-[240px]">
-              <div className="bg-purple-50 border border-purple-200 rounded-2xl hover:border-purple-300 transition-all p-4 flex items-center gap-3">
+              <div className="bg-purple-500/10 border border-purple-500/20 rounded-2xl hover:border-purple-500/30 transition-all p-4 flex items-center gap-3">
                 <Vote className="h-5 w-5 text-purple-500" />
-                <span className="text-gray-700 text-sm">{unvotedProposals} vote(s) en attente</span>
-                <ArrowRight className="h-4 w-4 text-gray-500 ml-auto" />
+                <span className="text-white/80 text-sm">{unvotedProposals} vote(s) en attente</span>
+                <ArrowRight className="h-4 w-4 text-white/50 ml-auto" />
               </div>
             </Link>
           )}
@@ -153,7 +153,7 @@ export default async function DashboardPage() {
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-3">
             <Sparkles className="h-5 w-5 text-[#E50914]" />
-            <h2 className="text-gray-900 font-bold text-lg font-playfair">
+            <h2 className="text-white font-bold text-lg font-playfair">
               Recommande pour vous
             </h2>
           </div>
@@ -165,18 +165,18 @@ export default async function DashboardPage() {
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {recommendations.map((rec) => (
               <Link key={rec.id} href={`/tasks/${rec.id}`}>
-                <div className="relative bg-white rounded-xl shadow-sm ring-1 ring-gray-100 border border-gray-200/60 p-4 sm:p-6 hover:border-[#E50914]/30 hover:shadow-md transition-all group">
+                <div className="relative bg-white/5 rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.3)] ring-1 ring-white/10 border border-white/10/60 p-4 sm:p-6 hover:border-[#E50914]/30 hover:shadow-md transition-all group">
                   {rec.isSkillMatch && (
                     <span className="absolute top-4 right-4 px-2.5 py-0.5 rounded-full bg-[#E50914]/10 text-[#E50914] text-[10px] font-bold">
                       MATCH
                     </span>
                   )}
-                  <p className="text-sm font-semibold text-gray-800 mb-2 line-clamp-1 pr-14">{rec.title}</p>
-                  <p className="text-xs text-gray-500 mb-3 truncate">
+                  <p className="text-sm font-semibold text-white/90 mb-2 line-clamp-1 pr-14">{rec.title}</p>
+                  <p className="text-xs text-white/50 mb-3 truncate">
                     {rec.filmTitle} · {(TASK_TYPE_LABELS as Record<string, string>)[rec.type] || rec.type}
                   </p>
                   <div className="flex items-center justify-between">
-                    <span className="text-xs text-gray-500">
+                    <span className="text-xs text-white/50">
                       {(DIFFICULTY_LABELS as Record<string, string>)[rec.difficulty] || rec.difficulty}
                     </span>
                     <span className="text-sm font-bold text-[#E50914]">{rec.priceEuros}€</span>
@@ -186,12 +186,12 @@ export default async function DashboardPage() {
             ))}
           </div>
         ) : (
-          <div className="bg-white rounded-2xl shadow-sm ring-1 ring-gray-100 border border-gray-200/60 p-6 sm:p-8 text-center">
-            <div className="mx-auto w-14 h-14 rounded-2xl bg-amber-50 flex items-center justify-center mb-4">
+          <div className="bg-white/5 rounded-2xl shadow-[0_2px_8px_rgba(0,0,0,0.3)] ring-1 ring-white/10 border border-white/10/60 p-6 sm:p-8 text-center">
+            <div className="mx-auto w-14 h-14 rounded-2xl bg-[#E50914]/10 flex items-center justify-center mb-4">
               <Zap className="h-6 w-6 text-[#E50914]/60" />
             </div>
-            <p className="text-gray-600 font-semibold mb-1">Pas encore de recommandations</p>
-            <p className="text-gray-600 text-sm max-w-sm mx-auto mb-5">Completez votre profil et realisez vos premieres taches pour recevoir des recommandations personnalisees.</p>
+            <p className="text-white/60 font-semibold mb-1">Pas encore de recommandations</p>
+            <p className="text-white/60 text-sm max-w-sm mx-auto mb-5">Completez votre profil et realisez vos premieres taches pour recevoir des recommandations personnalisees.</p>
             <Link href="/tasks" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#E50914] text-white text-sm font-medium hover:bg-[#FF2D2D] transition-colors">
               Explorer les taches disponibles
               <ArrowRight className="h-4 w-4" />
@@ -204,56 +204,56 @@ export default async function DashboardPage() {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         {/* Module 1 -- Studio Films */}
         <Link href="/tasks">
-          <div className="bg-white rounded-2xl shadow-sm ring-1 ring-gray-100 border border-gray-200/60 hover:border-[#E50914]/40 hover:shadow-md transition-all h-full group p-4 sm:p-6 space-y-4">
+          <div className="bg-white/5 rounded-2xl shadow-[0_2px_8px_rgba(0,0,0,0.3)] ring-1 ring-white/10 border border-white/10/60 hover:border-[#E50914]/40 hover:shadow-md transition-all h-full group p-4 sm:p-6 space-y-4">
             <div className="flex items-center justify-between">
-              <div className="h-11 w-11 rounded-xl bg-amber-50 flex items-center justify-center">
+              <div className="h-11 w-11 rounded-xl bg-[#E50914]/10 flex items-center justify-center">
                 <Film className="h-5 w-5 text-[#E50914]" />
               </div>
-              <ChevronRight className="h-4 w-4 text-gray-400 group-hover:text-[#E50914] transition-colors" />
+              <ChevronRight className="h-4 w-4 text-white/30 group-hover:text-[#E50914] transition-colors" />
             </div>
-            <h3 className="text-gray-900 font-semibold text-base">Studio Films</h3>
-            <p className="text-gray-600 text-sm leading-relaxed">Micro-taches cinema, VFX, doublage, montage.</p>
-            <div className="flex items-center gap-2 pt-3 border-t border-gray-100">
-              <span className="text-gray-500 text-xs">{user.tasksCompleted} taches</span>
-              <span className="text-gray-400">|</span>
-              <span className="text-gray-500 text-xs">{user.tasksValidated} validees</span>
+            <h3 className="text-white font-semibold text-base">Studio Films</h3>
+            <p className="text-white/60 text-sm leading-relaxed">Micro-taches cinema, VFX, doublage, montage.</p>
+            <div className="flex items-center gap-2 pt-3 border-t border-white/10">
+              <span className="text-white/50 text-xs">{user.tasksCompleted} taches</span>
+              <span className="text-white/30">|</span>
+              <span className="text-white/50 text-xs">{user.tasksValidated} validees</span>
             </div>
           </div>
         </Link>
 
         {/* Module 2 -- Streaming */}
         <Link href="/streaming">
-          <div className="bg-white rounded-2xl shadow-sm ring-1 ring-gray-100 border border-gray-200/60 hover:border-red-300 hover:shadow-md transition-all h-full group p-4 sm:p-6 space-y-4">
+          <div className="bg-white/5 rounded-2xl shadow-[0_2px_8px_rgba(0,0,0,0.3)] ring-1 ring-white/10 border border-white/10/60 hover:border-red-500/40 hover:shadow-md transition-all h-full group p-4 sm:p-6 space-y-4">
             <div className="flex items-center justify-between">
-              <div className="h-11 w-11 rounded-xl bg-red-50 flex items-center justify-center">
+              <div className="h-11 w-11 rounded-xl bg-red-500/10 flex items-center justify-center">
                 <Tv className="h-5 w-5 text-red-500" />
               </div>
-              <ChevronRight className="h-4 w-4 text-gray-400 group-hover:text-red-400 transition-colors" />
+              <ChevronRight className="h-4 w-4 text-white/30 group-hover:text-red-400 transition-colors" />
             </div>
-            <h3 className="text-gray-900 font-semibold text-base">Streaming</h3>
-            <p className="text-gray-600 text-sm leading-relaxed">Soumettez et regardez les films IA.</p>
-            <div className="flex items-center gap-2 pt-3 border-t border-gray-100">
-              <span className="text-gray-500 text-xs">{user._count.catalogFilms} films soumis</span>
+            <h3 className="text-white font-semibold text-base">Streaming</h3>
+            <p className="text-white/60 text-sm leading-relaxed">Soumettez et regardez les films IA.</p>
+            <div className="flex items-center gap-2 pt-3 border-t border-white/10">
+              <span className="text-white/50 text-xs">{user._count.catalogFilms} films soumis</span>
             </div>
           </div>
         </Link>
 
         {/* Module 3 -- Investissement */}
         <Link href="/tokenization">
-          <div className="bg-white rounded-2xl shadow-sm ring-1 ring-gray-100 border border-gray-200/60 hover:border-amber-300 hover:shadow-md transition-all h-full group p-4 sm:p-6 space-y-4">
+          <div className="bg-white/5 rounded-2xl shadow-[0_2px_8px_rgba(0,0,0,0.3)] ring-1 ring-white/10 border border-white/10/60 hover:border-amber-500/40 hover:shadow-md transition-all h-full group p-4 sm:p-6 space-y-4">
             <div className="flex items-center justify-between">
-              <div className="h-11 w-11 rounded-xl bg-amber-50 flex items-center justify-center">
+              <div className="h-11 w-11 rounded-xl bg-[#E50914]/100/10 flex items-center justify-center">
                 <Coins className="h-5 w-5 text-amber-500" />
               </div>
-              <ChevronRight className="h-4 w-4 text-gray-400 group-hover:text-amber-600 transition-colors" />
+              <ChevronRight className="h-4 w-4 text-white/30 group-hover:text-amber-600 transition-colors" />
             </div>
-            <h3 className="text-gray-900 font-semibold text-base">Investissement</h3>
-            <p className="text-gray-600 text-sm leading-relaxed">Tokens de films, dividendes, gouvernance.</p>
-            <div className="flex items-center gap-2 pt-3 border-t border-gray-100">
+            <h3 className="text-white font-semibold text-base">Investissement</h3>
+            <p className="text-white/60 text-sm leading-relaxed">Tokens de films, dividendes, gouvernance.</p>
+            <div className="flex items-center gap-2 pt-3 border-t border-white/10">
               <span className="text-amber-500 text-xs">{totalTokensHeld} tokens</span>
               {pendingDividends > 0 && (
                 <>
-                  <span className="text-gray-400">|</span>
+                  <span className="text-white/30">|</span>
                   <span className="text-green-500 text-xs">{pendingDividends} dividende(s)</span>
                 </>
               )}
@@ -264,15 +264,15 @@ export default async function DashboardPage() {
         {/* Module 4 -- Admin (admin only) */}
         {isAdmin && (
           <Link href="/admin">
-            <div className="bg-white rounded-2xl shadow-sm ring-1 ring-gray-100 border border-gray-200/60 hover:border-orange-300 hover:shadow-md transition-all h-full group p-4 sm:p-6 space-y-4">
+            <div className="bg-white/5 rounded-2xl shadow-[0_2px_8px_rgba(0,0,0,0.3)] ring-1 ring-white/10 border border-white/10/60 hover:border-orange-500/40 hover:shadow-md transition-all h-full group p-4 sm:p-6 space-y-4">
               <div className="flex items-center justify-between">
-                <div className="h-11 w-11 rounded-xl bg-orange-50 flex items-center justify-center">
+                <div className="h-11 w-11 rounded-xl bg-orange-500/10 flex items-center justify-center">
                   <Settings className="h-5 w-5 text-orange-500" />
                 </div>
-                <ChevronRight className="h-4 w-4 text-gray-400 group-hover:text-orange-600 transition-colors" />
+                <ChevronRight className="h-4 w-4 text-white/30 group-hover:text-orange-600 transition-colors" />
               </div>
-              <h3 className="text-gray-900 font-semibold text-base">Administration</h3>
-              <p className="text-gray-600 text-sm leading-relaxed">Utilisateurs, catalogue, payouts.</p>
+              <h3 className="text-white font-semibold text-base">Administration</h3>
+              <p className="text-white/60 text-sm leading-relaxed">Utilisateurs, catalogue, payouts.</p>
             </div>
           </Link>
         )}
@@ -280,86 +280,86 @@ export default async function DashboardPage() {
 
       {/* Screenwriter Banner */}
       {(user.role === 'SCREENWRITER' || user.role === 'ADMIN') && (
-        <Link href="/dashboard/screenwriter" className="block p-4 sm:p-6 rounded-2xl bg-gradient-to-r from-amber-50 to-yellow-50 border border-amber-200/60 hover:shadow-md transition-all group">
+        <Link href="/dashboard/screenwriter" className="block p-4 sm:p-6 rounded-2xl bg-gradient-to-r from-[#E50914]/10 to-amber-500/10 border border-white/10 hover:border-[#E50914]/30 hover:shadow-md transition-all group">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="h-10 w-10 rounded-xl bg-[#E50914]/15 flex items-center justify-center">
                 <Scale className="h-5 w-5 text-[#E50914]" />
               </div>
               <div>
-                <h3 className="font-semibold text-gray-800 text-sm">Espace Scenariste</h3>
-                <p className="text-xs text-gray-500">Gerez vos scenarios, suivez les votes et scores IA</p>
+                <h3 className="font-semibold text-white/90 text-sm">Espace Scenariste</h3>
+                <p className="text-xs text-white/50">Gerez vos scenarios, suivez les votes et scores IA</p>
               </div>
             </div>
-            <ChevronRight className="h-5 w-5 text-gray-500 group-hover:text-[#E50914] transition-colors" />
+            <ChevronRight className="h-5 w-5 text-white/50 group-hover:text-[#E50914] transition-colors" />
           </div>
         </Link>
       )}
 
       {/* Referral Banner */}
-      <Link href="/dashboard/referral" className="block p-4 sm:p-6 rounded-2xl bg-gradient-to-r from-purple-50 to-pink-50 border border-purple-200/60 hover:shadow-md transition-all group">
+      <Link href="/dashboard/referral" className="block p-4 sm:p-6 rounded-2xl bg-gradient-to-r from-purple-500/10 to-pink-500/10 border border-white/10 hover:border-purple-500/30 hover:shadow-md transition-all group">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded-xl bg-purple-100 flex items-center justify-center">
+            <div className="h-10 w-10 rounded-xl bg-purple-500/15 flex items-center justify-center">
               <Users className="h-5 w-5 text-purple-500" />
             </div>
             <div>
-              <h3 className="font-semibold text-gray-800 text-sm">Parrainage</h3>
-              <p className="text-xs text-gray-500">Invitez des amis et gagnez 30 Lumens par filleul</p>
+              <h3 className="font-semibold text-white/90 text-sm">Parrainage</h3>
+              <p className="text-xs text-white/50">Invitez des amis et gagnez 30 Lumens par filleul</p>
             </div>
           </div>
-          <ChevronRight className="h-5 w-5 text-gray-500 group-hover:text-purple-500 transition-colors" />
+          <ChevronRight className="h-5 w-5 text-white/50 group-hover:text-purple-500 transition-colors" />
         </div>
       </Link>
 
       {/* Earnings Banner */}
-      <Link href="/dashboard/earnings" className="block p-4 sm:p-6 rounded-2xl bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200/60 hover:shadow-md transition-all group">
+      <Link href="/dashboard/earnings" className="block p-4 sm:p-6 rounded-2xl bg-gradient-to-r from-green-500/10 to-emerald-500/10 border border-white/10 hover:border-green-500/30 hover:shadow-md transition-all group">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded-xl bg-green-100 flex items-center justify-center">
+            <div className="h-10 w-10 rounded-xl bg-green-500/15 flex items-center justify-center">
               <Banknote className="h-5 w-5 text-green-600" />
             </div>
             <div>
-              <h3 className="font-semibold text-gray-800 text-sm">Mes Revenus</h3>
-              <p className="text-xs text-gray-500">Historique des gains, stats mensuelles et previsions</p>
+              <h3 className="font-semibold text-white/90 text-sm">Mes Revenus</h3>
+              <p className="text-xs text-white/50">Historique des gains, stats mensuelles et previsions</p>
             </div>
           </div>
-          <ChevronRight className="h-5 w-5 text-gray-500 group-hover:text-green-600 transition-colors" />
+          <ChevronRight className="h-5 w-5 text-white/50 group-hover:text-green-600 transition-colors" />
         </div>
       </Link>
 
       {/* Quick Actions */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
         {[
-          { label: 'Trouver une tache', href: '/tasks', icon: Search, color: 'text-[#E50914]', bg: 'bg-amber-50' },
-          { label: 'Decouvrir les films', href: '/films', icon: Clapperboard, color: 'text-blue-500', bg: 'bg-blue-50' },
-          { label: 'Voir le streaming', href: '/streaming', icon: PlayCircle, color: 'text-red-500', bg: 'bg-red-50' },
-          { label: 'Investir', href: '/tokenization', icon: PiggyBank, color: 'text-green-500', bg: 'bg-green-50' },
+          { label: 'Trouver une tache', href: '/tasks', icon: Search, color: 'text-[#E50914]', bg: 'bg-white/[0.04]' },
+          { label: 'Decouvrir les films', href: '/films', icon: Clapperboard, color: 'text-blue-500', bg: 'bg-white/[0.04]' },
+          { label: 'Voir le streaming', href: '/streaming', icon: PlayCircle, color: 'text-red-500', bg: 'bg-white/[0.04]' },
+          { label: 'Investir', href: '/tokenization', icon: PiggyBank, color: 'text-green-500', bg: 'bg-white/[0.04]' },
         ].map((action) => (
           <Link
             key={action.label}
             href={action.href}
-            className={`flex items-center gap-3 p-4 sm:p-6 rounded-xl ${action.bg} border border-gray-200/60 hover:border-gray-300 hover:shadow-sm transition-all min-h-[52px] sm:min-h-[60px] group`}
+            className={`flex items-center gap-3 p-4 sm:p-6 rounded-xl ${action.bg} border border-white/10/60 hover:border-white/15 hover:shadow-[0_2px_8px_rgba(0,0,0,0.3)] transition-all min-h-[52px] sm:min-h-[60px] group`}
           >
             <action.icon className={`h-5 w-5 shrink-0 ${action.color}`} />
-            <span className="text-gray-600 text-sm font-medium group-hover:text-gray-800 transition-colors">{action.label}</span>
+            <span className="text-white/60 text-sm font-medium group-hover:text-white/90 transition-colors">{action.label}</span>
           </Link>
         ))}
       </div>
 
       {/* Launch Checklist -- Admin Only */}
       {isAdmin && (
-        <div className="bg-white rounded-2xl shadow-sm ring-1 ring-gray-100 border border-gray-200/60 overflow-hidden">
+        <div className="bg-white/5 rounded-2xl shadow-[0_2px_8px_rgba(0,0,0,0.3)] ring-1 ring-white/10 border border-white/10/60 overflow-hidden">
           <div className="p-4 sm:p-7 pb-4 sm:pb-5">
             <div className="flex items-center gap-3">
-              <div className="h-10 w-10 rounded-xl bg-amber-50 flex items-center justify-center">
+              <div className="h-10 w-10 rounded-xl bg-[#E50914]/10 flex items-center justify-center">
                 <AlertCircle className="h-5 w-5 text-[#E50914]" />
               </div>
               <div>
-                <h2 className="text-gray-900 text-lg font-bold font-[family-name:var(--font-playfair)]">
+                <h2 className="text-white text-lg font-bold font-[family-name:var(--font-playfair)]">
                   Checklist de Lancement
                 </h2>
-                <p className="text-gray-500 text-xs mt-0.5">
+                <p className="text-white/50 text-xs mt-0.5">
                   Actions requises avant la mise en production
                 </p>
               </div>
@@ -420,21 +420,21 @@ export default async function DashboardPage() {
               ] as const).map((item) => (
                 <div
                   key={item.title}
-                  className="flex flex-wrap sm:flex-nowrap items-center gap-2 sm:gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200 group"
+                  className="flex flex-wrap sm:flex-nowrap items-center gap-2 sm:gap-3 p-3 rounded-lg hover:bg-white/[0.03] transition-colors duration-200 group"
                 >
-                  <Square className={`h-4 w-4 shrink-0 ${item.needsAttention ? 'text-[#E50914]/60' : 'text-gray-400'}`} />
-                  <item.icon className={`h-4 w-4 shrink-0 ${item.needsAttention ? 'text-[#E50914]' : 'text-gray-500'}`} />
-                  <span className={`text-sm flex-1 min-w-0 ${item.needsAttention ? 'text-gray-700' : 'text-gray-500'}`}>
+                  <Square className={`h-4 w-4 shrink-0 ${item.needsAttention ? 'text-[#E50914]/60' : 'text-white/30'}`} />
+                  <item.icon className={`h-4 w-4 shrink-0 ${item.needsAttention ? 'text-[#E50914]' : 'text-white/50'}`} />
+                  <span className={`text-sm flex-1 min-w-0 ${item.needsAttention ? 'text-white/80' : 'text-white/50'}`}>
                     {item.title}
                   </span>
                   <Badge
                     variant="outline"
                     className={`text-[9px] px-1.5 py-0 h-4 shrink-0 ${
                       item.helper === 'CLAUDE'
-                        ? 'border-purple-200 text-purple-500'
+                        ? 'border-purple-500/30 text-purple-400'
                         : item.helper === 'HUMAN'
-                        ? 'border-orange-200 text-orange-500'
-                        : 'border-blue-200 text-blue-500'
+                        ? 'border-orange-500/30 text-orange-400'
+                        : 'border-blue-500/30 text-blue-400'
                     }`}
                   >
                     {item.helper === 'CLAUDE' ? 'Claude' : item.helper === 'HUMAN' ? 'Humain' : 'Les deux'}

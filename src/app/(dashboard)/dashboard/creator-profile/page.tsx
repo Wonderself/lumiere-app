@@ -66,8 +66,8 @@ export default function CreatorProfilePage() {
   return (
     <div className="space-y-8 max-w-3xl">
       <div>
-        <h1 className="text-2xl font-bold text-[#1A1A2E] font-[family-name:var(--font-playfair)]">Profil Créateur</h1>
-        <p className="text-sm text-gray-500 mt-1">Complétez votre profil pour maximiser votre visibilité</p>
+        <h1 className="text-2xl font-bold text-white font-[family-name:var(--font-playfair)]">Profil Créateur</h1>
+        <p className="text-sm text-white/50 mt-1">Complétez votre profil pour maximiser votre visibilité</p>
       </div>
 
       {/* Progress */}
@@ -79,37 +79,37 @@ export default function CreatorProfilePage() {
               className={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium transition-colors w-full ${
                 i === currentStep ? 'bg-[#E50914] text-white' :
                 i < currentStep ? 'bg-green-50 text-green-600' :
-                'bg-gray-100 text-gray-500'
+                'bg-white/[0.05] text-white/50'
               }`}
             >
               {i < currentStep ? <CheckCircle2 className="h-3.5 w-3.5" /> : <Circle className="h-3.5 w-3.5" />}
               {step.label}
             </button>
-            {i < ONBOARDING_STEPS.length - 1 && <ArrowRight className="h-4 w-4 text-gray-500 shrink-0" />}
+            {i < ONBOARDING_STEPS.length - 1 && <ArrowRight className="h-4 w-4 text-white/50 shrink-0" />}
           </div>
         ))}
       </div>
 
       {/* Step Content */}
-      <div className="rounded-2xl border border-gray-200 bg-white p-8">
+      <div className="rounded-2xl border border-white/10 bg-white/5 p-8">
         {currentStep === 0 && (
           <div className="space-y-5">
-            <h2 className="text-lg font-semibold text-[#1A1A2E]">Informations de base</h2>
+            <h2 className="text-lg font-semibold text-white">Informations de base</h2>
             <div>
-              <label className="text-xs text-gray-500 mb-1.5 block">Nom d&apos;affichage</label>
-              <input value={displayName} onChange={e => setDisplayName(e.target.value)} placeholder="Votre nom de créateur" className="w-full rounded-xl border border-gray-200 px-4 py-2.5 text-sm focus:border-[#E50914] focus:outline-none" />
+              <label className="text-xs text-white/50 mb-1.5 block">Nom d&apos;affichage</label>
+              <input value={displayName} onChange={e => setDisplayName(e.target.value)} placeholder="Votre nom de créateur" className="w-full rounded-xl border border-white/10 px-4 py-2.5 text-sm focus:border-[#E50914] focus:outline-none" />
             </div>
             <div>
-              <label className="text-xs text-gray-500 mb-1.5 block">Localisation</label>
-              <input value={location} onChange={e => setLocation(e.target.value)} placeholder="Paris, France" className="w-full rounded-xl border border-gray-200 px-4 py-2.5 text-sm focus:border-[#E50914] focus:outline-none" />
+              <label className="text-xs text-white/50 mb-1.5 block">Localisation</label>
+              <input value={location} onChange={e => setLocation(e.target.value)} placeholder="Paris, France" className="w-full rounded-xl border border-white/10 px-4 py-2.5 text-sm focus:border-[#E50914] focus:outline-none" />
             </div>
             <div>
-              <label className="text-xs text-gray-500 mb-1.5 block">Site web</label>
-              <input value={website} onChange={e => setWebsite(e.target.value)} placeholder="https://..." className="w-full rounded-xl border border-gray-200 px-4 py-2.5 text-sm focus:border-[#E50914] focus:outline-none" />
+              <label className="text-xs text-white/50 mb-1.5 block">Site web</label>
+              <input value={website} onChange={e => setWebsite(e.target.value)} placeholder="https://..." className="w-full rounded-xl border border-white/10 px-4 py-2.5 text-sm focus:border-[#E50914] focus:outline-none" />
             </div>
             <div>
-              <label className="text-xs text-gray-500 mb-1.5 block">Expérience</label>
-              <select value={experience} onChange={e => setExperience(e.target.value)} className="w-full rounded-xl border border-gray-200 px-4 py-2.5 text-sm">
+              <label className="text-xs text-white/50 mb-1.5 block">Expérience</label>
+              <select value={experience} onChange={e => setExperience(e.target.value)} className="w-full rounded-xl border border-white/10 px-4 py-2.5 text-sm">
                 <option value="beginner">Débutant (0-2 ans)</option>
                 <option value="intermediate">Intermédiaire (2-5 ans)</option>
                 <option value="advanced">Avancé (5-10 ans)</option>
@@ -121,16 +121,16 @@ export default function CreatorProfilePage() {
 
         {currentStep === 1 && (
           <div className="space-y-5">
-            <h2 className="text-lg font-semibold text-[#1A1A2E]">Spécialités</h2>
-            <p className="text-xs text-gray-500">Sélectionnez vos domaines d&apos;expertise (plusieurs possibles)</p>
+            <h2 className="text-lg font-semibold text-white">Spécialités</h2>
+            <p className="text-xs text-white/50">Sélectionnez vos domaines d&apos;expertise (plusieurs possibles)</p>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
               {SPECIALTIES.map(s => {
                 const SIcon = s.icon
                 const selected = selectedSpecialties.includes(s.id)
                 return (
-                  <button key={s.id} onClick={() => toggleSpecialty(s.id)} className={`flex flex-col items-center gap-2 p-4 rounded-xl border transition-colors ${selected ? 'border-[#E50914] bg-red-50' : 'border-gray-200 hover:border-gray-300'}`}>
-                    <SIcon className={`h-6 w-6 ${selected ? 'text-[#E50914]' : 'text-gray-500'}`} />
-                    <span className={`text-xs font-medium ${selected ? 'text-[#E50914]' : 'text-gray-600'}`}>{s.label}</span>
+                  <button key={s.id} onClick={() => toggleSpecialty(s.id)} className={`flex flex-col items-center gap-2 p-4 rounded-xl border transition-colors ${selected ? 'border-[#E50914] bg-red-50' : 'border-white/10 hover:border-white/15'}`}>
+                    <SIcon className={`h-6 w-6 ${selected ? 'text-[#E50914]' : 'text-white/50'}`} />
+                    <span className={`text-xs font-medium ${selected ? 'text-[#E50914]' : 'text-white/60'}`}>{s.label}</span>
                     {selected && <CheckCircle2 className="h-3.5 w-3.5 text-[#E50914]" />}
                   </button>
                 )
@@ -141,13 +141,13 @@ export default function CreatorProfilePage() {
 
         {currentStep === 2 && (
           <div className="space-y-5">
-            <h2 className="text-lg font-semibold text-[#1A1A2E]">Portfolio</h2>
-            <p className="text-xs text-gray-500">Ajoutez des liens vers vos travaux (Vimeo, YouTube, Behance, etc.)</p>
+            <h2 className="text-lg font-semibold text-white">Portfolio</h2>
+            <p className="text-xs text-white/50">Ajoutez des liens vers vos travaux (Vimeo, YouTube, Behance, etc.)</p>
             {portfolioLinks.map((link, i) => (
               <div key={i} className="flex gap-2">
-                <input value={link} onChange={e => updatePortfolioLink(i, e.target.value)} placeholder="https://..." className="flex-1 rounded-xl border border-gray-200 px-4 py-2.5 text-sm focus:border-[#E50914] focus:outline-none" />
+                <input value={link} onChange={e => updatePortfolioLink(i, e.target.value)} placeholder="https://..." className="flex-1 rounded-xl border border-white/10 px-4 py-2.5 text-sm focus:border-[#E50914] focus:outline-none" />
                 {portfolioLinks.length > 1 && (
-                  <button onClick={() => removePortfolioLink(i)} className="text-gray-500 hover:text-red-400"><X className="h-5 w-5" /></button>
+                  <button onClick={() => removePortfolioLink(i)} className="text-white/50 hover:text-red-400"><X className="h-5 w-5" /></button>
                 )}
               </div>
             ))}
@@ -157,15 +157,15 @@ export default function CreatorProfilePage() {
 
         {currentStep === 3 && (
           <div className="space-y-5">
-            <h2 className="text-lg font-semibold text-[#1A1A2E]">Bio & Présentation</h2>
-            <textarea value={bio} onChange={e => setBio(e.target.value)} placeholder="Parlez de vous, de vos projets, de votre vision du cinéma..." rows={8} className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:border-[#E50914] focus:outline-none resize-none" />
-            <p className="text-[10px] text-gray-500">{bio.length}/1000 caractères</p>
+            <h2 className="text-lg font-semibold text-white">Bio & Présentation</h2>
+            <textarea value={bio} onChange={e => setBio(e.target.value)} placeholder="Parlez de vous, de vos projets, de votre vision du cinéma..." rows={8} className="w-full rounded-xl border border-white/10 px-4 py-3 text-sm focus:border-[#E50914] focus:outline-none resize-none" />
+            <p className="text-[10px] text-white/50">{bio.length}/1000 caractères</p>
           </div>
         )}
 
         {/* Navigation */}
-        <div className="flex justify-between mt-8 pt-6 border-t border-gray-100">
-          <button onClick={() => setCurrentStep(Math.max(0, currentStep - 1))} disabled={currentStep === 0} className="px-4 py-2 text-sm text-gray-500 hover:text-[#1A1A2E] disabled:opacity-30">Précédent</button>
+        <div className="flex justify-between mt-8 pt-6 border-t border-white/10">
+          <button onClick={() => setCurrentStep(Math.max(0, currentStep - 1))} disabled={currentStep === 0} className="px-4 py-2 text-sm text-white/50 hover:text-white disabled:opacity-30">Précédent</button>
           <div className="flex gap-2">
             {currentStep < ONBOARDING_STEPS.length - 1 ? (
               <button onClick={() => setCurrentStep(currentStep + 1)} className="px-6 py-2 bg-[#E50914] hover:bg-[#FF2D2D] text-white text-sm font-medium rounded-lg transition-colors">Suivant</button>

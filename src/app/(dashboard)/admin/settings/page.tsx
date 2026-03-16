@@ -36,11 +36,11 @@ export default async function AdminSettingsPage() {
         <p className="text-white/60">Configuration globale de la plateforme.</p>
       </div>
 
-      <div className="h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
+      <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
 
       <form action={updateSettingsAction} className="space-y-6">
         {/* AI Settings */}
-        <Card className="rounded-xl shadow-sm border border-white/10 hover:shadow-md">
+        <Card className="rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.3)] border border-white/10 hover:shadow-md">
           <CardContent className="p-6 space-y-6">
             <h2 className="text-lg font-semibold text-[#E50914] flex items-center gap-2">
               <Cpu className="h-5 w-5" /> Paramètres IA
@@ -74,7 +74,7 @@ export default async function AdminSettingsPage() {
         </Card>
 
         {/* Lumens Settings */}
-        <Card className="rounded-xl shadow-sm border border-white/10 hover:shadow-md">
+        <Card className="rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.3)] border border-white/10 hover:shadow-md">
           <CardContent className="p-6 space-y-6">
             <h2 className="text-lg font-semibold text-[#E50914] flex items-center gap-2">
               <Sun className="h-5 w-5" /> Lumens (Crédits)
@@ -114,7 +114,7 @@ export default async function AdminSettingsPage() {
         </Card>
 
         {/* Email Settings */}
-        <Card className="rounded-xl shadow-sm border border-white/10 hover:shadow-md">
+        <Card className="rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.3)] border border-white/10 hover:shadow-md">
           <CardContent className="p-6 space-y-6">
             <h2 className="text-lg font-semibold text-[#E50914] flex items-center gap-2">
               <Mail className="h-5 w-5" /> Notifications Email
@@ -138,7 +138,7 @@ export default async function AdminSettingsPage() {
         </Card>
 
         {/* Task Settings */}
-        <Card className="rounded-xl shadow-sm border border-white/10 hover:shadow-md">
+        <Card className="rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.3)] border border-white/10 hover:shadow-md">
           <CardContent className="p-6 space-y-6">
             <h2 className="text-lg font-semibold text-[#E50914] flex items-center gap-2">
               <Settings className="h-5 w-5" /> Tâches
@@ -163,7 +163,7 @@ export default async function AdminSettingsPage() {
         </Card>
 
         {/* Payment Settings */}
-        <Card className="rounded-xl shadow-sm border border-white/10 hover:shadow-md">
+        <Card className="rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.3)] border border-white/10 hover:shadow-md">
           <CardContent className="p-6 space-y-6">
             <h2 className="text-lg font-semibold text-[#E50914] flex items-center gap-2">
               <CreditCard className="h-5 w-5" /> Paiements
@@ -187,7 +187,7 @@ export default async function AdminSettingsPage() {
         </Card>
 
         {/* Danger Zone */}
-        <Card className="rounded-xl shadow-sm border border-red-500/20 hover:shadow-md">
+        <Card className="rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.3)] border border-red-500/20 hover:shadow-md">
           <CardContent className="p-6 space-y-4">
             <h2 className="text-lg font-semibold text-red-400 flex items-center gap-2">
               <AlertTriangle className="h-5 w-5" /> Zone Dangereuse

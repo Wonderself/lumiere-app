@@ -40,7 +40,7 @@ const NOTIF_COLORS: Record<string, string> = {
   SUBMISSION_REVIEWED: 'text-yellow-500',
   PAYMENT_RECEIVED: 'text-emerald-500',
   LEVEL_UP: 'text-[#E50914]',
-  SYSTEM: 'text-gray-500',
+  SYSTEM: 'text-white/50',
 }
 
 function timeAgo(date: Date): string {
@@ -121,12 +121,12 @@ export default async function NotificationsPage({
       <div className="flex items-center justify-between flex-wrap gap-4">
         <div>
           <h1
-            className="text-3xl sm:text-4xl font-bold text-gray-900"
+            className="text-3xl sm:text-4xl font-bold text-white"
           >
             Notifications
           </h1>
           {unreadCount > 0 && (
-            <p className="text-sm text-gray-500 mt-1">
+            <p className="text-sm text-white/50 mt-1">
               {unreadCount} non lue{unreadCount > 1 ? 's' : ''}
             </p>
           )}
@@ -152,7 +152,7 @@ export default async function NotificationsPage({
               className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition-all border ${
                 isActive
                   ? 'bg-[#E50914]/10 text-[#E50914] border-[#E50914]/30'
-                  : 'bg-gray-50 text-gray-500 border-gray-100 hover:border-gray-200 hover:text-gray-700'
+                  : 'bg-white/[0.03] text-white/50 border-white/10 hover:border-white/10 hover:text-white/80'
               }`}
             >
               {filter.label}
@@ -162,16 +162,16 @@ export default async function NotificationsPage({
       </div>
 
       {/* Separator */}
-      <div className="h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
+      <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
 
       {/* Notifications List */}
       {notifications.length === 0 ? (
-        <div className="bg-white sm:rounded-3xl rounded-2xl shadow-sm border border-gray-100 p-8 sm:p-12 text-center">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gray-50 mb-4">
-            <InboxIcon className="h-8 w-8 text-gray-400" />
+        <div className="bg-white/5 sm:rounded-3xl rounded-2xl shadow-[0_2px_8px_rgba(0,0,0,0.3)] border border-white/10 p-8 sm:p-12 text-center">
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-white/[0.03] mb-4">
+            <InboxIcon className="h-8 w-8 text-white/30" />
           </div>
-          <p className="text-gray-600 text-lg mb-1">Aucune notification</p>
-          <p className="text-gray-500 text-sm">
+          <p className="text-white/60 text-lg mb-1">Aucune notification</p>
+          <p className="text-white/50 text-sm">
             Vos notifications apparaîtront ici
           </p>
         </div>
@@ -179,35 +179,35 @@ export default async function NotificationsPage({
         <div className="space-y-8">
           {grouped.map((group) => (
             <div key={group.label}>
-              <h2 className="text-xs font-semibold text-gray-600 uppercase tracking-widest mb-3 px-1">
+              <h2 className="text-xs font-semibold text-white/60 uppercase tracking-widest mb-3 px-1">
                 {group.label}
               </h2>
               {/* Date group container */}
-              <div className="bg-white sm:rounded-2xl rounded-xl border border-gray-100 shadow-sm p-2 sm:p-4 space-y-2">
+              <div className="bg-white/5 sm:rounded-2xl rounded-xl border border-white/10 shadow-[0_2px_8px_rgba(0,0,0,0.3)] p-2 sm:p-4 space-y-2">
                 {group.items.map((notification) => {
                   const Icon = NOTIF_ICONS[notification.type] || Bell
-                  const iconColor = NOTIF_COLORS[notification.type] || 'text-gray-500'
+                  const iconColor = NOTIF_COLORS[notification.type] || 'text-white/50'
                   const isUnread = !notification.read
 
                   return (
                     <div
                       key={notification.id}
-                      className={`rounded-xl border transition-all duration-300 p-4 hover:bg-gray-50/50 ${
+                      className={`rounded-xl border transition-all duration-300 p-4 hover:bg-white/[0.03] ${
                         isUnread
-                          ? 'border-l-2 border-l-[#E50914] border-gray-100 bg-amber-50/30'
-                          : 'border-gray-50 opacity-70 hover:opacity-100'
+                          ? 'border-l-2 border-l-[#E50914] border-white/10 bg-[#E50914]/5'
+                          : 'border-white/5 opacity-70 hover:opacity-100'
                       }`}
                     >
                       <div className="flex items-start gap-4">
                         {/* Icon with gold dot for unread */}
                         <div className="relative mt-0.5">
                           <div
-                            className={`p-2.5 rounded-xl bg-gray-50 ${iconColor}`}
+                            className={`p-2.5 rounded-xl bg-white/[0.03] ${iconColor}`}
                           >
                             <Icon className="h-4 w-4" />
                           </div>
                           {isUnread && (
-                            <div className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-[#E50914] border-2 border-white shadow-sm shadow-[#E50914]/20" />
+                            <div className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-[#E50914] border-2 border-[#0A0A0A] shadow-[0_2px_8px_rgba(0,0,0,0.3)] shadow-[#E50914]/20" />
                           )}
                         </div>
 
@@ -217,18 +217,18 @@ export default async function NotificationsPage({
                             <div className="min-w-0">
                               <p
                                 className={`text-sm font-medium ${
-                                  isUnread ? 'text-gray-900' : 'text-gray-500'
+                                  isUnread ? 'text-white' : 'text-white/50'
                                 }`}
                               >
                                 {notification.title}
                               </p>
                               {notification.body && (
-                                <p className="text-xs text-gray-500 mt-1 line-clamp-2 leading-relaxed">
+                                <p className="text-xs text-white/50 mt-1 line-clamp-2 leading-relaxed">
                                   {notification.body}
                                 </p>
                               )}
                             </div>
-                            <span className="text-[11px] text-gray-500 shrink-0 mt-0.5 tabular-nums">
+                            <span className="text-[11px] text-white/50 shrink-0 mt-0.5 tabular-nums">
                               {timeAgo(notification.createdAt)}
                             </span>
                           </div>
@@ -248,7 +248,7 @@ export default async function NotificationsPage({
                                   variant="ghost"
                                   size="sm"
                                   type="submit"
-                                  className="h-7 text-xs rounded-lg text-gray-500 hover:text-gray-600 transition-all duration-300"
+                                  className="h-7 text-xs rounded-lg text-white/50 hover:text-white/60 transition-all duration-300"
                                 >
                                   Marquer comme lu
                                 </Button>

@@ -51,9 +51,9 @@ async function updateLegalItemAction(formData: FormData) {
 const statusConfig: Record<string, { label: string; color: string; icon: typeof CheckCircle }> = {
   DONE: { label: 'Complété', color: 'bg-green-500/10 text-green-600 border-green-500/20', icon: CheckCircle },
   IN_PROGRESS: { label: 'En cours', color: 'bg-yellow-500/10 text-yellow-600 border-yellow-500/20', icon: Clock },
-  PENDING: { label: 'En attente', color: 'bg-gray-500/10 text-gray-500 border-gray-500/20', icon: CircleDot },
+  PENDING: { label: 'En attente', color: 'bg-white/[0.05] text-white/50 border-white/10', icon: CircleDot },
   BLOCKED: { label: 'Bloqué', color: 'bg-red-500/10 text-red-600 border-red-500/20', icon: Ban },
-  NA: { label: 'N/A', color: 'bg-gray-100 text-gray-500 border-gray-200', icon: Minus },
+  NA: { label: 'N/A', color: 'bg-white/[0.05] text-white/50 border-white/10', icon: Minus },
 }
 
 const responsibleConfig: Record<string, { label: string; color: string; icon: typeof Bot }> = {
@@ -67,7 +67,7 @@ const priorityConfig: Record<number, { label: string; color: string }> = {
   3: { label: 'HAUTE', color: 'bg-red-500/10 text-red-600 border-red-500/20' },
   2: { label: 'MOYENNE', color: 'bg-yellow-500/10 text-yellow-600 border-yellow-500/20' },
   1: { label: 'BASSE', color: 'bg-blue-500/10 text-blue-600 border-blue-500/20' },
-  0: { label: 'INFO', color: 'bg-gray-100 text-gray-500 border-gray-200' },
+  0: { label: 'INFO', color: 'bg-white/[0.05] text-white/50 border-white/10' },
 }
 
 const sectionConfig: Record<string, { title: string; icon: typeof Scale; description: string }> = {
@@ -248,7 +248,7 @@ export default async function AdminLegalPage() {
           <Scale className="inline h-7 w-7 text-[#E50914] mr-2 -mt-1" />
           Conformité Juridique Israélienne
         </h1>
-        <p className="text-gray-500 mt-1">
+        <p className="text-white/50 mt-1">
           Checklist complète pour opérer légalement la tokenisation de co-production en Israël.
         </p>
       </div>
@@ -259,13 +259,13 @@ export default async function AdminLegalPage() {
           <span className="text-sm font-medium text-[#E50914]">Progression globale</span>
           <span className="text-sm font-bold text-[#E50914]">{progressPct}%</span>
         </div>
-        <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
+        <div className="h-2 bg-white/[0.05] rounded-full overflow-hidden">
           <div
             className="h-full rounded-full bg-gradient-to-r from-[#E50914] to-[#FF2D2D] transition-all duration-700"
             style={{ width: `${progressPct}%` }}
           />
         </div>
-        <div className="flex flex-wrap gap-4 mt-2 text-xs text-gray-500">
+        <div className="flex flex-wrap gap-4 mt-2 text-xs text-white/50">
           <span className="flex items-center gap-1">
             <div className="w-2 h-2 rounded-full bg-green-500" /> {done} complétés
           </span>
@@ -273,7 +273,7 @@ export default async function AdminLegalPage() {
             <div className="w-2 h-2 rounded-full bg-yellow-500" /> {inProgress} en cours
           </span>
           <span className="flex items-center gap-1">
-            <div className="w-2 h-2 rounded-full bg-gray-400" /> {pending} en attente
+            <div className="w-2 h-2 rounded-full bg-white/30" /> {pending} en attente
           </span>
           <span className="flex items-center gap-1">
             <div className="w-2 h-2 rounded-full bg-red-500" /> {blocked} bloqués
@@ -288,8 +288,8 @@ export default async function AdminLegalPage() {
             <CardContent className="p-4">
               <stat.icon className={`h-5 w-5 ${stat.color} mb-2`} />
               <p className={`text-xl font-bold ${stat.color}`}>{stat.value}</p>
-              <p className="text-[10px] text-gray-500 mt-0.5">{stat.label}</p>
-              <p className="text-[10px] text-gray-500">{stat.sub}</p>
+              <p className="text-[10px] text-white/50 mt-0.5">{stat.label}</p>
+              <p className="text-[10px] text-white/50">{stat.sub}</p>
             </CardContent>
           </Card>
         ))}
@@ -299,11 +299,11 @@ export default async function AdminLegalPage() {
       {items.length === 0 && (
         <Card>
           <CardContent className="p-12 text-center">
-            <Scale className="h-12 w-12 text-gray-300 mx-auto mb-4" />
-            <p className="text-gray-500 text-lg mb-2">Checklist juridique vide</p>
-            <p className="text-gray-500 text-sm max-w-md mx-auto">
+            <Scale className="h-12 w-12 text-white/20 mx-auto mb-4" />
+            <p className="text-white/50 text-lg mb-2">Checklist juridique vide</p>
+            <p className="text-white/50 text-sm max-w-md mx-auto">
               Exécutez le seed de la base de données pour pré-remplir la checklist avec les éléments
-              de conformité israélienne. <code className="bg-gray-100 px-1.5 py-0.5 rounded text-xs">npm run db:seed</code>
+              de conformité israélienne. <code className="bg-white/[0.05] px-1.5 py-0.5 rounded text-xs">npm run db:seed</code>
             </p>
           </CardContent>
         </Card>
@@ -332,7 +332,7 @@ export default async function AdminLegalPage() {
                   <h2 className="text-lg font-semibold font-[family-name:var(--font-playfair)]">
                     {catConfig.title}
                   </h2>
-                  <p className="text-xs text-gray-500 mt-0.5">{catConfig.description}</p>
+                  <p className="text-xs text-white/50 mt-0.5">{catConfig.description}</p>
                 </div>
               </div>
               <Badge variant="outline" className="shrink-0">
@@ -342,7 +342,7 @@ export default async function AdminLegalPage() {
 
             {/* Section progress */}
             {catTotal > 0 && (
-              <div className="h-1 bg-gray-100 rounded-full overflow-hidden ml-0 sm:ml-12">
+              <div className="h-1 bg-white/[0.05] rounded-full overflow-hidden ml-0 sm:ml-12">
                 <div
                   className="h-full rounded-full bg-gradient-to-r from-[#E50914] to-[#FF2D2D] transition-all"
                   style={{ width: `${catPct}%` }}
@@ -369,14 +369,14 @@ export default async function AdminLegalPage() {
                             item.status === 'DONE' ? 'text-green-600' :
                             item.status === 'IN_PROGRESS' ? 'text-yellow-600' :
                             item.status === 'BLOCKED' ? 'text-red-600' :
-                            'text-gray-500'
+                            'text-white/50'
                           }`} />
                         </div>
 
                         {/* Content */}
                         <div className="flex-1 min-w-0 space-y-2">
                           <div className="flex flex-wrap items-center gap-2">
-                            <h3 className={`font-medium text-sm ${item.status === 'DONE' ? 'line-through text-gray-500' : ''}`}>
+                            <h3 className={`font-medium text-sm ${item.status === 'DONE' ? 'line-through text-white/50' : ''}`}>
                               {item.item}
                             </h3>
                             <Badge className={`text-[10px] ${stCfg.color}`}>
@@ -391,7 +391,7 @@ export default async function AdminLegalPage() {
                             </Badge>
                           </div>
 
-                          <p className="text-xs text-gray-500 leading-relaxed">
+                          <p className="text-xs text-white/50 leading-relaxed">
                             {item.description}
                           </p>
 
@@ -430,7 +430,7 @@ export default async function AdminLegalPage() {
                             <select
                               name="status"
                               defaultValue={item.status}
-                              className="w-full bg-gray-50 border border-gray-200 rounded-lg px-2.5 py-1.5 text-xs text-gray-700 min-h-[36px]"
+                              className="w-full bg-white/[0.03] border border-white/10 rounded-lg px-2.5 py-1.5 text-xs text-white/80 min-h-[36px]"
                             >
                               <option value="PENDING">En attente</option>
                               <option value="IN_PROGRESS">En cours</option>
@@ -444,7 +444,7 @@ export default async function AdminLegalPage() {
                               placeholder="Notes..."
                               defaultValue={item.notes || ''}
                               rows={2}
-                              className="w-full bg-gray-50 border border-gray-200 rounded-lg px-2.5 py-1.5 text-xs text-gray-700 resize-none min-w-[180px]"
+                              className="w-full bg-white/[0.03] border border-white/10 rounded-lg px-2.5 py-1.5 text-xs text-white/80 resize-none min-w-[180px]"
                             />
 
                             <Button type="submit" size="sm" variant="outline" className="w-full min-h-[36px] text-xs">
@@ -469,7 +469,7 @@ export default async function AdminLegalPage() {
             <Gavel className="h-5 w-5 text-[#E50914] shrink-0 mt-0.5" />
             <div>
               <h3 className="font-semibold text-sm mb-1">Avertissement juridique</h3>
-              <p className="text-xs text-gray-500 leading-relaxed">
+              <p className="text-xs text-white/50 leading-relaxed">
                 Cette checklist est fournie à titre indicatif et ne constitue pas un avis juridique.
                 La réglementation israélienne sur les actifs numériques évolue rapidement.
                 Consultez un avocat spécialisé en droit des valeurs mobilières israélien (עורך דין ניירות ערך)

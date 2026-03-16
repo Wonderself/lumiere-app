@@ -89,7 +89,7 @@ export function AgentExecutePanel({ agentSlug, agentName, agentColor, tier }: Ag
           />
 
           <div className="flex items-center justify-between">
-            <p className="text-[10px] text-gray-600">
+            <p className="text-[10px] text-white/60">
               Modèle: {tier === 'L3_STRATEGY' ? 'Opus + Extended Thinking' : tier === 'L2_MANAGEMENT' ? 'Opus' : 'Sonnet'}
               {' · '}Coût estimé basé sur les tokens consommés
             </p>

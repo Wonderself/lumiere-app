@@ -172,7 +172,7 @@ export default async function AdminReputationPage(
   const badgeColors: Record<string, string> = {
     diamond: 'border-cyan-500/30 bg-cyan-500/10 text-cyan-600',
     gold: 'border-[#E50914]/30 bg-[#E50914]/10 text-[#E50914]',
-    silver: 'border-gray-400/30 bg-gray-400/10 text-gray-500',
+    silver: 'border-gray-400/30 bg-gray-400/10 text-white/50',
     bronze: 'border-orange-600/30 bg-orange-600/10 text-orange-600',
   }
 
@@ -196,7 +196,7 @@ export default async function AdminReputationPage(
       {/* Charts Row */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
         {/* Badge Distribution */}
-        <div className="rounded-xl shadow-sm border border-white/10 bg-white/[0.02] p-4 sm:p-6">
+        <div className="rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.3)] border border-white/10 bg-white/[0.02] p-4 sm:p-6">
           <h2 className="text-sm font-semibold text-white/80 mb-4 flex items-center gap-2">
             <Award className="h-4 w-4 text-[#E50914]" />
             Distribution des Badges
@@ -209,7 +209,7 @@ export default async function AdminReputationPage(
         </div>
 
         {/* Score Distribution */}
-        <div className="rounded-xl shadow-sm border border-white/10 bg-white/[0.02] p-4 sm:p-6">
+        <div className="rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.3)] border border-white/10 bg-white/[0.02] p-4 sm:p-6">
           <h2 className="text-sm font-semibold text-white/80 mb-4 flex items-center gap-2">
             <TrendingUp className="h-4 w-4 text-[#E50914]" />
             Distribution des Scores
@@ -232,7 +232,7 @@ export default async function AdminReputationPage(
 
       <div className={`grid ${selectedUserId ? 'grid-cols-1 lg:grid-cols-5' : ''} gap-4 sm:gap-6`}>
         {/* Users Table */}
-        <div className={`rounded-xl shadow-sm border border-white/10 bg-white/[0.02] overflow-hidden ${selectedUserId ? 'lg:col-span-3' : ''}`}>
+        <div className={`rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.3)] border border-white/10 bg-white/[0.02] overflow-hidden ${selectedUserId ? 'lg:col-span-3' : ''}`}>
           <div className="p-5 border-b border-white/5 flex items-center gap-2">
             <Users className="h-4 w-4 text-white/50" />
             <h2 className="text-sm font-semibold text-white/80">Utilisateurs</h2>
@@ -338,7 +338,7 @@ export default async function AdminReputationPage(
         {selectedUserId && selectedUser && (
           <div className="lg:col-span-2 space-y-4">
             {/* User Summary */}
-            <div className="rounded-xl shadow-sm border border-[#E50914]/20 bg-[#E50914]/5 p-4 sm:p-6">
+            <div className="rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.3)] border border-[#E50914]/20 bg-[#E50914]/5 p-4 sm:p-6">
               <div className="flex items-center gap-3 mb-4">
                 {selectedUser.avatarUrl ? (
                   <img src={selectedUser.avatarUrl} alt="" className="w-12 h-12 rounded-full object-cover" />
@@ -386,7 +386,7 @@ export default async function AdminReputationPage(
             </div>
 
             {/* Manual Adjustment Form */}
-            <div className="rounded-xl shadow-sm border border-white/10 bg-white/[0.02] p-4 sm:p-5">
+            <div className="rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.3)] border border-white/10 bg-white/[0.02] p-4 sm:p-5">
               <h3 className="text-sm font-semibold text-white/80 mb-3 flex items-center gap-2">
                 <Shield className="h-4 w-4 text-[#E50914]" />
                 Ajustement Manuel
@@ -424,7 +424,7 @@ export default async function AdminReputationPage(
             </div>
 
             {/* Reputation Events History */}
-            <div className="rounded-xl shadow-sm border border-white/10 bg-white/[0.02] overflow-hidden">
+            <div className="rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.3)] border border-white/10 bg-white/[0.02] overflow-hidden">
               <div className="p-4 border-b border-white/5">
                 <h3 className="text-sm font-semibold text-white/80 flex items-center gap-2">
                   <Star className="h-4 w-4 text-white/50" />

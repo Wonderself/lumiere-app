@@ -61,7 +61,7 @@ export default async function ScreenplaysPage() {
           >
             Mes Scenarios
           </h1>
-          <p className="text-sm text-gray-500 mt-1">
+          <p className="text-sm text-white/50 mt-1">
             {screenplays.length} scenario{screenplays.length !== 1 ? 's' : ''} soumis
           </p>
         </div>
@@ -81,8 +81,8 @@ export default async function ScreenplaysPage() {
         <Card variant="glass">
           <CardContent className="p-12 text-center">
             <FileText className="h-12 w-12 text-gray-300 mx-auto mb-4" />
-            <p className="text-gray-500 text-lg mb-2">Aucun scenario soumis</p>
-            <p className="text-gray-500 text-sm mb-6">
+            <p className="text-white/50 text-lg mb-2">Aucun scenario soumis</p>
+            <p className="text-white/50 text-sm mb-6">
               Soumettez votre premier scenario et laissez notre IA l&#39;evaluer
             </p>
             <Link href="/screenplays/new">
@@ -102,7 +102,7 @@ export default async function ScreenplaysPage() {
                 <CardContent className="p-7">
                   {/* Title & Status */}
                   <div className="flex items-start justify-between gap-3 mb-3">
-                    <h3 className="font-semibold text-gray-900 truncate">
+                    <h3 className="font-semibold text-white truncate">
                       {screenplay.title}
                     </h3>
                     <Badge
@@ -127,7 +127,7 @@ export default async function ScreenplaysPage() {
 
                   {/* Logline */}
                   {screenplay.logline && (
-                    <p className="text-sm text-gray-500 line-clamp-2 mb-4">
+                    <p className="text-sm text-white/50 line-clamp-2 mb-4">
                       {screenplay.logline}
                     </p>
                   )}
@@ -138,7 +138,7 @@ export default async function ScreenplaysPage() {
                       <div className="flex items-center justify-between mb-1.5">
                         <div className="flex items-center gap-1.5">
                           <Sparkles className="h-3.5 w-3.5 text-[#E50914]" />
-                          <span className="text-xs text-gray-500">Score IA</span>
+                          <span className="text-xs text-white/50">Score IA</span>
                         </div>
                         <span
                           className={`text-sm font-bold ${
@@ -159,7 +159,7 @@ export default async function ScreenplaysPage() {
                   )}
 
                   {/* Footer */}
-                  <div className="flex items-center justify-between text-xs text-gray-500">
+                  <div className="flex items-center justify-between text-xs text-white/50">
                     <div className="flex items-center gap-1.5">
                       <Clock className="h-3 w-3" />
                       {formatDate(screenplay.createdAt)}

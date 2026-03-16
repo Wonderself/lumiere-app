@@ -44,10 +44,10 @@ export default async function AdminScreenplaysPage() {
         <p className="text-white/60">{screenplays.length} scénario{screenplays.length > 1 ? 's' : ''} soumis</p>
       </div>
 
-      <div className="h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
+      <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
 
       {screenplays.length === 0 ? (
-        <Card className="rounded-xl shadow-sm border border-white/10">
+        <Card className="rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.3)] border border-white/10">
           <CardContent className="p-12 text-center">
             <FileText className="h-12 w-12 text-white/50 mx-auto mb-3" />
             <p className="text-white/50">Aucun scénario soumis</p>
@@ -56,7 +56,7 @@ export default async function AdminScreenplaysPage() {
       ) : (
         <div className="space-y-4">
           {screenplays.map((s) => (
-            <Card key={s.id} className="rounded-xl shadow-sm border border-white/10 hover:border-white/15 hover:shadow-md hover:-translate-y-[1px] transition-all duration-500">
+            <Card key={s.id} className="rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.3)] border border-white/10 hover:border-white/15 hover:shadow-md hover:-translate-y-[1px] transition-all duration-500">
               <CardContent className="p-6">
                 <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
                   <div className="flex-1 min-w-0">

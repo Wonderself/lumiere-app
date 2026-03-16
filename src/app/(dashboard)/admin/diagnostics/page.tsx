@@ -134,33 +134,33 @@ export default function DiagnosticsPage() {
     <div className="space-y-10">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-[#1A1A2E] font-[family-name:var(--font-playfair)]">
+          <h1 className="text-2xl font-bold text-white font-[family-name:var(--font-playfair)]">
             Diagnostics Live
           </h1>
-          <p className="text-sm text-gray-500 mt-1">
+          <p className="text-sm text-white/50 mt-1">
             {healthyCount}/{totalCount} services opérationnels · Auto-refresh {autoRefresh ? '10s' : 'off'}
           </p>
         </div>
         <div className="flex gap-2">
           <button
             onClick={() => setAutoRefresh(!autoRefresh)}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium ${autoRefresh ? 'bg-green-50 text-green-700' : 'bg-gray-100 text-gray-500'}`}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium ${autoRefresh ? 'bg-green-500/10 text-green-500' : 'bg-white/[0.05] text-white/50'}`}
           >
             <Radio className={`h-3.5 w-3.5 ${autoRefresh ? 'animate-pulse' : ''}`} />
             {autoRefresh ? 'Live' : 'Paused'}
           </button>
-          <button onClick={checkServices} className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs bg-gray-100 text-gray-600 hover:bg-gray-200">
+          <button onClick={checkServices} className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs bg-white/[0.05] text-white/60 hover:bg-white/[0.08]">
             <RefreshCcw className="h-3.5 w-3.5" /> Refresh
           </button>
         </div>
       </div>
 
       {/* Overall Status Bar */}
-      <div className={`rounded-2xl p-4 sm:p-5 border ${healthyCount === totalCount ? 'border-green-200 bg-green-50' : healthyCount > totalCount / 2 ? 'border-yellow-200 bg-yellow-50' : 'border-red-200 bg-red-50'}`}>
+      <div className={`rounded-2xl p-4 sm:p-5 border ${healthyCount === totalCount ? 'border-green-500/20 bg-green-500/10' : healthyCount > totalCount / 2 ? 'border-yellow-500/20 bg-yellow-500/10' : 'border-red-500/20 bg-red-500/10'}`}>
         <div className="flex items-center gap-3">
           {healthyCount === totalCount ? <CheckCircle2 className="h-6 w-6 text-green-600" /> : <AlertTriangle className="h-6 w-6 text-yellow-600" />}
           <div>
-            <p className="text-sm font-semibold text-[#1A1A2E]">
+            <p className="text-sm font-semibold text-white">
               {healthyCount === totalCount ? 'Tous les services sont opérationnels' : `${totalCount - healthyCount} service(s) nécessitent attention`}
             </p>
             <div className="flex flex-wrap gap-3 mt-1">
@@ -176,23 +176,23 @@ export default function DiagnosticsPage() {
       <div className="space-y-6">
         {categories.map(cat => (
           <div key={cat.label}>
-            <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3">{cat.label}</h2>
+            <h2 className="text-sm font-semibold text-white/50 uppercase tracking-wider mb-3">{cat.label}</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
               {cat.items.map(service => {
                 const SIcon = service.icon
                 return (
-                  <div key={service.name} className="rounded-xl border border-gray-200 bg-white p-5">
+                  <div key={service.name} className="rounded-xl border border-white/10 bg-white/5 p-5">
                     <div className="flex items-center gap-3 mb-3">
-                      <SIcon className="h-5 w-5 text-gray-500" />
-                      <span className="text-sm font-medium text-[#1A1A2E] flex-1">{service.name}</span>
+                      <SIcon className="h-5 w-5 text-white/50" />
+                      <span className="text-sm font-medium text-white flex-1">{service.name}</span>
                       <div className={`h-3 w-3 rounded-full ${
                         service.status === 'healthy' ? 'bg-green-500' :
                         service.status === 'degraded' ? 'bg-yellow-500' :
-                        service.status === 'checking' ? 'bg-gray-300 animate-pulse' : 'bg-red-500'
+                        service.status === 'checking' ? 'bg-white/20 animate-pulse' : 'bg-red-500'
                       }`} />
                     </div>
-                    <p className="text-xs text-gray-500">{service.details}</p>
-                    <div className="flex items-center gap-3 mt-2 text-[10px] text-gray-500">
+                    <p className="text-xs text-white/50">{service.details}</p>
+                    <div className="flex items-center gap-3 mt-2 text-[10px] text-white/50">
                       {service.latencyMs !== null && <span>{service.latencyMs}ms</span>}
                       {service.lastCheck && <span>{service.lastCheck.toLocaleTimeString('fr-FR')}</span>}
                     </div>
@@ -206,7 +206,7 @@ export default function DiagnosticsPage() {
 
       {/* Interactive Tests */}
       <div>
-        <h2 className="text-lg font-semibold text-[#1A1A2E] mb-4 flex items-center gap-2">
+        <h2 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
           <Play className="h-5 w-5 text-blue-500" />
           Tests interactifs
         </h2>
@@ -216,27 +216,27 @@ export default function DiagnosticsPage() {
             const result = testResults[test.key]
             const isRunning = runningTest === test.key
             return (
-              <div key={test.key} className="rounded-xl border border-gray-200 bg-white p-5">
+              <div key={test.key} className="rounded-xl border border-white/10 bg-white/5 p-5">
                 <div className="flex items-center gap-3 mb-3">
-                  <TIcon className="h-5 w-5 text-gray-500" />
+                  <TIcon className="h-5 w-5 text-white/50" />
                   <div className="flex-1">
-                    <p className="text-sm font-medium text-[#1A1A2E]">{test.label}</p>
-                    <p className="text-[10px] text-gray-500">{test.desc}</p>
+                    <p className="text-sm font-medium text-white">{test.label}</p>
+                    <p className="text-[10px] text-white/50">{test.desc}</p>
                   </div>
                   <button
                     onClick={() => runTest(test.key)}
                     disabled={!!runningTest}
-                    className="px-3 py-1.5 rounded-lg text-xs font-medium bg-blue-50 text-blue-700 hover:bg-blue-100 disabled:opacity-50 transition-colors"
+                    className="px-3 py-1.5 rounded-lg text-xs font-medium bg-blue-500/10 text-blue-400 hover:bg-blue-500/20 disabled:opacity-50 transition-colors"
                   >
                     {isRunning ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : 'Run'}
                   </button>
                 </div>
                 {result && (
                   <div className={`rounded-lg px-3 py-2 text-xs ${
-                    result.status === 'pass' ? 'bg-green-50 text-green-700' :
-                    result.status === 'fail' ? 'bg-red-50 text-red-700' :
-                    result.status === 'running' ? 'bg-blue-50 text-blue-700' :
-                    'bg-gray-50 text-gray-600'
+                    result.status === 'pass' ? 'bg-green-500/10 text-green-400' :
+                    result.status === 'fail' ? 'bg-red-500/10 text-red-400' :
+                    result.status === 'running' ? 'bg-blue-500/10 text-blue-400' :
+                    'bg-white/[0.03] text-white/60'
                   }`}>
                     {result.message}
                   </div>

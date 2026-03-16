@@ -72,15 +72,15 @@ export function AccountSettings() {
 
   if (deleteSuccess) {
     return (
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+      <div className="bg-white/5 rounded-2xl shadow-[0_2px_8px_rgba(0,0,0,0.3)] border border-white/10 p-6">
         <div className="text-center py-8">
           <div className="inline-flex items-center justify-center h-14 w-14 rounded-full bg-green-50 mb-4">
             <svg className="h-7 w-7 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
           </div>
-          <h3 className="text-lg font-semibold text-gray-900 mb-2">Compte supprim&eacute;</h3>
-          <p className="text-sm text-gray-500">
+          <h3 className="text-lg font-semibold text-white mb-2">Compte supprim&eacute;</h3>
+          <p className="text-sm text-white/50">
             Vos donn&eacute;es personnelles ont &eacute;t&eacute; anonymis&eacute;es. Vous allez &ecirc;tre redirig&eacute;...
           </p>
         </div>
@@ -91,13 +91,13 @@ export function AccountSettings() {
   return (
     <div className="space-y-6">
       {/* ── Data Export Card ── */}
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-shadow duration-300">
+      <div className="bg-white/5 rounded-2xl shadow-[0_2px_8px_rgba(0,0,0,0.3)] border border-white/10 p-6 hover:shadow-md transition-shadow duration-300">
         <h3
-          className="text-lg font-semibold text-gray-900 mb-2"
+          className="text-lg font-semibold text-white mb-2"
         >
           Exporter mes donn&eacute;es
         </h3>
-        <p className="text-sm text-gray-500 mb-4 leading-relaxed">
+        <p className="text-sm text-white/50 mb-4 leading-relaxed">
           T&eacute;l&eacute;chargez une copie de toutes vos donn&eacute;es personnelles au format JSON
           (RGPD Art. 20 — Droit &agrave; la portabilit&eacute;).
         </p>
@@ -137,13 +137,13 @@ export function AccountSettings() {
       </div>
 
       {/* ── Account Deletion Card ── */}
-      <div className="bg-white rounded-2xl shadow-sm border border-red-100 p-6 hover:shadow-md transition-shadow duration-300">
+      <div className="bg-white/5 rounded-2xl shadow-[0_2px_8px_rgba(0,0,0,0.3)] border border-red-100 p-6 hover:shadow-md transition-shadow duration-300">
         <h3
-          className="text-lg font-semibold text-gray-900 mb-2"
+          className="text-lg font-semibold text-white mb-2"
         >
           Supprimer mon compte
         </h3>
-        <p className="text-sm text-gray-500 mb-4 leading-relaxed">
+        <p className="text-sm text-white/50 mb-4 leading-relaxed">
           Cette action est <strong className="text-red-600">irr&eacute;versible</strong>. Vos donn&eacute;es personnelles
           seront anonymis&eacute;es. Vos contributions aux films seront conserv&eacute;es de mani&egrave;re anonyme
           (RGPD Art. 17 — Droit &agrave; l&apos;effacement).
@@ -186,8 +186,8 @@ export function AccountSettings() {
                   placeholder="votre@email.com"
                   className="
                     w-full px-3 py-2 rounded-lg text-sm
-                    border border-red-200 bg-white text-gray-900
-                    placeholder:text-gray-500
+                    border border-red-200 bg-white/5 text-white
+                    placeholder:text-white/50
                     focus:outline-none focus:ring-2 focus:ring-red-300 focus:border-red-300
                   "
                 />
@@ -232,7 +232,7 @@ export function AccountSettings() {
                 }}
                 className="
                   px-4 py-2 rounded-lg text-sm font-medium
-                  text-gray-600 hover:text-gray-800
+                  text-white/60 hover:text-white/90
                   transition-colors duration-200 cursor-pointer
                 "
               >

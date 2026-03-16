@@ -110,8 +110,8 @@ export default function MyStrategyPage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-2xl font-bold text-[#1A1A2E] font-[family-name:var(--font-playfair)]">My Strategy</h1>
-        <p className="text-sm text-gray-500 mt-1">Objectifs · Actions · Plan IA · Notes</p>
+        <h1 className="text-2xl font-bold text-white font-[family-name:var(--font-playfair)]">My Strategy</h1>
+        <p className="text-sm text-white/50 mt-1">Objectifs · Actions · Plan IA · Notes</p>
       </div>
 
       {/* Tabs */}
@@ -119,7 +119,7 @@ export default function MyStrategyPage() {
         {tabs.map(t => {
           const TIcon = t.icon
           return (
-            <button key={t.key} onClick={() => setTab(t.key)} className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium ${tab === t.key ? 'bg-[#E50914] text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}>
+            <button key={t.key} onClick={() => setTab(t.key)} className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium ${tab === t.key ? 'bg-[#E50914] text-white' : 'bg-white/[0.05] text-white/60 hover:bg-white/[0.08]'}`}>
               <TIcon className="h-4 w-4" /> {t.label}
             </button>
           )
@@ -132,12 +132,12 @@ export default function MyStrategyPage() {
           <button onClick={() => setShowNewObj(!showNewObj)} className="flex items-center gap-2 text-sm text-[#E50914] hover:underline"><Plus className="h-4 w-4" /> Ajouter un objectif</button>
 
           {showNewObj && (
-            <div className="rounded-xl border border-gray-200 bg-white p-5 space-y-3">
-              <input value={newObj.title} onChange={e => setNewObj(p => ({ ...p, title: e.target.value }))} placeholder="Titre" className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:border-[#E50914] focus:outline-none" />
-              <input value={newObj.description} onChange={e => setNewObj(p => ({ ...p, description: e.target.value }))} placeholder="Description" className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:border-[#E50914] focus:outline-none" />
+            <div className="rounded-xl border border-white/10 bg-white/5 p-5 space-y-3">
+              <input value={newObj.title} onChange={e => setNewObj(p => ({ ...p, title: e.target.value }))} placeholder="Titre" className="w-full rounded-lg border border-white/10 px-3 py-2 text-sm focus:border-[#E50914] focus:outline-none" />
+              <input value={newObj.description} onChange={e => setNewObj(p => ({ ...p, description: e.target.value }))} placeholder="Description" className="w-full rounded-lg border border-white/10 px-3 py-2 text-sm focus:border-[#E50914] focus:outline-none" />
               <div className="flex gap-3">
-                <input type="date" value={newObj.deadline} onChange={e => setNewObj(p => ({ ...p, deadline: e.target.value }))} className="rounded-lg border border-gray-200 px-3 py-2 text-sm" />
-                <select value={newObj.priority} onChange={e => setNewObj(p => ({ ...p, priority: e.target.value as any }))} className="rounded-lg border border-gray-200 px-3 py-2 text-sm">
+                <input type="date" value={newObj.deadline} onChange={e => setNewObj(p => ({ ...p, deadline: e.target.value }))} className="rounded-lg border border-white/10 px-3 py-2 text-sm" />
+                <select value={newObj.priority} onChange={e => setNewObj(p => ({ ...p, priority: e.target.value as any }))} className="rounded-lg border border-white/10 px-3 py-2 text-sm">
                   <option value="high">Haute</option>
                   <option value="medium">Moyenne</option>
                   <option value="low">Basse</option>
@@ -148,18 +148,18 @@ export default function MyStrategyPage() {
           )}
 
           {objectives.map(obj => (
-            <div key={obj.id} className={`rounded-xl border bg-white p-5 transition-colors ${obj.completed ? 'border-green-200 opacity-60' : 'border-gray-200'}`}>
+            <div key={obj.id} className={`rounded-xl border bg-white/5 p-5 transition-colors ${obj.completed ? 'border-green-200 opacity-60' : 'border-white/10'}`}>
               <div className="flex items-center gap-3">
                 <button onClick={() => toggleObjective(obj.id)}>
-                  {obj.completed ? <CheckCircle2 className="h-5 w-5 text-green-500" /> : <Circle className="h-5 w-5 text-gray-500" />}
+                  {obj.completed ? <CheckCircle2 className="h-5 w-5 text-green-500" /> : <Circle className="h-5 w-5 text-white/50" />}
                 </button>
                 <div className="flex-1">
-                  <p className={`text-sm font-medium ${obj.completed ? 'line-through text-gray-500' : 'text-[#1A1A2E]'}`}>{obj.title}</p>
-                  {obj.description && <p className="text-xs text-gray-500">{obj.description}</p>}
+                  <p className={`text-sm font-medium ${obj.completed ? 'line-through text-white/50' : 'text-white'}`}>{obj.title}</p>
+                  {obj.description && <p className="text-xs text-white/50">{obj.description}</p>}
                 </div>
                 <span className={`text-[10px] px-2 py-0.5 rounded-full ${PRIORITY_CONFIG[obj.priority].bg} ${PRIORITY_CONFIG[obj.priority].color}`}>{PRIORITY_CONFIG[obj.priority].label}</span>
-                {obj.deadline && <span className="text-[10px] text-gray-500 flex items-center gap-1"><Clock className="h-3 w-3" />{obj.deadline}</span>}
-                <button onClick={() => setObjectives(prev => prev.filter(o => o.id !== obj.id))} className="text-gray-500 hover:text-red-400"><Trash2 className="h-4 w-4" /></button>
+                {obj.deadline && <span className="text-[10px] text-white/50 flex items-center gap-1"><Clock className="h-3 w-3" />{obj.deadline}</span>}
+                <button onClick={() => setObjectives(prev => prev.filter(o => o.id !== obj.id))} className="text-white/50 hover:text-red-400"><Trash2 className="h-4 w-4" /></button>
               </div>
             </div>
           ))}
@@ -173,18 +173,18 @@ export default function MyStrategyPage() {
             const FIcon = folder.icon
             const isActive = activeFolderIdx === idx
             return (
-              <div key={folder.name} className="rounded-xl border border-gray-200 bg-white p-4">
+              <div key={folder.name} className="rounded-xl border border-white/10 bg-white/5 p-4">
                 <button onClick={() => setActiveFolderIdx(isActive ? null : idx)} className="flex items-center gap-2 w-full text-left mb-3">
                   <FIcon className="h-4 w-4" style={{ color: folder.color }} />
-                  <span className="text-sm font-semibold text-[#1A1A2E]">{folder.name}</span>
-                  <span className="text-[10px] text-gray-500 ml-auto">{folder.items.length}</span>
+                  <span className="text-sm font-semibold text-white">{folder.name}</span>
+                  <span className="text-[10px] text-white/50 ml-auto">{folder.items.length}</span>
                 </button>
                 {folder.items.map((item, i) => (
-                  <p key={i} className="text-xs text-gray-600 py-1 border-t border-gray-50">• {item}</p>
+                  <p key={i} className="text-xs text-white/60 py-1 border-t border-gray-50">• {item}</p>
                 ))}
                 {isActive && (
                   <div className="flex gap-2 mt-2">
-                    <input value={newAction} onChange={e => setNewAction(e.target.value)} placeholder="Nouvelle action..." className="flex-1 text-xs rounded border border-gray-200 px-2 py-1 focus:outline-none" onKeyDown={e => { if (e.key === 'Enter') addAction(idx) }} />
+                    <input value={newAction} onChange={e => setNewAction(e.target.value)} placeholder="Nouvelle action..." className="flex-1 text-xs rounded border border-white/10 px-2 py-1 focus:outline-none" onKeyDown={e => { if (e.key === 'Enter') addAction(idx) }} />
                     <button onClick={() => addAction(idx)} className="text-xs text-[#E50914]"><Plus className="h-4 w-4" /></button>
                   </div>
                 )}
@@ -198,22 +198,22 @@ export default function MyStrategyPage() {
       {tab === 'plan' && (
         <div className="space-y-4">
           {!aiPlan ? (
-            <div className="rounded-2xl border border-gray-200 bg-white p-12 text-center">
-              <Brain className="h-12 w-12 text-gray-500 mx-auto mb-4" />
-              <h3 className="text-lg font-semibold text-[#1A1A2E] mb-2">Plan Stratégique IA</h3>
-              <p className="text-sm text-gray-500 mb-6 max-w-md mx-auto">L&apos;agent Studio Head analyse votre situation et génère un plan stratégique complet.</p>
+            <div className="rounded-2xl border border-white/10 bg-white/5 p-12 text-center">
+              <Brain className="h-12 w-12 text-white/50 mx-auto mb-4" />
+              <h3 className="text-lg font-semibold text-white mb-2">Plan Stratégique IA</h3>
+              <p className="text-sm text-white/50 mb-6 max-w-md mx-auto">L&apos;agent Studio Head analyse votre situation et génère un plan stratégique complet.</p>
               <button onClick={generateAIPlan} disabled={generatingPlan} className="px-6 py-3 bg-[#E50914] hover:bg-[#FF2D2D] text-white font-semibold rounded-xl disabled:opacity-50 transition-colors">
                 {generatingPlan ? <><Loader2 className="inline h-5 w-5 animate-spin mr-2" />Génération...</> : <><Brain className="inline h-5 w-5 mr-2" />Générer le plan</>}
               </button>
             </div>
           ) : (
-            <div className="rounded-2xl border border-gray-200 bg-white p-6">
+            <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
               <div className="flex justify-between mb-4">
-                <h3 className="text-sm font-semibold text-[#1A1A2E]">Plan généré par Studio Head</h3>
-                <button onClick={() => setAiPlan(null)} className="text-xs text-gray-500 hover:text-[#E50914]">Régénérer</button>
+                <h3 className="text-sm font-semibold text-white">Plan généré par Studio Head</h3>
+                <button onClick={() => setAiPlan(null)} className="text-xs text-white/50 hover:text-[#E50914]">Régénérer</button>
               </div>
               <div className="prose prose-sm max-w-none">
-                <pre className="whitespace-pre-wrap text-sm text-gray-700 leading-relaxed">{aiPlan}</pre>
+                <pre className="whitespace-pre-wrap text-sm text-white/80 leading-relaxed">{aiPlan}</pre>
               </div>
             </div>
           )}
@@ -224,17 +224,17 @@ export default function MyStrategyPage() {
       {tab === 'notes' && (
         <div className="space-y-4">
           <div className="flex gap-2">
-            <input value={newNote} onChange={e => setNewNote(e.target.value)} placeholder="Nouvelle note..." className="flex-1 rounded-xl border border-gray-200 px-4 py-2.5 text-sm focus:border-[#E50914] focus:outline-none" onKeyDown={e => { if (e.key === 'Enter') addNote() }} />
+            <input value={newNote} onChange={e => setNewNote(e.target.value)} placeholder="Nouvelle note..." className="flex-1 rounded-xl border border-white/10 px-4 py-2.5 text-sm focus:border-[#E50914] focus:outline-none" onKeyDown={e => { if (e.key === 'Enter') addNote() }} />
             <button onClick={addNote} disabled={!newNote.trim()} className="px-4 py-2 bg-[#E50914] text-white rounded-xl disabled:opacity-30"><Plus className="h-4 w-4" /></button>
           </div>
-          {notes.length === 0 && <p className="text-center text-sm text-gray-500 py-8">Aucune note</p>}
+          {notes.length === 0 && <p className="text-center text-sm text-white/50 py-8">Aucune note</p>}
           {notes.map(note => (
-            <div key={note.id} className="rounded-xl border border-gray-200 bg-white p-4">
+            <div key={note.id} className="rounded-xl border border-white/10 bg-white/5 p-4">
               <div className="flex justify-between mb-1">
-                <span className="text-[10px] text-gray-500">{note.timestamp.toLocaleString('fr-FR')}</span>
-                <button onClick={() => setNotes(prev => prev.filter(n => n.id !== note.id))} className="text-gray-500 hover:text-red-400"><Trash2 className="h-3.5 w-3.5" /></button>
+                <span className="text-[10px] text-white/50">{note.timestamp.toLocaleString('fr-FR')}</span>
+                <button onClick={() => setNotes(prev => prev.filter(n => n.id !== note.id))} className="text-white/50 hover:text-red-400"><Trash2 className="h-3.5 w-3.5" /></button>
               </div>
-              <p className="text-sm text-gray-700">{note.content}</p>
+              <p className="text-sm text-white/80">{note.content}</p>
             </div>
           ))}
         </div>

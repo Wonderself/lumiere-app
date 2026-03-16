@@ -78,9 +78,9 @@ const ROUTES: AdminRoute[] = [
 ]
 
 const STATUS_CONFIG: Record<PageStatus, { label: string; color: string; bg: string }> = {
-  functional: { label: 'Fonctionnel', color: 'text-green-600', bg: 'bg-green-50' },
-  partial: { label: 'Partiel', color: 'text-yellow-600', bg: 'bg-yellow-50' },
-  stub: { label: 'Stub', color: 'text-gray-500', bg: 'bg-gray-50' },
+  functional: { label: 'Fonctionnel', color: 'text-green-400', bg: 'bg-green-500/10' },
+  partial: { label: 'Partiel', color: 'text-yellow-400', bg: 'bg-yellow-500/10' },
+  stub: { label: 'Stub', color: 'text-white/50', bg: 'bg-white/[0.03]' },
 }
 
 export default async function ControlPanelPage() {
@@ -98,16 +98,16 @@ export default async function ControlPanelPage() {
   return (
     <div className="space-y-10">
       <div>
-        <h1 className="text-2xl font-bold text-[#1A1A2E] font-[family-name:var(--font-playfair)]">Control Panel</h1>
-        <p className="text-sm text-gray-500 mt-1">Hub central — {ROUTES.length} routes admin</p>
+        <h1 className="text-2xl font-bold text-white font-[family-name:var(--font-playfair)]">Control Panel</h1>
+        <p className="text-sm text-white/50 mt-1">Hub central — {ROUTES.length} routes admin</p>
       </div>
 
       {/* Stats */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
         {Object.entries(STATUS_CONFIG).map(([key, config]) => (
-          <div key={key} className={`rounded-xl border border-gray-200 ${config.bg} px-5 py-3`}>
+          <div key={key} className={`rounded-xl border border-white/10 ${config.bg} px-5 py-3`}>
             <span className={`text-2xl font-bold ${config.color}`}>{stats[key as PageStatus]}</span>
-            <span className="text-xs text-gray-500 ml-2">{config.label}</span>
+            <span className="text-xs text-white/50 ml-2">{config.label}</span>
           </div>
         ))}
       </div>
@@ -117,7 +117,7 @@ export default async function ControlPanelPage() {
         const catRoutes = ROUTES.filter(r => r.category === cat)
         return (
           <div key={cat}>
-            <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3">{cat}</h2>
+            <h2 className="text-sm font-semibold text-white/50 uppercase tracking-wider mb-3">{cat}</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
               {catRoutes.map(route => {
                 const RIcon = route.icon
@@ -126,10 +126,10 @@ export default async function ControlPanelPage() {
                   <Link
                     key={route.href}
                     href={route.href}
-                    className="flex items-center gap-3 px-4 py-3 rounded-xl border border-gray-100 bg-white hover:bg-gray-50 hover:border-gray-200 transition-colors"
+                    className="flex items-center gap-3 px-4 py-3 rounded-xl border border-white/10 bg-white/5 hover:bg-white/[0.03] hover:border-white/10 transition-colors"
                   >
-                    <RIcon className="h-4 w-4 text-gray-500 shrink-0" />
-                    <span className="text-sm text-[#1A1A2E] flex-1 truncate">{route.label}</span>
+                    <RIcon className="h-4 w-4 text-white/50 shrink-0" />
+                    <span className="text-sm text-white flex-1 truncate">{route.label}</span>
                     <span className={`text-[10px] px-2 py-0.5 rounded-full ${sc.bg} ${sc.color} font-medium shrink-0`}>{sc.label}</span>
                   </Link>
                 )

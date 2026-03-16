@@ -35,7 +35,7 @@ export function ModelSelector({ taskType, category, onSelect, selectedModel }: M
     <div className="space-y-3">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <label className="text-xs text-gray-500 font-medium">
+        <label className="text-xs text-white/50 font-medium">
           {isUserChoice ? 'Choisissez votre modèle IA' : 'Modèle IA imposé (cohérence film)'}
         </label>
         {!isUserChoice && (
@@ -48,7 +48,7 @@ export function ModelSelector({ taskType, category, onSelect, selectedModel }: M
 
       {/* Reason */}
       {mapping?.reason && (
-        <div className="flex items-start gap-2 text-[10px] text-gray-400 bg-gray-50 rounded-lg px-3 py-2">
+        <div className="flex items-start gap-2 text-[10px] text-gray-400 bg-white/[0.03] rounded-lg px-3 py-2">
           <Info className="h-3 w-3 mt-0.5 shrink-0" />
           {mapping.reason}
         </div>
@@ -69,7 +69,7 @@ export function ModelSelector({ taskType, category, onSelect, selectedModel }: M
               className={`text-left rounded-xl border p-4 transition-colors ${
                 isSelected
                   ? 'border-[#E50914] bg-red-50'
-                  : 'border-gray-200 hover:border-gray-300'
+                  : 'border-white/10 hover:border-gray-300'
               } ${!isUserChoice && !isSelected ? 'opacity-40 cursor-not-allowed' : ''}`}
             >
               <div className="flex items-center gap-2 mb-1">
@@ -79,7 +79,7 @@ export function ModelSelector({ taskType, category, onSelect, selectedModel }: M
               </div>
               <p className="text-[10px] text-gray-400 mb-2">{model.description}</p>
               <div className="flex items-center justify-between">
-                <span className="text-[10px] text-gray-500">{model.provider}</span>
+                <span className="text-[10px] text-white/50">{model.provider}</span>
                 <span className="text-xs font-semibold text-[#E50914]">
                   ~{microToCredits(cost).toFixed(2)} cr
                 </span>

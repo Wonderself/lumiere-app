@@ -35,7 +35,7 @@ export default async function AdminFilmsPage() {
         </Link>
       </div>
 
-      <div className="h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
+      <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
 
       {films.length === 0 ? (
         <div className="text-center py-20 text-white/50">

@@ -30,7 +30,7 @@ function CancelButton() {
     }}>
       <button
         type="submit"
-        className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-red-50 border border-red-200 text-red-600 text-sm font-medium hover:bg-red-100 hover:border-red-300 transition-all"
+        className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-sm font-medium hover:bg-red-500/20 hover:border-red-500/30 transition-all"
       >
         <X className="h-4 w-4" />
         Annuler mon abonnement
@@ -46,9 +46,9 @@ export default async function SubscriptionPage() {
   const subscription = await getUserSubscription(session.user.id)
 
   const statusConfig = {
-    active: { label: 'Actif', color: 'bg-green-50 text-green-600 border-green-200' },
-    cancelled: { label: 'Annulé', color: 'bg-red-50 text-red-500 border-red-200' },
-    expired: { label: 'Expiré', color: 'bg-gray-100 text-gray-500 border-gray-200' },
+    active: { label: 'Actif', color: 'bg-green-500/10 text-green-500 border-green-500/20' },
+    cancelled: { label: 'Annulé', color: 'bg-red-500/10 text-red-400 border-red-500/20' },
+    expired: { label: 'Expiré', color: 'bg-white/[0.05] text-white/50 border-white/10' },
   }
 
   const currentStatus = subscription.status || (subscription.active ? 'active' : 'expired')
@@ -62,17 +62,17 @@ export default async function SubscriptionPage() {
       {/* Header */}
       <div>
         <h1
-          className="text-3xl sm:text-4xl font-bold text-gray-900"
+          className="text-3xl sm:text-4xl font-bold text-white"
         >
           Mon Abonnement
         </h1>
-        <p className="text-gray-500 mt-1">
+        <p className="text-white/50 mt-1">
           Gérez votre plan de streaming et vos préférences.
         </p>
       </div>
 
       {/* Current Plan Card */}
-      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+      <div className="bg-white/5 rounded-2xl border border-white/10 shadow-[0_2px_8px_rgba(0,0,0,0.3)] overflow-hidden">
         <div className="p-6 sm:p-8">
           <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
             <div className="flex items-center gap-4">
@@ -82,7 +82,7 @@ export default async function SubscriptionPage() {
               <div>
                 <div className="flex items-center gap-3">
                   <h2
-                    className="text-2xl font-bold text-gray-900"
+                    className="text-2xl font-bold text-white"
                   >
                     Plan {subscription.name}
                   </h2>
@@ -92,11 +92,11 @@ export default async function SubscriptionPage() {
                 </div>
                 {!isFree && (
                   <p className="text-[#E50914] font-semibold text-lg mt-0.5">
-                    {subscription.priceEur}€<span className="text-gray-500 text-sm font-normal">/mois</span>
+                    {subscription.priceEur}€<span className="text-white/50 text-sm font-normal">/mois</span>
                   </p>
                 )}
                 {isFree && (
-                  <p className="text-gray-500 text-sm mt-0.5">
+                  <p className="text-white/50 text-sm mt-0.5">
                     Plan gratuit avec fonctionnalités limitées
                   </p>
                 )}
@@ -108,14 +108,14 @@ export default async function SubscriptionPage() {
           {!isFree && (
             <div className="mt-6 flex flex-wrap gap-4 text-sm">
               {'startedAt' in subscription && subscription.startedAt && (
-                <div className="flex items-center gap-2 text-gray-500">
-                  <CreditCard className="h-4 w-4 text-gray-500" />
+                <div className="flex items-center gap-2 text-white/50">
+                  <CreditCard className="h-4 w-4 text-white/50" />
                   <span>Depuis le {new Date(subscription.startedAt).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
                 </div>
               )}
               {'expiresAt' in subscription && subscription.expiresAt && (
-                <div className="flex items-center gap-2 text-gray-500">
-                  <Shield className="h-4 w-4 text-gray-500" />
+                <div className="flex items-center gap-2 text-white/50">
+                  <Shield className="h-4 w-4 text-white/50" />
                   <span>
                     {currentStatus === 'cancelled' ? 'Accès jusqu\'au' : 'Renouvellement le'}{' '}
                     {new Date(subscription.expiresAt).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}
@@ -127,47 +127,47 @@ export default async function SubscriptionPage() {
         </div>
 
         {/* Features list */}
-        <div className="border-t border-gray-100 px-6 sm:px-8 py-6">
-          <h3 className="text-sm font-semibold text-gray-900 mb-4">Inclus dans votre plan</h3>
+        <div className="border-t border-white/10 px-6 sm:px-8 py-6">
+          <h3 className="text-sm font-semibold text-white mb-4">Inclus dans votre plan</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {subscription.features.map((feature: string) => (
               <div key={feature} className="flex items-center gap-2.5">
-                <div className="h-5 w-5 rounded-full bg-green-50 flex items-center justify-center shrink-0">
+                <div className="h-5 w-5 rounded-full bg-green-500/10 flex items-center justify-center shrink-0">
                   <Check className="h-3 w-3 text-green-500" />
                 </div>
-                <span className="text-sm text-gray-600">{feature}</span>
+                <span className="text-sm text-white/60">{feature}</span>
               </div>
             ))}
           </div>
         </div>
 
         {/* Plan details grid */}
-        <div className="border-t border-gray-100 px-6 sm:px-8 py-6">
+        <div className="border-t border-white/10 px-6 sm:px-8 py-6">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div className="text-center p-3 rounded-xl bg-gray-50 border border-gray-100">
-              <Monitor className="h-5 w-5 text-gray-500 mx-auto mb-1.5" />
-              <p className="text-sm font-semibold text-gray-900">{subscription.maxQuality}</p>
-              <p className="text-xs text-gray-500">Qualité max</p>
+            <div className="text-center p-3 rounded-xl bg-white/[0.03] border border-white/10">
+              <Monitor className="h-5 w-5 text-white/50 mx-auto mb-1.5" />
+              <p className="text-sm font-semibold text-white">{subscription.maxQuality}</p>
+              <p className="text-xs text-white/50">Qualité max</p>
             </div>
-            <div className="text-center p-3 rounded-xl bg-gray-50 border border-gray-100">
-              <Tv className="h-5 w-5 text-gray-500 mx-auto mb-1.5" />
-              <p className="text-sm font-semibold text-gray-900">
+            <div className="text-center p-3 rounded-xl bg-white/[0.03] border border-white/10">
+              <Tv className="h-5 w-5 text-white/50 mx-auto mb-1.5" />
+              <p className="text-sm font-semibold text-white">
                 {subscription.maxStreams === -1 ? 'Illimité' : subscription.maxStreams}
               </p>
-              <p className="text-xs text-gray-500">Films/mois</p>
+              <p className="text-xs text-white/50">Films/mois</p>
             </div>
-            <div className="text-center p-3 rounded-xl bg-gray-50 border border-gray-100">
-              <Download className="h-5 w-5 text-gray-500 mx-auto mb-1.5" />
-              <p className="text-sm font-semibold text-gray-900">
+            <div className="text-center p-3 rounded-xl bg-white/[0.03] border border-white/10">
+              <Download className="h-5 w-5 text-white/50 mx-auto mb-1.5" />
+              <p className="text-sm font-semibold text-white">
                 {subscription.offlineDownloads === -1 ? 'Illimité' : subscription.offlineDownloads}
               </p>
-              <p className="text-xs text-gray-500">Downloads</p>
+              <p className="text-xs text-white/50">Downloads</p>
             </div>
           </div>
         </div>
 
         {/* Actions */}
-        <div className="border-t border-gray-100 px-6 sm:px-8 py-6">
+        <div className="border-t border-white/10 px-6 sm:px-8 py-6">
           <div className="flex flex-col sm:flex-row gap-3">
             <Link
               href="/streaming"
@@ -184,11 +184,11 @@ export default async function SubscriptionPage() {
 
       {/* Cancelled notice */}
       {currentStatus === 'cancelled' && (
-        <div className="bg-amber-50 border border-amber-200 rounded-2xl p-5 flex items-start gap-4">
+        <div className="bg-amber-500/10 border border-amber-500/20 rounded-2xl p-5 flex items-start gap-4">
           <AlertTriangle className="h-5 w-5 text-amber-500 mt-0.5 shrink-0" />
           <div>
-            <h3 className="text-sm font-semibold text-gray-800">Abonnement annulé</h3>
-            <p className="text-sm text-gray-600 mt-1">
+            <h3 className="text-sm font-semibold text-white/90">Abonnement annulé</h3>
+            <p className="text-sm text-white/60 mt-1">
               Votre abonnement a été annulé. Vous conservez l&apos;accès à toutes les fonctionnalités premium
               jusqu&apos;à la fin de votre période de facturation en cours.
               Vous pouvez réactiver votre abonnement à tout moment.
@@ -205,18 +205,18 @@ export default async function SubscriptionPage() {
 
       {/* Upgrade banner for free users */}
       {isFree && (
-        <div className="bg-gradient-to-r from-[#E50914]/10 to-amber-50 border border-[#E50914]/20 rounded-2xl p-6">
+        <div className="bg-gradient-to-r from-[#E50914]/10 to-[#E50914]/[0.04] border border-[#E50914]/20 rounded-2xl p-6">
           <div className="flex items-start gap-4">
             <div className="h-12 w-12 rounded-xl bg-[#E50914]/15 flex items-center justify-center shrink-0">
               <Crown className="h-6 w-6 text-[#E50914]" />
             </div>
             <div className="flex-1">
               <h3
-                className="text-lg font-bold text-gray-900"
+                className="text-lg font-bold text-white"
               >
                 Passez à un plan supérieur
               </h3>
-              <p className="text-sm text-gray-600 mt-1">
+              <p className="text-sm text-white/60 mt-1">
                 Débloquez le streaming illimité, la HD/4K, les téléchargements hors ligne et bien plus.
               </p>
               <div className="flex flex-wrap gap-3 mt-4">
@@ -224,7 +224,7 @@ export default async function SubscriptionPage() {
                   <Link
                     key={plan.id}
                     href="/streaming"
-                    className="px-4 py-2 rounded-xl border border-[#E50914]/30 bg-white text-sm font-medium text-gray-700 hover:border-[#E50914] hover:shadow-sm transition-all"
+                    className="px-4 py-2 rounded-xl border border-[#E50914]/30 bg-white/5 text-sm font-medium text-white/80 hover:border-[#E50914] hover:shadow-[0_2px_8px_rgba(0,0,0,0.3)] transition-all"
                   >
                     {plan.name} — {plan.priceEur}€/mois
                   </Link>

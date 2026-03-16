@@ -37,7 +37,7 @@ export default async function AdminReviewsPage() {
         <p className="text-white/60">{submissions.length} soumission{submissions.length > 1 ? 's' : ''} en attente</p>
       </div>
 
-      <div className="h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
+      <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
 
       {submissions.length === 0 ? (
         <div className="text-center py-24 text-white/50">
@@ -48,7 +48,7 @@ export default async function AdminReviewsPage() {
       ) : (
         <div className="space-y-6">
           {submissions.map((sub) => (
-            <div key={sub.id} className="rounded-xl shadow-sm border border-white/10 bg-white/[0.02] overflow-hidden hover:shadow-md transition-all duration-500">
+            <div key={sub.id} className="rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.3)] border border-white/10 bg-white/[0.02] overflow-hidden hover:shadow-md transition-all duration-500">
               {/* Header */}
               <div className="p-4 border-b border-white/5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div>

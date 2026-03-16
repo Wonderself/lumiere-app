@@ -15,13 +15,13 @@ export const dynamic = 'force-dynamic'
 export const metadata: Metadata = { title: 'Admin — Acteurs IA' }
 
 const STYLE_COLORS: Record<string, string> = {
-  DRAMATIC: 'border-purple-500/30 bg-purple-500/10 text-purple-600',
-  COMEDY: 'border-yellow-500/30 bg-yellow-500/10 text-yellow-600',
+  DRAMATIC: 'border-purple-500/30 bg-purple-500/10 text-purple-400',
+  COMEDY: 'border-yellow-500/30 bg-yellow-500/10 text-yellow-400',
   ACTION: 'border-red-500/30 bg-red-500/10 text-red-400',
   VERSATILE: 'border-[#E50914]/30 bg-[#E50914]/10 text-[#E50914]',
-  HORROR: 'border-emerald-500/30 bg-emerald-500/10 text-emerald-600',
-  ROMANCE: 'border-pink-500/30 bg-pink-500/10 text-pink-600',
-  EXPERIMENTAL: 'border-cyan-500/30 bg-cyan-500/10 text-cyan-600',
+  HORROR: 'border-emerald-500/30 bg-emerald-500/10 text-emerald-400',
+  ROMANCE: 'border-pink-500/30 bg-pink-500/10 text-pink-400',
+  EXPERIMENTAL: 'border-cyan-500/30 bg-cyan-500/10 text-cyan-400',
 }
 
 export default async function AdminActorsPage() {
@@ -56,14 +56,14 @@ export default async function AdminActorsPage() {
         </Link>
       </div>
 
-      <div className="h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
+      <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
 
       {/* Stats */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {[
           { label: 'Total acteurs', value: actors.length, icon: Users, color: 'text-[#E50914]' },
-          { label: 'Actifs', value: activeCount, icon: UserCheck, color: 'text-green-600' },
-          { label: 'Roles attribues', value: totalCastRoles, icon: Film, color: 'text-blue-600' },
+          { label: 'Actifs', value: activeCount, icon: UserCheck, color: 'text-green-400' },
+          { label: 'Roles attribues', value: totalCastRoles, icon: Film, color: 'text-blue-400' },
         ].map((stat) => (
           <div
             key={stat.label}

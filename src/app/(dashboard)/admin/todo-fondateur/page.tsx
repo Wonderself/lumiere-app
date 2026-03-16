@@ -400,7 +400,7 @@ export default async function AdminTodoFondateurPage() {
         >
           <ListTodo className="h-7 w-7 text-[#E50914]" /> TODO Fondateur
         </h1>
-        <p className="text-gray-500 mt-1">
+        <p className="text-white/50 mt-1">
           Check-list complete pour le lancement de CINEGEN. Chaque etape est faisable et guidee.
         </p>
       </div>
@@ -410,9 +410,9 @@ export default async function AdminTodoFondateurPage() {
         <CardContent className="p-6">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
             <div>
-              <p className="text-sm text-gray-500">Progression globale</p>
+              <p className="text-sm text-white/50">Progression globale</p>
               <p className="text-4xl font-bold text-[#E50914]">{globalPct}%</p>
-              <p className="text-xs text-gray-500 mt-1">
+              <p className="text-xs text-white/50 mt-1">
                 {doneItems}/{totalItems} etapes completees
               </p>
             </div>
@@ -422,24 +422,24 @@ export default async function AdminTodoFondateurPage() {
                   <Cpu className="h-4 w-4 text-purple-600" />
                   <p className="text-2xl font-bold text-purple-600">{claudeItems}</p>
                 </div>
-                <p className="text-[10px] text-gray-500">Claude peut faire</p>
+                <p className="text-[10px] text-white/50">Claude peut faire</p>
               </div>
               <div className="text-center">
                 <div className="flex items-center gap-1.5 mb-1">
                   <Users className="h-4 w-4 text-orange-600" />
                   <p className="text-2xl font-bold text-orange-600">{humanItems}</p>
                 </div>
-                <p className="text-[10px] text-gray-500">Humain requis</p>
+                <p className="text-[10px] text-white/50">Humain requis</p>
               </div>
             </div>
           </div>
-          <div className="h-3 bg-gray-100 rounded-full overflow-hidden">
+          <div className="h-3 bg-white/[0.05] rounded-full overflow-hidden">
             <div
               className="h-full rounded-full bg-gradient-to-r from-[#E50914] to-[#FF2D2D] transition-all duration-700"
               style={{ width: `${globalPct}%` }}
             />
           </div>
-          <p className="text-xs text-gray-400 mt-3 flex items-center gap-1.5">
+          <p className="text-xs text-white/40 mt-3 flex items-center gap-1.5">
             <Sparkles className="h-3 w-3 text-[#E50914]" />
             La V1 est deja tres avancee. La plupart des etapes restantes prennent 5-30 min avec Claude.
           </p>
@@ -452,7 +452,7 @@ export default async function AdminTodoFondateurPage() {
           <PartyPopper className="h-6 w-6 text-[#E50914] shrink-0 mt-0.5" />
           <div>
             <h3 className="font-bold text-[#E50914] mb-1">Excellent travail !</h3>
-            <p className="text-sm text-gray-500 leading-relaxed">
+            <p className="text-sm text-white/50 leading-relaxed">
               {doneItems} fonctionnalites sont deja developpees et fonctionnelles. Le site Cinema + Creators est a
               un niveau de demo tres avance. Les prochaines etapes sont principalement des integrations API
               (la plupart en 5-15 min) et des demarches administratives guidees.
@@ -476,10 +476,10 @@ export default async function AdminTodoFondateurPage() {
                     <section.icon className="h-5 w-5" /> {section.title}
                   </h2>
                   <div className="flex items-center gap-3">
-                    <span className="text-xs text-gray-500">
+                    <span className="text-xs text-white/50">
                       {sectionDone}/{sectionTotal}
                     </span>
-                    <div className="w-24 h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                    <div className="w-24 h-1.5 bg-white/[0.05] rounded-full overflow-hidden">
                       <div
                         className="h-full rounded-full bg-gradient-to-r from-[#E50914] to-[#FF2D2D]"
                         style={{ width: `${sectionPct}%` }}
@@ -502,12 +502,12 @@ export default async function AdminTodoFondateurPage() {
                         key={idx}
                         className={`flex items-start gap-3 p-3 rounded-lg transition-all ${
                           item.done
-                            ? 'bg-green-50 opacity-60'
-                            : 'bg-gray-50 hover:bg-gray-100'
+                            ? 'bg-green-500/10 opacity-60'
+                            : 'bg-white/[0.03] hover:bg-white/[0.05]'
                         }`}
                       >
                         <div
-                          className={`mt-0.5 shrink-0 ${item.done ? 'text-green-600' : 'text-gray-400'}`}
+                          className={`mt-0.5 shrink-0 ${item.done ? 'text-green-600' : 'text-white/40'}`}
                         >
                           {item.done ? (
                             <CheckCircle className="h-4 w-4" />
@@ -519,7 +519,7 @@ export default async function AdminTodoFondateurPage() {
                           <div className="flex flex-wrap items-center gap-2">
                             <span
                               className={`text-sm font-medium ${
-                                item.done ? 'line-through text-gray-500' : 'text-[#1A1A2E]'
+                                item.done ? 'line-through text-white/50' : 'text-white'
                               }`}
                             >
                               {item.label}
@@ -546,13 +546,13 @@ export default async function AdminTodoFondateurPage() {
                             )}
                           </div>
                           {item.note && (
-                            <p className="text-xs text-gray-500 mt-0.5 leading-relaxed">
+                            <p className="text-xs text-white/50 mt-0.5 leading-relaxed">
                               {item.note}
                             </p>
                           )}
                         </div>
                         <Icon
-                          className={`h-4 w-4 shrink-0 ${item.done ? 'text-green-600/30' : 'text-gray-300'}`}
+                          className={`h-4 w-4 shrink-0 ${item.done ? 'text-green-600/30' : 'text-white/30'}`}
                         />
                       </div>
                     )
@@ -565,12 +565,12 @@ export default async function AdminTodoFondateurPage() {
       </div>
 
       {/* Bottom CTA */}
-      <div className="text-center p-8 rounded-2xl border border-gray-200 bg-gray-50">
+      <div className="text-center p-8 rounded-2xl border border-white/10 bg-white/[0.03]">
         <Sparkles className="h-8 w-8 text-[#E50914] mx-auto mb-4" />
         <h3 className="text-xl font-bold mb-2 font-playfair">
           Prochaine etape recommandee
         </h3>
-        <p className="text-gray-500 text-sm mb-6 max-w-lg mx-auto">
+        <p className="text-white/50 text-sm mb-6 max-w-lg mx-auto">
           Configurez Stripe Connect pour activer les paiements. C&apos;est la fonctionnalite
           la plus impactante pour passer en production. Claude peut guider chaque etape.
         </p>

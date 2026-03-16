@@ -122,10 +122,10 @@ export default function DocumentFactoryPage() {
       <div className="space-y-8">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-bold text-[#1A1A2E] font-[family-name:var(--font-playfair)]">Document Factory</h1>
-            <p className="text-sm text-gray-500 mt-1">{CINEMA_DOC_TEMPLATES.length} templates cinéma · ~3.5 crédits/doc · 7 agents spécialisés</p>
+            <h1 className="text-2xl font-bold text-white font-[family-name:var(--font-playfair)]">Document Factory</h1>
+            <p className="text-sm text-white/50 mt-1">{CINEMA_DOC_TEMPLATES.length} templates cinéma · ~3.5 crédits/doc · 7 agents spécialisés</p>
           </div>
-          <button onClick={() => setView('library')} className="px-3 py-1.5 rounded-lg text-xs bg-gray-100 text-gray-600 hover:bg-gray-200">
+          <button onClick={() => setView('library')} className="px-3 py-1.5 rounded-lg text-xs bg-white/[0.05] text-white/60 hover:bg-white/[0.08]">
             Bibliothèque ({savedDocs.length})
           </button>
         </div>
@@ -138,16 +138,16 @@ export default function DocumentFactoryPage() {
 
         {/* Agents */}
         <div>
-          <h2 className="text-sm font-semibold text-gray-500 mb-3">7 agents spécialisés</h2>
+          <h2 className="text-sm font-semibold text-white/50 mb-3">7 agents spécialisés</h2>
           <div className="flex gap-2 overflow-x-auto pb-2">
             {DOC_FACTORY_AGENTS.map(agent => {
               const AIcon = ICON_MAP[agent.icon] || Bot
               return (
-                <div key={agent.slug} className="flex items-center gap-2 px-3 py-2 rounded-xl border border-gray-100 bg-white shrink-0">
+                <div key={agent.slug} className="flex items-center gap-2 px-3 py-2 rounded-xl border border-white/10 bg-white/5 shrink-0">
                   <AIcon className="h-4 w-4" style={{ color: agent.color }} />
                   <div>
-                    <p className="text-xs font-medium text-[#1A1A2E]">{agent.name}</p>
-                    <p className="text-[10px] text-gray-500">{agent.role}</p>
+                    <p className="text-xs font-medium text-white">{agent.name}</p>
+                    <p className="text-[10px] text-white/50">{agent.role}</p>
                   </div>
                 </div>
               )
@@ -157,11 +157,11 @@ export default function DocumentFactoryPage() {
 
         {/* Categories */}
         <div className="flex gap-2">
-          <button onClick={() => setFilterCategory('all')} className={`px-3 py-1.5 rounded-lg text-xs font-medium ${filterCategory === 'all' ? 'bg-[#E50914] text-white' : 'bg-gray-100 text-gray-600'}`}>Tous ({CINEMA_DOC_TEMPLATES.length})</button>
+          <button onClick={() => setFilterCategory('all')} className={`px-3 py-1.5 rounded-lg text-xs font-medium ${filterCategory === 'all' ? 'bg-[#E50914] text-white' : 'bg-white/[0.05] text-white/60'}`}>Tous ({CINEMA_DOC_TEMPLATES.length})</button>
           {DOC_CATEGORIES.map(cat => {
             const CIcon = ICON_MAP[cat.icon] || FileText
             return (
-              <button key={cat.id} onClick={() => setFilterCategory(cat.id)} className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium ${filterCategory === cat.id ? 'text-white' : 'bg-gray-100 text-gray-600'}`} style={filterCategory === cat.id ? { backgroundColor: cat.color } : {}}>
+              <button key={cat.id} onClick={() => setFilterCategory(cat.id)} className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium ${filterCategory === cat.id ? 'text-white' : 'bg-white/[0.05] text-white/60'}`} style={filterCategory === cat.id ? { backgroundColor: cat.color } : {}}>
                 <CIcon className="h-3.5 w-3.5" /> {cat.label} ({cat.count})
               </button>
             )
@@ -174,21 +174,21 @@ export default function DocumentFactoryPage() {
             const TIcon = ICON_MAP[template.icon] || FileText
             const catColor = DOC_CATEGORIES.find(c => c.id === template.category)?.color || '#6366F1'
             return (
-              <button key={template.id} onClick={() => selectTemplate(template)} className="text-left rounded-2xl border border-gray-200 bg-white p-6 hover:border-gray-300 hover:shadow-md transition-all">
+              <button key={template.id} onClick={() => selectTemplate(template)} className="text-left rounded-2xl border border-white/10 bg-white/5 p-6 hover:border-white/15 hover:shadow-md transition-all">
                 <div className="flex items-start gap-4">
                   <div className="h-12 w-12 rounded-xl flex items-center justify-center shrink-0" style={{ backgroundColor: `${catColor}10` }}>
                     <TIcon className="h-6 w-6" style={{ color: catColor }} />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <h3 className="text-sm font-bold text-[#1A1A2E] mb-1">{template.name}</h3>
-                    <p className="text-xs text-gray-500 line-clamp-2 mb-3">{template.description}</p>
-                    <div className="flex items-center gap-3 text-[10px] text-gray-500">
+                    <h3 className="text-sm font-bold text-white mb-1">{template.name}</h3>
+                    <p className="text-xs text-white/50 line-clamp-2 mb-3">{template.description}</p>
+                    <div className="flex items-center gap-3 text-[10px] text-white/50">
                       <span className="flex items-center gap-0.5"><Zap className="h-3 w-3" />~{template.estimatedCredits} cr</span>
                       <span>{template.estimatedPages} pages</span>
                       <span>{template.sections.length} sections</span>
                     </div>
                   </div>
-                  <ChevronRight className="h-5 w-5 text-gray-500 shrink-0 mt-1" />
+                  <ChevronRight className="h-5 w-5 text-white/50 shrink-0 mt-1" />
                 </div>
               </button>
             )
@@ -203,31 +203,31 @@ export default function DocumentFactoryPage() {
   if (view === 'form' && selectedTemplate) {
     return (
       <div className="space-y-8 max-w-3xl">
-        <button onClick={() => setView('templates')} className="flex items-center gap-1.5 text-sm text-gray-500 hover:text-[#1A1A2E]">
+        <button onClick={() => setView('templates')} className="flex items-center gap-1.5 text-sm text-white/50 hover:text-white">
           <ArrowLeft className="h-4 w-4" /> Retour aux templates
         </button>
 
         <div>
-          <h1 className="text-2xl font-bold text-[#1A1A2E]">{selectedTemplate.name}</h1>
-          <p className="text-sm text-gray-500 mt-1">{selectedTemplate.description}</p>
-          <p className="text-xs text-gray-500 mt-1">~{selectedTemplate.estimatedCredits} crédits · {selectedTemplate.estimatedPages} pages · Agent : {selectedTemplate.agentSlug}</p>
+          <h1 className="text-2xl font-bold text-white">{selectedTemplate.name}</h1>
+          <p className="text-sm text-white/50 mt-1">{selectedTemplate.description}</p>
+          <p className="text-xs text-white/50 mt-1">~{selectedTemplate.estimatedCredits} crédits · {selectedTemplate.estimatedPages} pages · Agent : {selectedTemplate.agentSlug}</p>
         </div>
 
-        <div className="rounded-2xl border border-gray-200 bg-white p-6 space-y-5">
+        <div className="rounded-2xl border border-white/10 bg-white/5 p-6 space-y-5">
           {selectedTemplate.requiredFields.map(field => (
             <div key={field.key}>
-              <label className="text-xs text-gray-500 mb-1.5 block">
+              <label className="text-xs text-white/50 mb-1.5 block">
                 {field.label} {field.required && <span className="text-[#E50914]">*</span>}
               </label>
               {field.type === 'textarea' ? (
-                <textarea value={fieldValues[field.key] || ''} onChange={e => updateField(field.key, e.target.value)} placeholder={field.placeholder} rows={3} className="w-full rounded-xl border border-gray-200 px-4 py-2.5 text-sm focus:border-[#E50914] focus:outline-none resize-none" />
+                <textarea value={fieldValues[field.key] || ''} onChange={e => updateField(field.key, e.target.value)} placeholder={field.placeholder} rows={3} className="w-full rounded-xl border border-white/10 px-4 py-2.5 text-sm focus:border-[#E50914] focus:outline-none resize-none" />
               ) : field.type === 'select' ? (
-                <select value={fieldValues[field.key] || ''} onChange={e => updateField(field.key, e.target.value)} className="w-full rounded-xl border border-gray-200 px-4 py-2.5 text-sm focus:border-[#E50914] focus:outline-none">
+                <select value={fieldValues[field.key] || ''} onChange={e => updateField(field.key, e.target.value)} className="w-full rounded-xl border border-white/10 px-4 py-2.5 text-sm focus:border-[#E50914] focus:outline-none">
                   <option value="">{field.placeholder}</option>
                   {field.options?.map(opt => <option key={opt} value={opt}>{opt}</option>)}
                 </select>
               ) : (
-                <input type={field.type} value={fieldValues[field.key] || ''} onChange={e => updateField(field.key, e.target.value)} placeholder={field.placeholder} className="w-full rounded-xl border border-gray-200 px-4 py-2.5 text-sm focus:border-[#E50914] focus:outline-none" />
+                <input type={field.type} value={fieldValues[field.key] || ''} onChange={e => updateField(field.key, e.target.value)} placeholder={field.placeholder} className="w-full rounded-xl border border-white/10 px-4 py-2.5 text-sm focus:border-[#E50914] focus:outline-none" />
               )}
             </div>
           ))}
@@ -245,14 +245,14 @@ export default function DocumentFactoryPage() {
   if (view === 'preview' && generatedContent) {
     return (
       <div className="space-y-8 max-w-3xl">
-        <button onClick={() => setView('form')} className="flex items-center gap-1.5 text-sm text-gray-500 hover:text-[#1A1A2E]">
+        <button onClick={() => setView('form')} className="flex items-center gap-1.5 text-sm text-white/50 hover:text-white">
           <ArrowLeft className="h-4 w-4" /> Modifier les champs
         </button>
 
         <div className="flex items-center justify-between">
-          <h1 className="text-2xl font-bold text-[#1A1A2E]">{selectedTemplate?.name}</h1>
+          <h1 className="text-2xl font-bold text-white">{selectedTemplate?.name}</h1>
           <div className="flex gap-2">
-            <button onClick={copyDoc} className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs bg-gray-100 hover:bg-gray-200">
+            <button onClick={copyDoc} className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs bg-white/[0.05] hover:bg-white/[0.08]">
               {copied ? <Check className="h-3.5 w-3.5 text-green-500" /> : <Copy className="h-3.5 w-3.5" />}
               {copied ? 'Copié' : 'Copier'}
             </button>
@@ -270,19 +270,19 @@ export default function DocumentFactoryPage() {
           <div className={`rounded-xl p-4 border ${reviewScore >= 80 ? 'border-green-200 bg-green-50' : reviewScore >= 60 ? 'border-yellow-200 bg-yellow-50' : 'border-red-200 bg-red-50'}`}>
             <div className="flex items-center gap-2">
               <ShieldCheck className={`h-5 w-5 ${reviewScore >= 80 ? 'text-green-600' : reviewScore >= 60 ? 'text-yellow-600' : 'text-red-600'}`} />
-              <span className="text-sm font-semibold text-[#1A1A2E]">Review juridique : {reviewScore}/100</span>
+              <span className="text-sm font-semibold text-white">Review juridique : {reviewScore}/100</span>
             </div>
-            <p className="text-xs text-gray-500 mt-1">Révisé par l&apos;agent cg-doc-reviewer · Faites relire par un professionnel avant signature</p>
+            <p className="text-xs text-white/50 mt-1">Révisé par l&apos;agent cg-doc-reviewer · Faites relire par un professionnel avant signature</p>
           </div>
         )}
 
         {/* Document Content */}
-        <div className="rounded-2xl border border-gray-200 bg-white p-8">
-          <pre className="whitespace-pre-wrap text-sm text-gray-700 leading-relaxed font-sans">{generatedContent}</pre>
+        <div className="rounded-2xl border border-white/10 bg-white/5 p-8">
+          <pre className="whitespace-pre-wrap text-sm text-white/80 leading-relaxed font-sans">{generatedContent}</pre>
         </div>
 
         <div className="flex gap-3">
-          <button onClick={() => setView('templates')} className="flex-1 px-4 py-3 border border-gray-200 text-gray-600 rounded-xl hover:bg-gray-50 text-sm font-medium">Nouveau document</button>
+          <button onClick={() => setView('templates')} className="flex-1 px-4 py-3 border border-white/10 text-white/60 rounded-xl hover:bg-white/[0.03] text-sm font-medium">Nouveau document</button>
           <button onClick={() => setView('library')} className="flex-1 px-4 py-3 bg-[#E50914] text-white rounded-xl hover:bg-[#FF2D2D] text-sm font-semibold">Voir la bibliothèque</button>
         </div>
       </div>
@@ -295,26 +295,26 @@ export default function DocumentFactoryPage() {
     <div className="space-y-8">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-[#1A1A2E]">Bibliothèque</h1>
-          <p className="text-sm text-gray-500 mt-1">{savedDocs.length} documents archivés</p>
+          <h1 className="text-2xl font-bold text-white">Bibliothèque</h1>
+          <p className="text-sm text-white/50 mt-1">{savedDocs.length} documents archivés</p>
         </div>
         <button onClick={() => setView('templates')} className="px-3 py-1.5 rounded-lg text-xs bg-[#E50914] text-white">Nouveau document</button>
       </div>
 
       {savedDocs.length === 0 ? (
-        <div className="rounded-2xl border border-gray-200 bg-white p-12 text-center">
-          <FolderOpen className="h-10 w-10 text-gray-500 mx-auto mb-3" />
-          <p className="text-sm text-gray-500">Bibliothèque vide</p>
-          <p className="text-xs text-gray-500 mt-1">Les documents générés et archivés apparaîtront ici</p>
+        <div className="rounded-2xl border border-white/10 bg-white/5 p-12 text-center">
+          <FolderOpen className="h-10 w-10 text-white/50 mx-auto mb-3" />
+          <p className="text-sm text-white/50">Bibliothèque vide</p>
+          <p className="text-xs text-white/50 mt-1">Les documents générés et archivés apparaîtront ici</p>
         </div>
       ) : (
         <div className="space-y-3">
           {savedDocs.map(doc => (
-            <div key={doc.id} className="rounded-xl border border-gray-200 bg-white p-5 flex items-center gap-4">
+            <div key={doc.id} className="rounded-xl border border-white/10 bg-white/5 p-5 flex items-center gap-4">
               <FileText className="h-5 w-5 text-[#E50914] shrink-0" />
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-[#1A1A2E]">{doc.name}</p>
-                <p className="text-[10px] text-gray-500">{doc.date.toLocaleString('fr-FR')} · Score review: {doc.score}/100</p>
+                <p className="text-sm font-medium text-white">{doc.name}</p>
+                <p className="text-[10px] text-white/50">{doc.date.toLocaleString('fr-FR')} · Score review: {doc.score}/100</p>
               </div>
               <button onClick={() => { setGeneratedContent(doc.content); setReviewScore(doc.score); setView('preview') }} className="text-xs text-blue-500 hover:underline">
                 <Eye className="h-4 w-4" />

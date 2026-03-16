@@ -57,27 +57,27 @@ export default async function FinancialPage() {
   const marginRate = rev > 0 ? ((margin / rev) * 100).toFixed(1) : '0'
 
   const kpis = [
-    { label: 'Revenue totale', value: microToCredits(rev).toFixed(2), unit: 'cr', icon: DollarSign, color: 'text-green-600', bg: 'bg-green-50', border: 'border-green-100' },
-    { label: "Aujourd'hui", value: microToCredits(revenueToday._sum.billedCredits ?? 0).toFixed(2), unit: 'cr', icon: TrendingUp, color: 'text-emerald-600', bg: 'bg-emerald-50', border: 'border-emerald-100' },
-    { label: 'Cette semaine', value: microToCredits(revenueWeek._sum.billedCredits ?? 0).toFixed(2), unit: 'cr', icon: BarChart3, color: 'text-blue-600', bg: 'bg-blue-50', border: 'border-blue-100' },
-    { label: 'Ce mois', value: microToCredits(revenueMonth._sum.billedCredits ?? 0).toFixed(2), unit: 'cr', icon: Activity, color: 'text-purple-600', bg: 'bg-purple-50', border: 'border-purple-100' },
-    { label: 'Coût total', value: microToCredits(cost).toFixed(2), unit: 'cr', icon: TrendingDown, color: 'text-orange-600', bg: 'bg-orange-50', border: 'border-orange-100' },
-    { label: 'Marge', value: `${marginRate}%`, unit: '', icon: Percent, color: 'text-indigo-600', bg: 'bg-indigo-50', border: 'border-indigo-100' },
-    { label: 'Total déposé', value: microToCredits(totalDeposits._sum.amount ?? 0).toFixed(2), unit: 'cr', icon: CreditCard, color: 'text-green-600', bg: 'bg-green-50', border: 'border-green-100' },
-    { label: 'Total remboursé', value: microToCredits(totalRefunds._sum.amount ?? 0).toFixed(2), unit: 'cr', icon: TrendingDown, color: 'text-red-600', bg: 'bg-red-50', border: 'border-red-100' },
-    { label: 'Moy/utilisateur', value: microToCredits(avgPerUser).toFixed(2), unit: 'cr', icon: Users, color: 'text-cyan-600', bg: 'bg-cyan-50', border: 'border-cyan-100' },
-    { label: 'Wallets actifs', value: activeWallets, unit: '', icon: Wallet, color: 'text-yellow-600', bg: 'bg-yellow-50', border: 'border-yellow-100' },
-    { label: 'Req today', value: requestsToday, unit: '', icon: Zap, color: 'text-pink-600', bg: 'bg-pink-50', border: 'border-pink-100' },
-    { label: 'Req semaine', value: requestsWeek, unit: '', icon: Activity, color: 'text-teal-600', bg: 'bg-teal-50', border: 'border-teal-100' },
+    { label: 'Revenue totale', value: microToCredits(rev).toFixed(2), unit: 'cr', icon: DollarSign, color: 'text-green-500', bg: 'bg-green-500/10', border: 'border-green-500/20' },
+    { label: "Aujourd'hui", value: microToCredits(revenueToday._sum.billedCredits ?? 0).toFixed(2), unit: 'cr', icon: TrendingUp, color: 'text-emerald-500', bg: 'bg-emerald-500/10', border: 'border-emerald-500/20' },
+    { label: 'Cette semaine', value: microToCredits(revenueWeek._sum.billedCredits ?? 0).toFixed(2), unit: 'cr', icon: BarChart3, color: 'text-blue-500', bg: 'bg-blue-500/10', border: 'border-blue-500/20' },
+    { label: 'Ce mois', value: microToCredits(revenueMonth._sum.billedCredits ?? 0).toFixed(2), unit: 'cr', icon: Activity, color: 'text-purple-500', bg: 'bg-purple-500/10', border: 'border-purple-500/20' },
+    { label: 'Coût total', value: microToCredits(cost).toFixed(2), unit: 'cr', icon: TrendingDown, color: 'text-orange-500', bg: 'bg-orange-500/10', border: 'border-orange-500/20' },
+    { label: 'Marge', value: `${marginRate}%`, unit: '', icon: Percent, color: 'text-indigo-500', bg: 'bg-indigo-500/10', border: 'border-indigo-500/20' },
+    { label: 'Total déposé', value: microToCredits(totalDeposits._sum.amount ?? 0).toFixed(2), unit: 'cr', icon: CreditCard, color: 'text-green-500', bg: 'bg-green-500/10', border: 'border-green-500/20' },
+    { label: 'Total remboursé', value: microToCredits(totalRefunds._sum.amount ?? 0).toFixed(2), unit: 'cr', icon: TrendingDown, color: 'text-red-500', bg: 'bg-red-500/10', border: 'border-red-500/20' },
+    { label: 'Moy/utilisateur', value: microToCredits(avgPerUser).toFixed(2), unit: 'cr', icon: Users, color: 'text-cyan-500', bg: 'bg-cyan-500/10', border: 'border-cyan-500/20' },
+    { label: 'Wallets actifs', value: activeWallets, unit: '', icon: Wallet, color: 'text-yellow-500', bg: 'bg-yellow-500/10', border: 'border-yellow-500/20' },
+    { label: 'Req today', value: requestsToday, unit: '', icon: Zap, color: 'text-pink-500', bg: 'bg-pink-500/10', border: 'border-pink-500/20' },
+    { label: 'Req semaine', value: requestsWeek, unit: '', icon: Activity, color: 'text-teal-500', bg: 'bg-teal-500/10', border: 'border-teal-500/20' },
   ]
 
   return (
     <div className="space-y-10">
       <div>
-        <h1 className="text-2xl font-bold text-[#1A1A2E] font-[family-name:var(--font-playfair)]">
+        <h1 className="text-2xl font-bold text-white font-[family-name:var(--font-playfair)]">
           Financial Dashboard
         </h1>
-        <p className="text-sm text-gray-500 mt-1">KPIs financiers détaillés et ventilation des coûts</p>
+        <p className="text-sm text-white/50 mt-1">KPIs financiers détaillés et ventilation des coûts</p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
@@ -87,11 +87,11 @@ export default async function FinancialPage() {
             <div key={kpi.label} className={`rounded-2xl border ${kpi.border} ${kpi.bg} p-5`}>
               <div className="flex items-center gap-2 mb-2">
                 <Icon className={`h-4 w-4 ${kpi.color}`} />
-                <span className="text-[10px] text-gray-500 uppercase tracking-wider">{kpi.label}</span>
+                <span className="text-[10px] text-white/50 uppercase tracking-wider">{kpi.label}</span>
               </div>
-              <p className="text-xl font-bold text-[#1A1A2E]">
+              <p className="text-xl font-bold text-white">
                 {typeof kpi.value === 'number' ? kpi.value.toLocaleString() : kpi.value}
-                {kpi.unit && <span className="text-xs text-gray-500 ml-1">{kpi.unit}</span>}
+                {kpi.unit && <span className="text-xs text-white/50 ml-1">{kpi.unit}</span>}
               </p>
             </div>
           )
@@ -99,22 +99,22 @@ export default async function FinancialPage() {
       </div>
 
       {/* Balance détaillée */}
-      <div className="rounded-2xl border border-gray-200 bg-white p-4 sm:p-6">
-        <h2 className="text-lg font-semibold text-[#1A1A2E] mb-4 flex items-center gap-2">
+      <div className="rounded-2xl border border-white/10 bg-white/5 p-4 sm:p-6">
+        <h2 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
           <Wallet className="h-5 w-5 text-orange-500" /> Solde plateforme
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
           <div>
-            <p className="text-[10px] text-gray-500 uppercase tracking-wider">Total en circulation</p>
-            <p className="text-2xl sm:text-3xl font-bold text-[#1A1A2E]">{microToCredits(totalBalance._sum.balance ?? 0).toFixed(2)} <span className="text-sm text-gray-500">cr</span></p>
+            <p className="text-[10px] text-white/50 uppercase tracking-wider">Total en circulation</p>
+            <p className="text-2xl sm:text-3xl font-bold text-white">{microToCredits(totalBalance._sum.balance ?? 0).toFixed(2)} <span className="text-sm text-white/50">cr</span></p>
           </div>
           <div>
-            <p className="text-[10px] text-gray-500 uppercase tracking-wider">Wallets actifs</p>
-            <p className="text-2xl sm:text-3xl font-bold text-[#1A1A2E]">{activeWallets}</p>
+            <p className="text-[10px] text-white/50 uppercase tracking-wider">Wallets actifs</p>
+            <p className="text-2xl sm:text-3xl font-bold text-white">{activeWallets}</p>
           </div>
           <div>
-            <p className="text-[10px] text-gray-500 uppercase tracking-wider">Revenue nette</p>
-            <p className="text-2xl sm:text-3xl font-bold text-green-600">{microToCredits(margin).toFixed(2)} <span className="text-sm text-gray-500">cr</span></p>
+            <p className="text-[10px] text-white/50 uppercase tracking-wider">Revenue nette</p>
+            <p className="text-2xl sm:text-3xl font-bold text-green-600">{microToCredits(margin).toFixed(2)} <span className="text-sm text-white/50">cr</span></p>
           </div>
         </div>
       </div>
