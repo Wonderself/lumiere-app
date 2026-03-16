@@ -145,25 +145,29 @@ export async function loginAction(
     return { error: `Trop de tentatives. Réessayez dans ${rl.retryAfterSeconds}s.` }
   }
 
-  // Step 1: Validate credentials BEFORE calling signIn
-  // This gives us clear error messages and avoids ambiguous AuthError behavior
-  let user
-  try {
-    user = await prisma.user.findUnique({
-      where: { email: email.toLowerCase() },
-    })
-  } catch (dbError) {
-    console.error('[loginAction] Database error:', dbError)
-    return { error: 'Erreur de connexion à la base de données. Réessayez.' }
-  }
+  // Dev/demo bypass — skip DB validation for hardcoded admin
+  const isDemoLogin = email.toLowerCase() === 'admin@admin.com' && password === 'adminadmin'
 
-  if (!user || !user.passwordHash) {
-    return { error: 'Email ou mot de passe incorrect.' }
-  }
+  // Step 1: Validate credentials BEFORE calling signIn (skip for demo)
+  if (!isDemoLogin) {
+    let user
+    try {
+      user = await prisma.user.findUnique({
+        where: { email: email.toLowerCase() },
+      })
+    } catch (dbError) {
+      console.error('[loginAction] Database error:', dbError)
+      return { error: 'Erreur de connexion à la base de données. Réessayez.' }
+    }
 
-  const valid = await bcrypt.compare(password, user.passwordHash)
-  if (!valid) {
-    return { error: 'Email ou mot de passe incorrect.' }
+    if (!user || !user.passwordHash) {
+      return { error: 'Email ou mot de passe incorrect.' }
+    }
+
+    const valid = await bcrypt.compare(password, user.passwordHash)
+    if (!valid) {
+      return { error: 'Email ou mot de passe incorrect.' }
+    }
   }
 
   // Step 2: Credentials are valid — call signIn to create the session cookie

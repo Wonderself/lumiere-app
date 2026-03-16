@@ -12,7 +12,8 @@ import { signIn as nextAuthSignIn } from 'next-auth/react'
 import { Mail, Lock, Sparkles, Eye, EyeOff } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
-const SHOW_DEMO = process.env.NEXT_PUBLIC_SHOW_DEMO === 'true' || process.env.NODE_ENV === 'development'
+// Demo buttons always visible until production launch
+const SHOW_DEMO = true
 
 function sanitizeCallbackUrl(url: string | null): string {
   if (!url) return '/dashboard'
