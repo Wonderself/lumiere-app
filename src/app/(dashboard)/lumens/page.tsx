@@ -69,7 +69,7 @@ export default async function LumensPage() {
       {/* Balance Card */}
       <div className="relative overflow-hidden bg-white sm:rounded-3xl rounded-2xl shadow-sm border border-[#E50914]/20">
         <div className="absolute inset-0 bg-gradient-to-br from-amber-50 via-transparent to-amber-50/30 pointer-events-none" />
-        <div className="p-8 md:p-12 flex flex-col items-center text-center relative">
+        <div className="p-6 sm:p-8 md:p-12 flex flex-col items-center text-center relative">
           <div className="w-16 h-16 rounded-full bg-amber-50 border border-[#E50914]/20 flex items-center justify-center mb-6">
             <Sun className="h-8 w-8 text-[#E50914]" />
           </div>
@@ -81,7 +81,7 @@ export default async function LumensPage() {
           <div className="text-6xl md:text-7xl font-bold text-[#E50914] mb-3 tracking-tight">
             {user.lumenBalance.toLocaleString('fr-FR')}
           </div>
-          <p className="text-gray-400 text-sm">
+          <p className="text-gray-500 text-sm">
             1 Lumen = {lumenPrice}&#8364; — Votre porte-monnaie plateforme
           </p>
         </div>
@@ -94,17 +94,17 @@ export default async function LumensPage() {
         const taskRewards = transactions.filter(t => t.type === 'TASK_REWARD').reduce((s, t) => s + t.amount, 0)
         const bonuses = transactions.filter(t => t.type === 'BONUS').reduce((s, t) => s + t.amount, 0)
         return (
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
             {[
               { label: 'Total gagne', value: `+${totalEarned}`, icon: TrendingUp, color: 'text-green-500', bg: 'bg-green-50 border-green-100' },
               { label: 'Total depense', value: `-${totalSpent}`, icon: TrendingDown, color: 'text-red-500', bg: 'bg-red-50 border-red-100' },
               { label: 'Rewards taches', value: `+${taskRewards}`, icon: Sparkles, color: 'text-[#E50914]', bg: 'bg-amber-50 border-amber-100' },
               { label: 'Bonus', value: `+${bonuses}`, icon: Coins, color: 'text-purple-500', bg: 'bg-purple-50 border-purple-100' },
             ].map((stat) => (
-              <div key={stat.label} className={`p-4 rounded-xl border ${stat.bg}`}>
+              <div key={stat.label} className={`p-4 rounded-xl border shadow-sm ${stat.bg}`}>
                 <stat.icon className={`h-4 w-4 mb-2 ${stat.color}`} />
                 <div className={`text-lg font-bold ${stat.color}`}>{stat.value}</div>
-                <div className="text-[11px] text-gray-400 mt-0.5">{stat.label}</div>
+                <div className="text-[11px] text-gray-600 mt-0.5">{stat.label}</div>
               </div>
             ))}
           </div>
@@ -115,8 +115,8 @@ export default async function LumensPage() {
       <div className="h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
 
       {/* Purchase Section */}
-      <div className="bg-white sm:rounded-3xl rounded-2xl shadow-sm border border-gray-100/80">
-        <div className="p-6 pb-4">
+      <div className="bg-white sm:rounded-3xl rounded-2xl shadow-sm border border-gray-100">
+        <div className="p-4 sm:p-6 pb-4">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-amber-50 border border-amber-100 flex items-center justify-center">
               <ShoppingCart className="h-5 w-5 text-[#E50914]" />
@@ -127,13 +127,13 @@ export default async function LumensPage() {
               >
                 Acheter des Lumens
               </h2>
-              <p className="text-gray-400 text-sm mt-0.5">
+              <p className="text-gray-500 text-sm mt-0.5">
                 Choisissez un pack — plus vous achetez, plus vous economisez.
               </p>
             </div>
           </div>
         </div>
-        <div className="px-6 pb-6">
+        <div className="px-4 sm:px-6 pb-6">
           <PurchaseForm />
         </div>
       </div>
@@ -142,8 +142,8 @@ export default async function LumensPage() {
       <div className="h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
 
       {/* Withdraw Section */}
-      <div className="bg-white sm:rounded-3xl rounded-2xl shadow-sm border border-gray-100/80">
-        <div className="p-6 pb-4">
+      <div className="bg-white sm:rounded-3xl rounded-2xl shadow-sm border border-gray-100">
+        <div className="p-4 sm:p-6 pb-4">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-green-50 border border-green-100 flex items-center justify-center">
               <ArrowDownCircle className="h-5 w-5 text-green-500" />
@@ -154,13 +154,13 @@ export default async function LumensPage() {
               >
                 Convertir en euros
               </h2>
-              <p className="text-gray-400 text-sm mt-0.5">
+              <p className="text-gray-500 text-sm mt-0.5">
                 Vos Lumens seront convertis en euros et vires sous 14 jours ouvres. 0 frais.
               </p>
             </div>
           </div>
         </div>
-        <div className="px-6 pb-6">
+        <div className="px-4 sm:px-6 pb-6">
           <WithdrawForm currentBalance={user.lumenBalance} />
         </div>
       </div>
@@ -169,8 +169,8 @@ export default async function LumensPage() {
       <div className="h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
 
       {/* Transaction History */}
-      <div className="bg-white sm:rounded-3xl rounded-2xl shadow-sm border border-gray-100/80">
-        <div className="p-6 pb-4">
+      <div className="bg-white sm:rounded-3xl rounded-2xl shadow-sm border border-gray-100">
+        <div className="p-4 sm:p-6 pb-4">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-gray-50 border border-gray-200 flex items-center justify-center">
               <Sparkles className="h-5 w-5 text-gray-500" />
@@ -182,12 +182,12 @@ export default async function LumensPage() {
             </h2>
           </div>
         </div>
-        <div className="px-6 pb-6">
+        <div className="px-4 sm:px-6 pb-6">
           {transactions.length === 0 ? (
             <div className="text-center py-12">
-              <Gift className="h-10 w-10 text-gray-200 mx-auto mb-3" />
-              <p className="text-gray-500">Aucune transaction pour le moment.</p>
-              <p className="text-gray-400 text-sm mt-1">
+              <Gift className="h-10 w-10 text-gray-300 mx-auto mb-3" />
+              <p className="text-gray-600">Aucune transaction pour le moment.</p>
+              <p className="text-gray-500 text-sm mt-1">
                 Achetez vos premiers Lumens ou completez une tache pour commencer.
               </p>
             </div>
@@ -195,11 +195,11 @@ export default async function LumensPage() {
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
-                  <tr className="border-b border-gray-100/80 text-left">
-                    <th className="pb-3 text-xs text-gray-400 font-medium">Date</th>
-                    <th className="pb-3 text-xs text-gray-400 font-medium">Type</th>
-                    <th className="pb-3 text-xs text-gray-400 font-medium">Description</th>
-                    <th className="pb-3 text-xs text-gray-400 font-medium text-right">Montant</th>
+                  <tr className="border-b border-gray-100 text-left">
+                    <th className="pb-3 text-xs text-gray-600 font-medium">Date</th>
+                    <th className="pb-3 text-xs text-gray-600 font-medium">Type</th>
+                    <th className="pb-3 text-xs text-gray-600 font-medium">Description</th>
+                    <th className="pb-3 text-xs text-gray-600 font-medium text-right">Montant</th>
                   </tr>
                 </thead>
                 <tbody>

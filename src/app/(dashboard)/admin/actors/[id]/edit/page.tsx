@@ -20,10 +20,10 @@ type Props = { params: Promise<{ id: string }> }
 
 const ROLE_COLORS: Record<string, string> = {
   LEAD: 'border-[#E50914]/30 bg-[#E50914]/10 text-[#E50914]',
-  SUPPORTING: 'border-blue-400/30 bg-blue-400/10 text-blue-400',
-  CAMEO: 'border-purple-400/30 bg-purple-400/10 text-purple-400',
-  VOICE: 'border-cyan-400/30 bg-cyan-400/10 text-cyan-400',
-  NARRATOR: 'border-emerald-400/30 bg-emerald-400/10 text-emerald-400',
+  SUPPORTING: 'border-blue-400/30 bg-blue-400/10 text-blue-600',
+  CAMEO: 'border-purple-400/30 bg-purple-400/10 text-purple-600',
+  VOICE: 'border-cyan-400/30 bg-cyan-400/10 text-cyan-600',
+  NARRATOR: 'border-emerald-400/30 bg-emerald-400/10 text-emerald-600',
 }
 
 export default async function EditActorPage({ params }: Props) {

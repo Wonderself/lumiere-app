@@ -179,7 +179,7 @@ export function TrailerActions({
             >
               <p className="text-sm font-medium text-[#1A1A2E] mb-3">{choice.question}</p>
               {choice.category && (
-                <p className="text-[10px] text-gray-400 uppercase tracking-wider mb-2">
+                <p className="text-[10px] text-gray-500 uppercase tracking-wider mb-2">
                   {choice.category}
                 </p>
               )}

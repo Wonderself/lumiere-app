@@ -45,7 +45,7 @@ export default function ReferralPage() {
         <h1 className="text-3xl sm:text-4xl font-bold font-playfair">
           Parrainage
         </h1>
-        <p className="text-gray-400 mt-1">
+        <p className="text-gray-500 mt-1">
           Invitez des amis et gagnez des Lumens ensemble.
         </p>
       </div>
@@ -136,7 +136,7 @@ export default function ReferralPage() {
                 <div className="text-2xl font-bold text-gray-900 font-playfair">
                   {stat.value}
                 </div>
-                <div className="text-xs text-gray-400 mt-1">{stat.label}</div>
+                <div className="text-xs text-gray-500 mt-1">{stat.label}</div>
               </div>
             ))}
           </div>
@@ -151,7 +151,7 @@ export default function ReferralPage() {
                     <div className="flex items-center gap-3">
                       <div className={cn(
                         'h-8 w-8 rounded-full flex items-center justify-center text-xs',
-                        r.status === 'COMPLETED' ? 'bg-green-100 text-green-600' : 'bg-gray-100 text-gray-400'
+                        r.status === 'COMPLETED' ? 'bg-green-100 text-green-600' : 'bg-gray-100 text-gray-500'
                       )}>
                         {r.status === 'COMPLETED' ? <CheckCircle className="h-4 w-4" /> : <Clock className="h-4 w-4" />}
                       </div>
@@ -159,7 +159,7 @@ export default function ReferralPage() {
                         <p className="text-sm font-medium text-gray-700">
                           {r.referred?.displayName || 'Utilisateur'}
                         </p>
-                        <p className="text-xs text-gray-400">
+                        <p className="text-xs text-gray-500">
                           Inscrit le {new Intl.DateTimeFormat('fr-FR').format(new Date(r.createdAt))}
                         </p>
                       </div>
@@ -167,7 +167,7 @@ export default function ReferralPage() {
                     <div className="flex items-center gap-2">
                       <span className={cn(
                         'px-2.5 py-1 rounded-full text-[10px] font-medium',
-                        r.status === 'COMPLETED' ? 'bg-green-100 text-green-600' : 'bg-gray-100 text-gray-400'
+                        r.status === 'COMPLETED' ? 'bg-green-100 text-green-600' : 'bg-gray-100 text-gray-500'
                       )}>
                         {r.status === 'COMPLETED' ? `+${r.tokensEarned} Lumens` : 'En attente'}
                       </span>

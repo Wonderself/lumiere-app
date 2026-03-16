@@ -40,8 +40,8 @@ export default async function AdminPaymentsPage() {
   const countPending = stats.find(s => s.status === 'PENDING')?._count || 0
 
   const statusColors: Record<string, string> = {
-    COMPLETED: 'bg-green-500/10 text-green-400 border-green-500/20',
-    PENDING: 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20',
+    COMPLETED: 'bg-green-500/10 text-green-600 border-green-500/20',
+    PENDING: 'bg-yellow-500/10 text-yellow-600 border-yellow-500/20',
     FAILED: 'bg-red-500/10 text-red-400 border-red-500/20',
   }
 
@@ -65,10 +65,10 @@ export default async function AdminPaymentsPage() {
       {/* Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {[
-          { icon: CheckCircle, label: 'Complétés', value: formatPrice(totalCompleted), sub: `${countCompleted} paiements`, color: 'text-green-400' },
-          { icon: Clock, label: 'En attente', value: formatPrice(totalPending), sub: `${countPending} paiements`, color: 'text-yellow-400' },
+          { icon: CheckCircle, label: 'Complétés', value: formatPrice(totalCompleted), sub: `${countCompleted} paiements`, color: 'text-green-600' },
+          { icon: Clock, label: 'En attente', value: formatPrice(totalPending), sub: `${countPending} paiements`, color: 'text-yellow-600' },
           { icon: CreditCard, label: 'Total distribué', value: formatPrice(totalCompleted + totalPending), sub: 'toutes méthodes', color: 'text-[#E50914]' },
-          { icon: AlertCircle, label: 'Moy. par paiement', value: formatPrice(countCompleted > 0 ? totalCompleted / countCompleted : 0), sub: 'paiements complétés', color: 'text-blue-400' },
+          { icon: AlertCircle, label: 'Moy. par paiement', value: formatPrice(countCompleted > 0 ? totalCompleted / countCompleted : 0), sub: 'paiements complétés', color: 'text-blue-600' },
         ].map((s) => (
           <Card key={s.label} className="sm:rounded-2xl hover:shadow-md hover:-translate-y-[1px]">
             <CardContent className="p-5">

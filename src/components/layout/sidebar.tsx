@@ -214,7 +214,7 @@ export function Sidebar() {
           <div key={section.title}>
             <div className="flex items-center gap-2 px-3 pt-1 pb-2">
               <span className={cn('w-1.5 h-1.5 rounded-full', section.dotColor)} />
-              <p className="text-[10px] font-semibold uppercase tracking-[0.15em] text-gray-400">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.15em] text-gray-500">
                 {section.title}
               </p>
             </div>
@@ -237,7 +237,7 @@ export function Sidebar() {
                   >
                     <link.icon className={cn(
                       'h-4 w-4 shrink-0 transition-colors',
-                      isActive ? 'text-[#E50914]' : 'text-gray-400 group-hover:text-[#E50914]'
+                      isActive ? 'text-[#E50914]' : 'text-gray-500 group-hover:text-[#E50914]'
                     )} />
                     <span className="flex-1">{link.label}</span>
                     {link.badge && (
@@ -258,13 +258,13 @@ export function Sidebar() {
           <Separator className="mb-3 bg-gray-200" />
           <div className="flex items-center gap-2 px-3 pb-2">
             <span className="w-1.5 h-1.5 rounded-full bg-gray-400" />
-            <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-[0.15em]">
+            <p className="text-[10px] font-semibold text-gray-500 uppercase tracking-[0.15em]">
               Utilisateur
             </p>
           </div>
           <Link
             href="/dashboard"
-            className="flex items-center gap-3 px-3 py-2 rounded-lg text-[13px] text-gray-400 hover:text-[#E50914] hover:bg-[#E50914]/[0.04] transition-all"
+            className="flex items-center gap-3 px-3 py-2 rounded-lg text-[13px] text-gray-500 hover:text-[#E50914] hover:bg-[#E50914]/[0.04] transition-all"
           >
             <LayoutDashboard className="h-4 w-4" />
             Dashboard
@@ -324,7 +324,7 @@ export function Sidebar() {
       >
         <div className="p-3 flex items-center justify-between border-b border-gray-200">
           <span className="text-sm font-bold text-[#1A1A2E] font-[family-name:var(--font-playfair)]">CINEGEN</span>
-          <button onClick={() => setMobileOpen(false)} className="h-8 w-8 rounded-lg hover:bg-gray-100 flex items-center justify-center text-gray-400">
+          <button onClick={() => setMobileOpen(false)} className="h-8 w-8 rounded-lg hover:bg-gray-100 flex items-center justify-center text-gray-500">
             <X className="h-4 w-4" />
           </button>
         </div>

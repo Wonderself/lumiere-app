@@ -47,8 +47,8 @@ export default async function AdminTasksPage() {
       <div className="h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
 
       {tasks.length === 0 ? (
-        <div className="text-center py-20 text-white/30">
-          <Star className="h-16 w-16 mx-auto mb-4 opacity-30" />
+        <div className="text-center py-20 text-white/50">
+          <Star className="h-16 w-16 mx-auto mb-4 opacity-40" />
           <p className="text-xl">Aucune tâche</p>
         </div>
       ) : (
@@ -65,7 +65,7 @@ export default async function AdminTasksPage() {
 
               <div className="flex-1 min-w-0">
                 <p className="font-medium text-sm truncate">{task.title}</p>
-                <div className="flex items-center gap-2 text-xs text-white/40 mt-1">
+                <div className="flex items-center gap-2 text-xs text-white/50 mt-1">
                   <span>{task.film.title}</span>
                   <span>·</span>
                   <span>{task.phase.phaseName}</span>
@@ -86,7 +86,7 @@ export default async function AdminTasksPage() {
                 {formatPrice(task.priceEuros)}
               </div>
 
-              <Link href={`/admin/tasks/${task.id}/edit`} className="text-white/20 hover:text-white/60 transition-colors duration-300 shrink-0">
+              <Link href={`/admin/tasks/${task.id}/edit`} className="text-white/50 hover:text-white/70 transition-colors duration-300 shrink-0">
                 <Pencil className="h-4 w-4" />
               </Link>
             </div>

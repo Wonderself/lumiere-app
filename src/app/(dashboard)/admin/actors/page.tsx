@@ -15,13 +15,13 @@ export const dynamic = 'force-dynamic'
 export const metadata: Metadata = { title: 'Admin — Acteurs IA' }
 
 const STYLE_COLORS: Record<string, string> = {
-  DRAMATIC: 'border-purple-500/30 bg-purple-500/10 text-purple-400',
-  COMEDY: 'border-yellow-500/30 bg-yellow-500/10 text-yellow-400',
+  DRAMATIC: 'border-purple-500/30 bg-purple-500/10 text-purple-600',
+  COMEDY: 'border-yellow-500/30 bg-yellow-500/10 text-yellow-600',
   ACTION: 'border-red-500/30 bg-red-500/10 text-red-400',
   VERSATILE: 'border-[#E50914]/30 bg-[#E50914]/10 text-[#E50914]',
-  HORROR: 'border-emerald-500/30 bg-emerald-500/10 text-emerald-400',
-  ROMANCE: 'border-pink-500/30 bg-pink-500/10 text-pink-400',
-  EXPERIMENTAL: 'border-cyan-500/30 bg-cyan-500/10 text-cyan-400',
+  HORROR: 'border-emerald-500/30 bg-emerald-500/10 text-emerald-600',
+  ROMANCE: 'border-pink-500/30 bg-pink-500/10 text-pink-600',
+  EXPERIMENTAL: 'border-cyan-500/30 bg-cyan-500/10 text-cyan-600',
 }
 
 export default async function AdminActorsPage() {
@@ -40,11 +40,11 @@ export default async function AdminActorsPage() {
   ])
 
   return (
-    <div className="p-8 space-y-6">
+    <div className="space-y-10">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold font-playfair">
+          <h1 className="text-3xl sm:text-4xl font-bold font-playfair">
             Acteurs IA
           </h1>
           <p className="text-white/50">Gerez les acteurs virtuels de la plateforme.</p>
@@ -56,12 +56,14 @@ export default async function AdminActorsPage() {
         </Link>
       </div>
 
+      <div className="h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
+
       {/* Stats */}
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {[
           { label: 'Total acteurs', value: actors.length, icon: Users, color: 'text-[#E50914]' },
-          { label: 'Actifs', value: activeCount, icon: UserCheck, color: 'text-green-400' },
-          { label: 'Roles attribues', value: totalCastRoles, icon: Film, color: 'text-blue-400' },
+          { label: 'Actifs', value: activeCount, icon: UserCheck, color: 'text-green-600' },
+          { label: 'Roles attribues', value: totalCastRoles, icon: Film, color: 'text-blue-600' },
         ].map((stat) => (
           <div
             key={stat.label}
@@ -69,7 +71,7 @@ export default async function AdminActorsPage() {
           >
             <div className="flex items-center gap-3 mb-2">
               <stat.icon className={`h-5 w-5 ${stat.color}`} />
-              <span className="text-xs text-white/40 uppercase tracking-wider">{stat.label}</span>
+              <span className="text-xs text-white/50 uppercase tracking-wider">{stat.label}</span>
             </div>
             <div className="text-3xl font-bold text-white font-playfair">
               {stat.value}
@@ -80,8 +82,8 @@ export default async function AdminActorsPage() {
 
       {/* Actors List */}
       {actors.length === 0 ? (
-        <div className="text-center py-20 text-white/30">
-          <Users className="h-16 w-16 mx-auto mb-4 opacity-30" />
+        <div className="text-center py-20 text-white/50">
+          <Users className="h-16 w-16 mx-auto mb-4 opacity-40" />
           <p className="text-xl">Aucun acteur</p>
           <p className="text-sm mt-2">Creez votre premier acteur IA.</p>
         </div>
@@ -90,7 +92,7 @@ export default async function AdminActorsPage() {
           {actors.map((actor) => (
             <div
               key={actor.id}
-              className="flex items-center gap-4 p-4 rounded-xl border border-white/5 bg-white/[0.02] hover:border-white/10 transition-all"
+              className="flex items-center gap-4 p-4 sm:rounded-2xl rounded-xl border border-white/5 bg-white/[0.02] hover:border-white/10 hover:shadow-md hover:-translate-y-[1px] transition-all duration-500"
             >
               {/* Avatar */}
               <div className="h-14 w-14 rounded-full border-2 border-[#E50914]/20 bg-gradient-to-br from-[#E50914]/10 to-purple-900/20 shrink-0 overflow-hidden">
@@ -120,8 +122,8 @@ export default async function AdminActorsPage() {
                     {ACTOR_STYLE_LABELS[actor.style as keyof typeof ACTOR_STYLE_LABELS]}
                   </Badge>
                 </div>
-                <div className="flex items-center gap-4 text-xs text-white/40">
-                  <span className="font-mono text-white/25">{actor.slug}</span>
+                <div className="flex items-center gap-4 text-xs text-white/50 flex-wrap">
+                  <span className="font-mono text-white/50">{actor.slug}</span>
                   <span>
                     {actor.nationality && (
                       <>

@@ -132,7 +132,7 @@ export default function ScreenplayNewPage() {
                   isActive
                     ? 'bg-[#E50914]/15 text-[#E50914] border border-[#E50914]/20'
                     : isCompleted
-                    ? 'bg-green-500/10 text-green-400 border border-green-500/20 cursor-pointer'
+                    ? 'bg-green-500/10 text-green-600 border border-green-500/20 cursor-pointer'
                     : 'bg-white/[0.03] text-white/30 border border-white/5'
                 }`}
               >
@@ -218,7 +218,7 @@ export default function ScreenplayNewPage() {
                 />
                 <div className="flex items-center justify-between text-xs text-white/25">
                   <span>{content.length} caracteres</span>
-                  <span className={content.length >= 100 ? 'text-green-400' : 'text-orange-400'}>
+                  <span className={content.length >= 100 ? 'text-green-600' : 'text-orange-600'}>
                     {content.length >= 100 ? 'Minimum atteint' : `${100 - content.length} restants`}
                   </span>
                 </div>

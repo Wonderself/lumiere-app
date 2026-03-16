@@ -55,7 +55,7 @@ export function Header() {
   const userName = session?.user?.name || session?.user?.email || ''
 
   return (
-    <header className="sticky top-0 z-50 border-b border-white/5 bg-[#0A0A0A]/80 backdrop-blur-2xl">
+    <header className="sticky top-0 z-50 border-b border-gray-200/20 bg-[#0A0A0A]/80 backdrop-blur-2xl">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2.5 group shrink-0">

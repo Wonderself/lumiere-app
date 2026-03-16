@@ -16,7 +16,7 @@ export function WithdrawForm({ currentBalance }: { currentBalance: number }) {
   return (
     <div className="space-y-4">
       {state?.success && (
-        <div className="flex items-center gap-2 p-4 rounded-lg bg-green-500/10 border border-green-500/20 text-green-400 text-sm">
+        <div className="flex items-center gap-2 p-4 rounded-lg bg-green-500/10 border border-green-500/20 text-green-600 text-sm">
           <Check className="h-4 w-4 shrink-0" />
           <span>Demande de retrait enregistree. Le virement sera effectue sous 14 jours ouvres.</span>
         </div>
@@ -84,7 +84,7 @@ export function WithdrawForm({ currentBalance }: { currentBalance: number }) {
               <div className="text-white/20 mx-4">&#8594;</div>
               <div className="space-y-1">
                 <div className="text-xs text-white/40">Solde restant</div>
-                <div className={`text-sm font-semibold ${remaining >= 0 ? 'text-green-400' : 'text-red-400'}`}>
+                <div className={`text-sm font-semibold ${remaining >= 0 ? 'text-green-600' : 'text-red-400'}`}>
                   {remaining >= 0
                     ? remaining.toLocaleString('fr-FR')
                     : 'Insuffisant'

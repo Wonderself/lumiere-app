@@ -12,9 +12,9 @@ export const metadata: Metadata = {
 }
 
 const STATUS_CONFIG: Record<string, { label: string; color: string; bg: string }> = {
-  PENDING: { label: 'En attente', color: 'text-yellow-400', bg: 'bg-yellow-500/10 border-yellow-500/20' },
-  PROCESSING: { label: 'En cours', color: 'text-blue-400', bg: 'bg-blue-500/10 border-blue-500/20' },
-  COMPLETED: { label: 'Complété', color: 'text-green-400', bg: 'bg-green-500/10 border-green-500/20' },
+  PENDING: { label: 'En attente', color: 'text-yellow-600', bg: 'bg-yellow-500/10 border-yellow-500/20' },
+  PROCESSING: { label: 'En cours', color: 'text-blue-600', bg: 'bg-blue-500/10 border-blue-500/20' },
+  COMPLETED: { label: 'Complété', color: 'text-green-600', bg: 'bg-green-500/10 border-green-500/20' },
   FAILED: { label: 'Échoué', color: 'text-red-400', bg: 'bg-red-500/10 border-red-500/20' },
 }
 
@@ -82,21 +82,21 @@ export default async function PaymentsPage() {
         <div className="bg-white/[0.03] backdrop-blur border border-white/10 sm:rounded-3xl rounded-2xl p-6 hover:shadow-md transition-all duration-500">
           <div className="flex items-center gap-3 mb-3">
             <div className="h-10 w-10 rounded-xl bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center">
-              <Clock className="h-5 w-5 text-yellow-400" />
+              <Clock className="h-5 w-5 text-yellow-600" />
             </div>
             <span className="text-sm text-white/40">En attente</span>
           </div>
-          <p className="text-2xl font-bold text-yellow-400">{pendingCount}</p>
+          <p className="text-2xl font-bold text-yellow-600">{pendingCount}</p>
         </div>
 
         <div className="bg-white/[0.03] backdrop-blur border border-white/10 sm:rounded-3xl rounded-2xl p-6 hover:shadow-md transition-all duration-500">
           <div className="flex items-center gap-3 mb-3">
             <div className="h-10 w-10 rounded-xl bg-green-500/10 border border-green-500/20 flex items-center justify-center">
-              <CheckCircle className="h-5 w-5 text-green-400" />
+              <CheckCircle className="h-5 w-5 text-green-600" />
             </div>
             <span className="text-sm text-white/40">Complétés</span>
           </div>
-          <p className="text-2xl font-bold text-green-400">{completedCount}</p>
+          <p className="text-2xl font-bold text-green-600">{completedCount}</p>
         </div>
       </div>
 

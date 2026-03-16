@@ -177,9 +177,9 @@ export default async function FilmTokenDetailPage({ params }: { params: Promise<
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
               {[
                 { label: 'Prix / Token', value: formatEur(offering.tokenPrice), icon: Coins, color: 'text-[#E50914]' },
-                { label: 'Vendus / Total', value: `${offering.tokensSold.toLocaleString('fr-FR')} / ${offering.totalTokens.toLocaleString('fr-FR')}`, icon: BarChart3, color: 'text-blue-400' },
-                { label: 'Levée', value: `${formatEur(offering.raised)} / ${formatEur(offering.hardCap)}`, icon: CircleDollarSign, color: 'text-green-400' },
-                { label: 'Temps restant', value: timeLeft, icon: Clock, color: 'text-orange-400' },
+                { label: 'Vendus / Total', value: `${offering.tokensSold.toLocaleString('fr-FR')} / ${offering.totalTokens.toLocaleString('fr-FR')}`, icon: BarChart3, color: 'text-blue-600' },
+                { label: 'Levée', value: `${formatEur(offering.raised)} / ${formatEur(offering.hardCap)}`, icon: CircleDollarSign, color: 'text-green-600' },
+                { label: 'Temps restant', value: timeLeft, icon: Clock, color: 'text-orange-600' },
               ].map((stat) => (
                 <div key={stat.label} className="rounded-lg bg-white/[0.03] border border-white/5 p-3">
                   <div className="flex items-center gap-1.5 mb-1">
@@ -248,7 +248,7 @@ export default async function FilmTokenDetailPage({ params }: { params: Promise<
             <CardHeader>
               <div className="flex items-center justify-between">
                 <CardTitle className="text-white flex items-center gap-2">
-                  <Gavel className="h-5 w-5 text-purple-400" />
+                  <Gavel className="h-5 w-5 text-purple-600" />
                   Gouvernance
                 </CardTitle>
                 <Link href="/tokenization/governance">
@@ -294,7 +294,7 @@ export default async function FilmTokenDetailPage({ params }: { params: Promise<
                             />
                           </div>
                           <div className="flex items-center justify-between text-[10px]">
-                            <span className="text-green-400">Pour: {forPct}%</span>
+                            <span className="text-green-600">Pour: {forPct}%</span>
                             <span className="text-white/20">{proposal._count.votes} vote(s)</span>
                             <span className="text-red-400">Contre: {againstPct}%</span>
                           </div>
@@ -306,7 +306,7 @@ export default async function FilmTokenDetailPage({ params }: { params: Promise<
                             <form action={async (fd: FormData) => { 'use server'; await voteOnProposalAction(fd) }} className="flex-1">
                               <input type="hidden" name="proposalId" value={proposal.id} />
                               <input type="hidden" name="vote" value="FOR" />
-                              <Button variant="outline" size="sm" className="w-full min-h-[44px] border-green-500/20 text-green-400 hover:bg-green-500/10" type="submit">
+                              <Button variant="outline" size="sm" className="w-full min-h-[44px] border-green-500/20 text-green-600 hover:bg-green-500/10" type="submit">
                                 Pour
                               </Button>
                             </form>
@@ -338,7 +338,7 @@ export default async function FilmTokenDetailPage({ params }: { params: Promise<
           <Card className="bg-white/[0.03] border-white/10">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <PiggyBank className="h-5 w-5 text-green-400" />
+                <PiggyBank className="h-5 w-5 text-green-600" />
                 Revenus & Dividendes
               </CardTitle>
             </CardHeader>
@@ -355,7 +355,7 @@ export default async function FilmTokenDetailPage({ params }: { params: Promise<
                   <div className="grid grid-cols-2 gap-3">
                     <div className="rounded-lg bg-green-500/5 border border-green-500/10 p-3">
                       <p className="text-white/30 text-xs">Revenu total</p>
-                      <p className="text-green-400 text-lg font-bold">{formatEur(totalRevenue)}</p>
+                      <p className="text-green-600 text-lg font-bold">{formatEur(totalRevenue)}</p>
                     </div>
                     <div className="rounded-lg bg-[#E50914]/5 border border-[#E50914]/10 p-3">
                       <p className="text-white/30 text-xs">Part distributable</p>
@@ -384,7 +384,7 @@ export default async function FilmTokenDetailPage({ params }: { params: Promise<
           <Card className="bg-white/[0.03] border-white/10">
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
-                <ShoppingCart className="h-5 w-5 text-blue-400" />
+                <ShoppingCart className="h-5 w-5 text-blue-600" />
                 Marché Secondaire
               </CardTitle>
             </CardHeader>
@@ -467,7 +467,7 @@ export default async function FilmTokenDetailPage({ params }: { params: Promise<
 
                   {offering.kycRequired && (
                     <div className="flex items-start gap-2 p-2 rounded-lg bg-yellow-500/5 border border-yellow-500/10">
-                      <Shield className="h-4 w-4 text-yellow-400 shrink-0 mt-0.5" />
+                      <Shield className="h-4 w-4 text-yellow-600 shrink-0 mt-0.5" />
                       <p className="text-white/40 text-[10px]">
                         Vérification KYC requise. Votre profil doit être vérifié pour investir.
                       </p>
@@ -509,7 +509,7 @@ export default async function FilmTokenDetailPage({ params }: { params: Promise<
                   {pendingDividends.map((div) => (
                     <div key={div.id} className="flex items-center justify-between py-1.5">
                       <span className="text-white/30 text-xs">{div.period}</span>
-                      <span className="text-green-400 text-sm font-medium">{formatEur(div.amount)}</span>
+                      <span className="text-green-600 text-sm font-medium">{formatEur(div.amount)}</span>
                     </div>
                   ))}
                 </div>
@@ -530,7 +530,7 @@ export default async function FilmTokenDetailPage({ params }: { params: Promise<
           <Card className="bg-white/[0.03] border-white/10">
             <CardHeader>
               <CardTitle className="text-white text-sm flex items-center gap-2">
-                <Users className="h-4 w-4 text-blue-400" />
+                <Users className="h-4 w-4 text-blue-600" />
                 Distribution
               </CardTitle>
             </CardHeader>
@@ -547,7 +547,7 @@ export default async function FilmTokenDetailPage({ params }: { params: Promise<
               </div>
               {offering.projectedROI && (
                 <div className="rounded-lg bg-green-500/5 border border-green-500/10 p-3 text-center">
-                  <p className="text-green-400 text-lg font-bold flex items-center justify-center gap-1">
+                  <p className="text-green-600 text-lg font-bold flex items-center justify-center gap-1">
                     <TrendingUp className="h-4 w-4" />
                     ~{offering.projectedROI}%
                   </p>

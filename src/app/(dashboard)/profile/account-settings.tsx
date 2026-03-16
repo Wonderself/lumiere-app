@@ -187,7 +187,7 @@ export function AccountSettings() {
                   className="
                     w-full px-3 py-2 rounded-lg text-sm
                     border border-red-200 bg-white text-gray-900
-                    placeholder:text-gray-400
+                    placeholder:text-gray-500
                     focus:outline-none focus:ring-2 focus:ring-red-300 focus:border-red-300
                   "
                 />

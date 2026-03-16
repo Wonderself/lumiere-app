@@ -64,8 +64,8 @@ export default async function EarningsPage() {
 
   const statusColors: Record<string, string> = {
     COMPLETED: 'bg-green-500/10 text-green-500 border-green-500/20',
-    PENDING: 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20',
-    PROCESSING: 'bg-blue-500/10 text-blue-400 border-blue-500/20',
+    PENDING: 'bg-yellow-500/10 text-yellow-600 border-yellow-500/20',
+    PROCESSING: 'bg-blue-500/10 text-blue-600 border-blue-500/20',
     FAILED: 'bg-red-500/10 text-red-400 border-red-500/20',
   }
 
@@ -91,17 +91,17 @@ export default async function EarningsPage() {
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
         {[
           { label: 'Total gagne', value: formatPrice(totalEarned), icon: TrendingUp, color: 'text-green-500', bg: 'bg-green-50 border-green-100' },
           { label: 'En attente', value: formatPrice(totalPending), icon: Clock, color: 'text-yellow-500', bg: 'bg-yellow-50 border-yellow-100' },
           { label: 'Paiements recus', value: String(completedCount), icon: CheckCircle, color: 'text-blue-500', bg: 'bg-blue-50 border-blue-100' },
           { label: 'Lumens', value: String(user?.lumenBalance || 0), icon: Wallet, color: 'text-[#E50914]', bg: 'bg-amber-50 border-amber-100' },
         ].map((stat) => (
-          <div key={stat.label} className={`p-4 rounded-xl border ${stat.bg}`}>
+          <div key={stat.label} className={`p-4 rounded-xl shadow-sm border ${stat.bg}`}>
             <stat.icon className={`h-4 w-4 mb-2 ${stat.color}`} />
             <div className={`text-xl font-bold ${stat.color}`}>{stat.value}</div>
-            <div className="text-[11px] text-gray-400 mt-0.5">{stat.label}</div>
+            <div className="text-xs text-gray-500 mt-0.5">{stat.label}</div>
           </div>
         ))}
       </div>
@@ -116,20 +116,20 @@ export default async function EarningsPage() {
             <h2 className="text-lg font-bold text-gray-900 font-playfair">
               Revenus mensuels
             </h2>
-            <p className="text-gray-400 text-sm">6 derniers mois</p>
+            <p className="text-gray-500 text-sm">6 derniers mois</p>
           </div>
         </div>
         <div className="flex items-end gap-3 h-32">
           {monthlyData.map((m) => (
             <div key={m.month} className="flex-1 flex flex-col items-center gap-1">
-              <span className="text-[10px] text-gray-400 font-medium">
+              <span className="text-xs text-gray-500 font-medium">
                 {m.amount > 0 ? formatPrice(m.amount) : ''}
               </span>
               <div
                 className="w-full rounded-t-lg bg-gradient-to-t from-[#E50914] to-[#FF2D2D] transition-all duration-500"
                 style={{ height: `${Math.max((m.amount / maxMonthly) * 100, 4)}%` }}
               />
-              <span className="text-[10px] text-gray-400">{m.month}</span>
+              <span className="text-xs text-gray-500">{m.month}</span>
             </div>
           ))}
         </div>
@@ -158,7 +158,7 @@ export default async function EarningsPage() {
             <div className="text-center py-12">
               <CreditCard className="h-10 w-10 text-gray-200 mx-auto mb-3" />
               <p className="text-gray-500">Aucun paiement pour le moment.</p>
-              <p className="text-gray-400 text-sm mt-1">
+              <p className="text-gray-500 text-sm mt-1">
                 Completez des taches pour recevoir vos premiers paiements.
               </p>
               <Link
@@ -176,17 +176,17 @@ export default async function EarningsPage() {
                   className="flex items-center gap-4 p-3 rounded-xl border border-gray-50 hover:bg-gray-50/50 transition-all duration-300"
                 >
                   <div className="w-10 h-10 rounded-lg bg-gray-50 border border-gray-100 flex items-center justify-center shrink-0">
-                    <CreditCard className="h-4 w-4 text-gray-400" />
+                    <CreditCard className="h-4 w-4 text-gray-500" />
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-medium text-gray-900 truncate">{p.task.title}</p>
-                    <p className="text-xs text-gray-400 truncate">{p.task.film.title}</p>
+                    <p className="text-xs text-gray-500 truncate">{p.task.film.title}</p>
                   </div>
                   <div className="text-right shrink-0">
                     <div className="text-sm font-bold text-green-600">+{formatPrice(p.amountEur)}</div>
-                    <div className="text-[10px] text-gray-300 mt-0.5">{formatDate(p.createdAt)}</div>
+                    <div className="text-xs text-gray-500 mt-0.5">{formatDate(p.createdAt)}</div>
                   </div>
-                  <Badge variant="outline" className={`text-[10px] shrink-0 ${statusColors[p.status] || ''}`}>
+                  <Badge variant="outline" className={`text-xs shrink-0 ${statusColors[p.status] || ''}`}>
                     {statusLabels[p.status] || p.status}
                   </Badge>
                   {p.status === 'COMPLETED' && (
@@ -196,7 +196,7 @@ export default async function EarningsPage() {
                       className="p-1.5 rounded-lg hover:bg-gray-100 transition-colors shrink-0"
                       title="Telecharger la facture"
                     >
-                      <FileText className="h-3.5 w-3.5 text-gray-400" />
+                      <FileText className="h-3.5 w-3.5 text-gray-500" />
                     </Link>
                   )}
                 </div>

@@ -24,9 +24,9 @@ export default async function AdminScreenplaysPage() {
   })
 
   const statusColors: Record<string, string> = {
-    SUBMITTED: 'bg-blue-500/10 text-blue-400 border-blue-500/20',
-    EVALUATING: 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20',
-    ACCEPTED: 'bg-green-500/10 text-green-400 border-green-500/20',
+    SUBMITTED: 'bg-blue-500/10 text-blue-600 border-blue-500/20',
+    EVALUATING: 'bg-yellow-500/10 text-yellow-600 border-yellow-500/20',
+    ACCEPTED: 'bg-green-500/10 text-green-600 border-green-500/20',
     REJECTED: 'bg-red-500/10 text-red-400 border-red-500/20',
   }
 
@@ -41,24 +41,24 @@ export default async function AdminScreenplaysPage() {
     <div className="space-y-10">
       <div>
         <h1 className="text-3xl sm:text-4xl font-bold mb-2 font-playfair">Scénarios</h1>
-        <p className="text-white/50">{screenplays.length} scénario{screenplays.length > 1 ? 's' : ''} soumis</p>
+        <p className="text-white/60">{screenplays.length} scénario{screenplays.length > 1 ? 's' : ''} soumis</p>
       </div>
 
       <div className="h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
 
       {screenplays.length === 0 ? (
-        <Card className="sm:rounded-2xl">
+        <Card className="rounded-xl shadow-sm border border-white/10">
           <CardContent className="p-12 text-center">
-            <FileText className="h-12 w-12 text-white/20 mx-auto mb-3" />
-            <p className="text-white/40">Aucun scénario soumis</p>
+            <FileText className="h-12 w-12 text-white/50 mx-auto mb-3" />
+            <p className="text-white/50">Aucun scénario soumis</p>
           </CardContent>
         </Card>
       ) : (
         <div className="space-y-4">
           {screenplays.map((s) => (
-            <Card key={s.id} className="sm:rounded-2xl hover:border-white/10 hover:shadow-md hover:-translate-y-[1px] transition-all duration-500">
+            <Card key={s.id} className="rounded-xl shadow-sm border border-white/10 hover:border-white/15 hover:shadow-md hover:-translate-y-[1px] transition-all duration-500">
               <CardContent className="p-6">
-                <div className="flex items-start justify-between gap-4">
+                <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-3 mb-2">
                       <h3 className="font-semibold text-lg truncate">{s.title}</h3>
@@ -69,7 +69,7 @@ export default async function AdminScreenplaysPage() {
 
                     <p className="text-sm text-white/50 mb-3 line-clamp-2">{s.logline}</p>
 
-                    <div className="flex items-center gap-4 text-xs text-white/40">
+                    <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-white/50">
                       <span>par {s.user.displayName || s.user.email}</span>
                       <span>·</span>
                       <span>{s.genre || 'Genre non défini'}</span>
@@ -89,23 +89,23 @@ export default async function AdminScreenplaysPage() {
                     {s.aiScore !== null && (
                       <div className="mt-3 flex items-center gap-3">
                         <div className={`text-sm font-bold ${
-                          (s.aiScore || 0) >= 80 ? 'text-green-400' :
+                          (s.aiScore || 0) >= 80 ? 'text-green-600' :
                           (s.aiScore || 0) >= 50 ? 'text-[#E50914]' :
                           'text-red-400'
                         }`}>
                           Score IA: {s.aiScore}/100
                         </div>
                         {s.aiFeedback && (
-                          <p className="text-xs text-white/30 truncate flex-1">{s.aiFeedback}</p>
+                          <p className="text-xs text-white/50 truncate flex-1">{s.aiFeedback}</p>
                         )}
                       </div>
                     )}
                   </div>
 
                   {/* Actions */}
-                  <div className="flex flex-col gap-2 shrink-0">
+                  <div className="flex flex-row sm:flex-col gap-2 shrink-0">
                     {s.status === 'ACCEPTED' ? (
-                      <Badge variant="outline" className="justify-center border-green-500/20 text-green-400">
+                      <Badge variant="outline" className="justify-center border-green-500/20 text-green-600">
                         <Film className="h-3 w-3 mr-1" /> Accepté
                       </Badge>
                     ) : s.status !== 'REJECTED' ? (

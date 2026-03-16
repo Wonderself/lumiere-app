@@ -83,12 +83,12 @@ export default async function AdminContestsPage() {
     <div className="p-8 space-y-8">
 
       {/* Header */}
-      <div className="flex items-start justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
         <div>
-          <h1 className="text-3xl font-bold mb-1 font-playfair">
+          <h1 className="text-2xl sm:text-3xl font-bold mb-1 font-playfair">
             Concours & Scenarios
           </h1>
-          <p className="text-white/50">Gerez les concours de trailers et les propositions de scenarios</p>
+          <p className="text-white/50 text-sm">Gerez les concours de trailers et les propositions de scenarios</p>
         </div>
         <Link
           href="/community"
@@ -108,23 +108,23 @@ export default async function AdminContestsPage() {
         </div>
 
         {/* Stats */}
-        <div className="grid grid-cols-3 gap-4 mb-6">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
           <Card>
             <CardContent className="p-4 text-center">
               <div className="text-2xl font-bold text-[#E50914]">{contestStats.total}</div>
-              <div className="text-xs text-white/40">Total concours</div>
+              <div className="text-xs text-white/50">Total concours</div>
             </CardContent>
           </Card>
           <Card>
             <CardContent className="p-4 text-center">
-              <div className="text-2xl font-bold text-green-400">{contestStats.active}</div>
-              <div className="text-xs text-white/40">Actifs</div>
+              <div className="text-2xl font-bold text-green-600">{contestStats.active}</div>
+              <div className="text-xs text-white/50">Actifs</div>
             </CardContent>
           </Card>
           <Card>
             <CardContent className="p-4 text-center">
-              <div className="text-2xl font-bold text-purple-400">{contestStats.entries}</div>
-              <div className="text-xs text-white/40">Participations</div>
+              <div className="text-2xl font-bold text-purple-600">{contestStats.entries}</div>
+              <div className="text-xs text-white/50">Participations</div>
             </CardContent>
           </Card>
         </div>
@@ -137,7 +137,7 @@ export default async function AdminContestsPage() {
         {/* Contest List */}
         {contests.length === 0 ? (
           <Card>
-            <CardContent className="p-8 text-center text-white/30">
+            <CardContent className="p-8 text-center text-white/40">
               <Trophy className="h-10 w-10 mx-auto mb-2 opacity-30" />
               <p>Aucun concours cree</p>
             </CardContent>
@@ -157,7 +157,7 @@ export default async function AdminContestsPage() {
                         <div className="flex items-center gap-2 mb-2">
                           <Badge variant={statusInfo.variant}>{statusInfo.label}</Badge>
                           {contest.film && (
-                            <span className="text-xs text-white/30 flex items-center gap-1">
+                            <span className="text-xs text-white/40 flex items-center gap-1">
                               <Film className="h-3 w-3" />
                               {contest.film.title}
                             </span>
@@ -168,7 +168,7 @@ export default async function AdminContestsPage() {
                             {contest.title}
                           </h3>
                         </Link>
-                        <div className="flex items-center gap-4 mt-2 text-xs text-white/30">
+                        <div className="flex items-center gap-4 mt-2 text-xs text-white/40">
                           <span className="flex items-center gap-1">
                             <Users className="h-3 w-3" />
                             {contest._count.entries} participation{contest._count.entries !== 1 ? 's' : ''}
@@ -215,23 +215,23 @@ export default async function AdminContestsPage() {
         </div>
 
         {/* Stats */}
-        <div className="grid grid-cols-3 gap-4 mb-6">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
           <Card>
             <CardContent className="p-4 text-center">
-              <div className="text-2xl font-bold text-blue-400">{scenarioStats.total}</div>
-              <div className="text-xs text-white/40">Total propositions</div>
+              <div className="text-2xl font-bold text-blue-600">{scenarioStats.total}</div>
+              <div className="text-xs text-white/50">Total propositions</div>
             </CardContent>
           </Card>
           <Card>
             <CardContent className="p-4 text-center">
               <div className="text-2xl font-bold text-[#E50914]">{scenarioStats.voting}</div>
-              <div className="text-xs text-white/40">En vote</div>
+              <div className="text-xs text-white/50">En vote</div>
             </CardContent>
           </Card>
           <Card>
             <CardContent className="p-4 text-center">
-              <div className="text-2xl font-bold text-green-400">{scenarioStats.winners}</div>
-              <div className="text-xs text-white/40">Gagnants</div>
+              <div className="text-2xl font-bold text-green-600">{scenarioStats.winners}</div>
+              <div className="text-xs text-white/50">Gagnants</div>
             </CardContent>
           </Card>
         </div>
@@ -251,7 +251,7 @@ export default async function AdminContestsPage() {
         {/* Proposal List */}
         {proposals.length === 0 ? (
           <Card>
-            <CardContent className="p-8 text-center text-white/30">
+            <CardContent className="p-8 text-center text-white/40">
               <PenTool className="h-10 w-10 mx-auto mb-2 opacity-30" />
               <p>Aucune proposition de scenario</p>
             </CardContent>
@@ -278,7 +278,7 @@ export default async function AdminContestsPage() {
                             {proposal.title}
                           </h4>
                         </Link>
-                        <div className="flex items-center gap-3 mt-1 text-xs text-white/30">
+                        <div className="flex items-center gap-3 mt-1 text-xs text-white/40">
                           <span className="flex items-center gap-1">
                             <User className="h-3 w-3" />
                             {proposal.author.displayName}

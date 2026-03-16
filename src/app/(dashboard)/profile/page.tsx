@@ -149,7 +149,7 @@ export default async function ProfilePage() {
 
               <p className="text-gray-500 text-sm mb-1">{user.email}</p>
 
-              <div className="flex items-center gap-4 text-xs text-gray-400 mt-2">
+              <div className="flex items-center gap-4 text-xs text-gray-500 mt-2">
                 <span className="flex items-center gap-1">
                   <Calendar className="h-3.5 w-3.5" />
                   Membre depuis {formatDate(user.createdAt)}
@@ -185,27 +185,27 @@ export default async function ProfilePage() {
       <div className="h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
 
       {/* ── Stats Row ── */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
         {stats.map((stat) => (
           <div
             key={stat.label}
             className={`border bg-white sm:rounded-2xl rounded-xl shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-500 ${stat.bgColor}`}
           >
-            <div className="p-6 text-center">
+            <div className="p-4 sm:p-6 text-center">
               <div className={`inline-flex items-center justify-center h-11 w-11 rounded-xl ${stat.bgColor} mb-3`}>
                 <stat.icon className={`h-5 w-5 ${stat.color}`} />
               </div>
               <div className={`text-2xl font-bold ${stat.color}`}>
                 {stat.value}
               </div>
-              <div className="text-xs text-gray-400 mt-1">{stat.label}</div>
+              <div className="text-xs text-gray-600 mt-1">{stat.label}</div>
             </div>
           </div>
         ))}
       </div>
 
       {/* ── Level Progress ── */}
-      <div className="bg-white sm:rounded-2xl rounded-xl shadow-sm border border-gray-100 p-7 hover:shadow-md transition-shadow duration-500">
+      <div className="bg-white sm:rounded-2xl rounded-xl shadow-sm border border-gray-100 p-4 sm:p-7 hover:shadow-md transition-shadow duration-500">
         <h2
           className="text-lg font-semibold text-gray-900 mb-5"
         >
@@ -215,7 +215,7 @@ export default async function ProfilePage() {
           {/* Level bar (light theme adaptation) */}
           <div className="flex items-center justify-between mb-2">
             <span className="text-sm font-bold text-[#E50914]">{user.level}</span>
-            <span className="text-xs text-gray-400">{user.points.toLocaleString('fr-FR')} points</span>
+            <span className="text-xs text-gray-600">{user.points.toLocaleString('fr-FR')} points</span>
           </div>
           <div className="h-2.5 bg-gray-100 rounded-full overflow-hidden">
             <div
@@ -233,7 +233,7 @@ export default async function ProfilePage() {
           </div>
           <div className="flex justify-between mt-1.5">
             {['ROOKIE', 'PRO', 'EXPERT', 'VIP'].map((lvl) => (
-              <span key={lvl} className={`text-[10px] ${lvl === user.level ? 'text-[#E50914] font-bold' : 'text-gray-300'}`}>
+              <span key={lvl} className={`text-[10px] ${lvl === user.level ? 'text-[#E50914] font-bold' : 'text-gray-600'}`}>
                 {lvl}
               </span>
             ))}
@@ -243,7 +243,7 @@ export default async function ProfilePage() {
 
       {/* ── Badges ── */}
       {allBadgesWithStatus.some(b => b.earned) && (
-        <div className="bg-white sm:rounded-2xl rounded-xl shadow-sm border border-gray-100 p-7 hover:shadow-md transition-shadow duration-500">
+        <div className="bg-white sm:rounded-2xl rounded-xl shadow-sm border border-gray-100 p-4 sm:p-7 hover:shadow-md transition-shadow duration-500">
           <h2
             className="text-lg font-semibold text-gray-900 mb-5"
           >
@@ -266,7 +266,7 @@ export default async function ProfilePage() {
               {allBadgesWithStatus.filter(b => !b.earned).map((badge) => (
                 <span
                   key={badge.type}
-                  className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-[10px] bg-gray-50 text-gray-300 border border-gray-100"
+                  className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-[10px] bg-gray-50 text-gray-600 border border-gray-100"
                   title={badge.description}
                 >
                   <span className="grayscale">{badge.icon}</span>

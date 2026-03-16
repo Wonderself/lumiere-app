@@ -18,8 +18,8 @@ type SeverityLevel = 'critical' | 'warning' | 'ok'
 function SeverityBadge({ level, count }: { level: SeverityLevel; count: number }) {
   const colors = {
     critical: 'bg-red-500/20 text-red-400 border-red-500/30',
-    warning: 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30',
-    ok: 'bg-green-500/20 text-green-400 border-green-500/30',
+    warning: 'bg-yellow-500/20 text-yellow-600 border-yellow-500/30',
+    ok: 'bg-green-500/20 text-green-600 border-green-500/30',
   }
   return (
     <span className={`text-xs font-bold px-2.5 py-1 rounded-full border ${colors[level]}`}>
@@ -168,14 +168,14 @@ export default async function InterventionsPage() {
           )}
           {totalWarning > 0 && (
             <div className="flex items-center gap-2 px-3 py-2 rounded-lg border border-yellow-500/30 bg-yellow-500/10">
-              <AlertCircle className="h-4 w-4 text-yellow-400" />
-              <span className="text-sm font-bold text-yellow-400">{totalWarning} avertissement{totalWarning > 1 ? 's' : ''}</span>
+              <AlertCircle className="h-4 w-4 text-yellow-600" />
+              <span className="text-sm font-bold text-yellow-600">{totalWarning} avertissement{totalWarning > 1 ? 's' : ''}</span>
             </div>
           )}
           {totalCritical === 0 && totalWarning === 0 && (
             <div className="flex items-center gap-2 px-3 py-2 rounded-lg border border-green-500/30 bg-green-500/10">
-              <CheckCircle className="h-4 w-4 text-green-400" />
-              <span className="text-sm font-bold text-green-400">Tout est OK</span>
+              <CheckCircle className="h-4 w-4 text-green-600" />
+              <span className="text-sm font-bold text-green-600">Tout est OK</span>
             </div>
           )}
         </div>
@@ -192,7 +192,7 @@ export default async function InterventionsPage() {
         <div className="flex items-center justify-between mb-5">
           <div className="flex items-center gap-3">
             <Server className={`h-5 w-5 ${
-              apiSeverity === 'critical' ? 'text-red-400' : apiSeverity === 'warning' ? 'text-yellow-400' : 'text-green-400'
+              apiSeverity === 'critical' ? 'text-red-400' : apiSeverity === 'warning' ? 'text-yellow-600' : 'text-green-600'
             }`} />
             <h2 className="text-lg font-semibold">Statut des APIs</h2>
           </div>
@@ -213,7 +213,7 @@ export default async function InterventionsPage() {
               <div className="flex items-center justify-between text-xs">
                 <span className="text-white/40">Latence</span>
                 <span className={`font-medium ${
-                  api.status === 'down' ? 'text-red-400' : api.status === 'degraded' ? 'text-yellow-400' : 'text-green-400'
+                  api.status === 'down' ? 'text-red-400' : api.status === 'degraded' ? 'text-yellow-600' : 'text-green-600'
                 }`}>
                   {api.status === 'down' ? 'HORS LIGNE' : api.latency}
                 </span>
@@ -248,7 +248,7 @@ export default async function InterventionsPage() {
         <div className="flex items-center justify-between mb-5">
           <div className="flex items-center gap-3">
             <Eye className={`h-5 w-5 ${
-              validationSeverity === 'critical' ? 'text-red-400' : validationSeverity === 'warning' ? 'text-yellow-400' : 'text-green-400'
+              validationSeverity === 'critical' ? 'text-red-400' : validationSeverity === 'warning' ? 'text-yellow-600' : 'text-green-600'
             }`} />
             <h2 className="text-lg font-semibold">Queue de Validation</h2>
             <span className="text-xs text-white/40">Soumissions avec aiScore &lt; 80%</span>
@@ -266,11 +266,11 @@ export default async function InterventionsPage() {
         <div className="grid grid-cols-3 gap-4 mb-4">
           <div className="rounded-lg bg-black/20 p-3">
             <div className="text-xs text-white/40 mb-1">Flaggees IA</div>
-            <div className="text-2xl font-bold text-yellow-400">{lowScoreSubmissions - pendingAiSubmissions}</div>
+            <div className="text-2xl font-bold text-yellow-600">{lowScoreSubmissions - pendingAiSubmissions}</div>
           </div>
           <div className="rounded-lg bg-black/20 p-3">
             <div className="text-xs text-white/40 mb-1">En attente IA</div>
-            <div className="text-2xl font-bold text-blue-400">{pendingAiSubmissions}</div>
+            <div className="text-2xl font-bold text-blue-600">{pendingAiSubmissions}</div>
           </div>
           <div className="rounded-lg bg-black/20 p-3">
             <div className="text-xs text-white/40 mb-1">Total a traiter</div>
@@ -305,7 +305,7 @@ export default async function InterventionsPage() {
       }`}>
         <div className="flex items-center justify-between mb-5">
           <div className="flex items-center gap-3">
-            <Users className={`h-5 w-5 ${raceSeverity === 'critical' ? 'text-red-400' : 'text-green-400'}`} />
+            <Users className={`h-5 w-5 ${raceSeverity === 'critical' ? 'text-red-400' : 'text-green-600'}`} />
             <h2 className="text-lg font-semibold">Race Conditions</h2>
             <span className="text-xs text-white/40">Conflits de reclamation de taches</span>
           </div>
@@ -314,9 +314,9 @@ export default async function InterventionsPage() {
 
         {raceConditions.length === 0 ? (
           <div className="flex items-center gap-3 p-4 rounded-lg bg-green-500/5 border border-green-500/20">
-            <CheckCircle className="h-5 w-5 text-green-400" />
+            <CheckCircle className="h-5 w-5 text-green-600" />
             <div>
-              <p className="text-sm font-medium text-green-400">Aucun conflit detecte</p>
+              <p className="text-sm font-medium text-green-600">Aucun conflit detecte</p>
               <p className="text-xs text-white/30">Toutes les taches reclamees ont un seul contributeur</p>
             </div>
           </div>
@@ -356,7 +356,7 @@ export default async function InterventionsPage() {
         <div className="flex items-center justify-between mb-5">
           <div className="flex items-center gap-3">
             <Gavel className={`h-5 w-5 ${
-              disputeSeverity === 'critical' ? 'text-red-400' : disputeSeverity === 'warning' ? 'text-yellow-400' : 'text-green-400'
+              disputeSeverity === 'critical' ? 'text-red-400' : disputeSeverity === 'warning' ? 'text-yellow-600' : 'text-green-600'
             }`} />
             <h2 className="text-lg font-semibold">Disputes</h2>
             <span className="text-xs text-white/40">Commandes et soumissions contestees</span>
@@ -373,10 +373,10 @@ export default async function InterventionsPage() {
               {disputedOrders > 0 ? (
                 <XCircle className="h-4 w-4 text-red-400" />
               ) : (
-                <CheckCircle className="h-4 w-4 text-green-400" />
+                <CheckCircle className="h-4 w-4 text-green-600" />
               )}
             </div>
-            <div className={`text-3xl font-bold ${disputedOrders > 0 ? 'text-red-400' : 'text-green-400'}`}>
+            <div className={`text-3xl font-bold ${disputedOrders > 0 ? 'text-red-400' : 'text-green-600'}`}>
               {disputedOrders}
             </div>
             <p className="text-[10px] text-white/30 mt-1">VideoOrders en statut DISPUTED</p>
@@ -388,12 +388,12 @@ export default async function InterventionsPage() {
             <div className="flex items-center justify-between mb-2">
               <span className="text-xs text-white/40">Soumissions Rejetees (7j)</span>
               {rejectedSubmissions > 0 ? (
-                <AlertCircle className="h-4 w-4 text-yellow-400" />
+                <AlertCircle className="h-4 w-4 text-yellow-600" />
               ) : (
-                <CheckCircle className="h-4 w-4 text-green-400" />
+                <CheckCircle className="h-4 w-4 text-green-600" />
               )}
             </div>
-            <div className={`text-3xl font-bold ${rejectedSubmissions > 0 ? 'text-yellow-400' : 'text-green-400'}`}>
+            <div className={`text-3xl font-bold ${rejectedSubmissions > 0 ? 'text-yellow-600' : 'text-green-600'}`}>
               {rejectedSubmissions}
             </div>
             <p className="text-[10px] text-white/30 mt-1">TaskSubmissions rejetees cette semaine</p>
@@ -403,7 +403,7 @@ export default async function InterventionsPage() {
         {totalDisputes > 0 && (
           <div className="mt-4 flex gap-3">
             <Link href="/admin/reviews" className="flex-1">
-              <button className="w-full flex items-center justify-center gap-2 text-xs font-medium px-3 py-2 rounded-lg border border-yellow-500/30 bg-yellow-500/10 text-yellow-400 hover:bg-yellow-500/20 transition-colors">
+              <button className="w-full flex items-center justify-center gap-2 text-xs font-medium px-3 py-2 rounded-lg border border-yellow-500/30 bg-yellow-500/10 text-yellow-600 hover:bg-yellow-500/20 transition-colors">
                 <Eye className="h-3.5 w-3.5" /> Voir les Reviews
               </button>
             </Link>
@@ -422,7 +422,7 @@ export default async function InterventionsPage() {
         <div className="flex items-center justify-between mb-5">
           <div className="flex items-center gap-3">
             <Zap className={`h-5 w-5 ${
-              rateSeverity === 'critical' ? 'text-red-400' : rateSeverity === 'warning' ? 'text-yellow-400' : 'text-green-400'
+              rateSeverity === 'critical' ? 'text-red-400' : rateSeverity === 'warning' ? 'text-yellow-600' : 'text-green-600'
             }`} />
             <h2 className="text-lg font-semibold">Quotas API</h2>
             <span className="text-xs text-white/40">Utilisation des quotas</span>
@@ -444,7 +444,7 @@ export default async function InterventionsPage() {
                   <span className="text-sm text-white/70">{limit.name}</span>
                   <div className="flex items-center gap-2">
                     <span className={`text-sm font-bold ${
-                      isHigh ? 'text-red-400' : isMedium ? 'text-yellow-400' : 'text-green-400'
+                      isHigh ? 'text-red-400' : isMedium ? 'text-yellow-600' : 'text-green-600'
                     }`}>
                       {percentage}%
                     </span>
@@ -473,10 +473,10 @@ export default async function InterventionsPage() {
       {/* Quick Actions Footer */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
         {[
-          { icon: Eye, label: 'Queue Reviews', href: '/admin/reviews', color: 'text-yellow-400' },
-          { icon: Users, label: 'Utilisateurs', href: '/admin/users', color: 'text-blue-400' },
-          { icon: Activity, label: 'Analytics', href: '/admin/analytics', color: 'text-purple-400' },
-          { icon: Shield, label: 'Parametres', href: '/admin/settings', color: 'text-green-400' },
+          { icon: Eye, label: 'Queue Reviews', href: '/admin/reviews', color: 'text-yellow-600' },
+          { icon: Users, label: 'Utilisateurs', href: '/admin/users', color: 'text-blue-600' },
+          { icon: Activity, label: 'Analytics', href: '/admin/analytics', color: 'text-purple-600' },
+          { icon: Shield, label: 'Parametres', href: '/admin/settings', color: 'text-green-600' },
         ].map((action) => (
           <Link key={action.label} href={action.href}>
             <div className="group p-4 rounded-xl border border-white/5 bg-white/[0.02] hover:border-[#E50914]/20 transition-all text-center">

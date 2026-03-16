@@ -33,14 +33,14 @@ export default async function AdminSettingsPage() {
         <h1 className="text-3xl sm:text-4xl font-bold flex items-center gap-3 font-playfair">
           <Settings className="h-7 w-7 text-[#E50914]" /> Paramètres
         </h1>
-        <p className="text-white/50">Configuration globale de la plateforme.</p>
+        <p className="text-white/60">Configuration globale de la plateforme.</p>
       </div>
 
       <div className="h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
 
       <form action={updateSettingsAction} className="space-y-6">
         {/* AI Settings */}
-        <Card className="sm:rounded-2xl hover:shadow-md">
+        <Card className="rounded-xl shadow-sm border border-white/10 hover:shadow-md">
           <CardContent className="p-6 space-y-6">
             <h2 className="text-lg font-semibold text-[#E50914] flex items-center gap-2">
               <Cpu className="h-5 w-5" /> Paramètres IA
@@ -50,7 +50,7 @@ export default async function AdminSettingsPage() {
               <Label>
                 Seuil de Confiance IA — {settings.aiConfidenceThreshold}%
               </Label>
-              <p className="text-xs text-white/40">
+              <p className="text-xs text-white/50">
                 Score minimum pour qu&apos;une soumission soit automatiquement validée par l&apos;IA. En dessous, elle passe en review humaine.
               </p>
               <div className="flex items-center gap-4">
@@ -65,7 +65,7 @@ export default async function AdminSettingsPage() {
                 />
                 <span className="text-sm text-[#E50914] font-medium w-12 text-right">{settings.aiConfidenceThreshold}%</span>
               </div>
-              <div className="flex justify-between text-xs text-white/30">
+              <div className="flex justify-between text-xs text-white/50">
                 <span>0% — Tout passe en review humaine</span>
                 <span>100% — Tout auto-validé</span>
               </div>
@@ -74,16 +74,16 @@ export default async function AdminSettingsPage() {
         </Card>
 
         {/* Lumens Settings */}
-        <Card className="sm:rounded-2xl hover:shadow-md">
+        <Card className="rounded-xl shadow-sm border border-white/10 hover:shadow-md">
           <CardContent className="p-6 space-y-6">
             <h2 className="text-lg font-semibold text-[#E50914] flex items-center gap-2">
               <Sun className="h-5 w-5" /> Lumens (Crédits)
             </h2>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="lumenPrice">Prix d&apos;un Lumen (€)</Label>
-                <p className="text-xs text-white/40">Taux de conversion EUR → Lumen.</p>
+                <p className="text-xs text-white/50">Taux de conversion EUR → Lumen.</p>
                 <Input
                   id="lumenPrice"
                   name="lumenPrice"
@@ -98,7 +98,7 @@ export default async function AdminSettingsPage() {
 
               <div className="space-y-2">
                 <Label htmlFor="lumenRewardPerTask">Lumens par tâche validée</Label>
-                <p className="text-xs text-white/40">Bonus attribué au contributeur.</p>
+                <p className="text-xs text-white/50">Bonus attribué au contributeur.</p>
                 <Input
                   id="lumenRewardPerTask"
                   name="lumenRewardPerTask"
@@ -114,7 +114,7 @@ export default async function AdminSettingsPage() {
         </Card>
 
         {/* Email Settings */}
-        <Card className="sm:rounded-2xl hover:shadow-md">
+        <Card className="rounded-xl shadow-sm border border-white/10 hover:shadow-md">
           <CardContent className="p-6 space-y-6">
             <h2 className="text-lg font-semibold text-[#E50914] flex items-center gap-2">
               <Mail className="h-5 w-5" /> Notifications Email
@@ -131,14 +131,14 @@ export default async function AdminSettingsPage() {
               />
               <div>
                 <Label htmlFor="notifEmailEnabled">Activer les emails transactionnels</Label>
-                <p className="text-xs text-white/40">Envoie des emails pour les validations, paiements, etc. Nécessite Resend API key.</p>
+                <p className="text-xs text-white/50">Envoie des emails pour les validations, paiements, etc. Nécessite Resend API key.</p>
               </div>
             </div>
           </CardContent>
         </Card>
 
         {/* Task Settings */}
-        <Card className="sm:rounded-2xl hover:shadow-md">
+        <Card className="rounded-xl shadow-sm border border-white/10 hover:shadow-md">
           <CardContent className="p-6 space-y-6">
             <h2 className="text-lg font-semibold text-[#E50914] flex items-center gap-2">
               <Settings className="h-5 w-5" /> Tâches
@@ -146,7 +146,7 @@ export default async function AdminSettingsPage() {
 
             <div className="space-y-2">
               <Label htmlFor="maxConcurrentTasks">Tâches simultanées max par contributeur</Label>
-              <p className="text-xs text-white/40">
+              <p className="text-xs text-white/50">
                 Un contributeur ne peut pas accepter plus de X tâches en même temps.
               </p>
               <Input
@@ -163,7 +163,7 @@ export default async function AdminSettingsPage() {
         </Card>
 
         {/* Payment Settings */}
-        <Card className="sm:rounded-2xl hover:shadow-md">
+        <Card className="rounded-xl shadow-sm border border-white/10 hover:shadow-md">
           <CardContent className="p-6 space-y-6">
             <h2 className="text-lg font-semibold text-[#E50914] flex items-center gap-2">
               <CreditCard className="h-5 w-5" /> Paiements
@@ -180,14 +180,14 @@ export default async function AdminSettingsPage() {
               />
               <div>
                 <Label htmlFor="bitcoinEnabled">Activer les paiements Bitcoin Lightning</Label>
-                <p className="text-xs text-white/40">Nécessite la configuration de BTCPay Server.</p>
+                <p className="text-xs text-white/50">Nécessite la configuration de BTCPay Server.</p>
               </div>
             </div>
           </CardContent>
         </Card>
 
         {/* Danger Zone */}
-        <Card className="border-red-500/20 sm:rounded-2xl hover:shadow-md">
+        <Card className="rounded-xl shadow-sm border border-red-500/20 hover:shadow-md">
           <CardContent className="p-6 space-y-4">
             <h2 className="text-lg font-semibold text-red-400 flex items-center gap-2">
               <AlertTriangle className="h-5 w-5" /> Zone Dangereuse
@@ -204,7 +204,7 @@ export default async function AdminSettingsPage() {
               />
               <div>
                 <Label htmlFor="maintenanceMode" className="text-red-400">Mode Maintenance</Label>
-                <p className="text-xs text-white/40">Redirige tous les visiteurs vers la page de maintenance.</p>
+                <p className="text-xs text-white/50">Redirige tous les visiteurs vers la page de maintenance.</p>
               </div>
             </div>
           </CardContent>

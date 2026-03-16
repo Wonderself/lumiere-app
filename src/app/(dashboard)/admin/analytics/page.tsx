@@ -126,7 +126,7 @@ export default async function AdminAnalyticsPage() {
           Analytics{' '}
           <span className="text-shimmer">Avancees</span>
         </h1>
-        <p className="text-white/50">Vue complete des donnees et tendances de la plateforme</p>
+        <p className="text-white/60">Vue complete des donnees et tendances de la plateforme</p>
       </div>
 
       <div className="h-px bg-gradient-to-r from-transparent via-[#E50914]/20 to-transparent" />
@@ -135,21 +135,21 @@ export default async function AdminAnalyticsPage() {
       {data && (
         <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4 sm:gap-5">
           {kpis.map((kpi) => (
-            <Card key={kpi.label} className="sm:rounded-2xl border-white/5 bg-white/[0.02] hover:border-white/10 hover:shadow-md hover:-translate-y-[1px] transition-all duration-300">
+            <Card key={kpi.label} className="rounded-xl shadow-sm border border-white/10 bg-white/[0.02] hover:border-white/15 hover:shadow-md hover:-translate-y-[1px] transition-all duration-300">
               <CardContent className="p-4 sm:p-5">
                 <div className="flex items-center justify-between mb-3">
                   <div className="p-2 rounded-xl" style={{ background: `${kpi.color}15` }}>
                     <kpi.icon className="h-4 w-4" style={{ color: kpi.color }} />
                   </div>
-                  {kpi.trend === 'up' && <ArrowUpRight className="h-4 w-4 text-green-400" />}
+                  {kpi.trend === 'up' && <ArrowUpRight className="h-4 w-4 text-green-600" />}
                   {kpi.trend === 'down' && <ArrowDownRight className="h-4 w-4 text-red-400" />}
                 </div>
                 <div className="text-2xl font-bold text-white mb-0.5 font-playfair">
                   {kpi.value}
                 </div>
-                <div className="text-[11px] text-white/30 mb-2">{kpi.label}</div>
+                <div className="text-xs text-white/50 mb-2">{kpi.label}</div>
                 <div className="flex items-center justify-between gap-2">
-                  <span className="text-[10px] text-white/40 truncate">{kpi.sub}</span>
+                  <span className="text-xs text-white/50 truncate">{kpi.sub}</span>
                   {kpi.sparkData.length > 2 && (
                     <Sparkline data={kpi.sparkData} color={kpi.color} width={48} height={16} />
                   )}
@@ -163,7 +163,7 @@ export default async function AdminAnalyticsPage() {
       {/* User Verification Banner */}
       {data && data.users.verified < data.users.total && (
         <div className="flex items-center gap-3 px-5 py-3 rounded-xl bg-amber-500/5 border border-amber-500/10">
-          <Eye className="h-4 w-4 text-amber-400 shrink-0" />
+          <Eye className="h-4 w-4 text-amber-600 shrink-0" />
           <span className="text-sm text-amber-300/80">
             {data.users.total - data.users.verified} utilisateur{data.users.total - data.users.verified > 1 ? 's' : ''} non verifie{data.users.total - data.users.verified > 1 ? 's' : ''} ({data.users.verificationRate}% verification rate)
           </span>
@@ -173,10 +173,10 @@ export default async function AdminAnalyticsPage() {
       {/* Charts Row 1: Growth + Revenue */}
       {data && (
         <div className="grid lg:grid-cols-2 gap-6">
-          <Card className="sm:rounded-2xl border-white/5 bg-white/[0.02] hover:shadow-md hover:-translate-y-[1px] transition-all">
+          <Card className="rounded-xl shadow-sm border border-white/10 bg-white/[0.02] hover:shadow-md hover:-translate-y-[1px] transition-all">
             <CardHeader>
               <CardTitle className="text-sm flex items-center gap-2">
-                <TrendingUp className="h-4 w-4 text-blue-400" />
+                <TrendingUp className="h-4 w-4 text-blue-600" />
                 Croissance utilisateurs (30 jours)
               </CardTitle>
             </CardHeader>
@@ -190,15 +190,15 @@ export default async function AdminAnalyticsPage() {
                   color="#3b82f6"
                 />
               ) : (
-                <p className="text-sm text-white/30 text-center py-8">Pas encore de donnees</p>
+                <p className="text-sm text-white/50 text-center py-8">Pas encore de donnees</p>
               )}
             </CardContent>
           </Card>
 
-          <Card className="sm:rounded-2xl border-white/5 bg-white/[0.02] hover:shadow-md hover:-translate-y-[1px] transition-all">
+          <Card className="rounded-xl shadow-sm border border-white/10 bg-white/[0.02] hover:shadow-md hover:-translate-y-[1px] transition-all">
             <CardHeader>
               <CardTitle className="text-sm flex items-center gap-2">
-                <CreditCard className="h-4 w-4 text-purple-400" />
+                <CreditCard className="h-4 w-4 text-purple-600" />
                 Revenus quotidiens (30 jours)
               </CardTitle>
             </CardHeader>
@@ -212,7 +212,7 @@ export default async function AdminAnalyticsPage() {
                   color="#a855f7"
                 />
               ) : (
-                <p className="text-sm text-white/30 text-center py-8">Pas encore de revenus</p>
+                <p className="text-sm text-white/50 text-center py-8">Pas encore de revenus</p>
               )}
             </CardContent>
           </Card>
@@ -221,8 +221,8 @@ export default async function AdminAnalyticsPage() {
 
       {/* Charts Row 2: Distribution */}
       {data && (
-        <div className="grid lg:grid-cols-3 gap-6">
-          <Card className="sm:rounded-2xl border-white/5 bg-white/[0.02] hover:shadow-md hover:-translate-y-[1px] transition-all">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+          <Card className="rounded-xl shadow-sm border border-white/10 bg-white/[0.02] hover:shadow-md hover:-translate-y-[1px] transition-all">
             <CardHeader>
               <CardTitle className="text-sm">Distribution des roles</CardTitle>
             </CardHeader>
@@ -235,7 +235,7 @@ export default async function AdminAnalyticsPage() {
             </CardContent>
           </Card>
 
-          <Card className="sm:rounded-2xl border-white/5 bg-white/[0.02] hover:shadow-md hover:-translate-y-[1px] transition-all">
+          <Card className="rounded-xl shadow-sm border border-white/10 bg-white/[0.02] hover:shadow-md hover:-translate-y-[1px] transition-all">
             <CardHeader>
               <CardTitle className="text-sm">Distribution des niveaux</CardTitle>
             </CardHeader>
@@ -248,7 +248,7 @@ export default async function AdminAnalyticsPage() {
             </CardContent>
           </Card>
 
-          <Card className="sm:rounded-2xl border-white/5 bg-white/[0.02] hover:shadow-md hover:-translate-y-[1px] transition-all">
+          <Card className="rounded-xl shadow-sm border border-white/10 bg-white/[0.02] hover:shadow-md hover:-translate-y-[1px] transition-all">
             <CardHeader>
               <CardTitle className="text-sm">Taches par difficulte</CardTitle>
             </CardHeader>
@@ -265,7 +265,7 @@ export default async function AdminAnalyticsPage() {
 
       {/* Charts Row 3: Tasks + Success Rate */}
       <div className="grid lg:grid-cols-2 gap-6">
-        <Card className="sm:rounded-2xl border-white/5 bg-white/[0.02] hover:shadow-md hover:-translate-y-[1px] transition-all">
+        <Card className="rounded-xl shadow-sm border border-white/10 bg-white/[0.02] hover:shadow-md hover:-translate-y-[1px] transition-all">
           <CardHeader>
             <CardTitle className="text-sm">Taches par type</CardTitle>
           </CardHeader>
@@ -277,7 +277,7 @@ export default async function AdminAnalyticsPage() {
           </CardContent>
         </Card>
 
-        <Card className="sm:rounded-2xl border-white/5 bg-white/[0.02] hover:shadow-md hover:-translate-y-[1px] transition-all">
+        <Card className="rounded-xl shadow-sm border border-white/10 bg-white/[0.02] hover:shadow-md hover:-translate-y-[1px] transition-all">
           <CardHeader>
             <CardTitle className="text-sm">Taux de succes par difficulte</CardTitle>
           </CardHeader>
@@ -289,7 +289,7 @@ export default async function AdminAnalyticsPage() {
 
       {/* Top Contributors */}
       {data && data.engagement.topContributors.length > 0 && (
-        <Card className="sm:rounded-2xl border-white/5 bg-white/[0.02]">
+        <Card className="rounded-xl shadow-sm border border-white/10 bg-white/[0.02]">
           <CardHeader>
             <CardTitle className="text-sm flex items-center gap-2">
               <Trophy className="h-4 w-4 text-[#E50914]" />
@@ -301,23 +301,23 @@ export default async function AdminAnalyticsPage() {
               {data.engagement.topContributors.map((user, i) => (
                 <div
                   key={user.id}
-                  className="flex items-center gap-4 p-4 rounded-xl bg-white/[0.02] border border-white/[0.04] hover:border-white/[0.08] transition-all"
+                  className="flex items-center gap-4 p-4 rounded-xl bg-white/[0.02] border border-white/10 hover:border-white/[0.08] transition-all"
                 >
                   <div className={`w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold shrink-0 ${
                     i === 0 ? 'bg-[#E50914]/20 text-[#E50914]' :
-                    i === 1 ? 'bg-gray-400/20 text-gray-300' :
+                    i === 1 ? 'bg-gray-400/20 text-gray-500' :
                     i === 2 ? 'bg-amber-700/20 text-amber-600' :
-                    'bg-white/5 text-white/30'
+                    'bg-white/5 text-white/50'
                   }`}>
                     {i + 1}
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="text-sm font-medium text-white/80 truncate">{user.name}</div>
-                    <div className="text-[11px] text-white/30">{user.role}</div>
+                    <div className="text-xs text-white/50">{user.role}</div>
                   </div>
                   <div className="text-right shrink-0">
                     <div className="text-sm font-semibold text-[#E50914]">{user.lumens} LUM</div>
-                    <div className="text-[11px] text-white/30">{user.tasksCompleted} taches</div>
+                    <div className="text-xs text-white/50">{user.tasksCompleted} taches</div>
                   </div>
                 </div>
               ))}
@@ -328,10 +328,10 @@ export default async function AdminAnalyticsPage() {
 
       {/* Task Pipeline Summary */}
       {data && (
-        <Card className="sm:rounded-2xl border-white/5 bg-white/[0.02]">
+        <Card className="rounded-xl shadow-sm border border-white/10 bg-white/[0.02]">
           <CardHeader>
             <CardTitle className="text-sm flex items-center gap-2">
-              <ListChecks className="h-4 w-4 text-green-400" />
+              <ListChecks className="h-4 w-4 text-green-600" />
               Pipeline des taches
             </CardTitle>
           </CardHeader>
@@ -343,17 +343,17 @@ export default async function AdminAnalyticsPage() {
                 { label: 'Completees', value: data.tasks.completed, color: '#22c55e' },
                 { label: 'Total', value: data.tasks.total, color: '#9ca3af' },
               ].map((item) => (
-                <div key={item.label} className="text-center p-4 rounded-xl bg-white/[0.02] border border-white/[0.04]">
+                <div key={item.label} className="text-center p-4 rounded-xl bg-white/[0.02] border border-white/10">
                   <div className="text-2xl font-bold mb-1 font-playfair" style={{ color: item.color }}>
                     {item.value}
                   </div>
-                  <div className="text-[11px] text-white/40">{item.label}</div>
+                  <div className="text-xs text-white/50">{item.label}</div>
                 </div>
               ))}
             </div>
             {/* Completion progress bar */}
             <div className="mt-4">
-              <div className="flex items-center justify-between text-xs text-white/40 mb-2">
+              <div className="flex items-center justify-between text-xs text-white/50 mb-2">
                 <span>Taux de completion</span>
                 <span className="font-medium text-[#E50914]">{data.tasks.completionRate}%</span>
               </div>

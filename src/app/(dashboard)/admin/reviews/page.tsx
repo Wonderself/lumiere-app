@@ -34,13 +34,13 @@ export default async function AdminReviewsPage() {
     <div className="space-y-10">
       <div>
         <h1 className="text-3xl sm:text-4xl font-bold font-playfair">Queue de Review</h1>
-        <p className="text-white/50">{submissions.length} soumission{submissions.length > 1 ? 's' : ''} en attente</p>
+        <p className="text-white/60">{submissions.length} soumission{submissions.length > 1 ? 's' : ''} en attente</p>
       </div>
 
       <div className="h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
 
       {submissions.length === 0 ? (
-        <div className="text-center py-24 text-white/30">
+        <div className="text-center py-24 text-white/50">
           <ClipboardCheck className="h-16 w-16 mx-auto mb-4 opacity-30" />
           <p className="text-xl">Aucune review en attente</p>
           <p className="text-sm mt-2">Toutes les soumissions sont à jour.</p>
@@ -48,9 +48,9 @@ export default async function AdminReviewsPage() {
       ) : (
         <div className="space-y-6">
           {submissions.map((sub) => (
-            <div key={sub.id} className="sm:rounded-2xl rounded-xl border border-white/10 bg-white/[0.02] overflow-hidden hover:shadow-md transition-all duration-500">
+            <div key={sub.id} className="rounded-xl shadow-sm border border-white/10 bg-white/[0.02] overflow-hidden hover:shadow-md transition-all duration-500">
               {/* Header */}
-              <div className="p-4 border-b border-white/5 flex items-center justify-between">
+              <div className="p-4 border-b border-white/5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div>
                   <div className="flex items-center gap-2 mb-1">
                     <h3 className="font-semibold">{sub.task.title}</h3>
@@ -58,7 +58,7 @@ export default async function AdminReviewsPage() {
                       {sub.status}
                     </Badge>
                   </div>
-                  <div className="flex items-center gap-3 text-xs text-white/40">
+                  <div className="flex items-center gap-3 text-xs text-white/50">
                     <span>{sub.task.film.title}</span>
                     <span>·</span>
                     <span>{sub.task.phase.phaseName}</span>
@@ -68,7 +68,7 @@ export default async function AdminReviewsPage() {
                 </div>
                 <div className="text-right">
                   <div className="text-lg font-bold text-[#E50914]">{formatPrice(sub.task.priceEuros)}</div>
-                  <div className="text-xs text-white/40">par {sub.user.displayName}</div>
+                  <div className="text-xs text-white/50">par {sub.user.displayName}</div>
                 </div>
               </div>
 
@@ -77,8 +77,8 @@ export default async function AdminReviewsPage() {
                 <div className="p-4 border-b border-white/5 bg-white/[0.01]">
                   <div className="flex items-center gap-4">
                     <div>
-                      <span className="text-xs text-white/40 uppercase tracking-wider">Score IA</span>
-                      <div className="text-3xl font-bold text-[#E50914]">{sub.aiScore}<span className="text-sm text-white/40">/100</span></div>
+                      <span className="text-xs text-white/50 uppercase tracking-wider">Score IA</span>
+                      <div className="text-3xl font-bold text-[#E50914]">{sub.aiScore}<span className="text-sm text-white/50">/100</span></div>
                     </div>
                     <div className="flex-1">
                       <div className="h-2 bg-white/10 rounded-full overflow-hidden mb-2">
@@ -99,7 +99,7 @@ export default async function AdminReviewsPage() {
               <div className="p-4 border-b border-white/5">
                 {sub.notes && (
                   <div className="mb-3">
-                    <p className="text-xs text-white/40 uppercase tracking-wider mb-1">Notes du contributeur</p>
+                    <p className="text-xs text-white/50 uppercase tracking-wider mb-1">Notes du contributeur</p>
                     <p className="text-sm text-white/70">{sub.notes}</p>
                   </div>
                 )}
@@ -112,7 +112,7 @@ export default async function AdminReviewsPage() {
               </div>
 
               {/* Actions */}
-              <div className="p-4 flex gap-3">
+              <div className="p-4 flex flex-col sm:flex-row gap-3">
                 <form action={approveSubmissionAction} className="flex-1">
                   <input type="hidden" name="submissionId" value={sub.id} />
                   <div className="flex gap-2">
@@ -120,7 +120,7 @@ export default async function AdminReviewsPage() {
                       type="text"
                       name="feedback"
                       placeholder="Commentaire optionnel..."
-                      className="flex-1 h-9 rounded-xl border border-white/10 bg-white/5 px-3 text-sm text-white placeholder:text-white/30 focus:outline-none focus:ring-1 focus:ring-green-500/50 transition-colors duration-300"
+                      className="flex-1 h-9 rounded-xl border border-white/10 bg-white/5 px-3 text-sm text-white placeholder:text-white/50 focus:outline-none focus:ring-1 focus:ring-green-500/50 transition-colors duration-300"
                     />
                     <Button type="submit" size="sm" className="bg-green-600 hover:bg-green-500 text-white shrink-0">
                       <CheckCircle className="h-4 w-4 mr-1" /> Approuver
@@ -136,7 +136,7 @@ export default async function AdminReviewsPage() {
                       name="feedback"
                       placeholder="Raison du rejet (obligatoire)..."
                       required
-                      className="h-9 w-48 rounded-xl border border-white/10 bg-white/5 px-3 text-sm text-white placeholder:text-white/30 focus:outline-none focus:ring-1 focus:ring-red-500/50 transition-colors duration-300"
+                      className="h-9 w-full sm:w-48 rounded-xl border border-white/10 bg-white/5 px-3 text-sm text-white placeholder:text-white/50 focus:outline-none focus:ring-1 focus:ring-red-500/50 transition-colors duration-300"
                     />
                     <Button type="submit" size="sm" variant="destructive" className="shrink-0">
                       <XCircle className="h-4 w-4 mr-1" /> Rejeter

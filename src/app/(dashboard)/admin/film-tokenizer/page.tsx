@@ -176,9 +176,9 @@ async function autoGenerateTasksAction(formData: FormData) {
 // ============================================
 
 const riskColors: Record<string, string> = {
-  LOW: 'text-green-400 bg-green-500/10 border-green-500/20',
-  MEDIUM: 'text-yellow-400 bg-yellow-500/10 border-yellow-500/20',
-  HIGH: 'text-orange-400 bg-orange-500/10 border-orange-500/20',
+  LOW: 'text-green-600 bg-green-500/10 border-green-500/20',
+  MEDIUM: 'text-yellow-600 bg-yellow-500/10 border-yellow-500/20',
+  HIGH: 'text-orange-600 bg-orange-500/10 border-orange-500/20',
   VERY_HIGH: 'text-red-400 bg-red-500/10 border-red-500/20',
 }
 
@@ -582,8 +582,8 @@ export default async function AdminFilmTokenizerPage() {
                       </div>
                       <p className="text-xs text-white/50 mb-1">{risk.description}</p>
                       <div className="flex items-start gap-1.5">
-                        <Shield className="h-3 w-3 text-green-400 shrink-0 mt-0.5" />
-                        <p className="text-[10px] text-green-400/70">{risk.mitigation}</p>
+                        <Shield className="h-3 w-3 text-green-600 shrink-0 mt-0.5" />
+                        <p className="text-[10px] text-green-600/70">{risk.mitigation}</p>
                       </div>
                     </div>
                   ))}
@@ -592,7 +592,7 @@ export default async function AdminFilmTokenizerPage() {
                 {/* Overall risk */}
                 <div className="mt-4 p-3 rounded-lg bg-white/[0.02] border border-white/5 text-center">
                   <p className="text-xs text-white/40">Risque global</p>
-                  <p className="text-lg font-bold text-yellow-400 mt-1">MOYEN</p>
+                  <p className="text-lg font-bold text-yellow-600 mt-1">MOYEN</p>
                   <p className="text-[10px] text-white/30 mt-1">
                     Basé sur {demoRisks.length} facteurs de risque analysés
                   </p>
@@ -617,18 +617,18 @@ export default async function AdminFilmTokenizerPage() {
                   <p className="text-[10px] text-white/40">Tokens à émettre</p>
                 </div>
                 <div className="text-center p-3 rounded-lg bg-white/[0.02] border border-white/5">
-                  <Target className="h-5 w-5 text-green-400 mx-auto mb-1" />
-                  <p className="text-lg font-bold text-green-400">{formatPrice(demoDecomp.tokens.hardCap)}</p>
+                  <Target className="h-5 w-5 text-green-600 mx-auto mb-1" />
+                  <p className="text-lg font-bold text-green-600">{formatPrice(demoDecomp.tokens.hardCap)}</p>
                   <p className="text-[10px] text-white/40">Objectif de levée</p>
                 </div>
                 <div className="text-center p-3 rounded-lg bg-white/[0.02] border border-white/5">
-                  <ListChecks className="h-5 w-5 text-blue-400 mx-auto mb-1" />
-                  <p className="text-lg font-bold text-blue-400">{demoTasks.length}</p>
+                  <ListChecks className="h-5 w-5 text-blue-600 mx-auto mb-1" />
+                  <p className="text-lg font-bold text-blue-600">{demoTasks.length}</p>
                   <p className="text-[10px] text-white/40">Tâches générées</p>
                 </div>
                 <div className="text-center p-3 rounded-lg bg-white/[0.02] border border-white/5">
-                  <Clock className="h-5 w-5 text-purple-400 mx-auto mb-1" />
-                  <p className="text-lg font-bold text-purple-400">{Math.ceil(totalTimelineWeeks / 4)} mois</p>
+                  <Clock className="h-5 w-5 text-purple-600 mx-auto mb-1" />
+                  <p className="text-lg font-bold text-purple-600">{Math.ceil(totalTimelineWeeks / 4)} mois</p>
                   <p className="text-[10px] text-white/40">Durée estimée</p>
                 </div>
               </div>
@@ -642,7 +642,7 @@ export default async function AdminFilmTokenizerPage() {
         <Card>
           <CardHeader>
             <CardTitle className="text-base flex items-center gap-2">
-              <CheckCircle className="h-4 w-4 text-green-400" />
+              <CheckCircle className="h-4 w-4 text-green-600" />
               Films Déjà Tokenisés
             </CardTitle>
           </CardHeader>
@@ -653,7 +653,7 @@ export default async function AdminFilmTokenizerPage() {
                   key={film.id}
                   className="flex items-center gap-4 p-3 rounded-lg border border-white/5 bg-white/[0.01]"
                 >
-                  <CheckCircle className="h-4 w-4 text-green-400 shrink-0" />
+                  <CheckCircle className="h-4 w-4 text-green-600 shrink-0" />
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-medium truncate">{film.title}</p>
                     <p className="text-[10px] text-white/30">{film.genre || 'N/A'} · {film.tasks.length} tâches</p>

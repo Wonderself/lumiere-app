@@ -42,7 +42,7 @@ export function PurchaseForm() {
   return (
     <div className="space-y-4">
       {state?.success && (
-        <div className="flex items-center gap-2 p-4 rounded-lg bg-green-500/10 border border-green-500/20 text-green-400 text-sm">
+        <div className="flex items-center gap-2 p-4 rounded-lg bg-green-500/10 border border-green-500/20 text-green-600 text-sm">
           <Check className="h-4 w-4 shrink-0" />
           <span>Lumens credites avec succes ! Votre solde a ete mis a jour.</span>
         </div>
@@ -88,7 +88,7 @@ export function PurchaseForm() {
                 {/* Discount */}
                 {pack.discount && (
                   <div className="absolute top-3 right-3">
-                    <span className="text-xs font-bold text-green-400 bg-green-500/10 border border-green-500/20 rounded-full px-2 py-0.5">
+                    <span className="text-xs font-bold text-green-600 bg-green-500/10 border border-green-500/20 rounded-full px-2 py-0.5">
                       {pack.discount}
                     </span>
                   </div>

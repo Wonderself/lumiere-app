@@ -40,7 +40,7 @@ const NOTIF_COLORS: Record<string, string> = {
   SUBMISSION_REVIEWED: 'text-yellow-500',
   PAYMENT_RECEIVED: 'text-emerald-500',
   LEVEL_UP: 'text-[#E50914]',
-  SYSTEM: 'text-gray-400',
+  SYSTEM: 'text-gray-500',
 }
 
 function timeAgo(date: Date): string {
@@ -166,12 +166,12 @@ export default async function NotificationsPage({
 
       {/* Notifications List */}
       {notifications.length === 0 ? (
-        <div className="bg-white sm:rounded-3xl rounded-2xl shadow-sm border border-gray-100 p-12 text-center">
+        <div className="bg-white sm:rounded-3xl rounded-2xl shadow-sm border border-gray-100 p-8 sm:p-12 text-center">
           <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gray-50 mb-4">
-            <InboxIcon className="h-8 w-8 text-gray-300" />
+            <InboxIcon className="h-8 w-8 text-gray-400" />
           </div>
-          <p className="text-gray-500 text-lg mb-1">Aucune notification</p>
-          <p className="text-gray-400 text-sm">
+          <p className="text-gray-600 text-lg mb-1">Aucune notification</p>
+          <p className="text-gray-500 text-sm">
             Vos notifications apparaîtront ici
           </p>
         </div>
@@ -179,14 +179,14 @@ export default async function NotificationsPage({
         <div className="space-y-8">
           {grouped.map((group) => (
             <div key={group.label}>
-              <h2 className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-3 px-1">
+              <h2 className="text-xs font-semibold text-gray-600 uppercase tracking-widest mb-3 px-1">
                 {group.label}
               </h2>
               {/* Date group container */}
-              <div className="bg-white sm:rounded-2xl rounded-xl border border-gray-100 shadow-sm p-3 sm:p-4 space-y-2">
+              <div className="bg-white sm:rounded-2xl rounded-xl border border-gray-100 shadow-sm p-2 sm:p-4 space-y-2">
                 {group.items.map((notification) => {
                   const Icon = NOTIF_ICONS[notification.type] || Bell
-                  const iconColor = NOTIF_COLORS[notification.type] || 'text-gray-400'
+                  const iconColor = NOTIF_COLORS[notification.type] || 'text-gray-500'
                   const isUnread = !notification.read
 
                   return (
@@ -223,12 +223,12 @@ export default async function NotificationsPage({
                                 {notification.title}
                               </p>
                               {notification.body && (
-                                <p className="text-xs text-gray-400 mt-1 line-clamp-2 leading-relaxed">
+                                <p className="text-xs text-gray-500 mt-1 line-clamp-2 leading-relaxed">
                                   {notification.body}
                                 </p>
                               )}
                             </div>
-                            <span className="text-[11px] text-gray-300 shrink-0 mt-0.5 tabular-nums">
+                            <span className="text-[11px] text-gray-500 shrink-0 mt-0.5 tabular-nums">
                               {timeAgo(notification.createdAt)}
                             </span>
                           </div>
@@ -248,7 +248,7 @@ export default async function NotificationsPage({
                                   variant="ghost"
                                   size="sm"
                                   type="submit"
-                                  className="h-7 text-xs rounded-lg text-gray-400 hover:text-gray-600 transition-all duration-300"
+                                  className="h-7 text-xs rounded-lg text-gray-500 hover:text-gray-600 transition-all duration-300"
                                 >
                                   Marquer comme lu
                                 </Button>

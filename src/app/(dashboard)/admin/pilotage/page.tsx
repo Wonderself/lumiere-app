@@ -349,40 +349,40 @@ const INIT_INSTITUTIONS: Institution[] = [
 // ==================== HELPER FUNCTIONS ====================
 const catColor = (cat: string) => {
   if (cat === 'FATAL') return 'bg-red-500/15 text-red-400 border-red-500/30'
-  if (cat === 'RISQUE') return 'bg-yellow-500/15 text-yellow-400 border-yellow-500/30'
-  if (cat === 'ASTUCE') return 'bg-green-500/15 text-green-400 border-green-500/30'
-  return 'bg-white/5 text-white/60 border-white/10'
+  if (cat === 'RISQUE') return 'bg-yellow-500/15 text-yellow-600 border-yellow-500/30'
+  if (cat === 'ASTUCE') return 'bg-green-500/15 text-green-600 border-green-500/30'
+  return 'bg-gray-100 text-gray-500 border-gray-200'
 }
 
 const catIcon = (cat: string) => {
   if (cat === 'FATAL') return <AlertTriangle className="h-4 w-4 text-red-400" />
-  if (cat === 'RISQUE') return <Shield className="h-4 w-4 text-yellow-400" />
-  if (cat === 'ASTUCE') return <Star className="h-4 w-4 text-green-400" />
+  if (cat === 'RISQUE') return <Shield className="h-4 w-4 text-yellow-600" />
+  if (cat === 'ASTUCE') return <Star className="h-4 w-4 text-green-600" />
   return null
 }
 
 const entityBadge = (entity: string) => {
-  if (entity === 'IL') return <span className="text-[10px] px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20">Israel</span>
-  if (entity === 'FR') return <span className="text-[10px] px-2 py-0.5 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">France</span>
-  return <span className="text-[10px] px-2 py-0.5 rounded-full bg-purple-500/10 text-purple-400 border border-purple-500/20">FR + IL</span>
+  if (entity === 'IL') return <span className="text-[10px] px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-600 border border-blue-500/20">Israel</span>
+  if (entity === 'FR') return <span className="text-[10px] px-2 py-0.5 rounded-full bg-indigo-500/10 text-indigo-600 border border-indigo-500/20">France</span>
+  return <span className="text-[10px] px-2 py-0.5 rounded-full bg-purple-500/10 text-purple-600 border border-purple-500/20">FR + IL</span>
 }
 
 const difficultyStars = (d: number) => '★'.repeat(d) + '☆'.repeat(5 - d)
 
 const statusBadge = (s: string) => {
-  if (s === 'done') return <span className="text-[10px] px-2 py-0.5 rounded-full bg-green-500/10 text-green-400 border border-green-500/20">Fait</span>
-  if (s === 'in-progress') return <span className="text-[10px] px-2 py-0.5 rounded-full bg-yellow-500/10 text-yellow-400 border border-yellow-500/20">En cours</span>
-  return <span className="text-[10px] px-2 py-0.5 rounded-full bg-white/5 text-white/40 border border-white/10">A faire</span>
+  if (s === 'done') return <span className="text-[10px] px-2 py-0.5 rounded-full bg-green-500/10 text-green-600 border border-green-500/20">Fait</span>
+  if (s === 'in-progress') return <span className="text-[10px] px-2 py-0.5 rounded-full bg-yellow-500/10 text-yellow-600 border border-yellow-500/20">En cours</span>
+  return <span className="text-[10px] px-2 py-0.5 rounded-full bg-gray-100 text-gray-500 border border-gray-200">A faire</span>
 }
 
 const instCatIcon = (cat: string) => {
   if (cat.includes('VC')) return <Briefcase className="h-4 w-4 text-violet-400" />
-  if (cat.includes('Angel')) return <Users className="h-4 w-4 text-amber-400" />
-  if (cat.includes('ccélérateur') || cat.includes('Hub')) return <GraduationCap className="h-4 w-4 text-cyan-400" />
-  if (cat.includes('Cinéma') || cat.includes('Fonds') || cat.includes('Fondation')) return <Film className="h-4 w-4 text-rose-400" />
-  if (cat.includes('Banque')) return <Building2 className="h-4 w-4 text-emerald-400" />
-  if (cat.includes('BPI')) return <Landmark className="h-4 w-4 text-blue-400" />
-  return <Globe2 className="h-4 w-4 text-white/40" />
+  if (cat.includes('Angel')) return <Users className="h-4 w-4 text-amber-600" />
+  if (cat.includes('ccélérateur') || cat.includes('Hub')) return <GraduationCap className="h-4 w-4 text-cyan-600" />
+  if (cat.includes('Cinéma') || cat.includes('Fonds') || cat.includes('Fondation')) return <Film className="h-4 w-4 text-rose-600" />
+  if (cat.includes('Banque')) return <Building2 className="h-4 w-4 text-emerald-600" />
+  if (cat.includes('BPI')) return <Landmark className="h-4 w-4 text-blue-600" />
+  return <Globe2 className="h-4 w-4 text-gray-500" />
 }
 
 // ==================== TABS ====================
@@ -461,41 +461,41 @@ export default function PilotagePage() {
           <Landmark className="h-7 w-7 text-[#E50914]" />
           Pilotage &amp; Subventions
         </h1>
-        <p className="text-white/50 text-sm mt-1">
+        <p className="text-gray-500 text-sm mt-1">
           Structure juridique FR-IL, subventions disponibles et institutions de financement.
         </p>
       </div>
 
       {/* Stats bar */}
       <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
-        <div className="bg-white/[0.03] border border-white/[0.06] rounded-xl p-3">
-          <p className="text-[10px] text-white/30 uppercase tracking-wider">Points fatals</p>
+        <div className="bg-white border border-gray-200 rounded-xl p-3">
+          <p className="text-[10px] text-gray-500 uppercase tracking-wider">Points fatals</p>
           <p className="text-xl font-bold text-red-400">{fatalCount}</p>
         </div>
-        <div className="bg-white/[0.03] border border-white/[0.06] rounded-xl p-3">
-          <p className="text-[10px] text-white/30 uppercase tracking-wider">Risques</p>
-          <p className="text-xl font-bold text-yellow-400">{risqueCount}</p>
+        <div className="bg-white border border-gray-200 rounded-xl p-3">
+          <p className="text-[10px] text-gray-500 uppercase tracking-wider">Risques</p>
+          <p className="text-xl font-bold text-yellow-600">{risqueCount}</p>
         </div>
-        <div className="bg-white/[0.03] border border-white/[0.06] rounded-xl p-3">
-          <p className="text-[10px] text-white/30 uppercase tracking-wider">Astuces</p>
-          <p className="text-xl font-bold text-green-400">{astuceCount}</p>
+        <div className="bg-white border border-gray-200 rounded-xl p-3">
+          <p className="text-[10px] text-gray-500 uppercase tracking-wider">Astuces</p>
+          <p className="text-xl font-bold text-green-600">{astuceCount}</p>
         </div>
-        <div className="bg-white/[0.03] border border-white/[0.06] rounded-xl p-3">
-          <p className="text-[10px] text-white/30 uppercase tracking-wider">Subventions</p>
+        <div className="bg-white border border-gray-200 rounded-xl p-3">
+          <p className="text-[10px] text-gray-500 uppercase tracking-wider">Subventions</p>
           <p className="text-xl font-bold text-[#E50914]">{totalSubsidyPotential}</p>
         </div>
-        <div className="bg-white/[0.03] border border-white/[0.06] rounded-xl p-3">
-          <p className="text-[10px] text-white/30 uppercase tracking-wider">Israel</p>
-          <p className="text-xl font-bold text-blue-400">{ilSubsidies}</p>
+        <div className="bg-white border border-gray-200 rounded-xl p-3">
+          <p className="text-[10px] text-gray-500 uppercase tracking-wider">Israel</p>
+          <p className="text-xl font-bold text-blue-600">{ilSubsidies}</p>
         </div>
-        <div className="bg-white/[0.03] border border-white/[0.06] rounded-xl p-3">
-          <p className="text-[10px] text-white/30 uppercase tracking-wider">France</p>
-          <p className="text-xl font-bold text-indigo-400">{frSubsidies}</p>
+        <div className="bg-white border border-gray-200 rounded-xl p-3">
+          <p className="text-[10px] text-gray-500 uppercase tracking-wider">France</p>
+          <p className="text-xl font-bold text-indigo-600">{frSubsidies}</p>
         </div>
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-1 bg-white/[0.03] border border-white/[0.06] rounded-xl p-1">
+      <div className="flex gap-1 bg-gray-50 border border-gray-200 rounded-xl p-1">
         {TABS.map(t => (
           <button
             key={t.id}
@@ -503,7 +503,7 @@ export default function PilotagePage() {
             className={`flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-all flex-1 justify-center ${
               tab === t.id
                 ? 'bg-[#E50914]/10 text-[#E50914] shadow-sm'
-                : 'text-white/40 hover:text-white/60 hover:bg-white/[0.03]'
+                : 'text-gray-500 hover:text-gray-700 hover:bg-gray-100'
             }`}
           >
             <t.icon className="h-4 w-4" />
@@ -515,42 +515,42 @@ export default function PilotagePage() {
       {/* Filters */}
       <div className="flex flex-col sm:flex-row gap-3">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/20" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
           <input
             type="text"
             value={search}
             onChange={e => setSearch(e.target.value)}
             placeholder="Rechercher..."
-            className="w-full pl-10 pr-4 py-2.5 bg-white/[0.03] border border-white/[0.06] rounded-xl text-sm text-white/80 placeholder:text-white/20 focus:outline-none focus:border-[#E50914]/30 transition-colors"
+            className="w-full pl-10 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm text-gray-700 placeholder:text-gray-400 focus:outline-none focus:border-[#E50914]/30 transition-colors"
           />
         </div>
         {(tab === 'structure' || tab === 'subsidies') && (
           <div className="relative">
-            <Filter className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/20" />
+            <Filter className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
             <select
               value={entityFilter}
               onChange={e => setEntityFilter(e.target.value)}
-              className="pl-10 pr-8 py-2.5 bg-white/[0.03] border border-white/[0.06] rounded-xl text-sm text-white/70 appearance-none cursor-pointer focus:outline-none focus:border-[#E50914]/30"
+              className="pl-10 pr-8 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm text-gray-600 appearance-none cursor-pointer focus:outline-none focus:border-[#E50914]/30"
             >
               <option value="ALL">Tous pays</option>
               <option value="IL">Israel</option>
               <option value="FR">France</option>
               <option value="BOTH">FR + IL</option>
             </select>
-            <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 h-3 w-3 text-white/20 pointer-events-none" />
+            <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 h-3 w-3 text-gray-400 pointer-events-none" />
           </div>
         )}
         <div className="relative">
           <select
             value={catFilter}
             onChange={e => setCatFilter(e.target.value)}
-            className="pl-4 pr-8 py-2.5 bg-white/[0.03] border border-white/[0.06] rounded-xl text-sm text-white/70 appearance-none cursor-pointer focus:outline-none focus:border-[#E50914]/30 min-w-[160px]"
+            className="pl-4 pr-8 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm text-gray-600 appearance-none cursor-pointer focus:outline-none focus:border-[#E50914]/30 min-w-[160px]"
           >
             {catOptions.map(c => (
               <option key={c} value={c}>{c === 'ALL' ? 'Toutes catégories' : c}</option>
             ))}
           </select>
-          <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 h-3 w-3 text-white/20 pointer-events-none" />
+          <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 h-3 w-3 text-gray-400 pointer-events-none" />
         </div>
       </div>
 
@@ -558,7 +558,7 @@ export default function PilotagePage() {
       {tab === 'structure' && (
         <div className="space-y-3">
           {filteredIssues.length === 0 && (
-            <div className="text-center py-12 text-white/30">
+            <div className="text-center py-12 text-gray-500">
               <Scale className="h-10 w-10 mx-auto mb-3 opacity-30" />
               <p>Aucun élément trouvé</p>
             </div>
@@ -568,7 +568,7 @@ export default function PilotagePage() {
             return (
               <div
                 key={issue.id}
-                className="bg-white/[0.02] border border-white/[0.06] rounded-xl overflow-hidden hover:border-white/10 transition-all"
+                className="bg-white border border-gray-200 rounded-xl overflow-hidden hover:border-gray-300 transition-all"
               >
                 <button
                   onClick={() => toggleExpand(issue.id)}
@@ -583,23 +583,23 @@ export default function PilotagePage() {
                       {entityBadge(issue.entity)}
                       {statusBadge(issue.status)}
                     </div>
-                    <h3 className="font-medium text-sm text-white/90">{issue.item}</h3>
+                    <h3 className="font-medium text-sm text-[#1A1A2E]">{issue.item}</h3>
                     {!isExpanded && (
-                      <p className="text-xs text-white/40 mt-1 line-clamp-1">{issue.desc}</p>
+                      <p className="text-xs text-gray-500 mt-1 line-clamp-1">{issue.desc}</p>
                     )}
                   </div>
-                  <ChevronRight className={`h-4 w-4 text-white/20 shrink-0 mt-1 transition-transform ${isExpanded ? 'rotate-90' : ''}`} />
+                  <ChevronRight className={`h-4 w-4 text-gray-400 shrink-0 mt-1 transition-transform ${isExpanded ? 'rotate-90' : ''}`} />
                 </button>
 
                 {isExpanded && (
                   <div className="px-4 pb-4 space-y-3">
-                    <div className="bg-white/[0.02] rounded-lg p-3">
-                      <p className="text-[10px] font-medium text-white/30 uppercase mb-1">Description</p>
-                      <p className="text-sm text-white/60">{issue.desc}</p>
+                    <div className="bg-gray-50 rounded-lg p-3">
+                      <p className="text-[10px] font-medium text-gray-500 uppercase mb-1">Description</p>
+                      <p className="text-sm text-gray-500">{issue.desc}</p>
                     </div>
                     <div className="bg-[#E50914]/[0.04] border border-[#E50914]/10 rounded-lg p-3">
                       <p className="text-[10px] font-medium text-[#E50914]/60 uppercase mb-1">Action requise</p>
-                      <p className="text-sm text-white/70">{issue.action}</p>
+                      <p className="text-sm text-gray-600">{issue.action}</p>
                     </div>
                   </div>
                 )}
@@ -613,7 +613,7 @@ export default function PilotagePage() {
       {tab === 'subsidies' && (
         <div className="space-y-3">
           {filteredSubsidies.length === 0 && (
-            <div className="text-center py-12 text-white/30">
+            <div className="text-center py-12 text-gray-500">
               <Banknote className="h-10 w-10 mx-auto mb-3 opacity-30" />
               <p>Aucune subvention trouvée</p>
             </div>
@@ -625,78 +625,78 @@ export default function PilotagePage() {
             return (
               <div
                 key={sub.id}
-                className="bg-white/[0.02] border border-white/[0.06] rounded-xl overflow-hidden hover:border-white/10 transition-all"
+                className="bg-white border border-gray-200 rounded-xl overflow-hidden hover:border-gray-300 transition-all"
               >
                 <button
                   onClick={() => toggleExpand(sub.id)}
                   className="w-full p-4 flex items-start gap-3 text-left"
                 >
                   <div className="mt-0.5 shrink-0">
-                    {sub.entity === 'IL' ? <MapPin className="h-4 w-4 text-blue-400" /> : <MapPin className="h-4 w-4 text-indigo-400" />}
+                    {sub.entity === 'IL' ? <MapPin className="h-4 w-4 text-blue-600" /> : <MapPin className="h-4 w-4 text-indigo-600" />}
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 flex-wrap mb-1">
-                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-white/5 text-white/50 border border-white/10">{sub.cat}</span>
+                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-gray-100 text-gray-500 border border-gray-200">{sub.cat}</span>
                       {entityBadge(sub.entity)}
                       {statusBadge(sub.status)}
-                      <span className="text-[10px] text-amber-400" title={`Difficulté ${sub.difficulty}/5`}>{difficultyStars(sub.difficulty)}</span>
+                      <span className="text-[10px] text-amber-600" title={`Difficulté ${sub.difficulty}/5`}>{difficultyStars(sub.difficulty)}</span>
                     </div>
-                    <h3 className="font-medium text-sm text-white/90">{sub.name}</h3>
+                    <h3 className="font-medium text-sm text-[#1A1A2E]">{sub.name}</h3>
                     <div className="flex items-center gap-3 mt-1">
                       <span className="text-xs text-[#E50914] font-medium">{sub.amount}</span>
                       {sub.tasks.length > 0 && (
-                        <span className="text-[10px] text-white/30">{completedTasks}/{sub.tasks.length} tâches</span>
+                        <span className="text-[10px] text-gray-500">{completedTasks}/{sub.tasks.length} tâches</span>
                       )}
                     </div>
                     {sub.tasks.length > 0 && (
-                      <div className="mt-2 h-1 bg-white/5 rounded-full overflow-hidden w-full max-w-[200px]">
+                      <div className="mt-2 h-1 bg-gray-100 rounded-full overflow-hidden w-full max-w-[200px]">
                         <div className="h-full rounded-full bg-gradient-to-r from-[#E50914] to-[#FF2D2D] transition-all" style={{ width: `${progressPct}%` }} />
                       </div>
                     )}
                   </div>
-                  <ChevronRight className={`h-4 w-4 text-white/20 shrink-0 mt-1 transition-transform ${isExpanded ? 'rotate-90' : ''}`} />
+                  <ChevronRight className={`h-4 w-4 text-gray-400 shrink-0 mt-1 transition-transform ${isExpanded ? 'rotate-90' : ''}`} />
                 </button>
 
                 {isExpanded && (
                   <div className="px-4 pb-4 space-y-3">
-                    <div className="bg-white/[0.02] rounded-lg p-3">
-                      <p className="text-[10px] font-medium text-white/30 uppercase mb-1">Description</p>
-                      <p className="text-sm text-white/60">{sub.desc}</p>
+                    <div className="bg-gray-50 rounded-lg p-3">
+                      <p className="text-[10px] font-medium text-gray-500 uppercase mb-1">Description</p>
+                      <p className="text-sm text-gray-500">{sub.desc}</p>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                      <div className="bg-white/[0.02] rounded-lg p-3">
-                        <p className="text-[10px] font-medium text-white/30 uppercase mb-1">Taux</p>
-                        <p className="text-sm text-white/60">{sub.rate}</p>
+                      <div className="bg-gray-50 rounded-lg p-3">
+                        <p className="text-[10px] font-medium text-gray-500 uppercase mb-1">Taux</p>
+                        <p className="text-sm text-gray-500">{sub.rate}</p>
                       </div>
-                      <div className="bg-white/[0.02] rounded-lg p-3">
-                        <p className="text-[10px] font-medium text-white/30 uppercase mb-1">Timing</p>
-                        <p className="text-sm text-white/60">{sub.timing}</p>
+                      <div className="bg-gray-50 rounded-lg p-3">
+                        <p className="text-[10px] font-medium text-gray-500 uppercase mb-1">Timing</p>
+                        <p className="text-sm text-gray-500">{sub.timing}</p>
                       </div>
-                      <div className="bg-white/[0.02] rounded-lg p-3">
-                        <p className="text-[10px] font-medium text-white/30 uppercase mb-1">Deadline</p>
-                        <p className="text-sm text-white/60">{sub.deadline}</p>
+                      <div className="bg-gray-50 rounded-lg p-3">
+                        <p className="text-[10px] font-medium text-gray-500 uppercase mb-1">Deadline</p>
+                        <p className="text-sm text-gray-500">{sub.deadline}</p>
                       </div>
                     </div>
 
                     {sub.residency && (
                       <div className="bg-blue-500/[0.04] border border-blue-500/10 rounded-lg p-3">
-                        <p className="text-[10px] font-medium text-blue-400/60 uppercase mb-1">Conditions de résidence</p>
-                        <p className="text-sm text-white/60">{sub.residency}</p>
+                        <p className="text-[10px] font-medium text-blue-600/60 uppercase mb-1">Conditions de résidence</p>
+                        <p className="text-sm text-gray-500">{sub.residency}</p>
                       </div>
                     )}
 
                     {sub.tasks.length > 0 && (
                       <div className="space-y-1.5">
-                        <p className="text-[10px] font-medium text-white/30 uppercase">Tâches</p>
+                        <p className="text-[10px] font-medium text-gray-500 uppercase">Tâches</p>
                         {sub.tasks.map((task, idx) => (
                           <div key={idx} className="flex items-start gap-2.5">
                             <span className={`mt-0.5 w-4 h-4 rounded border shrink-0 flex items-center justify-center text-[10px] ${
-                              task.done ? 'bg-[#E50914] border-[#E50914] text-white' : 'border-white/20'
+                              task.done ? 'bg-[#E50914] border-[#E50914] text-white' : 'border-gray-300'
                             }`}>
                               {task.done && <CheckCircle className="h-3 w-3" />}
                             </span>
-                            <span className={`text-sm ${task.done ? 'text-white/30 line-through' : 'text-white/60'}`}>{task.t}</span>
+                            <span className={`text-sm ${task.done ? 'text-gray-500 line-through' : 'text-gray-500'}`}>{task.t}</span>
                           </div>
                         ))}
                       </div>
@@ -704,10 +704,10 @@ export default function PilotagePage() {
 
                     {sub.docs.length > 0 && (
                       <div>
-                        <p className="text-[10px] font-medium text-white/30 uppercase mb-1.5">Documents requis</p>
+                        <p className="text-[10px] font-medium text-gray-500 uppercase mb-1.5">Documents requis</p>
                         <div className="flex gap-1.5 flex-wrap">
                           {sub.docs.map((doc, i) => (
-                            <span key={i} className="inline-flex items-center gap-1 text-[10px] px-2 py-0.5 rounded bg-white/[0.03] border border-white/[0.06] text-white/40">
+                            <span key={i} className="inline-flex items-center gap-1 text-[10px] px-2 py-0.5 rounded bg-gray-50 border border-gray-200 text-gray-500">
                               <FileText className="h-2.5 w-2.5" />{doc}
                             </span>
                           ))}
@@ -732,7 +732,7 @@ export default function PilotagePage() {
       {tab === 'institutions' && (
         <div className="space-y-3">
           {filteredInstitutions.length === 0 && (
-            <div className="text-center py-12 text-white/30">
+            <div className="text-center py-12 text-gray-500">
               <Building2 className="h-10 w-10 mx-auto mb-3 opacity-30" />
               <p>Aucune institution trouvée</p>
             </div>
@@ -742,7 +742,7 @@ export default function PilotagePage() {
             return (
               <div
                 key={inst.id}
-                className="bg-white/[0.02] border border-white/[0.06] rounded-xl overflow-hidden hover:border-white/10 transition-all"
+                className="bg-white border border-gray-200 rounded-xl overflow-hidden hover:border-gray-300 transition-all"
               >
                 <button
                   onClick={() => toggleExpand(inst.id)}
@@ -751,39 +751,39 @@ export default function PilotagePage() {
                   <span className="mt-0.5 shrink-0">{instCatIcon(inst.cat)}</span>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 flex-wrap mb-1">
-                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-white/5 text-white/50 border border-white/10">{inst.cat}</span>
+                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-gray-100 text-gray-500 border border-gray-200">{inst.cat}</span>
                       <span className="text-[10px] px-2 py-0.5 rounded-full bg-violet-500/10 text-violet-400 border border-violet-500/20">{inst.type}</span>
                       {statusBadge(inst.status)}
                     </div>
-                    <h3 className="font-medium text-sm text-white/90">{inst.name}</h3>
+                    <h3 className="font-medium text-sm text-[#1A1A2E]">{inst.name}</h3>
                     <div className="flex items-center gap-3 mt-1">
                       <span className="text-xs text-[#E50914] font-medium">{inst.ticket}</span>
-                      <span className="text-xs text-white/30">{inst.stage}</span>
+                      <span className="text-xs text-gray-500">{inst.stage}</span>
                     </div>
                   </div>
-                  <ChevronRight className={`h-4 w-4 text-white/20 shrink-0 mt-1 transition-transform ${isExpanded ? 'rotate-90' : ''}`} />
+                  <ChevronRight className={`h-4 w-4 text-gray-400 shrink-0 mt-1 transition-transform ${isExpanded ? 'rotate-90' : ''}`} />
                 </button>
 
                 {isExpanded && (
                   <div className="px-4 pb-4 space-y-3">
-                    <div className="bg-white/[0.02] rounded-lg p-3">
-                      <p className="text-[10px] font-medium text-white/30 uppercase mb-1">Focus</p>
-                      <p className="text-sm text-white/60">{inst.focus}</p>
+                    <div className="bg-gray-50 rounded-lg p-3">
+                      <p className="text-[10px] font-medium text-gray-500 uppercase mb-1">Focus</p>
+                      <p className="text-sm text-gray-500">{inst.focus}</p>
                     </div>
 
                     <div className="bg-[#E50914]/[0.04] border border-[#E50914]/10 rounded-lg p-3">
                       <p className="text-[10px] font-medium text-[#E50914]/60 uppercase mb-1">Pourquoi c&apos;est pertinent</p>
-                      <p className="text-sm text-white/70">{inst.why}</p>
+                      <p className="text-sm text-gray-600">{inst.why}</p>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                      <div className="bg-white/[0.02] rounded-lg p-3">
-                        <p className="text-[10px] font-medium text-white/30 uppercase mb-1">Contact</p>
-                        <p className="text-sm text-white/60">{inst.contact}</p>
+                      <div className="bg-gray-50 rounded-lg p-3">
+                        <p className="text-[10px] font-medium text-gray-500 uppercase mb-1">Contact</p>
+                        <p className="text-sm text-gray-500">{inst.contact}</p>
                       </div>
-                      <div className="bg-white/[0.02] rounded-lg p-3">
-                        <p className="text-[10px] font-medium text-white/30 uppercase mb-1">Quoi envoyer</p>
-                        <p className="text-sm text-white/60">{inst.what_to_send}</p>
+                      <div className="bg-gray-50 rounded-lg p-3">
+                        <p className="text-[10px] font-medium text-gray-500 uppercase mb-1">Quoi envoyer</p>
+                        <p className="text-sm text-gray-500">{inst.what_to_send}</p>
                       </div>
                     </div>
 

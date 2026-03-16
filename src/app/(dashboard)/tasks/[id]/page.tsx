@@ -241,7 +241,7 @@ export default async function TaskDetailPage({ params }: Props) {
                       <p className="text-xs text-white/40 mt-2">{sub.aiFeedback}</p>
                     )}
                     {sub.humanFeedback && (
-                      <p className="text-xs text-blue-400 mt-2">Review humaine : {sub.humanFeedback}</p>
+                      <p className="text-xs text-blue-600 mt-2">Review humaine : {sub.humanFeedback}</p>
                     )}
                   </div>
                 ))}
@@ -377,12 +377,12 @@ export default async function TaskDetailPage({ params }: Props) {
                   </p>
                 </form>
               ) : isClaimedByMe && task.status === 'CLAIMED' ? (
-                <div className="flex items-center gap-2 text-sm text-blue-400 p-3 rounded-lg bg-blue-500/10 border border-blue-500/20">
+                <div className="flex items-center gap-2 text-sm text-blue-600 p-3 rounded-lg bg-blue-500/10 border border-blue-500/20">
                   <Clock className="h-4 w-4" />
                   Tache en cours -- soumettez votre travail ci-contre.
                 </div>
               ) : task.status === 'VALIDATED' ? (
-                <div className="flex items-center gap-2 text-sm text-green-400 p-3 rounded-lg bg-green-500/10 border border-green-500/20">
+                <div className="flex items-center gap-2 text-sm text-green-600 p-3 rounded-lg bg-green-500/10 border border-green-500/20">
                   <CheckCircle className="h-4 w-4" />
                   Tache validee !
                 </div>

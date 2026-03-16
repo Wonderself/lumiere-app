@@ -299,11 +299,11 @@ export default async function AdminAIAutomationPage() {
   const claudeApiCost = 100
 
   const stats = [
-    { label: 'Automatisation complète', value: `${fullyAutomated.length}/${totalItems}`, sub: `${automationPct}% automatisé`, color: 'text-green-400', icon: CheckCircle },
-    { label: 'Assisté (Claude + Humain)', value: assisted.length.toString(), sub: 'approbation requise', color: 'text-yellow-400', icon: AlertTriangle },
+    { label: 'Automatisation complète', value: `${fullyAutomated.length}/${totalItems}`, sub: `${automationPct}% automatisé`, color: 'text-green-600', icon: CheckCircle },
+    { label: 'Assisté (Claude + Humain)', value: assisted.length.toString(), sub: 'approbation requise', color: 'text-yellow-600', icon: AlertTriangle },
     { label: 'Humain uniquement', value: humanOnly.length.toString(), sub: 'non automatisable', color: 'text-red-400', icon: XCircle },
-    { label: 'Modules activés', value: `${activatedCount}/${totalActivatable}`, sub: 'en production', color: 'text-blue-400', icon: Zap },
-    { label: 'Coût Claude API', value: `${claudeApiCost} EUR/mois`, sub: 'budget API actuel', color: 'text-purple-400', icon: Brain },
+    { label: 'Modules activés', value: `${activatedCount}/${totalActivatable}`, sub: 'en production', color: 'text-blue-600', icon: Zap },
+    { label: 'Coût Claude API', value: `${claudeApiCost} EUR/mois`, sub: 'budget API actuel', color: 'text-purple-600', icon: Brain },
     { label: 'Économies actives', value: `${new Intl.NumberFormat('fr-FR').format(activeSavings)} EUR`, sub: '/mois estimé', color: 'text-[#E50914]', icon: DollarSign },
   ]
 
@@ -326,8 +326,8 @@ export default async function AdminAIAutomationPage() {
               'bg-red-500/10'
             }`}>
               <ItemIcon className={`h-4 w-4 ${
-                type === 'auto' ? 'text-green-400' :
-                type === 'assisted' ? 'text-yellow-400' :
+                type === 'auto' ? 'text-green-600' :
+                type === 'assisted' ? 'text-yellow-600' :
                 'text-red-400'
               }`} />
             </div>
@@ -338,14 +338,14 @@ export default async function AdminAIAutomationPage() {
                   <Badge variant="success" className="text-[10px]">Actif</Badge>
                 )}
               </div>
-              <p className="text-xs text-white/50 mb-2">{item.description}</p>
+              <p className="text-xs text-gray-500 mb-2">{item.description}</p>
 
               {/* Expandable detail */}
               <details className="group">
                 <summary className="text-[10px] text-[#E50914] cursor-pointer hover:underline list-none">
                   Voir le détail...
                 </summary>
-                <p className="text-xs text-white/40 mt-2 leading-relaxed">
+                <p className="text-xs text-gray-500 mt-2 leading-relaxed">
                   {item.detail}
                 </p>
               </details>
@@ -388,7 +388,7 @@ export default async function AdminAIAutomationPage() {
           <Bot className="inline h-7 w-7 text-[#E50914] mr-2 -mt-1" />
           Automatisation Claude IA
         </h1>
-        <p className="text-white/50 mt-1">
+        <p className="text-gray-500 mt-1">
           Tableau de bord complet : ce que Claude automatise vs ce qui nécessite une intervention humaine.
         </p>
       </div>
@@ -400,27 +400,27 @@ export default async function AdminAIAutomationPage() {
             <div className="text-center">
               <Brain className="h-8 w-8 text-[#E50914] mx-auto mb-2" />
               <p className="text-3xl font-bold text-[#E50914]">{claudeApiCost} EUR</p>
-              <p className="text-xs text-white/40 mt-1">Coût mensuel API Claude</p>
+              <p className="text-xs text-gray-500 mt-1">Coût mensuel API Claude</p>
             </div>
             <div className="text-center">
-              <TrendingUp className="h-8 w-8 text-green-400 mx-auto mb-2" />
-              <p className="text-3xl font-bold text-green-400">
+              <TrendingUp className="h-8 w-8 text-green-600 mx-auto mb-2" />
+              <p className="text-3xl font-bold text-green-600">
                 {new Intl.NumberFormat('fr-FR').format(totalMonthlySavings)} EUR
               </p>
-              <p className="text-xs text-white/40 mt-1">Économie potentielle / mois</p>
+              <p className="text-xs text-gray-500 mt-1">Économie potentielle / mois</p>
             </div>
             <div className="text-center">
-              <Sparkles className="h-8 w-8 text-purple-400 mx-auto mb-2" />
-              <p className="text-3xl font-bold text-purple-400">
+              <Sparkles className="h-8 w-8 text-purple-600 mx-auto mb-2" />
+              <p className="text-3xl font-bold text-purple-600">
                 {Math.round(totalMonthlySavings / claudeApiCost)}x
               </p>
-              <p className="text-xs text-white/40 mt-1">ROI de l&apos;investissement IA</p>
+              <p className="text-xs text-gray-500 mt-1">ROI de l&apos;investissement IA</p>
             </div>
           </div>
-          <div className="mt-4 p-3 rounded-lg bg-white/[0.03] border border-white/5">
-            <p className="text-xs text-white/50 text-center">
+          <div className="mt-4 p-3 rounded-lg bg-gray-50 border border-gray-100">
+            <p className="text-xs text-gray-500 text-center">
               Avec Claude API à <span className="text-[#E50914] font-bold">{claudeApiCost} EUR/mois</span>,
-              vous remplacez environ <span className="text-green-400 font-bold">{new Intl.NumberFormat('fr-FR').format(totalMonthlySavings)} EUR/mois</span> en
+              vous remplacez environ <span className="text-green-600 font-bold">{new Intl.NumberFormat('fr-FR').format(totalMonthlySavings)} EUR/mois</span> en
               main-d&apos;oeuvre. Économie actuellement active :
               <span className="text-[#E50914] font-bold"> {new Intl.NumberFormat('fr-FR').format(activeSavings)} EUR/mois</span>.
             </p>
@@ -435,22 +435,22 @@ export default async function AdminAIAutomationPage() {
             <CardContent className="p-4">
               <stat.icon className={`h-5 w-5 ${stat.color} mb-2`} />
               <p className={`text-lg font-bold ${stat.color}`}>{stat.value}</p>
-              <p className="text-[10px] text-white/40 mt-0.5">{stat.label}</p>
-              <p className="text-[10px] text-white/25">{stat.sub}</p>
+              <p className="text-[10px] text-gray-500 mt-0.5">{stat.label}</p>
+              <p className="text-[10px] text-gray-400">{stat.sub}</p>
             </CardContent>
           </Card>
         ))}
       </div>
 
       {/* Automation progress bar */}
-      <div className="p-4 rounded-xl border border-white/10 bg-white/[0.02]">
+      <div className="p-4 rounded-xl border border-gray-100 bg-white rounded-xl shadow-sm">
         <div className="flex items-center justify-between mb-3">
           <span className="text-sm font-medium">Niveau d&apos;automatisation</span>
           <span className="text-sm font-bold text-[#E50914]">
             {fullyAutomated.length + assisted.length}/{totalItems} tâches automatisables
           </span>
         </div>
-        <div className="h-3 bg-white/5 rounded-full overflow-hidden flex">
+        <div className="h-3 bg-gray-100 rounded-full overflow-hidden flex">
           <div
             className="h-full bg-green-500 transition-all"
             style={{ width: `${(fullyAutomated.length / totalItems) * 100}%` }}
@@ -467,7 +467,7 @@ export default async function AdminAIAutomationPage() {
             title={`${humanOnly.length} humain uniquement`}
           />
         </div>
-        <div className="flex gap-4 mt-2 text-xs text-white/40">
+        <div className="flex gap-4 mt-2 text-xs text-gray-500">
           <span className="flex items-center gap-1">
             <div className="w-2 h-2 rounded-full bg-green-500" /> {fullyAutomated.length} auto
           </span>
@@ -486,13 +486,13 @@ export default async function AdminAIAutomationPage() {
         <div className="space-y-4">
           <div className="flex items-center gap-2 mb-2">
             <div className="p-1.5 rounded-lg bg-green-500/10">
-              <CheckCircle className="h-4 w-4 text-green-400" />
+              <CheckCircle className="h-4 w-4 text-green-600" />
             </div>
             <div>
-              <h2 className="font-semibold text-green-400 font-[family-name:var(--font-playfair)]">
+              <h2 className="font-semibold text-green-600 font-[family-name:var(--font-playfair)]">
                 Automatisation complète
               </h2>
-              <p className="text-[10px] text-white/30">Claude gère à 100%</p>
+              <p className="text-[10px] text-gray-500">Claude gère à 100%</p>
             </div>
             <Badge variant="success" className="ml-auto text-[10px]">{fullyAutomated.length}</Badge>
           </div>
@@ -505,13 +505,13 @@ export default async function AdminAIAutomationPage() {
         <div className="space-y-4">
           <div className="flex items-center gap-2 mb-2">
             <div className="p-1.5 rounded-lg bg-yellow-500/10">
-              <AlertTriangle className="h-4 w-4 text-yellow-400" />
+              <AlertTriangle className="h-4 w-4 text-yellow-600" />
             </div>
             <div>
-              <h2 className="font-semibold text-yellow-400 font-[family-name:var(--font-playfair)]">
+              <h2 className="font-semibold text-yellow-600 font-[family-name:var(--font-playfair)]">
                 Assisté par Claude
               </h2>
-              <p className="text-[10px] text-white/30">Claude rédige, humain approuve</p>
+              <p className="text-[10px] text-gray-500">Claude rédige, humain approuve</p>
             </div>
             <Badge variant="warning" className="ml-auto text-[10px]">{assisted.length}</Badge>
           </div>
@@ -530,7 +530,7 @@ export default async function AdminAIAutomationPage() {
               <h2 className="font-semibold text-red-400 font-[family-name:var(--font-playfair)]">
                 Humain uniquement
               </h2>
-              <p className="text-[10px] text-white/30">Non automatisable</p>
+              <p className="text-[10px] text-gray-500">Non automatisable</p>
             </div>
             <Badge variant="destructive" className="ml-auto text-[10px]">{humanOnly.length}</Badge>
           </div>
@@ -552,24 +552,24 @@ export default async function AdminAIAutomationPage() {
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-white/5 text-xs text-white/30 uppercase">
+                <tr className="border-b border-gray-100 text-xs text-gray-500 uppercase">
                   <th className="text-left py-3 px-2">Catégorie</th>
                   <th className="text-right py-3 px-2">Avec Humains</th>
                   <th className="text-right py-3 px-2">Avec Claude</th>
                   <th className="text-right py-3 px-2">Économie</th>
                 </tr>
               </thead>
-              <tbody className="text-white/70">
+              <tbody className="text-gray-600">
                 {fullyAutomated.filter(i => i.costSaving > 0).map((item) => (
-                  <tr key={item.id} className="border-b border-white/5">
+                  <tr key={item.id} className="border-b border-gray-100">
                     <td className="py-2.5 px-2 flex items-center gap-2">
-                      <CheckCircle className="h-3 w-3 text-green-400" />
+                      <CheckCircle className="h-3 w-3 text-green-600" />
                       {item.title}
                     </td>
-                    <td className="text-right py-2.5 px-2 text-white/40">
+                    <td className="text-right py-2.5 px-2 text-gray-500">
                       {new Intl.NumberFormat('fr-FR').format(item.costSaving)} EUR
                     </td>
-                    <td className="text-right py-2.5 px-2 text-green-400">
+                    <td className="text-right py-2.5 px-2 text-green-600">
                       ~{Math.round(item.costSaving * 0.01)} EUR
                     </td>
                     <td className="text-right py-2.5 px-2 text-[#E50914] font-medium">
@@ -578,15 +578,15 @@ export default async function AdminAIAutomationPage() {
                   </tr>
                 ))}
                 {assisted.filter(i => i.costSaving > 0).map((item) => (
-                  <tr key={item.id} className="border-b border-white/5">
+                  <tr key={item.id} className="border-b border-gray-100">
                     <td className="py-2.5 px-2 flex items-center gap-2">
-                      <AlertTriangle className="h-3 w-3 text-yellow-400" />
+                      <AlertTriangle className="h-3 w-3 text-yellow-600" />
                       {item.title}
                     </td>
-                    <td className="text-right py-2.5 px-2 text-white/40">
+                    <td className="text-right py-2.5 px-2 text-gray-500">
                       {new Intl.NumberFormat('fr-FR').format(item.costSaving)} EUR
                     </td>
-                    <td className="text-right py-2.5 px-2 text-yellow-400">
+                    <td className="text-right py-2.5 px-2 text-yellow-600">
                       ~{Math.round(item.costSaving * 0.3)} EUR
                     </td>
                     <td className="text-right py-2.5 px-2 text-[#E50914] font-medium">
@@ -596,10 +596,10 @@ export default async function AdminAIAutomationPage() {
                 ))}
                 <tr className="font-bold">
                   <td className="py-3 px-2">TOTAL</td>
-                  <td className="text-right py-3 px-2 text-white/50">
+                  <td className="text-right py-3 px-2 text-gray-500">
                     {new Intl.NumberFormat('fr-FR').format(totalMonthlySavings)} EUR
                   </td>
-                  <td className="text-right py-3 px-2 text-green-400">
+                  <td className="text-right py-3 px-2 text-green-600">
                     {claudeApiCost} EUR
                   </td>
                   <td className="text-right py-3 px-2 text-[#E50914]">
@@ -619,7 +619,7 @@ export default async function AdminAIAutomationPage() {
           <h3 className="font-semibold text-lg mb-1 font-[family-name:var(--font-playfair)]">
             Activer tous les modules
           </h3>
-          <p className="text-xs text-white/50 max-w-lg mx-auto mb-4">
+          <p className="text-xs text-gray-500 max-w-lg mx-auto mb-4">
             Activez tous les modules d&apos;automatisation Claude pour maximiser les économies.
             Chaque module peut être activé/désactivé individuellement. L&apos;API Claude est
             facturée à l&apos;usage avec un budget plafonné à {claudeApiCost} EUR/mois.

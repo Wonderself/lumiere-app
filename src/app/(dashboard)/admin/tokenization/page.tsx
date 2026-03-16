@@ -149,13 +149,13 @@ async function addRevenueAction(formData: FormData) {
 // ============================================
 
 const statusColors: Record<string, string> = {
-  DRAFT: 'bg-gray-500/10 text-gray-400 border-gray-500/20',
-  PENDING_LEGAL: 'bg-purple-500/10 text-purple-400 border-purple-500/20',
-  OPEN: 'bg-green-500/10 text-green-400 border-green-500/20',
-  FUNDED: 'bg-blue-500/10 text-blue-400 border-blue-500/20',
+  DRAFT: 'bg-gray-500/10 text-gray-500 border-gray-500/20',
+  PENDING_LEGAL: 'bg-purple-500/10 text-purple-600 border-purple-500/20',
+  OPEN: 'bg-green-500/10 text-green-600 border-green-500/20',
+  FUNDED: 'bg-blue-500/10 text-blue-600 border-blue-500/20',
   CLOSED: 'bg-white/10 text-white/50 border-white/10',
   CANCELLED: 'bg-red-500/10 text-red-400 border-red-500/20',
-  SUSPENDED: 'bg-orange-500/10 text-orange-400 border-orange-500/20',
+  SUSPENDED: 'bg-orange-500/10 text-orange-600 border-orange-500/20',
 }
 
 const statusLabels: Record<string, string> = {
@@ -215,11 +215,11 @@ export default async function AdminTokenizationPage() {
 
   const stats = [
     { icon: Coins, label: 'Total levé', value: formatPrice(totalRaised), color: 'text-[#E50914]' },
-    { icon: Play, label: 'Offres actives', value: activeOfferings.toString(), color: 'text-green-400' },
-    { icon: Users, label: 'Investisseurs', value: uniqueInvestors.toString(), color: 'text-blue-400' },
-    { icon: ShieldCheck, label: 'KYC en attente', value: pendingKyc.toString(), color: pendingKyc > 0 ? 'text-orange-400' : 'text-green-400' },
-    { icon: ArrowRightLeft, label: 'Volume secondaire', value: formatPrice(secondaryVolume), color: 'text-purple-400' },
-    { icon: Banknote, label: 'Revenus totaux', value: formatPrice(totalRevenue), color: 'text-cyan-400' },
+    { icon: Play, label: 'Offres actives', value: activeOfferings.toString(), color: 'text-green-600' },
+    { icon: Users, label: 'Investisseurs', value: uniqueInvestors.toString(), color: 'text-blue-600' },
+    { icon: ShieldCheck, label: 'KYC en attente', value: pendingKyc.toString(), color: pendingKyc > 0 ? 'text-orange-600' : 'text-green-600' },
+    { icon: ArrowRightLeft, label: 'Volume secondaire', value: formatPrice(secondaryVolume), color: 'text-purple-600' },
+    { icon: Banknote, label: 'Revenus totaux', value: formatPrice(totalRevenue), color: 'text-cyan-600' },
   ]
 
   // Current period for forms
@@ -394,10 +394,10 @@ export default async function AdminTokenizationPage() {
                         <Badge
                           className={
                             offering.riskLevel === 'LOW'
-                              ? 'bg-green-500/10 text-green-400 border-green-500/20'
+                              ? 'bg-green-500/10 text-green-600 border-green-500/20'
                               : offering.riskLevel === 'HIGH' || offering.riskLevel === 'VERY_HIGH'
                               ? 'bg-red-500/10 text-red-400 border-red-500/20'
-                              : 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20'
+                              : 'bg-yellow-500/10 text-yellow-600 border-yellow-500/20'
                           }
                         >
                           {offering.riskLevel}
@@ -517,7 +517,7 @@ export default async function AdminTokenizationPage() {
                   {allDividends.slice(0, 5).map((d) => (
                     <div key={d.id} className="flex items-center justify-between text-sm p-2 rounded-lg bg-white/[0.02]">
                       <div className="flex items-center gap-2">
-                        <CheckCircle className="h-3 w-3 text-green-400" />
+                        <CheckCircle className="h-3 w-3 text-green-600" />
                         <span className="text-white/60">{d.period}</span>
                       </div>
                       <span className="text-[#E50914] font-medium">{formatPrice(d.amount)}</span>
@@ -615,11 +615,11 @@ export default async function AdminTokenizationPage() {
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-xs text-white/40">Distribués</span>
-                <span className="text-sm text-green-400">{formatPrice(distributedRevenue)}</span>
+                <span className="text-sm text-green-600">{formatPrice(distributedRevenue)}</span>
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-xs text-white/40">En attente</span>
-                <span className="text-sm text-orange-400">{formatPrice(pendingRevenue)}</span>
+                <span className="text-sm text-orange-600">{formatPrice(pendingRevenue)}</span>
               </div>
             </div>
           </CardContent>
@@ -637,18 +637,18 @@ export default async function AdminTokenizationPage() {
         <CardContent>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
             <div className="text-center p-4 rounded-xl bg-white/[0.02] border border-white/5">
-              <BarChart3 className="h-6 w-6 text-purple-400 mx-auto mb-2" />
-              <p className="text-2xl font-bold text-purple-400">{formatPrice(secondaryVolume)}</p>
+              <BarChart3 className="h-6 w-6 text-purple-600 mx-auto mb-2" />
+              <p className="text-2xl font-bold text-purple-600">{formatPrice(secondaryVolume)}</p>
               <p className="text-xs text-white/40 mt-1">Volume total</p>
             </div>
             <div className="text-center p-4 rounded-xl bg-white/[0.02] border border-white/5">
-              <DollarSign className="h-6 w-6 text-green-400 mx-auto mb-2" />
-              <p className="text-2xl font-bold text-green-400">{formatPrice(secondaryFees)}</p>
+              <DollarSign className="h-6 w-6 text-green-600 mx-auto mb-2" />
+              <p className="text-2xl font-bold text-green-600">{formatPrice(secondaryFees)}</p>
               <p className="text-xs text-white/40 mt-1">Commissions collectées</p>
             </div>
             <div className="text-center p-4 rounded-xl bg-white/[0.02] border border-white/5">
-              <ArrowRightLeft className="h-6 w-6 text-blue-400 mx-auto mb-2" />
-              <p className="text-2xl font-bold text-blue-400">{allTransfers.length}</p>
+              <ArrowRightLeft className="h-6 w-6 text-blue-600 mx-auto mb-2" />
+              <p className="text-2xl font-bold text-blue-600">{allTransfers.length}</p>
               <p className="text-xs text-white/40 mt-1">Transactions complétées</p>
             </div>
           </div>
@@ -668,12 +668,12 @@ export default async function AdminTokenizationPage() {
       {/* Warnings */}
       {pendingKyc > 0 && (
         <div className="flex items-center gap-3 p-4 rounded-xl border border-orange-500/20 bg-orange-500/5">
-          <AlertTriangle className="h-5 w-5 text-orange-400 shrink-0" />
+          <AlertTriangle className="h-5 w-5 text-orange-600 shrink-0" />
           <div>
-            <p className="text-sm font-medium text-orange-400">
+            <p className="text-sm font-medium text-orange-600">
               {pendingKyc} achat{pendingKyc > 1 ? 's' : ''} en attente de vérification KYC
             </p>
-            <p className="text-xs text-orange-400/60 mt-0.5">
+            <p className="text-xs text-orange-600/60 mt-0.5">
               Ces investisseurs doivent compléter leur vérification d&apos;identité avant confirmation.
             </p>
           </div>

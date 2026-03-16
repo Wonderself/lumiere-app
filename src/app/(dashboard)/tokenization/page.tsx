@@ -41,7 +41,7 @@ function TokenizationNav({ active }: { active: string }) {
           className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 min-h-[44px] ${
             active === tab.key
               ? 'bg-white text-[#E50914] shadow-sm'
-              : 'text-gray-400 hover:text-gray-600'
+              : 'text-gray-500 hover:text-gray-600'
           }`}
         >
           <tab.icon className="h-4 w-4" />
@@ -137,7 +137,7 @@ export default async function TokenizationMarketplacePage() {
             ].map((stat) => (
               <div key={stat.label}>
                 <p className={`text-2xl font-bold ${stat.color}`}>{stat.value}</p>
-                <p className="text-gray-400 text-xs mt-0.5">{stat.label}</p>
+                <p className="text-gray-500 text-xs mt-0.5">{stat.label}</p>
               </div>
             ))}
           </div>
@@ -150,7 +150,7 @@ export default async function TokenizationMarketplacePage() {
           <h2 className="text-lg sm:text-xl font-bold text-gray-900 font-[family-name:var(--font-playfair)]">
             Films Ouverts a la Co-Production
           </h2>
-          <span className="text-gray-400 text-sm">{offerings.filter(o => o.status === 'OPEN').length} ouvertes</span>
+          <span className="text-gray-500 text-sm">{offerings.filter(o => o.status === 'OPEN').length} ouvertes</span>
         </div>
 
         {offerings.length === 0 ? (
@@ -159,7 +159,7 @@ export default async function TokenizationMarketplacePage() {
               <Sparkles className="h-8 w-8 text-[#E50914]/60" />
             </div>
             <p className="text-gray-700 text-lg font-semibold mb-2">Aucune offre active pour le moment</p>
-            <p className="text-gray-400 text-sm max-w-md mx-auto mb-6 px-4">De nouvelles opportunites de co-production arrivent bientot. Revenez regulierement pour decouvrir les prochains films ouverts.</p>
+            <p className="text-gray-500 text-sm max-w-md mx-auto mb-6 px-4">De nouvelles opportunites de co-production arrivent bientot. Revenez regulierement pour decouvrir les prochains films ouverts.</p>
             <Link href="/films" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#E50914] text-white text-sm font-medium hover:bg-[#FF2D2D] transition-colors">
               <Film className="h-4 w-4" />
               Decouvrir les films en production
@@ -184,7 +184,7 @@ export default async function TokenizationMarketplacePage() {
                         />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center">
-                          <Film className="h-10 w-10 text-gray-200" />
+                          <Film className="h-10 w-10 text-gray-300" />
                         </div>
                       )}
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
@@ -204,7 +204,7 @@ export default async function TokenizationMarketplacePage() {
                         <Progress value={progress} className="h-1.5" />
                         <div className="flex items-center justify-between mt-2">
                           <span className="text-[#E50914] text-sm font-semibold">{formatEur(offering.raised)}</span>
-                          <span className="text-gray-400 text-xs">/ {formatEur(offering.hardCap)}</span>
+                          <span className="text-gray-500 text-xs">/ {formatEur(offering.hardCap)}</span>
                         </div>
                       </div>
 
@@ -213,7 +213,7 @@ export default async function TokenizationMarketplacePage() {
                         {offering.projectedROI && (
                           <span className="text-green-500 font-medium">ROI ~{offering.projectedROI}%</span>
                         )}
-                        <span className="text-gray-400 flex items-center gap-1">
+                        <span className="text-gray-500 flex items-center gap-1">
                           <Clock className="h-3 w-3" />
                           {timeLeft}
                         </span>
@@ -252,7 +252,7 @@ export default async function TokenizationMarketplacePage() {
                     <p className="text-gray-900 text-sm font-semibold truncate">{offering.film.title}</p>
                     <p className="text-green-500 text-xs">{formatEur(offering.raised)} levés</p>
                   </div>
-                  <ArrowRight className="h-4 w-4 text-gray-200 group-hover:text-green-500 transition-colors shrink-0" />
+                  <ArrowRight className="h-4 w-4 text-gray-400 group-hover:text-green-500 transition-colors shrink-0" />
                 </div>
               </Link>
             ))}
@@ -265,7 +265,7 @@ export default async function TokenizationMarketplacePage() {
         <h2 className="text-lg font-bold text-gray-900 font-[family-name:var(--font-playfair)] mb-5">
           Comment Devenir Co-Producteur
         </h2>
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {[
             { title: 'Choisissez', desc: 'Parcourez les films ouverts a la co-production', icon: Film, color: 'text-blue-500', bg: 'bg-blue-50' },
             { title: 'Co-Produisez', desc: 'Tokens de co-production des 10\u20AC', icon: Coins, color: 'text-[#E50914]', bg: 'bg-amber-50' },
@@ -277,7 +277,7 @@ export default async function TokenizationMarketplacePage() {
                 <item.icon className={`h-5 w-5 ${item.color}`} />
               </div>
               <h3 className="text-gray-900 font-semibold text-sm mb-1">{item.title}</h3>
-              <p className="text-gray-400 text-xs">{item.desc}</p>
+              <p className="text-gray-500 text-xs">{item.desc}</p>
             </div>
           ))}
         </div>
@@ -285,18 +285,18 @@ export default async function TokenizationMarketplacePage() {
 
       {/* Legal Disclaimer */}
       <details className="group">
-        <summary className="flex items-center gap-2 cursor-pointer text-xs text-gray-400 hover:text-gray-500 transition-colors list-none py-2">
+        <summary className="flex items-center gap-2 cursor-pointer text-xs text-gray-500 hover:text-gray-500 transition-colors list-none py-2">
           <Shield className="h-3.5 w-3.5" />
           <span>Avertissement legal &amp; conformite reglementaire</span>
           <span className="text-[10px] ml-1 group-open:hidden">Cliquez pour lire</span>
         </summary>
         <div className="mt-2 p-4 rounded-xl bg-gray-50 border border-gray-100 space-y-2">
-          <p className="text-gray-400 text-xs leading-relaxed">
+          <p className="text-gray-500 text-xs leading-relaxed">
             Les tokens de co-production proposes sur cette plateforme representent des parts de revenus futurs des films.
             L&apos;investissement dans des projets cinematographiques comporte des risques significatifs, incluant la perte totale du capital investi.
             Les offres sont emises dans le respect des cadres reglementaires applicables, incluant la conformite ISA pour les offres exemptees.
           </p>
-          <p className="text-gray-400 text-xs leading-relaxed">
+          <p className="text-gray-500 text-xs leading-relaxed">
             Consultez un conseiller financier agree avant tout investissement.
             Investissez uniquement des sommes que vous pouvez vous permettre de perdre.
             Les performances passees ne garantissent pas les resultats futurs.

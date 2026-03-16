@@ -58,9 +58,9 @@ export default async function AdminPayoutsPage(
   const currentMonth = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`
 
   const statusColors: Record<string, string> = {
-    PENDING: 'border-blue-500/30 bg-blue-500/10 text-blue-400',
-    CALCULATED: 'border-yellow-500/30 bg-yellow-500/10 text-yellow-400',
-    PAID: 'border-green-500/30 bg-green-500/10 text-green-400',
+    PENDING: 'border-blue-500/30 bg-blue-500/10 text-blue-600',
+    CALCULATED: 'border-yellow-500/30 bg-yellow-500/10 text-yellow-600',
+    PAID: 'border-green-500/30 bg-green-500/10 text-green-600',
     FAILED: 'border-red-500/30 bg-red-500/10 text-red-400',
   }
 
@@ -93,9 +93,9 @@ export default async function AdminPayoutsPage(
       {/* Pending Amount Alert */}
       {totalPending > 0 && (
         <div className="flex items-center gap-3 p-4 rounded-xl border border-yellow-500/30 bg-yellow-500/10">
-          <AlertCircle className="h-5 w-5 text-yellow-400 shrink-0" />
+          <AlertCircle className="h-5 w-5 text-yellow-600 shrink-0" />
           <div className="flex-1">
-            <p className="font-medium text-yellow-400">{formatPrice(totalPending)} en attente de paiement</p>
+            <p className="font-medium text-yellow-600">{formatPrice(totalPending)} en attente de paiement</p>
             <p className="text-xs text-white/40 mt-0.5">{pendingPayouts} paiements calcules non encore verses</p>
           </div>
         </div>
@@ -237,7 +237,7 @@ export default async function AdminPayoutsPage(
                       </span>
                     </td>
                     <td className="p-4 text-right">
-                      <span className="text-sm font-bold text-green-400">{formatPrice(payout.amountEur)}</span>
+                      <span className="text-sm font-bold text-green-600">{formatPrice(payout.amountEur)}</span>
                     </td>
                     <td className="p-4 text-center">
                       <span className={`text-xs px-2 py-0.5 rounded-full border ${statusColors[payout.status] || ''}`}>
@@ -250,14 +250,14 @@ export default async function AdminPayoutsPage(
                           <input type="hidden" name="payoutId" value={payout.id} />
                           <button
                             type="submit"
-                            className="flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg border border-green-500/30 bg-green-500/10 text-green-400 hover:bg-green-500/20 transition-colors ml-auto"
+                            className="flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg border border-green-500/30 bg-green-500/10 text-green-600 hover:bg-green-500/20 transition-colors ml-auto"
                           >
                             <CheckCircle className="h-3.5 w-3.5" />
                             Marquer Paye
                           </button>
                         </form>
                       ) : payout.status === 'PAID' ? (
-                        <div className="flex items-center justify-end gap-1.5 text-xs text-green-400">
+                        <div className="flex items-center justify-end gap-1.5 text-xs text-green-600">
                           <CheckCircle className="h-3.5 w-3.5" />
                           {payout.paidAt ? formatDate(payout.paidAt) : 'Paye'}
                         </div>

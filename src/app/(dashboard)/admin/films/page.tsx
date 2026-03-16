@@ -38,8 +38,8 @@ export default async function AdminFilmsPage() {
       <div className="h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
 
       {films.length === 0 ? (
-        <div className="text-center py-20 text-white/30">
-          <Film className="h-16 w-16 mx-auto mb-4 opacity-30" />
+        <div className="text-center py-20 text-white/50">
+          <Film className="h-16 w-16 mx-auto mb-4 opacity-40" />
           <p className="text-xl">Aucun film</p>
           <p className="text-sm mt-2">Créez votre premier film.</p>
         </div>
@@ -63,7 +63,7 @@ export default async function AdminFilmsPage() {
                   {film.isPublic && <Badge variant="success">Public</Badge>}
                   {!film.isPublic && <Badge variant="secondary">Privé</Badge>}
                 </div>
-                <div className="flex items-center gap-4 text-xs text-white/40">
+                <div className="flex items-center gap-4 text-xs text-white/50">
                   <span>{FILM_STATUS_LABELS[film.status]}</span>
                   <span>·</span>
                   <span>{film._count.tasks} tâches</span>

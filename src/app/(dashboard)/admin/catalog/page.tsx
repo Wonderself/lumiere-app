@@ -100,31 +100,31 @@ export default async function AdminCatalogPage(
   ]
 
   const statusColors: Record<string, string> = {
-    PENDING: 'border-yellow-500/30 bg-yellow-500/10 text-yellow-400',
-    APPROVED: 'border-blue-500/30 bg-blue-500/10 text-blue-400',
-    LIVE: 'border-green-500/30 bg-green-500/10 text-green-400',
+    PENDING: 'border-yellow-500/30 bg-yellow-500/10 text-yellow-600',
+    APPROVED: 'border-blue-500/30 bg-blue-500/10 text-blue-600',
+    LIVE: 'border-green-500/30 bg-green-500/10 text-green-600',
     REJECTED: 'border-red-500/30 bg-red-500/10 text-red-400',
-    SUSPENDED: 'border-orange-500/30 bg-orange-500/10 text-orange-400',
+    SUSPENDED: 'border-orange-500/30 bg-orange-500/10 text-orange-600',
   }
 
   return (
     <div className="p-8 space-y-6">
       {/* Header */}
-      <div className="flex items-start justify-between">
+      <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold mb-1 font-[family-name:var(--font-playfair)]">
             Catalogue
           </h1>
           <p className="text-white/50">Gestion des films du catalogue streaming</p>
         </div>
-        <div className="flex items-center gap-3 text-xs">
+        <div className="flex flex-wrap items-center gap-3 text-xs">
           <div className="rounded-lg border border-white/10 bg-white/[0.02] px-3 py-2 flex items-center gap-2">
-            <Film className="h-3.5 w-3.5 text-white/40" />
+            <Film className="h-3.5 w-3.5 text-white/50" />
             <span className="text-white/60">{totalFilms} films</span>
           </div>
           <div className="rounded-lg border border-yellow-500/20 bg-yellow-500/5 px-3 py-2 flex items-center gap-2">
-            <Clock className="h-3.5 w-3.5 text-yellow-400" />
-            <span className="text-yellow-400">{pendingCount} en attente</span>
+            <Clock className="h-3.5 w-3.5 text-yellow-600" />
+            <span className="text-yellow-600">{pendingCount} en attente</span>
           </div>
           <div className="rounded-lg border border-[#E50914]/20 bg-[#E50914]/5 px-3 py-2 flex items-center gap-2">
             <Star className="h-3.5 w-3.5 text-[#E50914]" />
@@ -134,8 +134,8 @@ export default async function AdminCatalogPage(
       </div>
 
       {/* Filters */}
-      <div className="flex items-center justify-between gap-4">
-        <div className="flex items-center gap-1 rounded-xl border border-white/10 bg-white/[0.02] p-1">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div className="flex items-center gap-1 rounded-xl border border-white/10 bg-white/[0.02] p-1 overflow-x-auto">
           {statusTabs.map((tab) => (
             <Link
               key={tab.key}
@@ -157,7 +157,7 @@ export default async function AdminCatalogPage(
 
         <form action="/admin/catalog" method="GET" className="relative">
           <input type="hidden" name="status" value={statusFilter} />
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/30" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/40" />
           <input
             type="text"
             name="search"
@@ -171,7 +171,7 @@ export default async function AdminCatalogPage(
       {/* Films Table */}
       <div className="rounded-xl border border-white/10 bg-white/[0.02] overflow-hidden">
         {films.length === 0 ? (
-          <div className="text-center py-20 text-white/30">
+          <div className="text-center py-20 text-white/40">
             <Film className="h-14 w-14 mx-auto mb-4 opacity-30" />
             <p className="text-lg">Aucun film trouve</p>
             <p className="text-sm mt-1">Modifiez vos filtres ou attendez des soumissions</p>
@@ -205,7 +205,7 @@ export default async function AdminCatalogPage(
                         )}
                         <div>
                           <p className="text-sm font-medium truncate max-w-[200px]">{film.title}</p>
-                          <p className="text-[10px] text-white/30">{film.genre || 'Non defini'} {film.language && `· ${film.language}`}</p>
+                          <p className="text-[10px] text-white/40">{film.genre || 'Non defini'} {film.language && `· ${film.language}`}</p>
                         </div>
                       </div>
                     </td>
@@ -219,7 +219,7 @@ export default async function AdminCatalogPage(
                     </td>
                     <td className="p-4 text-right">
                       <div className="flex items-center justify-end gap-1.5">
-                        <Eye className="h-3 w-3 text-white/30" />
+                        <Eye className="h-3 w-3 text-white/40" />
                         <span className="text-sm text-white/60">{film.viewCount.toLocaleString('fr-FR')}</span>
                       </div>
                     </td>
@@ -254,7 +254,7 @@ export default async function AdminCatalogPage(
                             <input type="hidden" name="filmId" value={film.id} />
                             <button
                               type="submit"
-                              className="p-1.5 rounded-lg text-green-400 hover:bg-green-500/10 transition-colors"
+                              className="p-1.5 rounded-lg text-green-600 hover:bg-green-500/10 transition-colors"
                               title="Approuver (LIVE)"
                             >
                               <CheckCircle className="h-4 w-4" />
@@ -282,7 +282,7 @@ export default async function AdminCatalogPage(
                             <input type="hidden" name="filmId" value={film.id} />
                             <button
                               type="submit"
-                              className="p-1.5 rounded-lg text-orange-400 hover:bg-orange-500/10 transition-colors"
+                              className="p-1.5 rounded-lg text-orange-600 hover:bg-orange-500/10 transition-colors"
                               title="Suspendre"
                             >
                               <Pause className="h-4 w-4" />
@@ -296,7 +296,7 @@ export default async function AdminCatalogPage(
                             <input type="hidden" name="filmId" value={film.id} />
                             <button
                               type="submit"
-                              className="p-1.5 rounded-lg text-blue-400 hover:bg-blue-500/10 transition-colors"
+                              className="p-1.5 rounded-lg text-blue-600 hover:bg-blue-500/10 transition-colors"
                               title="Reactiver"
                             >
                               <Play className="h-4 w-4" />

@@ -78,7 +78,7 @@ export default async function AdminTaskEditPage({ params }: { params: Promise<{ 
       {/* Claimed by info */}
       {task.claimedBy && (
         <Card className="border-blue-500/20 bg-blue-500/5">
-          <CardContent className="p-4 text-sm text-blue-400">
+          <CardContent className="p-4 text-sm text-blue-600">
             Assignée à <strong>{task.claimedBy.displayName || task.claimedBy.email}</strong>
             {task.claimedAt && ` depuis le ${new Intl.DateTimeFormat('fr-FR').format(task.claimedAt)}`}
           </CardContent>

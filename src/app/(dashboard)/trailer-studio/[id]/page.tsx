@@ -28,7 +28,7 @@ const PHASE_CONFIG: Record<string, { label: string; icon: typeof Film; color: st
 
 const TASK_STATUS_CONFIG: Record<string, { label: string; color: string }> = {
   PENDING: { label: 'En attente', color: 'bg-gray-100 text-gray-500' },
-  BLOCKED: { label: 'Bloqué', color: 'bg-gray-100 text-gray-400' },
+  BLOCKED: { label: 'Bloqué', color: 'bg-gray-100 text-gray-500' },
   READY: { label: 'Prêt', color: 'bg-blue-100 text-blue-600' },
   GENERATING: { label: 'Génération...', color: 'bg-purple-100 text-purple-600' },
   AWAITING_CHOICE: { label: 'Choix requis', color: 'bg-amber-100 text-amber-600' },
@@ -36,7 +36,7 @@ const TASK_STATUS_CONFIG: Record<string, { label: string; color: string }> = {
   APPROVED: { label: 'Approuvé', color: 'bg-emerald-100 text-emerald-600' },
   REJECTED: { label: 'Rejeté', color: 'bg-red-100 text-red-600' },
   COMPLETED: { label: 'Terminé', color: 'bg-green-100 text-green-600' },
-  SKIPPED: { label: 'Ignoré', color: 'bg-gray-100 text-gray-400' },
+  SKIPPED: { label: 'Ignoré', color: 'bg-gray-100 text-gray-500' },
 }
 
 export default async function TrailerProjectPage({ params }: { params: Promise<{ id: string }> }) {
@@ -73,7 +73,7 @@ export default async function TrailerProjectPage({ params }: { params: Promise<{
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
         <div>
-          <Link href="/trailer-studio" className="inline-flex items-center gap-1.5 text-xs text-gray-400 hover:text-[#E50914] transition-colors mb-3">
+          <Link href="/trailer-studio" className="inline-flex items-center gap-1.5 text-xs text-gray-500 hover:text-[#E50914] transition-colors mb-3">
             <ArrowLeft className="h-3.5 w-3.5" />
             Retour au studio
           </Link>
@@ -122,13 +122,13 @@ export default async function TrailerProjectPage({ params }: { params: Promise<{
         <div className="rounded-2xl border border-gray-200 bg-white p-7 space-y-4">
           {project.concept && (
             <div>
-              <p className="text-xs font-medium text-gray-400 uppercase tracking-wider">Concept</p>
+              <p className="text-xs font-medium text-gray-500 uppercase tracking-wider">Concept</p>
               <p className="text-sm text-[#1A1A2E] mt-1">{project.concept}</p>
             </div>
           )}
           {project.synopsis && (
             <div>
-              <p className="text-xs font-medium text-gray-400 uppercase tracking-wider">Synopsis</p>
+              <p className="text-xs font-medium text-gray-500 uppercase tracking-wider">Synopsis</p>
               <p className="text-sm text-gray-600 mt-1 whitespace-pre-wrap">{project.synopsis}</p>
             </div>
           )}
@@ -155,9 +155,9 @@ export default async function TrailerProjectPage({ params }: { params: Promise<{
 
         {project.tasks.length === 0 ? (
           <div className="rounded-2xl border border-gray-200 bg-white p-8 text-center">
-            <Wand2 className="h-10 w-10 text-gray-300 mx-auto mb-3" />
+            <Wand2 className="h-10 w-10 text-gray-500 mx-auto mb-3" />
             <p className="text-sm text-gray-500">Le projet n&apos;a pas encore été décomposé en micro-tâches</p>
-            <p className="text-xs text-gray-400 mt-1">Utilisez le bouton ci-dessus pour décomposer le projet</p>
+            <p className="text-xs text-gray-500 mt-1">Utilisez le bouton ci-dessus pour décomposer le projet</p>
           </div>
         ) : (
           <div className="space-y-4">
@@ -201,25 +201,25 @@ export default async function TrailerProjectPage({ params }: { params: Promise<{
                           ) : task.status === 'GENERATING' ? (
                             <Loader2 className="h-4 w-4 text-purple-500 animate-spin shrink-0" />
                           ) : task.status === 'BLOCKED' ? (
-                            <Lock className="h-4 w-4 text-gray-300 shrink-0" />
+                            <Lock className="h-4 w-4 text-gray-500 shrink-0" />
                           ) : (
-                            <Clock className="h-4 w-4 text-gray-300 shrink-0" />
+                            <Clock className="h-4 w-4 text-gray-500 shrink-0" />
                           )}
                           <div className="flex-1 min-w-0">
                             <p className={`text-xs font-medium ${
-                              task.status === 'BLOCKED' ? 'text-gray-400' : 'text-[#1A1A2E]'
+                              task.status === 'BLOCKED' ? 'text-gray-500' : 'text-[#1A1A2E]'
                             }`}>
                               {task.title}
                             </p>
                             {task.description && (
-                              <p className="text-[10px] text-gray-400 truncate mt-0.5">{task.description}</p>
+                              <p className="text-[10px] text-gray-500 truncate mt-0.5">{task.description}</p>
                             )}
                           </div>
                           <Badge className={`text-[10px] px-1.5 py-0.5 border-0 ${statusConfig.color}`}>
                             {statusConfig.label}
                           </Badge>
                           {task.estimatedCredits > 0 && (
-                            <span className="text-[10px] text-gray-400 shrink-0">{task.estimatedCredits}cr</span>
+                            <span className="text-[10px] text-gray-500 shrink-0">{task.estimatedCredits}cr</span>
                           )}
                         </div>
                       )

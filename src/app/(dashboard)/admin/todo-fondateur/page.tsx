@@ -36,7 +36,7 @@ const sections: TodoSection[] = [
   {
     title: 'V1 Completee — Ce qui est fait',
     icon: PartyPopper,
-    color: 'text-green-400',
+    color: 'text-green-600',
     items: [
       { label: 'Landing page Hub (Cinema + Creators)', done: true, note: 'Page d\'accueil avec choix entre les 2 plateformes, style videoinu + gradient Instagram', icon: Globe, helper: 'CLAUDE' },
       { label: 'Landing Cinema complete', done: true, note: 'Hero, stats, services, genres, films, pricing, CTA — dark theme or', icon: Film, helper: 'CLAUDE' },
@@ -66,7 +66,7 @@ const sections: TodoSection[] = [
   {
     title: 'Phase 2 — APIs & Services (Claude peut guider etape par etape)',
     icon: Server,
-    color: 'text-blue-400',
+    color: 'text-blue-600',
     items: [
       {
         label: 'Stripe Connect — Paiements contributeurs',
@@ -154,7 +154,7 @@ const sections: TodoSection[] = [
   {
     title: 'Phase 3 — Etapes Legales (avec guide)',
     icon: Scale,
-    color: 'text-purple-400',
+    color: 'text-purple-600',
     items: [
       {
         label: 'Creation entite en Israel (Ltd)',
@@ -312,7 +312,7 @@ const sections: TodoSection[] = [
   {
     title: 'Phase 5 — Ameliorations Techniques (Claude fait tout)',
     icon: Code,
-    color: 'text-cyan-400',
+    color: 'text-cyan-600',
     items: [
       {
         label: 'Images WebP optimisees + responsive',
@@ -385,10 +385,10 @@ export default async function AdminTodoFondateurPage() {
   const humanItems = allItems.filter((i) => !i.done && i.helper === 'HUMAN').length
 
   const difficultyMap = {
-    trivial: { label: 'Tres facile', color: 'text-green-400 bg-green-500/10 border-green-500/20' },
-    easy: { label: 'Facile', color: 'text-blue-400 bg-blue-500/10 border-blue-500/20' },
-    medium: { label: 'Moyen', color: 'text-yellow-400 bg-yellow-500/10 border-yellow-500/20' },
-    guided: { label: 'Guide', color: 'text-purple-400 bg-purple-500/10 border-purple-500/20' },
+    trivial: { label: 'Tres facile', color: 'text-green-600 bg-green-500/10 border-green-500/20' },
+    easy: { label: 'Facile', color: 'text-blue-600 bg-blue-500/10 border-blue-500/20' },
+    medium: { label: 'Moyen', color: 'text-yellow-600 bg-yellow-500/10 border-yellow-500/20' },
+    guided: { label: 'Guide', color: 'text-purple-600 bg-purple-500/10 border-purple-500/20' },
   }
 
   return (
@@ -400,7 +400,7 @@ export default async function AdminTodoFondateurPage() {
         >
           <ListTodo className="h-7 w-7 text-[#E50914]" /> TODO Fondateur
         </h1>
-        <p className="text-white/50 mt-1">
+        <p className="text-gray-500 mt-1">
           Check-list complete pour le lancement de CINEGEN. Chaque etape est faisable et guidee.
         </p>
       </div>
@@ -410,36 +410,36 @@ export default async function AdminTodoFondateurPage() {
         <CardContent className="p-6">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
             <div>
-              <p className="text-sm text-white/40">Progression globale</p>
+              <p className="text-sm text-gray-500">Progression globale</p>
               <p className="text-4xl font-bold text-[#E50914]">{globalPct}%</p>
-              <p className="text-xs text-white/30 mt-1">
+              <p className="text-xs text-gray-500 mt-1">
                 {doneItems}/{totalItems} etapes completees
               </p>
             </div>
             <div className="flex gap-6">
               <div className="text-center">
                 <div className="flex items-center gap-1.5 mb-1">
-                  <Cpu className="h-4 w-4 text-purple-400" />
-                  <p className="text-2xl font-bold text-purple-400">{claudeItems}</p>
+                  <Cpu className="h-4 w-4 text-purple-600" />
+                  <p className="text-2xl font-bold text-purple-600">{claudeItems}</p>
                 </div>
-                <p className="text-[10px] text-white/30">Claude peut faire</p>
+                <p className="text-[10px] text-gray-500">Claude peut faire</p>
               </div>
               <div className="text-center">
                 <div className="flex items-center gap-1.5 mb-1">
-                  <Users className="h-4 w-4 text-orange-400" />
-                  <p className="text-2xl font-bold text-orange-400">{humanItems}</p>
+                  <Users className="h-4 w-4 text-orange-600" />
+                  <p className="text-2xl font-bold text-orange-600">{humanItems}</p>
                 </div>
-                <p className="text-[10px] text-white/30">Humain requis</p>
+                <p className="text-[10px] text-gray-500">Humain requis</p>
               </div>
             </div>
           </div>
-          <div className="h-3 bg-white/5 rounded-full overflow-hidden">
+          <div className="h-3 bg-gray-100 rounded-full overflow-hidden">
             <div
               className="h-full rounded-full bg-gradient-to-r from-[#E50914] to-[#FF2D2D] transition-all duration-700"
               style={{ width: `${globalPct}%` }}
             />
           </div>
-          <p className="text-xs text-white/20 mt-3 flex items-center gap-1.5">
+          <p className="text-xs text-gray-400 mt-3 flex items-center gap-1.5">
             <Sparkles className="h-3 w-3 text-[#E50914]" />
             La V1 est deja tres avancee. La plupart des etapes restantes prennent 5-30 min avec Claude.
           </p>
@@ -452,7 +452,7 @@ export default async function AdminTodoFondateurPage() {
           <PartyPopper className="h-6 w-6 text-[#E50914] shrink-0 mt-0.5" />
           <div>
             <h3 className="font-bold text-[#E50914] mb-1">Excellent travail !</h3>
-            <p className="text-sm text-white/50 leading-relaxed">
+            <p className="text-sm text-gray-500 leading-relaxed">
               {doneItems} fonctionnalites sont deja developpees et fonctionnelles. Le site Cinema + Creators est a
               un niveau de demo tres avance. Les prochaines etapes sont principalement des integrations API
               (la plupart en 5-15 min) et des demarches administratives guidees.
@@ -476,10 +476,10 @@ export default async function AdminTodoFondateurPage() {
                     <section.icon className="h-5 w-5" /> {section.title}
                   </h2>
                   <div className="flex items-center gap-3">
-                    <span className="text-xs text-white/30">
+                    <span className="text-xs text-gray-500">
                       {sectionDone}/{sectionTotal}
                     </span>
-                    <div className="w-24 h-1.5 bg-white/5 rounded-full overflow-hidden">
+                    <div className="w-24 h-1.5 bg-gray-100 rounded-full overflow-hidden">
                       <div
                         className="h-full rounded-full bg-gradient-to-r from-[#E50914] to-[#FF2D2D]"
                         style={{ width: `${sectionPct}%` }}
@@ -492,9 +492,9 @@ export default async function AdminTodoFondateurPage() {
                   {section.items.map((item, idx) => {
                     const Icon = item.icon || Circle
                     const helperColors = {
-                      CLAUDE: 'border-purple-500/20 text-purple-400 bg-purple-500/10',
-                      HUMAN: 'border-orange-500/20 text-orange-400 bg-orange-500/10',
-                      BOTH: 'border-blue-500/20 text-blue-400 bg-blue-500/10',
+                      CLAUDE: 'border-purple-500/20 text-purple-600 bg-purple-500/10',
+                      HUMAN: 'border-orange-500/20 text-orange-600 bg-orange-500/10',
+                      BOTH: 'border-blue-500/20 text-blue-600 bg-blue-500/10',
                     }
 
                     return (
@@ -502,12 +502,12 @@ export default async function AdminTodoFondateurPage() {
                         key={idx}
                         className={`flex items-start gap-3 p-3 rounded-lg transition-all ${
                           item.done
-                            ? 'bg-green-500/[0.03] opacity-60'
-                            : 'bg-white/[0.02] hover:bg-white/[0.04]'
+                            ? 'bg-green-50 opacity-60'
+                            : 'bg-gray-50 hover:bg-gray-100'
                         }`}
                       >
                         <div
-                          className={`mt-0.5 shrink-0 ${item.done ? 'text-green-400' : 'text-white/20'}`}
+                          className={`mt-0.5 shrink-0 ${item.done ? 'text-green-600' : 'text-gray-400'}`}
                         >
                           {item.done ? (
                             <CheckCircle className="h-4 w-4" />
@@ -519,7 +519,7 @@ export default async function AdminTodoFondateurPage() {
                           <div className="flex flex-wrap items-center gap-2">
                             <span
                               className={`text-sm font-medium ${
-                                item.done ? 'line-through text-white/30' : 'text-white/80'
+                                item.done ? 'line-through text-gray-500' : 'text-[#1A1A2E]'
                               }`}
                             >
                               {item.label}
@@ -546,13 +546,13 @@ export default async function AdminTodoFondateurPage() {
                             )}
                           </div>
                           {item.note && (
-                            <p className="text-xs text-white/30 mt-0.5 leading-relaxed">
+                            <p className="text-xs text-gray-500 mt-0.5 leading-relaxed">
                               {item.note}
                             </p>
                           )}
                         </div>
                         <Icon
-                          className={`h-4 w-4 shrink-0 ${item.done ? 'text-green-400/30' : 'text-white/15'}`}
+                          className={`h-4 w-4 shrink-0 ${item.done ? 'text-green-600/30' : 'text-gray-300'}`}
                         />
                       </div>
                     )
@@ -565,12 +565,12 @@ export default async function AdminTodoFondateurPage() {
       </div>
 
       {/* Bottom CTA */}
-      <div className="text-center p-8 rounded-2xl border border-white/5 bg-white/[0.02]">
+      <div className="text-center p-8 rounded-2xl border border-gray-200 bg-gray-50">
         <Sparkles className="h-8 w-8 text-[#E50914] mx-auto mb-4" />
         <h3 className="text-xl font-bold mb-2 font-playfair">
           Prochaine etape recommandee
         </h3>
-        <p className="text-white/40 text-sm mb-6 max-w-lg mx-auto">
+        <p className="text-gray-500 text-sm mb-6 max-w-lg mx-auto">
           Configurez Stripe Connect pour activer les paiements. C&apos;est la fonctionnalite
           la plus impactante pour passer en production. Claude peut guider chaque etape.
         </p>

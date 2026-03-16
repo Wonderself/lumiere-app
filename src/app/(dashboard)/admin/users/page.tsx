@@ -40,7 +40,7 @@ export default async function AdminUsersPage() {
       {/* Pending first */}
       {users.some((u) => !u.isVerified) && (
         <div>
-          <h2 className="text-lg font-semibold mb-4 text-yellow-400 flex items-center gap-2">
+          <h2 className="text-lg font-semibold mb-4 text-yellow-600 flex items-center gap-2">
             <Clock className="h-5 w-5" /> En attente de validation
           </h2>
           <div className="space-y-2">
@@ -51,10 +51,10 @@ export default async function AdminUsersPage() {
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="font-medium">{user.displayName || 'N/A'}</p>
-                  <p className="text-sm text-white/40">{user.email}</p>
-                  <p className="text-xs text-white/30">Inscrit le {formatDate(user.createdAt)} · {user.role}</p>
+                  <p className="text-sm text-white/50">{user.email}</p>
+                  <p className="text-xs text-white/50">Inscrit le {formatDate(user.createdAt)} · {user.role}</p>
                   {user.skills.length > 0 && (
-                    <p className="text-xs text-white/30 mt-1">Skills : {user.skills.slice(0, 3).join(', ')}</p>
+                    <p className="text-xs text-white/50 mt-1">Skills : {user.skills.slice(0, 3).join(', ')}</p>
                   )}
                 </div>
                 <form action={verifyUserAction}>
@@ -90,8 +90,8 @@ export default async function AdminUsersPage() {
                     {user.level}
                   </Badge>
                 </div>
-                <p className="text-xs text-white/40">{user.email}</p>
-                <p className="text-xs text-white/30">
+                <p className="text-xs text-white/50">{user.email}</p>
+                <p className="text-xs text-white/50">
                   {user._count.claimedTasks} tâches · {user.points} pts · Inscrit {formatDate(user.createdAt)}
                 </p>
               </div>

@@ -65,7 +65,7 @@ function ProposalStatusBadge({ status }: { status: string }) {
     case 'REJECTED':
       return <Badge variant="destructive" className="text-xs"><XCircle className="h-3 w-3 mr-1" />Rejetée</Badge>
     case 'EXECUTED':
-      return <Badge className="text-xs border-purple-500/30 bg-purple-500/10 text-purple-400"><Gavel className="h-3 w-3 mr-1" />Exécutée</Badge>
+      return <Badge className="text-xs border-purple-500/30 bg-purple-500/10 text-purple-600"><Gavel className="h-3 w-3 mr-1" />Exécutée</Badge>
     case 'EXPIRED':
       return <Badge variant="secondary" className="text-xs"><Clock className="h-3 w-3 mr-1" />Expirée</Badge>
     default:
@@ -264,7 +264,7 @@ export default async function GovernancePage() {
                           </div>
                           <div className="flex items-center justify-between">
                             <div className="flex items-center gap-4 text-xs">
-                              <span className="text-green-400 flex items-center gap-1">
+                              <span className="text-green-600 flex items-center gap-1">
                                 <CheckCircle2 className="h-3 w-3" />
                                 Pour: {forPct}% ({proposal.votesFor})
                               </span>
@@ -285,7 +285,7 @@ export default async function GovernancePage() {
                         <div className="rounded-lg bg-white/[0.02] border border-white/5 p-3 space-y-1.5">
                           <div className="flex items-center justify-between text-xs">
                             <span className="text-white/30">Quorum ({proposal.quorumPct}%)</span>
-                            <span className={quorumReached ? 'text-green-400' : 'text-white/50'}>
+                            <span className={quorumReached ? 'text-green-600' : 'text-white/50'}>
                               {quorumReached ? 'Atteint' : `${quorumPct}% — ${totalVotes}/${quorumRequired} tokens`}
                             </span>
                           </div>
@@ -302,7 +302,7 @@ export default async function GovernancePage() {
                             <CheckCircle2 className="h-4 w-4 text-[#E50914]" />
                             <span className="text-white/50 text-sm">
                               Vous avez voté : <strong className={
-                                userVote === 'FOR' ? 'text-green-400' :
+                                userVote === 'FOR' ? 'text-green-600' :
                                 userVote === 'AGAINST' ? 'text-red-400' : 'text-white/50'
                               }>
                                 {userVote === 'FOR' ? 'Pour' : userVote === 'AGAINST' ? 'Contre' : 'Abstention'}
@@ -321,7 +321,7 @@ export default async function GovernancePage() {
                                 <input type="hidden" name="vote" value="FOR" />
                                 <Button
                                   variant="outline"
-                                  className="w-full min-h-[44px] border-green-500/20 text-green-400 hover:bg-green-500/10"
+                                  className="w-full min-h-[44px] border-green-500/20 text-green-600 hover:bg-green-500/10"
                                   type="submit"
                                 >
                                   <CheckCircle2 className="h-4 w-4 mr-1" />

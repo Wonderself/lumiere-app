@@ -170,10 +170,10 @@ export default async function AdminReputationPage(
   }
 
   const badgeColors: Record<string, string> = {
-    diamond: 'border-cyan-500/30 bg-cyan-500/10 text-cyan-400',
+    diamond: 'border-cyan-500/30 bg-cyan-500/10 text-cyan-600',
     gold: 'border-[#E50914]/30 bg-[#E50914]/10 text-[#E50914]',
-    silver: 'border-gray-400/30 bg-gray-400/10 text-gray-400',
-    bronze: 'border-orange-600/30 bg-orange-600/10 text-orange-400',
+    silver: 'border-gray-400/30 bg-gray-400/10 text-gray-500',
+    bronze: 'border-orange-600/30 bg-orange-600/10 text-orange-600',
   }
 
   const badgeIcons: Record<string, string> = {
@@ -184,19 +184,19 @@ export default async function AdminReputationPage(
   }
 
   return (
-    <div className="p-8 space-y-6">
+    <div className="p-4 sm:p-8 space-y-6">
       {/* Header */}
       <div>
         <h1 className="text-3xl font-bold mb-1 font-[family-name:var(--font-playfair)]">
           Reputation
         </h1>
-        <p className="text-white/50">Scores, badges et historique de reputation</p>
+        <p className="text-white/60">Scores, badges et historique de reputation</p>
       </div>
 
       {/* Charts Row */}
-      <div className="grid lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
         {/* Badge Distribution */}
-        <div className="rounded-xl border border-white/10 bg-white/[0.02] p-6">
+        <div className="rounded-xl shadow-sm border border-white/10 bg-white/[0.02] p-4 sm:p-6">
           <h2 className="text-sm font-semibold text-white/80 mb-4 flex items-center gap-2">
             <Award className="h-4 w-4 text-[#E50914]" />
             Distribution des Badges
@@ -204,12 +204,12 @@ export default async function AdminReputationPage(
           {badgeDistribution.length > 0 ? (
             <DonutChart data={badgeDistribution} size={180} />
           ) : (
-            <div className="text-white/30 text-sm text-center py-12">Aucun badge attribue</div>
+            <div className="text-white/50 text-sm text-center py-12">Aucun badge attribue</div>
           )}
         </div>
 
         {/* Score Distribution */}
-        <div className="rounded-xl border border-white/10 bg-white/[0.02] p-6">
+        <div className="rounded-xl shadow-sm border border-white/10 bg-white/[0.02] p-4 sm:p-6">
           <h2 className="text-sm font-semibold text-white/80 mb-4 flex items-center gap-2">
             <TrendingUp className="h-4 w-4 text-[#E50914]" />
             Distribution des Scores
@@ -220,27 +220,27 @@ export default async function AdminReputationPage(
 
       {/* Search */}
       <form action="/admin/reputation" method="GET" className="relative max-w-sm">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/30" />
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/50" />
         <input
           type="text"
           name="search"
           defaultValue={searchQuery}
           placeholder="Rechercher un utilisateur..."
-          className="w-full h-9 pl-9 pr-4 rounded-lg border border-white/10 bg-white/5 text-sm text-white placeholder:text-white/30 focus:outline-none focus:ring-1 focus:ring-[#E50914]/50"
+          className="w-full h-9 pl-9 pr-4 rounded-lg border border-white/10 bg-white/5 text-sm text-white placeholder:text-white/50 focus:outline-none focus:ring-1 focus:ring-[#E50914]/50"
         />
       </form>
 
-      <div className={`grid ${selectedUserId ? 'lg:grid-cols-5' : ''} gap-6`}>
+      <div className={`grid ${selectedUserId ? 'grid-cols-1 lg:grid-cols-5' : ''} gap-4 sm:gap-6`}>
         {/* Users Table */}
-        <div className={`rounded-xl border border-white/10 bg-white/[0.02] overflow-hidden ${selectedUserId ? 'lg:col-span-3' : ''}`}>
+        <div className={`rounded-xl shadow-sm border border-white/10 bg-white/[0.02] overflow-hidden ${selectedUserId ? 'lg:col-span-3' : ''}`}>
           <div className="p-5 border-b border-white/5 flex items-center gap-2">
-            <Users className="h-4 w-4 text-white/40" />
+            <Users className="h-4 w-4 text-white/50" />
             <h2 className="text-sm font-semibold text-white/80">Utilisateurs</h2>
-            <span className="text-xs text-white/30 ml-auto">{users.length} resultats</span>
+            <span className="text-xs text-white/50 ml-auto">{users.length} resultats</span>
           </div>
 
           {users.length === 0 ? (
-            <div className="text-center py-16 text-white/30">
+            <div className="text-center py-16 text-white/50">
               <Users className="h-12 w-12 mx-auto mb-3 opacity-30" />
               <p>Aucun utilisateur trouve</p>
             </div>
@@ -249,11 +249,11 @@ export default async function AdminReputationPage(
               <table className="w-full">
                 <thead>
                   <tr className="border-b border-white/5">
-                    <th className="text-left text-xs text-white/40 font-medium p-4">Utilisateur</th>
-                    <th className="text-center text-xs text-white/40 font-medium p-4">Score</th>
-                    <th className="text-center text-xs text-white/40 font-medium p-4">Badge</th>
-                    <th className="text-center text-xs text-white/40 font-medium p-4">Events</th>
-                    <th className="text-right text-xs text-white/40 font-medium p-4">Action</th>
+                    <th className="text-left text-xs text-white/50 font-medium p-4">Utilisateur</th>
+                    <th className="text-center text-xs text-white/50 font-medium p-4">Score</th>
+                    <th className="text-center text-xs text-white/50 font-medium p-4">Badge</th>
+                    <th className="text-center text-xs text-white/50 font-medium p-4">Events</th>
+                    <th className="text-right text-xs text-white/50 font-medium p-4">Action</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -271,13 +271,13 @@ export default async function AdminReputationPage(
                             {user.avatarUrl ? (
                               <img src={user.avatarUrl} alt="" className="w-8 h-8 rounded-full object-cover" />
                             ) : (
-                              <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-xs font-bold text-white/40">
+                              <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-xs font-bold text-white/50">
                                 {(user.displayName || user.email)?.[0]?.toUpperCase() || '?'}
                               </div>
                             )}
                             <div>
                               <p className="text-sm font-medium">{user.displayName || user.email}</p>
-                              <p className="text-[10px] text-white/30">{user.role} / {user.level}</p>
+                              <p className="text-xs text-white/50">{user.role} / {user.level}</p>
                             </div>
                           </div>
                         </td>
@@ -296,9 +296,9 @@ export default async function AdminReputationPage(
                               />
                             </div>
                             <span className={`text-sm font-bold ${
-                              user.reputationScore >= 80 ? 'text-green-400'
+                              user.reputationScore >= 80 ? 'text-green-600'
                               : user.reputationScore >= 60 ? 'text-[#E50914]'
-                              : user.reputationScore >= 40 ? 'text-yellow-400'
+                              : user.reputationScore >= 40 ? 'text-yellow-600'
                               : 'text-red-400'
                             }`}>
                               {user.reputationScore.toFixed(0)}
@@ -319,7 +319,7 @@ export default async function AdminReputationPage(
                             className={`text-xs px-3 py-1.5 rounded-lg transition-colors inline-flex items-center gap-1 ${
                               isSelected
                                 ? 'bg-[#E50914]/20 text-[#E50914] border border-[#E50914]/30'
-                                : 'border border-white/10 text-white/40 hover:text-white/60 hover:border-white/20'
+                                : 'border border-white/10 text-white/50 hover:text-white/60 hover:border-white/20'
                             }`}
                           >
                             {isSelected ? 'Selectionne' : 'Voir'}
@@ -338,7 +338,7 @@ export default async function AdminReputationPage(
         {selectedUserId && selectedUser && (
           <div className="lg:col-span-2 space-y-4">
             {/* User Summary */}
-            <div className="rounded-xl border border-[#E50914]/20 bg-[#E50914]/5 p-6">
+            <div className="rounded-xl shadow-sm border border-[#E50914]/20 bg-[#E50914]/5 p-4 sm:p-6">
               <div className="flex items-center gap-3 mb-4">
                 {selectedUser.avatarUrl ? (
                   <img src={selectedUser.avatarUrl} alt="" className="w-12 h-12 rounded-full object-cover" />
@@ -353,40 +353,40 @@ export default async function AdminReputationPage(
                     <span className={`text-xs px-2 py-0.5 rounded-full border ${badgeColors[selectedUser.reputationBadge] || badgeColors.bronze}`}>
                       {selectedUser.reputationBadge}
                     </span>
-                    <span className="text-xs text-white/40">{selectedUser.role}</span>
+                    <span className="text-xs text-white/50">{selectedUser.role}</span>
                   </div>
                 </div>
                 <div className="ml-auto text-right">
                   <div className={`text-3xl font-bold ${
-                    selectedUser.reputationScore >= 80 ? 'text-green-400'
+                    selectedUser.reputationScore >= 80 ? 'text-green-600'
                     : selectedUser.reputationScore >= 60 ? 'text-[#E50914]'
-                    : selectedUser.reputationScore >= 40 ? 'text-yellow-400'
+                    : selectedUser.reputationScore >= 40 ? 'text-yellow-600'
                     : 'text-red-400'
                   }`}>
                     {selectedUser.reputationScore.toFixed(1)}
                   </div>
-                  <div className="text-[10px] text-white/30">/ 100</div>
+                  <div className="text-xs text-white/50">/ 100</div>
                 </div>
               </div>
 
               <div className="grid grid-cols-3 gap-3 text-center">
                 <div className="rounded-lg bg-black/20 p-2">
-                  <div className="text-xs text-white/40">Taches</div>
+                  <div className="text-xs text-white/50">Taches</div>
                   <div className="text-sm font-bold text-white">{selectedUser.tasksCompleted}</div>
                 </div>
                 <div className="rounded-lg bg-black/20 p-2">
-                  <div className="text-xs text-white/40">Events</div>
+                  <div className="text-xs text-white/50">Events</div>
                   <div className="text-sm font-bold text-white">{selectedUser._count.reputationEvents}</div>
                 </div>
                 <div className="rounded-lg bg-black/20 p-2">
-                  <div className="text-xs text-white/40">Niveau</div>
+                  <div className="text-xs text-white/50">Niveau</div>
                   <div className="text-sm font-bold text-white">{selectedUser.level}</div>
                 </div>
               </div>
             </div>
 
             {/* Manual Adjustment Form */}
-            <div className="rounded-xl border border-white/10 bg-white/[0.02] p-5">
+            <div className="rounded-xl shadow-sm border border-white/10 bg-white/[0.02] p-4 sm:p-5">
               <h3 className="text-sm font-semibold text-white/80 mb-3 flex items-center gap-2">
                 <Shield className="h-4 w-4 text-[#E50914]" />
                 Ajustement Manuel
@@ -394,24 +394,24 @@ export default async function AdminReputationPage(
               <form action={adjustReputationAction} className="space-y-3">
                 <input type="hidden" name="userId" value={selectedUserId} />
                 <div>
-                  <label className="block text-xs text-white/40 mb-1">Variation de score</label>
+                  <label className="block text-xs text-white/50 mb-1">Variation de score</label>
                   <input
                     type="number"
                     name="scoreChange"
                     step="0.1"
                     placeholder="ex: +5 ou -10"
                     required
-                    className="w-full h-9 rounded-lg border border-white/10 bg-white/5 px-3 text-sm text-white placeholder:text-white/30 focus:outline-none focus:ring-1 focus:ring-[#E50914]/50"
+                    className="w-full h-9 rounded-lg border border-white/10 bg-white/5 px-3 text-sm text-white placeholder:text-white/50 focus:outline-none focus:ring-1 focus:ring-[#E50914]/50"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs text-white/40 mb-1">Raison</label>
+                  <label className="block text-xs text-white/50 mb-1">Raison</label>
                   <input
                     type="text"
                     name="reason"
                     placeholder="Raison de l'ajustement..."
                     required
-                    className="w-full h-9 rounded-lg border border-white/10 bg-white/5 px-3 text-sm text-white placeholder:text-white/30 focus:outline-none focus:ring-1 focus:ring-[#E50914]/50"
+                    className="w-full h-9 rounded-lg border border-white/10 bg-white/5 px-3 text-sm text-white placeholder:text-white/50 focus:outline-none focus:ring-1 focus:ring-[#E50914]/50"
                   />
                 </div>
                 <button
@@ -424,15 +424,15 @@ export default async function AdminReputationPage(
             </div>
 
             {/* Reputation Events History */}
-            <div className="rounded-xl border border-white/10 bg-white/[0.02] overflow-hidden">
+            <div className="rounded-xl shadow-sm border border-white/10 bg-white/[0.02] overflow-hidden">
               <div className="p-4 border-b border-white/5">
                 <h3 className="text-sm font-semibold text-white/80 flex items-center gap-2">
-                  <Star className="h-4 w-4 text-white/40" />
+                  <Star className="h-4 w-4 text-white/50" />
                   Historique Events
                 </h3>
               </div>
               {selectedUserEvents.length === 0 ? (
-                <div className="text-center py-8 text-white/30 text-sm">Aucun evenement</div>
+                <div className="text-center py-8 text-white/50 text-sm">Aucun evenement</div>
               ) : (
                 <div className="divide-y divide-white/5 max-h-[400px] overflow-y-auto">
                   {selectedUserEvents.map((event) => (
@@ -441,23 +441,23 @@ export default async function AdminReputationPage(
                         event.score > 0 ? 'bg-green-500/10' : 'bg-red-500/10'
                       }`}>
                         {event.score > 0 ? (
-                          <ChevronUp className="h-3.5 w-3.5 text-green-400" />
+                          <ChevronUp className="h-3.5 w-3.5 text-green-600" />
                         ) : (
                           <ChevronDown className="h-3.5 w-3.5 text-red-400" />
                         )}
                       </div>
                       <div className="flex-1 min-w-0">
                         <p className="text-xs font-medium">{event.type}</p>
-                        <p className="text-[10px] text-white/30">
+                        <p className="text-xs text-white/50">
                           {event.source} — {formatDate(event.createdAt)}
                         </p>
                       </div>
                       <div className="text-right shrink-0">
-                        <span className={`text-sm font-bold ${event.score > 0 ? 'text-green-400' : 'text-red-400'}`}>
+                        <span className={`text-sm font-bold ${event.score > 0 ? 'text-green-600' : 'text-red-400'}`}>
                           {event.score > 0 ? '+' : ''}{event.score.toFixed(1)}
                         </span>
                         {event.weight !== 1 && (
-                          <div className="text-[10px] text-white/30">x{event.weight}</div>
+                          <div className="text-xs text-white/50">x{event.weight}</div>
                         )}
                       </div>
                     </div>

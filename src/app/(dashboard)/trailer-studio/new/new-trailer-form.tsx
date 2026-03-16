@@ -154,7 +154,7 @@ export function NewTrailerForm() {
         {/* Mood */}
         <div className="space-y-2">
           <Label className="text-sm font-medium text-gray-700 flex items-center gap-2">
-            <Music className="h-3.5 w-3.5 text-gray-400" />
+            <Music className="h-3.5 w-3.5 text-gray-500" />
             Ambiance / Mood
           </Label>
           <div className="flex flex-wrap gap-2">
@@ -178,7 +178,7 @@ export function NewTrailerForm() {
         {/* Target Audience */}
         <div className="space-y-2">
           <Label htmlFor="targetAudience" className="text-sm font-medium text-gray-700 flex items-center gap-2">
-            <Users className="h-3.5 w-3.5 text-gray-400" />
+            <Users className="h-3.5 w-3.5 text-gray-500" />
             Public cible
           </Label>
           <Input
@@ -250,7 +250,7 @@ export function NewTrailerForm() {
 
       {/* Submit */}
       <div className="flex items-center justify-between pt-2">
-        <p className="text-xs text-gray-400">
+        <p className="text-xs text-gray-500">
           L&apos;IA décomposera votre projet en ~30 micro-tâches après création
         </p>
         <Button

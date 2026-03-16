@@ -61,6 +61,11 @@
   --shadow-elevated: 0 4px 24px rgba(0, 0, 0, 0.08);
   --shadow-gold: 0 4px 24px rgba(229, 9, 20, 0.12);
   --shadow-gold-intense: 0 4px 32px rgba(229, 9, 20, 0.2);
+
+  --accent-blue: #2563EB;
+  --accent-purple: #7C3AED;
+  --accent-green: #059669;
+  --accent-rose: #E11D48;
 }
 
 @theme inline {

@@ -92,11 +92,11 @@ export default async function SubscriptionPage() {
                 </div>
                 {!isFree && (
                   <p className="text-[#E50914] font-semibold text-lg mt-0.5">
-                    {subscription.priceEur}€<span className="text-gray-400 text-sm font-normal">/mois</span>
+                    {subscription.priceEur}€<span className="text-gray-500 text-sm font-normal">/mois</span>
                   </p>
                 )}
                 {isFree && (
-                  <p className="text-gray-400 text-sm mt-0.5">
+                  <p className="text-gray-500 text-sm mt-0.5">
                     Plan gratuit avec fonctionnalités limitées
                   </p>
                 )}
@@ -109,13 +109,13 @@ export default async function SubscriptionPage() {
             <div className="mt-6 flex flex-wrap gap-4 text-sm">
               {'startedAt' in subscription && subscription.startedAt && (
                 <div className="flex items-center gap-2 text-gray-500">
-                  <CreditCard className="h-4 w-4 text-gray-400" />
+                  <CreditCard className="h-4 w-4 text-gray-500" />
                   <span>Depuis le {new Date(subscription.startedAt).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
                 </div>
               )}
               {'expiresAt' in subscription && subscription.expiresAt && (
                 <div className="flex items-center gap-2 text-gray-500">
-                  <Shield className="h-4 w-4 text-gray-400" />
+                  <Shield className="h-4 w-4 text-gray-500" />
                   <span>
                     {currentStatus === 'cancelled' ? 'Accès jusqu\'au' : 'Renouvellement le'}{' '}
                     {new Date(subscription.expiresAt).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}
@@ -143,25 +143,25 @@ export default async function SubscriptionPage() {
 
         {/* Plan details grid */}
         <div className="border-t border-gray-100 px-6 sm:px-8 py-6">
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div className="text-center p-3 rounded-xl bg-gray-50 border border-gray-100">
-              <Monitor className="h-5 w-5 text-gray-400 mx-auto mb-1.5" />
+              <Monitor className="h-5 w-5 text-gray-500 mx-auto mb-1.5" />
               <p className="text-sm font-semibold text-gray-900">{subscription.maxQuality}</p>
-              <p className="text-[11px] text-gray-400">Qualité max</p>
+              <p className="text-xs text-gray-500">Qualité max</p>
             </div>
             <div className="text-center p-3 rounded-xl bg-gray-50 border border-gray-100">
-              <Tv className="h-5 w-5 text-gray-400 mx-auto mb-1.5" />
+              <Tv className="h-5 w-5 text-gray-500 mx-auto mb-1.5" />
               <p className="text-sm font-semibold text-gray-900">
                 {subscription.maxStreams === -1 ? 'Illimité' : subscription.maxStreams}
               </p>
-              <p className="text-[11px] text-gray-400">Films/mois</p>
+              <p className="text-xs text-gray-500">Films/mois</p>
             </div>
             <div className="text-center p-3 rounded-xl bg-gray-50 border border-gray-100">
-              <Download className="h-5 w-5 text-gray-400 mx-auto mb-1.5" />
+              <Download className="h-5 w-5 text-gray-500 mx-auto mb-1.5" />
               <p className="text-sm font-semibold text-gray-900">
                 {subscription.offlineDownloads === -1 ? 'Illimité' : subscription.offlineDownloads}
               </p>
-              <p className="text-[11px] text-gray-400">Downloads</p>
+              <p className="text-xs text-gray-500">Downloads</p>
             </div>
           </div>
         </div>

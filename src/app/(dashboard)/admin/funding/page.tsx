@@ -17,13 +17,13 @@ export const dynamic = 'force-dynamic'
 export const metadata: Metadata = { title: 'Admin — Aides Publiques' }
 
 const statusColors: Record<string, string> = {
-  NOT_STARTED: 'bg-gray-500/10 text-gray-400 border-gray-500/20',
-  ELIGIBLE: 'bg-blue-500/10 text-blue-400 border-blue-500/20',
-  IN_PROGRESS: 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20',
-  SUBMITTED: 'bg-purple-500/10 text-purple-400 border-purple-500/20',
-  ACCEPTED: 'bg-green-500/10 text-green-400 border-green-500/20',
+  NOT_STARTED: 'bg-gray-500/10 text-gray-500 border-gray-500/20',
+  ELIGIBLE: 'bg-blue-500/10 text-blue-600 border-blue-500/20',
+  IN_PROGRESS: 'bg-yellow-500/10 text-yellow-600 border-yellow-500/20',
+  SUBMITTED: 'bg-purple-500/10 text-purple-600 border-purple-500/20',
+  ACCEPTED: 'bg-green-500/10 text-green-600 border-green-500/20',
   REJECTED: 'bg-red-500/10 text-red-400 border-red-500/20',
-  EXPIRED: 'bg-gray-500/10 text-gray-300 border-gray-500/20',
+  EXPIRED: 'bg-gray-500/10 text-gray-500 border-gray-500/20',
 }
 
 const statusLabels: Record<string, string> = {
@@ -76,10 +76,10 @@ export default async function AdminFundingPage() {
   const completedSteps = fundings.reduce((s, f) => s + f.steps.filter(st => st.completed).length, 0)
 
   const stats = [
-    { label: 'Montant potentiel', value: formatPrice(totalPotential), icon: Banknote, color: 'text-green-400' },
+    { label: 'Montant potentiel', value: formatPrice(totalPotential), icon: Banknote, color: 'text-green-600' },
     { label: 'Montant obtenu', value: formatPrice(totalObtained), icon: CheckCircle, color: 'text-[#E50914]' },
-    { label: 'Dossiers en cours', value: inProgress.length.toString(), icon: Clock, color: 'text-blue-400' },
-    { label: 'Progression globale', value: totalSteps > 0 ? `${Math.round((completedSteps / totalSteps) * 100)}%` : '0%', icon: FileText, color: 'text-purple-400' },
+    { label: 'Dossiers en cours', value: inProgress.length.toString(), icon: Clock, color: 'text-blue-600' },
+    { label: 'Progression globale', value: totalSteps > 0 ? `${Math.round((completedSteps / totalSteps) * 100)}%` : '0%', icon: FileText, color: 'text-purple-600' },
   ]
 
   function renderFundingCard(f: typeof fundings[0]) {
@@ -140,12 +140,12 @@ export default async function AdminFundingPage() {
           {/* Tags */}
           <div className="flex gap-2 mb-4">
             {f.preCompany && (
-              <Badge variant="outline" className="text-[10px] border-blue-500/20 text-blue-400">
+              <Badge variant="outline" className="text-[10px] border-blue-500/20 text-blue-600">
                 Avant création société
               </Badge>
             )}
             {f.postCompany && (
-              <Badge variant="outline" className="text-[10px] border-green-500/20 text-green-400">
+              <Badge variant="outline" className="text-[10px] border-green-500/20 text-green-600">
                 Après création société
               </Badge>
             )}
@@ -213,7 +213,7 @@ export default async function AdminFundingPage() {
           {/* Notes */}
           {f.notes && (
             <div className="mt-3 p-2.5 bg-yellow-500/5 border border-yellow-500/10 rounded-lg">
-              <p className="text-xs text-yellow-400/70 flex items-center gap-1.5">
+              <p className="text-xs text-yellow-600/70 flex items-center gap-1.5">
                 <AlertTriangle className="h-3 w-3" /> {f.notes}
               </p>
             </div>
@@ -253,7 +253,7 @@ export default async function AdminFundingPage() {
       {/* Timeline: Avant création société */}
       {preCompanyFundings.length > 0 && (
         <div>
-          <h2 className="text-lg font-semibold text-blue-400 flex items-center gap-2 mb-4">
+          <h2 className="text-lg font-semibold text-blue-600 flex items-center gap-2 mb-4">
             <Building2 className="h-5 w-5" /> Avant création de la société (SAS)
           </h2>
           <div className="space-y-4 border-l-2 border-blue-500/20 pl-6 ml-3">
@@ -265,7 +265,7 @@ export default async function AdminFundingPage() {
       {/* Timeline: Après création société */}
       {postCompanyFundings.length > 0 && (
         <div>
-          <h2 className="text-lg font-semibold text-green-400 flex items-center gap-2 mb-4">
+          <h2 className="text-lg font-semibold text-green-600 flex items-center gap-2 mb-4">
             <Building2 className="h-5 w-5" /> Après création de la société
           </h2>
           <div className="space-y-4 border-l-2 border-green-500/20 pl-6 ml-3">

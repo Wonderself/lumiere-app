@@ -14,10 +14,10 @@ export const dynamic = 'force-dynamic'
 export const metadata: Metadata = { title: 'Dashboard Scenariste' }
 
 const STATUS_CONFIG: Record<string, { label: string; color: string; icon: typeof Clock }> = {
-  SUBMITTED: { label: 'Soumis', color: 'bg-blue-500/10 text-blue-400 border-blue-500/20', icon: Clock },
-  SHORTLISTED: { label: 'Preselectione', color: 'bg-purple-500/10 text-purple-400 border-purple-500/20', icon: Star },
+  SUBMITTED: { label: 'Soumis', color: 'bg-blue-500/10 text-blue-600 border-blue-500/20', icon: Clock },
+  SHORTLISTED: { label: 'Preselectione', color: 'bg-purple-500/10 text-purple-600 border-purple-500/20', icon: Star },
   VOTING: { label: 'En Vote', color: 'bg-[#E50914]/10 text-[#E50914] border-[#E50914]/20', icon: TrendingUp },
-  WINNER: { label: 'Gagnant', color: 'bg-green-500/10 text-green-400 border-green-500/20', icon: Trophy },
+  WINNER: { label: 'Gagnant', color: 'bg-green-500/10 text-green-600 border-green-500/20', icon: Trophy },
   ARCHIVED: { label: 'Archive', color: 'bg-white/5 text-white/30 border-white/10', icon: FileText },
 }
 
@@ -74,10 +74,10 @@ export default async function ScreenwriterDashboardPage() {
       {/* Stats */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
         {[
-          { label: 'Scenarios', value: stats._count, icon: FileText, color: 'text-blue-400' },
-          { label: 'Total Votes', value: stats._sum.votesCount || 0, icon: TrendingUp, color: 'text-purple-400' },
+          { label: 'Scenarios', value: stats._count, icon: FileText, color: 'text-blue-600' },
+          { label: 'Total Votes', value: stats._sum.votesCount || 0, icon: TrendingUp, color: 'text-purple-600' },
           { label: 'Score IA Moyen', value: stats._avg.aiScore ? `${Math.round(stats._avg.aiScore)}%` : '—', icon: Sparkles, color: 'text-[#E50914]' },
-          { label: 'Gagnants', value: winners, icon: Trophy, color: 'text-green-400' },
+          { label: 'Gagnants', value: winners, icon: Trophy, color: 'text-green-600' },
         ].map((stat) => (
           <div key={stat.label} className="p-5 rounded-xl border border-white/[0.06] bg-white/[0.02]">
             <stat.icon className={`h-5 w-5 mb-3 ${stat.color}`} />
@@ -139,7 +139,7 @@ export default async function ScreenwriterDashboardPage() {
                         {s.genre && <span>{s.genre}</span>}
                         <span>{s.votesCount} vote{s.votesCount !== 1 ? 's' : ''}</span>
                         {s.aiScore !== null && (
-                          <span className={s.aiScore >= 75 ? 'text-green-400' : s.aiScore >= 50 ? 'text-[#E50914]' : 'text-red-400'}>
+                          <span className={s.aiScore >= 75 ? 'text-green-600' : s.aiScore >= 50 ? 'text-[#E50914]' : 'text-red-400'}>
                             IA: {s.aiScore}%
                           </span>
                         )}
@@ -163,15 +163,15 @@ export default async function ScreenwriterDashboardPage() {
         <h3 className="text-sm font-semibold text-white/60 mb-3">Conseils pour un bon scenario</h3>
         <div className="grid sm:grid-cols-3 gap-4 text-xs text-white/40">
           <div className="flex items-start gap-2">
-            <CheckCircle className="h-3.5 w-3.5 text-green-400 shrink-0 mt-0.5" />
+            <CheckCircle className="h-3.5 w-3.5 text-green-600 shrink-0 mt-0.5" />
             <span>Logline claire et accrocheuse (1-2 phrases)</span>
           </div>
           <div className="flex items-start gap-2">
-            <CheckCircle className="h-3.5 w-3.5 text-green-400 shrink-0 mt-0.5" />
+            <CheckCircle className="h-3.5 w-3.5 text-green-600 shrink-0 mt-0.5" />
             <span>Synopsis detaille avec debut, milieu et fin</span>
           </div>
           <div className="flex items-start gap-2">
-            <CheckCircle className="h-3.5 w-3.5 text-green-400 shrink-0 mt-0.5" />
+            <CheckCircle className="h-3.5 w-3.5 text-green-600 shrink-0 mt-0.5" />
             <span>Genre bien defini pour le ciblage IA</span>
           </div>
         </div>

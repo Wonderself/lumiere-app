@@ -202,20 +202,20 @@ export default async function PortfolioPage() {
             label: 'Valeur actuelle',
             value: formatEur(totalCurrentValue),
             icon: Wallet,
-            color: 'text-blue-400',
+            color: 'text-blue-600',
           },
           {
             label: 'Dividendes totaux',
             value: formatEur(totalPaidDividends),
             icon: PiggyBank,
-            color: 'text-green-400',
+            color: 'text-green-600',
           },
           {
             label: 'P&L',
             value: `${totalPnl >= 0 ? '+' : ''}${formatEur(totalPnl)}`,
             subValue: `${totalPnlPct >= 0 ? '+' : ''}${Math.round(totalPnlPct * 10) / 10}%`,
             icon: totalPnl >= 0 ? TrendingUp : TrendingDown,
-            color: totalPnl >= 0 ? 'text-green-400' : 'text-red-400',
+            color: totalPnl >= 0 ? 'text-green-600' : 'text-red-400',
           },
         ].map((kpi) => (
           <Card key={kpi.label} className="bg-white/[0.03] border-white/10">
@@ -293,11 +293,11 @@ export default async function PortfolioPage() {
                       <td className="text-right py-3 px-2">
                         <div className="flex items-center justify-end gap-1">
                           {holding.pnl >= 0 ? (
-                            <ArrowUpRight className="h-3 w-3 text-green-400" />
+                            <ArrowUpRight className="h-3 w-3 text-green-600" />
                           ) : (
                             <ArrowDownRight className="h-3 w-3 text-red-400" />
                           )}
-                          <span className={holding.pnl >= 0 ? 'text-green-400' : 'text-red-400'}>
+                          <span className={holding.pnl >= 0 ? 'text-green-600' : 'text-red-400'}>
                             {holding.pnl >= 0 ? '+' : ''}{Math.round(holding.pnlPct * 10) / 10}%
                           </span>
                         </div>
@@ -337,7 +337,7 @@ export default async function PortfolioPage() {
           <CardHeader>
             <div className="flex items-center justify-between">
               <CardTitle className="text-white flex items-center gap-2">
-                <PiggyBank className="h-5 w-5 text-green-400" />
+                <PiggyBank className="h-5 w-5 text-green-600" />
                 Dividendes en Attente
               </CardTitle>
               {totalPendingDividends > 0 && (
@@ -357,7 +357,7 @@ export default async function PortfolioPage() {
                       <p className="text-white/30 text-xs">Période: {div.period} | {div.tokenCount} tokens</p>
                     </div>
                     <div className="flex items-center gap-3">
-                      <span className="text-green-400 font-semibold">{formatEur(div.amount)}</span>
+                      <span className="text-green-600 font-semibold">{formatEur(div.amount)}</span>
                       <form action={async (fd: FormData) => { 'use server'; await claimDividendAction(fd) }}>
                         <input type="hidden" name="dividendId" value={div.id} />
                         <Button size="sm" className="min-h-[36px]" type="submit">
@@ -376,7 +376,7 @@ export default async function PortfolioPage() {
         <Card className="bg-white/[0.03] border-white/10">
           <CardHeader>
             <CardTitle className="text-white flex items-center gap-2">
-              <ShoppingCart className="h-5 w-5 text-blue-400" />
+              <ShoppingCart className="h-5 w-5 text-blue-600" />
               Mes Ventes en Cours
             </CardTitle>
           </CardHeader>
@@ -427,9 +427,9 @@ export default async function PortfolioPage() {
                         isDividend ? 'bg-green-500/10' : isSale ? 'bg-blue-500/10' : 'bg-[#E50914]/10'
                       }`}>
                         {isDividend ? (
-                          <PiggyBank className="h-4 w-4 text-green-400" />
+                          <PiggyBank className="h-4 w-4 text-green-600" />
                         ) : isSale ? (
-                          <ArrowUpRight className="h-4 w-4 text-blue-400" />
+                          <ArrowUpRight className="h-4 w-4 text-blue-600" />
                         ) : (
                           <Coins className="h-4 w-4 text-[#E50914]" />
                         )}

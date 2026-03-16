@@ -196,7 +196,7 @@ export default async function TrailerStudioPage() {
                         </div>
                       )}
                     </div>
-                    <ChevronRight className="h-5 w-5 text-gray-300 group-hover:text-[#E50914] transition-colors shrink-0" />
+                    <ChevronRight className="h-5 w-5 text-gray-500 group-hover:text-[#E50914] transition-colors shrink-0" />
                   </div>
                 </Link>
               )
@@ -214,7 +214,7 @@ export default async function TrailerStudioPage() {
               <p className="text-sm font-medium text-[#1A1A2E] group-hover:text-[#E50914] transition-colors">Acheter des crédits</p>
               <p className="text-xs text-gray-500">Packs à partir de 4.99€</p>
             </div>
-            <ArrowRight className="h-4 w-4 text-gray-300 ml-auto group-hover:text-[#E50914] transition-colors" />
+            <ArrowRight className="h-4 w-4 text-gray-500 ml-auto group-hover:text-[#E50914] transition-colors" />
           </div>
         </Link>
         <Link href="/community/contests" className="group rounded-xl border border-gray-200 bg-white hover:border-[#E50914]/30 p-5 transition-all">
@@ -224,7 +224,7 @@ export default async function TrailerStudioPage() {
               <p className="text-sm font-medium text-[#1A1A2E] group-hover:text-[#E50914] transition-colors">Concours ouverts</p>
               <p className="text-xs text-gray-500">Gagnez la prod de votre film</p>
             </div>
-            <ArrowRight className="h-4 w-4 text-gray-300 ml-auto group-hover:text-[#E50914] transition-colors" />
+            <ArrowRight className="h-4 w-4 text-gray-500 ml-auto group-hover:text-[#E50914] transition-colors" />
           </div>
         </Link>
         <Link href="/films" className="group rounded-xl border border-gray-200 bg-white hover:border-[#E50914]/30 p-5 transition-all">
@@ -234,7 +234,7 @@ export default async function TrailerStudioPage() {
               <p className="text-sm font-medium text-[#1A1A2E] group-hover:text-[#E50914] transition-colors">Nos films</p>
               <p className="text-xs text-gray-500">Inspirez-vous du catalogue</p>
             </div>
-            <ArrowRight className="h-4 w-4 text-gray-300 ml-auto group-hover:text-[#E50914] transition-colors" />
+            <ArrowRight className="h-4 w-4 text-gray-500 ml-auto group-hover:text-[#E50914] transition-colors" />
           </div>
         </Link>
       </div>

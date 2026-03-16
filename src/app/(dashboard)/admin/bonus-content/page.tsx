@@ -47,14 +47,14 @@ const TYPE_LABELS: Record<string, string> = {
 }
 
 const TYPE_COLORS: Record<string, string> = {
-  INTERVIEW: 'bg-blue-500/20 text-blue-400 border-blue-500/30',
+  INTERVIEW: 'bg-blue-500/20 text-blue-600 border-blue-500/30',
   DELETED_SCENE: 'bg-red-500/20 text-red-400 border-red-500/30',
-  BLOOPER: 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30',
-  BTS: 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30',
-  DIRECTORS_COMMENTARY: 'bg-purple-500/20 text-purple-400 border-purple-500/30',
-  CONCEPT_ART: 'bg-pink-500/20 text-pink-400 border-pink-500/30',
-  SOUNDTRACK: 'bg-indigo-500/20 text-indigo-400 border-indigo-500/30',
-  MAKING_OF: 'bg-orange-500/20 text-orange-400 border-orange-500/30',
+  BLOOPER: 'bg-yellow-500/20 text-yellow-600 border-yellow-500/30',
+  BTS: 'bg-emerald-500/20 text-emerald-600 border-emerald-500/30',
+  DIRECTORS_COMMENTARY: 'bg-purple-500/20 text-purple-600 border-purple-500/30',
+  CONCEPT_ART: 'bg-pink-500/20 text-pink-600 border-pink-500/30',
+  SOUNDTRACK: 'bg-indigo-500/20 text-indigo-600 border-indigo-500/30',
+  MAKING_OF: 'bg-orange-500/20 text-orange-600 border-orange-500/30',
   AUDITION_TAPE: 'bg-[#E50914]/20 text-[#E50914] border-[#E50914]/30',
 }
 
@@ -114,7 +114,7 @@ export default async function AdminBonusContentPage(props: { searchParams: Promi
         <h1 className="text-2xl font-bold text-white font-[family-name:var(--font-playfair)]">
           Bonus Content
         </h1>
-        <p className="text-white/40 text-sm mt-1">
+        <p className="text-white/50 text-sm mt-1">
           Gerez le contenu bonus associe aux films et acteurs IA.
         </p>
       </div>
@@ -128,29 +128,29 @@ export default async function AdminBonusContentPage(props: { searchParams: Promi
             </div>
             <div>
               <p className="text-2xl font-bold text-white">{totalItems}</p>
-              <p className="text-white/40 text-xs">Total bonus</p>
+              <p className="text-white/50 text-xs">Total bonus</p>
             </div>
           </div>
         </div>
         <div className="bg-white/[0.02] border border-white/[0.06] rounded-xl p-5">
           <div className="flex items-center gap-3">
             <div className="h-10 w-10 rounded-lg bg-purple-500/10 flex items-center justify-center">
-              <Crown className="h-5 w-5 text-purple-400" />
+              <Crown className="h-5 w-5 text-purple-600" />
             </div>
             <div>
               <p className="text-2xl font-bold text-white">{premiumCount}</p>
-              <p className="text-white/40 text-xs">Premium</p>
+              <p className="text-white/50 text-xs">Premium</p>
             </div>
           </div>
         </div>
         <div className="bg-white/[0.02] border border-white/[0.06] rounded-xl p-5">
           <div className="flex items-center gap-3">
             <div className="h-10 w-10 rounded-lg bg-blue-500/10 flex items-center justify-center">
-              <Eye className="h-5 w-5 text-blue-400" />
+              <Eye className="h-5 w-5 text-blue-600" />
             </div>
             <div>
               <p className="text-2xl font-bold text-white">{(totalViews._sum.viewCount || 0).toLocaleString()}</p>
-              <p className="text-white/40 text-xs">Vues totales</p>
+              <p className="text-white/50 text-xs">Vues totales</p>
             </div>
           </div>
         </div>
@@ -166,7 +166,7 @@ export default async function AdminBonusContentPage(props: { searchParams: Promi
           {/* Target Selection */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div>
-              <label className="block text-xs font-medium text-white/40 mb-1.5">Film Studio</label>
+              <label className="block text-xs font-medium text-white/50 mb-1.5">Film Studio</label>
               <select
                 name="filmId"
                 className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:ring-1 focus:ring-[#E50914]/50"
@@ -178,7 +178,7 @@ export default async function AdminBonusContentPage(props: { searchParams: Promi
               </select>
             </div>
             <div>
-              <label className="block text-xs font-medium text-white/40 mb-1.5">Film Catalogue</label>
+              <label className="block text-xs font-medium text-white/50 mb-1.5">Film Catalogue</label>
               <select
                 name="catalogFilmId"
                 className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:ring-1 focus:ring-[#E50914]/50"
@@ -190,7 +190,7 @@ export default async function AdminBonusContentPage(props: { searchParams: Promi
               </select>
             </div>
             <div>
-              <label className="block text-xs font-medium text-white/40 mb-1.5">Acteur IA</label>
+              <label className="block text-xs font-medium text-white/50 mb-1.5">Acteur IA</label>
               <select
                 name="actorId"
                 className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:ring-1 focus:ring-[#E50914]/50"
@@ -206,7 +206,7 @@ export default async function AdminBonusContentPage(props: { searchParams: Promi
           {/* Type + Title */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-white/40 mb-1.5">Type *</label>
+              <label className="block text-xs font-medium text-white/50 mb-1.5">Type *</label>
               <select
                 name="type"
                 required
@@ -218,7 +218,7 @@ export default async function AdminBonusContentPage(props: { searchParams: Promi
               </select>
             </div>
             <div>
-              <label className="block text-xs font-medium text-white/40 mb-1.5">Titre *</label>
+              <label className="block text-xs font-medium text-white/50 mb-1.5">Titre *</label>
               <input
                 name="title"
                 required
@@ -230,7 +230,7 @@ export default async function AdminBonusContentPage(props: { searchParams: Promi
 
           {/* Description */}
           <div>
-            <label className="block text-xs font-medium text-white/40 mb-1.5">Description</label>
+            <label className="block text-xs font-medium text-white/50 mb-1.5">Description</label>
             <textarea
               name="description"
               rows={2}
@@ -242,7 +242,7 @@ export default async function AdminBonusContentPage(props: { searchParams: Promi
           {/* URLs + Duration */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div>
-              <label className="block text-xs font-medium text-white/40 mb-1.5">URL Contenu</label>
+              <label className="block text-xs font-medium text-white/50 mb-1.5">URL Contenu</label>
               <input
                 name="contentUrl"
                 placeholder="https://..."
@@ -250,7 +250,7 @@ export default async function AdminBonusContentPage(props: { searchParams: Promi
               />
             </div>
             <div>
-              <label className="block text-xs font-medium text-white/40 mb-1.5">URL Miniature</label>
+              <label className="block text-xs font-medium text-white/50 mb-1.5">URL Miniature</label>
               <input
                 name="thumbnailUrl"
                 placeholder="https://..."
@@ -258,7 +258,7 @@ export default async function AdminBonusContentPage(props: { searchParams: Promi
               />
             </div>
             <div>
-              <label className="block text-xs font-medium text-white/40 mb-1.5">Duree (sec)</label>
+              <label className="block text-xs font-medium text-white/50 mb-1.5">Duree (sec)</label>
               <input
                 name="duration"
                 type="number"
@@ -270,7 +270,7 @@ export default async function AdminBonusContentPage(props: { searchParams: Promi
           </div>
 
           {/* Premium + Sort Order + Submit */}
-          <div className="flex items-center gap-6">
+          <div className="flex flex-wrap items-center gap-4 sm:gap-6">
             <label className="flex items-center gap-2 cursor-pointer">
               <input
                 name="isPremium"
@@ -280,7 +280,7 @@ export default async function AdminBonusContentPage(props: { searchParams: Promi
               <span className="text-sm text-white/60">Premium</span>
             </label>
             <div className="flex items-center gap-2">
-              <label className="text-sm text-white/40">Ordre :</label>
+              <label className="text-sm text-white/50">Ordre :</label>
               <input
                 name="sortOrder"
                 type="number"
@@ -330,7 +330,7 @@ export default async function AdminBonusContentPage(props: { searchParams: Promi
         {bonusItems.length === 0 ? (
           <div className="text-center py-12">
             <Sparkles className="h-10 w-10 text-white/10 mx-auto mb-3" />
-            <p className="text-white/30 text-sm">Aucun contenu bonus{filterType ? ` de type "${TYPE_LABELS[filterType]}"` : ''}.</p>
+            <p className="text-white/40 text-sm">Aucun contenu bonus{filterType ? ` de type "${TYPE_LABELS[filterType]}"` : ''}.</p>
           </div>
         ) : (
           <div className="divide-y divide-white/5">
@@ -348,7 +348,7 @@ export default async function AdminBonusContentPage(props: { searchParams: Promi
                 <div key={item.id} className="flex items-center gap-4 px-5 py-4 hover:bg-white/[0.02] transition-colors">
                   {/* Icon */}
                   <div className="shrink-0 h-10 w-10 rounded-lg bg-white/5 flex items-center justify-center">
-                    <TypeIcon className="h-5 w-5 text-white/30" />
+                    <TypeIcon className="h-5 w-5 text-white/40" />
                   </div>
 
                   {/* Info */}
@@ -361,7 +361,7 @@ export default async function AdminBonusContentPage(props: { searchParams: Promi
                         </Badge>
                       )}
                     </div>
-                    <div className="flex items-center gap-3 text-xs text-white/30">
+                    <div className="flex items-center gap-3 text-xs text-white/40 flex-wrap">
                       <Badge className={`text-[9px] px-1.5 py-0 h-4 border ${typeColor}`}>
                         {TYPE_LABELS[item.type] || item.type}
                       </Badge>
@@ -378,7 +378,7 @@ export default async function AdminBonusContentPage(props: { searchParams: Promi
                       <p className="text-sm font-medium text-white/60 flex items-center gap-1">
                         <Eye className="h-3.5 w-3.5" /> {item.viewCount.toLocaleString()}
                       </p>
-                      <p className="text-[10px] text-white/20">Ordre: {item.sortOrder}</p>
+                      <p className="text-[10px] text-white/40">Ordre: {item.sortOrder}</p>
                     </div>
 
                     {/* Delete */}
