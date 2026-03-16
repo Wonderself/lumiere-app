@@ -55,7 +55,7 @@ export async function POST(req: NextRequest) {
               bio: `subscription:${planId}:${expiresAt.toISOString()}`,
             },
           })
-          console.log(`[Stripe] Subscription activated: ${planId} for user ${userId}`)
+          if (process.env.NODE_ENV !== "production") console.log(`[Stripe] Subscription activated: ${planId} for user ${userId}`)
         }
         break
       }
@@ -64,7 +64,7 @@ export async function POST(req: NextRequest) {
         const invoice = event.data.object as Record<string, unknown>
         const customerId = invoice.customer as string
         if (customerId) {
-          console.log(`[Stripe] Invoice paid for customer ${customerId}`)
+          if (process.env.NODE_ENV !== "production") console.log(`[Stripe] Invoice paid for customer ${customerId}`)
           // Renewal: extend subscription by 30 days
         }
         break
@@ -83,13 +83,13 @@ export async function POST(req: NextRequest) {
         const userId = (account.metadata as Record<string, string>)?.userId
         if (userId) {
           const chargesEnabled = account.charges_enabled as boolean
-          console.log(`[Stripe Connect] Account ${account.id} — charges_enabled: ${chargesEnabled}`)
+          if (process.env.NODE_ENV !== "production") console.log(`[Stripe Connect] Account ${account.id} — charges_enabled: ${chargesEnabled}`)
         }
         break
       }
 
       default:
-        console.log(`[Stripe Webhook] Unhandled event: ${event.type}`)
+        if (process.env.NODE_ENV !== "production") console.log(`[Stripe Webhook] Unhandled event: ${event.type}`)
     }
 
     return NextResponse.json({ received: true })

@@ -49,7 +49,7 @@ export async function sendProposalNotification(proposal: {
   const chatId = process.env.TELEGRAM_ADMIN_CHAT_ID
 
   if (!token || !chatId) {
-    console.log('[Telegram] Bot token or chat ID not configured, skipping notification')
+    if (process.env.NODE_ENV !== "production") console.log('[Telegram] Bot token or chat ID not configured, skipping notification')
     return { success: false, error: 'Telegram not configured' }
   }
 

@@ -85,7 +85,7 @@ export async function createCheckoutSessionAction(planId: 'basic' | 'premium') {
 
   if (!stripe || !plan.stripePriceId) {
     // Mock mode: directly activate plan
-    console.log(`[Stripe Mock] Checkout for ${planId} — user ${session.user.id}`)
+    if (process.env.NODE_ENV !== "production") console.log(`[Stripe Mock] Checkout for ${planId} — user ${session.user.id}`)
 
     // Update user subscription in DB
     await prisma.user.update({
@@ -146,7 +146,7 @@ export async function createPayoutAction(paymentId: string) {
 
   if (!stripe) {
     // Mock mode: mark payment as completed
-    console.log(`[Stripe Mock] Payout ${payment.amountEur}€ to ${payment.user.email}`)
+    if (process.env.NODE_ENV !== "production") console.log(`[Stripe Mock] Payout ${payment.amountEur}€ to ${payment.user.email}`)
 
     await prisma.payment.update({
       where: { id: paymentId },
