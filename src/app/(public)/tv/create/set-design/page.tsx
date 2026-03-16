@@ -38,7 +38,7 @@ const STEPS = [
 ]
 
 const LOCATIONS = [
-  { id: 'studio-a', name: 'Studio A - Main Stage', desc: 'Large open studio with audience seating', img: 'https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=400&h=250&fit=crop' },
+  { id: 'studio-a', name: 'Studio A - Main Stage', desc: 'Large open studio with audience seating', img: 'https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=400&h=250&fit=crop' },
   { id: 'studio-b', name: 'Studio B - Intimate', desc: 'Smaller studio for interviews and close-ups', img: 'https://images.unsplash.com/photo-1478737270239-2f02b77fc618?w=400&h=250&fit=crop' },
   { id: 'newsroom', name: 'Newsroom Set', desc: 'Professional news desk with screens', img: 'https://images.unsplash.com/photo-1585776245991-cf89dd7fc73a?w=400&h=250&fit=crop' },
   { id: 'living-room', name: 'Living Room Set', desc: 'Cozy domestic interior for sitcoms', img: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=250&fit=crop' },

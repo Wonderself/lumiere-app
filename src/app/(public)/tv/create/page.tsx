@@ -97,7 +97,7 @@ const TV_STEPS: TvStep[] = [
     description: 'Cut, add graphics, transitions, and lower thirds. Polish your episodes to broadcast quality.',
     href: '/tv/create/editing',
     icon: Scissors,
-    unsplashImage: 'https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=800&h=500&q=80',
+    unsplashImage: 'https://images.unsplash.com/photo-1559136555-9303baea8ebd?auto=format&fit=crop&w=800&h=500&q=80',
     cta: 'Edit Episodes',
   },
   {

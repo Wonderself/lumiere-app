@@ -95,16 +95,16 @@ const TRENDING_FILMS: FilmCard[] = (() => {
    ──────────────────────────────────────────────── */
 
 const GENRE_CONFIG: Record<string, { icon: typeof Flame; color: string; colorLight: string; pattern: string; image: string }> = {
-  'Action':      { icon: Flame,      color: '#E50914', colorLight: '#FF4444', pattern: 'embers',    image: 'https://plus.unsplash.com/premium_photo-1748959562766-0d6cd69a210f?auto=format&fit=crop&w=800&h=400&q=80' },
-  'Comedy':      { icon: Laugh,      color: '#F59E0B', colorLight: '#FCD34D', pattern: 'confetti',  image: 'https://plus.unsplash.com/premium_photo-1682430945542-7d8742d4cb0e?auto=format&fit=crop&w=800&h=400&q=80' },
-  'Drama':       { icon: Drama,      color: '#8B5CF6', colorLight: '#C4B5FD', pattern: 'curtain',   image: 'https://plus.unsplash.com/premium_photo-1661501691846-7bed1fdf5b95?auto=format&fit=crop&w=800&h=400&q=80' },
-  'Sci-Fi':      { icon: Microscope, color: '#3B82F6', colorLight: '#93C5FD', pattern: 'scan',      image: 'https://plus.unsplash.com/premium_photo-1683121271048-88e13aa31c11?auto=format&fit=crop&w=800&h=400&q=80' },
-  'Documentary': { icon: BookOpen,   color: '#10B981', colorLight: '#6EE7B7', pattern: 'lens',      image: 'https://plus.unsplash.com/premium_photo-1674389991716-c85ddd942811?auto=format&fit=crop&w=800&h=400&q=80' },
-  'Thriller':    { icon: Ghost,      color: '#6366F1', colorLight: '#A5B4FC', pattern: 'shadow',    image: 'https://plus.unsplash.com/premium_photo-1661891158359-1cb37357707c?auto=format&fit=crop&w=800&h=400&q=80' },
-  'Animation':   { icon: Wand2,      color: '#EC4899', colorLight: '#F9A8D4', pattern: 'sparkle',   image: 'https://plus.unsplash.com/premium_photo-1732776567082-cbcd94f49316?auto=format&fit=crop&w=800&h=400&q=80' },
-  'Historical':  { icon: Clock,      color: '#D97706', colorLight: '#FCD34D', pattern: 'parchment', image: 'https://plus.unsplash.com/premium_photo-1697730060425-c2e6aae61e04?auto=format&fit=crop&w=800&h=400&q=80' },
-  'Romance':     { icon: Heart,      color: '#F43F5E', colorLight: '#FDA4AF', pattern: 'hearts',    image: 'https://plus.unsplash.com/premium_photo-1723673057176-1bf5582ed316?auto=format&fit=crop&w=800&h=400&q=80' },
-  'Fantasy':     { icon: Swords,     color: '#A855F7', colorLight: '#D8B4FE', pattern: 'stars',     image: 'https://plus.unsplash.com/premium_photo-1747592231452-55a8355d53e3?auto=format&fit=crop&w=800&h=400&q=80' },
+  'Action':      { icon: Flame,      color: '#E50914', colorLight: '#FF4444', pattern: 'embers',    image: 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&w=800&h=400&q=80' },
+  'Comedy':      { icon: Laugh,      color: '#F59E0B', colorLight: '#FCD34D', pattern: 'confetti',  image: 'https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?auto=format&fit=crop&w=800&h=400&q=80' },
+  'Drama':       { icon: Drama,      color: '#8B5CF6', colorLight: '#C4B5FD', pattern: 'curtain',   image: 'https://images.unsplash.com/photo-1478720568477-152d9b164e26?auto=format&fit=crop&w=800&h=400&q=80' },
+  'Sci-Fi':      { icon: Microscope, color: '#3B82F6', colorLight: '#93C5FD', pattern: 'scan',      image: 'https://images.unsplash.com/photo-1440404653325-ab127d49abc1?auto=format&fit=crop&w=800&h=400&q=80' },
+  'Documentary': { icon: BookOpen,   color: '#10B981', colorLight: '#6EE7B7', pattern: 'lens',      image: 'https://images.unsplash.com/photo-1478720568477-152d9b164e26?auto=format&fit=crop&w=800&h=400&q=80' },
+  'Thriller':    { icon: Ghost,      color: '#6366F1', colorLight: '#A5B4FC', pattern: 'shadow',    image: 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=800&h=400&q=80' },
+  'Animation':   { icon: Wand2,      color: '#EC4899', colorLight: '#F9A8D4', pattern: 'sparkle',   image: 'https://images.unsplash.com/photo-1574267432553-4b4628081c31?auto=format&fit=crop&w=800&h=400&q=80' },
+  'Historical':  { icon: Clock,      color: '#D97706', colorLight: '#FCD34D', pattern: 'parchment', image: 'https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=800&h=400&q=80' },
+  'Romance':     { icon: Heart,      color: '#F43F5E', colorLight: '#FDA4AF', pattern: 'hearts',    image: 'https://images.unsplash.com/photo-1518676590747-1e3bb275183a?auto=format&fit=crop&w=800&h=400&q=80' },
+  'Fantasy':     { icon: Swords,     color: '#A855F7', colorLight: '#D8B4FE', pattern: 'stars',     image: 'https://images.unsplash.com/photo-1559136555-9303baea8ebd?auto=format&fit=crop&w=800&h=400&q=80' },
 }
 
 /* ────────────────────────────────────────────────
@@ -147,10 +147,10 @@ const pillars = [
 
 const createCards = [
   { icon: Pen, title: 'Write a Screenplay', description: 'Submit your story to the community vote', href: '/community/scenarios', accent: '#E50914', accentLight: '#FF4444', image: 'https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=400&h=500&q=80' },
-  { icon: Palette, title: 'Design & VFX', description: 'Create visuals, storyboards, environments', href: '/tasks', accent: '#8B5CF6', accentLight: '#C4B5FD', image: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&w=400&h=500&q=80' },
-  { icon: Music, title: 'Compose Music', description: 'Score original soundtracks for films', href: '/tasks', accent: '#F59E0B', accentLight: '#FCD34D', image: 'https://images.unsplash.com/photo-1511379938547-c1f69419868d?auto=format&fit=crop&w=400&h=500&q=80' },
+  { icon: Palette, title: 'Design & VFX', description: 'Create visuals, storyboards, environments', href: '/tasks', accent: '#8B5CF6', accentLight: '#C4B5FD', image: 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&w=400&h=500&q=80' },
+  { icon: Music, title: 'Compose Music', description: 'Score original soundtracks for films', href: '/tasks', accent: '#F59E0B', accentLight: '#FCD34D', image: 'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=400&h=500&q=80' },
   { icon: Camera, title: 'Direct & Produce', description: 'Lead a film from script to screen', href: '/films', accent: '#10B981', accentLight: '#6EE7B7', image: 'https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=400&h=500&q=80' },
-  { icon: Sparkles, title: 'AI Micro-Tasks', description: 'Complete small tasks, earn rewards', href: '/tasks', accent: '#3B82F6', accentLight: '#93C5FD', image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=400&h=500&q=80' },
+  { icon: Sparkles, title: 'AI Micro-Tasks', description: 'Complete small tasks, earn rewards', href: '/tasks', accent: '#3B82F6', accentLight: '#93C5FD', image: 'https://images.unsplash.com/photo-1574267432553-4b4628081c31?auto=format&fit=crop&w=400&h=500&q=80' },
 ]
 
 /* ────────────────────────────────────────────────
@@ -655,7 +655,7 @@ export function NetflixHome({ data }: { data: HomeData }) {
                 href: '/act',
                 accent: '#E50914',
                 accentLight: '#FF4444',
-                image: 'https://images.unsplash.com/photo-1598899134739-24c46f58b8c0?auto=format&fit=crop&w=800&h=600&q=80',
+                image: 'https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?auto=format&fit=crop&w=800&h=600&q=80',
               },
               {
                 icon: Clapperboard,
@@ -673,7 +673,7 @@ export function NetflixHome({ data }: { data: HomeData }) {
                 href: '/work',
                 accent: '#D97706',
                 accentLight: '#FCD34D',
-                image: 'https://images.unsplash.com/photo-1524712245354-2c4e5e7121c0?auto=format&fit=crop&w=800&h=600&q=80',
+                image: 'https://images.unsplash.com/photo-1518676590747-1e3bb275183a?auto=format&fit=crop&w=800&h=600&q=80',
               },
             ].map((card, ci) => (
               <Link

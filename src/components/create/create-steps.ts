@@ -42,8 +42,8 @@ export const CREATE_STEPS: CreateStep[] = [
     description: 'Visualize every scene. Generate storyboard frames with AI or upload your own artwork.',
     href: '/create/storyboard',
     icon: LayoutGrid,
-    unsplashImage: 'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=800&h=500&q=80',
-    unsplashThumb: 'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=400&h=300&q=80',
+    unsplashImage: 'https://images.unsplash.com/photo-1518676590747-1e3bb275183a?auto=format&fit=crop&w=800&h=500&q=80',
+    unsplashThumb: 'https://images.unsplash.com/photo-1518676590747-1e3bb275183a?auto=format&fit=crop&w=400&h=300&q=80',
     cta: 'Create a Storyboard',
   },
   {
@@ -54,8 +54,8 @@ export const CREATE_STEPS: CreateStep[] = [
     description: 'Browse AI actors, create custom characters, or insert yourself into your film.',
     href: '/create/casting',
     icon: UserCircle,
-    unsplashImage: 'https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=800&h=500&q=80',
-    unsplashThumb: 'https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=400&h=300&q=80',
+    unsplashImage: 'https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?auto=format&fit=crop&w=800&h=500&q=80',
+    unsplashThumb: 'https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?auto=format&fit=crop&w=400&h=300&q=80',
     cta: 'Create Characters',
   },
   {
@@ -90,8 +90,8 @@ export const CREATE_STEPS: CreateStep[] = [
     description: 'Generate video clips, animate scenes, and assemble your sequences with AI-powered tools.',
     href: '/create/videos',
     icon: Video,
-    unsplashImage: 'https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=800&h=500&q=80',
-    unsplashThumb: 'https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=400&h=300&q=80',
+    unsplashImage: 'https://images.unsplash.com/photo-1559136555-9303baea8ebd?auto=format&fit=crop&w=800&h=500&q=80',
+    unsplashThumb: 'https://images.unsplash.com/photo-1559136555-9303baea8ebd?auto=format&fit=crop&w=400&h=300&q=80',
     cta: 'Create Videos',
   },
   {
@@ -102,8 +102,8 @@ export const CREATE_STEPS: CreateStep[] = [
     description: 'Browse audio libraries, generate custom soundtracks and add sound effects to bring your film to life.',
     href: '/create/music',
     icon: Music,
-    unsplashImage: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=800&h=500&q=80',
-    unsplashThumb: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=400&h=300&q=80',
+    unsplashImage: 'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=800&h=500&q=80',
+    unsplashThumb: 'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=400&h=300&q=80',
     cta: 'Add Music & SFX',
   },
 ]

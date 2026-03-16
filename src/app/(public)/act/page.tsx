@@ -242,7 +242,7 @@ export default function ActPage() {
         {/* Background image */}
         <div className="absolute inset-0">
           <Image
-            src="https://images.unsplash.com/photo-1524712245354-2c4e5e7121c0?auto=format&fit=crop&w=1400&h=600&q=80"
+            src="https://images.unsplash.com/photo-1518676590747-1e3bb275183a?auto=format&fit=crop&w=1400&h=600&q=80"
             alt="Cinematic spotlight"
             fill
             className="object-cover object-center"

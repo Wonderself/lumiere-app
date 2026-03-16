@@ -35,12 +35,12 @@ import { cn } from '@/lib/utils'
 /* ── Data ── */
 
 const LOCATION_IMAGES = [
-  'https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=600&h=400&q=80',
-  'https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=600&h=400&q=80',
-  'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=600&h=400&q=80',
-  'https://images.unsplash.com/photo-1509316785289-025f5b846b35?auto=format&fit=crop&w=600&h=400&q=80',
-  'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=600&h=400&q=80',
-  'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=600&h=400&q=80',
+  'https://images.unsplash.com/photo-1478720568477-152d9b164e26?auto=format&fit=crop&w=600&h=400&q=80',
+  'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=600&h=400&q=80',
+  'https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&w=600&h=400&q=80',
+  'https://images.unsplash.com/photo-1440404653325-ab127d49abc1?auto=format&fit=crop&w=600&h=400&q=80',
+  'https://images.unsplash.com/photo-1559136555-9303baea8ebd?auto=format&fit=crop&w=600&h=400&q=80',
+  'https://images.unsplash.com/photo-1574267432553-4b4628081c31?auto=format&fit=crop&w=600&h=400&q=80',
 ]
 
 const INITIAL_LOCATIONS = [
@@ -48,25 +48,25 @@ const INITIAL_LOCATIONS = [
     id: 'urban',
     name: 'Urban Night',
     description: 'Neon-lit city streets with rain-slicked asphalt and towering buildings.',
-    image: 'https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=600&h=400&q=80',
+    image: 'https://images.unsplash.com/photo-1478720568477-152d9b164e26?auto=format&fit=crop&w=600&h=400&q=80',
   },
   {
     id: 'forest',
     name: 'Forest',
     description: 'Dense woodland canopy with dappled sunlight filtering through ancient trees.',
-    image: 'https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=600&h=400&q=80',
+    image: 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=600&h=400&q=80',
   },
   {
     id: 'interior',
     name: 'Interior',
     description: 'Elegant modern interior with warm ambient lighting and minimal decor.',
-    image: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=600&h=400&q=80',
+    image: 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&w=600&h=400&q=80',
   },
   {
     id: 'desert',
     name: 'Desert',
     description: 'Vast arid landscape with rolling dunes and dramatic golden-hour shadows.',
-    image: 'https://images.unsplash.com/photo-1509316785289-025f5b846b35?auto=format&fit=crop&w=600&h=400&q=80',
+    image: 'https://images.unsplash.com/photo-1440404653325-ab127d49abc1?auto=format&fit=crop&w=600&h=400&q=80',
   },
 ]
 

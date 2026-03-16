@@ -36,7 +36,7 @@ const EPISODE_THUMBS = [
   'https://images.unsplash.com/photo-1598899134739-24c46f58b8c0?auto=format&fit=crop&w=400&h=225&q=80',
   'https://images.unsplash.com/photo-1616530940355-351fabd9524b?auto=format&fit=crop&w=400&h=225&q=80',
   'https://images.unsplash.com/photo-1478720568477-152d9b164e26?auto=format&fit=crop&w=400&h=225&q=80',
-  'https://images.unsplash.com/photo-1524712245354-2c4e5e7121c0?auto=format&fit=crop&w=400&h=225&q=80',
+  'https://images.unsplash.com/photo-1518676590747-1e3bb275183a?auto=format&fit=crop&w=400&h=225&q=80',
   'https://images.unsplash.com/photo-1594909122845-11baa439b7bf?auto=format&fit=crop&w=400&h=225&q=80',
   'https://images.unsplash.com/photo-1574267432553-4b4628081c31?auto=format&fit=crop&w=400&h=225&q=80',
   'https://images.unsplash.com/photo-1518676590747-1e3dcf5a0e32?auto=format&fit=crop&w=400&h=225&q=80',
@@ -45,14 +45,14 @@ const EPISODE_THUMBS = [
 
 /* ── Poster URLs ── */
 const POSTER_URLS = [
-  'https://images.unsplash.com/photo-1763198216782-b534fea3dcf1?auto=format&fit=crop&w=800&h=1200&q=80',
+  'https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&w=800&h=1200&q=80',
   'https://images.unsplash.com/photo-1685910715615-577928e2450e?auto=format&fit=crop&w=800&h=1200&q=80',
-  'https://images.unsplash.com/photo-1734045443700-99e89079928a?auto=format&fit=crop&w=800&h=1200&q=80',
-  'https://images.unsplash.com/photo-1759230766134-e3ff1c27d20e?auto=format&fit=crop&w=800&h=1200&q=80',
+  'https://images.unsplash.com/photo-1509347528160-9a9e33742cdb?auto=format&fit=crop&w=800&h=1200&q=80',
+  'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&w=800&h=1200&q=80',
   'https://images.unsplash.com/photo-1563905463861-7d77975b3a44?auto=format&fit=crop&w=800&h=1200&q=80',
   'https://images.unsplash.com/photo-1576238956869-2098f3d26eb2?auto=format&fit=crop&w=800&h=1200&q=80',
-  'https://images.unsplash.com/photo-1767557125491-b3483567d843?auto=format&fit=crop&w=800&h=1200&q=80',
-  'https://images.unsplash.com/photo-1766156555244-572b9757433b?auto=format&fit=crop&w=800&h=1200&q=80',
+  'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&h=1200&q=80',
+  'https://images.unsplash.com/photo-1493246507139-91e8fad9978e?auto=format&fit=crop&w=800&h=1200&q=80',
 ]
 
 function getShowPoster(show: TvShowData): string {

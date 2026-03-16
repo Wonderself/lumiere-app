@@ -62,7 +62,7 @@ export type TvGenre = (typeof TV_GENRES)[number]
 const TV_GENRE_POSTERS: Record<string, string[]> = {
   'Talk Show': [
     'https://images.unsplash.com/photo-1478737270239-2f02b77fc618?auto=format&fit=crop&w=400&h=600&q=80',
-    'https://images.unsplash.com/photo-1598488035139-bdbb2231cb64?auto=format&fit=crop&w=400&h=600&q=80',
+    'https://images.unsplash.com/photo-1478720568477-152d9b164e26?auto=format&fit=crop&w=400&h=600&q=80',
     'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=400&h=600&q=80',
     'https://images.unsplash.com/photo-1590602847861-f357a9332bbc?auto=format&fit=crop&w=400&h=600&q=80',
     'https://images.unsplash.com/photo-1524678606370-a47ad25cb82a?auto=format&fit=crop&w=400&h=600&q=80',
@@ -116,7 +116,7 @@ const TV_GENRE_POSTERS: Record<string, string[]> = {
     'https://images.unsplash.com/photo-1509281373149-e957c6296406?auto=format&fit=crop&w=400&h=600&q=80',
     'https://images.unsplash.com/photo-1478720568477-152d9b164e26?auto=format&fit=crop&w=400&h=600&q=80',
     'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=400&h=600&q=80',
-    'https://images.unsplash.com/photo-1524712245354-2c4e5e7121c0?auto=format&fit=crop&w=400&h=600&q=80',
+    'https://images.unsplash.com/photo-1518676590747-1e3bb275183a?auto=format&fit=crop&w=400&h=600&q=80',
     'https://images.unsplash.com/photo-1440404653325-ab127d49abc1?auto=format&fit=crop&w=400&h=600&q=80',
     'https://images.unsplash.com/photo-1518676590747-1e3dcf5a4e27?auto=format&fit=crop&w=400&h=600&q=80',
   ],
@@ -134,7 +134,7 @@ const TV_GENRE_POSTERS: Record<string, string[]> = {
     'https://images.unsplash.com/photo-1511882150382-421056c89033?auto=format&fit=crop&w=400&h=600&q=80',
     'https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=400&h=600&q=80',
     'https://images.unsplash.com/photo-1579373903781-fd5c0c30c4cd?auto=format&fit=crop&w=400&h=600&q=80',
-    'https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?auto=format&fit=crop&w=400&h=600&q=80',
+    'https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=400&h=600&q=80',
     'https://images.unsplash.com/photo-1560419015-7c427e8ae5ba?auto=format&fit=crop&w=400&h=600&q=80',
     'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=400&h=600&q=80',
     'https://images.unsplash.com/photo-1585504198199-20277593b94f?auto=format&fit=crop&w=400&h=600&q=80',
