@@ -60,11 +60,5 @@ declare module 'next-auth' {
   }
 }
 
-declare module 'next-auth/jwt' {
-  interface JWT {
-    id?: string
-    role?: string
-    level?: string
-    isVerified?: boolean
-  }
-}
+// JWT types are inferred from the next-auth callbacks in auth.ts
+// No module augmentation needed — token fields accessed via (token as Record<string, unknown>)
