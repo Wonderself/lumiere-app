@@ -93,7 +93,7 @@ export default async function ActorsPage({
               <span>Intelligence Artificielle Cinematographique</span>
             </div>
             <h1
-              className="text-3xl sm:text-5xl md:text-7xl font-bold mb-4 sm:mb-6 text-white"
+              className="text-3xl sm:text-5xl md:text-4xl sm:text-5xl md:text-7xl font-bold mb-4 sm:mb-6 text-white"
             >
               Nos{' '}
               <span
@@ -190,7 +190,7 @@ export default async function ActorsPage({
             </p>
           </div>
         ) : (
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-7">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7">
             {actors.map((actor) => (
               <Link key={actor.id} href={`/actors/${actor.slug}`}>
                 <div className="group relative rounded-2xl border border-white/[0.06] bg-white/[0.02] overflow-hidden hover:border-[#E50914]/30 transition-all duration-500 hover:shadow-md">

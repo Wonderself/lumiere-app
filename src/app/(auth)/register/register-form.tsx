@@ -39,7 +39,7 @@ export function RegisterForm() {
         </div>
         <h2 className="text-2xl font-bold text-white font-playfair">Compte créé !</h2>
         <p className="text-white/50 leading-relaxed">
-          Votre compte est en attente de validation par notre équipe. Vous recevrez un email dès que votre compte sera activé.
+          Un email de confirmation a été envoyé. Vérifiez votre boîte de réception pour activer votre compte.
         </p>
         <div className="flex items-center justify-center gap-2 text-sm text-white/30">
           <div className="w-4 h-4 border-2 border-white/20 border-t-[#E50914] rounded-full animate-spin" />

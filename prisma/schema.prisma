@@ -117,6 +117,24 @@ model User {
 
   // V18 — Pay-Per-View
   ppvPurchases        PPVPurchase[]
+
+  // V19 — Wallet & Billing
+  walletHolds        WalletHold[]
+  aiUsageLogs        AIUsageLog[]
+  // V20 — AI Agents
+  agentExecutions     AgentExecution[]
+  agentFavorites      AgentFavorite[]
+  agentPreferences    AgentPreferences?
+
+  // V21 — Chat & Conversations
+  conversations       Conversation[]
+  chatMessages         ChatMessage[]
+  dailyBudgets        DailyBudget[]
+  meetingParticipations MeetingParticipant[]
+
+  // V22 — Autopilot & Governance
+  autopilotProposals   AutopilotProposal[]    @relation("ProposalCreator")
+  autopilotApprovals   AutopilotProposal[]    @relation("ProposalApprover")
 }
 
 // ============================================
@@ -1839,6 +1857,12 @@ model CreditAccount {
   totalGranted    Int      @default(0)      // Lifetime credits granted (admin/subscription)
   totalUsed       Int      @default(0)      // Lifetime credits consumed
   totalRefunded   Int      @default(0)
+  // Auto-topup settings
+  autoTopupEnabled   Boolean  @default(false)
+  autoTopupThreshold Int      @default(0)     // Alert when balance drops below this
+  autoTopupAmount    Int      @default(0)     // Amount to request for topup
+  currency           String   @default("EUR")
+  stripeCustomerId   String?                  // For future Stripe integration
   weeklyFreeUsed  Int      @default(0)      // Free trailers used this week (premium)
   weeklyFreeReset DateTime @default(now())  // When weekly counter resets
   createdAt       DateTime @default(now())
@@ -1846,6 +1870,7 @@ model CreditAccount {
 
   user         User                @relation(fields: [userId], references: [id], onDelete: Cascade)
   transactions CreditTransaction[]
+  holds        WalletHold[]
 
   @@index([userId])
 }
@@ -2006,6 +2031,11 @@ enum CreditTxType {
   CONTEST_PRIZE      // Won credits from contest
   REFERRAL_BONUS     // Referral reward
   PROMO_CODE         // Promotional code
+  HOLD               // Credits held before AI action
+  HOLD_RELEASE       // Credits refunded from hold overestimate
+  HOLD_OVERAGE       // Additional charge when actual > estimated
+  AUTO_TOPUP         // Auto-topup deposit
+  EXPIRY             // Expired credits
 }
 
 // ============================================
@@ -2664,4 +2694,499 @@ enum TvShowStatus {
   AIRING
   COMPLETED
   CANCELLED
+}
+
+// ============================================
+// V19 — WALLET HOLDS (Pre-authorization)
+// ============================================
+
+model WalletHold {
+  id          String   @id @default(cuid())
+  userId      String
+  accountId   String
+  amount      Int                    // Micro-credits held
+  description String?
+  status      WalletHoldStatus @default(ACTIVE)
+  releasedAt  DateTime?
+  actualAmount Int?                  // Actual cost after release
+  refundAmount Int?                  // Difference refunded
+  createdAt   DateTime @default(now())
+
+  user    User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  account CreditAccount @relation(fields: [accountId], references: [id], onDelete: Cascade)
+
+  @@index([userId, status])
+  @@index([accountId])
+}
+
+enum WalletHoldStatus {
+  ACTIVE       // Credits locked, AI call in progress
+  RELEASED     // Hold released, actual cost settled
+  EXPIRED      // Hold expired (timeout)
+  FAILED       // AI call failed, full refund
+}
+
+// ============================================
+// V19 — AI USAGE LOG (Detailed billing analytics)
+// ============================================
+
+model AIUsageLog {
+  id             String   @id @default(cuid())
+  userId         String
+  accountId      String?
+  requestId      String   @unique @default(cuid()) // Idempotency key
+  // AI details
+  provider       String                // "anthropic", "runway", "replicate", "openai", "elevenlabs"
+  model          String                // "claude-sonnet-4-20250514", "gen-3-alpha", etc.
+  action         String                // "script_analysis", "image_gen", "video_gen", "music_gen"
+  // Token counts
+  inputTokens    Int      @default(0)
+  outputTokens   Int      @default(0)
+  totalTokens    Int      @default(0)
+  // Billing (all in micro-credits: 1 credit = 1,000,000 micro-credits)
+  costCredits    Int      @default(0)  // Raw AI cost
+  billedCredits  Int      @default(0)  // What user was charged (cost + margin)
+  marginCredits  Int      @default(0)  // Platform margin (billedCredits - costCredits)
+  marginPercent  Float    @default(0)  // Margin % applied (0 for launch)
+  // Performance
+  durationMs     Int?                  // How long the AI call took
+  success        Boolean  @default(true)
+  errorMessage   String?
+  // Context
+  filmProjectId  String?              // Related film project
+  holdId         String?              // Related wallet hold
+  metadata       Json?                // Extra context
+  createdAt      DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt])
+  @@index([provider, model])
+  @@index([action])
+  @@index([createdAt])
+}
+
+// ============================================
+// V20 — AI CINEMA AGENTS
+// ============================================
+
+model AgentDefinition {
+  id              String        @id @default(cuid())
+  slug            String        @unique         // "cg-scenariste"
+  name            String                        // "Scénariste"
+  nameEn          String?                       // "Screenwriter"
+  description     String                        // Full description
+  descriptionEn   String?
+  tier            AgentTier                     // L1, L2, L3
+  category        AgentCategory                 // WRITING, DIRECTING, etc.
+  defaultModel    String        @default("claude-sonnet-4-6")  // AI model to use
+  systemPrompt    String        @db.Text        // System prompt for this agent
+  icon            String        @default("film")              // Lucide icon name
+  color           String        @default("#E50914")           // Accent color
+  isActive        Boolean       @default(true)
+  isMarketplace   Boolean       @default(false)               // Template from marketplace
+  // Capabilities
+  capabilities    String[]      @default([])                   // ["screenplay", "dialogue", "synopsis"]
+  inputTypes      String[]      @default(["text"])             // ["text", "image", "document"]
+  outputTypes     String[]      @default(["text"])             // ["text", "image", "structured"]
+  // Defaults
+  maxTokens       Int           @default(4096)
+  temperature     Float         @default(0.7)
+  // Stats
+  totalExecutions Int           @default(0)
+  avgRating       Float         @default(0)
+  // Metadata
+  tags            String[]      @default([])
+  metadata        Json?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  executions AgentExecution[]
+  favorites  AgentFavorite[]
+
+  @@index([tier])
+  @@index([category])
+  @@index([isActive])
+  @@index([slug])
+}
+
+model AgentExecution {
+  id              String              @id @default(cuid())
+  userId          String
+  agentId         String
+  // Request
+  prompt          String              @db.Text
+  context         Json?                              // Film project context, previous outputs, etc.
+  // Response
+  response        String?             @db.Text
+  // Execution details
+  status          AgentExecutionStatus @default(PENDING)
+  model           String?                             // Actual model used
+  inputTokens     Int                 @default(0)
+  outputTokens    Int                 @default(0)
+  costCredits     Int                 @default(0)     // Micro-credits charged
+  durationMs      Int?
+  errorMessage    String?
+  // User preferences snapshot
+  preferences     Json?                               // Captured at execution time
+  // Relations
+  filmProjectId   String?
+  parentId        String?                             // For chained executions
+  // Rating
+  rating          Int?                                // 1-5 user rating
+  feedback        String?
+  // Timestamps
+  startedAt       DateTime?
+  completedAt     DateTime?
+  createdAt       DateTime            @default(now())
+
+  user    User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  agent   AgentDefinition @relation(fields: [agentId], references: [id], onDelete: Cascade)
+  parent  AgentExecution? @relation("ExecutionChain", fields: [parentId], references: [id])
+  children AgentExecution[] @relation("ExecutionChain")
+
+  @@index([userId, createdAt])
+  @@index([agentId])
+  @@index([status])
+  @@index([filmProjectId])
+}
+
+model AgentFavorite {
+  id        String   @id @default(cuid())
+  userId    String
+  agentId   String
+  pinOrder  Int      @default(0)          // For ordering pinned agents
+  createdAt DateTime @default(now())
+
+  user  User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  agent AgentDefinition @relation(fields: [agentId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, agentId])
+  @@index([userId])
+}
+
+model AgentPreferences {
+  id            String   @id @default(cuid())
+  userId        String   @unique
+  // 6 curseurs (0-100)
+  formality     Int      @default(50)  // 0=très casual, 100=très formel
+  length        Int      @default(50)  // 0=concis, 100=très détaillé
+  creativity    Int      @default(60)  // 0=conservateur, 100=très créatif
+  proactivity   Int      @default(50)  // 0=réactif seulement, 100=très proactif
+  expertise     Int      @default(50)  // 0=débutant, 100=expert technique
+  humor         Int      @default(20)  // 0=sérieux, 100=humoristique
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+enum AgentTier {
+  L1_EXECUTION     // Sonnet — task execution
+  L2_MANAGEMENT    // Opus — coordination & management
+  L3_STRATEGY      // Opus + Extended Thinking — strategic decisions
+}
+
+enum AgentCategory {
+  WRITING          // Script, dialogue
+  DIRECTING        // Artistic direction
+  PRODUCTION       // Budget, planning
+  CASTING          // Character casting
+  CINEMATOGRAPHY   // Visual choices
+  EDITING          // Montage, rhythm
+  MUSIC            // Composition, sound
+  VFX              // Visual effects
+  SOUND            // Sound design
+  MARKETING        // Promotion, launch
+  MANAGEMENT       // Coordination (L2)
+  STRATEGY         // Strategic decisions (L3)
+  MARKETPLACE      // Community templates
+}
+
+enum AgentExecutionStatus {
+  PENDING          // Queued
+  RUNNING          // In progress
+  PAUSED           // Paused by user
+  COMPLETED        // Done successfully
+  FAILED           // Error occurred
+  CANCELLED        // Cancelled by user
+}
+
+// ============================================
+// V21 — CHAT & CONVERSATIONS
+// ============================================
+
+model Conversation {
+  id            String   @id @default(cuid())
+  userId        String
+  agentSlug     String                        // Which agent this conversation is with
+  title         String?                       // Auto-generated or user-set
+  // Context
+  filmProjectId String?                       // Optional: link to a film project
+  metadata      Json?                         // Extra context data
+  // Status
+  isArchived    Boolean  @default(false)
+  isPinned      Boolean  @default(false)
+  messageCount  Int      @default(0)
+  totalTokens   Int      @default(0)          // Running token count
+  totalCost     Int      @default(0)          // Running cost in micro-credits
+  // Timestamps
+  lastMessageAt DateTime?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  user     User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  messages ChatMessage[]
+
+  @@index([userId, updatedAt])
+  @@index([userId, agentSlug])
+  @@index([agentSlug])
+}
+
+model ChatMessage {
+  id              String        @id @default(cuid())
+  conversationId  String
+  userId          String
+  // Content
+  role            ChatRole                    // USER, ASSISTANT, SYSTEM
+  content         String        @db.Text
+  // AI metadata (only for ASSISTANT messages)
+  model           String?
+  agentSlug       String?
+  inputTokens     Int           @default(0)
+  outputTokens    Int           @default(0)
+  costCredits     Int           @default(0)   // Micro-credits
+  durationMs      Int?
+  // Caching
+  cacheHit        Boolean       @default(false)  // Was this served from cache?
+  promptCacheHit  Boolean       @default(false)  // Did Anthropic prompt caching activate?
+  cachedTokens    Int           @default(0)      // Tokens saved by prompt caching
+  // Status
+  status          ChatMessageStatus @default(COMPLETED)
+  errorMessage    String?
+  // Metadata
+  metadata        Json?
+  createdAt       DateTime      @default(now())
+
+  conversation Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([conversationId, createdAt])
+  @@index([userId])
+}
+
+model DailyBudget {
+  id          String   @id @default(cuid())
+  userId      String
+  date        DateTime @db.Date                // The day this budget is for
+  limit       Int      @default(100000000)      // 100 credits default daily limit (in micro-credits)
+  used        Int      @default(0)              // Micro-credits used today
+  requestCount Int     @default(0)              // Number of requests today
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, date])
+  @@index([userId, date])
+}
+
+// ============================================
+// V21 — MULTI-AGENT MEETINGS
+// ============================================
+
+model AgentMeeting {
+  id              String   @id @default(cuid())
+  title           String
+  topic           String   @db.Text              // What the meeting is about
+  filmProjectId   String?
+  status          MeetingStatus @default(PENDING)
+  // Output
+  transcript      String?  @db.Text              // Full meeting transcript
+  summary         String?  @db.Text              // Structured summary/minutes
+  decisions       Json?                           // Key decisions made
+  actionItems     Json?                           // Follow-up actions
+  // Stats
+  totalTokens     Int      @default(0)
+  totalCost       Int      @default(0)
+  durationMs      Int?
+  roundCount      Int      @default(0)            // Number of discussion rounds
+  // Timestamps
+  startedAt       DateTime?
+  completedAt     DateTime?
+  createdAt       DateTime @default(now())
+
+  participants MeetingParticipant[]
+
+  @@index([status])
+  @@index([createdAt])
+}
+
+model MeetingParticipant {
+  id          String   @id @default(cuid())
+  meetingId   String
+  userId      String
+  agentSlug   String                              // Which agent is participating
+  role        String?                             // "moderator", "contributor", etc.
+  messageCount Int     @default(0)
+  createdAt   DateTime @default(now())
+
+  meeting AgentMeeting @relation(fields: [meetingId], references: [id], onDelete: Cascade)
+  user    User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([meetingId, agentSlug])
+  @@index([meetingId])
+  @@index([userId])
+}
+
+enum ChatRole {
+  USER
+  ASSISTANT
+  SYSTEM
+}
+
+enum ChatMessageStatus {
+  STREAMING      // Currently being streamed
+  COMPLETED      // Successfully completed
+  FAILED         // Error occurred
+  CANCELLED      // Cancelled by user
+}
+
+enum MeetingStatus {
+  PENDING        // Not started
+  IN_PROGRESS    // Agents are discussing
+  COMPLETED      // Meeting finished with summary
+  FAILED         // Error occurred
+  CANCELLED      // Cancelled by user
+}
+
+// ============================================
+// V22 — AUTOPILOT & GOVERNANCE
+// ============================================
+
+model AutopilotProposal {
+  id              String                @id @default(cuid())
+  // Who proposed
+  createdById     String?                              // User or null if system/agent
+  agentSlug       String?                              // Which agent proposed this
+  // What
+  actionType      AutopilotActionType
+  title           String
+  description     String                @db.Text
+  payload         Json                                 // Action parameters
+  // Risk & Priority
+  severity        ProposalSeverity      @default(INFO)
+  riskScore       Int                   @default(0)    // 0-100
+  riskAnalysis    String?               @db.Text       // Why this risk level
+  // Rollback
+  snapshotBefore  Json?                                // State before execution for rollback
+  rollbackPayload Json?                                // How to undo
+  // Review
+  status          AutopilotStatus       @default(DRAFT)
+  reviewedById    String?
+  reviewNote      String?
+  reviewedAt      DateTime?
+  // Execution
+  executionResult Json?
+  executionError  String?
+  executedAt      DateTime?
+  rolledBackAt    DateTime?
+  // Telegram
+  telegramMessageId Int?                               // Message ID for inline buttons
+  telegramChatId    String?                            // Chat ID where sent
+  // Rate limiting
+  isUrgent        Boolean               @default(false)
+  // Timestamps
+  expiresAt       DateTime?                            // Auto-deny after this
+  createdAt       DateTime              @default(now())
+  updatedAt       DateTime              @updatedAt
+
+  createdBy  User? @relation("ProposalCreator", fields: [createdById], references: [id])
+  reviewedBy User? @relation("ProposalApprover", fields: [reviewedById], references: [id])
+
+  @@index([status])
+  @@index([createdById])
+  @@index([actionType])
+  @@index([severity])
+  @@index([createdAt])
+}
+
+model AutopilotAudit {
+  id            String          @id @default(cuid())
+  auditorType   AuditorType                          // HEALTH, BUSINESS, SECURITY
+  status        AuditStatus     @default(RUNNING)
+  // Results
+  findings      Json?                                // Array of findings
+  score         Int?                                 // 0-100 overall score
+  summary       String?         @db.Text
+  recommendations Json?                              // Suggested actions
+  // Metrics
+  checksRun     Int             @default(0)
+  issuesFound   Int             @default(0)
+  criticalCount Int             @default(0)
+  warningCount  Int             @default(0)
+  // Timing
+  durationMs    Int?
+  startedAt     DateTime        @default(now())
+  completedAt   DateTime?
+  createdAt     DateTime        @default(now())
+
+  @@index([auditorType])
+  @@index([createdAt])
+}
+
+model FeatureFlag {
+  id          String   @id @default(cuid())
+  key         String   @unique                       // "enable_ai_chat", "maintenance_mode"
+  value       Boolean  @default(false)
+  description String?
+  changedBy   String?                                // Who last changed it
+  changedAt   DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([key])
+}
+
+enum AutopilotActionType {
+  TOGGLE_FEATURE_FLAG
+  UPDATE_AGENT_CONFIG
+  APPROVE_CAMPAIGN
+  UPDATE_USER_TIER
+  SEND_NOTIFICATION
+  CREATE_PROMO_CODE
+  TRIGGER_CRON
+  MODIFY_BILLING_PARAM
+  PUBLISH_CONTENT
+  PROMOTE_FILM
+}
+
+enum AutopilotStatus {
+  DRAFT
+  PENDING_REVIEW
+  APPROVED
+  DENIED
+  EXECUTING
+  COMPLETED
+  FAILED
+  ROLLED_BACK
+}
+
+enum ProposalSeverity {
+  INFO
+  WARNING
+  CRITICAL
+  URGENT
+}
+
+enum AuditorType {
+  HEALTH
+  BUSINESS
+  SECURITY
+}
+
+enum AuditStatus {
+  RUNNING
+  COMPLETED
+  FAILED
 }

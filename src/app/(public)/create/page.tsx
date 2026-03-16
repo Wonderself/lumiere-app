@@ -49,7 +49,7 @@ const FAQ_ITEMS = [
   },
   {
     q: 'How much does it cost?',
-    a: 'All AI generation tools are included with your subscription. Submitting a script to community vote costs a one-time $9 fee.',
+    a: 'You only pay the actual AI token costs — 0% commission. Submitting a script to community vote costs a one-time $9 fee. Check our transparent pricing page for detailed costs per action.',
   },
   {
     q: 'Can I collaborate with others?',
@@ -187,6 +187,13 @@ export default function CreatePage() {
             Step-by-step, we guide you from scriptwriting to publishing your film.
             Bring your vision to life with the most advanced AI technology.
           </p>
+
+          {/* 0% commission badge */}
+          <div className="mt-6 inline-flex items-center gap-2 px-4 py-2 rounded-full border border-emerald-500/20 bg-emerald-500/5">
+            <span className="text-xs text-emerald-400 font-medium">
+              0% commission — you only pay actual AI token costs
+            </span>
+          </div>
         </div>
       </section>
 

@@ -139,7 +139,7 @@ export default function PricingPage() {
         </div>
 
         {/* Plans grid */}
-        <div className="grid md:grid-cols-3 gap-6 mb-20">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-20">
           {PLANS.map((plan) => (
             <div
               key={plan.id}

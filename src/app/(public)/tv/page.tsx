@@ -199,7 +199,7 @@ export default function TvHomePage() {
       {/* ═══════════════════════════════════════════
           A. HERO BANNER
           ═══════════════════════════════════════════ */}
-      <section className="relative w-full" style={{ height: '70vh', minHeight: '480px' }}>
+      <section className="relative w-full" style={{ height: '55vh', minHeight: '380px' }}>
         {/* Background image */}
         <div
           className="absolute inset-0 bg-cover bg-center"
@@ -538,7 +538,7 @@ export default function TvHomePage() {
               >
                 {/* Large number */}
                 <span
-                  className="absolute -left-2 md:-left-3 bottom-0 text-[80px] md:text-[100px] font-black leading-none select-none pointer-events-none"
+                  className="absolute -left-2 md:-left-3 bottom-0 text-[50px] sm:text-[80px] md:text-[100px] font-black leading-none select-none pointer-events-none"
                   style={{
                     color: 'transparent',
                     WebkitTextStroke: '2px rgba(37, 99, 235, 0.4)',

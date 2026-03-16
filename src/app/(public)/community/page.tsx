@@ -212,7 +212,7 @@ export default async function CommunityPage() {
               </CardContent>
             </Card>
           ) : (
-            <div className="grid md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {contests.map((contest) => {
                 const statusInfo = CONTEST_STATUS_BADGE[contest.status] || CONTEST_STATUS_BADGE.UPCOMING
                 const daysLeft = contest.endDate
@@ -333,7 +333,7 @@ export default async function CommunityPage() {
               </h2>
             </div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {winners.scenarioWinners.map((w) => (
                 <Link key={w.id} href={`/community/scenarios/${w.id}`}>
                   <Card variant="gold" className="h-full group cursor-pointer border-[#E50914]/20 bg-[#E50914]/[0.03] hover:shadow-lg hover:shadow-[#E50914]/5 hover:-translate-y-[1px] transition-all duration-500">

@@ -136,6 +136,14 @@ export default function WorkPage() {
                 Start Earning Money
                 <ArrowRight className="h-5 w-5" />
               </Link>
+
+              {/* 0% commission banner */}
+              <div className="mt-6 inline-flex items-center gap-2 px-4 py-2 rounded-full border border-emerald-500/20 bg-emerald-500/5">
+                <Shield className="h-4 w-4 text-emerald-400" />
+                <span className="text-xs text-emerald-400 font-medium">
+                  0% commission on AI — you only pay actual token costs
+                </span>
+              </div>
             </div>
 
             {/* Right: 3 hero film cards */}

@@ -146,13 +146,13 @@ export function LoginForm() {
                 <button
                   type="button"
                   disabled={isPending}
-                  onClick={() => loginAsDemo('admin@cinegen.studio', 'Admin1234!')}
+                  onClick={() => loginAsDemo('admin@admin.com', 'adminadmin')}
                   className="w-full rounded-xl bg-[#E50914]/[0.06] border border-[#E50914]/15 hover:border-[#E50914]/30 hover:bg-[#E50914]/10 p-3.5 text-left transition-all duration-300 group cursor-pointer disabled:opacity-50"
                 >
                   <div className="flex items-center justify-between">
                     <div>
                       <p className="text-xs font-semibold text-[#E50914]/80 group-hover:text-[#E50914]">Admin</p>
-                      <p className="text-[11px] text-white/35 mt-0.5">admin@cinegen.studio</p>
+                      <p className="text-[11px] text-white/35 mt-0.5">admin@admin.com</p>
                     </div>
                     <span className="text-[10px] text-[#E50914]/40 group-hover:text-[#E50914]/70 uppercase tracking-wider font-medium">
                       {isPending ? 'Connexion...' : 'Connexion rapide'}
@@ -162,13 +162,13 @@ export function LoginForm() {
                 <button
                   type="button"
                   disabled={isPending}
-                  onClick={() => loginAsDemo('contributeur@cinegen.studio', 'Test1234!')}
+                  onClick={() => loginAsDemo('admin@admin.com', 'adminadmin')}
                   className="w-full rounded-xl bg-white/[0.02] border border-white/[0.06] hover:border-white/[0.12] hover:bg-white/[0.04] p-3.5 text-left transition-all duration-300 group cursor-pointer disabled:opacity-50"
                 >
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-xs font-semibold text-white/50 group-hover:text-white/70">Contributeur</p>
-                      <p className="text-[11px] text-white/25 mt-0.5">contributeur@cinegen.studio</p>
+                      <p className="text-xs font-semibold text-white/50 group-hover:text-white/70">Utilisateur Demo</p>
+                      <p className="text-[11px] text-white/25 mt-0.5">admin@admin.com</p>
                     </div>
                     <span className="text-[10px] text-white/20 group-hover:text-white/40 uppercase tracking-wider font-medium">
                       {isPending ? 'Connexion...' : 'Connexion rapide'}

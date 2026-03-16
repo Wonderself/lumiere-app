@@ -119,7 +119,7 @@ export default async function FilmsPage({
           </p>
 
           {/* Stats row */}
-          <div className="grid grid-cols-3 gap-6 sm:gap-10 max-w-2xl mx-auto">
+          <div className="grid grid-cols-3 gap-3 sm:gap-6 md:gap-10 max-w-2xl mx-auto">
             {[
               { label: 'Films', value: heroStats.filmsCount, icon: Film },
               { label: 'Taches', value: heroStats.tasksCount, icon: CheckCircle },
