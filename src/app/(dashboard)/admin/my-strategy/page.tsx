@@ -95,9 +95,9 @@ export default function MyStrategyPage() {
   }
 
   const PRIORITY_CONFIG = {
-    high: { label: 'Haute', color: 'text-red-600', bg: 'bg-red-50' },
-    medium: { label: 'Moyenne', color: 'text-yellow-600', bg: 'bg-yellow-50' },
-    low: { label: 'Basse', color: 'text-green-600', bg: 'bg-green-50' },
+    high: { label: 'Haute', color: 'text-red-400', bg: 'bg-red-500/10' },
+    medium: { label: 'Moyenne', color: 'text-yellow-400', bg: 'bg-yellow-500/10' },
+    low: { label: 'Basse', color: 'text-green-400', bg: 'bg-green-500/10' },
   }
 
   const tabs = [
@@ -148,7 +148,7 @@ export default function MyStrategyPage() {
           )}
 
           {objectives.map(obj => (
-            <div key={obj.id} className={`rounded-xl border bg-white/5 p-5 transition-colors ${obj.completed ? 'border-green-200 opacity-60' : 'border-white/10'}`}>
+            <div key={obj.id} className={`rounded-xl border bg-white/5 p-5 transition-colors ${obj.completed ? 'border-green-500/20 opacity-60' : 'border-white/10'}`}>
               <div className="flex items-center gap-3">
                 <button onClick={() => toggleObjective(obj.id)}>
                   {obj.completed ? <CheckCircle2 className="h-5 w-5 text-green-500" /> : <Circle className="h-5 w-5 text-white/50" />}

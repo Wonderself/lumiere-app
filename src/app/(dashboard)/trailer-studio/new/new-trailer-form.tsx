@@ -61,7 +61,7 @@ export function NewTrailerForm() {
       <input type="hidden" name="communityVoteEnabled" value={communityVote ? 'true' : 'false'} />
 
       {state?.error && (
-        <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
+        <div className="rounded-xl border border-red-500/20 bg-red-500/10 px-4 py-3 text-sm text-red-400">
           {state.error}
         </div>
       )}
@@ -113,8 +113,8 @@ export function NewTrailerForm() {
       {/* Creative Direction */}
       <div className="rounded-2xl border border-white/10 bg-white/5 p-6 space-y-5">
         <div className="flex items-center gap-3 mb-2">
-          <div className="h-8 w-8 rounded-lg bg-purple-50 flex items-center justify-center">
-            <Palette className="h-4 w-4 text-purple-600" />
+          <div className="h-8 w-8 rounded-lg bg-purple-500/10 flex items-center justify-center">
+            <Palette className="h-4 w-4 text-purple-400" />
           </div>
           <h2 className="text-base font-semibold text-white">Direction créative</h2>
         </div>
@@ -193,8 +193,8 @@ export function NewTrailerForm() {
       {/* Duration */}
       <div className="rounded-2xl border border-white/10 bg-white/5 p-6 space-y-4">
         <div className="flex items-center gap-3 mb-2">
-          <div className="h-8 w-8 rounded-lg bg-blue-50 flex items-center justify-center">
-            <Clock className="h-4 w-4 text-blue-600" />
+          <div className="h-8 w-8 rounded-lg bg-blue-500/10 flex items-center justify-center">
+            <Clock className="h-4 w-4 text-blue-400" />
           </div>
           <h2 className="text-base font-semibold text-white">Durée</h2>
         </div>
@@ -224,8 +224,8 @@ export function NewTrailerForm() {
       <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="h-8 w-8 rounded-lg bg-pink-50 flex items-center justify-center">
-              <Users className="h-4 w-4 text-pink-600" />
+            <div className="h-8 w-8 rounded-lg bg-pink-500/10 flex items-center justify-center">
+              <Users className="h-4 w-4 text-pink-400" />
             </div>
             <div>
               <h2 className="text-base font-semibold text-white">Vote communautaire</h2>

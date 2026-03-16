@@ -61,14 +61,14 @@ export default function PromoCodesPage() {
 
       {/* KPIs */}
       <div className="grid grid-cols-4 gap-4">
-        <div className="rounded-xl border border-white/10 bg-green-50 p-4 text-center">
-          <p className="text-2xl font-bold text-green-600">{activeCount}</p><p className="text-[10px] text-white/50">Actifs</p>
+        <div className="rounded-xl border border-white/10 bg-green-500/10 p-4 text-center">
+          <p className="text-2xl font-bold text-green-400">{activeCount}</p><p className="text-[10px] text-white/50">Actifs</p>
         </div>
-        <div className="rounded-xl border border-white/10 bg-blue-50 p-4 text-center">
-          <p className="text-2xl font-bold text-blue-600">{totalUsed}</p><p className="text-[10px] text-white/50">Utilisations</p>
+        <div className="rounded-xl border border-white/10 bg-blue-500/10 p-4 text-center">
+          <p className="text-2xl font-bold text-blue-400">{totalUsed}</p><p className="text-[10px] text-white/50">Utilisations</p>
         </div>
-        <div className="rounded-xl border border-white/10 bg-purple-50 p-4 text-center">
-          <p className="text-2xl font-bold text-purple-600">{codes.length}</p><p className="text-[10px] text-white/50">Total codes</p>
+        <div className="rounded-xl border border-white/10 bg-purple-500/10 p-4 text-center">
+          <p className="text-2xl font-bold text-purple-400">{codes.length}</p><p className="text-[10px] text-white/50">Total codes</p>
         </div>
         <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4 text-center">
           <p className="text-2xl font-bold text-white/60">{codes.filter(c => !c.isActive).length}</p><p className="text-[10px] text-white/50">Inactifs</p>
@@ -115,8 +115,8 @@ export default function PromoCodesPage() {
                   <div className="flex items-center gap-2">
                     <code className="text-sm font-mono font-bold text-white">{code.code}</code>
                     <button onClick={() => copyCode(code.code)} className="text-white/50 hover:text-white/60">{copied === code.code ? <Check className="h-3.5 w-3.5 text-green-500" /> : <Copy className="h-3.5 w-3.5" />}</button>
-                    {code.isActive ? <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-green-50 text-green-600">Actif</span> : <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-white/[0.05] text-white/50">Inactif</span>}
-                    {code.onePerUser && <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-blue-50 text-blue-500">1/user</span>}
+                    {code.isActive ? <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-green-500/10 text-green-400">Actif</span> : <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-white/[0.05] text-white/50">Inactif</span>}
+                    {code.onePerUser && <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-blue-500/10 text-blue-400">1/user</span>}
                   </div>
                   <p className="text-[10px] text-white/50 mt-0.5">{code.description}</p>
                   <div className="flex items-center gap-3 mt-1 text-[10px] text-white/50">
@@ -126,7 +126,7 @@ export default function PromoCodesPage() {
                     {code.expiresAt && <><span>·</span><span>Expire: {code.expiresAt}</span></>}
                   </div>
                 </div>
-                <button onClick={() => toggleCode(code.code)} className={`p-1.5 rounded-lg ${code.isActive ? 'hover:bg-red-50' : 'hover:bg-green-50'}`}>
+                <button onClick={() => toggleCode(code.code)} className={`p-1.5 rounded-lg ${code.isActive ? 'hover:bg-red-500/10' : 'hover:bg-green-500/10'}`}>
                   {code.isActive ? <EyeOff className="h-4 w-4 text-red-400" /> : <Eye className="h-4 w-4 text-green-600" />}
                 </button>
               </div>

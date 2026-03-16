@@ -13,9 +13,9 @@ export const dynamic = 'force-dynamic'
 export const metadata: Metadata = { title: 'User Management — Admin CINEGEN' }
 
 const ROLE_CONFIG: Record<string, { label: string; color: string; bg: string }> = {
-  ADMIN: { label: 'Admin', color: 'text-red-600', bg: 'bg-red-50' },
-  MODERATOR: { label: 'Moderator', color: 'text-purple-600', bg: 'bg-purple-50' },
-  CONTRIBUTOR: { label: 'Contributor', color: 'text-blue-600', bg: 'bg-blue-50' },
+  ADMIN: { label: 'Admin', color: 'text-red-400', bg: 'bg-red-500/10' },
+  MODERATOR: { label: 'Moderator', color: 'text-purple-400', bg: 'bg-purple-500/10' },
+  CONTRIBUTOR: { label: 'Contributor', color: 'text-blue-400', bg: 'bg-blue-500/10' },
   VIEWER: { label: 'Viewer', color: 'text-white/60', bg: 'bg-white/[0.03]' },
 }
 

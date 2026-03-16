@@ -51,7 +51,7 @@ export default function ReferralPage() {
       </div>
 
       {/* How it works */}
-      <div className="p-6 rounded-2xl bg-gradient-to-r from-amber-50 to-yellow-50 border border-amber-200/50">
+      <div className="p-6 rounded-2xl bg-gradient-to-r from-amber-500/10 to-yellow-500/10 border border-amber-500/20">
         <h2 className="text-sm font-bold text-white/90 mb-4 flex items-center gap-2">
           <Gift className="h-4 w-4 text-[#E50914]" />
           Comment ca marche
@@ -105,7 +105,7 @@ export default function ReferralPage() {
             {/* Link */}
             {referralLink && (
               <div className="flex items-center gap-2">
-                <div className="flex-1 px-4 py-3 rounded-xl bg-amber-50 border border-amber-200 text-sm text-white/80 truncate">
+                <div className="flex-1 px-4 py-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-sm text-white/80 truncate">
                   {referralLink}
                 </div>
                 <button
@@ -125,9 +125,9 @@ export default function ReferralPage() {
         <>
           <div className="grid grid-cols-3 gap-4">
             {[
-              { label: 'Filleuls', value: data.total, icon: Users, color: 'text-blue-500', bg: 'bg-blue-50' },
-              { label: 'Actives', value: data.completed, icon: CheckCircle, color: 'text-green-500', bg: 'bg-green-50' },
-              { label: 'Lumens Gagnes', value: data.totalEarned, icon: TrendingUp, color: 'text-[#E50914]', bg: 'bg-amber-50' },
+              { label: 'Filleuls', value: data.total, icon: Users, color: 'text-blue-400', bg: 'bg-blue-500/10' },
+              { label: 'Actives', value: data.completed, icon: CheckCircle, color: 'text-green-400', bg: 'bg-green-500/10' },
+              { label: 'Lumens Gagnes', value: data.totalEarned, icon: TrendingUp, color: 'text-[#E50914]', bg: 'bg-amber-500/10' },
             ].map((stat) => (
               <div key={stat.label} className="p-5 rounded-2xl bg-white/5 border border-white/10 shadow-[0_2px_8px_rgba(0,0,0,0.3)] text-center">
                 <div className={`inline-flex items-center justify-center h-10 w-10 rounded-xl ${stat.bg} mb-3`}>
@@ -151,7 +151,7 @@ export default function ReferralPage() {
                     <div className="flex items-center gap-3">
                       <div className={cn(
                         'h-8 w-8 rounded-full flex items-center justify-center text-xs',
-                        r.status === 'COMPLETED' ? 'bg-green-100 text-green-600' : 'bg-white/[0.05] text-white/50'
+                        r.status === 'COMPLETED' ? 'bg-green-500/15 text-green-400' : 'bg-white/[0.05] text-white/50'
                       )}>
                         {r.status === 'COMPLETED' ? <CheckCircle className="h-4 w-4" /> : <Clock className="h-4 w-4" />}
                       </div>
@@ -167,7 +167,7 @@ export default function ReferralPage() {
                     <div className="flex items-center gap-2">
                       <span className={cn(
                         'px-2.5 py-1 rounded-full text-[10px] font-medium',
-                        r.status === 'COMPLETED' ? 'bg-green-100 text-green-600' : 'bg-white/[0.05] text-white/50'
+                        r.status === 'COMPLETED' ? 'bg-green-500/15 text-green-400' : 'bg-white/[0.05] text-white/50'
                       )}>
                         {r.status === 'COMPLETED' ? `+${r.tokensEarned} Lumens` : 'En attente'}
                       </span>

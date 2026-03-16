@@ -193,7 +193,7 @@ export default function MyDocumentsPage() {
                     {copied ? <Check className="h-3.5 w-3.5 text-green-500" /> : <Copy className="h-3.5 w-3.5" />}
                     {copied ? 'Copié' : 'Copier'}
                   </button>
-                  <button onClick={saveDoc} className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs bg-green-50 text-green-700 hover:bg-green-100 transition-colors">
+                  <button onClick={saveDoc} className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs bg-green-500/10 text-green-400 hover:bg-green-500/15 transition-colors">
                     <Download className="h-3.5 w-3.5" /> Sauver
                   </button>
                 </div>

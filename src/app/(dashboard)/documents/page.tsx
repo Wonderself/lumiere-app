@@ -162,9 +162,9 @@ export default function DocumentFactoryPage() {
         </div>
 
         {/* 0% Commission */}
-        <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-4 flex items-center gap-3">
-          <Shield className="h-5 w-5 text-emerald-600 shrink-0" />
-          <p className="text-xs text-emerald-700"><span className="font-semibold">0% commission</span> — vous ne payez que les tokens IA. ~3.5 crédits par document professionnel.</p>
+        <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/10 p-4 flex items-center gap-3">
+          <Shield className="h-5 w-5 text-emerald-400 shrink-0" />
+          <p className="text-xs text-emerald-400"><span className="font-semibold">0% commission</span> — vous ne payez que les tokens IA. ~3.5 crédits par document professionnel.</p>
         </div>
 
         {/* Agents */}
@@ -287,10 +287,10 @@ export default function DocumentFactoryPage() {
               {copied ? <Check className="h-3.5 w-3.5 text-green-500" /> : <Copy className="h-3.5 w-3.5" />}
               {copied ? 'Copié' : 'Copier'}
             </button>
-            <button onClick={saveDoc} className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs bg-green-50 text-green-700 hover:bg-green-100">
+            <button onClick={saveDoc} className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs bg-green-500/10 text-green-400 hover:bg-green-500/15">
               <Download className="h-3.5 w-3.5" /> Archiver
             </button>
-            <button className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs bg-blue-50 text-blue-700 hover:bg-blue-100" title="Bientôt disponible" disabled>
+            <button className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs bg-blue-500/10 text-blue-400 hover:bg-blue-500/15" title="Bientôt disponible" disabled>
               <FileText className="h-3.5 w-3.5" /> Export PDF
             </button>
           </div>
@@ -298,7 +298,7 @@ export default function DocumentFactoryPage() {
 
         {/* Review Score */}
         {reviewScore !== null && (
-          <div className={`rounded-xl p-4 border ${reviewScore >= 80 ? 'border-green-200 bg-green-50' : reviewScore >= 60 ? 'border-yellow-200 bg-yellow-50' : 'border-red-200 bg-red-50'}`}>
+          <div className={`rounded-xl p-4 border ${reviewScore >= 80 ? 'border-green-500/20 bg-green-500/10' : reviewScore >= 60 ? 'border-yellow-500/20 bg-yellow-500/10' : 'border-red-500/20 bg-red-500/10'}`}>
             <div className="flex items-center gap-2">
               <ShieldCheck className={`h-5 w-5 ${reviewScore >= 80 ? 'text-green-600' : reviewScore >= 60 ? 'text-yellow-600' : 'text-red-600'}`} />
               <span className="text-sm font-semibold text-white">Review juridique : {reviewScore}/100</span>

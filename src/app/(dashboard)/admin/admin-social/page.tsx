@@ -157,7 +157,7 @@ export default function AdminSocialPage() {
                           {copied === `gen-${i}` ? <Check className="h-3 w-3 text-green-500" /> : <Copy className="h-3 w-3" />}
                           {copied === `gen-${i}` ? 'Copié' : 'Copier'}
                         </button>
-                        <button onClick={() => addToCalendar(post)} className="text-xs px-2 py-1 rounded bg-blue-50 text-blue-600 hover:bg-blue-100 flex items-center gap-1">
+                        <button onClick={() => addToCalendar(post)} className="text-xs px-2 py-1 rounded bg-blue-500/10 text-blue-400 hover:bg-blue-500/15 flex items-center gap-1">
                           <Calendar className="h-3 w-3" /> Planifier
                         </button>
                       </div>
@@ -192,7 +192,7 @@ export default function AdminSocialPage() {
                     <div className="flex items-center gap-2 text-[10px] text-white/50 mt-0.5">
                       <Clock className="h-3 w-3" />
                       <span>{post.scheduledAt}</span>
-                      <span className={`px-1.5 py-0.5 rounded-full ${post.status === 'published' ? 'bg-green-50 text-green-600' : post.status === 'scheduled' ? 'bg-blue-50 text-blue-600' : 'bg-white/[0.03] text-white/50'}`}>
+                      <span className={`px-1.5 py-0.5 rounded-full ${post.status === 'published' ? 'bg-green-500/10 text-green-400' : post.status === 'scheduled' ? 'bg-blue-500/10 text-blue-400' : 'bg-white/[0.03] text-white/50'}`}>
                         {post.status}
                       </span>
                     </div>

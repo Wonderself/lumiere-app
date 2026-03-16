@@ -27,10 +27,10 @@ const MOCK_MODULES: UserModule[] = [
 ]
 
 const TYPE_CONFIG = {
-  form: { label: 'Form', icon: FileText, color: 'text-blue-600', bg: 'bg-blue-50' },
-  crm: { label: 'CRM', icon: Users, color: 'text-purple-600', bg: 'bg-purple-50' },
-  agent: { label: 'Agent', icon: Bot, color: 'text-orange-600', bg: 'bg-orange-50' },
-  dashboard: { label: 'Dashboard', icon: BarChart3, color: 'text-green-600', bg: 'bg-green-50' },
+  form: { label: 'Form', icon: FileText, color: 'text-blue-400', bg: 'bg-blue-500/10' },
+  crm: { label: 'CRM', icon: Users, color: 'text-purple-400', bg: 'bg-purple-500/10' },
+  agent: { label: 'Agent', icon: Bot, color: 'text-orange-400', bg: 'bg-orange-500/10' },
+  dashboard: { label: 'Dashboard', icon: BarChart3, color: 'text-green-400', bg: 'bg-green-500/10' },
 }
 
 export default function ModulesMonitorPage() {
@@ -43,10 +43,10 @@ export default function ModulesMonitorPage() {
     .filter(m => !search || m.name.toLowerCase().includes(search.toLowerCase()))
 
   const kpis = [
-    { label: 'Total Modules', value: modules.length, icon: Layout, color: 'text-blue-600', bg: 'bg-blue-50' },
-    { label: 'Actifs', value: modules.filter(m => m.status === 'active').length, icon: CheckCircle2, color: 'text-green-600', bg: 'bg-green-50' },
-    { label: 'Total Usage', value: modules.reduce((s, m) => s + m.usageCount, 0), icon: Activity, color: 'text-purple-600', bg: 'bg-purple-50' },
-    { label: 'En erreur', value: modules.filter(m => m.status === 'error').length, icon: XCircle, color: 'text-red-600', bg: 'bg-red-50' },
+    { label: 'Total Modules', value: modules.length, icon: Layout, color: 'text-blue-400', bg: 'bg-blue-500/10' },
+    { label: 'Actifs', value: modules.filter(m => m.status === 'active').length, icon: CheckCircle2, color: 'text-green-400', bg: 'bg-green-500/10' },
+    { label: 'Total Usage', value: modules.reduce((s, m) => s + m.usageCount, 0), icon: Activity, color: 'text-purple-400', bg: 'bg-purple-500/10' },
+    { label: 'En erreur', value: modules.filter(m => m.status === 'error').length, icon: XCircle, color: 'text-red-400', bg: 'bg-red-500/10' },
   ]
 
   return (

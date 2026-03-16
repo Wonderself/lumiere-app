@@ -107,13 +107,13 @@ export function TrailerActions({
     <div className="space-y-4">
       {/* Error / Success Messages */}
       {error && (
-        <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 flex items-center gap-2 text-sm text-red-700">
+        <div className="rounded-xl border border-red-500/20 bg-red-500/10 px-4 py-3 flex items-center gap-2 text-sm text-red-400">
           <AlertCircle className="h-4 w-4 shrink-0" />
           {error}
         </div>
       )}
       {success && (
-        <div className="rounded-xl border border-green-200 bg-green-50 px-4 py-3 flex items-center gap-2 text-sm text-green-700">
+        <div className="rounded-xl border border-green-500/20 bg-green-500/10 px-4 py-3 flex items-center gap-2 text-sm text-green-400">
           <CheckCircle2 className="h-4 w-4 shrink-0" />
           {success}
         </div>
@@ -155,7 +155,7 @@ export function TrailerActions({
               onClick={handleDelete}
               disabled={isPending}
               variant="outline"
-              className="border-red-200 text-red-600 hover:bg-red-50"
+              className="border-red-500/20 text-red-400 hover:bg-red-500/10"
             >
               {isPending ? (
                 <Loader2 className="h-4 w-4 mr-2 animate-spin" />
@@ -175,7 +175,7 @@ export function TrailerActions({
           {pendingChoices.map((choice) => (
             <div
               key={choice.id}
-              className="rounded-2xl border border-amber-200 bg-amber-50/50 p-5"
+              className="rounded-2xl border border-amber-500/20 bg-amber-500/10 p-5"
             >
               <p className="text-sm font-medium text-white mb-3">{choice.question}</p>
               {choice.category && (

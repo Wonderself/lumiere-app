@@ -16,26 +16,26 @@ export const dynamic = 'force-dynamic'
 export const metadata: Metadata = { title: 'Projet Bande-Annonce' }
 
 const PHASE_CONFIG: Record<string, { label: string; icon: typeof Film; color: string }> = {
-  CONCEPT: { label: 'Concept', icon: Sparkles, color: 'text-amber-600 bg-amber-50' },
-  SCRIPT: { label: 'Script', icon: Film, color: 'text-blue-600 bg-blue-50' },
-  VISUAL_DESIGN: { label: 'Design Visuel', icon: Palette, color: 'text-purple-600 bg-purple-50' },
-  STORYBOARD: { label: 'Storyboard', icon: Clapperboard, color: 'text-pink-600 bg-pink-50' },
-  PRODUCTION: { label: 'Production IA', icon: Wand2, color: 'text-indigo-600 bg-indigo-50' },
-  AUDIO: { label: 'Audio', icon: Music, color: 'text-green-600 bg-green-50' },
-  POST_PRODUCTION: { label: 'Post-Production', icon: Scissors, color: 'text-orange-600 bg-orange-50' },
-  ASSEMBLY: { label: 'Assemblage Final', icon: Play, color: 'text-red-600 bg-red-50' },
+  CONCEPT: { label: 'Concept', icon: Sparkles, color: 'text-amber-400 bg-amber-500/10' },
+  SCRIPT: { label: 'Script', icon: Film, color: 'text-blue-400 bg-blue-500/10' },
+  VISUAL_DESIGN: { label: 'Design Visuel', icon: Palette, color: 'text-purple-400 bg-purple-500/10' },
+  STORYBOARD: { label: 'Storyboard', icon: Clapperboard, color: 'text-pink-400 bg-pink-500/10' },
+  PRODUCTION: { label: 'Production IA', icon: Wand2, color: 'text-indigo-400 bg-indigo-500/10' },
+  AUDIO: { label: 'Audio', icon: Music, color: 'text-green-400 bg-green-500/10' },
+  POST_PRODUCTION: { label: 'Post-Production', icon: Scissors, color: 'text-orange-400 bg-orange-500/10' },
+  ASSEMBLY: { label: 'Assemblage Final', icon: Play, color: 'text-red-400 bg-red-500/10' },
 }
 
 const TASK_STATUS_CONFIG: Record<string, { label: string; color: string }> = {
   PENDING: { label: 'En attente', color: 'bg-white/[0.05] text-white/50' },
   BLOCKED: { label: 'Bloqué', color: 'bg-white/[0.05] text-white/50' },
-  READY: { label: 'Prêt', color: 'bg-blue-100 text-blue-600' },
-  GENERATING: { label: 'Génération...', color: 'bg-purple-100 text-purple-600' },
-  AWAITING_CHOICE: { label: 'Choix requis', color: 'bg-amber-100 text-amber-600' },
-  IN_REVIEW: { label: 'En revue', color: 'bg-orange-100 text-orange-600' },
-  APPROVED: { label: 'Approuvé', color: 'bg-emerald-100 text-emerald-600' },
-  REJECTED: { label: 'Rejeté', color: 'bg-red-100 text-red-600' },
-  COMPLETED: { label: 'Terminé', color: 'bg-green-100 text-green-600' },
+  READY: { label: 'Prêt', color: 'bg-blue-500/15 text-blue-400' },
+  GENERATING: { label: 'Génération...', color: 'bg-purple-500/15 text-purple-400' },
+  AWAITING_CHOICE: { label: 'Choix requis', color: 'bg-amber-500/15 text-amber-400' },
+  IN_REVIEW: { label: 'En revue', color: 'bg-orange-500/15 text-orange-400' },
+  APPROVED: { label: 'Approuvé', color: 'bg-emerald-500/15 text-emerald-400' },
+  REJECTED: { label: 'Rejeté', color: 'bg-red-500/15 text-red-400' },
+  COMPLETED: { label: 'Terminé', color: 'bg-green-500/15 text-green-400' },
   SKIPPED: { label: 'Ignoré', color: 'bg-white/[0.05] text-white/50' },
 }
 

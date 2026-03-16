@@ -77,7 +77,7 @@ export default async function UserDetailPage({ params }: { params: Promise<{ id:
             <h1 className="text-2xl font-bold text-white">{user.displayName || 'Sans nom'}</h1>
             <div className="flex items-center gap-3 mt-1">
               <span className="flex items-center gap-1 text-xs text-white/50"><Mail className="h-3 w-3" /> {user.email}</span>
-              <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${user.role === 'ADMIN' ? 'bg-red-50 text-red-600' : 'bg-blue-50 text-blue-600'}`}>
+              <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${user.role === 'ADMIN' ? 'bg-red-500/10 text-red-400' : 'bg-blue-500/10 text-blue-400'}`}>
                 {user.role}
               </span>
               <span className="text-[10px] px-2 py-0.5 rounded-full bg-white/[0.05] text-white/50">{user.level}</span>

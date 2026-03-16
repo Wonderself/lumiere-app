@@ -47,9 +47,9 @@ export default function NotificationsConfigPage() {
   ]
 
   const PRIORITY_CONFIG = {
-    critical: { color: 'text-red-600', bg: 'bg-red-50' },
-    high: { color: 'text-orange-600', bg: 'bg-orange-50' },
-    medium: { color: 'text-yellow-600', bg: 'bg-yellow-50' },
+    critical: { color: 'text-red-400', bg: 'bg-red-500/10' },
+    high: { color: 'text-orange-400', bg: 'bg-orange-500/10' },
+    medium: { color: 'text-yellow-400', bg: 'bg-yellow-500/10' },
     low: { color: 'text-white/50', bg: 'bg-white/[0.03]' },
   }
 

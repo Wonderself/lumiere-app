@@ -74,7 +74,7 @@ export function AccountSettings() {
     return (
       <div className="bg-white/5 rounded-2xl shadow-[0_2px_8px_rgba(0,0,0,0.3)] border border-white/10 p-6">
         <div className="text-center py-8">
-          <div className="inline-flex items-center justify-center h-14 w-14 rounded-full bg-green-50 mb-4">
+          <div className="inline-flex items-center justify-center h-14 w-14 rounded-full bg-green-500/10 mb-4">
             <svg className="h-7 w-7 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
@@ -102,7 +102,7 @@ export function AccountSettings() {
           (RGPD Art. 20 — Droit &agrave; la portabilit&eacute;).
         </p>
         {exportError && (
-          <div className="mb-3 px-3 py-2 rounded-lg bg-red-50 border border-red-100 text-sm text-red-600">
+          <div className="mb-3 px-3 py-2 rounded-lg bg-red-500/10 border border-red-500/15 text-sm text-red-400">
             {exportError}
           </div>
         )}
@@ -154,8 +154,8 @@ export function AccountSettings() {
             onClick={() => setShowDeleteDialog(true)}
             className="
               inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium
-              text-red-600 border border-red-200 bg-red-50
-              hover:bg-red-100 hover:border-red-300
+              text-red-400 border border-red-500/20 bg-red-500/10
+              hover:bg-red-500/15 hover:border-red-500/30
               transition-all duration-200 cursor-pointer
             "
           >
@@ -165,7 +165,7 @@ export function AccountSettings() {
             Supprimer mon compte
           </button>
         ) : (
-          <div className="space-y-4 p-4 rounded-xl bg-red-50/50 border border-red-100">
+          <div className="space-y-4 p-4 rounded-xl bg-red-500/10 border border-red-500/15">
             <div className="flex items-start gap-3">
               <div className="shrink-0 mt-0.5">
                 <svg className="h-5 w-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -173,10 +173,10 @@ export function AccountSettings() {
                 </svg>
               </div>
               <div>
-                <p className="text-sm font-medium text-red-800 mb-1">
+                <p className="text-sm font-medium text-red-300 mb-1">
                   Confirmez la suppression
                 </p>
-                <p className="text-xs text-red-600/80 mb-3">
+                <p className="text-xs text-red-400/80 mb-3">
                   Entrez votre adresse email pour confirmer. Cette action est d&eacute;finitive.
                 </p>
                 <input
@@ -186,16 +186,16 @@ export function AccountSettings() {
                   placeholder="votre@email.com"
                   className="
                     w-full px-3 py-2 rounded-lg text-sm
-                    border border-red-200 bg-white/5 text-white
+                    border border-red-500/20 bg-white/5 text-white
                     placeholder:text-white/50
-                    focus:outline-none focus:ring-2 focus:ring-red-300 focus:border-red-300
+                    focus:outline-none focus:ring-2 focus:ring-red-500/30 focus:border-red-500/30
                   "
                 />
               </div>
             </div>
 
             {deleteError && (
-              <div className="px-3 py-2 rounded-lg bg-red-100 border border-red-200 text-sm text-red-700">
+              <div className="px-3 py-2 rounded-lg bg-red-500/15 border border-red-500/20 text-sm text-red-400">
                 {deleteError}
               </div>
             )}

@@ -113,13 +113,13 @@ export default async function SetupPage() {
             <div className={`rounded-xl border bg-white/5 p-5 transition-colors ${
               check.href ? 'hover:bg-white/[0.03] cursor-pointer' : ''
             } ${
-              check.status === 'warning' ? 'border-yellow-200' :
-              check.status === 'done' ? 'border-green-100' : 'border-white/10'
+              check.status === 'warning' ? 'border-yellow-500/20' :
+              check.status === 'done' ? 'border-green-500/15' : 'border-white/10'
             }`}>
               <div className="flex items-center gap-4">
                 <div className={`h-10 w-10 rounded-xl flex items-center justify-center ${
-                  check.status === 'done' ? 'bg-green-50' :
-                  check.status === 'warning' ? 'bg-yellow-50' : 'bg-white/[0.03]'
+                  check.status === 'done' ? 'bg-green-500/10' :
+                  check.status === 'warning' ? 'bg-yellow-500/10' : 'bg-white/[0.03]'
                 }`}>
                   <CIcon className={`h-5 w-5 ${
                     check.status === 'done' ? 'text-green-500' :

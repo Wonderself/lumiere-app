@@ -64,11 +64,11 @@ export default function EnhancedBillingPage() {
   }))
 
   const kpis = [
-    { label: 'Revenue totale', value: `${microToCredits(data.totalRevenue).toFixed(2)} cr`, icon: DollarSign, color: 'text-green-600', bg: 'bg-green-50' },
-    { label: 'Marge', value: `${microToCredits(data.totalMargin).toFixed(2)} cr`, icon: TrendingUp, color: 'text-emerald-600', bg: 'bg-emerald-50' },
-    { label: 'Requêtes IA', value: data.totalRequests.toLocaleString(), icon: Activity, color: 'text-blue-600', bg: 'bg-blue-50' },
-    { label: 'Wallets actifs', value: data.activeWallets, icon: Users, color: 'text-purple-600', bg: 'bg-purple-50' },
-    { label: 'Solde total', value: `${microToCredits(data.totalBalance).toFixed(2)} cr`, icon: Wallet, color: 'text-orange-600', bg: 'bg-orange-50' },
+    { label: 'Revenue totale', value: `${microToCredits(data.totalRevenue).toFixed(2)} cr`, icon: DollarSign, color: 'text-green-400', bg: 'bg-green-500/10' },
+    { label: 'Marge', value: `${microToCredits(data.totalMargin).toFixed(2)} cr`, icon: TrendingUp, color: 'text-emerald-400', bg: 'bg-emerald-500/10' },
+    { label: 'Requêtes IA', value: data.totalRequests.toLocaleString(), icon: Activity, color: 'text-blue-400', bg: 'bg-blue-500/10' },
+    { label: 'Wallets actifs', value: data.activeWallets, icon: Users, color: 'text-purple-400', bg: 'bg-purple-500/10' },
+    { label: 'Solde total', value: `${microToCredits(data.totalBalance).toFixed(2)} cr`, icon: Wallet, color: 'text-orange-400', bg: 'bg-orange-500/10' },
   ]
 
   return (

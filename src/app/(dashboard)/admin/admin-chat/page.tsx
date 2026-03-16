@@ -56,7 +56,7 @@ export default function AdminChatPage() {
           {CORE_AGENTS.map(a => {
             const AIc = ICON_MAP[a.icon] || Bot
             return (
-              <button key={a.slug} onClick={() => setAgent(a)} className={`w-full flex items-center gap-2 px-3 py-2 rounded-lg text-left text-xs transition-colors mb-0.5 ${agent.slug === a.slug ? 'bg-white/5 border border-white/10 text-white font-medium' : 'text-white/50 hover:bg-white'}`}>
+              <button key={a.slug} onClick={() => setAgent(a)} className={`w-full flex items-center gap-2 px-3 py-2 rounded-lg text-left text-xs transition-colors mb-0.5 ${agent.slug === a.slug ? 'bg-white/5 border border-white/10 text-white font-medium' : 'text-white/50 hover:bg-white/10'}`}>
                 <AIc className="h-3.5 w-3.5 shrink-0" style={{ color: a.color }} />
                 <span className="truncate">{a.name}</span>
               </button>

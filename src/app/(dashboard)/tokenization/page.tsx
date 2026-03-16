@@ -95,7 +95,7 @@ export default async function TokenizationMarketplacePage() {
       <TokenizationNav active="marketplace" />
 
       {/* Hero */}
-      <div className="relative overflow-hidden rounded-2xl border border-[#E50914]/20 bg-gradient-to-br from-amber-50 to-white p-7 sm:p-9 lg:p-11">
+      <div className="relative overflow-hidden rounded-2xl border border-[#E50914]/20 bg-gradient-to-br from-amber-500/10 to-white/5 p-7 sm:p-9 lg:p-11">
         <div className="absolute top-0 right-0 w-64 h-64 bg-[#E50914]/[0.06] rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
 
         <div className="relative flex flex-col lg:flex-row lg:items-center gap-8">
@@ -155,7 +155,7 @@ export default async function TokenizationMarketplacePage() {
 
         {offerings.length === 0 ? (
           <div className="py-20 text-center bg-white/5 rounded-2xl border border-white/10 shadow-[0_2px_8px_rgba(0,0,0,0.3)]">
-            <div className="mx-auto w-16 h-16 rounded-2xl bg-amber-50 flex items-center justify-center mb-5">
+            <div className="mx-auto w-16 h-16 rounded-2xl bg-amber-500/10 flex items-center justify-center mb-5">
               <Sparkles className="h-8 w-8 text-[#E50914]/60" />
             </div>
             <p className="text-white/80 text-lg font-semibold mb-2">Aucune offre active pour le moment</p>
@@ -175,7 +175,7 @@ export default async function TokenizationMarketplacePage() {
                 <Link key={offering.id} href={`/tokenization/${offering.filmId}`}>
                   <div className="bg-white/5 rounded-2xl shadow-[0_2px_8px_rgba(0,0,0,0.3)] border border-white/10 hover:border-[#E50914]/30 hover:shadow-md transition-all h-full group overflow-hidden">
                     {/* Film Cover */}
-                    <div className="relative h-36 bg-gradient-to-br from-amber-50 to-gray-50 overflow-hidden">
+                    <div className="relative h-36 bg-gradient-to-br from-amber-500/10 to-white/5 overflow-hidden">
                       {offering.film.coverImageUrl ? (
                         <img
                           src={offering.film.coverImageUrl}
@@ -244,8 +244,8 @@ export default async function TokenizationMarketplacePage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {recentlyFunded.map((offering) => (
               <Link key={offering.id} href={`/tokenization/${offering.filmId}`}>
-                <div className="bg-white/5 rounded-2xl shadow-[0_2px_8px_rgba(0,0,0,0.3)] border border-white/10 hover:border-green-200 transition-all group p-4 flex items-center gap-3">
-                  <div className="h-12 w-12 rounded-lg bg-green-50 flex items-center justify-center shrink-0">
+                <div className="bg-white/5 rounded-2xl shadow-[0_2px_8px_rgba(0,0,0,0.3)] border border-white/10 hover:border-green-500/30 transition-all group p-4 flex items-center gap-3">
+                  <div className="h-12 w-12 rounded-lg bg-green-500/10 flex items-center justify-center shrink-0">
                     <CheckCircle2 className="h-6 w-6 text-green-500" />
                   </div>
                   <div className="min-w-0 flex-1">
@@ -267,10 +267,10 @@ export default async function TokenizationMarketplacePage() {
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {[
-            { title: 'Choisissez', desc: 'Parcourez les films ouverts a la co-production', icon: Film, color: 'text-blue-500', bg: 'bg-blue-50' },
-            { title: 'Co-Produisez', desc: 'Tokens de co-production des 10\u20AC', icon: Coins, color: 'text-[#E50914]', bg: 'bg-amber-50' },
-            { title: 'Decidez', desc: 'Votez sur les choix creatifs du film', icon: Vote, color: 'text-purple-500', bg: 'bg-purple-50' },
-            { title: 'Gagnez', desc: 'Revenus partages + nom au generique', icon: TrendingUp, color: 'text-green-500', bg: 'bg-green-50' },
+            { title: 'Choisissez', desc: 'Parcourez les films ouverts a la co-production', icon: Film, color: 'text-blue-400', bg: 'bg-blue-500/10' },
+            { title: 'Co-Produisez', desc: 'Tokens de co-production des 10\u20AC', icon: Coins, color: 'text-[#E50914]', bg: 'bg-amber-500/10' },
+            { title: 'Decidez', desc: 'Votez sur les choix creatifs du film', icon: Vote, color: 'text-purple-400', bg: 'bg-purple-500/10' },
+            { title: 'Gagnez', desc: 'Revenus partages + nom au generique', icon: TrendingUp, color: 'text-green-400', bg: 'bg-green-500/10' },
           ].map((item) => (
             <div key={item.title} className="text-center p-6 rounded-2xl border border-white/10 bg-white/5 shadow-[0_2px_8px_rgba(0,0,0,0.3)] hover:border-[#E50914]/20 hover:shadow-md transition-all duration-300">
               <div className={`h-10 w-10 rounded-lg ${item.bg} flex items-center justify-center mx-auto mb-3`}>

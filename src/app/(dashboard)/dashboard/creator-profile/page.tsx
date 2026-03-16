@@ -84,7 +84,7 @@ export default function CreatorProfilePage() {
               onClick={() => setCurrentStep(i)}
               className={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium transition-colors w-full ${
                 i === currentStep ? 'bg-[#E50914] text-white' :
-                i < currentStep ? 'bg-green-50 text-green-600' :
+                i < currentStep ? 'bg-green-500/10 text-green-400' :
                 'bg-white/[0.05] text-white/50'
               }`}
             >
@@ -151,7 +151,7 @@ export default function CreatorProfilePage() {
                   const SIcon = s.icon
                   const selected = selectedSpecialties.includes(s.id)
                   return (
-                    <button type="button" key={s.id} onClick={() => toggleSpecialty(s.id)} className={`flex flex-col items-center gap-2 p-4 rounded-xl border transition-colors ${selected ? 'border-[#E50914] bg-red-50' : 'border-white/10 hover:border-white/15'}`}>
+                    <button type="button" key={s.id} onClick={() => toggleSpecialty(s.id)} className={`flex flex-col items-center gap-2 p-4 rounded-xl border transition-colors ${selected ? 'border-[#E50914] bg-red-500/10' : 'border-white/10 hover:border-white/15'}`}>
                       <SIcon className={`h-6 w-6 ${selected ? 'text-[#E50914]' : 'text-white/50'}`} />
                       <span className={`text-xs font-medium ${selected ? 'text-[#E50914]' : 'text-white/60'}`}>{s.label}</span>
                       {selected && <CheckCircle2 className="h-3.5 w-3.5 text-[#E50914]" />}
