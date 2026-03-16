@@ -171,7 +171,7 @@ export function Header() {
                   <DropdownMenuSeparator />
                   <DropdownMenuItem
                     className="text-red-400 focus:text-red-300 focus:bg-red-500/10 cursor-pointer"
-                    onClick={() => signOut({ callbackUrl: '/' })}
+                    onClick={async () => { await signOut({ redirect: false }); window.location.href = '/' }}
                   >
                     <LogOut className="h-4 w-4 mr-2" /> Se déconnecter
                   </DropdownMenuItem>
@@ -240,7 +240,7 @@ export function Header() {
                   )}
                   <div className="h-px bg-white/5 my-2" />
                   <button
-                    onClick={() => { signOut({ callbackUrl: '/' }); setMobileOpen(false) }}
+                    onClick={async () => { await signOut({ redirect: false }); window.location.href = '/' }}
                     className="flex items-center gap-3 px-3 py-2.5 text-sm text-red-400/70 hover:text-red-400 hover:bg-red-500/5 rounded-lg w-full transition-all"
                   >
                     <LogOut className="h-4 w-4" /> Se déconnecter

@@ -1,77 +1,9 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
-import { getToken } from 'next-auth/jwt'
 
-// Next.js 16: proxy.ts replaces middleware.ts (nodejs runtime, no edge restrictions)
+// Next.js 16: proxy.ts — security headers only
+// Auth protection is handled per-page via auth() checks
 export async function proxy(req: NextRequest) {
-  const { nextUrl } = req
-
-  // Try multiple cookie name strategies for maximum reliability
-  let token = null
-  try {
-    token = await getToken({
-      req,
-      secret: process.env.AUTH_SECRET || process.env.NEXTAUTH_SECRET,
-    })
-  } catch {
-    // Token extraction failed — treat as unauthenticated
-  }
-
-  // Fallback: try with explicit cookie name if first attempt failed
-  if (!token) {
-    try {
-      const cookieName = nextUrl.protocol === 'https:'
-        ? '__Secure-authjs.session-token'
-        : 'authjs.session-token'
-      token = await getToken({
-        req,
-        secret: process.env.AUTH_SECRET || process.env.NEXTAUTH_SECRET,
-        cookieName,
-      })
-    } catch {
-      // Still failed — treat as unauthenticated
-    }
-  }
-
-  const isLoggedIn = !!token
-  const isAdmin = token?.role === 'ADMIN'
-
-  const protectedPaths = [
-    '/dashboard', '/tasks', '/profile', '/lumens', '/notifications',
-    '/screenplays', '/tokenization', '/trailer-studio', '/credits',
-    '/documents', '/playlists', '/orders', '/sessions', '/preferences',
-    '/subscription', '/earnings',
-  ]
-  const adminPaths = ['/admin']
-  const authPaths = ['/login', '/register', '/forgot-password', '/reset-password', '/verify-email']
-
-  const isProtected = protectedPaths.some((p) => nextUrl.pathname.startsWith(p))
-  const isAdminPath = adminPaths.some((p) => nextUrl.pathname.startsWith(p))
-  const isAuthPath = authPaths.some((p) => nextUrl.pathname.startsWith(p))
-
-  // Redirect logged-in users away from auth pages
-  if (isAuthPath && isLoggedIn) {
-    return addSecurityHeaders(NextResponse.redirect(new URL('/dashboard', req.url)))
-  }
-
-  // Protect dashboard/profile routes
-  if (isProtected && !isLoggedIn) {
-    const loginUrl = new URL('/login', req.url)
-    loginUrl.searchParams.set('callbackUrl', nextUrl.pathname)
-    return addSecurityHeaders(NextResponse.redirect(loginUrl))
-  }
-
-  // Admin routes — require ADMIN role
-  if (isAdminPath && !isAdmin) {
-    if (!isLoggedIn) {
-      const loginUrl = new URL('/login', req.url)
-      loginUrl.searchParams.set('callbackUrl', nextUrl.pathname)
-      return addSecurityHeaders(NextResponse.redirect(loginUrl))
-    }
-    return addSecurityHeaders(NextResponse.redirect(new URL('/dashboard', req.url)))
-  }
-
-  // Apply security headers to all responses
   return addSecurityHeaders(NextResponse.next())
 }
 
@@ -83,9 +15,8 @@ function addSecurityHeaders(response: NextResponse): NextResponse {
   response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin')
   response.headers.set('X-XSS-Protection', '1; mode=block')
   response.headers.set('X-DNS-Prefetch-Control', 'on')
-  response.headers.set('Permissions-Policy', 'camera=(), microphone=(), geolocation=(), interest-cohort=()')
+  response.headers.set('Permissions-Policy', 'camera=(), microphone=(), geolocation=()')
 
-  // HSTS only in production — on localhost it causes persistent HTTPS enforcement
   if (!isDev) {
     response.headers.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains')
   }
