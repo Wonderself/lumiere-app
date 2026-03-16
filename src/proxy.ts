@@ -11,7 +11,7 @@ export async function proxy(req: NextRequest) {
   try {
     token = await getToken({
       req,
-      secret: process.env.AUTH_SECRET,
+      secret: process.env.AUTH_SECRET || process.env.NEXTAUTH_SECRET,
     })
   } catch {
     // Token extraction failed — treat as unauthenticated
@@ -25,7 +25,7 @@ export async function proxy(req: NextRequest) {
         : 'authjs.session-token'
       token = await getToken({
         req,
-        secret: process.env.AUTH_SECRET,
+        secret: process.env.AUTH_SECRET || process.env.NEXTAUTH_SECRET,
         cookieName,
       })
     } catch {
@@ -36,7 +36,12 @@ export async function proxy(req: NextRequest) {
   const isLoggedIn = !!token
   const isAdmin = token?.role === 'ADMIN'
 
-  const protectedPaths = ['/dashboard', '/tasks', '/profile', '/lumens', '/notifications', '/screenplays', '/tokenization', '/trailer-studio', '/credits']
+  const protectedPaths = [
+    '/dashboard', '/tasks', '/profile', '/lumens', '/notifications',
+    '/screenplays', '/tokenization', '/trailer-studio', '/credits',
+    '/documents', '/playlists', '/orders', '/sessions', '/preferences',
+    '/subscription', '/earnings',
+  ]
   const adminPaths = ['/admin']
   const authPaths = ['/login', '/register', '/forgot-password', '/reset-password', '/verify-email']
 
@@ -44,8 +49,27 @@ export async function proxy(req: NextRequest) {
   const isAdminPath = adminPaths.some((p) => nextUrl.pathname.startsWith(p))
   const isAuthPath = authPaths.some((p) => nextUrl.pathname.startsWith(p))
 
-  // Auth redirects — DISABLED for demo/open access
-  // All routes are publicly accessible
+  // Redirect logged-in users away from auth pages
+  if (isAuthPath && isLoggedIn) {
+    return addSecurityHeaders(NextResponse.redirect(new URL('/dashboard', req.url)))
+  }
+
+  // Protect dashboard/profile routes
+  if (isProtected && !isLoggedIn) {
+    const loginUrl = new URL('/login', req.url)
+    loginUrl.searchParams.set('callbackUrl', nextUrl.pathname)
+    return addSecurityHeaders(NextResponse.redirect(loginUrl))
+  }
+
+  // Admin routes — require ADMIN role
+  if (isAdminPath && !isAdmin) {
+    if (!isLoggedIn) {
+      const loginUrl = new URL('/login', req.url)
+      loginUrl.searchParams.set('callbackUrl', nextUrl.pathname)
+      return addSecurityHeaders(NextResponse.redirect(loginUrl))
+    }
+    return addSecurityHeaders(NextResponse.redirect(new URL('/dashboard', req.url)))
+  }
 
   // Apply security headers to all responses
   return addSecurityHeaders(NextResponse.next())
@@ -70,7 +94,7 @@ function addSecurityHeaders(response: NextResponse): NextResponse {
     "default-src 'self'",
     "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
     "style-src 'self' 'unsafe-inline'",
-    "img-src 'self' data: blob: https://images.unsplash.com https://lh3.googleusercontent.com https://avatars.githubusercontent.com",
+    "img-src 'self' data: blob: https://images.unsplash.com https://plus.unsplash.com https://lh3.googleusercontent.com https://avatars.githubusercontent.com",
     "font-src 'self' data:",
     "connect-src 'self' https://api.resend.com",
     "frame-ancestors 'none'",
@@ -83,5 +107,5 @@ function addSecurityHeaders(response: NextResponse): NextResponse {
 }
 
 export const config = {
-  matcher: ['/((?!api|_next/static|_next/image|favicon.ico|images|fonts).*)'],
+  matcher: ['/((?!api|_next/static|_next/image|favicon.ico|images|fonts|sw.js|manifest.json|robots.txt|sitemap.xml).*)'],
 }
