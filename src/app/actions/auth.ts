@@ -175,13 +175,10 @@ export async function loginAction(
     await signIn('credentials', {
       email,
       password,
-      redirectTo: safeCallbackUrl,
+      redirect: false,
     })
-    // signIn with redirect calls redirect() internally which throws NEXT_REDIRECT
-    // If we somehow reach here, return redirect URL as fallback
-    return { redirectTo: safeCallbackUrl }
   } catch (error: unknown) {
-    // NEXT_REDIRECT from signIn's internal redirect() — let it propagate
+    // NEXT_REDIRECT — let it propagate (signIn may still throw this)
     if (error && typeof error === 'object' && 'digest' in error) {
       const digest = (error as { digest: string }).digest
       if (typeof digest === 'string' && digest.startsWith('NEXT_REDIRECT')) {
@@ -189,16 +186,16 @@ export async function loginAction(
       }
     }
 
-    // AuthError shouldn't happen since we pre-validated, but handle it
     if (error instanceof AuthError) {
-      return { error: 'Erreur lors de la création de la session.' }
+      return { error: 'Email ou mot de passe incorrect.' }
     }
 
-    // Unknown error — still return redirect URL since credentials ARE valid
-    // The session cookie might have been set even if an error occurred after
-    console.error('[loginAction] Post-signIn error:', error)
-    return { redirectTo: safeCallbackUrl }
+    // Log but don't fail — session cookie may already be set
+    console.error('[loginAction] signIn error (session may still be valid):', error)
   }
+
+  // Step 3: Redirect to callback URL
+  redirect(safeCallbackUrl)
 }
 
 // ─── Forgot Password ──────────────────────────────────────────
