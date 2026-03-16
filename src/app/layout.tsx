@@ -3,7 +3,6 @@ import { Inter, Playfair_Display } from 'next/font/google'
 import './globals.css'
 import { Toaster } from 'sonner'
 import { AuthSessionProvider } from '@/components/layout/session-provider'
-import { CookieBanner } from '@/components/layout/cookie-banner'
 import { CookieConsent } from '@/components/cookie-consent'
 import { ServiceWorkerRegister } from '@/components/layout/sw-register'
 import { NextIntlClientProvider } from 'next-intl'
@@ -87,7 +86,6 @@ export default async function RootLayout({
         <NextIntlClientProvider messages={messages}>
         <AuthSessionProvider>
         <div id="main-content">{children}</div>
-        <CookieBanner />
         <CookieConsent />
         <ServiceWorkerRegister />
         <Toaster

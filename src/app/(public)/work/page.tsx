@@ -331,8 +331,9 @@ export default function WorkPage() {
           {/* Task grid */}
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {TASKS.map((task) => (
-              <div
+              <Link
                 key={task.id}
+                href="/tasks"
                 className="group p-5 rounded-2xl border border-white/[0.06] bg-white/[0.02] hover:border-[#E50914]/15 transition-all duration-500 backdrop-blur-sm"
               >
                 {/* Category + difficulty */}
@@ -371,7 +372,7 @@ export default function WorkPage() {
                     <span className="text-[10px]">{task.time}</span>
                   </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </div>

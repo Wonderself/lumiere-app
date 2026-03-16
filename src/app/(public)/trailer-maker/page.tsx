@@ -167,8 +167,40 @@ export default function TrailerMakerPage() {
                       <p className="text-[10px] text-gray-500">{styleInfo?.description}</p>
                     </div>
                     <div className="flex gap-2">
-                      <button className="px-3 py-1.5 rounded-lg text-xs bg-gray-800 text-gray-400 hover:bg-gray-700"><Download className="inline h-3 w-3 mr-1" />Export</button>
-                      <button className="px-3 py-1.5 rounded-lg text-xs bg-gray-800 text-gray-400 hover:bg-gray-700"><Share2 className="inline h-3 w-3 mr-1" />Partager</button>
+                      <button
+                        onClick={async () => {
+                          try {
+                            const response = await fetch(result.posterUrl)
+                            const blob = await response.blob()
+                            const url = URL.createObjectURL(blob)
+                            const a = document.createElement('a')
+                            a.href = url
+                            a.download = `${result.filmTitle.replace(/\s+/g, '-').toLowerCase()}-trailer-${result.style}.jpg`
+                            a.click()
+                            URL.revokeObjectURL(url)
+                            toast.success('Bande-annonce exportée !')
+                          } catch {
+                            toast.error('Erreur lors de l\'export')
+                          }
+                        }}
+                        className="px-3 py-1.5 rounded-lg text-xs bg-gray-800 text-gray-400 hover:bg-gray-700"
+                      >
+                        <Download className="inline h-3 w-3 mr-1" />Export
+                      </button>
+                      <button
+                        onClick={async () => {
+                          const shareText = `${result.filmTitle} — Bande-annonce ${styleInfo?.label}`
+                          if (navigator.share) {
+                            try { await navigator.share({ title: result.filmTitle, text: shareText, url: window.location.href }) } catch { /* cancelled */ }
+                          } else {
+                            await navigator.clipboard.writeText(window.location.href)
+                            toast.success('Lien copié dans le presse-papiers !')
+                          }
+                        }}
+                        className="px-3 py-1.5 rounded-lg text-xs bg-gray-800 text-gray-400 hover:bg-gray-700"
+                      >
+                        <Share2 className="inline h-3 w-3 mr-1" />Partager
+                      </button>
                     </div>
                   </div>
                   {/* Scenes */}
@@ -184,7 +216,10 @@ export default function TrailerMakerPage() {
                   </div>
                   {/* Play Button */}
                   <div className="p-6 text-center">
-                    <button className="inline-flex items-center gap-2 px-8 py-3 bg-[#E50914] hover:bg-[#FF2D2D] text-white font-semibold rounded-xl transition-colors">
+                    <button
+                      onClick={() => toast.info('Lecteur vidéo en cours de génération — disponible sous peu !')}
+                      className="inline-flex items-center gap-2 px-8 py-3 bg-[#E50914] hover:bg-[#FF2D2D] text-white font-semibold rounded-xl transition-colors"
+                    >
                       <Play className="h-5 w-5" /> Lire la bande-annonce
                     </button>
                     <p className="text-[10px] text-gray-600 mt-2">Vidéo assemblée automatiquement · Lecteur HTML5</p>

@@ -4,24 +4,85 @@ export const dynamic = 'force-dynamic'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = process.env.NEXT_PUBLIC_URL || 'https://cinegen.studio'
+  const now = new Date()
 
-  // Static pages
+  // Static pages — all public routes
   const staticPages: MetadataRoute.Sitemap = [
-    { url: baseUrl, lastModified: new Date(), changeFrequency: 'daily', priority: 1.0 },
-    { url: `${baseUrl}/films`, lastModified: new Date(), changeFrequency: 'daily', priority: 0.9 },
-    { url: `${baseUrl}/streaming`, lastModified: new Date(), changeFrequency: 'daily', priority: 0.9 },
-    { url: `${baseUrl}/community`, lastModified: new Date(), changeFrequency: 'daily', priority: 0.8 },
-    { url: `${baseUrl}/about`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${baseUrl}/invest`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${baseUrl}/leaderboard`, lastModified: new Date(), changeFrequency: 'daily', priority: 0.7 },
-    { url: `${baseUrl}/roadmap`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.6 },
+    // Core
+    { url: baseUrl, lastModified: now, changeFrequency: 'daily', priority: 1.0 },
+    { url: `${baseUrl}/films`, lastModified: now, changeFrequency: 'daily', priority: 0.9 },
+    { url: `${baseUrl}/streaming`, lastModified: now, changeFrequency: 'daily', priority: 0.9 },
+    { url: `${baseUrl}/tv`, lastModified: now, changeFrequency: 'daily', priority: 0.9 },
+    { url: `${baseUrl}/watch`, lastModified: now, changeFrequency: 'daily', priority: 0.8 },
+    { url: `${baseUrl}/actors`, lastModified: now, changeFrequency: 'weekly', priority: 0.8 },
+
+    // Community
+    { url: `${baseUrl}/community`, lastModified: now, changeFrequency: 'daily', priority: 0.8 },
+    { url: `${baseUrl}/community-hub`, lastModified: now, changeFrequency: 'daily', priority: 0.7 },
+    { url: `${baseUrl}/leaderboard`, lastModified: now, changeFrequency: 'daily', priority: 0.7 },
+
+    // Create & Tools
+    { url: `${baseUrl}/create`, lastModified: now, changeFrequency: 'weekly', priority: 0.8 },
+    { url: `${baseUrl}/studio`, lastModified: now, changeFrequency: 'weekly', priority: 0.8 },
+    { url: `${baseUrl}/studio/guided`, lastModified: now, changeFrequency: 'weekly', priority: 0.7 },
+    { url: `${baseUrl}/studio/pro`, lastModified: now, changeFrequency: 'weekly', priority: 0.7 },
+    { url: `${baseUrl}/poster-maker`, lastModified: now, changeFrequency: 'weekly', priority: 0.7 },
+    { url: `${baseUrl}/trailer-maker`, lastModified: now, changeFrequency: 'weekly', priority: 0.7 },
+    { url: `${baseUrl}/agent-builder`, lastModified: now, changeFrequency: 'weekly', priority: 0.6 },
+    { url: `${baseUrl}/create/book-adaptation`, lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
+    { url: `${baseUrl}/create/voices`, lastModified: now, changeFrequency: 'weekly', priority: 0.6 },
+
+    // Business
+    { url: `${baseUrl}/invest`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${baseUrl}/investors`, lastModified: now, changeFrequency: 'weekly', priority: 0.9 },
+    { url: `${baseUrl}/produce`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${baseUrl}/work`, lastModified: now, changeFrequency: 'daily', priority: 0.7 },
+    { url: `${baseUrl}/act`, lastModified: now, changeFrequency: 'weekly', priority: 0.7 },
+    { url: `${baseUrl}/pricing`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
+
+    // AI Agents
+    { url: `${baseUrl}/agents`, lastModified: now, changeFrequency: 'weekly', priority: 0.8 },
+    { url: `${baseUrl}/agents/marketplace`, lastModified: now, changeFrequency: 'weekly', priority: 0.7 },
+    { url: `${baseUrl}/chat`, lastModified: now, changeFrequency: 'weekly', priority: 0.7 },
+
+    // Engagement
+    { url: `${baseUrl}/rewards`, lastModified: now, changeFrequency: 'weekly', priority: 0.6 },
+    { url: `${baseUrl}/referral`, lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
+    { url: `${baseUrl}/points`, lastModified: now, changeFrequency: 'weekly', priority: 0.5 },
+
+    // Content
+    { url: `${baseUrl}/blog`, lastModified: now, changeFrequency: 'weekly', priority: 0.7 },
+    { url: `${baseUrl}/discussions`, lastModified: now, changeFrequency: 'weekly', priority: 0.6 },
+    { url: `${baseUrl}/film-knowledge`, lastModified: now, changeFrequency: 'weekly', priority: 0.5 },
+    { url: `${baseUrl}/marketing`, lastModified: now, changeFrequency: 'monthly', priority: 0.5 },
+
+    // Info
+    { url: `${baseUrl}/about`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${baseUrl}/roadmap`, lastModified: now, changeFrequency: 'weekly', priority: 0.6 },
+    { url: `${baseUrl}/vs-alternatives`, lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
+    { url: `${baseUrl}/api-pricing`, lastModified: now, changeFrequency: 'monthly', priority: 0.5 },
+    { url: `${baseUrl}/fonctionnalites/agents-ia`, lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
+    { url: `${baseUrl}/cas/createur`, lastModified: now, changeFrequency: 'monthly', priority: 0.5 },
+    { url: `${baseUrl}/developers`, lastModified: now, changeFrequency: 'monthly', priority: 0.5 },
+
+    // TV sub-pages
+    { url: `${baseUrl}/tv/shows`, lastModified: now, changeFrequency: 'daily', priority: 0.7 },
+    { url: `${baseUrl}/tv/live`, lastModified: now, changeFrequency: 'daily', priority: 0.7 },
+    { url: `${baseUrl}/tv/replay`, lastModified: now, changeFrequency: 'daily', priority: 0.6 },
+    { url: `${baseUrl}/tv/hosts`, lastModified: now, changeFrequency: 'weekly', priority: 0.5 },
+    { url: `${baseUrl}/tv/community`, lastModified: now, changeFrequency: 'daily', priority: 0.5 },
+    { url: `${baseUrl}/tv/create`, lastModified: now, changeFrequency: 'weekly', priority: 0.7 },
+    { url: `${baseUrl}/tv/produce`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${baseUrl}/tv/work`, lastModified: now, changeFrequency: 'daily', priority: 0.7 },
+    { url: `${baseUrl}/tv/invest`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${baseUrl}/tv/act`, lastModified: now, changeFrequency: 'weekly', priority: 0.7 },
+
+    // Auth
     { url: `${baseUrl}/login`, changeFrequency: 'monthly', priority: 0.3 },
     { url: `${baseUrl}/register`, changeFrequency: 'monthly', priority: 0.3 },
-    { url: `${baseUrl}/legal/terms`, changeFrequency: 'yearly', priority: 0.2 },
-    { url: `${baseUrl}/legal/privacy`, changeFrequency: 'yearly', priority: 0.2 },
   ]
 
-  // Dynamic film pages (lazy import to avoid build-time DB connection)
+  // Dynamic film pages
   let filmPages: MetadataRoute.Sitemap = []
   try {
     const { prisma } = await import('@/lib/prisma')

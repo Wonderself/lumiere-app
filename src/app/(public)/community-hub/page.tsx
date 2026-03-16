@@ -1,15 +1,16 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useTransition } from 'react'
 import { toast } from 'sonner'
 import { COMMUNITY_AGENTS, REPUTATION_FACTORS, REPUTATION_LEVELS, MENTOR_CONFIG, COLLAB_TYPES, FEED_EVENT_TYPES, MENTOR_SPECIALTIES } from '@/data/community-enhanced'
 import {
   Users, Star, Activity, Heart, Handshake, Shield,
   Bot, Search, Filter, ChevronRight, Award, Flame,
   Clock, CheckCircle2, MessageCircle, Film, TrendingUp,
-  Briefcase, Eye, Zap, Crown,
+  Briefcase, Eye, Zap, Crown, Check, X,
 } from 'lucide-react'
 import Link from 'next/link'
+import { sendCollabRequestAction, respondToCollabAction } from '@/app/actions/collabs'
 
 const MOCK_CREATORS = [
   { id: '1', name: 'Sophie M.', reputation: 78, level: 'Expert', badge: '🏆', specialties: ['Scénario', 'Réalisation'], tasksCompleted: 34, votesReceived: 156, isMentor: true },
@@ -39,6 +40,52 @@ const MOCK_COLLABS = [
 export default function CommunityHubPage() {
   const [tab, setTab] = useState<'feed' | 'creators' | 'mentors' | 'collabs'>('feed')
   const [search, setSearch] = useState('')
+  const [isPending, startTransition] = useTransition()
+
+  function handleSendCollabRequest(collabTypeId: string, collabTypeLabel: string) {
+    startTransition(async () => {
+      // Map UI collab type IDs to server action enum values
+      const typeMap: Record<string, string> = {
+        'co-write': 'CO_CREATE',
+        'co-direct': 'CO_CREATE',
+        'co-produce': 'CO_CREATE',
+        'skill-trade': 'AD_EXCHANGE',
+        'mentoring': 'GUEST',
+      }
+      const serverType = typeMap[collabTypeId] || 'CO_CREATE'
+
+      const formData = new FormData()
+      // toUserId left empty here — UI will prompt user to select a creator
+      // For the request to work a real target user must be selected; this
+      // guard returns a clear error that is shown via toast.
+      formData.set('toUserId', '')
+      formData.set('type', serverType)
+      formData.set('message', `Demande de collaboration : ${collabTypeLabel}`)
+
+      const result = await sendCollabRequestAction(null, formData)
+      if (result?.error) {
+        // "Destinataire requis" tells the user they need to pick a creator first
+        toast.error(result.error === 'Destinataire requis'
+          ? 'Sélectionnez d\'abord un créateur pour proposer une collaboration'
+          : result.error
+        )
+      } else if (result?.success) {
+        toast.success(`Demande de ${collabTypeLabel} envoyée !`)
+      }
+    })
+  }
+
+  function handleRespondToCollab(collabId: string, action: 'accept' | 'reject') {
+    startTransition(async () => {
+      const formData = new FormData()
+      formData.set('collabId', collabId)
+      formData.set('action', action)
+      formData.set('response', action === 'accept' ? 'Accepté' : 'Refusé')
+
+      await respondToCollabAction(formData)
+      toast.success(action === 'accept' ? 'Collaboration acceptée !' : 'Collaboration refusée')
+    })
+  }
 
   const FEED_ICONS: Record<string, typeof Film> = {
     film: Film, 'check-circle': CheckCircle2, star: Star, 'message-circle': MessageCircle,
@@ -179,11 +226,18 @@ export default function CommunityHubPage() {
         {/* COLLABS */}
         {tab === 'collabs' && (
           <div className="space-y-6">
+            <p className="text-xs text-gray-500 mb-3">Sélectionnez un créateur dans l&apos;onglet Créateurs, puis proposez une collaboration :</p>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mb-6">
               {COLLAB_TYPES.map(type => (
-                <button key={type.id} onClick={() => toast.success(`Recherche de ${type.label}...`)} className="text-left rounded-xl border border-gray-800 bg-gray-900/50 p-4 hover:border-gray-700 transition-colors">
+                <button
+                  key={type.id}
+                  onClick={() => handleSendCollabRequest(type.id, type.label)}
+                  disabled={isPending}
+                  className="text-left rounded-xl border border-gray-800 bg-gray-900/50 p-4 hover:border-gray-700 transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+                >
                   <p className="text-sm font-medium text-white">{type.label}</p>
                   <p className="text-[10px] text-gray-500 mt-0.5">{type.description}</p>
+                  <p className="text-[10px] text-blue-400/70 mt-1.5 font-medium">→ Proposer</p>
                 </button>
               ))}
             </div>
@@ -192,12 +246,33 @@ export default function CommunityHubPage() {
               const type = COLLAB_TYPES.find(t => t.id === collab.type)
               return (
                 <div key={collab.id} className="flex items-center gap-4 px-5 py-3 rounded-xl border border-gray-800 bg-gray-900/50">
-                  <div className="h-3 w-3 rounded-full" style={{ backgroundColor: collab.status === 'active' ? '#10B981' : '#F59E0B' }} />
-                  <div className="flex-1">
+                  <div className="h-3 w-3 rounded-full shrink-0" style={{ backgroundColor: collab.status === 'active' ? '#10B981' : '#F59E0B' }} />
+                  <div className="flex-1 min-w-0">
                     <p className="text-sm text-white">{collab.from} ↔ {collab.to}</p>
                     <p className="text-[10px] text-gray-500">{type?.label} · {collab.film}</p>
                   </div>
-                  <span className="text-[10px] px-2 py-0.5 rounded-full bg-gray-800 text-gray-400">{collab.status}</span>
+                  {collab.status === 'pending' ? (
+                    <div className="flex items-center gap-1.5 shrink-0">
+                      <button
+                        onClick={() => handleRespondToCollab(collab.id, 'accept')}
+                        disabled={isPending}
+                        title="Accepter"
+                        className="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-emerald-500/15 text-emerald-400 text-[10px] font-semibold hover:bg-emerald-500/25 transition-colors border border-emerald-500/20 disabled:opacity-50"
+                      >
+                        <Check className="h-3 w-3" /> Accepter
+                      </button>
+                      <button
+                        onClick={() => handleRespondToCollab(collab.id, 'reject')}
+                        disabled={isPending}
+                        title="Refuser"
+                        className="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-red-500/15 text-red-400 text-[10px] font-semibold hover:bg-red-500/25 transition-colors border border-red-500/20 disabled:opacity-50"
+                      >
+                        <X className="h-3 w-3" /> Refuser
+                      </button>
+                    </div>
+                  ) : (
+                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-gray-800 text-gray-400 shrink-0">{collab.status}</span>
+                  )}
                 </div>
               )
             })}

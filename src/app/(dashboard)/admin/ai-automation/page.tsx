@@ -2,7 +2,8 @@ import { auth } from '@/lib/auth'
 import { redirect } from 'next/navigation'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
+import { AutomationCard } from '@/components/admin/automation-toggle'
+import { ActivateAllButton } from '@/components/admin/activate-all-button'
 import {
   Bot, User, Users, Zap, CheckCircle, AlertTriangle, XCircle,
   DollarSign, TrendingUp, Cpu, Brain, Sparkles, Shield,
@@ -307,79 +308,6 @@ export default async function AdminAIAutomationPage() {
     { label: 'Économies actives', value: `${new Intl.NumberFormat('fr-FR').format(activeSavings)} EUR`, sub: '/mois estimé', color: 'text-[#E50914]', icon: DollarSign },
   ]
 
-  function renderItem(item: AutomationItem, type: 'auto' | 'assisted' | 'human') {
-    const borderColor = type === 'auto'
-      ? 'border-green-500/20 hover:border-green-500/40'
-      : type === 'assisted'
-      ? 'border-yellow-500/20 hover:border-yellow-500/40'
-      : 'border-red-500/20 hover:border-red-500/40'
-
-    const ItemIcon = item.icon
-
-    return (
-      <Card key={item.id} className={`${borderColor} transition-all`}>
-        <CardContent className="p-4">
-          <div className="flex items-start gap-3">
-            <div className={`p-2 rounded-lg shrink-0 ${
-              type === 'auto' ? 'bg-green-500/10' :
-              type === 'assisted' ? 'bg-yellow-500/10' :
-              'bg-red-500/10'
-            }`}>
-              <ItemIcon className={`h-4 w-4 ${
-                type === 'auto' ? 'text-green-600' :
-                type === 'assisted' ? 'text-yellow-600' :
-                'text-red-400'
-              }`} />
-            </div>
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-2 mb-1">
-                <h4 className="font-medium text-sm">{item.title}</h4>
-                {item.active && (
-                  <Badge variant="success" className="text-[10px]">Actif</Badge>
-                )}
-              </div>
-              <p className="text-xs text-white/50 mb-2">{item.description}</p>
-
-              {/* Expandable detail */}
-              <details className="group">
-                <summary className="text-[10px] text-[#E50914] cursor-pointer hover:underline list-none">
-                  Voir le détail...
-                </summary>
-                <p className="text-xs text-white/50 mt-2 leading-relaxed">
-                  {item.detail}
-                </p>
-              </details>
-
-              {item.costSaving > 0 && (
-                <div className="flex items-center gap-1 mt-2">
-                  <DollarSign className="h-3 w-3 text-[#E50914]" />
-                  <span className="text-[10px] text-[#E50914]">
-                    Économie estimée : {new Intl.NumberFormat('fr-FR').format(item.costSaving)} EUR/mois
-                  </span>
-                </div>
-              )}
-            </div>
-
-            {/* Activate button for non-human items */}
-            {type !== 'human' && (
-              <div className="shrink-0">
-                {item.active ? (
-                  <Badge variant="success" className="text-[10px]">
-                    <CheckCircle className="h-2.5 w-2.5 mr-0.5" /> ON
-                  </Badge>
-                ) : (
-                  <Button size="sm" variant="outline" className="text-[10px] min-h-[36px] px-3">
-                    <Zap className="h-3 w-3 mr-1" /> Activer
-                  </Button>
-                )}
-              </div>
-            )}
-          </div>
-        </CardContent>
-      </Card>
-    )
-  }
-
   return (
     <div className="p-4 sm:p-6 lg:p-8 space-y-8">
       {/* Header */}
@@ -497,7 +425,7 @@ export default async function AdminAIAutomationPage() {
             <Badge variant="success" className="ml-auto text-[10px]">{fullyAutomated.length}</Badge>
           </div>
           <div className="space-y-3">
-            {fullyAutomated.map((item) => renderItem(item, 'auto'))}
+            {fullyAutomated.map((item) => <AutomationCard key={item.id} item={item} type="auto" />)}
           </div>
         </div>
 
@@ -516,7 +444,7 @@ export default async function AdminAIAutomationPage() {
             <Badge variant="warning" className="ml-auto text-[10px]">{assisted.length}</Badge>
           </div>
           <div className="space-y-3">
-            {assisted.map((item) => renderItem(item, 'assisted'))}
+            {assisted.map((item) => <AutomationCard key={item.id} item={item} type="assisted" />)}
           </div>
         </div>
 
@@ -535,7 +463,7 @@ export default async function AdminAIAutomationPage() {
             <Badge variant="destructive" className="ml-auto text-[10px]">{humanOnly.length}</Badge>
           </div>
           <div className="space-y-3">
-            {humanOnly.map((item) => renderItem(item, 'human'))}
+            {humanOnly.map((item) => <AutomationCard key={item.id} item={item} type="human" />)}
           </div>
         </div>
       </div>
@@ -624,10 +552,7 @@ export default async function AdminAIAutomationPage() {
             Chaque module peut être activé/désactivé individuellement. L&apos;API Claude est
             facturée à l&apos;usage avec un budget plafonné à {claudeApiCost} EUR/mois.
           </p>
-          <Button size="lg" className="min-h-[48px]">
-            <Zap className="h-4 w-4 mr-2" />
-            Activer tous les modules ({totalActivatable - activatedCount} restants)
-          </Button>
+          <ActivateAllButton remaining={totalActivatable - activatedCount} />
         </CardContent>
       </Card>
     </div>

@@ -2,10 +2,13 @@ import { prisma } from '@/lib/prisma'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Play, Eye, Clock, User, Calendar, ArrowLeft, Share2, Heart, Film } from 'lucide-react'
+import { Play, Eye, Clock, User, Calendar, ArrowLeft, Film } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent } from '@/components/ui/card'
 import { FilmTabs } from '@/components/streaming/film-tabs'
+import { FilmActions } from '@/components/streaming/film-actions'
+import { VideoPlayerWrapper } from '@/components/streaming/video-player-wrapper'
+import { WatchlistButton } from '@/components/watchlist-button'
 import type { Metadata } from 'next'
 
 export const dynamic = 'force-dynamic'
@@ -60,19 +63,21 @@ export default async function StreamingFilmPage(props: { params: Promise<{ slug:
       {/* Video Player Area */}
       <div className="relative bg-black aspect-video max-h-[70vh] w-full">
         {film.videoUrl ? (
-          <video
+          <VideoPlayerWrapper
+            filmId={film.id}
             src={film.videoUrl}
             poster={film.thumbnailUrl || undefined}
-            controls
-            className="w-full h-full object-contain"
+            title={film.title}
+            className="w-full h-full"
           />
         ) : film.trailerUrl ? (
           <>
-            <video
+            <VideoPlayerWrapper
+              filmId={film.id}
               src={film.trailerUrl}
               poster={film.thumbnailUrl || undefined}
-              controls
-              className="w-full h-full object-contain"
+              title={`${film.title} — Bande-annonce`}
+              className="w-full h-full"
             />
             {/* Trailer badge overlay */}
             <div className="absolute top-4 left-4 px-3 py-1.5 rounded-lg bg-[#E50914]/90 text-white text-xs font-semibold backdrop-blur-sm pointer-events-none">
@@ -143,13 +148,9 @@ export default async function StreamingFilmPage(props: { params: Promise<{ slug:
             </div>
 
             {/* Actions */}
-            <div className="flex gap-3">
-              <button className="flex items-center gap-2 px-5 py-2.5 bg-white/5 rounded-lg text-white/60 hover:bg-white/10 transition-colors">
-                <Heart className="h-4 w-4" /> J&apos;aime
-              </button>
-              <button className="flex items-center gap-2 px-5 py-2.5 bg-white/5 rounded-lg text-white/60 hover:bg-white/10 transition-colors">
-                <Share2 className="h-4 w-4" /> Partager
-              </button>
+            <div className="flex items-center gap-3 flex-wrap">
+              <FilmActions filmTitle={film.title} filmSlug={film.slug} />
+              <WatchlistButton filmId={film.id} />
             </div>
 
             {/* Film Tabs: Synopsis, Casting, Bonus */}

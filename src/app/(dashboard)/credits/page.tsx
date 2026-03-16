@@ -2,7 +2,6 @@ import { auth } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
 import { redirect } from 'next/navigation'
 import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
 import { AutoTopupForm } from '@/components/wallet/auto-topup-form'
 import { microToCredits } from '@/lib/ai-pricing'
 import Link from 'next/link'
@@ -13,6 +12,7 @@ import {
   RefreshCcw, AlertTriangle, Gift, Lock,
   ChevronRight,
 } from 'lucide-react'
+import { BuyCreditsButton } from '@/components/credits/buy-credits-button'
 import type { Metadata } from 'next'
 
 export const dynamic = 'force-dynamic'
@@ -24,6 +24,7 @@ export const metadata: Metadata = {
 
 const CREDIT_PACKS = [
   {
+    id: 'decouverte',
     name: 'Découverte',
     credits: 100,
     bonus: 0,
@@ -32,6 +33,7 @@ const CREDIT_PACKS = [
     popular: false,
   },
   {
+    id: 'createur',
     name: 'Créateur',
     credits: 500,
     bonus: 50,
@@ -40,6 +42,7 @@ const CREDIT_PACKS = [
     popular: true,
   },
   {
+    id: 'studio',
     name: 'Studio',
     credits: 2000,
     bonus: 400,
@@ -48,6 +51,7 @@ const CREDIT_PACKS = [
     popular: false,
   },
   {
+    id: 'production',
     name: 'Production',
     credits: 10000,
     bonus: 3000,
@@ -238,22 +242,17 @@ export default async function WalletCreditsPage() {
                   </li>
                 ))}
               </ul>
-              <Button
-                className={`w-full ${
-                  pack.popular
-                    ? 'bg-[#E50914] hover:bg-[#FF2D2D] text-white font-semibold'
-                    : 'bg-white/[0.05] hover:bg-white/[0.08] text-white/60'
-                }`}
-                disabled
-              >
-                Bientôt disponible
-              </Button>
+              <BuyCreditsButton
+                packId={pack.id}
+                amount={pack.credits + pack.bonus}
+                popular={pack.popular}
+              />
             </div>
           ))}
         </div>
         <div className="mt-4 flex items-center gap-2 text-xs text-white/50">
           <Info className="h-3.5 w-3.5" />
-          <span>Les paiements seront activés prochainement. Contactez l&apos;admin pour un crédit manuel.</span>
+          <span>Paiement sécurisé via Stripe. Crédits crédités instantanément après confirmation.</span>
         </div>
       </div>
 

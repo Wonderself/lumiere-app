@@ -93,7 +93,7 @@ export default async function ActorsPage({
               <span>Intelligence Artificielle Cinematographique</span>
             </div>
             <h1
-              className="text-3xl sm:text-5xl md:text-4xl sm:text-5xl md:text-7xl font-bold mb-4 sm:mb-6 text-white"
+              className="text-3xl sm:text-5xl md:text-7xl font-bold mb-4 sm:mb-6 text-white"
             >
               Nos{' '}
               <span

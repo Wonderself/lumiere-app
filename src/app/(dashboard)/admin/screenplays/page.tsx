@@ -110,12 +110,26 @@ export default async function AdminScreenplaysPage() {
                       </Badge>
                     ) : s.status !== 'REJECTED' ? (
                       <>
-                        <Button size="sm" className="w-full gap-1">
-                          <CheckCircle className="h-4 w-4" /> Accepter
-                        </Button>
-                        <Button size="sm" variant="outline" className="text-red-400 border-red-500/20 gap-1">
-                          <XCircle className="h-4 w-4" /> Refuser
-                        </Button>
+                        <form action={async () => {
+                          'use server'
+                          await prisma.screenplay.update({ where: { id: s.id }, data: { status: 'ACCEPTED' } })
+                          const { redirect: redir } = await import('next/navigation')
+                          redir('/admin/screenplays')
+                        }}>
+                          <Button type="submit" size="sm" className="w-full gap-1">
+                            <CheckCircle className="h-4 w-4" /> Accepter
+                          </Button>
+                        </form>
+                        <form action={async () => {
+                          'use server'
+                          await prisma.screenplay.update({ where: { id: s.id }, data: { status: 'REJECTED' } })
+                          const { redirect: redir } = await import('next/navigation')
+                          redir('/admin/screenplays')
+                        }}>
+                          <Button type="submit" size="sm" variant="outline" className="text-red-400 border-red-500/20 gap-1">
+                            <XCircle className="h-4 w-4" /> Refuser
+                          </Button>
+                        </form>
                       </>
                     ) : (
                       <Badge variant="outline" className="justify-center border-red-500/20 text-red-400">

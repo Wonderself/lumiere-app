@@ -13,6 +13,8 @@ import {
 } from 'lucide-react'
 import { formatPrice } from '@/lib/utils'
 import type { Metadata } from 'next'
+import { getFeaturedCreatorAction } from '@/app/actions/featured-creator'
+import { FeaturedCreatorPanel } from './featured-creator-panel'
 
 export const dynamic = 'force-dynamic'
 
@@ -26,6 +28,7 @@ export default async function AdminPage() {
     usersCount, pendingUsers, filmsCount, tasksCount, availableTasks,
     totalPayments, pendingReviews, validatedTasks, submissionsTotal,
     recentSubmissions, todos, recentNotifications,
+    featuredCreatorResult,
   ] = await Promise.all([
     prisma.user.count(),
     prisma.user.count({ where: { isVerified: false } }),
@@ -46,6 +49,7 @@ export default async function AdminPage() {
     }),
     prisma.adminTodo.findMany({ orderBy: [{ completed: 'asc' }, { priority: 'desc' }, { createdAt: 'desc' }], take: 8 }),
     prisma.notification.findMany({ orderBy: { createdAt: 'desc' }, take: 10, include: { user: { select: { displayName: true } } } }),
+    getFeaturedCreatorAction(),
   ])
 
   const completionRate = tasksCount > 0 ? Math.round((validatedTasks / tasksCount) * 100) : 0
@@ -183,6 +187,21 @@ export default async function AdminPage() {
           </CardContent>
         </Card>
       </div>
+
+      {/* Créateur en vedette */}
+      <Card>
+        <CardHeader className="pb-3">
+          <div className="flex items-center justify-between">
+            <CardTitle className="text-base flex items-center gap-2">
+              <Star className="h-4 w-4 text-yellow-400" /> Créateur en vedette
+            </CardTitle>
+            <span className="text-xs text-white/30">Semaine courante</span>
+          </div>
+        </CardHeader>
+        <CardContent>
+          <FeaturedCreatorPanel initialCreator={featuredCreatorResult.creator ?? null} />
+        </CardContent>
+      </Card>
 
       {/* Quick Actions */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-6">

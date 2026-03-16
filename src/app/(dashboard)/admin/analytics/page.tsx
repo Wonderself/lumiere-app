@@ -37,9 +37,11 @@ export default async function AdminAnalyticsPage() {
 
   // Type labels & colors
   const typeLabels: Record<string, string> = {
-    PROMPT: 'Prompt IA', IMAGE_GEN: 'Image', VIDEO_GEN: 'Video', AUDIO_GEN: 'Audio',
-    VOICE_CLONE: 'Voice', SUBTITLE: 'Sous-titres', REVIEW: 'Review', STORYBOARD: 'Storyboard',
-    SCRIPT_EDIT: 'Script', COLOR_GRADE: 'Etalonnage', MUSIC_COMPOSE: 'Musique', SOUND_DESIGN: 'Sound Design',
+    PROMPT_WRITING: 'Prompt IA', IMAGE_GEN: 'Image', VIDEO_REVIEW: 'Review Video',
+    STUNT_CAPTURE: 'Capture Stunts', DANCE_CAPTURE: 'Capture Danse', DIALOGUE_EDIT: 'Dialogues',
+    COLOR_GRADE: 'Etalonnage', SOUND_DESIGN: 'Sound Design', CONTINUITY_CHECK: 'Continuité',
+    QA_REVIEW: 'QA Review', CHARACTER_DESIGN: 'Design Perso', ENV_DESIGN: 'Design Décor',
+    MOTION_REF: 'Motion Ref', COMPOSITING: 'Compositing', TRANSLATION: 'Traduction', SUBTITLE: 'Sous-titres',
   }
   const difficultyColors: Record<string, string> = {
     EASY: '#22c55e', MEDIUM: '#E50914', HARD: '#f97316', EXPERT: '#ef4444',

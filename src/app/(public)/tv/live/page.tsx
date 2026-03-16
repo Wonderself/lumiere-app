@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from 'react'
 import Link from 'next/link'
+import { toast } from 'sonner'
 import {
   Play,
   Pause,
@@ -136,6 +137,7 @@ export default function TvLivePage() {
   const [visibleChats, setVisibleChats] = useState<ChatMessage[]>(SIMULATED_CHAT.slice(0, 5))
   const scheduleRef = useRef<HTMLDivElement>(null)
   const chatEndRef = useRef<HTMLDivElement>(null)
+  const videoAreaRef = useRef<HTMLDivElement>(null)
 
   // Build schedule on mount
   useEffect(() => {
@@ -195,6 +197,18 @@ export default function TvLivePage() {
     })
   }, [])
 
+  const handleFullscreen = useCallback(() => {
+    const el = videoAreaRef.current
+    if (!el) return
+    if (!document.fullscreenElement) {
+      el.requestFullscreen().catch(() => {
+        toast.info('Plein écran non disponible')
+      })
+    } else {
+      document.exitFullscreen()
+    }
+  }, [])
+
   const currentShow = schedule[currentSlotIndex]
   const nextShow = schedule[currentSlotIndex + 1] ?? schedule[0]
 
@@ -205,7 +219,7 @@ export default function TvLivePage() {
         <div className={`flex flex-col lg:flex-row`}>
           {/* Video Area */}
           <div className={`relative flex-1 ${chatOpen ? 'lg:mr-[360px]' : ''} transition-all duration-300`}>
-            <div className="relative aspect-video bg-gradient-to-br from-[#0A1628] via-[#050A15] to-[#0A1225] overflow-hidden">
+            <div ref={videoAreaRef} className="relative aspect-video bg-gradient-to-br from-[#0A1628] via-[#050A15] to-[#0A1225] overflow-hidden">
               {/* Fake video content */}
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#2563EB]/[0.08] via-transparent to-transparent" />
@@ -274,10 +288,16 @@ export default function TvLivePage() {
                       <MessageSquare className="h-4 w-4" />
                       <span className="hidden sm:inline">Chat</span>
                     </button>
-                    <button className="text-white/60 hover:text-white transition-colors">
+                    <button
+                      onClick={() => toast.info('Paramètres bientôt disponibles')}
+                      className="text-white/60 hover:text-white transition-colors"
+                    >
                       <Settings className="h-4 w-4" />
                     </button>
-                    <button className="text-white/60 hover:text-white transition-colors">
+                    <button
+                      onClick={handleFullscreen}
+                      className="text-white/60 hover:text-white transition-colors"
+                    >
                       <Maximize className="h-4 w-4" />
                     </button>
                   </div>
@@ -368,7 +388,10 @@ export default function TvLivePage() {
               <p className="text-white/40 text-sm mb-1">Next Up</p>
               <p className="text-white font-semibold">{nextShow?.showTitle ?? '...'}</p>
               <p className="text-[#2563EB] text-sm">at {nextShow?.time ?? '--:--'}</p>
-              <button className="mt-3 inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-[#2563EB]/10 border border-[#2563EB]/30 text-[#2563EB] text-sm font-medium hover:bg-[#2563EB]/20 transition-colors">
+              <button
+                onClick={() => toast.success('Ajouté à votre calendrier')}
+                className="mt-3 inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-[#2563EB]/10 border border-[#2563EB]/30 text-[#2563EB] text-sm font-medium hover:bg-[#2563EB]/20 transition-colors"
+              >
                 <Calendar className="h-3.5 w-3.5" /> Add to Calendar
               </button>
             </div>

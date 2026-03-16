@@ -8,14 +8,17 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { registerAction } from '@/app/actions/auth'
+import { signIn as nextAuthSignIn } from 'next-auth/react'
 import { SKILLS, LANGUAGES } from '@/lib/constants'
 import { CheckCircle, UserPlus, User, Mail, Lock, Link2, Briefcase, Eye, EyeOff } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 const VALID_ROLES = ['CONTRIBUTOR', 'ARTIST', 'STUNT_PERFORMER', 'SCREENWRITER', 'VIEWER']
 
 export function RegisterForm() {
   const router = useRouter()
   const searchParams = useSearchParams()
+  const t = useTranslations('auth')
   const [state, action, isPending] = useActionState(registerAction, {})
   const [selectedSkills, setSelectedSkills] = useState<string[]>([])
   const [selectedLanguages, setSelectedLanguages] = useState<string[]>(['Français'])
@@ -37,13 +40,13 @@ export function RegisterForm() {
         <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-green-500/10 border border-green-500/20">
           <CheckCircle className="h-10 w-10 text-green-400" />
         </div>
-        <h2 className="text-2xl font-bold text-white font-playfair">Compte créé !</h2>
+        <h2 className="text-2xl font-bold text-white font-playfair">{t('account_created')}</h2>
         <p className="text-white/50 leading-relaxed">
-          Un email de confirmation a été envoyé. Vérifiez votre boîte de réception pour activer votre compte.
+          {t('check_email')}
         </p>
         <div className="flex items-center justify-center gap-2 text-sm text-white/30">
           <div className="w-4 h-4 border-2 border-white/20 border-t-[#E50914] rounded-full animate-spin" />
-          Redirection vers la connexion...
+          {t('redirecting')}
         </div>
       </div>
     )
@@ -69,12 +72,12 @@ export function RegisterForm() {
           <UserPlus className="h-8 w-8 text-[#E50914]" />
         </div>
         <h1 className="text-3xl sm:text-4xl font-bold text-white font-playfair">
-          <span className="text-shimmer">{role === 'SCREENWRITER' ? 'Devenez Scenariste' : 'Rejoindre CINEGEN'}</span>
+          <span className="text-shimmer">{role === 'SCREENWRITER' ? t('become_screenwriter') : t('join_cinegen')}</span>
         </h1>
         <p className="text-white/50 text-sm sm:text-base">
           {role === 'SCREENWRITER'
-            ? 'Rejoignez nos 100 scenaristes et participez a la creation du cinema de demain.'
-            : 'Créez votre compte et commencez à contribuer.'}
+            ? t('screenwriter_subtitle')
+            : t('register_subtitle_default')}
         </p>
       </div>
 
@@ -102,7 +105,7 @@ export function RegisterForm() {
             {/* Name + Email */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-3">
-                <Label htmlFor="displayName" className="text-white/70 text-sm font-medium">Nom / Pseudo</Label>
+                <Label htmlFor="displayName" className="text-white/70 text-sm font-medium">{t('name_pseudo')}</Label>
                 <div className="relative">
                   <User className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-white/25" />
                   <Input
@@ -116,7 +119,7 @@ export function RegisterForm() {
                 </div>
               </div>
               <div className="space-y-3">
-                <Label htmlFor="email" className="text-white/70 text-sm font-medium">Email</Label>
+                <Label htmlFor="email" className="text-white/70 text-sm font-medium">{t('email')}</Label>
                 <div className="relative">
                   <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-white/25" />
                   <Input
@@ -133,14 +136,14 @@ export function RegisterForm() {
 
             {/* Password */}
             <div className="space-y-3">
-              <Label htmlFor="password" className="text-white/70 text-sm font-medium">Mot de passe</Label>
+              <Label htmlFor="password" className="text-white/70 text-sm font-medium">{t('password')}</Label>
               <div className="relative">
                 <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-white/25" />
                 <Input
                   id="password"
                   name="password"
                   type={showPassword ? 'text' : 'password'}
-                  placeholder="Minimum 8 caractères"
+                  placeholder={t('password_min')}
                   required
                   minLength={8}
                   className="pl-11 pr-11 h-12 rounded-xl bg-white/[0.04] border-white/[0.08] text-white placeholder:text-white/25 focus:border-[#E50914]/40 focus:ring-[#E50914]/20 transition-all duration-300"
@@ -149,7 +152,7 @@ export function RegisterForm() {
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-3.5 top-1/2 -translate-y-1/2 text-white/25 hover:text-white/50 transition-colors"
-                  aria-label={showPassword ? 'Masquer le mot de passe' : 'Afficher le mot de passe'}
+                  aria-label={showPassword ? t('hide_password') : t('show_password')}
                 >
                   {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                 </button>
@@ -163,7 +166,7 @@ export function RegisterForm() {
             <div className="space-y-3">
               <Label className="text-white/70 text-sm font-medium flex items-center gap-2">
                 <Briefcase className="h-3.5 w-3.5 text-[#E50914]/60" />
-                Rôle souhaité
+                {t('desired_role')}
               </Label>
               <Select value={role} onValueChange={setRole}>
                 <SelectTrigger className="h-12 rounded-xl bg-white/[0.04] border-white/[0.08] text-white focus:border-[#E50914]/40 focus:ring-[#E50914]/20">
@@ -183,7 +186,7 @@ export function RegisterForm() {
             <div className="space-y-3">
               <Label htmlFor="portfolioUrl" className="text-white/70 text-sm font-medium flex items-center gap-2">
                 <Link2 className="h-3.5 w-3.5 text-[#E50914]/60" />
-                Portfolio URL <span className="text-white/25">(optionnel)</span>
+                Portfolio URL <span className="text-white/25">{t('portfolio_optional')}</span>
               </Label>
               <Input
                 id="portfolioUrl"
@@ -200,7 +203,7 @@ export function RegisterForm() {
             {/* Skills */}
             <div className="space-y-3">
               <Label className="text-white/70 text-sm font-medium">
-                Compétences <span className="text-[#E50914]/60">({selectedSkills.length})</span>
+                {t('skills_count')} <span className="text-[#E50914]/60">({selectedSkills.length})</span>
               </Label>
               <div className="flex flex-wrap gap-2.5">
                 {SKILLS.map((skill) => (
@@ -222,7 +225,7 @@ export function RegisterForm() {
 
             {/* Languages */}
             <div className="space-y-3">
-              <Label className="text-white/70 text-sm font-medium">Langues maîtrisées</Label>
+              <Label className="text-white/70 text-sm font-medium">{t('languages_mastered')}</Label>
               <div className="flex flex-wrap gap-2.5">
                 {LANGUAGES.map((lang) => (
                   <button
@@ -248,24 +251,24 @@ export function RegisterForm() {
                 size="lg"
                 loading={isPending}
               >
-                {isPending ? 'Création du compte...' : 'Créer mon Compte'}
+                {isPending ? t('creating_account') : t('sign_up')}
               </Button>
             </div>
 
             <p className="text-xs text-white/25 text-center leading-relaxed">
-              En créant un compte, vous acceptez nos{' '}
-              <Link href="/legal/terms" className="text-[#E50914]/50 hover:text-[#E50914] transition-colors duration-300">CGU</Link>
-              {' '}et notre{' '}
-              <Link href="/legal/privacy" className="text-[#E50914]/50 hover:text-[#E50914] transition-colors duration-300">politique de confidentialité</Link>.
+              {t('terms_agree')}{' '}
+              <Link href="/legal/terms" className="text-[#E50914]/50 hover:text-[#E50914] transition-colors duration-300">{t('terms_link')}</Link>
+              {' '}{t('terms_and')}{' '}
+              <Link href="/legal/privacy" className="text-[#E50914]/50 hover:text-[#E50914] transition-colors duration-300">{t('privacy_link')}</Link>.
             </p>
           </form>
         </div>
       </div>
 
       <p className="text-center text-sm text-white/40">
-        Déjà un compte ?{' '}
+        {t('already_account')}{' '}
         <Link href="/login" className="text-[#E50914] hover:text-[#FF2D2D] transition-colors duration-300 font-medium">
-          Se connecter
+          {t('sign_in')}
         </Link>
       </p>
     </div>

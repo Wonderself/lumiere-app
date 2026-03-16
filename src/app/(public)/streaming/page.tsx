@@ -56,7 +56,7 @@ export default async function StreamingPage(props: { searchParams: Promise<{ gen
             <Badge className="mb-6 bg-[#E50914]/20 text-[#E50914] border-[#E50914]/30 backdrop-blur-sm">
               <Star className="h-3 w-3 mr-1 fill-[#E50914]" /> En vedette
             </Badge>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-4xl sm:text-5xl md:text-7xl font-bold text-white mb-4 font-[family-name:var(--font-playfair)] max-w-3xl">
+            <h1 className="text-3xl sm:text-5xl md:text-7xl font-bold text-white mb-4 font-[family-name:var(--font-playfair)] max-w-3xl">
               {featured.title}
             </h1>
             <p className="text-white/70 text-lg max-w-2xl mb-8 line-clamp-2 leading-relaxed">{featured.synopsis}</p>

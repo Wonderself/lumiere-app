@@ -8,7 +8,9 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { loginAction } from '@/app/actions/auth'
 import type { LoginFormState } from '@/app/actions/auth'
+import { signIn as nextAuthSignIn } from 'next-auth/react'
 import { Mail, Lock, Sparkles, Eye, EyeOff } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 const SHOW_DEMO = process.env.NEXT_PUBLIC_SHOW_DEMO === 'true' || process.env.NODE_ENV === 'development'
 
@@ -23,6 +25,7 @@ function sanitizeCallbackUrl(url: string | null): string {
 export function LoginForm() {
   const searchParams = useSearchParams()
   const router = useRouter()
+  const t = useTranslations('auth')
   const callbackUrl = sanitizeCallbackUrl(searchParams.get('callbackUrl'))
   const [state, action, isPending] = useActionState<LoginFormState, FormData>(loginAction, {})
   const formRef = useRef<HTMLFormElement>(null)
@@ -53,9 +56,9 @@ export function LoginForm() {
           <Sparkles className="h-8 w-8 text-[#E50914]" />
         </div>
         <h1 className="text-3xl sm:text-4xl font-bold text-white font-playfair">
-          <span className="text-shimmer">Bienvenue</span>
+          <span className="text-shimmer">{t('welcome')}</span>
         </h1>
-        <p className="text-white/50 text-sm sm:text-base">Connectez-vous à votre compte CINEGEN.</p>
+        <p className="text-white/50 text-sm sm:text-base">{t('studio_subtitle')}</p>
       </div>
 
       {/* Form Card */}
@@ -74,7 +77,7 @@ export function LoginForm() {
             )}
 
             <div className="space-y-3">
-              <Label htmlFor="email" className="text-white/70 text-sm font-medium">Email</Label>
+              <Label htmlFor="email" className="text-white/70 text-sm font-medium">{t('email')}</Label>
               <div className="relative">
                 <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-white/25" />
                 <Input
@@ -93,9 +96,9 @@ export function LoginForm() {
 
             <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <Label htmlFor="password" className="text-white/70 text-sm font-medium">Mot de passe</Label>
+                <Label htmlFor="password" className="text-white/70 text-sm font-medium">{t('password')}</Label>
                 <Link href="/forgot-password" className="text-xs text-white/30 hover:text-[#E50914] transition-colors duration-300">
-                  Mot de passe oublié ?
+                  {t('forgot_password')}
                 </Link>
               </div>
               <div className="relative">
@@ -115,7 +118,7 @@ export function LoginForm() {
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-3.5 top-1/2 -translate-y-1/2 text-white/25 hover:text-white/50 transition-colors"
-                  aria-label={showPassword ? 'Masquer le mot de passe' : 'Afficher le mot de passe'}
+                  aria-label={showPassword ? t('hide_password') : t('show_password')}
                 >
                   {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                 </button>
@@ -129,7 +132,7 @@ export function LoginForm() {
                 size="lg"
                 loading={isPending}
               >
-                {isPending ? 'Connexion...' : 'Se Connecter'}
+                {isPending ? t('signing_in') : t('sign_in')}
               </Button>
             </div>
           </form>
@@ -139,7 +142,7 @@ export function LoginForm() {
             <>
               <div className="mt-10 flex items-center gap-3">
                 <div className="flex-1 h-px bg-gradient-to-r from-transparent to-white/[0.06]" />
-                <span className="text-xs text-white/20 uppercase tracking-widest">comptes demo</span>
+                <span className="text-xs text-white/20 uppercase tracking-widest">{t('demo_accounts')}</span>
                 <div className="flex-1 h-px bg-gradient-to-l from-transparent to-white/[0.06]" />
               </div>
               <div className="mt-5 space-y-3.5">
@@ -155,7 +158,7 @@ export function LoginForm() {
                       <p className="text-[11px] text-white/35 mt-0.5">admin@admin.com</p>
                     </div>
                     <span className="text-[10px] text-[#E50914]/40 group-hover:text-[#E50914]/70 uppercase tracking-wider font-medium">
-                      {isPending ? 'Connexion...' : 'Connexion rapide'}
+                      {isPending ? t('signing_in') : t('quick_login')}
                     </span>
                   </div>
                 </button>
@@ -167,11 +170,11 @@ export function LoginForm() {
                 >
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-xs font-semibold text-white/50 group-hover:text-white/70">Utilisateur Demo</p>
+                      <p className="text-xs font-semibold text-white/50 group-hover:text-white/70">Demo User</p>
                       <p className="text-[11px] text-white/25 mt-0.5">admin@admin.com</p>
                     </div>
                     <span className="text-[10px] text-white/20 group-hover:text-white/40 uppercase tracking-wider font-medium">
-                      {isPending ? 'Connexion...' : 'Connexion rapide'}
+                      {isPending ? t('signing_in') : t('quick_login')}
                     </span>
                   </div>
                 </button>
@@ -182,9 +185,9 @@ export function LoginForm() {
       </div>
 
       <p className="text-center text-sm text-white/40">
-        Pas encore de compte ?{' '}
+        {t('no_account_yet')}{' '}
         <Link href="/register" className="text-[#E50914] hover:text-[#FF2D2D] transition-colors duration-300 font-medium">
-          Créer un compte
+          {t('create_account')}
         </Link>
       </p>
     </div>

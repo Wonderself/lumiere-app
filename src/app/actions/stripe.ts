@@ -33,9 +33,8 @@ function getStripeMode(): StripeMode {
 async function getStripe() {
   if (!STRIPE_SECRET) return null
   try {
-    // @ts-expect-error — stripe SDK conditionally installed
     const { default: Stripe } = await import('stripe')
-    return new Stripe(STRIPE_SECRET, { apiVersion: '2024-12-18.acacia' })
+    return new Stripe(STRIPE_SECRET, { apiVersion: '2026-02-25.clover' })
   } catch {
     console.warn('[Stripe] SDK not installed — running in mock mode')
     return null

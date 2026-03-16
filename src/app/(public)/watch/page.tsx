@@ -164,15 +164,15 @@ function FilmCard({ film }: { film: FilmData }) {
         </p>
         {/* quick actions */}
         <div className="flex items-center gap-2 pt-1">
-          <span className="flex items-center gap-1 text-[10px] text-gray-400 hover:text-[#E50914] transition-colors cursor-pointer">
+          <Link href={`/streaming/${film.slug}`} onClick={(e) => e.stopPropagation()} className="flex items-center gap-1 text-[10px] text-gray-400 hover:text-[#E50914] transition-colors">
             <Eye size={12} /> Watch
-          </span>
-          <span className="flex items-center gap-1 text-[10px] text-gray-400 hover:text-yellow-400 transition-colors cursor-pointer">
+          </Link>
+          <Link href="/community" onClick={(e) => e.stopPropagation()} className="flex items-center gap-1 text-[10px] text-gray-400 hover:text-yellow-400 transition-colors">
             <Vote size={12} /> Vote
-          </span>
-          <span className="flex items-center gap-1 text-[10px] text-gray-400 hover:text-green-400 transition-colors cursor-pointer">
+          </Link>
+          <Link href="/invest" onClick={(e) => e.stopPropagation()} className="flex items-center gap-1 text-[10px] text-gray-400 hover:text-green-400 transition-colors">
             <DollarSign size={12} /> Invest
-          </span>
+          </Link>
         </div>
       </div>
     </Link>
@@ -219,15 +219,15 @@ function TvCard({ show }: { show: TvShowData }) {
           {show.host} &middot; {show.year}
         </p>
         <div className="flex items-center gap-2 pt-1">
-          <span className="flex items-center gap-1 text-[10px] text-gray-400 hover:text-[#2563EB] transition-colors cursor-pointer">
+          <Link href={`/tv/shows/${show.slug}`} onClick={(e) => e.stopPropagation()} className="flex items-center gap-1 text-[10px] text-gray-400 hover:text-[#2563EB] transition-colors">
             <Eye size={12} /> Watch
-          </span>
-          <span className="flex items-center gap-1 text-[10px] text-gray-400 hover:text-yellow-400 transition-colors cursor-pointer">
+          </Link>
+          <Link href="/community" onClick={(e) => e.stopPropagation()} className="flex items-center gap-1 text-[10px] text-gray-400 hover:text-yellow-400 transition-colors">
             <Vote size={12} /> Vote
-          </span>
-          <span className="flex items-center gap-1 text-[10px] text-gray-400 hover:text-green-400 transition-colors cursor-pointer">
+          </Link>
+          <Link href="/invest" onClick={(e) => e.stopPropagation()} className="flex items-center gap-1 text-[10px] text-gray-400 hover:text-green-400 transition-colors">
             <DollarSign size={12} /> Invest
-          </span>
+          </Link>
         </div>
       </div>
     </Link>

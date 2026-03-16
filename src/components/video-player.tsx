@@ -1,7 +1,7 @@
 'use client'
 
 import { useRef, useState, useEffect, useCallback } from 'react'
-import { Play, Pause, Maximize, Minimize, Volume2, VolumeX, SkipForward, SkipBack, Settings } from 'lucide-react'
+import { Play, Pause, Maximize, Minimize, Volume2, VolumeX, SkipForward, SkipBack, Settings, Subtitles, Check, X } from 'lucide-react'
 
 type SubtitleTrack = {
   label: string
@@ -44,6 +44,8 @@ export function VideoPlayer({
   const [duration, setDuration] = useState(0)
   const [showControls, setShowControls] = useState(true)
   const [volume, setVolume] = useState(1)
+  const [activeSubtitle, setActiveSubtitle] = useState<string | null>(null) // srclang or null = off
+  const [showCCMenu, setShowCCMenu] = useState(false)
 
   // Format time
   const formatTime = (s: number) => {
@@ -120,6 +122,18 @@ export function VideoPlayer({
     video.volume = v
     setVolume(v)
     setMuted(v === 0)
+  }, [])
+
+  // Switch active subtitle track (srclang) or disable all (null)
+  const selectSubtitle = useCallback((srclang: string | null) => {
+    const video = videoRef.current
+    if (!video) return
+    const tracks = Array.from(video.textTracks)
+    tracks.forEach((track) => {
+      track.mode = track.language === srclang ? 'showing' : 'hidden'
+    })
+    setActiveSubtitle(srclang)
+    setShowCCMenu(false)
   }, [])
 
   // Time/progress updates
@@ -286,6 +300,60 @@ export function VideoPlayer({
               className="w-16 h-1 accent-[#E50914] cursor-pointer"
             />
           </div>
+
+          {/* CC / Subtitles */}
+          {subtitles.length > 0 && (
+            <div className="relative">
+              <button
+                onClick={() => setShowCCMenu((prev) => !prev)}
+                className={`text-white/60 hover:text-white transition-colors ${activeSubtitle ? 'text-[#E50914]' : ''}`}
+                title="Sous-titres"
+              >
+                <Subtitles className="h-4 w-4" />
+              </button>
+
+              {/* CC popup */}
+              {showCCMenu && (
+                <div className="absolute bottom-8 right-0 min-w-[160px] rounded-xl border border-white/10 bg-[#111]/95 backdrop-blur-sm shadow-2xl p-1 z-50">
+                  <div className="px-2 py-1.5 flex items-center justify-between">
+                    <span className="text-[10px] font-semibold text-white/40 uppercase tracking-wider">Sous-titres</span>
+                    <button onClick={() => setShowCCMenu(false)} className="text-white/30 hover:text-white/60 transition-colors">
+                      <X className="h-3 w-3" />
+                    </button>
+                  </div>
+
+                  {/* Off option */}
+                  <button
+                    onClick={() => selectSubtitle(null)}
+                    className={`w-full flex items-center justify-between gap-2 px-3 py-2 rounded-lg text-xs transition-colors ${
+                      activeSubtitle === null
+                        ? 'bg-[#E50914]/10 text-[#E50914]'
+                        : 'text-white/50 hover:text-white hover:bg-white/[0.06]'
+                    }`}
+                  >
+                    <span>Désactivé</span>
+                    {activeSubtitle === null && <Check className="h-3 w-3 shrink-0" />}
+                  </button>
+
+                  {/* Track options */}
+                  {subtitles.map((sub) => (
+                    <button
+                      key={sub.srclang}
+                      onClick={() => selectSubtitle(sub.srclang)}
+                      className={`w-full flex items-center justify-between gap-2 px-3 py-2 rounded-lg text-xs transition-colors ${
+                        activeSubtitle === sub.srclang
+                          ? 'bg-[#E50914]/10 text-[#E50914]'
+                          : 'text-white/50 hover:text-white hover:bg-white/[0.06]'
+                      }`}
+                    >
+                      <span>{sub.label}</span>
+                      {activeSubtitle === sub.srclang && <Check className="h-3 w-3 shrink-0" />}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
 
           {/* Fullscreen */}
           <button onClick={toggleFullscreen} className="text-white/60 hover:text-white transition-colors">

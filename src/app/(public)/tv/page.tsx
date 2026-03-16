@@ -11,6 +11,7 @@ import {
   Briefcase, DollarSign, Sparkles, Eye, Signal,
   Monitor, Rocket, Users, Heart, Film, Mic,
 } from 'lucide-react'
+import { toast } from 'sonner'
 
 /* ────────────────────────────────────────────────
    Genre config (icons + colors) — TV BLUE THEME
@@ -238,7 +239,10 @@ export default function TvHomePage() {
             >
               <Play className="h-4 w-4" fill="white" /> Watch Now
             </Link>
-            <button className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-white/10 hover:bg-white/15 text-white font-semibold text-sm border border-white/[0.08] transition-all duration-300 hover:-translate-y-0.5">
+            <button
+              onClick={() => toast.success(`"${featuredShow.title}" ajouté à votre liste`)}
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-white/10 hover:bg-white/15 text-white font-semibold text-sm border border-white/[0.08] transition-all duration-300 hover:-translate-y-0.5"
+            >
               + Add to List
             </button>
           </div>
@@ -656,9 +660,10 @@ export default function TvHomePage() {
                     <div className="p-3 space-y-2">
                       <p className="text-[10px] text-white/40 line-clamp-2 leading-relaxed">{show.synopsis}</p>
                       <div className="flex items-center gap-1.5">
-                        <button className="px-2 py-0.5 rounded text-[9px] font-bold bg-emerald-500/15 text-emerald-400 border border-emerald-500/20 hover:bg-emerald-500/25 transition-colors">Vote</button>
-                        <button className="px-2 py-0.5 rounded text-[9px] font-bold bg-amber-500/15 text-amber-400 border border-amber-500/20 hover:bg-amber-500/25 transition-colors">Invest</button>
-                        <button className="px-2 py-0.5 rounded text-[9px] font-bold bg-[#2563EB]/15 text-[#60A5FA] border border-[#2563EB]/20 hover:bg-[#2563EB]/25 transition-colors">Work</button>
+                        <Link href="/community" className="px-2 py-0.5 rounded text-[9px] font-bold bg-emerald-500/15 text-emerald-400 border border-emerald-500/20 hover:bg-emerald-500/25 transition-colors">Vote</Link>
+                        <Link href="/invest" className="px-2 py-0.5 rounded text-[9px] font-bold bg-amber-500/15 text-amber-400 border border-amber-500/20 hover:bg-amber-500/25 transition-colors">Invest</Link>
+                        <Link href="/work" className="px-2 py-0.5 rounded text-[9px] font-bold bg-[#2563EB]/15 text-[#60A5FA] border border-[#2563EB]/20 hover:bg-[#2563EB]/25 transition-colors">Work</Link>
+                        <button onClick={() => toast.success(`"${show.title}" ajouté à votre liste`)} className="px-2 py-0.5 rounded text-[9px] font-bold bg-white/10 text-white/50 border border-white/10 hover:bg-white/20 transition-colors">+ Liste</button>
                       </div>
                       {/* Funding bar */}
                       <div className="h-1 rounded-full bg-white/[0.06] overflow-hidden">

@@ -4,14 +4,18 @@ import { useState, useEffect, useCallback } from 'react'
 import { useParams } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
+import { toast } from 'sonner'
 import {
   Tv, Star, Users, Clock, Play, Plus, ChevronRight, ChevronLeft,
   Tag, Crown, Coins, ArrowRight, Shield, MonitorPlay, Calendar,
-  ThumbsUp, ThumbsDown, Heart, Briefcase, Film, Clapperboard,
-  Eye, TrendingUp, Share2, Bookmark,
+  Heart, Briefcase, Film, Clapperboard,
+  Eye, TrendingUp, Bookmark, Camera, Mic2, Laugh, X,
 } from 'lucide-react'
 import { ALL_TV_SHOWS, SHOWS_BY_GENRE } from '@/data/tv-shows'
 import type { TvShowData } from '@/data/tv-shows'
+import { SocialShare } from '@/components/social-share'
+import { VideoPlayerWrapper } from '@/components/streaming/video-player-wrapper'
+import { TvVoteButton } from '@/components/tv/tv-vote-button'
 
 /* ── Episode title templates by genre ── */
 const EPISODE_TITLES: Record<string, string[]> = {
@@ -141,25 +145,24 @@ export default function TvShowDetailPage() {
   const show = ALL_TV_SHOWS.find(s => s.slug === slug)
 
   const [selectedSeason, setSelectedSeason] = useState(1)
+  const [showPlayer, setShowPlayer] = useState(false)
+  const [activeEpisodesTab, setActiveEpisodesTab] = useState<'episodes' | 'bonus'>('episodes')
 
-  /* ── Voting state (persisted to localStorage) ── */
-  const [userVote, setUserVote] = useState<'up' | 'down' | null>(null)
+  /* ── Favorites + approval bar state ── */
   const [voteUp, setVoteUp] = useState(0)
   const [voteDown, setVoteDown] = useState(0)
   const [isFavorited, setIsFavorited] = useState(false)
 
   useEffect(() => {
     if (!show) return
-    // Load vote from localStorage
     try {
-      const stored = localStorage.getItem(`cinegen-vote-${show.slug}`)
+      // Seed approval bar with deterministic fake votes (TvVoteButton handles actual voting)
+      const stored = localStorage.getItem(`cinegen-tv-vote-${show.slug}`)
       if (stored) {
-        const parsed = JSON.parse(stored)
-        setUserVote(parsed.vote)
+        const parsed = JSON.parse(stored) as { vote: 'up' | 'down' | null; up: number; down: number }
         setVoteUp(parsed.up)
         setVoteDown(parsed.down)
       } else {
-        // Seed with deterministic fake votes
         const baseUp = Math.floor(show.viewCount / 120)
         const baseDown = Math.floor(show.viewCount / 800)
         setVoteUp(baseUp)
@@ -170,38 +173,25 @@ export default function TvShowDetailPage() {
     } catch { /* SSR safety */ }
   }, [show?.slug, show?.viewCount])
 
-  const handleVote = useCallback((direction: 'up' | 'down') => {
-    if (!show) return
-    setUserVote(prev => {
-      const newVote = prev === direction ? null : direction
-      setVoteUp(v => {
-        const base = v - (prev === 'up' ? 1 : 0)
-        return base + (newVote === 'up' ? 1 : 0)
-      })
-      setVoteDown(v => {
-        const base = v - (prev === 'down' ? 1 : 0)
-        return base + (newVote === 'down' ? 1 : 0)
-      })
-      // Persist after state update
-      setTimeout(() => {
-        try {
-          const up = voteUp + (newVote === 'up' ? 1 : 0) - (prev === 'up' ? 1 : 0)
-          const down = voteDown + (newVote === 'down' ? 1 : 0) - (prev === 'down' ? 1 : 0)
-          localStorage.setItem(`cinegen-vote-${show.slug}`, JSON.stringify({ vote: newVote, up, down }))
-        } catch { /* noop */ }
-      }, 0)
-      return newVote
-    })
-  }, [show, voteUp, voteDown])
-
   const toggleFavorite = useCallback(() => {
     if (!show) return
     setIsFavorited(prev => {
       const next = !prev
       try { localStorage.setItem(`cinegen-fav-${show.slug}`, String(next)) } catch { /* noop */ }
+      if (next) {
+        toast.success('Ajouté aux favoris')
+      } else {
+        toast.info('Retiré des favoris')
+      }
       return next
     })
   }, [show])
+
+  /* ── Document title ── */
+  useEffect(() => {
+    if (!show) return
+    document.title = `${show.title} — CINEGEN TV`
+  }, [show?.title])
 
   /* ── Not found ── */
   if (!show) {
@@ -230,8 +220,28 @@ export default function TvShowDetailPage() {
   const fundingPct = show.fundingPct ?? (((ALL_TV_SHOWS.indexOf(show) * 13 + 25) % 70) + 20)
   const fundingAmount = Math.round(fundingPct * 1200)
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'TVSeries',
+    name: show.title,
+    description: show.synopsis,
+    genre: show.genre,
+    image: show.coverImageUrl,
+    url: `https://cinegen.studio/tv/shows/${show.slug}`,
+    numberOfSeasons: show.seasons,
+    numberOfEpisodes: show.episodeCount,
+    productionCompany: {
+      '@type': 'Organization',
+      name: 'CINEGEN Studio',
+      url: 'https://cinegen.studio',
+    },
+  }
+
   return (
     <div className="min-h-screen" style={{ backgroundColor: '#050A15' }}>
+
+      {/* JSON-LD structured data */}
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
       {/* ════════════════════════════════════════════════════════════
           BREADCRUMB NAV
@@ -306,9 +316,12 @@ export default function TvShowDetailPage() {
 
             {/* Action buttons */}
             <div className="flex items-center gap-3 flex-wrap">
-              <button className="flex items-center gap-2 px-6 py-3 rounded-xl bg-[#2563EB] hover:bg-[#3B82F6] text-white font-bold text-sm transition-colors shadow-lg shadow-[#2563EB]/20">
+              <button
+                onClick={() => setShowPlayer(p => !p)}
+                className="flex items-center gap-2 px-6 py-3 rounded-xl bg-[#2563EB] hover:bg-[#3B82F6] text-white font-bold text-sm transition-colors shadow-lg shadow-[#2563EB]/20"
+              >
                 <Play className="h-4 w-4 fill-white" />
-                Watch Latest Episode
+                {showPlayer ? 'Close Player' : 'Watch Latest Episode'}
               </button>
               <button
                 onClick={toggleFavorite}
@@ -321,13 +334,54 @@ export default function TvShowDetailPage() {
                 <Heart className={`h-4 w-4 ${isFavorited ? 'fill-rose-400' : ''}`} />
                 {isFavorited ? 'Favorited' : 'Add to Favorites'}
               </button>
-              <button className="flex items-center gap-2 px-4 py-3 rounded-xl bg-white/[0.06] hover:bg-white/10 text-white/60 text-sm transition-colors border border-white/10">
-                <Share2 className="h-4 w-4" />
-              </button>
+              <SocialShare
+                url={typeof window !== 'undefined' ? window.location.href : `/tv/shows/${show.slug}`}
+                title={show.title}
+                description={show.synopsis}
+              />
             </div>
           </div>
         </div>
       </section>
+
+      {/* ════════════════════════════════════════════════════════════
+          VIDEO PLAYER — shown when Watch Latest Episode is clicked
+         ════════════════════════════════════════════════════════════ */}
+      {showPlayer && (
+        <div className="bg-black/80 border-y border-[#2563EB]/20">
+          <div className="container mx-auto max-w-6xl px-6 sm:px-10 md:px-16 py-6">
+            <div className="flex items-center justify-between mb-4">
+              <div>
+                <h2 className="text-base font-semibold text-white">
+                  Now Playing — {show.title}
+                </h2>
+                <p className="text-xs text-white/40 mt-0.5">
+                  Season {selectedSeason} · Latest Episode
+                </p>
+              </div>
+              <button
+                onClick={() => setShowPlayer(false)}
+                className="flex items-center gap-1.5 text-xs text-white/40 hover:text-white/80 transition-colors px-3 py-1.5 rounded-lg hover:bg-white/[0.06] border border-transparent hover:border-white/10"
+              >
+                <X className="h-4 w-4" />
+                Close
+              </button>
+            </div>
+            <div className="rounded-2xl overflow-hidden border border-[#2563EB]/20 shadow-2xl shadow-[#2563EB]/10">
+              <VideoPlayerWrapper
+                filmId={show.id}
+                src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+                poster={show.coverImageUrl || undefined}
+                title={`${show.title} — Latest Episode`}
+                className="w-full aspect-video"
+              />
+            </div>
+            <p className="text-[11px] text-white/20 mt-3 text-center">
+              Demo player — full episode streaming available with CINEGEN subscription
+            </p>
+          </div>
+        </div>
+      )}
 
       <div className="container mx-auto max-w-6xl px-6 sm:px-10 md:px-16 py-14 space-y-14">
 
@@ -341,28 +395,11 @@ export default function TvShowDetailPage() {
               <p className="text-sm text-white/40">Your vote helps shape the future of {show.title}</p>
             </div>
             <div className="flex items-center gap-4">
-              <button
-                onClick={() => handleVote('up')}
-                className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium transition-all duration-300 border ${
-                  userVote === 'up'
-                    ? 'bg-[#2563EB]/20 border-[#2563EB]/40 text-[#2563EB] shadow-lg shadow-[#2563EB]/10'
-                    : 'bg-white/[0.04] border-white/[0.06] text-white/50 hover:bg-white/[0.08] hover:border-white/10'
-                }`}
-              >
-                <ThumbsUp className={`h-4 w-4 ${userVote === 'up' ? 'fill-[#2563EB]' : ''}`} />
-                <span>{voteUp.toLocaleString()}</span>
-              </button>
-              <button
-                onClick={() => handleVote('down')}
-                className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium transition-all duration-300 border ${
-                  userVote === 'down'
-                    ? 'bg-red-500/20 border-red-500/40 text-red-400 shadow-lg shadow-red-500/10'
-                    : 'bg-white/[0.04] border-white/[0.06] text-white/50 hover:bg-white/[0.08] hover:border-white/10'
-                }`}
-              >
-                <ThumbsDown className={`h-4 w-4 ${userVote === 'down' ? 'fill-red-400' : ''}`} />
-                <span>{voteDown.toLocaleString()}</span>
-              </button>
+              <TvVoteButton
+                showSlug={show.slug}
+                initialUpVotes={voteUp}
+                initialDownVotes={voteDown}
+              />
               {/* Approval bar */}
               <div className="hidden sm:flex items-center gap-2">
                 <div className="w-24 h-2 bg-white/[0.06] rounded-full overflow-hidden">
@@ -380,14 +417,37 @@ export default function TvShowDetailPage() {
         </section>
 
         {/* ════════════════════════════════════════════════════════════
-            EPISODES GRID
+            EPISODES / BONUS TABS
            ════════════════════════════════════════════════════════════ */}
         <section>
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-xl sm:text-2xl font-bold text-white">Episodes</h2>
+          {/* Tab bar */}
+          <div className="flex items-center justify-between mb-6 flex-wrap gap-4">
+            <div className="flex items-center gap-1 bg-white/[0.04] border border-white/[0.06] rounded-xl p-1">
+              <button
+                onClick={() => setActiveEpisodesTab('episodes')}
+                className={`px-5 py-2 rounded-lg text-sm font-semibold transition-all duration-200 ${
+                  activeEpisodesTab === 'episodes'
+                    ? 'bg-[#2563EB] text-white shadow-lg shadow-[#2563EB]/20'
+                    : 'text-white/50 hover:text-white/80'
+                }`}
+              >
+                Episodes
+              </button>
+              <button
+                onClick={() => setActiveEpisodesTab('bonus')}
+                className={`px-5 py-2 rounded-lg text-sm font-semibold transition-all duration-200 flex items-center gap-1.5 ${
+                  activeEpisodesTab === 'bonus'
+                    ? 'bg-[#2563EB] text-white shadow-lg shadow-[#2563EB]/20'
+                    : 'text-white/50 hover:text-white/80'
+                }`}
+              >
+                <span>Bonus</span>
+                <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-[#2563EB]/30 text-[#60A5FA] font-bold">3</span>
+              </button>
+            </div>
 
-            {/* Season selector */}
-            {seasonCount > 1 && (
+            {/* Season selector — only visible on Episodes tab */}
+            {activeEpisodesTab === 'episodes' && seasonCount > 1 && (
               <div className="flex items-center gap-2 overflow-x-auto">
                 {Array.from({ length: seasonCount }, (_, i) => i + 1).map(s => (
                   <button
@@ -406,58 +466,186 @@ export default function TvShowDetailPage() {
             )}
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {episodes.map((ep) => (
-              <div
-                key={ep.id}
-                className="rounded-2xl border border-white/[0.06] bg-white/[0.02] overflow-hidden hover:border-[#2563EB]/20 transition-all duration-300 group"
-              >
-                {/* Thumbnail */}
-                <div className="relative aspect-video overflow-hidden">
-                  <Image
-                    src={ep.thumbnail}
-                    alt={ep.title}
-                    fill
-                    unoptimized
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  />
-                  <div className="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    {ep.isReleased ? (
-                      <div className="w-12 h-12 rounded-full bg-[#2563EB] flex items-center justify-center shadow-lg shadow-[#2563EB]/30">
+          {/* ── Episodes grid ── */}
+          {activeEpisodesTab === 'episodes' && (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {episodes.map((ep) => (
+                <div
+                  key={ep.id}
+                  className="rounded-2xl border border-white/[0.06] bg-white/[0.02] overflow-hidden hover:border-[#2563EB]/20 transition-all duration-300 group"
+                >
+                  {/* Thumbnail */}
+                  <div className="relative aspect-video overflow-hidden">
+                    <Image
+                      src={ep.thumbnail}
+                      alt={ep.title}
+                      fill
+                      unoptimized
+                      className="object-cover group-hover:scale-105 transition-transform duration-500"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    />
+                    <div className="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      {ep.isReleased ? (
+                        <div className="w-12 h-12 rounded-full bg-[#2563EB] flex items-center justify-center shadow-lg shadow-[#2563EB]/30">
+                          <Play className="h-5 w-5 text-white fill-white ml-0.5" />
+                        </div>
+                      ) : (
+                        <span className="text-xs font-semibold text-white/70 bg-black/50 rounded-full px-3 py-1.5">Coming Soon</span>
+                      )}
+                    </div>
+                    {/* Duration badge */}
+                    <div className="absolute bottom-2 right-2 text-[10px] font-medium text-white bg-black/60 rounded px-1.5 py-0.5">
+                      {ep.duration}
+                    </div>
+                    {/* Season-episode badge */}
+                    <div className="absolute top-2 left-2 text-[10px] font-semibold text-white/80 bg-[#2563EB]/70 rounded px-1.5 py-0.5">
+                      S{ep.season}E{ep.episode}
+                    </div>
+                  </div>
+
+                  {/* Info */}
+                  <div className="p-4">
+                    <h3 className="text-sm font-semibold text-white mb-1 line-clamp-1 group-hover:text-[#2563EB] transition-colors">
+                      {ep.title}
+                    </h3>
+                    <div className="flex items-center justify-between">
+                      <span className="text-[10px] text-white/30">{ep.airDate}</span>
+                      {ep.isReleased ? (
+                        <span className="text-[10px] font-medium text-[#2563EB]">Watch Now</span>
+                      ) : (
+                        <span className="text-[10px] font-medium text-white/25">Upcoming</span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* ── Bonus content ── */}
+          {activeEpisodesTab === 'bonus' && (
+            <div className="space-y-6">
+              <p className="text-sm text-white/40 -mt-2">
+                Exclusive behind-the-scenes content for {show.title} subscribers.
+              </p>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+
+                {/* Card 1 — Behind the Scenes */}
+                <div className="group rounded-2xl border border-[#2563EB]/20 bg-[#2563EB]/[0.04] overflow-hidden hover:border-[#2563EB]/40 hover:bg-[#2563EB]/[0.07] transition-all duration-300">
+                  <div className="relative aspect-video bg-gradient-to-br from-[#0F1E40] to-[#050A15] flex items-center justify-center overflow-hidden">
+                    <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(37,99,235,0.15)_0%,transparent_70%)]" />
+                    <Camera className="h-12 w-12 text-[#2563EB]/40 group-hover:text-[#2563EB]/70 transition-colors duration-300" />
+                    <div className="absolute top-2 left-2 text-[10px] font-semibold text-white/80 bg-[#2563EB]/60 rounded px-1.5 py-0.5 uppercase tracking-wider">
+                      Bonus
+                    </div>
+                    <div className="absolute bottom-2 right-2 text-[10px] font-medium text-white/60 bg-black/50 rounded px-1.5 py-0.5">
+                      18 min
+                    </div>
+                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <div className="w-12 h-12 rounded-full bg-[#2563EB]/80 flex items-center justify-center shadow-lg shadow-[#2563EB]/30 backdrop-blur-sm">
                         <Play className="h-5 w-5 text-white fill-white ml-0.5" />
                       </div>
-                    ) : (
-                      <span className="text-xs font-semibold text-white/70 bg-black/50 rounded-full px-3 py-1.5">Coming Soon</span>
-                    )}
+                    </div>
                   </div>
-                  {/* Duration badge */}
-                  <div className="absolute bottom-2 right-2 text-[10px] font-medium text-white bg-black/60 rounded px-1.5 py-0.5">
-                    {ep.duration}
-                  </div>
-                  {/* Season-episode badge */}
-                  <div className="absolute top-2 left-2 text-[10px] font-semibold text-white/80 bg-[#2563EB]/70 rounded px-1.5 py-0.5">
-                    S{ep.season}E{ep.episode}
+                  <div className="p-4">
+                    <h3 className="text-sm font-semibold text-white mb-1 group-hover:text-[#2563EB] transition-colors">
+                      Behind the Scenes
+                    </h3>
+                    <p className="text-[11px] text-white/35 leading-relaxed">
+                      Follow the crew of {show.title} as they set up lighting, rehearse lines, and prepare for live taping. See the magic before it hits the screen.
+                    </p>
+                    <div className="flex items-center gap-2 mt-3">
+                      <Camera className="h-3 w-3 text-[#2563EB]/60" />
+                      <span className="text-[10px] text-[#2563EB]/70 font-medium">Production Diary</span>
+                    </div>
                   </div>
                 </div>
 
-                {/* Info */}
-                <div className="p-4">
-                  <h3 className="text-sm font-semibold text-white mb-1 line-clamp-1 group-hover:text-[#2563EB] transition-colors">
-                    {ep.title}
-                  </h3>
-                  <div className="flex items-center justify-between">
-                    <span className="text-[10px] text-white/30">{ep.airDate}</span>
-                    {ep.isReleased ? (
-                      <span className="text-[10px] font-medium text-[#2563EB]">Watch Now</span>
-                    ) : (
-                      <span className="text-[10px] font-medium text-white/25">Upcoming</span>
-                    )}
+                {/* Card 2 — Host Interview */}
+                <div className="group rounded-2xl border border-[#2563EB]/20 bg-[#2563EB]/[0.04] overflow-hidden hover:border-[#2563EB]/40 hover:bg-[#2563EB]/[0.07] transition-all duration-300">
+                  <div className="relative aspect-video bg-gradient-to-br from-[#0F1E40] to-[#050A15] flex items-center justify-center overflow-hidden">
+                    <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(37,99,235,0.15)_0%,transparent_70%)]" />
+                    <Mic2 className="h-12 w-12 text-[#2563EB]/40 group-hover:text-[#2563EB]/70 transition-colors duration-300" />
+                    <div className="absolute top-2 left-2 text-[10px] font-semibold text-white/80 bg-[#2563EB]/60 rounded px-1.5 py-0.5 uppercase tracking-wider">
+                      Interview
+                    </div>
+                    <div className="absolute bottom-2 right-2 text-[10px] font-medium text-white/60 bg-black/50 rounded px-1.5 py-0.5">
+                      24 min
+                    </div>
+                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <div className="w-12 h-12 rounded-full bg-[#2563EB]/80 flex items-center justify-center shadow-lg shadow-[#2563EB]/30 backdrop-blur-sm">
+                        <Play className="h-5 w-5 text-white fill-white ml-0.5" />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="p-4">
+                    <h3 className="text-sm font-semibold text-white mb-1 group-hover:text-[#2563EB] transition-colors">
+                      Interview with {show.host}
+                    </h3>
+                    <p className="text-[11px] text-white/35 leading-relaxed">
+                      An exclusive sit-down with {show.host} — covering the creative vision behind the show, unexpected challenges, and what fans can expect next season.
+                    </p>
+                    <div className="flex items-center gap-2 mt-3">
+                      <Mic2 className="h-3 w-3 text-[#2563EB]/60" />
+                      <span className="text-[10px] text-[#2563EB]/70 font-medium">Exclusive Interview</span>
+                    </div>
                   </div>
                 </div>
+
+                {/* Card 3 — Bloopers */}
+                <div className="group rounded-2xl border border-[#2563EB]/20 bg-[#2563EB]/[0.04] overflow-hidden hover:border-[#2563EB]/40 hover:bg-[#2563EB]/[0.07] transition-all duration-300">
+                  <div className="relative aspect-video bg-gradient-to-br from-[#0F1E40] to-[#050A15] flex items-center justify-center overflow-hidden">
+                    <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(37,99,235,0.15)_0%,transparent_70%)]" />
+                    <Laugh className="h-12 w-12 text-[#2563EB]/40 group-hover:text-[#2563EB]/70 transition-colors duration-300" />
+                    <div className="absolute top-2 left-2 text-[10px] font-semibold text-white/80 bg-[#2563EB]/60 rounded px-1.5 py-0.5 uppercase tracking-wider">
+                      Bloopers
+                    </div>
+                    <div className="absolute bottom-2 right-2 text-[10px] font-medium text-white/60 bg-black/50 rounded px-1.5 py-0.5">
+                      11 min
+                    </div>
+                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <div className="w-12 h-12 rounded-full bg-[#2563EB]/80 flex items-center justify-center shadow-lg shadow-[#2563EB]/30 backdrop-blur-sm">
+                        <Play className="h-5 w-5 text-white fill-white ml-0.5" />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="p-4">
+                    <h3 className="text-sm font-semibold text-white mb-1 group-hover:text-[#2563EB] transition-colors">
+                      Season Bloopers
+                    </h3>
+                    <p className="text-[11px] text-white/35 leading-relaxed">
+                      The funniest outtakes, flubbed lines, and unexpected moments that never made the final cut — compiled into one hilarious reel for the true fans.
+                    </p>
+                    <div className="flex items-center gap-2 mt-3">
+                      <Laugh className="h-3 w-3 text-[#2563EB]/60" />
+                      <span className="text-[10px] text-[#2563EB]/70 font-medium">Outtakes Reel</span>
+                    </div>
+                  </div>
+                </div>
+
               </div>
-            ))}
-          </div>
+
+              {/* Subscription upsell banner */}
+              <div className="rounded-2xl border border-[#2563EB]/15 bg-gradient-to-r from-[#2563EB]/[0.06] to-transparent p-5 flex items-center justify-between gap-4 flex-wrap">
+                <div className="flex items-center gap-3">
+                  <div className="h-10 w-10 rounded-xl bg-[#2563EB]/15 border border-[#2563EB]/25 flex items-center justify-center shrink-0">
+                    <MonitorPlay className="h-5 w-5 text-[#2563EB]" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold text-white">Unlock all bonus content</p>
+                    <p className="text-xs text-white/35">Subscribe to CINEGEN TV for unlimited access to every show&apos;s bonus library.</p>
+                  </div>
+                </div>
+                <Link
+                  href="/pricing"
+                  className="flex items-center gap-1.5 px-5 py-2.5 rounded-xl bg-[#2563EB] hover:bg-[#3B82F6] text-white font-semibold text-sm transition-colors shrink-0 shadow-lg shadow-[#2563EB]/20"
+                >
+                  Subscribe <ArrowRight className="h-3.5 w-3.5" />
+                </Link>
+              </div>
+            </div>
+          )}
         </section>
 
         {/* ════════════════════════════════════════════════════════════

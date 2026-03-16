@@ -162,8 +162,40 @@ export default function PosterMakerPage() {
                       </div>
                     </div>
                     <div className="flex gap-2 p-3">
-                      <button className="flex-1 py-2 text-xs bg-gray-800 text-gray-400 rounded-lg hover:bg-gray-700"><Download className="inline h-3 w-3 mr-1" />Télécharger</button>
-                      <button className="flex-1 py-2 text-xs bg-gray-800 text-gray-400 rounded-lg hover:bg-gray-700"><Share2 className="inline h-3 w-3 mr-1" />Partager</button>
+                      <button
+                        onClick={async () => {
+                          try {
+                            const response = await fetch(poster.url)
+                            const blob = await response.blob()
+                            const url = URL.createObjectURL(blob)
+                            const a = document.createElement('a')
+                            a.href = url
+                            a.download = `${poster.title.replace(/\s+/g, '-').toLowerCase()}-poster.jpg`
+                            a.click()
+                            URL.revokeObjectURL(url)
+                            toast.success('Affiche téléchargée !')
+                          } catch {
+                            toast.error('Erreur lors du téléchargement')
+                          }
+                        }}
+                        className="flex-1 py-2 text-xs bg-gray-800 text-gray-400 rounded-lg hover:bg-gray-700"
+                      >
+                        <Download className="inline h-3 w-3 mr-1" />Télécharger
+                      </button>
+                      <button
+                        onClick={async () => {
+                          const shareData = { title: poster.title, text: poster.tagline, url: poster.url }
+                          if (navigator.share) {
+                            try { await navigator.share(shareData) } catch { /* cancelled */ }
+                          } else {
+                            await navigator.clipboard.writeText(poster.url)
+                            toast.success('Lien copié dans le presse-papiers !')
+                          }
+                        }}
+                        className="flex-1 py-2 text-xs bg-gray-800 text-gray-400 rounded-lg hover:bg-gray-700"
+                      >
+                        <Share2 className="inline h-3 w-3 mr-1" />Partager
+                      </button>
                       <button onClick={generate} className="py-2 px-3 text-xs bg-gray-800 text-gray-400 rounded-lg hover:bg-gray-700"><RefreshCcw className="h-3 w-3" /></button>
                     </div>
                   </div>

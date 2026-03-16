@@ -1,7 +1,10 @@
 import Link from 'next/link'
 import { Film, Tv, Users, Award, Pen, BarChart3, MapPin, Code2, Tag, Star, Clapperboard, Briefcase, Coins, Radio, Play } from 'lucide-react'
+import { getTranslations } from 'next-intl/server'
 
-export function Footer() {
+export async function Footer() {
+  const t = await getTranslations('footer')
+
   return (
     <footer className="relative border-t border-white/[0.04] bg-[#060606] pt-20 md:pt-24 pb-12 md:pb-16 mt-16">
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[1px] bg-gradient-to-r from-transparent via-[#E50914]/20 to-transparent" />
@@ -16,9 +19,7 @@ export function Footer() {
               </span>
             </Link>
             <p className="text-[13px] text-white/30 leading-[1.8] max-w-sm">
-              The infinite possibilities cinema studio.
-              We harness AI to create the cinema of tomorrow —
-              collaborative production, tokenization, blockchain.
+              {t('tagline')}
             </p>
             <div className="flex items-center gap-4 pt-1">
               <span className="text-[10px] text-white/15 uppercase tracking-[0.2em] font-medium">Paris</span>
@@ -29,49 +30,49 @@ export function Footer() {
 
           {/* Platform */}
           <div className="lg:col-span-2 space-y-5">
-            <h4 className="text-[10px] font-bold text-white/40 uppercase tracking-[0.2em]">Platform</h4>
+            <h4 className="text-[10px] font-bold text-white/40 uppercase tracking-[0.2em]">{t('section_platform')}</h4>
             <ul className="space-y-3.5">
-              <li><Link href="/films" className="group flex items-center gap-2 text-[13px] text-white/25 hover:text-[#E50914] transition-colors"><Film className="h-3.5 w-3.5 opacity-40 group-hover:opacity-100 transition-opacity" />Films</Link></li>
-              <li><Link href="/streaming" className="group flex items-center gap-2 text-[13px] text-white/25 hover:text-[#E50914] transition-colors"><Tv className="h-3.5 w-3.5 opacity-40 group-hover:opacity-100 transition-opacity" />Streaming</Link></li>
-              <li><Link href="/community" className="group flex items-center gap-2 text-[13px] text-white/25 hover:text-[#E50914] transition-colors"><Users className="h-3.5 w-3.5 opacity-40 group-hover:opacity-100 transition-opacity" />Community</Link></li>
-              <li><Link href="/leaderboard" className="group flex items-center gap-2 text-[13px] text-white/25 hover:text-[#E50914] transition-colors"><BarChart3 className="h-3.5 w-3.5 opacity-40 group-hover:opacity-100 transition-opacity" />Leaderboard</Link></li>
-              <li><Link href="/roadmap" className="group flex items-center gap-2 text-[13px] text-white/25 hover:text-[#E50914] transition-colors"><MapPin className="h-3.5 w-3.5 opacity-40 group-hover:opacity-100 transition-opacity" />Roadmap</Link></li>
-              <li><Link href="/pricing" className="group flex items-center gap-2 text-[13px] text-white/25 hover:text-[#E50914] transition-colors"><Tag className="h-3.5 w-3.5 opacity-40 group-hover:opacity-100 transition-opacity" />Pricing</Link></li>
-              <li><Link href="/developers" className="group flex items-center gap-2 text-[13px] text-white/25 hover:text-[#E50914] transition-colors"><Code2 className="h-3.5 w-3.5 opacity-40 group-hover:opacity-100 transition-opacity" />Developer API</Link></li>
-              <li><Link href="/tv" className="group flex items-center gap-2 text-[13px] text-white/25 hover:text-[#2563EB] transition-colors"><Tv className="h-3.5 w-3.5 opacity-40 group-hover:opacity-100 transition-opacity" />TV Home</Link></li>
-              <li><Link href="/tv/live" className="group flex items-center gap-2 text-[13px] text-white/25 hover:text-[#2563EB] transition-colors"><Radio className="h-3.5 w-3.5 opacity-40 group-hover:opacity-100 transition-opacity" />Live TV</Link></li>
-              <li><Link href="/tv/replay" className="group flex items-center gap-2 text-[13px] text-white/25 hover:text-[#2563EB] transition-colors"><Tv className="h-3.5 w-3.5 opacity-40 group-hover:opacity-100 transition-opacity" />Replay</Link></li>
-              <li><Link href="/tv/shows" className="group flex items-center gap-2 text-[13px] text-white/25 hover:text-[#2563EB] transition-colors"><Film className="h-3.5 w-3.5 opacity-40 group-hover:opacity-100 transition-opacity" />TV Shows</Link></li>
-              <li><Link href="/watch" className="group flex items-center gap-2 text-[13px] text-white/25 hover:text-[#2563EB] transition-colors"><Play className="h-3.5 w-3.5 opacity-40 group-hover:opacity-100 transition-opacity" />Watch All</Link></li>
-              <li><Link href="/tv/hosts" className="group flex items-center gap-2 text-[13px] text-white/25 hover:text-[#2563EB] transition-colors"><Users className="h-3.5 w-3.5 opacity-40 group-hover:opacity-100 transition-opacity" />TV Hosts</Link></li>
-              <li><Link href="/tv/community" className="group flex items-center gap-2 text-[13px] text-white/25 hover:text-[#2563EB] transition-colors"><Users className="h-3.5 w-3.5 opacity-40 group-hover:opacity-100 transition-opacity" />TV Community</Link></li>
+              <li><Link href="/films" className="group flex items-center gap-2 text-[13px] text-white/25 hover:text-[#E50914] transition-colors"><Film className="h-3.5 w-3.5 opacity-40 group-hover:opacity-100 transition-opacity" />{t('link_films')}</Link></li>
+              <li><Link href="/streaming" className="group flex items-center gap-2 text-[13px] text-white/25 hover:text-[#E50914] transition-colors"><Tv className="h-3.5 w-3.5 opacity-40 group-hover:opacity-100 transition-opacity" />{t('link_streaming')}</Link></li>
+              <li><Link href="/community" className="group flex items-center gap-2 text-[13px] text-white/25 hover:text-[#E50914] transition-colors"><Users className="h-3.5 w-3.5 opacity-40 group-hover:opacity-100 transition-opacity" />{t('link_community')}</Link></li>
+              <li><Link href="/leaderboard" className="group flex items-center gap-2 text-[13px] text-white/25 hover:text-[#E50914] transition-colors"><BarChart3 className="h-3.5 w-3.5 opacity-40 group-hover:opacity-100 transition-opacity" />{t('link_leaderboard')}</Link></li>
+              <li><Link href="/roadmap" className="group flex items-center gap-2 text-[13px] text-white/25 hover:text-[#E50914] transition-colors"><MapPin className="h-3.5 w-3.5 opacity-40 group-hover:opacity-100 transition-opacity" />{t('link_roadmap')}</Link></li>
+              <li><Link href="/pricing" className="group flex items-center gap-2 text-[13px] text-white/25 hover:text-[#E50914] transition-colors"><Tag className="h-3.5 w-3.5 opacity-40 group-hover:opacity-100 transition-opacity" />{t('link_pricing')}</Link></li>
+              <li><Link href="/developers" className="group flex items-center gap-2 text-[13px] text-white/25 hover:text-[#E50914] transition-colors"><Code2 className="h-3.5 w-3.5 opacity-40 group-hover:opacity-100 transition-opacity" />{t('link_developer_api')}</Link></li>
+              <li><Link href="/tv" className="group flex items-center gap-2 text-[13px] text-white/25 hover:text-[#2563EB] transition-colors"><Tv className="h-3.5 w-3.5 opacity-40 group-hover:opacity-100 transition-opacity" />{t('link_tv_home')}</Link></li>
+              <li><Link href="/tv/live" className="group flex items-center gap-2 text-[13px] text-white/25 hover:text-[#2563EB] transition-colors"><Radio className="h-3.5 w-3.5 opacity-40 group-hover:opacity-100 transition-opacity" />{t('link_live_tv')}</Link></li>
+              <li><Link href="/tv/replay" className="group flex items-center gap-2 text-[13px] text-white/25 hover:text-[#2563EB] transition-colors"><Tv className="h-3.5 w-3.5 opacity-40 group-hover:opacity-100 transition-opacity" />{t('link_replay')}</Link></li>
+              <li><Link href="/tv/shows" className="group flex items-center gap-2 text-[13px] text-white/25 hover:text-[#2563EB] transition-colors"><Film className="h-3.5 w-3.5 opacity-40 group-hover:opacity-100 transition-opacity" />{t('link_tv_shows')}</Link></li>
+              <li><Link href="/watch" className="group flex items-center gap-2 text-[13px] text-white/25 hover:text-[#2563EB] transition-colors"><Play className="h-3.5 w-3.5 opacity-40 group-hover:opacity-100 transition-opacity" />{t('link_watch_all')}</Link></li>
+              <li><Link href="/tv/hosts" className="group flex items-center gap-2 text-[13px] text-white/25 hover:text-[#2563EB] transition-colors"><Users className="h-3.5 w-3.5 opacity-40 group-hover:opacity-100 transition-opacity" />{t('link_tv_hosts')}</Link></li>
+              <li><Link href="/tv/community" className="group flex items-center gap-2 text-[13px] text-white/25 hover:text-[#2563EB] transition-colors"><Users className="h-3.5 w-3.5 opacity-40 group-hover:opacity-100 transition-opacity" />{t('link_tv_community')}</Link></li>
             </ul>
           </div>
 
           {/* Create */}
           <div className="lg:col-span-3 space-y-5">
-            <h4 className="text-[10px] font-bold text-white/40 uppercase tracking-[0.2em]">Create</h4>
+            <h4 className="text-[10px] font-bold text-white/40 uppercase tracking-[0.2em]">{t('section_create')}</h4>
             <ul className="space-y-3.5">
-              <li><Link href="/register" className="group flex items-center gap-2 text-[13px] text-white/25 hover:text-[#E50914] transition-colors"><Users className="h-3.5 w-3.5 opacity-40 group-hover:opacity-100 transition-opacity" />Create Account</Link></li>
-              <li><Link href="/register?role=SCREENWRITER" className="group flex items-center gap-2 text-[13px] text-white/25 hover:text-[#E50914] transition-colors"><Pen className="h-3.5 w-3.5 opacity-40 group-hover:opacity-100 transition-opacity" />Submit a Screenplay</Link></li>
-              <li><Link href="/tasks" className="group flex items-center gap-2 text-[13px] text-white/25 hover:text-[#E50914] transition-colors"><Award className="h-3.5 w-3.5 opacity-40 group-hover:opacity-100 transition-opacity" />Available Tasks</Link></li>
-              <li><Link href="/actors" className="group flex items-center gap-2 text-[13px] text-white/25 hover:text-[#E50914] transition-colors"><Users className="h-3.5 w-3.5 opacity-40 group-hover:opacity-100 transition-opacity" />Actors</Link></li>
-              <li><Link href="/act" className="group flex items-center gap-2 text-[13px] text-white/25 hover:text-[#E50914] transition-colors"><Star className="h-3.5 w-3.5 opacity-40 group-hover:opacity-100 transition-opacity" />Act</Link></li>
-              <li><Link href="/produce" className="group flex items-center gap-2 text-[13px] text-white/25 hover:text-[#E50914] transition-colors"><Clapperboard className="h-3.5 w-3.5 opacity-40 group-hover:opacity-100 transition-opacity" />Produce</Link></li>
-              <li><Link href="/work" className="group flex items-center gap-2 text-[13px] text-white/25 hover:text-[#E50914] transition-colors"><Briefcase className="h-3.5 w-3.5 opacity-40 group-hover:opacity-100 transition-opacity" />Work</Link></li>
-              <li><Link href="/points" className="group flex items-center gap-2 text-[13px] text-white/25 hover:text-amber-400 transition-colors"><Coins className="h-3.5 w-3.5 opacity-40 group-hover:opacity-100 transition-opacity" />Points & Rewards</Link></li>
+              <li><Link href="/register" className="group flex items-center gap-2 text-[13px] text-white/25 hover:text-[#E50914] transition-colors"><Users className="h-3.5 w-3.5 opacity-40 group-hover:opacity-100 transition-opacity" />{t('link_create_account')}</Link></li>
+              <li><Link href="/register?role=SCREENWRITER" className="group flex items-center gap-2 text-[13px] text-white/25 hover:text-[#E50914] transition-colors"><Pen className="h-3.5 w-3.5 opacity-40 group-hover:opacity-100 transition-opacity" />{t('link_submit_screenplay')}</Link></li>
+              <li><Link href="/tasks" className="group flex items-center gap-2 text-[13px] text-white/25 hover:text-[#E50914] transition-colors"><Award className="h-3.5 w-3.5 opacity-40 group-hover:opacity-100 transition-opacity" />{t('link_tasks')}</Link></li>
+              <li><Link href="/actors" className="group flex items-center gap-2 text-[13px] text-white/25 hover:text-[#E50914] transition-colors"><Users className="h-3.5 w-3.5 opacity-40 group-hover:opacity-100 transition-opacity" />{t('link_actors')}</Link></li>
+              <li><Link href="/act" className="group flex items-center gap-2 text-[13px] text-white/25 hover:text-[#E50914] transition-colors"><Star className="h-3.5 w-3.5 opacity-40 group-hover:opacity-100 transition-opacity" />{t('link_act')}</Link></li>
+              <li><Link href="/produce" className="group flex items-center gap-2 text-[13px] text-white/25 hover:text-[#E50914] transition-colors"><Clapperboard className="h-3.5 w-3.5 opacity-40 group-hover:opacity-100 transition-opacity" />{t('link_produce')}</Link></li>
+              <li><Link href="/work" className="group flex items-center gap-2 text-[13px] text-white/25 hover:text-[#E50914] transition-colors"><Briefcase className="h-3.5 w-3.5 opacity-40 group-hover:opacity-100 transition-opacity" />{t('link_work')}</Link></li>
+              <li><Link href="/points" className="group flex items-center gap-2 text-[13px] text-white/25 hover:text-amber-400 transition-colors"><Coins className="h-3.5 w-3.5 opacity-40 group-hover:opacity-100 transition-opacity" />{t('link_points')}</Link></li>
             </ul>
           </div>
 
           {/* Legal */}
           <div className="lg:col-span-3 space-y-5">
-            <h4 className="text-[10px] font-bold text-white/40 uppercase tracking-[0.2em]">Legal</h4>
+            <h4 className="text-[10px] font-bold text-white/40 uppercase tracking-[0.2em]">{t('section_legal')}</h4>
             <ul className="space-y-3.5">
-              <li><Link href="/legal/terms" className="text-[13px] text-white/25 hover:text-white/50 transition-colors">Terms of Service</Link></li>
-              <li><Link href="/legal/privacy" className="text-[13px] text-white/25 hover:text-white/50 transition-colors">Privacy Policy</Link></li>
-              <li><Link href="/legal/cookies" className="text-[13px] text-white/25 hover:text-white/50 transition-colors">Cookies</Link></li>
-              <li><Link href="/about" className="text-[13px] text-white/25 hover:text-white/50 transition-colors">About</Link></li>
-              <li><Link href="/invest" className="text-[13px] text-white/25 hover:text-[#E50914] transition-colors font-medium">Investors</Link></li>
+              <li><Link href="/legal/terms" className="text-[13px] text-white/25 hover:text-white/50 transition-colors">{t('link_terms')}</Link></li>
+              <li><Link href="/legal/privacy" className="text-[13px] text-white/25 hover:text-white/50 transition-colors">{t('link_privacy')}</Link></li>
+              <li><Link href="/legal/cookies" className="text-[13px] text-white/25 hover:text-white/50 transition-colors">{t('link_cookies')}</Link></li>
+              <li><Link href="/about" className="text-[13px] text-white/25 hover:text-white/50 transition-colors">{t('link_about')}</Link></li>
+              <li><Link href="/invest" className="text-[13px] text-white/25 hover:text-[#E50914] transition-colors font-medium">{t('link_investors')}</Link></li>
             </ul>
           </div>
         </div>
@@ -79,10 +80,10 @@ export function Footer() {
         {/* Bottom bar */}
         <div className="mt-16 pt-10 border-t border-white/[0.04] flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-[11px] text-white/15">
-            &copy; {new Date().getFullYear()} CINEGEN Films. All rights reserved.
+            &copy; {new Date().getFullYear()} {t('copyright')}
           </p>
           <div className="flex items-center gap-3">
-            <span className="text-[10px] text-white/10 tracking-wider">Powered by</span>
+            <span className="text-[10px] text-white/10 tracking-wider">{t('powered_by')}</span>
             <span className="text-[10px] text-white/20 font-medium">Next.js</span>
             <span className="text-[10px] text-white/10">&middot;</span>
             <span className="text-[10px] text-white/20 font-medium">Claude AI</span>

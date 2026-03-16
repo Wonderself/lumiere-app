@@ -11,7 +11,10 @@ import { FILM_STATUS_LABELS } from '@/lib/constants'
 import { FilmTimeline } from '@/components/film-timeline'
 import { SocialShare } from '@/components/social-share'
 import { FilmReviews } from '@/components/film-reviews'
+import { FilmVoteButton } from '@/components/film-vote-button'
+import { WatchlistButton } from '@/components/watchlist-button'
 import { FILMS_BY_SLUG, FILMS_BY_GENRE } from '@/data/films'
+import { getFilmCreditsAction } from '@/app/actions/credits'
 import type { Metadata } from 'next'
 
 type Props = { params: Promise<{ slug: string }> }
@@ -69,7 +72,8 @@ export default async function FilmDetailPage({ params }: Props) {
 
   // If DB has the film, render the full DB-driven page
   if (film) {
-    return <DbFilmPage film={film} />
+    const { credits } = await getFilmCreditsAction(slug)
+    return <DbFilmPage film={film} credits={credits} />
   }
 
   // Fallback: check shared catalog data
@@ -83,8 +87,10 @@ export default async function FilmDetailPage({ params }: Props) {
    DB Film Page (full features)
    ───────────────────────────────────────────── */
 
+type FilmCredit = Awaited<ReturnType<typeof getFilmCreditsAction>>['credits'][number]
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-function DbFilmPage({ film }: { film: any }) {
+function DbFilmPage({ film, credits }: { film: any; credits: FilmCredit[] }) {
   const availableTasks = 0 // Already counted in the main function for DB films
 
   const jsonLd = {
@@ -200,6 +206,18 @@ function DbFilmPage({ film }: { film: any }) {
               ))}
             </div>
 
+            {/* Community voting */}
+            <div className="rounded-xl border border-white/5 bg-white/[0.02] p-4">
+              <p className="text-xs font-medium text-white/40 uppercase tracking-wider mb-3">Votre avis</p>
+              <FilmVoteButton
+                filmId={film.id}
+                initialUpVotes={film._count.votes}
+                className="justify-center"
+              />
+            </div>
+
+            <WatchlistButton filmId={film.id} className="w-full justify-center" />
+
             <Link href={`/tasks?film=${film.id}`}>
               <Button className="w-full" size="lg">
                 Voir les Tâches Disponibles
@@ -211,6 +229,55 @@ function DbFilmPage({ film }: { film: any }) {
 
         {/* Production Timeline */}
         <FilmTimeline phases={film.phases as never} />
+
+        {/* Film Credits */}
+        {credits.length > 0 && (
+          <div>
+            <h2 className="text-xl font-bold font-playfair text-white mb-6 flex items-center gap-2">
+              <Users className="h-5 w-5 text-[#E50914]" />
+              Générique
+            </h2>
+            <div className="space-y-8">
+              {credits.map((group) => (
+                <div key={group.phase}>
+                  <h3 className="text-xs font-semibold uppercase tracking-widest text-white/30 mb-3">
+                    {group.phase}
+                  </h3>
+                  <div className="grid sm:grid-cols-2 gap-3">
+                    {group.tasks.map((task) =>
+                      task.contributor ? (
+                        <div
+                          key={task.title}
+                          className="flex items-center gap-3 rounded-xl border border-white/5 bg-white/[0.02] p-3"
+                        >
+                          {task.contributor.avatarUrl ? (
+                            <Image
+                              src={task.contributor.avatarUrl}
+                              alt={task.contributor.displayName || ''}
+                              width={36}
+                              height={36}
+                              className="rounded-full object-cover shrink-0"
+                            />
+                          ) : (
+                            <div className="h-9 w-9 rounded-full bg-[#E50914]/10 flex items-center justify-center shrink-0">
+                              <Users className="h-4 w-4 text-[#E50914]/60" />
+                            </div>
+                          )}
+                          <div className="min-w-0">
+                            <p className="text-sm font-medium text-white truncate">
+                              {task.contributor.displayName || 'Contributeur'}
+                            </p>
+                            <p className="text-xs text-white/40 truncate">{task.title}</p>
+                          </div>
+                        </div>
+                      ) : null
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Co-Producer Section */}
         <CoProducerSection film={film} />

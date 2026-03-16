@@ -6,9 +6,10 @@ import Link from 'next/link'
 import {
   Zap, Film, MessageSquare, CreditCard, Star, Trophy,
   ArrowUpRight, ChevronRight, Clock, Bell, Bot,
-  TrendingUp, Target, Sparkles, Activity, Heart,
+  TrendingUp, Target, Sparkles, Activity, Heart, Video,
 } from 'lucide-react'
 import type { Metadata } from 'next'
+import { GenerateVideoForm } from './generate-video-form'
 
 export const dynamic = 'force-dynamic'
 export const metadata: Metadata = { title: 'Espace Cr\u00e9ateur \u2014 CINEGEN' }
@@ -185,6 +186,19 @@ export default async function CreatorDashboardPage() {
               ))}
             </div>
           )}
+        </div>
+      </div>
+
+      {/* Quick Video Generation */}
+      <div>
+        <h2 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+          <Video className="h-5 w-5 text-[#E50914]" /> G\u00e9n\u00e9rer une vid\u00e9o rapidement
+        </h2>
+        <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
+          <p className="text-xs text-white/50 mb-5">
+            Cr\u00e9ez une vid\u00e9o pour vos r\u00e9seaux sociaux en quelques secondes. Co\u00fbt&nbsp;: 10 tokens par g\u00e9n\u00e9ration.
+          </p>
+          <GenerateVideoForm />
         </div>
       </div>
     </div>

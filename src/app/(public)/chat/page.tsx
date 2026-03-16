@@ -12,6 +12,11 @@ import {
   TrendingUp, Shield, Store, Star, Copy, Check,
   Settings, StopCircle,
 } from 'lucide-react'
+import {
+  createConversationAction,
+  getConversationsAction,
+  archiveConversationAction,
+} from '@/app/actions/chat'
 
 const ICON_MAP: Record<string, typeof Bot> = {
   'pen-tool': PenTool, 'clapperboard': Film, 'briefcase': Briefcase,
@@ -38,10 +43,10 @@ interface Message {
 interface ConversationSummary {
   id: string
   agentSlug: string
-  title: string
+  title: string | null
   isPinned: boolean
   messageCount: number
-  lastMessageAt: string | null
+  lastMessageAt: string | Date | null
 }
 
 const NON_MARKETPLACE_AGENTS = ALL_AGENTS.filter(a => a.category !== 'MARKETPLACE')
@@ -67,8 +72,7 @@ export default function ChatPage() {
 
   // Load conversations on mount
   useEffect(() => {
-    fetch('/api/chat/conversations')
-      .then(r => r.json())
+    getConversationsAction()
       .then(data => setConversations(data.conversations || []))
       .catch(() => {})
   }, [])
@@ -223,6 +227,16 @@ export default function ChatPage() {
     inputRef.current?.focus()
   }
 
+  async function handleArchiveConversation(e: React.MouseEvent, convId: string) {
+    e.stopPropagation()
+    await archiveConversationAction(convId)
+    setConversations(prev => prev.filter(c => c.id !== convId))
+    if (activeConvId === convId) {
+      setActiveConvId(null)
+      setMessages([])
+    }
+  }
+
   function handleKeyDown(e: React.KeyboardEvent) {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault()
@@ -261,14 +275,14 @@ export default function ChatPage() {
                   const convAgent = getAgentBySlug(conv.agentSlug)
                   const ConvIcon = ICON_MAP[convAgent?.icon || 'film'] || Bot
                   return (
-                    <button
+                    <div
                       key={conv.id}
-                      onClick={() => loadConversation(conv.id)}
-                      className={`w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors ${
+                      className={`group/conv w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors cursor-pointer ${
                         activeConvId === conv.id
                           ? 'bg-gray-800 text-white'
                           : 'text-gray-400 hover:bg-gray-800/50 hover:text-gray-300'
                       }`}
+                      onClick={() => loadConversation(conv.id)}
                     >
                       <ConvIcon className="h-4 w-4 shrink-0" style={{ color: convAgent?.color }} />
                       <div className="flex-1 min-w-0">
@@ -276,7 +290,14 @@ export default function ChatPage() {
                         <p className="text-[10px] text-gray-600">{conv.messageCount} messages</p>
                       </div>
                       {conv.isPinned && <Pin className="h-3 w-3 text-yellow-500 shrink-0" />}
-                    </button>
+                      <button
+                        onClick={(e) => handleArchiveConversation(e, conv.id)}
+                        className="hidden group-hover/conv:flex h-5 w-5 items-center justify-center rounded text-gray-600 hover:text-gray-400 transition-colors shrink-0"
+                        title="Archiver"
+                      >
+                        <Archive className="h-3 w-3" />
+                      </button>
+                    </div>
                   )
                 })}
               </div>

@@ -20,6 +20,7 @@ import {
   Waves,
   Zap,
 } from 'lucide-react'
+import { toast } from 'sonner'
 import { CreateLayout } from '@/components/create/create-layout'
 import { useCreateProgress } from '@/components/create/use-create-progress'
 import { CREATE_STEPS } from '@/components/create/create-steps'
@@ -172,7 +173,20 @@ export default function MusicPage() {
         {!unlocked && <LockOverlay />}
         <div className="flex items-center justify-between mb-6 flex-wrap gap-3">
           <h2 className="text-lg font-bold text-white/80">Music Library</h2>
-          <button className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-[#E50914] to-[#B20710] text-white text-sm font-semibold hover:opacity-90 transition-opacity">
+          <button
+            onClick={() => {
+              if (!unlocked) { toast.error('Complétez les étapes précédentes pour débloquer cette fonctionnalité'); return }
+              toast.promise(
+                new Promise<void>((resolve) => setTimeout(resolve, 2500)),
+                {
+                  loading: 'Composition IA en cours...',
+                  success: 'Piste originale générée et ajoutée à votre bibliothèque !',
+                  error: 'Erreur lors de la génération',
+                }
+              )
+            }}
+            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-[#E50914] to-[#B20710] text-white text-sm font-semibold hover:opacity-90 transition-opacity"
+          >
             <Sparkles className="h-4 w-4" />
             Generate Custom Track
             <span className="ml-1 px-2 py-0.5 rounded-full bg-white/10 text-[10px]">Included</span>
@@ -270,7 +284,10 @@ export default function MusicPage() {
                 </div>
 
                 {/* Add button */}
-                <button className="w-full py-2 rounded-lg text-xs font-medium bg-white/[0.04] border border-white/[0.08] text-white/60 hover:bg-[#E50914] hover:border-[#E50914] hover:text-white transition-all duration-200 flex items-center justify-center gap-1.5">
+                <button
+                  onClick={() => toast.success(`"${track.title}" ajouté à votre film !`)}
+                  className="w-full py-2 rounded-lg text-xs font-medium bg-white/[0.04] border border-white/[0.08] text-white/60 hover:bg-[#E50914] hover:border-[#E50914] hover:text-white transition-all duration-200 flex items-center justify-center gap-1.5"
+                >
                   <Plus className="h-3.5 w-3.5" />
                   Add to Film
                 </button>

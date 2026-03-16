@@ -5,7 +5,11 @@ import { HeroManifesto } from './hero-manifesto'
 import { FilmRow } from './film-row'
 import { NetflixHeader } from './netflix-header'
 import { SplashScreen } from './splash-screen'
+import { TopTenRow } from './top-ten-row'
+import { CreatorBar } from './creator-bar'
+import { ScreenwriterCTA } from './screenwriter-cta'
 import { Footer } from '@/components/layout/footer'
+import { CreativeShowcase } from '@/components/home/creative-showcase'
 import { GENRE_ORDER, FILMS_BY_GENRE, ALL_FILMS } from '@/data/films'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -329,12 +333,7 @@ export function NetflixHome({ data }: { data: HomeData }) {
         )}
 
         {/* ── Top 10 ── */}
-        <FilmRow
-          title="Top 10"
-          films={top10Films}
-          href="/films"
-          variant="trending"
-        />
+        <TopTenRow films={top10Films} />
 
         {/* ── Pillar Blocks (2nd position) ── */}
         <section className="relative mb-10 md:mb-12 px-4 sm:px-8 md:px-16 lg:px-20">
@@ -620,6 +619,14 @@ export function NetflixHome({ data }: { data: HomeData }) {
             </div>
           </div>
         </section>
+
+        <div className="h-px bg-gradient-to-r from-transparent via-white/[0.04] to-transparent" />
+
+        {/* ── Participez à la Création ── */}
+        <CreatorBar />
+
+        {/* ── Creative Showcase — Trailer Maker & Poster Maker ── */}
+        <CreativeShowcase />
 
         <div className="h-px bg-gradient-to-r from-transparent via-white/[0.04] to-transparent" />
 
@@ -932,6 +939,9 @@ export function NetflixHome({ data }: { data: HomeData }) {
           </div>
         </div>
       </section>
+
+      {/* ── Screenwriter CTA — 100 Scénaristes ── */}
+      <ScreenwriterCTA />
 
       {/* ── Final CTA — Compact 3D banner ── */}
       <section className="relative mx-4 sm:mx-8 md:mx-16 lg:mx-20 mb-10 rounded-2xl overflow-hidden">

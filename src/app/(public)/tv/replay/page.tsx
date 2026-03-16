@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from 'react'
 import Link from 'next/link'
+import { toast } from 'sonner'
 import {
   Play,
   Search,
@@ -170,7 +171,10 @@ export default function TvReplayPage() {
                       <Eye className="h-3 w-3" /> {ep.viewCount.toLocaleString()}
                     </span>
                   </div>
-                  <button className="mt-3 w-full py-2 rounded-lg bg-[#2563EB]/10 border border-[#2563EB]/20 text-[#2563EB] text-sm font-medium hover:bg-[#2563EB]/20 transition-colors flex items-center justify-center gap-2">
+                  <button
+                    onClick={() => toast.info('Lecture du replay...')}
+                    className="mt-3 w-full py-2 rounded-lg bg-[#2563EB]/10 border border-[#2563EB]/20 text-[#2563EB] text-sm font-medium hover:bg-[#2563EB]/20 transition-colors flex items-center justify-center gap-2"
+                  >
                     <Play className="h-3.5 w-3.5" /> Watch Replay
                   </button>
                 </div>

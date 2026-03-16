@@ -197,7 +197,7 @@ export async function submitBookForAdaptationAction(
 
   // Record blockchain event
   await recordEvent({
-    type: 'SCREENPLAY_SUBMITTED',
+    type: 'CONTENT_REGISTERED',
     entityType: 'Screenplay',
     entityId: screenplay.id,
     data: {

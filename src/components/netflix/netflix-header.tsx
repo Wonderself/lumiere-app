@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useSession, signOut } from 'next-auth/react'
 import { useState, useEffect, useRef } from 'react'
+import { useTranslations } from 'next-intl'
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 import {
   DropdownMenu,
@@ -118,6 +119,7 @@ export function NetflixHeader() {
   const { data: session } = useSession()
   const [mobileOpen, setMobileOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const t = useTranslations('nav')
 
   const isAdmin = session?.user?.role === 'ADMIN'
   const userName = session?.user?.name || session?.user?.email || ''
@@ -133,26 +135,27 @@ export function NetflixHeader() {
     { href: '/create', label: 'Start a Film', icon: Clapperboard },
     { href: '/act', label: 'Act In Your Movie', icon: Star },
     { href: '/community/scenarios/new', label: 'Submit a Scenario', icon: FileText },
+    { href: '/tv/create', label: 'Create TV Show', icon: Tv },
   ]
 
   const exploreItems = [
-    { href: '/films', label: 'Films', icon: Film },
-    { href: '/actors', label: 'Actors', icon: UserCircle },
+    { href: '/films', label: t('films'), icon: Film },
+    { href: '/actors', label: t('actors'), icon: UserCircle },
     { href: '/trailer-studio', label: 'Trailer Studio', icon: Sparkles },
-    { href: '/leaderboard', label: 'Leaderboard', icon: Trophy },
+    { href: '/leaderboard', label: t('leaderboard'), icon: Trophy },
   ]
 
   const mobileLinks = [
-    { href: '/', label: 'Home', icon: Film },
-    { href: '/films', label: 'Films', icon: Clapperboard },
+    { href: '/', label: t('home'), icon: Film },
+    { href: '/films', label: t('films'), icon: Clapperboard },
     { href: '/act', label: 'Act', icon: Star },
     { href: '/produce', label: 'Produce', icon: Clapperboard },
     { href: '/work', label: 'Work', icon: Users },
-    { href: '/invest', label: 'Invest', icon: DollarSign },
-    { href: '/community', label: 'Community', icon: MessageSquare },
-    { href: '/tv', label: 'TV', icon: Tv },
-    { href: '/watch', label: 'Watch', icon: Play },
-    { href: '/tv/live', label: 'Live TV', icon: Radio },
+    { href: '/invest', label: t('invest'), icon: DollarSign },
+    { href: '/community', label: t('community'), icon: MessageSquare },
+    { href: '/tv', label: t('tv'), icon: Tv },
+    { href: '/watch', label: t('watch'), icon: Play },
+    { href: '/tv/live', label: t('live_tv'), icon: Radio },
   ]
 
   const moreItems = [
@@ -204,7 +207,7 @@ export function NetflixHeader() {
               pathname.startsWith('/films') ? 'text-white/90' : 'text-white/40 hover:text-white/80'
             )}
           >
-            Films
+            {t('films')}
           </Link>
           <Link
             href="/invest"
@@ -213,7 +216,7 @@ export function NetflixHeader() {
               pathname.startsWith('/invest') ? 'text-white/90' : 'text-white/40 hover:text-white/80'
             )}
           >
-            Invest
+            {t('invest')}
           </Link>
           <Link
             href="/community"
@@ -222,7 +225,7 @@ export function NetflixHeader() {
               pathname.startsWith('/community') ? 'text-white/90' : 'text-white/40 hover:text-white/80'
             )}
           >
-            Community
+            {t('community')}
           </Link>
           <Link
             href="/tv"
@@ -231,7 +234,7 @@ export function NetflixHeader() {
               pathname.startsWith('/tv') ? 'text-white/90' : 'text-white/40 hover:text-white/80'
             )}
           >
-            TV
+            {t('tv')}
           </Link>
           <Link
             href="/watch"
@@ -240,7 +243,7 @@ export function NetflixHeader() {
               pathname.startsWith('/watch') ? 'text-white/90' : 'text-white/40 hover:text-white/80'
             )}
           >
-            Watch
+            {t('watch')}
           </Link>
           <Link
             href="/tv/live"
@@ -249,9 +252,11 @@ export function NetflixHeader() {
               pathname === '/tv/live' ? 'text-white/90' : 'text-white/40 hover:text-white/80'
             )}
           >
-            Live TV
+            {t('live_tv')}
           </Link>
-          <NavDropdown label="More" items={moreItems} isActive={isMoreActive} />
+          <NavDropdown label={t('create')} items={createItems} isActive={isCreateActive} />
+          <NavDropdown label={t('explore')} items={exploreItems} isActive={isExploreActive} />
+          <NavDropdown label={t('more')} items={moreItems} isActive={isMoreActive} />
         </nav>
 
         {/* Right: Search + Lang + Profile + Hamburger */}
@@ -285,22 +290,22 @@ export function NetflixHeader() {
                   <DropdownMenuSeparator className="bg-white/10" />
                   <DropdownMenuItem asChild>
                     <Link href="/dashboard" className="flex items-center gap-2 cursor-pointer text-white/70 hover:text-white">
-                      <LayoutDashboard className="h-4 w-4" /> Dashboard
+                      <LayoutDashboard className="h-4 w-4" /> {t('dashboard')}
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
                     <Link href="/profile" className="flex items-center gap-2 cursor-pointer text-white/70 hover:text-white">
-                      <User className="h-4 w-4" /> Profile
+                      <User className="h-4 w-4" /> {t('profile')}
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
                     <Link href="/profile/payments" className="flex items-center gap-2 cursor-pointer text-white/70 hover:text-white">
-                      <CreditCard className="h-4 w-4" /> Payments
+                      <CreditCard className="h-4 w-4" /> {t('payments')}
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
                     <Link href="/lumens" className="flex items-center gap-2 cursor-pointer text-white/70 hover:text-white">
-                      <Sun className="h-4 w-4" /> Lumens
+                      <Sun className="h-4 w-4" /> {t('lumens')}
                     </Link>
                   </DropdownMenuItem>
                   {(session.user as { role?: string }).role === 'SCREENWRITER' && (
@@ -325,7 +330,7 @@ export function NetflixHeader() {
                     className="text-red-400 focus:text-red-300 focus:bg-red-500/10 cursor-pointer"
                     onClick={() => signOut({ callbackUrl: '/' })}
                   >
-                    <LogOut className="h-4 w-4 mr-2" /> Sign Out
+                    <LogOut className="h-4 w-4 mr-2" /> {t('sign_out')}
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
@@ -336,14 +341,14 @@ export function NetflixHeader() {
                 href="/login"
                 className="text-[12px] font-medium text-white/60 hover:text-white px-4 py-2 rounded-lg border border-white/10 hover:border-white/25 hover:bg-white/5 transition-all duration-300"
               >
-                Sign In
+                {t('sign_in')}
               </Link>
               <Link
                 href="/register"
                 className="relative text-[12px] font-bold px-5 py-2 rounded-lg text-white overflow-hidden transition-all duration-300 hover:shadow-[0_0_30px_rgba(229,9,20,0.35)] hover:scale-[1.02] active:scale-[0.98]"
                 style={{ background: 'linear-gradient(135deg, #E50914 0%, #B20710 100%)' }}
               >
-                <span className="relative z-10">Get Started</span>
+                <span className="relative z-10">{t('sign_up')}</span>
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-200%] hover:translate-x-[200%] transition-transform duration-700" />
               </Link>
             </div>
@@ -391,30 +396,30 @@ export function NetflixHeader() {
               {session?.user ? (
                 <>
                   <Link href="/dashboard" onClick={() => setMobileOpen(false)} className="flex items-center gap-3 px-3 py-2.5 text-sm text-white/50 hover:text-white hover:bg-white/5 rounded-lg transition-all">
-                    <LayoutDashboard className="h-4 w-4" /> Dashboard
+                    <LayoutDashboard className="h-4 w-4" /> {t('dashboard')}
                   </Link>
                   <Link href="/profile" onClick={() => setMobileOpen(false)} className="flex items-center gap-3 px-3 py-2.5 text-sm text-white/50 hover:text-white hover:bg-white/5 rounded-lg transition-all">
-                    <User className="h-4 w-4" /> Profile
+                    <User className="h-4 w-4" /> {t('profile')}
                   </Link>
                   {isAdmin && (
                     <Link href="/admin" onClick={() => setMobileOpen(false)} className="flex items-center gap-3 px-3 py-2.5 text-sm text-white/50 hover:text-white hover:bg-white/5 rounded-lg transition-all">
-                      <Settings className="h-4 w-4" /> Admin
+                      <Settings className="h-4 w-4" /> {t('admin')}
                     </Link>
                   )}
                   <button
                     onClick={() => { signOut({ callbackUrl: '/' }); setMobileOpen(false) }}
                     className="flex items-center gap-3 px-3 py-2.5 text-sm text-red-400/70 hover:text-red-400 hover:bg-red-500/5 rounded-lg w-full transition-all"
                   >
-                    <LogOut className="h-4 w-4" /> Sign Out
+                    <LogOut className="h-4 w-4" /> {t('sign_out')}
                   </button>
                 </>
               ) : (
                 <div className="flex gap-2 pt-2">
                   <Link href="/login" onClick={() => setMobileOpen(false)} className="flex-1 text-center text-sm text-white/60 border border-white/10 rounded-full py-2.5 hover:bg-white/5 transition-all">
-                    Sign In
+                    {t('sign_in')}
                   </Link>
                   <Link href="/register" onClick={() => setMobileOpen(false)} className="flex-1 text-center text-sm font-semibold text-white rounded-full py-2.5" style={{ background: 'linear-gradient(135deg, #E50914, #B20710)' }}>
-                    Sign Up
+                    {t('sign_up')}
                   </Link>
                 </div>
               )}
