@@ -1,4 +1,5 @@
 import NextAuth from 'next-auth'
+import type { Session } from 'next-auth'
 import Credentials from 'next-auth/providers/credentials'
 import { prisma } from '@/lib/prisma'
 import bcrypt from 'bcryptjs'
@@ -97,23 +98,21 @@ const nextAuth = NextAuth({
 })
 
 export const { handlers, signIn, signOut } = nextAuth
-const _auth = nextAuth.auth
 
 /* ── DEMO MODE: always return admin session if not logged in ── */
-export async function auth() {
-  const session = await _auth()
-  if (session) return session
+const DEMO_SESSION: Session = {
+  user: {
+    id: 'admin-bypass-001',
+    email: 'admin@admin.com',
+    name: 'Admin (Demo)',
+    role: 'ADMIN',
+    level: 'VIP',
+    isVerified: true,
+  },
+  expires: new Date(Date.now() + 86400 * 1000).toISOString(),
+}
 
-  // No session → return fake admin session for open access
-  return {
-    user: {
-      id: 'admin-bypass-001',
-      email: 'admin@admin.com',
-      name: 'Admin (Demo)',
-      role: 'ADMIN',
-      level: 'VIP',
-      isVerified: true,
-    },
-    expires: new Date(Date.now() + 86400 * 1000).toISOString(),
-  } as Awaited<ReturnType<typeof _auth>>
+export async function auth(): Promise<Session> {
+  const session = await nextAuth.auth() as Session | null
+  return session ?? DEMO_SESSION
 }
