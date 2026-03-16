@@ -7,6 +7,20 @@ export const metadata = {
   title: 'CINEGEN — Create. Fund. Stream Your Films.',
   description:
     'The collaborative cinema platform powered by AI. Micro-tasks, streaming, independent film production. Paris, Jerusalem, Hollywood.',
+  openGraph: {
+    title: 'CINEGEN — The AI Cinema Studio',
+    description: 'Create, fund, and stream films powered by 113 AI agents. Join the cinema revolution.',
+    url: 'https://cinegen.studio',
+    siteName: 'CINEGEN',
+    type: 'website',
+    locale: 'fr_FR',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'CINEGEN — The AI Cinema Studio',
+    description: 'Create, fund, and stream films powered by 113 AI agents.',
+  },
+  keywords: ['cinema IA', 'film participatif', 'production cinématographique', 'streaming', 'crowdfunding film', 'AI cinema', 'CINEGEN'],
 }
 
 async function getHomeData() {
