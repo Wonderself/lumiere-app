@@ -47,19 +47,19 @@ export function SlideOver({ open, onClose, title, description, children, width =
       <div className="fixed inset-y-0 right-0 flex">
         <div
           ref={panelRef}
-          className={`w-screen ${WIDTH_MAP[width]} bg-white shadow-2xl transform transition-transform duration-300 ease-out`}
+          className={`w-screen ${WIDTH_MAP[width]} bg-[#111] shadow-2xl transform transition-transform duration-300 ease-out`}
         >
           {/* Header */}
-          <div className="flex items-center justify-between px-6 py-5 border-b border-gray-200">
+          <div className="flex items-center justify-between px-6 py-5 border-b border-white/10">
             <div>
-              <h2 className="text-lg font-semibold text-[#1A1A2E]">{title}</h2>
-              {description && <p className="text-xs text-gray-500 mt-0.5">{description}</p>}
+              <h2 className="text-lg font-semibold text-white">{title}</h2>
+              {description && <p className="text-xs text-white/50 mt-0.5">{description}</p>}
             </div>
             <button
               onClick={onClose}
-              className="h-8 w-8 rounded-lg flex items-center justify-center hover:bg-gray-100 transition-colors"
+              className="h-8 w-8 rounded-lg flex items-center justify-center hover:bg-white/10 transition-colors"
             >
-              <X className="h-5 w-5 text-gray-500" />
+              <X className="h-5 w-5 text-white/50" />
             </button>
           </div>
 

@@ -27,8 +27,10 @@ export async function POST(req: NextRequest) {
   let event: { type: string; data: { object: Record<string, unknown> } }
 
   try {
-    // @ts-expect-error — stripe SDK conditionally installed
-    const { default: Stripe } = await import('stripe')
+    // Dynamic import that webpack cannot statically resolve
+    const moduleName = 'stripe'
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const Stripe = (await import(/* webpackIgnore: true */ moduleName)).default
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, { apiVersion: '2024-12-18.acacia' })
     event = stripe.webhooks.constructEvent(body, sig, WEBHOOK_SECRET) as typeof event
   } catch (err) {

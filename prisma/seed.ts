@@ -1269,13 +1269,13 @@ async function main() {
   await prisma.subscription.createMany({
     data: [
       { userId: viewer.id, plan: 'FREE', status: 'active' },
-      { userId: vip1.id, plan: 'BUSINESS', status: 'active', expiresAt: new Date('2027-01-01') },
-      { userId: artist.id, plan: 'PRO', status: 'active', expiresAt: new Date('2026-12-01') },
-      { userId: expert1.id, plan: 'STARTER', status: 'active', expiresAt: new Date('2026-12-01') },
+      { userId: vip1.id, plan: 'PREMIUM_PLUS', status: 'active', expiresAt: new Date('2027-01-01') },
+      { userId: artist.id, plan: 'PREMIUM', status: 'active', expiresAt: new Date('2026-12-01') },
+      { userId: expert1.id, plan: 'FREE', status: 'active', expiresAt: new Date('2026-12-01') },
       { userId: contributor.id, plan: 'FREE', status: 'active' },
     ],
   })
-  console.log('✅ Abonnements créés (FREE, STARTER, PRO, BUSINESS)')
+  console.log('✅ Abonnements créés (FREE, PREMIUM, PREMIUM_PLUS)')
 
   // =============================================
   // NOTIFICATIONS
