@@ -150,20 +150,6 @@ const nextAuth = NextAuth({
 
 export const { handlers, signIn, signOut } = nextAuth
 
-/* ── DEMO MODE: always return admin session if not logged in ── */
-const DEMO_SESSION: Session = {
-  user: {
-    id: 'admin-bypass-001',
-    email: 'admin@admin.com',
-    name: 'Admin (Demo)',
-    role: 'ADMIN',
-    level: 'VIP',
-    isVerified: true,
-  },
-  expires: new Date(Date.now() + 86400 * 1000).toISOString(),
-}
-
-export async function auth(): Promise<Session> {
-  const session = await nextAuth.auth() as Session | null
-  return session ?? DEMO_SESSION
+export async function auth(): Promise<Session | null> {
+  return await nextAuth.auth() as Session | null
 }
