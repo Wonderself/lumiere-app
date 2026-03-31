@@ -6,18 +6,15 @@ import { FilmRow } from './film-row'
 import { NetflixHeader } from './netflix-header'
 import { SplashScreen } from './splash-screen'
 import { TopTenRow } from './top-ten-row'
-import { CreatorBar } from './creator-bar'
-import { ScreenwriterCTA } from './screenwriter-cta'
 import { Footer } from '@/components/layout/footer'
-import { CreativeShowcase } from '@/components/home/creative-showcase'
 import { GENRE_ORDER, FILMS_BY_GENRE, ALL_FILMS } from '@/data/films'
 import Link from 'next/link'
 import Image from 'next/image'
 import {
-  ArrowRight, ChevronLeft, ChevronRight, Pen, Palette, Music, Camera, Sparkles,
-  Clapperboard, DollarSign, PlayCircle, Vote, Star, Users, MessageSquare,
+  ArrowRight, ChevronLeft, ChevronRight,
+  Vote, Star, Users, MessageSquare,
   Flame, Laugh, Drama, Microscope, BookOpen, Swords, Ghost, Heart, Wand2, Clock,
-  Activity, Briefcase, Film, Play, TrendingUp, Tv, Radio, Monitor,
+  Activity,
 } from 'lucide-react'
 
 /* ────────────────────────────────────────────────
@@ -112,52 +109,6 @@ const GENRE_CONFIG: Record<string, { icon: typeof Flame; color: string; colorLig
 }
 
 /* ────────────────────────────────────────────────
-   Pillar blocks
-   ──────────────────────────────────────────────── */
-
-const pillars = [
-  {
-    icon: Clapperboard,
-    title: 'PRODUCE',
-    sub: 'Submit scripts, assemble a team, and lead your own film production.',
-    href: '/films',
-    image: '/images/ai-film-production-team-meeting.webp',
-    accent: '#E50914',
-    gradient: 'from-[#E50914]/40 via-[#E50914]/10 to-transparent',
-  },
-  {
-    icon: DollarSign,
-    title: 'FUND',
-    sub: 'Back the projects you believe in. Invest in independent cinema.',
-    href: '/invest',
-    image: '/images/editions-ruppin-library-partnership.webp',
-    accent: '#10B981',
-    gradient: 'from-emerald-500/40 via-emerald-500/10 to-transparent',
-  },
-  {
-    icon: PlayCircle,
-    title: 'CREATE',
-    sub: 'Micro-tasks: design, compose, write. Earn Lumens for every contribution.',
-    href: '/tasks',
-    image: '/images/studio-workflow-maison-desk.webp',
-    accent: '#3B82F6',
-    gradient: 'from-blue-500/40 via-blue-500/10 to-transparent',
-  },
-]
-
-/* ────────────────────────────────────────────────
-   Create cards
-   ──────────────────────────────────────────────── */
-
-const createCards = [
-  { icon: Pen, title: 'Write a Screenplay', description: 'Submit your story to the community vote', href: '/community/scenarios', accent: '#E50914', accentLight: '#FF4444', image: 'https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=400&h=500&q=80' },
-  { icon: Palette, title: 'Design & VFX', description: 'Create visuals, storyboards, environments', href: '/tasks', accent: '#8B5CF6', accentLight: '#C4B5FD', image: 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&w=400&h=500&q=80' },
-  { icon: Music, title: 'Compose Music', description: 'Score original soundtracks for films', href: '/tasks', accent: '#F59E0B', accentLight: '#FCD34D', image: 'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=400&h=500&q=80' },
-  { icon: Camera, title: 'Direct & Produce', description: 'Lead a film from script to screen', href: '/films', accent: '#10B981', accentLight: '#6EE7B7', image: 'https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=400&h=500&q=80' },
-  { icon: Sparkles, title: 'AI Micro-Tasks', description: 'Complete small tasks, earn rewards', href: '/tasks', accent: '#3B82F6', accentLight: '#93C5FD', image: 'https://images.unsplash.com/photo-1574267432553-4b4628081c31?auto=format&fit=crop&w=400&h=500&q=80' },
-]
-
-/* ────────────────────────────────────────────────
    Live counter hook (fake animated counter)
    ──────────────────────────────────────────────── */
 
@@ -189,19 +140,9 @@ export function NetflixHome({ data }: { data: HomeData }) {
     .slice(0, 10)
     .map((f, i) => ({ ...f, id: `top10-${i}` }))
 
-  // ALWAYS show all 10 genre rows (fallback), regardless of DB
+  // Genre rows — Documentary shown first
   const allGenreRows = GENRE_ORDER.map(genre => [genre, FALLBACK_GENRE_FILMS[genre]] as [string, FilmCard[]])
-  // Documentary row is extracted to show first; remaining genres split in half
   const docRow = allGenreRows.find(([g]) => g === 'Documentary')
-  const otherGenreRows = allGenreRows.filter(([g]) => g !== 'Documentary')
-  const firstHalfGenres = otherGenreRows.slice(0, 5)
-  const secondHalfGenres = otherGenreRows.slice(5)
-
-  // Trailers: films in DRAFT or PRE_PRODUCTION
-  const trailerFilms = ALL_FILMS
-    .filter((f) => f.status === 'DRAFT' || f.status === 'PRE_PRODUCTION')
-    .slice(0, 12)
-    .map((f, i) => ({ ...f, id: `trailer-${i}` }))
 
   // Community vote: films with low funding
   const voteFilms = ALL_FILMS
@@ -209,7 +150,6 @@ export function NetflixHome({ data }: { data: HomeData }) {
     .slice(0, 10)
     .map((f, i) => ({ ...f, id: `cvote-${i}` }))
 
-  const trailerScrollRef = useRef<HTMLDivElement>(null)
   const voteScrollRef = useRef<HTMLDivElement>(null)
 
   const scroll = (ref: React.RefObject<HTMLDivElement | null>, dir: 'left' | 'right') => {
@@ -228,6 +168,70 @@ export function NetflixHome({ data }: { data: HomeData }) {
 
       {/* ── Hero ── */}
       <HeroManifesto />
+
+      {/* ── 3 CTA Cards ── */}
+      <section className="relative z-10 px-4 sm:px-8 md:px-16 lg:px-20 pt-10 pb-6">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          {[
+            {
+              emoji: '🎬',
+              title: 'Créer un Film',
+              subtitle: '7 étapes assistées par l\'IA',
+              href: '/create',
+              accent: '#E50914',
+            },
+            {
+              emoji: '💰',
+              title: 'Investir',
+              subtitle: 'Dès $0.05 — SAFE 50% discount',
+              href: '/investors',
+              accent: '#10B981',
+            },
+            {
+              emoji: '🍿',
+              title: 'Regarder',
+              subtitle: '100+ films, streaming gratuit',
+              href: '/films',
+              accent: '#3B82F6',
+            },
+          ].map((card) => (
+            <Link
+              key={card.title}
+              href={card.href}
+              className="group relative flex flex-col items-center justify-center gap-3 p-7 rounded-2xl transition-all duration-400 hover:-translate-y-1"
+              style={{
+                background: 'rgba(255,255,255,0.03)',
+                border: `1px solid ${card.accent}25`,
+                boxShadow: '0 4px 24px rgba(0,0,0,0.3)',
+              }}
+            >
+              {/* Hover glow */}
+              <div
+                className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-400 pointer-events-none"
+                style={{ boxShadow: `0 0 40px ${card.accent}20, inset 0 0 40px ${card.accent}05` }}
+              />
+              {/* Bottom accent line */}
+              <div className="absolute bottom-0 left-0 right-0 h-[2px] overflow-hidden rounded-b-2xl">
+                <div
+                  className="h-full w-0 group-hover:w-full transition-all duration-500 ease-out"
+                  style={{ background: `linear-gradient(90deg, transparent, ${card.accent}, transparent)` }}
+                />
+              </div>
+              <span className="text-4xl">{card.emoji}</span>
+              <div className="text-center">
+                <p className="text-base font-black text-white tracking-wide">{card.title}</p>
+                <p className="text-[12px] text-white/40 mt-1 group-hover:text-white/60 transition-colors">{card.subtitle}</p>
+              </div>
+              <div
+                className="flex items-center gap-1.5 text-[11px] font-semibold opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-1 group-hover:translate-y-0"
+                style={{ color: card.accent }}
+              >
+                Découvrir <ArrowRight className="h-3 w-3" />
+              </div>
+            </Link>
+          ))}
+        </div>
+      </section>
 
       <div className="relative z-10">
         {/* ── Category Pills — Cinematic genre buttons with Unsplash backgrounds ── */}
@@ -335,57 +339,6 @@ export function NetflixHome({ data }: { data: HomeData }) {
         {/* ── Top 10 ── */}
         <TopTenRow films={top10Films} />
 
-        {/* ── Pillar Blocks (2nd position) ── */}
-        <section className="relative mb-10 md:mb-12 px-4 sm:px-8 md:px-16 lg:px-20">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-base md:text-lg lg:text-xl font-bold text-white/90 tracking-tight section-title-flash">
-              Get Involved
-            </h2>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-4">
-            {pillars.map((p) => (
-              <Link
-                key={p.title}
-                href={p.href}
-                className="group relative aspect-[16/10] sm:aspect-[16/11] rounded-2xl overflow-hidden border border-white/[0.06] hover:border-white/15 transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_16px_48px_rgba(0,0,0,0.5)]"
-              >
-                <Image
-                  src={p.image}
-                  alt={p.title}
-                  fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-[1.06]"
-                  sizes="(max-width: 640px) 100vw, 33vw"
-                />
-                <div className="absolute inset-0 bg-black/55 group-hover:bg-black/45 transition-all duration-500" />
-                <div className={`absolute inset-0 bg-gradient-to-t ${p.gradient}`} />
-                <div className="absolute top-0 left-6 right-6 h-[1px] bg-gradient-to-r from-transparent via-white/0 group-hover:via-white/20 to-transparent transition-all duration-700" />
-
-                <div className="absolute inset-0 flex flex-col justify-end p-5 md:p-6">
-                  <div
-                    className="w-10 h-10 rounded-xl flex items-center justify-center mb-2.5 transition-all duration-500 group-hover:scale-110 group-hover:shadow-lg"
-                    style={{ background: `${p.accent}22` }}
-                  >
-                    <p.icon className="h-5 w-5" style={{ color: p.accent }} />
-                  </div>
-                  <h3 className="text-lg md:text-xl font-black text-white tracking-wide mb-1">{p.title}</h3>
-                  <p className="text-[11px] md:text-[12px] text-white/40 leading-relaxed group-hover:text-white/60 transition-colors line-clamp-2">{p.sub}</p>
-                  <div className="flex items-center gap-1.5 mt-2.5 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-2 group-hover:translate-y-0">
-                    <span className="text-[11px] font-semibold" style={{ color: p.accent }}>Explore</span>
-                    <ArrowRight className="h-3 w-3" style={{ color: p.accent }} />
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </section>
-
-        {/* ── First half of genre rows ── */}
-        {firstHalfGenres.map(([genre, films]) => (
-          <div key={genre} id={`genre-${genre.toLowerCase().replace(/[^a-z]/g, '')}`}>
-            <FilmRow title={genre} films={films} />
-          </div>
-        ))}
-
         {/* ── Vote CTA Block ── */}
         <section className="relative my-10 md:my-14 mx-4 sm:mx-8 md:mx-16 lg:mx-20 rounded-3xl overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-[#E50914]/10 via-[#0F0808] to-[#E50914]/5" />
@@ -435,109 +388,13 @@ export function NetflixHome({ data }: { data: HomeData }) {
           </div>
         </section>
 
-        {/* ── Second half of genre rows ── */}
-        {secondHalfGenres.map(([genre, films]) => (
-          <div key={genre} id={`genre-${genre.toLowerCase().replace(/[^a-z]/g, '')}`}>
-            <FilmRow title={genre} films={films} />
-          </div>
-        ))}
-
-        {/* ── Derniers Films (mixed row — moved lower) ── */}
+        {/* ── Derniers Films ── */}
         <FilmRow
           title="Derniers Films"
           films={trendingFilms}
           href="/films"
           variant="trending"
         />
-
-        {/* ── Bandes-Annonces — En Développement ── */}
-        <section className="relative py-8 md:py-10">
-          <div className="h-px bg-gradient-to-r from-transparent via-white/[0.04] to-transparent" />
-          <div className="px-4 sm:px-8 md:px-16 lg:px-20 mt-6">
-            <div className="flex items-center gap-2 mb-1">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-[#E50914]/20 bg-[#E50914]/10 text-[10px] font-bold text-[#E50914] uppercase tracking-wider">
-                <Film className="h-3 w-3" />
-                Bandes-Annonces
-              </span>
-            </div>
-            <p className="text-[11px] text-white/30 mt-1 mb-4">Films in development — watch trailers, vote, invest, or volunteer to work</p>
-          </div>
-
-          <div className="relative group/trailers">
-            {/* Left chevron */}
-            <button
-              onClick={() => scroll(trailerScrollRef, 'left')}
-              className="absolute left-1 sm:left-3 top-1/2 -translate-y-1/2 z-20 w-8 h-8 rounded-full bg-black/70 border border-white/10 flex items-center justify-center opacity-0 group-hover/trailers:opacity-100 transition-opacity duration-300 hover:bg-black/90"
-            >
-              <ChevronLeft className="h-4 w-4 text-white/70" />
-            </button>
-            {/* Right chevron */}
-            <button
-              onClick={() => scroll(trailerScrollRef, 'right')}
-              className="absolute right-1 sm:right-3 top-1/2 -translate-y-1/2 z-20 w-8 h-8 rounded-full bg-black/70 border border-white/10 flex items-center justify-center opacity-0 group-hover/trailers:opacity-100 transition-opacity duration-300 hover:bg-black/90"
-            >
-              <ChevronRight className="h-4 w-4 text-white/70" />
-            </button>
-
-            <div
-              ref={trailerScrollRef}
-              className="flex gap-3 md:gap-4 overflow-x-auto px-4 sm:px-8 md:px-16 lg:px-20 scroll-smooth snap-x snap-mandatory pb-2"
-              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch' }}
-            >
-              {trailerFilms.map((film) => {
-                const raised = Math.round(((film.fundingPct / 100) * 250000))
-                const goal = 250000
-                return (
-                  <div
-                    key={film.id}
-                    className="flex-shrink-0 snap-start w-[280px] md:w-[360px] rounded-xl overflow-hidden border border-white/[0.06] bg-white/[0.02] transition-all duration-300 hover:border-white/10"
-                  >
-                    {/* 16:9 poster area */}
-                    <div className="relative" style={{ aspectRatio: '16 / 9' }}>
-                      {film.coverImageUrl ? (
-                        <Image
-                          src={film.coverImageUrl}
-                          alt={film.title}
-                          fill
-                          unoptimized
-                          className="object-cover"
-                          sizes="360px"
-                        />
-                      ) : (
-                        <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-900" />
-                      )}
-                      <div className="absolute inset-0 bg-black/50" />
-                      {/* Play button */}
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="w-12 h-12 rounded-full bg-[#E50914] flex items-center justify-center shadow-lg shadow-[#E50914]/30">
-                          <Play className="h-5 w-5 text-white ml-0.5" fill="white" />
-                        </div>
-                      </div>
-                      {/* Bottom overlay */}
-                      <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/80 to-transparent">
-                        <p className="text-[13px] font-bold text-white truncate">{film.title}</p>
-                        <span className="inline-block mt-0.5 px-2 py-0.5 rounded text-[9px] font-semibold bg-white/10 text-white/60">{film.genre}</span>
-                      </div>
-                    </div>
-                    {/* Card body */}
-                    <div className="p-3 space-y-2">
-                      <div className="flex items-center gap-1.5">
-                        <button className="px-2 py-0.5 rounded text-[9px] font-bold bg-emerald-500/15 text-emerald-400 border border-emerald-500/20 hover:bg-emerald-500/25 transition-colors">Vote</button>
-                        <button className="px-2 py-0.5 rounded text-[9px] font-bold bg-amber-500/15 text-amber-400 border border-amber-500/20 hover:bg-amber-500/25 transition-colors">Invest</button>
-                        <button className="px-2 py-0.5 rounded text-[9px] font-bold bg-blue-500/15 text-blue-400 border border-blue-500/20 hover:bg-blue-500/25 transition-colors">Work</button>
-                      </div>
-                      {/* Funding bar */}
-                      <div className="h-1 rounded-full bg-white/[0.06] overflow-hidden">
-                        <div className="h-full rounded-full bg-[#E50914]" style={{ width: `${film.fundingPct}%` }} />
-                      </div>
-                      <p className="text-[10px] text-white/25">${raised.toLocaleString()} raised of ${goal.toLocaleString()}</p>
-                    </div>
-                  </div>
-                )
-              })}
-            </div>
-          </div>
-        </section>
 
         {/* ── Soumis au Vote — Community Vote ── */}
         <section className="relative py-6 md:py-8">
@@ -622,371 +479,7 @@ export function NetflixHome({ data }: { data: HomeData }) {
 
         <div className="h-px bg-gradient-to-r from-transparent via-white/[0.04] to-transparent" />
 
-        {/* ── Participez à la Création ── */}
-        <CreatorBar />
-
-        {/* ── Creative Showcase — Trailer Maker & Poster Maker ── */}
-        <CreativeShowcase />
-
-        <div className="h-px bg-gradient-to-r from-transparent via-white/[0.04] to-transparent" />
-
       </div>
-
-      {/* ── Rentrez dans le Cinéma — 3 hero cards ── */}
-      <section className="relative py-12 md:py-16 px-4 sm:px-8 md:px-16 lg:px-20">
-        {/* Ambient glow */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[1px] bg-gradient-to-r from-transparent via-[#E50914]/20 to-transparent" />
-        <div className="absolute top-[10%] left-[10%] w-[300px] h-[300px] bg-[#E50914]/[0.04] rounded-full blur-[120px] pointer-events-none" />
-        <div className="absolute bottom-[10%] right-[10%] w-[250px] h-[250px] bg-amber-500/[0.03] rounded-full blur-[100px] pointer-events-none" />
-
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-8 md:mb-10">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#E50914]/20 bg-[#E50914]/10 mb-4">
-              <Clapperboard className="h-3.5 w-3.5 text-[#E50914]" />
-              <span className="text-[11px] font-bold text-[#E50914] uppercase tracking-wider">Rentrez dans le Cinéma</span>
-            </div>
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-black text-white tracking-tight leading-[1.1] section-title-flash">
-              Your Role Awaits.
-            </h2>
-            <p className="text-sm md:text-base text-white/35 max-w-lg mx-auto mt-3 leading-relaxed">
-              Act, produce, or work on films. Choose your path in the world of cinema.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-5">
-            {[
-              {
-                icon: Star,
-                title: 'ACT',
-                description: 'Become the star of iconic films. Upload your photo and see yourself on screen.',
-                href: '/act',
-                accent: '#E50914',
-                accentLight: '#FF4444',
-                image: 'https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?auto=format&fit=crop&w=800&h=600&q=80',
-              },
-              {
-                icon: Clapperboard,
-                title: 'PRODUCE',
-                description: 'Turn your vision into reality. Start and crowdfund your film project.',
-                href: '/produce',
-                accent: '#F59E0B',
-                accentLight: '#FCD34D',
-                image: 'https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=800&h=600&q=80',
-              },
-              {
-                icon: Briefcase,
-                title: 'WORK',
-                description: 'Complete film tasks, get paid in cash or production shares.',
-                href: '/work',
-                accent: '#D97706',
-                accentLight: '#FCD34D',
-                image: 'https://images.unsplash.com/photo-1518676590747-1e3bb275183a?auto=format&fit=crop&w=800&h=600&q=80',
-              },
-            ].map((card, ci) => (
-              <Link
-                key={card.title}
-                href={card.href}
-                className="group/cinema relative block rounded-2xl overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:scale-[1.03] golden-border-btn"
-                style={{
-                  aspectRatio: '4 / 5',
-                  boxShadow: `
-                    0 4px 8px rgba(0,0,0,0.3),
-                    0 12px 32px rgba(0,0,0,0.35),
-                    0 24px 64px rgba(0,0,0,0.15),
-                    inset 0 1px 0 rgba(255,255,255,0.1),
-                    inset 0 -1px 0 rgba(0,0,0,0.4)
-                  `,
-                  border: '1px solid rgba(255,255,255,0.08)',
-                }}
-              >
-                {/* Full background image */}
-                <div
-                  className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover/cinema:scale-110"
-                  style={{ backgroundImage: `url(${card.image})` }}
-                />
-                {/* Dark overlay */}
-                <div className="absolute inset-0 bg-black/55 group-hover/cinema:bg-black/40 transition-all duration-500" />
-                {/* Color gradient overlay */}
-                <div
-                  className="absolute inset-0 opacity-40 group-hover/cinema:opacity-60 transition-opacity duration-500"
-                  style={{ background: `linear-gradient(to top, ${card.accent}60, transparent 60%)` }}
-                />
-
-                {/* Flash sweep */}
-                <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                  <div
-                    className="absolute top-0 h-full w-[50%] opacity-15 group-hover/cinema:opacity-40"
-                    style={{
-                      background: `linear-gradient(90deg, transparent, ${card.accent}30, rgba(255,255,255,0.12), ${card.accent}30, transparent)`,
-                      animation: `glintSweep ${2.5 + ci * 0.2}s ease-in-out infinite`,
-                      animationDelay: `${ci * 0.4}s`,
-                    }}
-                  />
-                </div>
-
-                {/* Hover glow */}
-                <div
-                  className="absolute inset-0 rounded-2xl opacity-0 group-hover/cinema:opacity-100 transition-all duration-500 pointer-events-none"
-                  style={{ boxShadow: `0 12px 48px ${card.accent}30, 0 0 80px ${card.accent}10` }}
-                />
-
-                {/* Top edge highlight */}
-                <div
-                  className="absolute top-0 left-6 right-6 h-[1px] opacity-25 group-hover/cinema:opacity-60 transition-opacity duration-500"
-                  style={{ background: `linear-gradient(90deg, transparent, ${card.accentLight}50, transparent)` }}
-                />
-
-                {/* Bottom accent line */}
-                <div className="absolute bottom-0 left-0 right-0 h-[2px] overflow-hidden">
-                  <div
-                    className="h-full w-0 group-hover/cinema:w-full transition-all duration-700 ease-out"
-                    style={{ background: `linear-gradient(90deg, transparent, ${card.accent}, ${card.accentLight}, ${card.accent}, transparent)` }}
-                  />
-                </div>
-
-                {/* Content — positioned at bottom */}
-                <div className="absolute inset-0 flex flex-col justify-end p-6 md:p-8">
-                  {/* Icon */}
-                  <div
-                    className="w-14 h-14 rounded-xl flex items-center justify-center mb-4 transition-all duration-500 group-hover/cinema:scale-110 group-hover/cinema:rotate-3"
-                    style={{
-                      background: `linear-gradient(135deg, ${card.accent}70, ${card.accent}30)`,
-                      boxShadow: `0 4px 20px ${card.accent}50, inset 0 1px 0 rgba(255,255,255,0.2)`,
-                      backdropFilter: 'blur(8px)',
-                    }}
-                  >
-                    <card.icon className="h-7 w-7 text-white" style={{ filter: `drop-shadow(0 0 6px ${card.accent})` }} />
-                  </div>
-
-                  {/* Title */}
-                  <h3 className="text-2xl md:text-3xl font-black text-white tracking-wider mb-2 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
-                    {card.title}
-                  </h3>
-
-                  {/* Description */}
-                  <p className="text-[13px] md:text-[14px] text-white/50 leading-relaxed group-hover/cinema:text-white/75 transition-colors max-w-xs">
-                    {card.description}
-                  </p>
-
-                  {/* Arrow link */}
-                  <div className="flex items-center gap-2 mt-4 opacity-0 group-hover/cinema:opacity-100 transition-all duration-300 translate-y-2 group-hover/cinema:translate-y-0">
-                    <span className="text-[12px] font-bold" style={{ color: card.accentLight }}>Enter</span>
-                    <ArrowRight className="h-4 w-4 group-hover/cinema:translate-x-1 transition-transform" style={{ color: card.accentLight }} />
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── Start Creating — Deep 3D cards ── */}
-      <section className="relative py-10 md:py-14 px-4 sm:px-8 md:px-16 lg:px-20">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[400px] h-[1px] bg-gradient-to-r from-transparent via-[#E50914]/15 to-transparent" />
-
-        <div className="max-w-7xl mx-auto">
-          <div className="flex items-center justify-between mb-6">
-            <div>
-              <h2 className="text-lg md:text-xl font-bold text-white/90 tracking-tight section-title-flash">Start Creating</h2>
-              <p className="text-xs text-white/35 mt-1">Join the production of our films</p>
-            </div>
-            <Link
-              href="/tasks"
-              className="group text-xs font-medium text-white/40 hover:text-[#E50914] transition-all duration-300 flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-white/[0.06] hover:border-[#E50914]/20 hover:bg-[#E50914]/5"
-            >
-              Browse All <ChevronRight className="h-3 w-3 group-hover:translate-x-0.5 transition-transform" />
-            </Link>
-          </div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 md:gap-4">
-            {createCards.map((card, ci) => (
-              <Link
-                key={card.title}
-                href={card.href}
-                className="group/create relative block rounded-2xl transition-all duration-500 hover:-translate-y-2 hover:scale-[1.03] overflow-hidden"
-                style={{
-                  boxShadow: `
-                    0 4px 8px rgba(0,0,0,0.3),
-                    0 12px 32px rgba(0,0,0,0.35),
-                    0 24px 64px rgba(0,0,0,0.15),
-                    inset 0 1px 0 rgba(255,255,255,0.1),
-                    inset 0 -1px 0 rgba(0,0,0,0.4)
-                  `,
-                  border: '1px solid rgba(255,255,255,0.08)',
-                }}
-              >
-                {/* Background image zone — top of card */}
-                <div className="relative h-28 sm:h-32 overflow-hidden">
-                  {/* Unsplash background */}
-                  <div
-                    className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover/create:scale-110"
-                    style={{ backgroundImage: `url(${card.image})` }}
-                  />
-                  {/* Dark overlay */}
-                  <div className="absolute inset-0 bg-black/50 group-hover/create:bg-black/35 transition-all duration-500" />
-                  {/* Color tint */}
-                  <div
-                    className="absolute inset-0 opacity-30 group-hover/create:opacity-50 transition-opacity duration-500"
-                    style={{ background: `linear-gradient(135deg, ${card.accent}50, transparent 70%)` }}
-                  />
-
-                  {/* Animated flash sweep */}
-                  <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                    <div
-                      className="absolute top-0 h-full w-[50%] opacity-25 group-hover/create:opacity-50"
-                      style={{
-                        background: `linear-gradient(90deg, transparent, ${card.accent}30, rgba(255,255,255,0.12), ${card.accent}30, transparent)`,
-                        animation: `glintSweep ${2.5 + ci * 0.2}s ease-in-out infinite`,
-                        animationDelay: `${ci * 0.3}s`,
-                      }}
-                    />
-                  </div>
-
-                  {/* (removed second flash + floating particles for performance) */}
-
-                  {/* Icon — floating with glass effect */}
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div
-                      className="w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-500 group-hover/create:scale-125 group-hover/create:rotate-6"
-                      style={{
-                        background: `linear-gradient(135deg, ${card.accent}60, ${card.accent}30)`,
-                        boxShadow: `0 4px 20px ${card.accent}40, inset 0 1px 0 rgba(255,255,255,0.2)`,
-                        backdropFilter: 'blur(8px)',
-                        animation: `iconFloat ${3.5 + ci * 0.2}s ease-in-out infinite`,
-                        animationDelay: `${ci * 0.25}s`,
-                      }}
-                    >
-                      <card.icon className="h-5 w-5 text-white" style={{ filter: `drop-shadow(0 0 6px ${card.accent})` }} />
-                    </div>
-                  </div>
-                </div>
-
-                {/* (removed breathing glow for performance) */}
-
-                {/* Hover glow intensify */}
-                <div
-                  className="absolute inset-0 rounded-2xl opacity-0 group-hover/create:opacity-100 transition-all duration-500 pointer-events-none"
-                  style={{
-                    boxShadow: `0 12px 48px ${card.accent}20, 0 0 80px ${card.accent}08`,
-                  }}
-                />
-
-                {/* Bottom accent line */}
-                <div className="absolute bottom-0 left-0 right-0 h-[2px] overflow-hidden">
-                  <div
-                    className="h-full w-0 group-hover/create:w-full transition-all duration-700 ease-out"
-                    style={{ background: `linear-gradient(90deg, transparent, ${card.accent}, ${card.accentLight}, ${card.accent}, transparent)` }}
-                  />
-                </div>
-
-                {/* Top edge highlight */}
-                <div
-                  className="absolute top-0 left-4 right-4 h-[1px] opacity-25 group-hover/create:opacity-60 transition-opacity duration-500"
-                  style={{ background: `linear-gradient(90deg, transparent, ${card.accentLight}50, transparent)` }}
-                />
-
-                {/* Text content */}
-                <div className="relative bg-[#0A0A0A]/90 p-4 pt-3">
-                  <p className="text-[12px] font-bold text-white/85 mb-1 group-hover/create:text-white transition-colors tracking-wide">{card.title}</p>
-                  <p className="text-[10px] text-white/25 leading-relaxed group-hover/create:text-white/50 transition-colors">{card.description}</p>
-                  <div className="flex items-center gap-1 mt-2 opacity-0 group-hover/create:opacity-100 transition-all duration-400 translate-y-1 group-hover/create:translate-y-0">
-                    <span className="text-[9px] font-semibold" style={{ color: card.accent }}>Explore</span>
-                    <ArrowRight className="h-2.5 w-2.5" style={{ color: card.accent }} />
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── CINEGEN TV Discovery Banner ── */}
-      <section className="relative mx-4 sm:mx-8 md:mx-16 lg:mx-20 mb-8 rounded-2xl overflow-hidden">
-        <div
-          className="relative"
-          style={{
-            background: 'linear-gradient(135deg, rgba(37,99,235,0.12) 0%, rgba(5,10,21,0.95) 50%, rgba(37,99,235,0.06) 100%)',
-            border: '1px solid rgba(37,99,235,0.15)',
-          }}
-        >
-          <div className="absolute top-0 right-[20%] w-[200px] h-[100px] bg-[#2563EB]/[0.08] rounded-full blur-[80px]" />
-          <div className="relative z-10 px-6 sm:px-8 md:px-12 py-6 md:py-8">
-            <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-              <div className="flex-1">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[#2563EB]/20 bg-[#2563EB]/10 mb-3">
-                  <Tv className="h-3 w-3 text-[#2563EB]" />
-                  <span className="text-[10px] font-bold text-[#2563EB] uppercase tracking-wider">New</span>
-                </div>
-                <h2 className="text-lg md:text-xl font-black text-white mb-1.5 tracking-tight">
-                  Discover <span className="text-[#2563EB]">CINEGEN TV</span>
-                </h2>
-                <p className="text-xs text-white/35 max-w-md leading-relaxed">
-                  AI-generated TV shows, live broadcasts, and original series. Create, produce, or invest in the future of television.
-                </p>
-              </div>
-              <div className="flex flex-wrap gap-2">
-                <Link href="/tv" className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#2563EB] hover:bg-[#3B82F6] text-white text-xs font-bold transition-colors">
-                  <Monitor className="h-3.5 w-3.5" /> Explore TV
-                </Link>
-                <Link href="/tv/live" className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-[#2563EB]/30 hover:bg-[#2563EB]/10 text-white/70 hover:text-white text-xs font-medium transition-all">
-                  <Radio className="h-3.5 w-3.5 text-red-500" /> Live Now
-                </Link>
-                <Link href="/watch" className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-white/10 hover:bg-white/5 text-white/50 hover:text-white text-xs font-medium transition-all">
-                  <Play className="h-3.5 w-3.5" /> Watch All
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── Screenwriter CTA — 100 Scénaristes ── */}
-      <ScreenwriterCTA />
-
-      {/* ── Final CTA — Compact 3D banner ── */}
-      <section className="relative mx-4 sm:mx-8 md:mx-16 lg:mx-20 mb-10 rounded-2xl overflow-hidden">
-        {/* 3D depth container */}
-        <div
-          className="relative"
-          style={{
-            background: 'linear-gradient(135deg, rgba(229,9,20,0.08) 0%, rgba(15,8,8,0.95) 40%, rgba(229,9,20,0.04) 100%)',
-            boxShadow: '0 8px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.06), inset 0 -1px 0 rgba(0,0,0,0.3)',
-            border: '1px solid rgba(255,255,255,0.06)',
-          }}
-        >
-          {/* Ambient glows */}
-          <div className="absolute top-0 left-[20%] w-[200px] h-[100px] bg-[#E50914]/[0.08] rounded-full blur-[80px]" />
-          <div className="absolute bottom-0 right-[10%] w-[150px] h-[80px] bg-blue-500/[0.04] rounded-full blur-[60px]" />
-          {/* Animated shine */}
-          <div className="absolute inset-0 overflow-hidden">
-            <div className="absolute top-0 h-[1px] w-[60%] animate-[shimmerLine_8s_ease-in-out_infinite]"
-              style={{ background: 'linear-gradient(90deg, transparent, rgba(229,9,20,0.3), transparent)' }} />
-          </div>
-
-          <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6 px-8 sm:px-10 md:px-14 py-8 md:py-10">
-            <div className="flex-1 text-center md:text-left">
-              <h2 className="text-xl md:text-2xl lg:text-3xl font-black text-white mb-2 tracking-tight section-title-flash">
-                The Future of Cinema.
-              </h2>
-              <p className="text-xs md:text-sm text-white/35 max-w-md leading-relaxed">
-                Independent films, documentaries and original series. Produced by the community, powered by AI.
-              </p>
-            </div>
-            <Link
-              href="/register"
-              className="golden-border-btn golden-border-always group relative shrink-0 inline-flex items-center gap-2.5 px-8 py-3.5 rounded-xl text-[14px] font-bold text-white transition-all duration-500 hover:-translate-y-0.5 overflow-hidden"
-              style={{
-                background: 'linear-gradient(135deg, #E50914 0%, #B20710 100%)',
-                boxShadow: '0 6px 24px rgba(229,9,20,0.3), inset 0 1px 0 rgba(255,255,255,0.15), inset 0 -2px 0 rgba(0,0,0,0.2)',
-              }}
-            >
-              <span className="relative z-10">Get Started Free</span>
-              <ArrowRight className="relative z-10 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/15 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
-            </Link>
-          </div>
-        </div>
-      </section>
 
       <Footer />
     </div>

@@ -191,7 +191,7 @@ export default async function TrailerProjectPage({ params }: { params: Promise<{
                   </div>
 
                   {/* Phase tasks */}
-                  <div className="divide-y divide-gray-50">
+                  <div className="divide-y divide-white/10">
                     {phaseTasks.map((task) => {
                       const statusConfig = TASK_STATUS_CONFIG[task.status] || TASK_STATUS_CONFIG.PENDING
                       return (

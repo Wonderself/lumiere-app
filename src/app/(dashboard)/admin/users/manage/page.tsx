@@ -187,7 +187,7 @@ export default async function UserManagementPage() {
                 <th className="px-5 py-3"></th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-50">
+            <tbody className="divide-y divide-white/10">
               {users.map(user => {
                 const roleConf = ROLE_CONFIG[user.role] || ROLE_CONFIG.CONTRIBUTOR
                 return (

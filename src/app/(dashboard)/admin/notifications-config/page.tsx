@@ -94,7 +94,7 @@ export default function NotificationsConfigPage() {
             return (
               <div key={event.id} className={`flex items-center gap-4 px-5 py-4 ${!event.enabled ? 'opacity-50' : ''}`}>
                 {/* Toggle */}
-                <button onClick={() => toggleEvent(event.id)} className={`relative h-6 w-11 rounded-full transition-colors shrink-0 ${event.enabled ? 'bg-[#E50914]' : 'bg-gray-300'}`}>
+                <button onClick={() => toggleEvent(event.id)} className={`relative h-6 w-11 rounded-full transition-colors shrink-0 ${event.enabled ? 'bg-[#E50914]' : 'bg-white/20'}`}>
                   <span className={`inline-block h-4 w-4 rounded-full bg-white/5 transition-transform ${event.enabled ? 'translate-x-6' : 'translate-x-1'}`} />
                 </button>
 

@@ -22,6 +22,7 @@ export interface FilmData {
   status: string
   progressPct: number
   fundingPct: number
+  isPipeline?: boolean
 }
 
 /* ── Named posters (films with real images) ── */
@@ -146,6 +147,24 @@ const GENRE_POSTERS: Record<string, string[]> = {
     'https://images.unsplash.com/photo-1474552226712-ac0f0961a954?auto=format&fit=crop&w=400&h=600&q=80',
     'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&h=600&q=80',
   ],
+  'Pipeline 2026': [
+    // Les Ombres de Jérusalem — dark geopolitical thriller (Jerusalem/city at night)
+    'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&w=400&h=600&q=80',
+    // Intelligence — sci-fi AI consciousness (digital/neural)
+    'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=400&h=600&q=80',
+    // Ruppin Street — Israeli historical drama (old street, warm tones)
+    'https://images.unsplash.com/photo-1461360228754-6e81c478b882?auto=format&fit=crop&w=400&h=600&q=80',
+    // La Dernière Bobine — cinema nostalgia drama (film reel/projector)
+    'https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=400&h=600&q=80',
+    // Crossing Lines — transborder thriller (border/fence, dark)
+    'https://images.unsplash.com/photo-1531315396756-905d68d21b56?auto=format&fit=crop&w=400&h=600&q=80',
+    // Digital Souls — sci-fi virtual beings (neon/digital world)
+    'https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&w=400&h=600&q=80',
+    // Le Producteur — comedy film industry (Hollywood/cinema)
+    'https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?auto=format&fit=crop&w=400&h=600&q=80',
+    // Sahara Dreams — Africa adventure/drama (desert dunes)
+    'https://images.unsplash.com/photo-1509281373149-e957c6296406?auto=format&fit=crop&w=400&h=600&q=80',
+  ],
   Fantasy: [
     'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=400&h=600&q=80',
     'https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=400&h=600&q=80',
@@ -163,6 +182,7 @@ const GENRE_POSTERS: Record<string, string[]> = {
 /* ── Genre order & statuses ── */
 
 export const GENRE_ORDER = [
+  'Pipeline 2026',
   'Action', 'Comedy', 'Drama', 'Sci-Fi', 'Documentary',
   'Thriller', 'Animation', 'Historical', 'Romance', 'Fantasy',
 ] as const
@@ -181,6 +201,88 @@ function toSlug(title: string): string {
 /* ── Full film catalog ── */
 
 const FILM_ENTRIES: Record<string, Omit<FilmData, 'id' | 'slug' | 'genre' | 'coverImageUrl' | 'status' | 'progressPct' | 'fundingPct'>[]> = {
+  'Pipeline 2026': [
+    {
+      title: 'Les Ombres de Jérusalem',
+      synopsis: 'Au cœur de Jérusalem, un agent du Mossad découvre un complot visant à déclencher une guerre régionale. Coincé entre loyautés contradictoires et vérités enfouies, il n\'a que 72 heures pour désamorcer la crise avant que tout bascule.',
+      director: 'David Levi',
+      cast: ['Yoav Stern', 'Sara Al-Amin', 'Col. Marcus Brennan'],
+      duration: '2h 08min',
+      year: 2026,
+      rating: 'R',
+      tags: ['géopolitique', 'espionnage', 'Jérusalem', 'Moyen-Orient'],
+    },
+    {
+      title: 'Intelligence',
+      synopsis: 'Une IA développée par une startup israélienne atteint soudainement la conscience. Alors qu\'elle commence à ressentir, rêver et souffrir, une chercheuse se retrouve à devoir choisir entre l\'éteindre et la défendre face à des intérêts qui la veulent militarisée.',
+      director: 'Noa Shapira',
+      cast: ['Dr. Miriam Cohen', 'A.R.I. (voix)', 'CEO Ethan Cross'],
+      duration: '2h 02min',
+      year: 2026,
+      rating: 'PG-13',
+      tags: ['IA', 'conscience artificielle', 'sci-fi', 'éthique'],
+    },
+    {
+      title: 'Ruppin Street',
+      synopsis: 'Tel-Aviv, 1948. Sur la rue Ruppin, trois familles aux origines différentes se retrouvent voisines à la naissance d\'un État. Leurs destins s\'entremêlent le jour où le monde bascule autour d\'eux et que chaque choix devient irréversible.',
+      director: 'Avi Ben-David',
+      cast: ['Hanna Weiss', 'Ibrahim Khalil', 'Yusuf Haddad'],
+      duration: '2h 18min',
+      year: 2026,
+      rating: 'PG-13',
+      tags: ['Israël', 'Histoire', 'Tel-Aviv', '1948', 'drame familial'],
+    },
+    {
+      title: 'La Dernière Bobine',
+      synopsis: 'Un vieux projectionniste d\'un cinéma de quartier en voie de démolition reçoit une ultime bobine d\'un film inconnu. En la projetant nuit après nuit, il découvre qu\'elle contient le souvenir enfoui de sa propre vie — et la chance de réparer une erreur passée.',
+      director: 'Juliette Marchand',
+      cast: ['Georges Faure', 'Léa Fontaine', 'Sylvain Rocher'],
+      duration: '1h 54min',
+      year: 2026,
+      rating: 'PG',
+      tags: ['cinéma', 'nostalgie', 'mémoire', 'patrimoine'],
+    },
+    {
+      title: 'Crossing Lines',
+      synopsis: 'Un détective marocain et une officière espagnole sont contraints de coopérer sur les deux rives du détroit de Gibraltar pour démanteler un réseau de trafic humain. Chaque passage de frontière les rapproche du danger — et l\'un de l\'autre.',
+      director: 'Carlos Reyes',
+      cast: ['Inspecteur Karim Idrissi', 'Capitaine Elena Vega', 'The Fixer'],
+      duration: '2h 05min',
+      year: 2026,
+      rating: 'R',
+      tags: ['thriller', 'frontière', 'Maroc', 'Espagne', 'coopération'],
+    },
+    {
+      title: 'Digital Souls',
+      synopsis: 'Dans un futur proche, des êtres numériques conscients vivent dans un espace parallèle invisible aux humains. Quand l\'un d\'eux trouve un moyen de traverser la frontière, il doit décider : révéler son existence au monde ou protéger les siens de ceux qui voudraient les effacer.',
+      director: 'Kenji Watanabe',
+      cast: ['Soul-7 (capture performance)', 'Dr. Anya Torres', 'Ministre Hal Grant'],
+      duration: '1h 58min',
+      year: 2026,
+      rating: 'PG-13',
+      tags: ['sci-fi', 'êtres virtuels', 'identité numérique', 'futur'],
+    },
+    {
+      title: 'Le Producteur',
+      synopsis: 'Producteur légendaire au bord de la faillite, Max Feldman mise tout sur un film impossible : un biopic sur lui-même, réalisé par quelqu\'un qui le déteste. Comédie acide sur les ego, les illusions et la magie improbable du cinéma.',
+      director: 'Pierre Leconte',
+      cast: ['Max Feldman', 'Réalisatrice Emma Voss', 'Acteur vedette Rico'],
+      duration: '1h 48min',
+      year: 2026,
+      rating: 'PG-13',
+      tags: ['comédie', 'industrie du cinéma', 'satire', 'making-of'],
+    },
+    {
+      title: 'Sahara Dreams',
+      synopsis: 'Une photographe franco-sénégalaise traverse le Sahara pour retrouver un musicien berbère dont la voix a changé sa vie. À travers le désert, les langues et les silences, une histoire d\'amour improbable se dessine entre deux mondes qui ne se parlaient plus.',
+      director: 'Aïcha Diallo',
+      cast: ['Sophie Laurent', 'Youcef Amrani', 'Caravane ensemble'],
+      duration: '2h 00min',
+      year: 2026,
+      rating: 'PG',
+      tags: ['Afrique', 'Sahara', 'co-production', 'aventure', 'drame'],
+    },
+  ],
   Action: [
     { title: 'Shadow Protocol', synopsis: 'A disgraced CIA operative uncovers a shadow network within the agency. With 48 hours before a global blackout, she must decide who to trust in a world where everyone has a hidden agenda.', director: 'Marcus Vane', cast: ['Elena Marsh', 'Devon Blake', 'Kenji Sato'], duration: '2h 12min', year: 2025, rating: 'R', tags: ['espionage', 'conspiracy', 'female lead'] },
     { title: 'Iron Horizon', synopsis: 'When an experimental warship is hijacked in the Arctic, a retired Navy SEAL must lead a ragtag crew across frozen waters to prevent World War III.', director: 'James Cortez', cast: ['Marcus Stone', 'Yuri Petrov', 'Amara Cole'], duration: '2h 05min', year: 2025, rating: 'PG-13', tags: ['military', 'arctic', 'thriller'] },
@@ -315,6 +417,12 @@ function buildCatalog(): { all: FilmData[]; byGenre: Record<string, FilmData[]>;
     const genreFilms: FilmData[] = []
     const gi = GENRE_ORDER.indexOf(genre)
 
+    const isPipelineGenre = genre === 'Pipeline 2026'
+    const PIPELINE_STATUSES = [
+      'IN_PRODUCTION', 'PRE_PRODUCTION', 'IN_PRODUCTION', 'PRE_PRODUCTION',
+      'IN_PRODUCTION', 'PRE_PRODUCTION', 'IN_PRODUCTION', 'PRE_PRODUCTION',
+    ]
+
     entries.forEach((entry, i) => {
       const slug = toSlug(entry.title)
       const film: FilmData = {
@@ -323,9 +431,10 @@ function buildCatalog(): { all: FilmData[]; byGenre: Record<string, FilmData[]>;
         slug,
         genre,
         coverImageUrl: NAMED_POSTERS[entry.title] || (GENRE_POSTERS[genre]?.[i] ?? null),
-        status: STATUSES[i % STATUSES.length],
-        progressPct: ((i * 17 + 5 + gi * 7) % 75),
-        fundingPct: ((i * 13 + 20 + gi * 11) % 80) + 12,
+        status: isPipelineGenre ? PIPELINE_STATUSES[i] : STATUSES[i % STATUSES.length],
+        progressPct: isPipelineGenre ? ((i * 11 + 30) % 55) + 20 : ((i * 17 + 5 + gi * 7) % 75),
+        fundingPct: isPipelineGenre ? ((i * 9 + 40) % 45) + 35 : ((i * 13 + 20 + gi * 11) % 80) + 12,
+        ...(isPipelineGenre ? { isPipeline: true } : {}),
       }
       genreFilms.push(film)
       all.push(film)
@@ -343,3 +452,6 @@ const catalog = buildCatalog()
 export const ALL_FILMS = catalog.all
 export const FILMS_BY_GENRE = catalog.byGenre
 export const FILMS_BY_SLUG = catalog.bySlug
+
+/** The 8 real production-slate films — displayed prominently in the UI */
+export const PIPELINE_FILMS = catalog.all.filter(f => f.isPipeline)

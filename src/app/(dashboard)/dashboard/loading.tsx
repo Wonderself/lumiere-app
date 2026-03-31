@@ -21,7 +21,7 @@ export default function DashboardPageLoading() {
         <div className="bg-white/5 rounded-2xl border border-white/10 p-6 space-y-4">
           <div className="h-5 w-40 bg-white/[0.08] rounded-lg" />
           {Array.from({ length: 3 }).map((_, i) => (
-            <div key={i} className="flex items-center gap-4 py-3 border-b border-gray-50">
+            <div key={i} className="flex items-center gap-4 py-3 border-b border-white/10">
               <div className="h-8 w-8 bg-white/[0.05] rounded-full" />
               <div className="flex-1 space-y-2">
                 <div className="h-4 w-48 bg-white/[0.05] rounded" />
@@ -33,7 +33,7 @@ export default function DashboardPageLoading() {
         <div className="bg-white/5 rounded-2xl border border-white/10 p-6 space-y-4">
           <div className="h-5 w-36 bg-white/[0.08] rounded-lg" />
           {Array.from({ length: 3 }).map((_, i) => (
-            <div key={i} className="flex items-center gap-4 py-3 border-b border-gray-50">
+            <div key={i} className="flex items-center gap-4 py-3 border-b border-white/10">
               <div className="h-8 w-8 bg-white/[0.05] rounded-full" />
               <div className="flex-1 space-y-2">
                 <div className="h-4 w-44 bg-white/[0.05] rounded" />

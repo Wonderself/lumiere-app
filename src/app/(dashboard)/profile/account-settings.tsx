@@ -137,7 +137,7 @@ export function AccountSettings() {
       </div>
 
       {/* ── Account Deletion Card ── */}
-      <div className="bg-white/5 rounded-2xl shadow-[0_2px_8px_rgba(0,0,0,0.3)] border border-red-100 p-6 hover:shadow-md transition-shadow duration-300">
+      <div className="bg-white/5 rounded-2xl shadow-[0_2px_8px_rgba(0,0,0,0.3)] border border-red-500/20 p-6 hover:shadow-md transition-shadow duration-300">
         <h3
           className="text-lg font-semibold text-white mb-2"
         >

@@ -128,7 +128,7 @@ export default async function UserDetailPage({ params }: { params: Promise<{ id:
         <div className="px-6 py-4 border-b border-white/10">
           <h2 className="text-sm font-semibold text-white">Transactions récentes</h2>
         </div>
-        <div className="divide-y divide-gray-50">
+        <div className="divide-y divide-white/10">
           {recentTransactions.length === 0 ? (
             <div className="p-6 text-center text-sm text-white/50">Aucune transaction</div>
           ) : recentTransactions.map(tx => (

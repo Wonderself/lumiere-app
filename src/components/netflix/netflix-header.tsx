@@ -152,6 +152,7 @@ export function NetflixHeader() {
     { href: '/produce', label: 'Produce', icon: Clapperboard },
     { href: '/work', label: 'Work', icon: Users },
     { href: '/invest', label: t('invest'), icon: DollarSign },
+    { href: '/investors', label: 'Investors', icon: TrendingUp },
     { href: '/community', label: t('community'), icon: MessageSquare },
     { href: '/tv', label: t('tv'), icon: Tv },
     { href: '/watch', label: t('watch'), icon: Play },
@@ -217,6 +218,19 @@ export function NetflixHeader() {
             )}
           >
             {t('invest')}
+          </Link>
+          <Link
+            href="/investors"
+            className={cn(
+              'flex items-center gap-1 text-[11px] px-2.5 py-1.5 rounded transition-all duration-300 font-semibold',
+              pathname.startsWith('/investors')
+                ? 'text-amber-400'
+                : 'text-amber-400/70 hover:text-amber-400'
+            )}
+          >
+            <TrendingUp className="h-3 w-3" />
+            Investors
+            <span className="ml-0.5 px-1 py-0 text-[9px] font-bold rounded bg-amber-400/15 text-amber-400 border border-amber-400/25">OPEN</span>
           </Link>
           <Link
             href="/community"

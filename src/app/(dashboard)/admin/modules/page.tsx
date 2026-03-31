@@ -109,7 +109,7 @@ export default function ModulesMonitorPage() {
                   <p className="text-xs font-medium text-white">{mod.usageCount} uses</p>
                   <p className="text-[10px] text-white/50">{mod.lastUsed.toLocaleDateString('fr-FR')}</p>
                 </div>
-                <div className={`h-2.5 w-2.5 rounded-full ${mod.status === 'active' ? 'bg-green-500' : mod.status === 'error' ? 'bg-red-500' : 'bg-gray-300'}`} />
+                <div className={`h-2.5 w-2.5 rounded-full ${mod.status === 'active' ? 'bg-green-500' : mod.status === 'error' ? 'bg-red-500' : 'bg-white/30'}`} />
               </div>
             )
           })}

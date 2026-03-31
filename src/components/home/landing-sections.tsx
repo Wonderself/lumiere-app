@@ -86,7 +86,7 @@ export function WhyCineGenSection() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {[
-            { title: '177 Pages', detail: 'App complète prête à l\'emploi', icon: '📱' },
+            { title: '200+ Pages', detail: 'App complète prête à l\'emploi', icon: '📱' },
             { title: '113 Agents IA', detail: 'Chaque métier du cinéma couvert', icon: '🤖' },
             { title: '0% Commission', detail: 'Coût réel des tokens IA uniquement', icon: '💚' },
           ].map(stat => (

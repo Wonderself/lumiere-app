@@ -38,26 +38,26 @@ const PHASES = [
   {
     id: 1,
     name: 'Family & Friends',
-    subtitle: 'Cercle fondateur',
-    tokenPrice: 0.004,
-    discount: 60,
+    subtitle: 'SAFE — Cercle fondateur',
+    tokenPrice: 0.05,
+    discount: 50,
     raiseTarget: 50000,
-    tokensAllocated: 12500000,
-    startDate: new Date('2026-03-01'),
+    tokensAllocated: 1000000,
+    startDate: new Date('2026-04-01'),
     endDate: new Date('2026-05-31T23:59:59'),
     status: 'ACTIVE' as const,
-    perks: ['Siège consultatif (Advisory seat)', 'Accès le plus anticipé', 'Upside maximum', 'Appels mensuels avec les fondateurs'],
+    perks: ['SAFE avec 50% discount sur le prochain tour', 'Accès le plus anticipé', 'Upside maximum', 'Appels mensuels avec les fondateurs'],
     color: COLORS.gold,
-    raisedSoFar: 8500,
+    raisedSoFar: 0,
   },
   {
     id: 2,
     name: 'Pré-Seed',
     subtitle: 'Investisseurs stratégiques',
-    tokenPrice: 0.005,
-    discount: 50,
+    tokenPrice: 0.08,
+    discount: 20,
     raiseTarget: 200000,
-    tokensAllocated: 40000000,
+    tokensAllocated: 2500000,
     startDate: new Date('2026-06-01'),
     endDate: new Date('2026-07-31T23:59:59'),
     status: 'UPCOMING' as const,
@@ -68,11 +68,11 @@ const PHASES = [
   {
     id: 3,
     name: 'Seed',
-    subtitle: 'Croissance accélérée',
-    tokenPrice: 0.008,
-    discount: 20,
+    subtitle: 'Croissance accélérée — Rentrée',
+    tokenPrice: 0.10,
+    discount: 0,
     raiseTarget: 500000,
-    tokensAllocated: 62500000,
+    tokensAllocated: 5000000,
     startDate: new Date('2026-08-01'),
     endDate: new Date('2026-09-30T23:59:59'),
     status: 'UPCOMING' as const,
@@ -703,7 +703,7 @@ export default function InvestorsPage() {
                       <span className="text-3xl font-bold" style={{ color: phase.color }}>
                         {phase.tokenPrice}€
                       </span>
-                      <span className="text-sm text-white/40">/ token CINE</span>
+                      <span className="text-sm text-white/40">/ token PRODCOIN</span>
                     </div>
                     <Badge className="border-green-500/30 bg-green-500/10 text-green-400">
                       -{phase.discount}% vs. prix public
@@ -786,8 +786,8 @@ export default function InvestorsPage() {
         <MotionCard delay={0.5}>
           <div className="border border-white/[0.06] bg-white/[0.02] rounded-xl p-6 md:p-8 text-center">
             <Badge variant="secondary" className="mb-3">POST-SEED — RENTRÉE OCTOBRE 2026</Badge>
-            <h3 className="text-xl font-bold text-white mb-2">Prix public du token CINE</h3>
-            <div className="text-4xl font-bold text-white mb-2">0.01€</div>
+            <h3 className="text-xl font-bold text-white mb-2">Prix public du token PRODCOIN</h3>
+            <div className="text-4xl font-bold text-white mb-2">$0.10</div>
             <p className="text-white/40 text-sm">Accès complet à la plateforme. Pas de réduction.</p>
           </div>
         </MotionCard>
@@ -801,7 +801,7 @@ export default function InvestorsPage() {
       <section id="tokenomics" className="px-4 py-16 md:py-24 max-w-7xl mx-auto">
         <SectionTitle
           badge="TOKEN ECONOMICS"
-          title="Le Token CINE"
+          title="Le Token PRODCOIN"
           subtitle="Un token dual — Utility & Security — conçu pour aligner les intérêts de la communauté, des créateurs et des investisseurs."
           gold
         />
@@ -809,10 +809,10 @@ export default function InvestorsPage() {
         {/* Key token stats */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
           {[
-            { label: 'Supply totale', value: '200M', sub: 'CINE tokens' },
+            { label: 'Supply totale', value: '20M', sub: 'PRODCOIN tokens' },
             { label: 'Type', value: 'Dual', sub: 'Utility + Security' },
-            { label: 'Prix de base', value: '0.01€', sub: 'post-seed' },
-            { label: 'FDV', value: '2M€', sub: 'Fully Diluted' },
+            { label: 'Prix de base', value: '$0.10', sub: 'post-seed' },
+            { label: 'FDV', value: '$2M', sub: 'Fully Diluted' },
           ].map((s, i) => (
             <MotionCard key={i} delay={i * 0.1}>
               <div className="bg-white/[0.03] border border-[#D4AF37]/10 rounded-xl p-5 text-center">
@@ -849,7 +849,7 @@ export default function InvestorsPage() {
           {/* Token utility */}
           <MotionCard delay={0.35}>
             <div className="bg-white/[0.02] border border-white/[0.06] rounded-xl p-8">
-              <h3 className="text-lg font-semibold text-white mb-6">Utilité du token CINE</h3>
+              <h3 className="text-lg font-semibold text-white mb-6">Utilité du token PRODCOIN</h3>
               <div className="space-y-5">
                 {[
                   {
@@ -1462,16 +1462,16 @@ export default function InvestorsPage() {
         <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
           {[
             {
-              name: 'Emmanuel',
-              role: 'CEO — Directeur Stratégique',
+              name: 'Emmanuel Smadja',
+              role: 'CEO & Co-Fondateur',
               focus: 'Finance & Ventes',
               bio: 'Entrepreneur Franco-Israélien, expert en structuration fiscale hybride et levée de fonds. Spécialiste de la co-production internationale et des mécanismes de financement public. Maîtrise des environnements réglementaires France-Israël.',
               color: COLORS.gold,
               initials: 'E',
             },
             {
-              name: 'Éric',
-              role: 'COO/CTO — Direction Créative & Technologique',
+              name: 'Eric Haldezos',
+              role: 'Co-Founder & Managing Director',
               focus: 'IA & Production',
               bio: 'Expert en IA générative et pipeline de production cinématographique. Architecture logicielle, développement de la plateforme CINEGEN, supervision créative. Pionnier de l\'utilisation de l\'IA dans la production audiovisuelle.',
               color: COLORS.red,

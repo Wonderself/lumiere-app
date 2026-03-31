@@ -1,3 +1,5 @@
+import { auth } from '@/lib/auth'
+import { redirect } from 'next/navigation'
 import { Shield, Activity, Clock, User, BarChart3, TrendingUp } from 'lucide-react'
 import { getAuditLogAction, getAuditStatsAction } from '@/app/actions/audit'
 import { TwoFactorSetup } from './two-factor-setup'
@@ -7,6 +9,9 @@ export const dynamic = 'force-dynamic'
 export const metadata: Metadata = { title: 'Sécurité — Admin CINEGEN' }
 
 export default async function SecurityPage() {
+  const session = await auth()
+  if (!session?.user || session.user.role !== 'ADMIN') redirect('/dashboard')
+
   const [auditResult, statsResult] = await Promise.all([
     getAuditLogAction(1),
     getAuditStatsAction(),

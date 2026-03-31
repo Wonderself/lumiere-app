@@ -102,7 +102,7 @@ export default function EnhancedBillingPage() {
           </h2>
           <ResponsiveContainer width="100%" height={250}>
             <AreaChart data={timelineData}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.08)" />
               <XAxis dataKey="day" tick={{ fontSize: 11 }} />
               <YAxis tick={{ fontSize: 11 }} />
               <Tooltip />
@@ -145,7 +145,7 @@ export default function EnhancedBillingPage() {
         ) : (
           <ResponsiveContainer width="100%" height={200}>
             <BarChart data={actionChartData}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.08)" />
               <XAxis dataKey="name" tick={{ fontSize: 10 }} />
               <YAxis tick={{ fontSize: 11 }} />
               <Tooltip />
@@ -160,7 +160,7 @@ export default function EnhancedBillingPage() {
         <div className="px-6 py-4 border-b border-white/10">
           <h2 className="text-sm font-semibold text-white">Top consommateurs</h2>
         </div>
-        <div className="divide-y divide-gray-50">
+        <div className="divide-y divide-white/10">
           {data.topUsers.map((user, i) => (
             <div key={user.userId} className="flex items-center gap-4 px-6 py-3 hover:bg-white/[0.03]">
               <span className="text-xs font-bold text-white/50 w-6">#{i + 1}</span>

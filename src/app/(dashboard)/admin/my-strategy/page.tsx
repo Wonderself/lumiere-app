@@ -180,7 +180,7 @@ export default function MyStrategyPage() {
                   <span className="text-[10px] text-white/50 ml-auto">{folder.items.length}</span>
                 </button>
                 {folder.items.map((item, i) => (
-                  <p key={i} className="text-xs text-white/60 py-1 border-t border-gray-50">• {item}</p>
+                  <p key={i} className="text-xs text-white/60 py-1 border-t border-white/10">• {item}</p>
                 ))}
                 {isActive && (
                   <div className="flex gap-2 mt-2">

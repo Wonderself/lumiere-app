@@ -107,9 +107,20 @@ function getSeasonCount(show: TvShowData): number {
   return Math.max(1, Math.ceil(show.episodeCount / epsPerSeason))
 }
 
-/* ── Simulated reviews ── */
+/* ── Deterministic hash helper ── */
+function hashCode(s: string): number {
+  let h = 0
+  for (let i = 0; i < s.length; i++) h = ((h << 5) - h) + s.charCodeAt(i)
+  return Math.abs(h)
+}
+
+/* ── Simulated reviews (deterministic — same slug = same reviews) ── */
 function generateReviews(show: TvShowData) {
-  const reviewers = ['Alex M.', 'Jordan K.', 'Taylor S.', 'Morgan W.', 'Casey R.']
+  const REVIEWER_POOL = [
+    'Alex M.', 'Jordan K.', 'Taylor S.', 'Morgan W.', 'Casey R.',
+    'Riley B.', 'Quinn T.', 'Avery L.', 'Blake N.', 'Drew P.',
+  ]
+  const MONTH_POOL = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct']
   const comments = [
     `Absolutely hooked on ${show.title}! The writing is phenomenal.`,
     'One of the best shows on the platform. Every episode keeps you guessing.',
@@ -117,12 +128,16 @@ function generateReviews(show: TvShowData) {
     'The production quality is insane for an AI-generated series. Highly recommend.',
     'Started watching casually, now I can\'t stop. Season finale was mind-blowing.',
   ]
-  return reviewers.map((name, i) => ({
-    name,
-    rating: Number((3.5 + ((i * 7 + show.id.length) % 15) / 10).toFixed(1)),
-    comment: comments[i],
-    date: `${['Jan', 'Feb', 'Mar', 'Apr', 'May'][i]} 2025`,
-  }))
+  const base = hashCode(show.slug)
+  return Array.from({ length: 5 }, (_, i) => {
+    const seed = hashCode(`${show.slug}-review-${i}`)
+    return {
+      name: REVIEWER_POOL[(base + i * 3) % REVIEWER_POOL.length],
+      rating: Number((3.5 + ((seed + i * 7) % 15) / 10).toFixed(1)),
+      comment: comments[i],
+      date: `${MONTH_POOL[(base + i * 2) % MONTH_POOL.length]} 2025`,
+    }
+  })
 }
 
 /* ── Cast avatar colors ── */

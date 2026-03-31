@@ -308,6 +308,12 @@ const GENRE_COLORS: Record<string, string> = {
   'Fantasy': '#A855F7',
 }
 
+function deterministicNumber(slug: string, min: number, max: number): number {
+  let hash = 0
+  for (let i = 0; i < slug.length; i++) hash = ((hash << 5) - hash) + slug.charCodeAt(i)
+  return min + Math.abs(hash) % (max - min)
+}
+
 function CatalogFilmPage({ film }: { film: FilmData }) {
   const accentColor = GENRE_COLORS[film.genre] || '#E50914'
   const statusLabel = FILM_STATUS_LABELS[film.status as keyof typeof FILM_STATUS_LABELS] || film.status
@@ -428,11 +434,11 @@ function CatalogFilmPage({ film }: { film: FilmData }) {
                   </Link>
                   <div className="flex items-center gap-2 text-sm text-white/40">
                     <Users className="h-3.5 w-3.5" />
-                    <span className="font-semibold text-amber-400">{Math.floor(Math.random() * 400 + 120)}</span> votes so far
+                    <span className="font-semibold text-amber-400">{deterministicNumber(film.slug, 120, 520)}</span> votes so far
                   </div>
                 </div>
                 <div className="h-1.5 bg-white/[0.06] rounded-full overflow-hidden">
-                  <div className="h-full rounded-full bg-gradient-to-r from-amber-600 to-amber-400 animate-pulse" style={{ width: `${Math.floor(Math.random() * 40 + 30)}%` }} />
+                  <div className="h-full rounded-full bg-gradient-to-r from-amber-600 to-amber-400 animate-pulse" style={{ width: `${deterministicNumber(film.slug, 30, 70)}%` }} />
                 </div>
                 <p className="text-xs text-white/25">500 votes needed to greenlight</p>
               </div>
@@ -561,7 +567,7 @@ function CatalogFilmPage({ film }: { film: FilmData }) {
 
             {/* RELEASED: Watch Now + Community rating */}
             {film.status === 'RELEASED' && (() => {
-              const communityRating = (Math.random() * 1.5 + 3.5).toFixed(1)
+              const communityRating = (3.5 + (deterministicNumber(film.slug, 0, 15) / 10)).toFixed(1)
               const fullStars = Math.floor(Number(communityRating))
               const hasHalf = Number(communityRating) - fullStars >= 0.5
               return (
@@ -586,7 +592,7 @@ function CatalogFilmPage({ film }: { film: FilmData }) {
                           />
                         ))}
                       </div>
-                      <p className="text-xs text-white/30 mt-1">{Math.floor(Math.random() * 800 + 200)} community ratings</p>
+                      <p className="text-xs text-white/30 mt-1">{deterministicNumber(film.slug, 200, 1000)} community ratings</p>
                     </div>
                   </div>
                   <Link href="/streaming" className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-[#E50914] text-white text-sm font-bold hover:bg-[#E50914]/90 transition-colors shadow-lg shadow-[#E50914]/20">
